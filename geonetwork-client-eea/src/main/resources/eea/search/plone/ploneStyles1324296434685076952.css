@@ -1,0 +1,337 @@
+
+/* - ++resource++videostyles/video.css - */
+@media all {
+/* http://www.eea.europa.eu/portal_css/++resource++videostyles/video.css?original=1 */
+.video_popup_play p, .video_embedded_play p {
+display: inline;
+}
+.video_popup_play a span, .video_embedded_play span {
+display: none;
+}
+.coverImageContainer {
+float: left;
+margin: 0 1em 0.5em 0em;
+}
+#summary_wrapper {
+clear: both;
+background-color: #dfdfdf;
+}
+#objmetadata_pbwidgets_wrapper{
+width: 65%;
+border-right: 1px solid #fff;
+background-color: #efefef;
+position: relative;
+}
+#video_metadata {
+float: right;
+width: 33%;
+padding-top: 1em;
+font-size: 90%;
+}
+#video_metadata div {
+line-height: 1.6em;
+}
+#video_metadata span {
+width: 45%
+}
+#playback_widgets {
+float: right;
+padding: 0.5em 1em 1em 1em;
+}
+#object_metadata {
+float: left;
+padding: 0.5em 1em 1em 1em;
+}
+#play_icon {
+display: block;
+width: 16px; height: 16px;
+background: transparent url(../++resource++videoimages/play_icon.png) no-repeat left top;
+}
+#download_icon {
+display: block;
+width: 16px; height: 16px;
+background: transparent url(../++resource++videoimages/download_icon.png) no-repeat left top;
+}
+#popup_play_icon {
+display: block;
+width: 16px; height: 16px;
+background: transparent url(../++resource++videoimages/popup_play_icon.png) no-repeat left top;
+}
+.widget_icon {
+margin-bottom: 8px;
+}
+.image-absent {
+display: none;
+}
+.media-player {
+width: 100%;
+display: block;
+padding-top: 8px;
+padding-bottom: 8px;
+}
+.media-player.media-absent {
+display: none;
+}
+.media-player.player-not-available{
+display: none;
+}
+.media-player .playButton {
+position: absolute;
+cursor: pointer;
+}
+.hVlog{
+text-align: center;
+}
+.bottom-content-info DT,
+.bottom-content-info DD {
+float: left;
+margin: 0;
+padding: 0;
+line-height: 1.5em;
+font-size: 0.8em;
+}
+* HTML BODY .bottom-content-info DT,
+* HTML BODY .bottom-content-info DD {
+float: none;
+}
+* HTML BODY .bottom-content-info DD {
+padding-left: 2em;
+margin-right: -2em;
+float: left;
+}
+* HTML BODY .bottom-content-info DL {
+padding: 0;
+margin: 0;
+}
+.bottom-content-info DT {
+clear: left;
+width: 12em;
+color: #666;
+}
+.bottom-content-info DD {
+padding-right: 0.5em;
+}
+.media-item {
+border: solid 1px #cacacb;
+padding: 0.75em;
+margin-top: 1.5em;
+}
+.media-item.even {
+background-color: transparent;
+}
+.media-item.odd {
+background-color: #f2f5f7;
+}
+.media-item .item-left {
+float: left;
+margin: 0;
+padding: 0;
+}
+.media-item .item-content {
+padding-left: 1em;
+margin-left: 131px;
+}
+.media-item .item-left {
+padding: 0;
+margin: 0;
+}
+.media-item .item-left DL {
+padding: 0;
+margin: 0;
+}
+.media-item .item-left DT.album-art {
+display: none;
+}
+.media-item .item-left DD.album-art {
+border: solid 1px #cacacb;
+margin: 0 0 1em 0;
+width: 131px;
+}
+.media-item .item-left DD.album-art IMG {
+border: 1px solid transparent;
+width: 128px;
+}
+.media-item .item-left .no-album-art {
+margin: 1em auto;
+display: block;
+text-align: center;
+}
+.media-item .item-left DT,
+.media-item .item-left DD {
+color: #9a9a99;
+padding: 0;
+margin: 0 0 0.2em 0;
+line-height: 1.1;
+font-size: 90%;
+}
+.media-item .item-left DT {
+float: left;
+padding-right: 0.5em;
+}
+.media-item .item-description {
+line-height: 1.2em;
+color: #9a9a99;
+font-size: 1.2em;
+margin-top: 0.5em;
+}
+.media-item .item-content DT {
+line-height: 1.4em;
+padding: 0 0.5em 0 0;
+margin: 0;
+float: left;
+clear: left;
+width: 6em;
+}
+.media-item .item-content DD {
+line-height: 1.4em;
+margin: 0;
+padding: 0 0.5em 0 0;
+float: left;
+}
+.media-item DT.tag {
+background: url(../++resource++videoimages/tags.gif) transparent no-repeat;
+padding-left: 20px;
+padding-right: 30px;
+}
+.media-item DT.commenting {
+background: url(../++resource++videoimages/comments.gif) transparent no-repeat;
+padding-left: 20px;
+}
+.media-item DT.rating {
+background: url(../++resource++videoimages/ratings.gif) transparent no-repeat;
+padding-left: 20px;
+padding-right: 30px;
+}
+.media-item H2 {
+border: 0;
+font-weight: bold;
+display: block;
+}
+.media-item .author-byline {
+color: #9a9a99;
+font-size: 90%;
+}
+.media-item .item-content DD {
+display: inline;
+}
+.media-item H2 .relevance {
+display: block;
+float: right;
+font-size: 75%;
+color: #9a9a99;
+font-weight: normal;
+margin-top: -1.5em;
+}
+.field #form\.title {
+width: 100%;
+font-size: 150%;
+}
+.field #form\.url {
+width: 100%;
+}
+.field #form\.tags {
+width: 100%;
+}
+
+}
+
+
+/* - ++resource++vPIP/vPIPBox.css - */
+@media all {
+/* http://www.eea.europa.eu/portal_css/++resource++vPIP/vPIPBox.css?original=1 */
+/* */
+#vPIP_TB_window {
+color:#000000;
+}
+#vPIP_TB_overlay {
+position: fixed;
+z-index:100;
+top: 0px;
+left: 0px;
+background-color:#000;
+filter:alpha(opacity=75);
+-moz-opacity: 0.75;
+opacity: 0.75;
+height:100%;
+width:100%;
+}
+* html #vPIP_TB_overlay { /* */
+position: absolute;
+height: expression(document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight + 'px');
+}
+#vPIP_TB_window {
+position: fixed;
+background: #E1E1E1;
+z-index: 102;
+color:#000000;
+display:none;
+border: 4px solid #525252;
+text-align:left;
+top:50%;
+left:50%;
+}
+* html #vPIP_TB_window { /* */
+position: absolute;
+margin-top: expression(0 - parseInt(this.offsetHeight / 2) + (vPIP_TBWindowMargin = document.documentElement && document.documentElement.scrollTop || document.body.scrollTop) + 'px');
+}
+#vPIP_TB_window img {
+display:block;
+margin: 15px 0 0 15px;
+border-right: 1px solid #ccc;
+border-bottom: 1px solid #ccc;
+border-top: 1px solid #666;
+border-left: 1px solid #666;
+}
+#vPIP_TB_caption{
+height:25px;
+padding:10px 30px 10px 15px;
+float:left;
+}
+#vPIP_TB_closeWindow{
+height:25px;
+padding:10px 25px 10px 0;
+float:right;
+}
+#vPIP_Object {
+display:block;
+text-align: left;
+padding: 15px 0 0 15px;
+/* */
+background:#E1E1E1;
+}
+
+}
+
+
+/* - orderablereference.css - */
+@media screen {
+/* http://www.eea.europa.eu/portal_css/orderablereference.css?original=1 */
+/* */
+/* */
+#box1, #box2 {
+float: left;
+}
+#box1 table, #box2 table {
+margin-right: 0.5em;
+}
+.selectbuttons, .orderbuttons {
+padding-left: 0.5em;
+}
+.selectbuttons input, .orderbuttons input {
+margin-bottom: 10px;
+}
+#buttonup input, #buttondown input {
+padding: 1px 1px 1px 15px;
+background: transparent url(linkTransparent.gif) no-repeat scroll 9px 1px;
+cursor: pointer;
+font-size: 70%;
+text-transform: lowercase;
+width: 5.5em;
+}
+.orfspacing {
+clear: both;
+}
+/* */
+
+}
+

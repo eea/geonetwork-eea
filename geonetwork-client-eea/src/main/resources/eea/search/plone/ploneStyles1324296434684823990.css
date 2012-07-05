@@ -1,0 +1,149 @@
+
+/* - helpcenter.css - */
+@media all {
+/* http://www.eea.europa.eu/portal_css/helpcenter.css?original=1 */
+/* */
+.link-expand {
+background: transparent url(http://www.eea.europa.eu/arrowDown.gif) 4px 5px no-repeat;
+padding: 1px 0px 1px 16px;
+display: block;
+font-size: 85%;
+float: right;
+}
+.faqMarker {
+list-style-type: square;
+list-style-image: url(http://www.eea.europa.eu/faq_icon.gif);
+}
+.portletHalfWidth {
+width: 45%;
+float: left;
+margin: 0 1em 1em 0 !important;
+}
+.portletThirdWidth {
+width: 30%;
+float: left;
+margin: 0 1em 1em 0 !important;
+}
+/* */
+table.sectionIndex {
+float: right;
+background: transparent;
+border-collapse: collapse;
+border-left: 1px solid #cccccc;
+border-bottom: 1px solid #cccccc;
+font-size: 85%;
+margin: 0.5em 0em 1em 1em;
+}
+.sectionIndex th {
+background: #f3f3f3;
+border-top: 1px solid #cccccc;
+border-bottom: 1px solid #cccccc;
+border-right: 1px solid #cccccc;
+font-weight: normal;
+padding: 0.25em 1em;
+text-transform: lowercase;
+}
+.sectionIndex td {
+border-right: 1px solid #cccccc;
+padding: 0.25em 1em;
+}
+.sectionIndex a {
+text-decoration: none;
+}
+.sectionIndex a:hover {
+text-decoration: underline;
+}
+/* */
+.tutorialAbout {
+display: inline;
+float: right;
+background-color: #f3f3f3;
+border-color: #cccccc;
+border-width: 1px;
+border-style: solid;
+font-size: 85%;
+margin: 0.5em 0 0.5em 0.5em;
+padding: 1em;
+width: 10em;
+clear: right;
+text-align: center;
+}
+/* */
+.jumpBox {
+float: right;
+text-align: right;
+}
+/* */
+.outdatedMarker {
+}
+/* */
+.state-hidden {
+color: red;
+}
+.state-in-progress {
+color: #74AE0B;
+}
+.state-obsolete {
+color: #cccccc;
+}
+ul.quickLinks {
+margin: 0 0 1em 0;
+background-color: #dee7ec;
+border: solid 1px #8cacbb;
+padding: 1em;
+text-align: center;
+}
+ul.quickLinks li {
+display: inline;
+margin-right: 1em;
+}
+dl.topicList {
+width: 32%;
+display: block;
+float: left;
+margin: 0 0.5em 1em 0;
+/* */
+}
+dl.topicList dt {
+font-size: 120%;
+}
+dl.topicList dt a {
+color: black;
+}
+dl.topicList dd {
+margin: 0;
+display: inline;
+}
+.flatlist li {
+display: inline;
+margin-right: 2em;
+}
+.flatlist ul {
+margin-left: 0;
+margin-bottom: 1em;
+}
+.doclist dd {
+margin-left: 20px;
+}
+.template-helpcenter_topicview_main .readmore {
+text-align: right;
+}
+h2.section-subheading {
+margin-top: 0.5em;
+}
+/* */
+}
+
+
+/* - helpcenter_print.css - */
+@media print {
+/* http://www.eea.europa.eu/portal_css/helpcenter_print.css?original=1 */
+/* */
+/* */
+.link-parent, .link-expand, .jumpBox, .listingBar,
+.sectionIndex, .link-anchor {
+display: none;
+}
+/* */
+}
+
