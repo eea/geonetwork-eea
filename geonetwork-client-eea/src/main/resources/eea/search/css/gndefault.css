@@ -227,6 +227,9 @@ table.related * a:hover,
 .addIcon {
   background-image : url(../../../apps/images/default/add.png) !important;
 }
+.rdfIcon {
+  background-image : url(../../../apps/images/default/sw-cube.png);
+}
 .privIcon {
   background-image : url(../../../apps/images/default/group_key.png) !important;
 }
