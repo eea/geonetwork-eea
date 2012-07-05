@@ -2,6 +2,7 @@ Ext.namespace('GeoNetwork');
 
 var catalogue;
 var app;
+var cookie;
 
 GeoNetwork.app = function () {
     // private vars:
@@ -9,7 +10,6 @@ GeoNetwork.app = function () {
     var searching = false;
     var editorWindow;
     var editorPanel;
-    var cookie;
     
     /**
      * Application parameters are :
@@ -126,16 +126,13 @@ GeoNetwork.app = function () {
         // Store user info in cookie to be displayed if user reload the page
         // Register events to set cookie values
         catalogue.on('afterLogin', function(){
-            var cookie = Ext.state.Manager.getProvider();
             cookie.set('user', catalogue.identifiedUser);
         });
         catalogue.on('afterLogout', function(){
-            var cookie = Ext.state.Manager.getProvider();
             cookie.set('user', undefined);
         });
         
         // Refresh login form if needed
-        var cookie = Ext.state.Manager.getProvider();
         var user = cookie.get('user');
         if (user) {
             catalogue.identifiedUser = user;
@@ -754,7 +751,11 @@ GeoNetwork.app = function () {
             cookie = new Ext.state.CookieProvider({
                 expires: new Date(new Date().getTime()+(1000*60*60*24*365))
             });
-            Ext.state.Manager.setProvider(cookie);
+            
+                        // set a permalink provider which will be the main state provider.
+            permalinkProvider = new GeoExt.state.PermalinkProvider({encodeType: false});
+            
+            Ext.state.Manager.setProvider(permalinkProvider);
             
             Ext.getDom('searchLb').innerHTML = OpenLayers.i18n('search');
             Ext.getDom('loginLb').innerHTML = 'Admin login';//OpenLayers.i18n('login');
@@ -774,10 +775,6 @@ GeoNetwork.app = function () {
                 metadataEditFn: edit,
                 metadataShowFn: show
             });
-            
-            // set a permalink provider
-            var permalinkProvider = new GeoExt.state.PermalinkProvider({encodeType: false});
-            Ext.state.Manager.setProvider(permalinkProvider);
             
             createHeader();
             
