@@ -1,0 +1,58 @@
+<!-- 
+    EEA configuration
+-->
+<overrides xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="config-overrides.xsd">
+  <import file="/WEB-INF/config-overrides-eea-props.xml"/>
+  <import file="/WEB-INF/server-props-overrides.xml"/>
+
+
+  <file name=".*/WEB-INF/config-gui.xml">
+    <replaceAtt xpath="client" attName="widget" value="true"/>
+    <replaceAtt xpath="client" attName="url" value="${widget.url}"/>
+    <replaceAtt xpath="client" attName="createParameter" value="#create"/>
+    <replaceAtt xpath="client" attName="parameters" value="${widget.parameters}"/>
+    <replaceXML xpath="map/proj">
+      <crs code="EPSG:4326" default="1" edit="1"/><!-- WGS84 is mandatory because ISO store it by default in LatLong-->
+      <crs code="EPSG:3035"
+        def="+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs"
+      />
+    </replaceXML>
+  </file>
+  <file name=".*/WEB-INF/config.xml">
+    <replaceText xpath="general/uploadDir">../../data/tmp</replaceText>
+    <replaceText xpath="general/maxUploadSize">100</replaceText>
+    <replaceAtt xpath="appHandler/param[@name = 'luceneDir']" attName="value" value="WEB-INF/lucene"/>
+    <replaceAtt xpath="appHandler/param[@name = 'dataDir']" attName="value" value="WEB-INF/data"/>
+    <replaceXML xpath="resources">
+      <resource enabled="true">
+        <name>main-db</name>
+        <provider>jeeves.resources.dbms.ApacheDBCPool</provider>
+        <config>
+          <user>${db.user}</user>
+          <password>${db.pass}</password>
+          <driver>${db.driver}</driver>
+          <url>${db.url}</url>
+          <poolSize>33</poolSize>
+          <validationQuery>SELECT 1</validationQuery>
+        </config>
+      </resource>
+    </replaceXML>
+  </file>
+
+  <!-- Add custom CSW service -->
+  <file name=".*/WEB-INF/config-csw-servers.xml">
+    <addXML xpath="services">
+      <service name="csw-inspire">
+        <class name=".services.main.CswDispatcher">
+          <param name="filter" value="+inspirerelated:on"/>
+        </class>
+      </service>
+    </addXML>
+  </file>
+  <file name=".*/WEB-INF/user-profiles.xml">
+    <addXML xpath="profile[@name='Guest']">
+      <allow service="csw-inspire"/>
+    </addXML>
+  </file>
+</overrides>
