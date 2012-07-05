@@ -12,6 +12,7 @@
 	
 	<xsl:include href="header.xsl"/>
 	<xsl:include href="banner.xsl"/>
+  <xsl:include href="eea-layout.xsl"/>
 	<xsl:include href="utils.xsl"/>
 
 	<!--
@@ -23,6 +24,8 @@
 				<xsl:call-template name="header"/>
 				<xsl:apply-templates mode="script" select="/"/>
 				
+        <xsl:call-template name="eea-head"/>
+			  
 				<style type="text/css">
 					body {
 						height:100%;
@@ -30,12 +33,14 @@
 				</style>
 			</head>
 			<body onload="init();">
-				<!-- banner -->
-				<xsl:if test="not(/root/request/modal)">
-					<div id="header">
-						<xsl:call-template name="banner"/>
-					</div>
-				</xsl:if>
+			  
+			  <!-- banner -->
+			  <xsl:if test="not(/root/request/modal)">
+			    <xsl:call-template name="eea-header"/>
+			  </xsl:if>
+			  
+			  <div id="visual-portal-wrapper" style="min-height: 600px;">
+				
 			
 				<div id="content_container" style="display:none">
 					<xsl:if test="/root/request/modal">
@@ -43,13 +48,22 @@
 					</xsl:if>
 					<xsl:call-template name="content"/>
 				</div>
-
-				<xsl:if test="not(/root/request/modal)">
-					<xsl:apply-templates mode="loading" select="/"/>
-				</xsl:if>
+				</div>
+			  
+			  <xsl:if test="not(/root/request/modal)">
+			    <xsl:apply-templates mode="loading" select="/"/>
+			    
+			    <!--FAILED because not well formed <xsl:variable name="eeaFooter" select="document(concat('http://www.eea.europa.eu/', /root/gui/language, '/getFooter'))"/>
+			      <xsl:copy-of select="$eeaFooter"/>-->
+			    <xsl:call-template name="eea-footer"/>
+			  </xsl:if>
 			</body>
 		</html>
 	</xsl:template>
+
+
+
+
 
 	<xsl:template mode="script" match="/"/>
 	<xsl:template mode="css" match="/"/>
@@ -116,7 +130,6 @@
 				<xsl:call-template name="formFiller">
 					<xsl:with-param name="indent" select="$indent"/>
 				</xsl:call-template>
-				<tr><td class="blue-content" colspan="3"/></tr>
 			</xsl:if>
 		</table>
 	</xsl:template>
@@ -131,7 +144,7 @@
 					<td class="padded-content" width="{$indent}"/>
 					<td class="dots"/>
 					<td class="padded-content">
-						<h1><xsl:value-of select="$title"/></h1>
+					  <h1 class="documentFirstHeading"><xsl:value-of select="$title"/> | <a href="home"><xsl:value-of select="/root/gui/strings/search"/></a></h1>
 					</td>
 				</xsl:when>
 				<xsl:otherwise>

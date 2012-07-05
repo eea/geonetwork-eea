@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:fo="http://www.w3.org/1999/XSL/Format">
-
-
+  
   <xsl:include href="../header.xsl"/>
   <xsl:include href="../banner.xsl"/>
+  <xsl:include href="../eea-layout.xsl"/>
   
   <xsl:variable name="widgetPath">../../apps</xsl:variable>
   <xsl:variable name="indent" select="100"/>
@@ -87,6 +87,7 @@
     <html>
       <head>
         <xsl:call-template name="header"/>
+        <xsl:call-template name="eea-head"/>
         <xsl:apply-templates mode="script" select="/"/>
         
         <style type="text/css">
@@ -96,10 +97,13 @@
         </style>
       </head>
       <body>
-        <xsl:call-template name="banner"/>
+        
+        <xsl:call-template name="eea-header"/>
         <div id="content_container">
           <xsl:call-template name="content"/>
         </div>
+        
+        <xsl:call-template name="eea-footer"/>
       </body>
     </html>
   </xsl:template>
@@ -130,7 +134,6 @@
           </button>
         </td>
       </tr>
-      <tr><td class="blue-content" colspan="3"/></tr>
     </table> 
   </xsl:template>
 
