@@ -1,0 +1,53 @@
+#portal-column-one {
+    width: 300px !important;
+}
+#portal-column-content {
+/*   width: 90% !important;*/
+   margin-left: -300px !important; 
+}
+/*body.longwordlanguage .visualColumnHideTwo #portal-column-content #content, .visualColumnHideTwo #portal-column-content #content {
+    margin-left: 300px !important;
+}*/
+/*body.longwordlanguage .visualColumnHideTwo #portal-column-content #content, .visualColumnHideTwo #portal-column-content #content, #portal-column-content #content {
+   margin-left: 300px !important; 
+}*/
+#slide-menu {
+    width: 300px !important;
+    position: absolute;
+/*    position: fixed;
+*/}
+.latest * .md-view {
+  background-color: #F3F3F3;
+}
+#lang-form {
+    display: none;
+}
+.metadata * table.gn {
+    font-size: inherit !important;
+}
+ul li.tag-cloud {
+    text-align: left !important;
+    float: none !important;
+}
+.x-superboxselect-item-close {
+    background: url(../../../apps/js/ext-ux/SuperBoxSelect/close.png) no-repeat scroll left 0px !important;
+}
+#content #resultsPanel table {
+  margin-bottom: 0px !important;
+}
+/* Avoid some Plone rules */
+.md-view ul li * h1 {
+  text-shadow: none !important;
+}
+#login-form input {
+  font-size: 100% !important;
+}
+/* TODO .featured img {
+  width: 180px !important;
+  height: 180px !important;
+}*/
+
+
+#portal-globalnav li {
+  float: left !important;
+}
