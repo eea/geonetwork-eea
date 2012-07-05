@@ -1,3 +1,5 @@
+geonetwork-client-eea/src/main/resources/eea/search/js/App-mini.js
+geonetwork-client-eea/src/main/resources/gisc/search/js/App-mini.js
 web-client/src/main/resources/apps/js/GeoNetwork-mini-nomap.js
 web-client/src/main/resources/apps/js/GeoNetwork-mini.js
 web-client/src/main/resources/apps/search/js/App-mini.js
