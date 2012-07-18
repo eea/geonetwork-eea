@@ -12,7 +12,7 @@
 	
 	<xsl:include href="header.xsl"/>
 	<xsl:include href="banner.xsl"/>
-  <xsl:include href="eea-layout.xsl"/>
+	<xsl:include href="eea-layout.xsl"/>
 	<xsl:include href="utils.xsl"/>
 
 	<!--
@@ -42,7 +42,7 @@
 			  <div id="visual-portal-wrapper" style="min-height: 600px;">
 				
 			
-				<div id="content_container" style="display:none">
+				<div id="content_container" style="display:block">
 					<xsl:if test="/root/request/modal">
 						<xsl:attribute name="style">display: block"</xsl:attribute>
 					</xsl:if>
@@ -53,8 +53,6 @@
 			  <xsl:if test="not(/root/request/modal)">
 			    <xsl:apply-templates mode="loading" select="/"/>
 			    
-			    <!--FAILED because not well formed <xsl:variable name="eeaFooter" select="document(concat('http://www.eea.europa.eu/', /root/gui/language, '/getFooter'))"/>
-			      <xsl:copy-of select="$eeaFooter"/>-->
 			    <xsl:call-template name="eea-footer"/>
 			  </xsl:if>
 			</body>

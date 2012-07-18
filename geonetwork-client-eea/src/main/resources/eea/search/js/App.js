@@ -647,29 +647,20 @@ GeoNetwork.app = function () {
         Ext.get('parent-fieldname-title').dom.innerHTML = info.name;
         // http://www.eea.europa.eu/en/getHeader
         // Load EEA header inf
-//        new Ext.Panel({
-//            border: false,
-//            frame: false,
-//            baseCls: 'none',
-//            autoWidth: true,
-//            renderTo: 'header',
-//            autoLoad: {
-//                //url: 'http://webservices.eea.europa.eu/templates/getHeader?tabselected=products',
-//                url: 'http://www.eea.europa.eu/' + catalogue.LANG + '/getHeader',
-//                loadScripts: false
-//            }
-//        });
-//        return new Ext.Panel({
-//            border: false,
-//            frame: false,
-//            baseCls: 'none',
-//            autoWidth: true,
-//            renderTo: 'footer',
-//            autoLoad: {
-//                url: 'http://www.eea.europa.eu/' + catalogue.LANG + '/getFooter',
-//                loadScripts: false
-//            }
-//        });
+        
+        var wrapper = Ext.get('visual-portal-wrapper');
+        OpenLayers.Request.GET({
+            url: 'http://www.eea.europa.eu/templates/v2/getHeader',
+            success: function(response){
+                wrapper.insertHtml('beforeBegin', response.responseText);
+            }
+        });
+        OpenLayers.Request.GET({
+            url: 'http://www.eea.europa.eu/templates/v2/getFooter',
+            success: function(response){
+                wrapper.insertHtml('afterEnd', response.responseText);
+            }
+        });
     }
     
     // public space:
@@ -757,7 +748,7 @@ GeoNetwork.app = function () {
             
             Ext.state.Manager.setProvider(permalinkProvider);
             
-            Ext.getDom('searchLb').innerHTML = OpenLayers.i18n('search');
+            Ext.getDom('searchLb').innerHTML = OpenLayers.i18n('Search');
             Ext.getDom('loginLb').innerHTML = 'Admin login';//OpenLayers.i18n('login');
             
             // Create connexion to the catalogue
