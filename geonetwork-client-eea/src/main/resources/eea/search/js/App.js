@@ -884,7 +884,7 @@ Ext.onReady(function (){
 
 // When scrolling down in window, change search form top position
 window.onscroll = function (e) {
-    var pos = 0;
+    var pos = 0, searchFormTopUnderHeader = 160, searchFormBottomOverFooter = 160;
     if (pageYOffset)//usual
         pos = pageYOffset;
     else if (document.documentElement.clientHeight)//ie
@@ -893,5 +893,11 @@ window.onscroll = function (e) {
         pos = document.body.scrollTop;
     
     var e = Ext.get('slide-menu');
-    e.setTop(pos < 250 ? 0 : pos - 250);
+    
+    // Close to the bottom of the page - stop moving the panel
+    var newTop = pos < searchFormTopUnderHeader ? 5 : pos - searchFormTopUnderHeader;
+    if (!(newTop + e.getHeight() > document.height)) {
+        e.setTop(newTop);
+    }
+    
   }
