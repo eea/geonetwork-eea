@@ -43,6 +43,9 @@ GeoNetwork.Settings.editor = {
 //    defaultViewMode : 'inspire'
 };
 
+
+GeoNetwork.printUrl = '../../apps/search/print.html';
+
 // Define which type of search to use
 // Default mode
 //GeoNetwork.Settings.mdStore = GeoNetwork.data.MetadataResultsStore;

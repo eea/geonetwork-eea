@@ -386,7 +386,7 @@ GeoNetwork.app = function () {
         if (success) {
             createLatestUpdate();
         } else {
-            Ext.get('infoPanel').getUpdater().update({url:'home_en.html'});
+            Ext.get('infoPanel').getUpdater().update({url:'../../eea/search/home_en.html'});
         }
     }
     /** private: methode[createInfoPanel]
@@ -403,7 +403,7 @@ GeoNetwork.app = function () {
             renderTo: 'infoContent',
             //contentEl: 'infoContent',
             autoLoad: {
-                url: 'home_' + catalogue.LANG + '.html',
+                url: '../../eea/search/home_' + catalogue.LANG + '.html',
                 callback: loadCallback,
                 scope: this,
                 loadScripts: false
@@ -424,7 +424,7 @@ GeoNetwork.app = function () {
             autoWidth: true,
             renderTo: 'shortcut',
             autoLoad: {
-                url: 'help_' + catalogue.LANG + '.html',
+                url: '../../eea/search/help_' + catalogue.LANG + '.html',
                 callback: initShortcut,
                 scope: this,
                 loadScripts: false
@@ -581,6 +581,7 @@ GeoNetwork.app = function () {
             lang: this.lang,
             currTab: GeoNetwork.defaultViewMode || 'simple',
             printDefaultForTabs: GeoNetwork.printDefaultForTabs || false,
+            printUrl: GeoNetwork.printUrl,
             catalogue: catalogue,
             maximized: maximized || false,
             metadataUuid: uuid,
@@ -647,20 +648,26 @@ GeoNetwork.app = function () {
         Ext.get('parent-fieldname-title').dom.innerHTML = info.name;
         // http://www.eea.europa.eu/en/getHeader
         // Load EEA header inf
+//        OpenLayers.Request.GET({
+//            url: 'http://www.eea.europa.eu/templates/v2/getRequiredHead',
+//            success: function(response){
+//            	Ext.get('html-head').insertHtml('afterBegin', response.responseText);
+//            }
+//        });
+//        var wrapper = Ext.get('visual-portal-wrapper');
+//        OpenLayers.Request.GET({
+//            url: 'http://www.eea.europa.eu/templates/v2/getHeader',
+//            success: function(response){
+//                wrapper.insertHtml('beforeBegin', response.responseText);
+//            }
+//        });
+//        OpenLayers.Request.GET({
+//            url: 'http://www.eea.europa.eu/templates/v2/getFooter',
+//            success: function(response){
+//                wrapper.insertHtml('afterEnd', response.responseText);
+//            }
+//        });
         
-        var wrapper = Ext.get('visual-portal-wrapper');
-        OpenLayers.Request.GET({
-            url: 'http://www.eea.europa.eu/templates/v2/getHeader',
-            success: function(response){
-                wrapper.insertHtml('beforeBegin', response.responseText);
-            }
-        });
-        OpenLayers.Request.GET({
-            url: 'http://www.eea.europa.eu/templates/v2/getFooter',
-            success: function(response){
-                wrapper.insertHtml('afterEnd', response.responseText);
-            }
-        });
     }
     
     // public space:
@@ -730,7 +737,7 @@ GeoNetwork.app = function () {
             });
         },
         init: function (){
-            geonetworkUrl = GeoNetwork.URL || window.location.href.match(/(http.*\/.*)\/eea\/search.*/, '')[1];
+            geonetworkUrl = GeoNetwork.URL || window.location.href.match(/(http.*\/.*)\/(eea|srv.*)\/search.*/, '')[1];
 
             urlParameters = GeoNetwork.Util.getParameters(location.href);
             var lang = GeoNetwork.Util.getCatalogueLang(urlParameters.hl || GeoNetwork.defaultLocale);
@@ -864,7 +871,7 @@ GeoNetwork.app = function () {
 document.namespaces;
 Ext.onReady(function (){
     var lang = /hl=([a-z]{3})/.exec(location.href);
-    GeoNetwork.Util.setLang(lang && lang[1], '..');
+    GeoNetwork.Util.setLang(lang && lang[1], '../../apps/');
     GeoNetwork.lang.en['login'] = 'Admin login';
     Ext.QuickTips.init();
     setTimeout(function () {

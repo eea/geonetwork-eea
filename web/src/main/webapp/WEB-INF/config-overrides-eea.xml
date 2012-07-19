@@ -79,9 +79,17 @@
       </service>
     </addXML>
   </file>
+  <file name=".*/WEB-INF/config.xml">
+    <addXML xpath="services">
+      <service name="search">
+        <output sheet="eea-search.xsl"/>
+      </service>
+    </addXML>
+  </file>
   <file name=".*/WEB-INF/user-profiles.xml">
     <addXML xpath="profile[@name='Guest']">
       <allow service="csw-inspire"/>
+      <allow service="search"/>
     </addXML>
   </file>
 
