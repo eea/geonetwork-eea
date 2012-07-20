@@ -833,7 +833,7 @@
             </connector>
           </connectors>
           <webApp>${project.build.directory}/geonetwork</webApp>
-          <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
+          <webXml>${build.webapp.resources}/WEB-INF/webgeonetwork.xml</webXml>
 <!--      <webAppSourceDirectory>${build.webapp.resources}</webAppSourceDirectory> -->
           <webAppConfig>
             <contextPath>/geonetwork</contextPath>
@@ -864,7 +864,7 @@
       <properties>
         <env>prod</env>
         <geonetwork.webapp.name>geonetwork</geonetwork.webapp.name>
-        <geonetwork.web.xml>web.xml</geonetwork.web.xml>
+        <geonetwork.web.xml>webgeonetwork.xml</geonetwork.web.xml>
       </properties>
     </profile>
     <profile>
@@ -878,7 +878,7 @@
       <properties>
         <env>dev</env>
         <geonetwork.webapp.name>geonetwork</geonetwork.webapp.name>
-        <geonetwork.web.xml>web.xml</geonetwork.web.xml>
+        <geonetwork.web.xml>webgeonetwork.xml</geonetwork.web.xml>
       </properties>
     </profile>
     <profile>
