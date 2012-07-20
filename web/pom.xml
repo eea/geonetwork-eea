@@ -886,11 +886,11 @@
       <activation>
         <property>
           <name>env</name>
-          <value>internal-catalogue</value>
+          <value>prod</value>
         </property>
       </activation>
       <properties>
-        <env>internal-catalogue</env>
+        <env>prod</env>
         <geonetwork.webapp.name>internal-catalogue</geonetwork.webapp.name>
         <geonetwork.web.xml>webinternal-catalogue.xml</geonetwork.web.xml>
       </properties>
@@ -900,11 +900,11 @@
       <activation>
         <property>
           <name>env</name>
-          <value>editor-catalogue</value>
+          <value>prod</value>
         </property>
       </activation>
       <properties>
-        <env>editor-catalogue</env>
+        <env>prod</env>
         <geonetwork.webapp.name>editor-catalogue</geonetwork.webapp.name>
         <geonetwork.web.xml>webeditor-catalogue.xml</geonetwork.web.xml>
       </properties>
@@ -914,11 +914,11 @@
       <activation>
         <property>
           <name>env</name>
-          <value>catalogue</value>
+          <value>prod</value>
         </property>
       </activation>
       <properties>
-        <env>catalogue</env>
+        <env>prod</env>
         <geonetwork.webapp.name>catalogue</geonetwork.webapp.name>
         <geonetwork.web.xml>webcatalogue.xml</geonetwork.web.xml>
         </properties>
