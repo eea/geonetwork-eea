@@ -812,15 +812,15 @@
               <type>jar</type>
             </overlay>
           </overlays>
-          <!-- <packagingExcludes>WEB-INF/data/**</packagingExcludes> -->
-          <packagingExcludes>xml/schemas/**</packagingExcludes>
-<!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
-          <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
+          <packagingExcludes>WEB-INF/web*.xml</packagingExcludes>
+          <webXml>${build.webapp.resources}/WEB-INF/${geonetwork.web.xml}</webXml>
           <attachClasses>true</attachClasses>
-          <warName>geonetwork</warName>
+          <warName>${geonetwork.webapp.name}</warName>
           <webappDirectory>${project.build.directory}/geonetwork</webappDirectory>
         </configuration>
       </plugin>
+      
+      
       <plugin>
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>maven-jetty-plugin</artifactId>
@@ -828,7 +828,7 @@
         <configuration>
           <connectors>
             <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-              <port>8080</port>
+              <port>8082</port>
               <maxIdleTime>10000</maxIdleTime>
             </connector>
           </connectors>
@@ -842,7 +842,7 @@
             </baseResource>
           </webAppConfig>
           <stopKey>JETTY_TOP</stopKey>
-          <stopPort>8090</stopPort>
+          <stopPort>8092</stopPort>
         </configuration>
       </plugin>
     </plugins>
@@ -863,6 +863,8 @@
       </activation>
       <properties>
         <env>prod</env>
+        <geonetwork.webapp.name>geonetwork</geonetwork.webapp.name>
+        <geonetwork.web.xml>web.xml</geonetwork.web.xml>
       </properties>
     </profile>
     <profile>
@@ -875,7 +877,51 @@
       </activation>
       <properties>
         <env>dev</env>
+        <geonetwork.webapp.name>geonetwork</geonetwork.webapp.name>
+        <geonetwork.web.xml>web.xml</geonetwork.web.xml>
       </properties>
+    </profile>
+    <profile>
+      <id>env-internal-catalogue</id>
+      <activation>
+        <property>
+          <name>env</name>
+          <value>internal-catalogue</value>
+        </property>
+      </activation>
+      <properties>
+        <env>internal-catalogue</env>
+        <geonetwork.webapp.name>internal-catalogue</geonetwork.webapp.name>
+        <geonetwork.web.xml>webinternal-catalogue.xml</geonetwork.web.xml>
+      </properties>
+    </profile>
+    <profile>
+      <id>env-editor-catalogue</id>
+      <activation>
+        <property>
+          <name>env</name>
+          <value>editor-catalogue</value>
+        </property>
+      </activation>
+      <properties>
+        <env>editor-catalogue</env>
+        <geonetwork.webapp.name>editor-catalogue</geonetwork.webapp.name>
+        <geonetwork.web.xml>webeditor-catalogue.xml</geonetwork.web.xml>
+      </properties>
+    </profile>
+    <profile>
+      <id>env-catalogue</id>
+      <activation>
+        <property>
+          <name>env</name>
+          <value>catalogue</value>
+        </property>
+      </activation>
+      <properties>
+        <env>catalogue</env>
+        <geonetwork.webapp.name>catalogue</geonetwork.webapp.name>
+        <geonetwork.web.xml>webcatalogue.xml</geonetwork.web.xml>
+        </properties>
     </profile>
     <profile>
       <id>env-inspire</id>
