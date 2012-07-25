@@ -381,6 +381,12 @@
       <artifactId>geonetwork-client</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
+		</dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>geonetwork-client-eea</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
     </dependency>
 
   </dependencies>
@@ -809,6 +815,11 @@
             <overlay>
               <groupId>${project.groupId}</groupId>
               <artifactId>geonetwork-client</artifactId>
+              <type>jar</type>
+            </overlay>
+            <overlay>
+              <groupId>${project.groupId}</groupId>
+              <artifactId>geonetwork-client-eea</artifactId>
               <type>jar</type>
             </overlay>
           </overlays>
