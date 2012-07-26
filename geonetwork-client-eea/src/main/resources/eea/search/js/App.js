@@ -845,8 +845,8 @@ GeoNetwork.app = function () {
          * @return
          */
         loadResults: function (response){
-            // FIXME : result panel need to update layout in case of slider
-            // Ext.getCmp('resultsPanel').syncSize();
+            Ext.getDom('slide-menu').style.position="relative"
+            
             Ext.getCmp('previousBt').setDisabled(catalogue.startRecord === 1);
             Ext.getCmp('nextBt').setDisabled(catalogue.startRecord + 
                     parseInt(Ext.getCmp('E_hitsperpage').getValue(), 10) > catalogue.metadataStore.totalLength);
@@ -858,10 +858,6 @@ GeoNetwork.app = function () {
 
             }
             
-//            resultsPanel.syncSize();
-//            console.log(Ext.getCmp('tagCloudPanel'));
-//            Ext.getCmp('tagCloudPanel').setHeight(200);
-            //resultPanel.setHeight(Ext.getCmp('center').getHeight());
             Ext.ux.Lightbox.register('a[rel^=lightbox]');
             
             app.registerTooltipLinks.call(Ext.get('resultsPanel'));
@@ -891,7 +887,7 @@ Ext.onReady(function (){
 
 // When scrolling down in window, change search form top position
 window.onscroll = function (e) {
-    var pos = 0, searchFormTopUnderHeader = 160, searchFormBottomOverFooter = 400;
+    var pos = 0, searchFormTopUnderHeader = 160, searchFormBottomOverFooter = 430;
     if (pageYOffset)//usual
         pos = pageYOffset;
     else if (document.documentElement.clientHeight)//ie
