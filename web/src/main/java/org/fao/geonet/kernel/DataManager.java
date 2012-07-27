@@ -1531,7 +1531,7 @@ public class DataManager {
         //--- force namespace prefix for iso19139 metadata
         setNamespacePrefixUsingSchemas(schema, metadata);
 
-        if (ufo && isTemplate.equals("n")) {
+        if (ufo && !"y".equals(isTemplate)) {
             String parentUuid = null;
             metadata = updateFixedInfo(schema, id$, uuid, metadata, parentUuid, DataManager.UpdateDatestamp.no, dbms);
         }
@@ -2217,6 +2217,15 @@ public class DataManager {
      * @throws Exception
      */
 	private void transformMd(Dbms dbms, ServiceContext context, String id, Element md, Element env, String schema, String styleSheet) throws Exception {
+		
+		if(env.getChild("host")==null){
+			String host    = settingMan.getValue(Geonet.Settings.SERVER_HOST);
+			String port    = settingMan.getValue(Geonet.Settings.SERVER_PORT);
+			
+			env.addContent(new Element("host").setText(host));
+			env.addContent(new Element("port").setText(port));
+		}
+		
 		//--- setup root element
 		Element root = new Element("root");
 		root.addContent(md);
