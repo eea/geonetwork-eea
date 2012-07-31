@@ -689,9 +689,13 @@ GeoNetwork.app = function () {
                         //var title = GeoNetwork.lang.en[titleId] && GeoNetwork.lang.en[titleId] != titleId ? GeoNetwork.lang.en[titleId] : titleId;
                         // FIXME 
                         var id = href;
+                        // Format \ for CIFS link which could
+                        // be prefixed by cifs or \\
                         if (href.indexOf('cifs://') != -1) {
                             href = href.replace(/\//g, '\\');
                             href = href.replace(/cifs:/, '');
+                        } else if (href.indexOf('\\') != -1) {
+                            href = href.replace(/\//g, '\\');
                         }
                         var t = new Ext.ToolTip({
                                 id: id,   // Identify tooltip by the href which might be unique
