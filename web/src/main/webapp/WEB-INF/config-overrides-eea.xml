@@ -5,7 +5,7 @@
   xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"
   xmlns:inspire_ds="http://inspire.ec.europa.eu/schemas/inspire_ds/1.0"
   xsi:noNamespaceSchemaLocation="config-overrides.xsd">
-  <import file="/WEB-INF/config-overrides-eea-props.xml"/>
+  <import file="./catalogue-props.xml"/>
   <import file="/WEB-INF/server-props-overrides.xml"/>
 
 
@@ -30,6 +30,19 @@
     <replaceAtt xpath="appHandler/param[@name = 'useSubversion']" attName="value" value="false"/>
     
     <replaceXML xpath="resources">
+      <!-- The JNDI connection enabled -->
+      <resource enabled="false">
+        <name>main-db</name>
+        <provider>jeeves.resources.dbms.JNDIPool</provider>
+        <config>
+          <context>java:/comp/env</context>
+          <resourceName>${resource.name}</resourceName>
+          <url>${db.url}</url>
+          <provideDataStore>true</provideDataStore>
+          <maxOpenPreparedStatements>300</maxOpenPreparedStatements>
+        </config>
+      </resource>
+      <!-- The direct connection disabled -->
       <resource enabled="true">
         <name>main-db</name>
         <provider>jeeves.resources.dbms.ApacheDBCPool</provider>

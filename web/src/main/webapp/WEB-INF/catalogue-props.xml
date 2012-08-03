@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<overrides>
+  <properties>
+    <db.user>www-data</db.user>
+    <db.pass>www-data</db.pass>
+    <!--<db.driver>org.h2.Driver</db.driver>
+      <db.url>jdbc:h2:/tmp/geonetworkdummy</db.url>-->
+    <!--<db.driver>org.postgis.DriverWrapper</db.driver>
+    <db.url>jdbc:postgresql_postGIS://localhost:5432/geonetwork_eea</db.url>-->
+    <resource.name>jdbc/internal-catalogue</resource.name>
+    <db.driver>org.postgresql.Driver</db.driver>
+    <db.url>jdbc:postgresql://localhost:5432/eea_catalogue</db.url>
+<!--    <widget.url>../../eea/search/index_debug.html</widget.url>
+-->    <widget.url>search</widget.url>
+    <widget.parameters>hl=eng&amp;extent=-12,3,37,72</widget.parameters>
+  </properties>
+</overrides>
