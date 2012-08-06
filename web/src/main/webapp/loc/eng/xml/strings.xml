@@ -709,6 +709,11 @@
 	<progressChoice value="planned">planned</progressChoice>
 	<progressChoice/>
 	<protocol>Protocol</protocol>
+	<!-- EEA Custom protocols -->
+	<protocolChoice show="y" value="EEA:FILEPATH">File path (from the level below gis_sdi)</protocolChoice>
+	<protocolChoice show="y" value="EEA:FOLDERPATH">Folder path (from the level below gis_sdi)</protocolChoice>
+	<protocolChoice show="y" value="EEA:DBPG">PostGIS database table</protocolChoice>
+	<!-- EEA Custom protocols | end -->
   <protocolChoice show="y" value="ESRI:AIMS--http--configuration">ArcIMS Map Service Configuration File (*.AXL)</protocolChoice>
   <protocolChoice show="y" value="ESRI:AIMS--http-get-feature">ArcIMS Internet Feature Map Service</protocolChoice>
   <protocolChoice show="-" value="ESRI:AIMS--http-get-image">ArcIMS Internet Image Map Service</protocolChoice>
