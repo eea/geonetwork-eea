@@ -184,9 +184,6 @@
 				<xsl:call-template name="eea-footer"/>
 				
 				
-				<!-- <script type="text/javascript"
-					src="../../apps/js/ext/adapter/jquery/ext-jquery-adapter.js"></script>
-				-->
 				
 				<xsl:choose>
 					<xsl:when test="/root/request/debug">
@@ -231,8 +228,6 @@
 						
 					</xsl:when>
 					<xsl:otherwise>
-						<script type="text/javascript"
-        src="../../apps/js/ext/adapter/jquery/ext-jquery-adapter.js"></script>
 						
 						<script type="text/javascript"
         src="../../apps/js/ext/adapter/ext/ext-base.js"></script>
