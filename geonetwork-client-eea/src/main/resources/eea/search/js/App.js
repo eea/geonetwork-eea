@@ -892,8 +892,8 @@ Ext.onReady(function (){
 // When scrolling down in window, change search form top position
 window.onscroll = function (e) {
     var pos = 0, searchFormTopUnderHeader = 160, searchFormBottomOverFooter = 430;
-    if (pageYOffset)//usual
-        pos = pageYOffset;
+    if (window.pageYOffset)//usual
+        pos = window.pageYOffset;
     else if (document.documentElement.clientHeight)//ie
         pos = document.documentElement.scrollTop;
     else if (document.body)//ie quirks
