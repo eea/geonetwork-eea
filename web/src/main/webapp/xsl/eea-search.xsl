@@ -105,7 +105,7 @@
 											<div id="socialmedia-list">
 												<div id="delicious" class="social-box">
 													<a href="http://www.delicious.com/save" onclick="window.open('http://www.delicious.com/save?v=5&amp;noui&amp;jump=close&amp;url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title), 'delicious','toolbar=no,width=550,height=550'); return false;">
-														<img src="http://webservices.eea.europa.eu/delicious20x20.png" alt="Delicious"/>
+														<img src="http://www.eea.europa.eu/delicious20x20.png" alt="Delicious"/>
 													</a>
 												</div>                                     
 												<div id="twitter" class="social-box">
@@ -141,7 +141,7 @@
 											<ul>
 												<li id="document-action-print">
 													<a href="javascript:this.print();">
-														<img src="http://webservices.eea.europa.eu/templates/print_icon.gif"
+														<img src="http://www.eea.europa.eu/templates/print_icon.gif"
 															alt="Print this page"
 															title="Print this page" />
 													</a>
