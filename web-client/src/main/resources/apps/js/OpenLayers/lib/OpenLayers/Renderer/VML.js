@@ -53,13 +53,25 @@ OpenLayers.Renderer.VML = OpenLayers.Class(OpenLayers.Renderer.Elements, {
         }
         if (!document.namespaces.olv) {
             document.namespaces.add("olv", this.xmlns);
-            var style = document.createStyleSheet();
+            //var style = document.createStyleSheet();
+            var sheet = null, style = null;
+            try {
+               style = document.createStyleSheet ();
+               //sheet.cssText = cssText;
+            } catch (e) {
+               sheet = document.styleSheets[document.styleSheets.length - 1];
+            }
+            
             var shapes = ['shape','rect', 'oval', 'fill', 'stroke', 'imagedata', 'group','textbox']; 
             for (var i = 0, len = shapes.length; i < len; i++) {
-
-                style.addRule('olv\\:' + shapes[i], "behavior: url(#default#VML); " +
-                              "position: absolute; display: inline-block;");
-            }                  
+                cssText = 'olv\\:' + shapes[i], "behavior: url(#default#VML); " +
+                "position: absolute; display: inline-block;";
+                if (style) {
+                    style.addRule(cssText);
+                } else {
+                    sheet.cssText += "\r\n" + cssText;
+                }
+            }
         }
         
         OpenLayers.Renderer.Elements.prototype.initialize.apply(this, 
