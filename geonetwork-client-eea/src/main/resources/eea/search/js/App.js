@@ -631,7 +631,8 @@ GeoNetwork.app = function () {
             });
             this.editorPanel.setContainer(this.editorWindow);
             this.editorPanel.on('editorClosed', function (){
-                Ext.getCmp('searchBt').fireEvent('click');
+                var e = Ext.getCmp('searchForm');
+                e.fireEvent('search');
             });
         }
         
