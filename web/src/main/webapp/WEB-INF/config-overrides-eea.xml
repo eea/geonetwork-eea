@@ -28,6 +28,8 @@
     <replaceAtt xpath="appHandler/param[@name = 'luceneDir']" attName="value" value="WEB-INF/lucene"/>
     <replaceAtt xpath="appHandler/param[@name = 'dataDir']" attName="value" value="WEB-INF/data"/>
     <replaceAtt xpath="appHandler/param[@name = 'useSubversion']" attName="value" value="false"/>
+    <replaceAtt xpath="appHandler/param[@name = 'maxWritesInTransaction']" attName="value" value="1"/>
+    
     
     <replaceXML xpath="resources">
       <!-- The JNDI connection enabled -->
