@@ -5,7 +5,8 @@
 <!ENTITY  footer SYSTEM 'http://www.eea.europa.eu/templates/v2/getFooter'> 
 <!ENTITY  header SYSTEM 'http://www.eea.europa.eu/templates/v2/getHeader'> 
 ]>
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exslt="http://exslt.org/common">
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exslt="http://exslt.org/common"
+    exclude-result-prefixes="#all">
   
   <xsl:template name="eea-head">
       <xsl:variable name="xhtml">&head;</xsl:variable>
