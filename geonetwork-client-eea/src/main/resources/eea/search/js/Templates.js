@@ -204,6 +204,13 @@ EEA.Templates.FULL = new Ext.XTemplate(
                             '{value}{[xindex==xcount?"":", "]}',
                         '</tpl></p>',
                     '</tpl>',
+                    '<tpl for="links">',
+                        '<tpl if="values.type == \'EEA:FILEPATH\' || values.type == \'EEA:FOLDERPATH\'">',
+                            '<div class="md-path">',
+                               'EEA file path: {href} ',
+                            '</div>',
+                        '</tpl>',
+                    '</tpl>',
                     '<div class="md-links">',
                     // FIXME : this call require the catalogue to be named catalogue, static call ?
                     // FIXME : ref to app

@@ -1,6 +1,9 @@
 .md-view * table {
     overflow: hidden !important;
 }
+.md-path {
+    padding: 2px;
+}
 #portal-column-one {
     width: 300px !important;
 }
