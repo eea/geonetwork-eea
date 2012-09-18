@@ -38,6 +38,9 @@ ul li.tag-cloud {
 #content #resultsPanel table {
   margin-bottom: 0px !important;
 }
+#latest * ul {
+    list-style-type: none;
+}
 /* Avoid some Plone rules */
 .md-view ul li * h1 {
   text-shadow: none !important;
