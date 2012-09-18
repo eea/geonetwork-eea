@@ -93,7 +93,7 @@
             <aggregation>
               <output>src/main/resources/apps/css/geonetwork.css</output>
               <includes>
-                <include>${project.build.directory}/classes/apps/css/gndefault.css</include>
+                <!--<include>${project.build.directory}/classes/apps/css/gndefault.css</include>-->
                 <include>${project.build.directory}/classes/apps/css/gnmapdefault.css</include>
                 <include>${project.build.directory}/classes/apps/css/gnmetadatadefault.css</include>
                 <include>${project.build.directory}/classes/apps/css/metadata-view.css</include>

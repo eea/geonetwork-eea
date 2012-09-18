@@ -35,9 +35,6 @@ ul li.tag-cloud {
     text-align: left !important;
     float: none !important;
 }
-.x-superboxselect-item-close {
-    background: url(../../../apps/js/ext-ux/SuperBoxSelect/close.png) no-repeat scroll left 0px !important;
-}
 #content #resultsPanel table {
   margin-bottom: 0px !important;
 }

@@ -24,30 +24,48 @@
 				<link href="../../srv/en/portal.opensearch" rel="search"
 					type="application/opensearchdescription+xml" title="GeoNetwork" />
 				
-				<link rel="stylesheet" type="text/css" href="../../eea/search/css/eea.css" />
 				<link rel="stylesheet" type="text/css"
 					href="../../apps/js/ext/resources/css/ext-all.css" />
 				<link rel="stylesheet" type="text/css"
 					href="../../apps/js/ext/resources/css/xtheme-gray.css" />
-				<link rel="stylesheet" type="text/css"
-					href="../../apps/js/ext-ux/Rating/rating.css" />
-				<link rel="stylesheet" type="text/css"
-					href="../../apps/js/ext-ux/LightBox/lightbox.css" />
-				<link rel="stylesheet" type="text/css"
-					href="../../apps/js/ext-ux/FileUploadField/file-upload.css" />
-				<link rel="stylesheet" type="text/css"
-					href="../../apps/js/ext-ux/SuperBoxSelect/superboxselect.css" />
-				<link rel="stylesheet" type="text/css"
-					href="../../apps/js/ext-ux/MultiselectItemSelector-3.0/Multiselect.css" />
-				<link rel="stylesheet" type="text/css" href="../../eea/search/css/gndefault.css" />
-				<link rel="stylesheet" type="text/css"
-					href="../../apps/css/gnmapdefault.css" />
-				<link rel="stylesheet" type="text/css"
-					href="../../apps/css/gnmetadatadefault.css" />
-				<link rel="stylesheet" type="text/css"
-					href="../../apps/js/GeoNetwork/resources/css/metadata-view.css" />
-				<link rel="stylesheet" type="text/css"
-					href="../../apps/js/OpenLayers/theme/default/style.css" />
+				
+				
+				<xsl:choose>
+					<xsl:when test="/root/request/debug">
+						<link rel="stylesheet" type="text/css" href="../../eea/search/css/eea.css" />
+						<link rel="stylesheet" type="text/css"
+							href="../../apps/js/ext-ux/Rating/rating.css" />
+						<link rel="stylesheet" type="text/css"
+							href="../../apps/js/ext-ux/LightBox/lightbox.css" />
+						<link rel="stylesheet" type="text/css"
+							href="../../apps/js/ext-ux/FileUploadField/file-upload.css" />
+						<link rel="stylesheet" type="text/css"
+							href="../../apps/js/ext-ux/SuperBoxSelect/superboxselect.css" />
+						<link rel="stylesheet" type="text/css"
+							href="../../apps/js/ext-ux/MultiselectItemSelector-3.0/Multiselect.css" />
+						<link rel="stylesheet" type="text/css" href="../../eea/search/css/gndefault.css" />
+						<link rel="stylesheet" type="text/css"
+							href="../../apps/css/gnmapdefault.css" />
+						<link rel="stylesheet" type="text/css"
+							href="../../apps/css/gnmetadatadefault.css" />
+						<link rel="stylesheet" type="text/css"
+							href="../../apps/js/GeoNetwork/resources/css/metadata-view.css" />
+						<link rel="stylesheet" type="text/css"
+							href="../../apps/js/OpenLayers/theme/default/style.css" />
+					</xsl:when>
+					<xsl:otherwise>
+						<link rel="stylesheet" type="text/css"
+							href="../../apps/js/ext-ux/css/ext-ux.css" />
+						<link rel="stylesheet" type="text/css"
+							href="../../apps/css/geonetwork.css" />
+						<link rel="stylesheet" type="text/css"
+							href="../../eea/search/css/eea-mini.css" />
+						<link rel="stylesheet" type="text/css"
+							href="../../apps/js/OpenLayers/theme/default/style.css" />
+					</xsl:otherwise>
+				</xsl:choose>
+				
+				
 				
 			</head>
 			<body style="overflow: auto;">

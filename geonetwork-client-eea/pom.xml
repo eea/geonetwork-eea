@@ -77,10 +77,15 @@
           <jswarn>${minify.verbose}</jswarn>
           <excludes>
             <exclude>**/eea/search/js/App-mini.js</exclude>
-            <exclude>**/eea/search/plone/*.js</exclude>
-            <exclude>**/eea/search/plone/*.css</exclude>
           </excludes>
           <aggregations>
+            <aggregation>
+              <output>src/main/resources/eea/search/css/eea-mini.css</output>
+              <includes>
+                <include>${project.build.directory}/classes/eea/search/css/eea.css</include>
+                <include>${project.build.directory}/classes//eea/search/css/gndefault.css</include>
+              </includes>
+            </aggregation>
             <aggregation>
               <output>src/main/resources/eea/search/js/App-mini.js</output>
               <includes>
