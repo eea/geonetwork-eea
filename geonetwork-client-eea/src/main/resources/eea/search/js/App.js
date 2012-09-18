@@ -516,7 +516,7 @@ GeoNetwork.app = function () {
         
         tBar = new GeoNetwork.MetadataResultsToolbar({
             catalogue: catalogue,
-            searchBtCmp: Ext.getCmp('searchBt'),
+            searchFormCmp: Ext.getCmp('searchForm'),
             sortByCmp: Ext.getCmp('E_sortBy'),
             metadataResultsView: metadataResultsView,
             permalinkProvider: permalinkProvider
@@ -783,12 +783,12 @@ GeoNetwork.app = function () {
             
             // Override xml search service value
             catalogue.setServiceUrl('xmlSearch', GeoNetwork.Settings.searchService);
+
+            // Search form
+            searchForm = createSearchForm();
             
             // Search result
             resultsPanel = createResultsPanel(permalinkProvider);
-            
-            // Search form
-            searchForm = createSearchForm();
             
             // Top navigation widgets
             createLanguageSwitcher(lang);
