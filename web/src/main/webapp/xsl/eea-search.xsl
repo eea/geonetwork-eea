@@ -49,7 +49,7 @@
 						<link rel="stylesheet" type="text/css"
 							href="../../apps/css/gnmetadatadefault.css" />
 						<link rel="stylesheet" type="text/css"
-							href="../../apps/js/GeoNetwork/resources/css/metadata-view.css" />
+							href="../../apps/css/metadata-view.css" />
 						<link rel="stylesheet" type="text/css"
 							href="../../apps/js/OpenLayers/theme/default/style.css" />
 					</xsl:when>

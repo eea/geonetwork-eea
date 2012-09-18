@@ -57,3 +57,8 @@ ul li.tag-cloud {
 #portal-globalnav li {
   float: left !important;
 }
+
+/* Override plone style */
+.x-superboxselect li {
+    display: block;
+}
