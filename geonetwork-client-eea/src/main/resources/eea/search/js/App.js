@@ -714,7 +714,7 @@ GeoNetwork.app = function () {
                                         // When tooltip is displayed
                                         // select the text and focus in order to
                                         // quickly copy the link
-                                        var input = Ext.query('input', Ext.get(href).dom);
+                                        var input = Ext.query('input', Ext.get(id).dom);
                                         if (input && input.length===1) {
                                             if (!Ext.isIE8) {
                                                 input[0].select();
