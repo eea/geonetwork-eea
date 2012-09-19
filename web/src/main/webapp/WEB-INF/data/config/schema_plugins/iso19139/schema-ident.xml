@@ -6,7 +6,8 @@
 	<schemaLocation>http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd</schemaLocation>
 	<autodetect xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco">
 		<elements type="root">
-			<gmd:MD_Metadata/>
+			<!-- Disable iso19139 in order to detect only iso19139.eea schema -->
+			<gmd:MD_NoMetadata/>
 		</elements>
 	</autodetect>
 </schema>
