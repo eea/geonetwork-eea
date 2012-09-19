@@ -229,6 +229,13 @@
       <subtemplate type="gmd:DQ_FormatConsistency">
         <parent id="gmd:report"/>
       </subtemplate>
+      <!--TODO : support all substitutes for an element
+        <subtemplate type="gmd:MD_LegalConstraints">
+        <parent id="gmd:resourceConstraints"/>
+      </subtemplate>-->
+      <subtemplate type="gmd:MD_Constraints">
+        <parent id="gmd:resourceConstraints"/>
+      </subtemplate>
     </mapping>
   </editor-subtemplate>
 
