@@ -1467,8 +1467,8 @@
 	<include>config-test.xml</include>
 	<include>config-csw.xml</include>
 	<include>config-sru.xml</include>
-    <include>config-csw-servers.xml</include>
-    <include>config-monitoring.xml</include>
+	<include>config-csw-servers.xml</include>
+	<include>config-monitoring.xml</include>
     <include>config-dcat-rdf.xml</include>
 
 	<!-- ====================================================================== -->
