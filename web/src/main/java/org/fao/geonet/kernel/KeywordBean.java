@@ -459,14 +459,15 @@ public class KeywordBean {
 		Element an = new Element("Anchor", NS_GMX);
 		Element cs = new Element("CharacterString", NS_GCO);
 		if (getCode() != null && getCode().length() != 0) {
-			try {
-				an.setText(getDefaultValue());
-				an.setAttribute("href", URIUtil.encodeQuery(keywordUrl+getCode()), NS_XLINK);
-				el.addContent(an);
-			} catch (URIException e) { // what to do here? Just add the value
+//		    Turn off Anchor support for the time being. FIXME
+//			try {
+//				an.setText(getDefaultValue());
+//				an.setAttribute("href", URIUtil.encodeQuery(keywordUrl+getCode()), NS_XLINK);
+//				el.addContent(an);
+//			} catch (URIException e) { // what to do here? Just add the value
 				cs.setText(getDefaultValue());
 				el.addContent(cs); 
-			}
+//			}
 		} else {
 			cs.setText(getDefaultValue());
 			el.addContent(cs);
@@ -533,14 +534,14 @@ public class KeywordBean {
 		for (KeywordBean kb : kbList) {
 			Element keyword = new Element("keyword", NS_GMD);
 			if (kb.getCode() != null && kb.getCode().length() != 0) {
-				try {
-					an.setText(kb.getDefaultValue());
-					an.setAttribute("href", URIUtil.encodeQuery(kb.keywordUrl+kb.getCode()), NS_XLINK);
-					keyword.addContent((Content) an.clone());
-				} catch (URIException e) {
+//				try {
+//					an.setText(kb.getDefaultValue());
+//					an.setAttribute("href", URIUtil.encodeQuery(kb.keywordUrl+kb.getCode()), NS_XLINK);
+//					keyword.addContent((Content) an.clone());
+//				} catch (URIException e) {
 					cs.setText(kb.getDefaultValue());
 					keyword.addContent((Content) cs.clone());
-				}
+//				}
 			} else {
 				cs.setText(kb.getDefaultValue());
 				keyword.addContent((Content) cs.clone());
@@ -637,7 +638,7 @@ public class KeywordBean {
 
 		citation.addContent(0,title);
 		citation.addContent(1,date);
-		citation.addContent(2,id);
+//		citation.addContent(2,id);
 		thesaurusName.addContent(citation);
 		
 		return thesaurusName;
