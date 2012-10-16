@@ -304,7 +304,7 @@ GeoNetwork.editor.SubTemplateSelectionPanel = Ext.extend(Ext.FormPanel, {
             drawDownIcon: false,
             drawTopIcon: false,
             drawBotIcon: false,
-            imagePath: '../js/ext-ux/images', // FIXME
+            imagePath: '../../apps/js/ext-ux/images', // FIXME
             toTBar: [{
                 text: OpenLayers.i18n('clear'),
                 handler: function(){
