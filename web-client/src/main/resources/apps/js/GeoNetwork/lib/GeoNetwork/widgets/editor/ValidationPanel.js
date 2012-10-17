@@ -79,7 +79,7 @@ GeoNetwork.editor.ValidationPanel = Ext.extend(Ext.Panel, {
     /** private: method[initComponent] 
      *  Initializes the validation report panel.
      */
-    initComponent: function() {
+    initComponent: function () {
         Ext.applyIf(this, this.defaultConfig);
         
         this.title = OpenLayers.i18n('validationReport');
@@ -100,7 +100,7 @@ GeoNetwork.editor.ValidationPanel = Ext.extend(Ext.Panel, {
         
         var xg = Ext.grid;
         
-        var groupTpl = function(value, p, record){
+        var groupTpl = function (value, p, record){
             var rules = record.store.query('group', record.data.group);
             return String.format(
                     '{0} ({1} {2})',
@@ -137,7 +137,7 @@ GeoNetwork.editor.ValidationPanel = Ext.extend(Ext.Panel, {
             }, {
                 header: OpenLayers.i18n('title'),
                 hidden: false,
-                renderer: tpl, 
+                renderer: tpl,
                 dataIndex: 'title'
             }]
         });
@@ -146,7 +146,6 @@ GeoNetwork.editor.ValidationPanel = Ext.extend(Ext.Panel, {
             store: this.store,
             colModel: colModel,
             loadMask: true,
-            cls: 'validation',
             view: new Ext.grid.GroupingView({
                 forceFit: true,
                 groupRenderer: groupTpl

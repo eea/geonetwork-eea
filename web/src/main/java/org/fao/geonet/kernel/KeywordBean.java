@@ -332,7 +332,7 @@ public class KeywordBean {
 	/**
 	 * Returns the URI of the keyword concept.
 	 */
-	public String getCode() {
+	public String getUriCode() {
 		return code;
 	}
 
@@ -364,7 +364,7 @@ public class KeywordBean {
 			return "#";
 	}
 
-	public KeywordBean setCode(String code) {
+	public KeywordBean setUriCode(String code) {
 		this.code = code;
 		return this;
 	}
@@ -696,7 +696,7 @@ public class KeywordBean {
         Element elDefiniton = new Element("definition");
         elDefiniton.addContent(getDefaultDefinition());
         Element elUri = new Element("uri");
-        elUri.addContent(this.getCode());
+        elUri.addContent(this.getUriCode());
 
         String thesaurusType = this.getThesaurusKey();
         thesaurusType = thesaurusType.replace('.', '-');
