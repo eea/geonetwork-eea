@@ -65,3 +65,7 @@ ul li.tag-cloud {
 #region-content * ul {
     margin: 0 0 0 0;
 }
+
+#editorPanel * .help * a {
+    font-weight: bold;
+}

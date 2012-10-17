@@ -624,6 +624,21 @@ GeoNetwork.app = function () {
             this.editorPanel = new GeoNetwork.editor.EditorPanel({
                 defaultViewMode: GeoNetwork.Settings.editor.defaultViewMode,
                 catalogue: catalogue,
+                utilityPanelConfig: {
+                    thumbnailPanel: {
+                        hidden: true
+                    },
+                    relationPanel: {
+                        hidden: true
+                    },
+                    suggestionPanel: {
+                        hidden: true
+                    },
+                    validationPanel: {
+                        collapsed: false,
+                        heigth: 500
+                    }
+                },
                 xlinkOptions: {CONTACT: true}
             });
             
