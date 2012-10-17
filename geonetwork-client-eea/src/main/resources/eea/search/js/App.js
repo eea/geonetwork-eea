@@ -123,13 +123,21 @@ GeoNetwork.app = function () {
         });
         
         catalogue.on('afterBadLogin', loginAlert, this);
+        
+        var  newMetadataButton = null;
+        
         // Store user info in cookie to be displayed if user reload the page
         // Register events to set cookie values
         catalogue.on('afterLogin', function(){
             cookie.set('user', catalogue.identifiedUser);
+            if (newMetadataButton === null) {
+                newMetadataButton = showNewMetadataButton (loginForm);
+            }
+            newMetadataButton.setVisible(true);
         });
         catalogue.on('afterLogout', function(){
             cookie.set('user', undefined);
+            newMetadataButton.setVisible(false);
         });
         
         // Refresh login form if needed
@@ -137,7 +145,22 @@ GeoNetwork.app = function () {
         if (user) {
             catalogue.identifiedUser = user;
             loginForm.login(catalogue, true);
+            newMetadataButton = showNewMetadataButton (loginForm);
+            loginForm.doLayout();
         }
+    }
+    function showNewMetadataButton (loginForm) {
+         var newMetadataButton = new Ext.Button({
+            id: 'new-metadata-bt',
+            text: OpenLayers.i18n('newMetadata'),
+            iconCls: 'addIcon',
+            handler: function () {
+                var actionCtn = Ext.getCmp('resultsPanel').getTopToolbar();
+                actionCtn.createMetadataAction.handler.apply(actionCtn);
+            }
+        });
+        loginForm.add(newMetadataButton);
+        return newMetadataButton;
     }
     /**
      * Create latest metadata panel.
@@ -460,10 +483,10 @@ GeoNetwork.app = function () {
             id: 'previousBt',
             text: '&lt;&lt;',
             handler: function(){
-            	var from = catalogue.startRecord - parseInt(Ext.getCmp('E_hitsperpage').getValue(), 10);
+                var from = catalogue.startRecord - parseInt(Ext.getCmp('E_hitsperpage').getValue(), 10);
                 if (from > 0) {
-                	catalogue.startRecord = from;
-	            	search();
+                    catalogue.startRecord = from;
+                    search();
                 }
             },
             scope: this
@@ -652,7 +675,7 @@ GeoNetwork.app = function () {
 //        OpenLayers.Request.GET({
 //            url: 'http://www.eea.europa.eu/templates/v2/getRequiredHead',
 //            success: function(response){
-//            	Ext.get('html-head').insertHtml('afterBegin', response.responseText);
+//                Ext.get('html-head').insertHtml('afterBegin', response.responseText);
 //            }
 //        });
 //        var wrapper = Ext.get('visual-portal-wrapper');
