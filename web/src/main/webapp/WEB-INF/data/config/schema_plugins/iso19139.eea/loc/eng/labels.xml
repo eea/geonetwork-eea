@@ -22,7 +22,10 @@
    <option value="urn:ogc:def:crs:EPSG:7.1:3035"
     title="Lambert Azimuthal Equal Area 52N 10E projection based on ETRS89 datum">Lambert Azimuthal
     Equal Area (EPSG 3035)</option>
-   <!-- TODO : add other standard projections -->
+   <option value="urn:ogc:def:crs:EPSG:7.1:4258"
+    title="ETRS89">ETRS89 (EPSG 4258)</option>
+   <option value="urn:ogc:def:crs:EPSG:7.1:4326"
+    title="WGS 84">WGS 84 (EPSG 4326)</option>
   </helper>
  </element>
  <element name="gmd:codeSpace" id="208.1">
