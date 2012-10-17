@@ -49,6 +49,7 @@ GeoNetwork.editor.EditorToolbar = Ext.extend(Ext.Toolbar, {
          * for sub-template editing or when interface only allows to edit one kind of records.
          */
         hideTypeMenu: false,
+        hideMinorEdit: false,
         editAttributes: false
     },
     mapOptions: undefined,
@@ -116,7 +117,8 @@ GeoNetwork.editor.EditorToolbar = Ext.extend(Ext.Toolbar, {
 //            }
 //        });
         this.minorCheckbox = new Ext.Button({
-        	enableToggle: true,
+            enableToggle: true,
+            hidden: this.hideMinorEdit,
             text: OpenLayers.i18n('minorEdit'),
             tooltip: OpenLayers.i18n('minorEditTT'),
             listeners: {

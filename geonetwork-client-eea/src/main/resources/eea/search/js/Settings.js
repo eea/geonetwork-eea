@@ -39,7 +39,7 @@ GeoNetwork.searchDefault = {
 GeoNetwork.advancedFormButton = true;
 
 GeoNetwork.Settings.editor = {
-    defaultViewMode : 'metadata'
+    defaultViewMode : 'simple'
 //    defaultViewMode : 'inspire'
 };
 
