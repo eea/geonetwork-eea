@@ -23,9 +23,11 @@
 Ext.namespace('GeoNetwork');
 
 
-GeoNetwork.lang.en["webdavLink"] = "WebDAV (Web-based Distributed Authoring and Versioning) link";
-GeoNetwork.lang.en["cifsLink"] = "CIFS (Common Internet File System) link";
-GeoNetwork.lang.en["ftpsLink"] = "FTPS link";
+GeoNetwork.Lang.en["webdavLink"] = "WebDAV (Web-based Distributed Authoring and Versioning) link";
+GeoNetwork.Lang.en["cifsLink"] = "CIFS (Common Internet File System) link";
+GeoNetwork.Lang.en["ftpsLink"] = "FTPS link";
+GeoNetwork.Lang.en["schematron-rules-eea"] = "EEA validation";
+
 
 /** api: (define)
  *  module = GeoNetwork

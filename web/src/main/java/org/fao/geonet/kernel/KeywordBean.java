@@ -458,7 +458,7 @@ public class KeywordBean {
 		Element el = new Element("keyword", NS_GMD);
 		Element an = new Element("Anchor", NS_GMX);
 		Element cs = new Element("CharacterString", NS_GCO);
-		if (getCode() != null && getCode().length() != 0) {
+		if (getUriCode() != null && getUriCode().length() != 0) {
 //		    Turn off Anchor support for the time being. FIXME
 //			try {
 //				an.setText(getDefaultValue());
@@ -533,7 +533,7 @@ public class KeywordBean {
 		
 		for (KeywordBean kb : kbList) {
 			Element keyword = new Element("keyword", NS_GMD);
-			if (kb.getCode() != null && kb.getCode().length() != 0) {
+			if (kb.getUriCode() != null && kb.getUriCode().length() != 0) {
 //				try {
 //					an.setText(kb.getDefaultValue());
 //					an.setAttribute("href", URIUtil.encodeQuery(kb.keywordUrl+kb.getCode()), NS_XLINK);

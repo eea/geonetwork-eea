@@ -512,7 +512,6 @@ GeoNetwork.Lang.en = {
     'schematron-rules-geonetwork': 'GeoNetwork validation',
     'schematron-rules-iso': 'ISO validation',
     'schematron-rules-inspire': 'INSPIRE validation',
-    'schematron-rules-eea': 'EEA validation'
     'linklabel-application/vnd.ogc.wms_xml': 'Add to map',
     'linklabel-OGC:WMS': 'Add to map',
     'linklabel-application/vnd.google-earth.kml+xml': 'View in Google Earth',
