@@ -49,6 +49,9 @@ GeoNetwork.editor.EditorToolbar = Ext.extend(Ext.Toolbar, {
          * for sub-template editing or when interface only allows to edit one kind of records.
          */
         hideTypeMenu: false,
+        /**
+         * Use this property to display or not the minor edit mode.
+         */
         hideMinorEdit: false,
         editAttributes: false
     },

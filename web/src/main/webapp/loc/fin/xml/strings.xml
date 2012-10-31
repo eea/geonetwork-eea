@@ -17,6 +17,7 @@
     <pol>Polski</pol> <!-- Do not translate! -->
     
 	<warning>Warning</warning>
+	<isAdmin>Is administrator ?</isAdmin>
     <anyLanguage>mikä tahansa kieli</anyLanguage>
 	<nodata>Null</nodata>
 	<extractRegisterItems>Extract Register Items</extractRegisterItems>
@@ -1362,4 +1363,5 @@ vaatimusten täyttämiseksi ilmoitetaan seuraavat kaksi metatietoelementtiä:
     <formatter.admin>Metadata Formatter Admin</formatter.admin>
     <formatter.admin.des>Administration UI for metadata formatting bundlers</formatter.admin.des>
 	<monitor>Monitor</monitor>
+	<serviceNotAllowed>You do not have the correct permissions to access the following service {1}</serviceNotAllowed>
 </strings>

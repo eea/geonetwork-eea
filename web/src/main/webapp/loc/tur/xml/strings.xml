@@ -21,7 +21,8 @@
 	<!-- new strings - SP 2.5 -->
 	<showRemoteHTML>Uzak sunucudan HTML göster</showRemoteHTML>
 	<!-- end new strings -->
-
+	
+	<isAdmin>Is administrator ?</isAdmin>
 	<createChild>Çocuk (child)oluştur</createChild>
 	<updateChildren>Çocuk (child) güncelle</updateChildren>
 	<updateChildrenOk>Çocuklar (children) güncellendi</updateChildrenOk>
@@ -1079,4 +1080,6 @@
     <custom-elementset-add>Eleman Ekle</custom-elementset-add>
 
 
+	<monitor>Monitor</monitor>
+	<serviceNotAllowed>You do not have the correct permissions to access the following service {1}</serviceNotAllowed>
 </strings>
