@@ -642,9 +642,9 @@ GeoNetwork.app = function () {
                 xlinkOptions: {CONTACT: false},
                 tbarConfig: {
                     // Only display type menu and minor edit menu for admin
-                    hideMinorEdit: catalogue.identifiedUser.role !== 'Administrator',
+                    hideMinorEdit: catalogue.identifiedUser && catalogue.identifiedUser.role !== 'Administrator',
                     // FIXME : if login admin / logout / login editor, this is not updated
-                    hideTypeMenu: catalogue.identifiedUser.role !== 'Administrator'
+                    hideTypeMenu: catalogue.identifiedUser && catalogue.identifiedUser.role !== 'Administrator'
                 }
             });
             

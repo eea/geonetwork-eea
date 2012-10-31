@@ -307,7 +307,7 @@ GeoNetwork.editor.ConceptSelectionPanel = Ext.extend(Ext.Panel, {
             drawDownIcon: false,
             drawTopIcon: false,
             drawBotIcon: false,
-            imagePath: '../js/ext-ux/images', // FIXME
+            imagePath: '../../apps/js/ext-ux/images',
             fromTBar: [this.generateFilterField(), '->', 
                        OpenLayers.i18n('maxResults'), this.getLimitInput()],
             toTBar: [{

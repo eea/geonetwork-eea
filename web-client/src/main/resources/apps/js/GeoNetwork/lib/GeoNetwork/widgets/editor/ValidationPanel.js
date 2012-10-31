@@ -151,7 +151,7 @@ GeoNetwork.editor.ValidationPanel = Ext.extend(Ext.Panel, {
                 groupRenderer: groupTpl
             }),
             frame: false,
-            height: 300,
+            height: 500,
             autoWidth: true
         });
         this.add(grid);
