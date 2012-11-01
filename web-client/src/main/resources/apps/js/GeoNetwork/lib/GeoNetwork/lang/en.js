@@ -524,7 +524,14 @@ GeoNetwork.Lang.en = {
     'linklabel-text/html': 'Web link',
     'linklabel-text/plain': 'Web link',
     'linklabel-image/png': 'Image link',
-    'linklabel-': 'Link'
+    'linklabel-': 'Link',
+    // EEA custom loc
+    "webdavLink": "WebDAV (Web-based Distributed Authoring and Versioning) link",
+    "cifsLink": "CIFS (Common Internet File System) link",
+    "ftpsLink": "FTPS link",
+    'login': 'Admin login',
+    "schematron-rules-eea": "EEA validation"
+
 };
 
 OpenLayers.Util.extend(OpenLayers.Lang.en, GeoNetwork.Lang.en);

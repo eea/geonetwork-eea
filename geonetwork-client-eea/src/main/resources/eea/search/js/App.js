@@ -917,7 +917,6 @@ document.namespaces;
 Ext.onReady(function (){
     var lang = /hl=([a-z]{3})/.exec(location.href);
     GeoNetwork.Util.setLang(lang && lang[1], '../../apps/');
-    GeoNetwork.Lang.en['login'] = 'Admin login';
     Ext.QuickTips.init();
     setTimeout(function () {
       Ext.get('loading').remove();
