@@ -465,6 +465,9 @@ dl.xml * dd {
     vertical-align: middle;
 }
 
+.x-grid3-cell-inner, .x-grid3-hd-inner {
+    white-space: normal !important;
+}
 
 .debug {
     display: none;
