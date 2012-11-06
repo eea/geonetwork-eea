@@ -83,7 +83,7 @@
               <output>src/main/resources/eea/search/css/eea-mini.css</output>
               <includes>
                 <include>${project.build.directory}/classes/eea/search/css/eea.css</include>
-                <include>${project.build.directory}/classes//eea/search/css/gndefault.css</include>
+                <include>${project.build.directory}/classes/eea/search/css/gndefault.css</include>
               </includes>
             </aggregation>
             <aggregation>
