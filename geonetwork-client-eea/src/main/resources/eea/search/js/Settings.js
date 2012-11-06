@@ -66,8 +66,15 @@ GeoNetwork.Settings.results = {
         colormap: undefined,
         // Use a custom CSS rules
         //featurecolorCSS: "border-width: 5px;border-style: solid; border-color: ${featurecolor}"
-        featurecolorCSS: undefined
+        featurecolorCSS: undefined,
+        // Look for relation for all records (true) or only series (default).
+        // Only for series is recommended to not trigger to much queries when
+        // displaying search results. It may be relevant to search for all
+        // if record related to a dataset using largerWorkCitation is used.
+        loadRelationForAll: true
+        //loadRelationForAll: undefined
 };
+
 //Latest update info query
 GeoNetwork.Settings.latestQuery = "from=1&to=6&sortBy=changeDate&fast=index";
 //GeoNetwork.Settings.latestTpl = EEA.Templates.THUMBNAIL;
