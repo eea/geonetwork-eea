@@ -286,10 +286,10 @@ GeoNetwork.app = function () {
         });
         
         
-        var catalogueField = GeoNetwork.util.SearchFormTools.getCatalogueField(services.getSources, services.logoUrl, true);
-        var groupField = GeoNetwork.util.SearchFormTools.getGroupField(services.getGroups, true);
+//        var catalogueField = GeoNetwork.util.SearchFormTools.getCatalogueField(services.getSources, services.logoUrl, true);
+//        var groupField = GeoNetwork.util.SearchFormTools.getGroupField(services.getGroups, true);
         var metadataTypeField = GeoNetwork.util.SearchFormTools.getMetadataTypeField(true);
-        //var categoryField = GeoNetwork.util.SearchFormTools.getCategoryField(services.getCategories, '../../apps/images/default/category/');
+        var categoryField = GeoNetwork.util.SearchFormTools.getCategoryField(services.getCategories, '../../apps/images/default/category/', true);
         var validField = GeoNetwork.util.SearchFormTools.getValidField(true);
         var spatialTypes = GeoNetwork.util.SearchFormTools.getSpatialRepresentationTypeField([['grid', OpenLayers.i18n('grid')], 
                                                                                               ['textTabled', OpenLayers.i18n('textTable')], 
@@ -308,9 +308,10 @@ GeoNetwork.app = function () {
             hidden: true
         });
         
-        advancedCriteria.push(themekeyField, orgNameField, typeCodeList, //categoryField, 
+        advancedCriteria.push(themekeyField, orgNameField, typeCodeList, 
+                                categoryField, 
                                 when, spatialTypes, denominatorField,
-                                catalogueField, groupField, 
+//                                catalogueField, groupField, 
                                 metadataTypeField, validField, ownerField, isHarvestedField);
         var adv = {
             xtype: 'fieldset',
@@ -360,7 +361,9 @@ GeoNetwork.app = function () {
         
         
         // Hide or show extra fields after login event
-        var adminFields = [groupField, metadataTypeField, validField];
+        var adminFields = [
+                           //groupField, 
+                           metadataTypeField, validField, categoryField];
         Ext.each(adminFields, function (item) {
             item.setVisible(false);
         });
