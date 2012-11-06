@@ -96,6 +96,12 @@
           <param name="filter" value="+inspirerelated:on"/>
         </class>
       </service>
+      
+      <service name="csw-geoss">
+        <class name=".services.main.CswDiscoveryDispatcher">
+          <param name="filter" value="+_cat:geodatacore"/>
+        </class>
+      </service>
     </addXML>
   </file>
   <file name=".*/WEB-INF/config.xml">
@@ -108,6 +114,7 @@
   <file name=".*/WEB-INF/user-profiles.xml">
     <addXML xpath="profile[@name='Guest']">
       <allow service="csw-inspire"/>
+      <allow service="csw-geodatacore"/>
       <allow service="search"/>
     </addXML>
   </file>
