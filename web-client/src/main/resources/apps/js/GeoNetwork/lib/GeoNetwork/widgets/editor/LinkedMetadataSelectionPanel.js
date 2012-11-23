@@ -286,7 +286,7 @@ GeoNetwork.editor.LinkedMetadataSelectionPanel = Ext.extend(Ext.FormPanel, {
      */
     getSearchInput: function(){
         return new GeoNetwork.form.SearchField({
-            name: 'E.8_AnyText',
+            name: 'E_AnyText',
             width: 240,
             store: this.linkedMetadataStore,
             triggerAction: function(scope){
