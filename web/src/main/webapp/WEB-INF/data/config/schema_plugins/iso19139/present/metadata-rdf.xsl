@@ -331,7 +331,7 @@
     
     
     <xsl:for-each select="../../gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
-      <dcat:Distribution rdf:resource="{gmd:CI_OnlineResource/gmd:linkage/gmd:URL}"/>
+      <dcat:distribution rdf:resource="{gmd:CI_OnlineResource/gmd:linkage/gmd:URL}"/>
     </xsl:for-each>
     <!-- xpath: gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/gmd:CI_OnlineResource -->
     

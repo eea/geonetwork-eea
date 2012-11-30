@@ -16,6 +16,9 @@
                                         if ($port='80') then '' else concat(':', $port),
                                         /root/gui/url)"/>
   
+  <!-- TODO: should use Java language code mapper -->
+  <xsl:variable name="iso2letterLanguageCode" select="substring(/root/gui/language, 1, 2)"/>
+  
   <xsl:include href="../../schema-xsl-rdf-loader.xsl"/>
   
   <xsl:template match="/">
@@ -46,15 +49,15 @@
     <dcat:Catalog rdf:about="{$url}">
 
       <!-- A name given to the catalog. -->
-      <dct:title xml:lang="{/root/gui/language}">
+      <dct:title xml:lang="{$iso2letterLanguageCode}">
         <xsl:value-of select="/root/gui/env/site/name"/>
       </dct:title>
 
       <!-- free-text account of the catalog. -->
       <dct:description/>
 
-      <rdf:label xml:lang="{/root/gui/language}">
-        <xsl:value-of select="/root/gui/env/site/name"/> (<xsl:value-of select="/root/gui/env/site/organization"/>)</rdf:label>
+      <rdfs:label xml:lang="{$iso2letterLanguageCode}">
+        <xsl:value-of select="/root/gui/env/site/name"/> (<xsl:value-of select="/root/gui/env/site/organization"/>)</rdfs:label>
 
       <!-- The homepage of the catalog -->
       <foaf:homepage><xsl:value-of select="$url"/></foaf:homepage>
