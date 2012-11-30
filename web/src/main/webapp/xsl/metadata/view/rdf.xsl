@@ -25,7 +25,7 @@
     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
       xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:foaf="http://xmlns.com/foaf/0.1/"
       xmlns:void="http://www.w3.org/TR/void/" xmlns:dcat="http://www.w3.org/ns/dcat#"
-      xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/"
+      xmlns:dct="http://purl.org/dc/terms/"
       xmlns:dctype="http://purl.org/dc/dcmitype/" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
       <!-- Metadata element -->
 
@@ -122,7 +122,7 @@
     -->
     <xsl:for-each select="/root/gui/thesaurus/thesauri/thesaurus">
       <skos:ConceptScheme rdf:about="{$url}/thesaurus/{key}">
-        <dc:title><xsl:value-of select="title"/></dc:title>
+        <dct:title><xsl:value-of select="title"/></dct:title>
         <!-- TODO : add conceptSchemes
           <dc:description>Thesaurus name.</dc:description>
           <dc:creator>
@@ -130,7 +130,7 @@
           <foaf:name>Thesaurus org</foaf:name>
           </foaf:Organization>
           </dc:creator>-->
-        <dc:uri><xsl:value-of select="$url"/>/srv/eng/thesaurus.download?ref=<xsl:value-of select="key"/></dc:uri>
+        <dct:uri><xsl:value-of select="$url"/>/srv/eng/thesaurus.download?ref=<xsl:value-of select="key"/></dct:uri>
         <!--
           <dct:issued>2008-06-01</dct:issued>
           <dct:modified>2008-06-01</dct:modified>-->
