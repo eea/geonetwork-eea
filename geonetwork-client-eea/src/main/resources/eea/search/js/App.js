@@ -656,6 +656,7 @@ GeoNetwork.app = function () {
                     id: 'newwindow',
                     qtip: OpenLayers.i18n('newWindow'),
                     handler: function (e, toolEl, panel, tc){
+                        Ext.get('content').setVisible(true);
                         window.open(GeoNetwork.Util.getBaseUrl(location.href) + "#edit=" + panel.getComponent('editorPanel').metadataId);
                         panel.hide();
                     },
@@ -674,7 +675,15 @@ GeoNetwork.app = function () {
                 resizable: true,
 //                constrain: true,
                 width: 980,
-                height: 800
+                height: 800,
+                listeners: {
+                    close: function () {
+                        Ext.get('content').setVisible(true);
+                    },
+                    hide: function () {
+                        Ext.get('content').setVisible(true);
+                    }
+                }
             });
             this.editorPanel.setContainer(this.editorWindow);
             this.editorPanel.on('editorClosed', function (){
@@ -684,6 +693,12 @@ GeoNetwork.app = function () {
         }
         
         if (metadataId) {
+            // hide main container to avoid to have 2 scrollbars 
+            // when editor is open.
+            var content = Ext.get('content');
+            content.setVisibilityMode(Ext.Element.DISPLAY);
+            content.setVisible(false);
+            
             this.editorWindow.show();
             this.editorWindow.maximize();
             this.editorPanel.init(metadataId, create, group, child);
