@@ -19,9 +19,6 @@
   <!-- TODO: should use Java language code mapper -->
   <xsl:variable name="iso2letterLanguageCode" select="substring(/root/gui/language, 1, 2)"/>
   
-  <!-- TODO: should use Java language code mapper -->
-  <xsl:variable name="iso2letterLanguageCode" select="substring(/root/gui/language, 1, 2)"/>
-  
   <xsl:include href="../../schema-xsl-rdf-loader.xsl"/>
   
   <xsl:template match="/">
