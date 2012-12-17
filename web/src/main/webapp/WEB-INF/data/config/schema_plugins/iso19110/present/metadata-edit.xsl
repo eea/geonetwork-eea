@@ -507,14 +507,6 @@
                                         </xsl:if>
                                     </xsl:otherwise>
                                 </xsl:choose>
-                                
-                                <xsl:apply-templates mode="elementEP" select="
-                                    gfc:valueMeasurementUnit|geonet:child[string(@name)='valueMeasurementUnit']|
-                                    gfc:constrainedBy|geonet:child[string(@name)='constrainedBy']|
-                                    gfc:definitionReference|geonet:child[string(@name)='definitionReference']">
-                                    <xsl:with-param name="schema" select="$schema"/>
-                                    <xsl:with-param name="edit"   select="$edit"/>
-                                </xsl:apply-templates>
                             </table>
                         </td>
                     </tr>
