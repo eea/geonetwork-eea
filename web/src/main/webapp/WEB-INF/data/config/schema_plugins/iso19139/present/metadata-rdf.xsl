@@ -62,6 +62,8 @@
       <dct:modified><xsl:value-of select="$date"/></dct:modified>
       <!-- xpath: gmd:dateStamp/gco:DateTime -->
       
+      <dct:relation><xsl:value-of select="concat($url , '?uuid=', gmd:fileIdentifier/gco:CharacterString)"/></dct:relation>
+      <dct:references><xsl:value-of select="concat($url , 'srv/eng/xml.metadata.get?uuid=', gmd:fileIdentifier/gco:CharacterString)"/></dct:references>
     </dcat:CatalogRecord>
     
     <xsl:apply-templates select="gmd:identificationInfo/*" mode="to-dcat"/>
@@ -347,28 +349,28 @@
     <!-- Dataset relation
     -->
     <xsl:for-each select="srv:operatesOn/@uuidref ">
-      <dct:relation rdf:resource="{$url}/metadata/{.}"/>
+      <dct:relation rdf:resource="{$url}/metadata/{.}"><xsl:value-of select="concat($url , '?uuid=', .)"/></dct:relation>
     </xsl:for-each>
     
     
     
     <!-- Source relation -->
     <xsl:for-each select="/root/gui/relation/sources/response/metadata">
-      <dct:relation rdf:resource="{$url}/metadata/{geonet:info/uuid}"/>
+      <dct:relation rdf:resource="{$url}/metadata/{geonet:info/uuid}"><xsl:value-of select="concat($url , '?uuid=', geonet:info/uuid)"/></dct:relation>
     </xsl:for-each>
     
     
     <!-- Parent/child relation -->
     <xsl:for-each select="../../gmd:parentIdentifier/gco:CharacterString[.!='']">
-      <dct:relation rdf:resource="{$url}/metadata/{.}"/>
+      <dct:relation rdf:resource="{$url}/metadata/{.}"><xsl:value-of select="concat($url , '?uuid=', .)"/></dct:relation>
     </xsl:for-each>
     <xsl:for-each select="/root/gui/relation/children/response/metadata">
-      <dct:relation rdf:resource="{$url}/metadata/{geonet:info/uuid}"/>
+      <dct:relation rdf:resource="{$url}/metadata/{geonet:info/uuid}"><xsl:value-of select="concat($url , '?uuid=', geonet:info/uuid)"/></dct:relation>
     </xsl:for-each>
     
     <!-- Service relation -->
     <xsl:for-each select="/root/gui/relations/services/response/metadata">
-      <dct:relation rdf:resource="{$url}/metadata/{geonet:info/uuid}"/>
+      <dct:relation rdf:resource="{$url}/metadata/{geonet:info/uuid}"><xsl:value-of select="concat($url , '?uuid=', geonet:info/uuid)"/></dct:relation>
     </xsl:for-each>
     
     
