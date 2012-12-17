@@ -184,7 +184,7 @@
 	<!-- online resources: download -->
 	<!-- ================================================================= -->
 
-	<xsl:template match="gmd:CI_OnlineResource[starts-with(gmd:protocol/gco:CharacterString,'WWW:DOWNLOAD-') and contains(gmd:protocol/gco:CharacterString,'http--download') and gmd:name]">
+	<xsl:template match="gmd:CI_OnlineResource[matches(gmd:protocol/gco:CharacterString,'^WWW:DOWNLOAD-.*-http--download.*') and gmd:name]">
 		<xsl:variable name="fname" select="gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType"/>
 		<xsl:variable name="mimeType">
 			<xsl:call-template name="getMimeTypeFile">
@@ -318,7 +318,7 @@
 	<xsl:template  match="gmd:LocalisedCharacterString">
 		<xsl:element name="gmd:{local-name()}">
 			<xsl:variable name="currentLocale" select="upper-case(replace(normalize-space(@locale), '^#', ''))"/>
-			<xsl:variable name="ptLocale" select="$language[@id=string($currentLocale)]"/>
+			<xsl:variable name="ptLocale" select="$language[upper-case(replace(normalize-space(@id), '^#', ''))=string($currentLocale)]"/>
 			<xsl:variable name="id" select="upper-case(substring($ptLocale/gmd:languageCode/gmd:LanguageCode/@codeListValue, 1, 3))"/>
 			<xsl:apply-templates select="@*"/>
 			<xsl:if test="$id != '' and ($currentLocale='' or @locale!=concat('#', $id)) ">

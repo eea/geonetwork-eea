@@ -43,12 +43,19 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
     frame: false,
     tbarConfig: undefined,
     id: 'editorPanel', // Only one Editor panel allowed by Document
+    
+    /**
+     * image path for selectionPanel (default /ext-ux/MultiselectItemSelector-3.0/icons)
+     */
+    selectionPanelImgPath: undefined,
+
     defaultConfig: {
     	/** api: config[defaultViewMode] 
          *  Default view mode to open the editor. Default to 'simple'.
          *  View mode is keep in user session (on the server).
          */
         defaultViewMode: 'simple',
+        selectionPanelImgPath: '../../apps/js/ext-ux/images',
         /** api: config[thesaurusButton] 
          *  Use thesaurus selector and inline keyword selection 
          *  instead of keyword selection popup.
@@ -365,11 +372,12 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
      *  :param ref: ``String``  Form element identifier (eg. 235).
      *  :param name: ``String``  Sub template type name (eg. CI_ResponsibleParty).
      *  :param elementName: ``String``  Element tag name (eg. gmd:pointOfContact).
+     *  :param namespaces: ``String``  Element namespaces to append (eg. xmlns:gmd="http://www.isotc211.org/2005/gmd").
      *  
      *  Display contact selection panel
      *  Not available in trunk.
      */
-    showSubTemplateSelectionPanel: function(ref, name, elementName){
+    showSubTemplateSelectionPanel: function(ref, name, elementName, namespaces){
         var editorPanel = this;
         
         // Destroy all previously created windows which may
@@ -382,6 +390,7 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
             var selectionPanel = new GeoNetwork.editor.SubTemplateSelectionPanel({
                         width : 620,
                         height : 300,
+                        imagePath: this.selectionPanelImgPath,
                         catalogue: this.catalogue,
                         listeners : {
                             subTemplateSelected : function(panel, subtemplates) {
@@ -403,6 +412,7 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
         this.subTemplateSelectionWindow.items.get(0).setRef(ref);
         this.subTemplateSelectionWindow.items.get(0).setName(name);
         this.subTemplateSelectionWindow.items.get(0).setElementName(elementName);
+        this.subTemplateSelectionWindow.items.get(0).setNamespaces(namespaces);
         
         this.subTemplateSelectionWindow.items.get(0).setAddAsXLink(this.xlinkOptions.CONTACT);
         this.subTemplateSelectionWindow.show();
@@ -431,6 +441,7 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
             if (!this.keywordSelectionWindow) {
                 this.keywordSelectionPanel = new GeoNetwork.editor.KeywordSelectionPanel({
                     catalogue: this.catalogue,
+                    imagePath: this.selectionPanelImgPath,
                     listeners: {
                         keywordselected: function(panel, keywords){
                             GeoNetwork.editor.EditorTools.addHiddenFormFieldForFragment(panel, keywords, editorPanel);
@@ -469,6 +480,7 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
         if (!this.crsSelectionWindow) {
             this.crsSelectionPanel = new GeoNetwork.editor.CRSSelectionPanel({
                 catalogue: this.catalogue,
+                imagePath: this.selectionPanelImgPath,
                 listeners: {
                     crsSelected: function(xml){
                         var id = '_X' + ref + '_' + name.replace(":", "COLON");
@@ -812,7 +824,7 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
      *  Initialized the metadata editor. The method could be used to create a metadata record
      *  from a template or from a parent metadata record.
      */
-    init: function(metadataId, create, group, child, isTemplate){
+    init: function(metadataId, create, group, child, isTemplate, fullPrivileges){
         var url;
         
         this.metadataId = metadataId;
@@ -825,6 +837,9 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
             if (isTemplate) {
                 url += "&isTemplate=" + isTemplate;
             }
+            if (fullPrivileges) {
+                url += "&fullPrivileges=" + fullPrivileges;
+            }
         } else {
             url = this.editUrl + '?id=' + this.metadataId;
         }
@@ -836,7 +851,7 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
             this.setDisabled(false);
         }
         this.container.show();
-        this.ownerCt.show();
+        this.ownerCt && this.ownerCt.show();
     },
     /** api: method[loadUrl]
      * 
@@ -870,7 +885,7 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
     },
     closeCallback: function(){
         this.onEditorClosed();
-        this.ownerCt.hide();
+        this.ownerCt && this.ownerCt.hide();
         this.toolbar && this.toolbar.setDisabled(false);
         //Ext.Msg.alert('Editor', 'Finish editing', function () {this.hide()}, this);
     },
@@ -963,7 +978,7 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
         this.catalogue.extentMap.initMapDiv();
         
         // Create concept selection widgets where relevant
-        GeoNetwork.editor.ConceptSelectionPanel.init();
+        GeoNetwork.editor.ConceptSelectionPanel.init({imagePath: this.selectionPanelImgPath});
         
         // TODO : Update toolbar metadata type value according to form content
         //Ext.get('template').dom.value=item.value;
@@ -971,17 +986,22 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
         
         // Register event to form element to display help information 
         var formElements = Ext.query('th[id]', this.body.dom);
-        //formElements = formElements.concat(Ext.query('legend[id]', this.body.dom));
+        // select the title element of complex metadata elements
         formElements = formElements.concat(Ext.query('legend[id]', this.body.dom));
         Ext.each(formElements, function(item, index, allItems){
             var e = Ext.get(item);
             var id = e.getAttribute('id');
             if (e.is('TH')) {
                 var section = e.up('FIELDSET');
-                // TODO : register event on custom widgets like Bbox
-                e.parent().on('mouseover', function(){
-                    this.helpPanel.updateHelp(id, section);
-                }, this);
+                var helplinks = e.parent().select(".helplink");
+                if (helplinks && helplinks.elements.length > 0) {
+                    // skip  
+                  } else {
+	                // TODO : register event on custom widgets like Bbox
+	                e.parent().on('mouseover', function(){
+	                    this.helpPanel.updateHelp(id, section);
+	                }, this);
+            	}
             } else {
                 e.on('mouseover', function(){
                     this.helpPanel.updateHelp(id);
@@ -989,6 +1009,17 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
             }
         }, this);
         
+        // select additional elements requiring a help link  
+        formElements = Ext.query('.helplink', this.body.dom);
+        Ext.each(formElements, function(item, index, allItems){
+            var e = Ext.get(item);
+            var id = e.getAttribute('id');
+            var section = e.up('FIELDSET');
+
+            e.on('mouseover', function(){
+                this.helpPanel.updateHelp(id, section);
+            }, this);
+        }, this);
         
         this.updateViewMenu();
     },

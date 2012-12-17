@@ -171,7 +171,7 @@ GeoNetwork.Templates.THUMBNAIL = new Ext.XTemplate(
                     '<tpl for="links">',
                     '<tpl if="values.type == \'application/vnd.ogc.wms_xml\'">',
                     // FIXME : ref to app
-                        '<a href="#" class="md-mn addLayer" title="{title}" alt="{title}" onclick="app.switchMode(\'1\', true);app.getIMap().addWMSLayer([[\'{title}\', \'{href}\', \'{name}\', \'{id}\']]);">&nbsp;</a>',
+                        '<a href="#" class="md-mn addLayer" title="{title}" alt="{title}" onclick="app.switchMode(\'1\', true);app.getIMap().addWMSLayer([[\'{title}\', \'{href}\', \'{name}\', \'{uuid}\']]);">&nbsp;</a>',
                     '</tpl>',
                     '</tpl>',
                 '</div>',
@@ -265,7 +265,8 @@ GeoNetwork.Templates.FULL = new Ext.XTemplate(
 );
 
 GeoNetwork.Templates.Relation = {
+        // TODO : subType should be translated
         SHORT: ['<li class="{type}">',
-                   '<a href="#" onclick="javascript:catalogue.metadataShow(\'{uuid}\');return false;" title="{abstract}">{title}</a>',
+                  '<a href="#" onclick="javascript:catalogue.metadataShow(\'{uuid}\');return false;" title="{abstract}">{title}</a><span class="badge relation-type">{subType}</span>',
                  '</li>']
 };

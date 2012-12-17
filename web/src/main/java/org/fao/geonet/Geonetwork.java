@@ -56,6 +56,7 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.csw.common.Csw;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.DataManagerParameter;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.SvnManager;
 import org.fao.geonet.kernel.ThesaurusManager;
@@ -267,7 +268,7 @@ public class Geonetwork implements ApplicationHandler {
 		String schemaCatalogueFile = systemDataDir + "config" + File.separator + Geonet.File.SCHEMA_PLUGINS_CATALOG;
 		logger.info("			- Schema plugins directory: "+schemaPluginsDir);
 		logger.info("			- Schema Catalog File     : "+schemaCatalogueFile);
-		SchemaManager schemaMan = SchemaManager.getInstance(path, schemaCatalogueFile, schemaPluginsDir, context.getLanguage(), handlerConfig.getMandatoryValue(Geonet.Config.PREFERRED_SCHEMA));
+		SchemaManager schemaMan = SchemaManager.getInstance(path, Resources.locateResourcesDir(context), schemaCatalogueFile, schemaPluginsDir, context.getLanguage(), handlerConfig.getMandatoryValue(Geonet.Config.PREFERRED_SCHEMA));
 
 		//------------------------------------------------------------------------
 		//--- initialize search and editing
@@ -317,7 +318,7 @@ public class Geonetwork implements ApplicationHandler {
 		 
 		 // if the validator exists the proxyCallbackURL needs to have the external host and
 		 // servlet name added so that the cas knows where to send the validation notice
-		 ServerBeanPropertyUpdater.updateURL(settingInfo.getSiteUrl()+baseURL, servletContext);
+		 ServerBeanPropertyUpdater.updateURL(settingInfo.getSiteUrl(true)+baseURL, servletContext);
 
 		//------------------------------------------------------------------------
 		//--- extract intranet ip/mask and initialize AccessManager
@@ -342,8 +343,22 @@ public class Geonetwork implements ApplicationHandler {
 		} else {
 			xmlSerializer = new XmlSerializerDb(settingMan);
 		}
+		
+		DataManagerParameter dataManagerParameter = new DataManagerParameter();
+		dataManagerParameter.context = context;
+		dataManagerParameter.svnManager = svnManager;
+		dataManagerParameter.searchManager = searchMan;
+		dataManagerParameter.xmlSerializer = xmlSerializer;
+		dataManagerParameter.schemaManager = schemaMan;
+		dataManagerParameter.accessManager = accessMan;
+		dataManagerParameter.dbms = dbms;
+		dataManagerParameter.settingsManager = settingMan;
+		dataManagerParameter.baseURL = baseURL;
+		dataManagerParameter.dataDir = dataDir;
+		dataManagerParameter.thesaurusDir = thesauriDir;
+		dataManagerParameter.appPath = path;
 
-		DataManager dataMan = new DataManager(context, svnManager, xmlSerializer, schemaMan, searchMan, accessMan, dbms, settingMan, baseURL, dataDir, thesauriDir, path);
+		DataManager dataMan = new DataManager(dataManagerParameter);
 
 
         /**
@@ -715,7 +730,7 @@ public class Geonetwork implements ApplicationHandler {
             if (!logo.exists()) {
                 FileOutputStream os = new FileOutputStream(logo);
                 try {
-                    os.write(Resources.loadImage(servletContext, appPath, "logos/dummy.gif", new byte[0]));
+                    os.write(Resources.loadImage(servletContext, appPath, "logos/dummy.gif", new byte[0]).one());
                     logger.info("      Setting catalogue logo for current node identified by: " + nodeUuid);
                 } finally {
                     os.close();

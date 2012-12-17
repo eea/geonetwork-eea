@@ -45,6 +45,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.constants.Geonet.Namespaces;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.exceptions.NoSchemaMatchesException;
 import org.fao.geonet.exceptions.SchemaMatchConflictException;
@@ -89,7 +90,9 @@ import java.util.concurrent.Executors;
 public class DataManager {
     
 
-    //--------------------------------------------------------------------------
+    private boolean hideWithheldElements;
+
+	//--------------------------------------------------------------------------
 	//---
 	//--- Constructor
 	//---
@@ -106,39 +109,27 @@ public class DataManager {
     /**
      * Initializes the search manager and index not-indexed metadata.
      *
-     * @param context
-     * @param svnManager
-     * @param xmlSerializer
-     * @param scm
-     * @param sm
-     * @param am
-     * @param dbms
-     * @param ss
-     * @param baseURL
-     * @param dataDir
-     * @param thesaurusDir TODO
-     * @param appPath
      * @throws Exception
      */
-	public DataManager(ServiceContext context, SvnManager svnManager, XmlSerializer xmlSerializer, SchemaManager scm, SearchManager sm, AccessManager am, Dbms dbms, SettingManager ss, String baseURL, String dataDir, String thesaurusDir, String appPath) throws Exception {
-		searchMan = sm;
-		accessMan = am;
-		settingMan= ss;
-		schemaMan = scm;
+	public DataManager(DataManagerParameter parameterObject) throws Exception {
+		searchMan = parameterObject.searchManager;
+		accessMan = parameterObject.accessManager;
+		settingMan= parameterObject.settingsManager;
+		schemaMan = parameterObject.schemaManager;
 		editLib = new EditLib(schemaMan);
-        servContext=context;
+        servContext=parameterObject.context;
 
-		this.baseURL = baseURL;
-        this.dataDir = dataDir;
-        this.thesaurusDir = thesaurusDir;
-		this.appPath = appPath;
+		this.baseURL = parameterObject.baseURL;
+        this.dataDir = parameterObject.dataDir;
+        this.thesaurusDir = parameterObject.thesaurusDir;
+		this.appPath = parameterObject.appPath;
 
-		stylePath = context.getAppPath() + FS + Geonet.Path.STYLESHEETS + FS;
+		stylePath = parameterObject.context.getAppPath() + FS + Geonet.Path.STYLESHEETS + FS;
 
-		this.xmlSerializer = xmlSerializer;
-		this.svnManager    = svnManager;
+		this.xmlSerializer = parameterObject.xmlSerializer;
+		this.svnManager    = parameterObject.svnManager;
 
-		init(context, dbms, false);
+		init(parameterObject.context, parameterObject.dbms, false);
 	}
 
 	/**
@@ -681,7 +672,7 @@ public class DataManager {
      * @throws Exception
      */
 	public void validate(String schema, Element md) throws Exception {
-		String schemaLoc = md.getAttributeValue("schemaLocation", Geonet.XSI_NAMESPACE);
+		String schemaLoc = md.getAttributeValue("schemaLocation", Namespaces.XSI);
         if(Log.isDebugEnabled(Geonet.DATA_MANAGER))
             Log.debug(Geonet.DATA_MANAGER, "Extracted schemaLocation of "+schemaLoc);
 		if (schemaLoc == null) schemaLoc = "";
@@ -710,7 +701,7 @@ public class DataManager {
      * @throws Exception
      */
 	public Element validateInfo(String schema, Element md, ErrorHandler eh) throws Exception {
-		String schemaLoc = md.getAttributeValue("schemaLocation", Geonet.XSI_NAMESPACE);
+		String schemaLoc = md.getAttributeValue("schemaLocation", Namespaces.XSI);
         if(Log.isDebugEnabled(Geonet.DATA_MANAGER))
             Log.debug(Geonet.DATA_MANAGER, "Extracted schemaLocation of "+schemaLoc);
 		if (schemaLoc == null) schemaLoc = "";
@@ -1454,12 +1445,13 @@ public class DataManager {
      * @param owner
      * @param parentUuid
      * @param isTemplate TODO
+     * @param fullRightsForGroup TODO
      * @return
      * @throws Exception
      */
 	public String createMetadata(ServiceContext context, Dbms dbms, String templateId, String groupOwner,
 										  SerialFactory sf, String source, int owner,
-										  String parentUuid, String isTemplate) throws Exception {
+										  String parentUuid, String isTemplate, boolean fullRightsForGroup) throws Exception {
 		int iTemplateId = new Integer(templateId);
 		String query = "SELECT schemaId, data FROM Metadata WHERE id=?";
 		List listTempl = dbms.select(query, iTemplateId).getChildren();
@@ -1484,7 +1476,7 @@ public class DataManager {
 		
 		//--- store metadata
 		String id = xmlSerializer.insert(dbms, schema, xml, serial, source, uuid, null, null, isTemplate, null, owner, groupOwner, "", context);
-		copyDefaultPrivForGroup(context, dbms, id, groupOwner);
+		copyDefaultPrivForGroup(context, dbms, id, groupOwner, fullRightsForGroup);
 
 		//--- store metadata categories copying them from the template
 		List categList = dbms.select("SELECT categoryId FROM MetadataCateg WHERE metadataId = ?",iTemplateId).getChildren();
@@ -1548,7 +1540,7 @@ public class DataManager {
         //--- store metadata
         xmlSerializer.insert(dbms, schema, metadata, id, source, uuid, createDate, changeDate, isTemplate, title, owner, group, docType, context);
 
-        copyDefaultPrivForGroup(context, dbms, id$, group);
+        copyDefaultPrivForGroup(context, dbms, id$, group, false);
 
         if (category != null) {
             setCategory(context, dbms, id$, category);
@@ -2439,9 +2431,10 @@ public class DataManager {
      * @param dbms the database
      * @param id metadata id
      * @param groupId group id
+     * @param fullRightsForGroup TODO
      * @throws Exception hmmm
      */
-	public void copyDefaultPrivForGroup(ServiceContext context, Dbms dbms, String id, String groupId) throws Exception {
+	public void copyDefaultPrivForGroup(ServiceContext context, Dbms dbms, String id, String groupId, boolean fullRightsForGroup) throws Exception {
         if(StringUtils.isBlank(groupId)) {
             Log.info(Geonet.DATA_MANAGER, "Attempt to set default privileges for metadata " + id + " to an empty groupid");
             return;
@@ -2454,9 +2447,11 @@ public class DataManager {
 		// Restrictive: new and inserted records should not be editable, 
 		// their resources can't be downloaded and any interactive maps can't be 
 		// displayed by users in the same group 
-		// setOperation(dbms, id, groupId, AccessManager.OPER_EDITING);
-		// setOperation(dbms, id, groupId, AccessManager.OPER_DOWNLOAD);
-		// setOperation(dbms, id, groupId, AccessManager.OPER_DYNAMIC);
+		if(fullRightsForGroup) {
+			setOperation(context, dbms, id, groupId, AccessManager.OPER_EDITING);
+			setOperation(context, dbms, id, groupId, AccessManager.OPER_DOWNLOAD);
+			setOperation(context, dbms, id, groupId, AccessManager.OPER_DYNAMIC);
+		}
 		// Ultimately this should be configurable elsewhere
 	}
 

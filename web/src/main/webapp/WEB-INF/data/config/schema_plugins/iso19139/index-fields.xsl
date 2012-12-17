@@ -94,6 +94,8 @@
 
 				<xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date">
 					<Field name="revisionDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}" store="true" index="true"/>
+					<Field name="createDateMonth" string="{substring(gco:Date[.!='']|gco:DateTime[.!=''], 0, 8)}" store="true" index="true"/>
+					<Field name="createDateYear" string="{substring(gco:Date[.!='']|gco:DateTime[.!=''], 0, 5)}" store="true" index="true"/>
 					<xsl:if test="$useDateAsTemporalExtent">
 						<Field name="tempExtentBegin" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}" store="true" index="true"/>
 					</xsl:if>
@@ -101,6 +103,8 @@
 
 				<xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date">
 					<Field name="createDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}" store="true" index="true"/>
+					<Field name="createDateMonth" string="{substring(gco:Date[.!='']|gco:DateTime[.!=''], 0, 8)}" store="true" index="true"/>
+					<Field name="createDateYear" string="{substring(gco:Date[.!='']|gco:DateTime[.!=''], 0, 5)}" store="true" index="true"/>
 					<xsl:if test="$useDateAsTemporalExtent">
 						<Field name="tempExtentBegin" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}" store="true" index="true"/>
 					</xsl:if>
@@ -173,7 +177,7 @@
 
 			<xsl:for-each select="//gmd:MD_Keywords">
 			  
-				<xsl:for-each select="gmd:keyword/gco:CharacterString|gmd:keyword/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString">
+				<xsl:for-each select="gmd:keyword/gco:CharacterString|gmd:keyword/gmx:Anchor|gmd:keyword/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString">
                     <xsl:variable name="keywordLower" select="lower-case(.)"/>
                     <Field name="keyword" string="{string(.)}" store="true" index="true"/>
 					
@@ -207,7 +211,7 @@
 	
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->		
 	
-			<xsl:for-each select="gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString">
+			<xsl:for-each select="gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString|gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gmx:Anchor">
 				<Field name="orgName" string="{string(.)}" store="true" index="true"/>
 				
 				<xsl:variable name="role" select="../../gmd:role/*/@codeListValue"/>
@@ -487,7 +491,7 @@
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
-		<xsl:for-each select="gmd:contact/*/gmd:organisationName/gco:CharacterString">
+		<xsl:for-each select="gmd:contact/*/gmd:organisationName/gco:CharacterString|gmd:contact/*/gmd:organisationName/gmx:Anchor">
 			<Field name="metadataPOC" string="{string(.)}" store="true" index="true"/>
 			
 			<xsl:variable name="role" select="../../gmd:role/*/@codeListValue"/>

@@ -149,6 +149,10 @@
       <artifactId>lucene-queries</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-facet</artifactId>
+    </dependency>
+    <dependency>
         <groupId>pcj</groupId>
         <artifactId>pcj</artifactId>
     </dependency>    
@@ -260,7 +264,12 @@
       <groupId>xmlunit</groupId>
       <artifactId>xmlunit</artifactId>
     </dependency>
-
+	<dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-all</artifactId>
+		<scope>test</scope>
+	</dependency>
+	            
     <dependency>
       <groupId>org.tmatesoft.svnkit</groupId>
       <artifactId>svnkit</artifactId>
@@ -395,8 +404,26 @@
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
+    
+    <dependency>
+		<groupId>org.xhtmlrenderer</groupId>
+		<artifactId>flying-saucer-core</artifactId>
+		<version>9.0.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.xhtmlrenderer</groupId>
+		<artifactId>flying-saucer-pdf</artifactId>
+		<version>9.0.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.xhtmlrenderer</groupId>
+		<artifactId>flying-saucer-pdf-itext5</artifactId>
+		<version>9.0.1</version>
+	</dependency>
+	
+	
+	</dependencies>
 
-  </dependencies>
   
   <build>
     <plugins>

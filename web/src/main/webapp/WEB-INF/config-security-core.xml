@@ -25,6 +25,9 @@
 				<sec:filter-chain pattern="/scripts/**" filters="" />
 				<sec:filter-chain pattern="/pdf/**" filters="" />
 				<sec:filter-chain pattern="/loc/**" filters="" />
+				<sec:filter-chain pattern="/xml/csw/test/*" filters="" />
+				<sec:filter-chain pattern="/xml/schemas/**" filters="" />
+				<sec:filter-chain pattern="/xsl/harvesting/**" filters="" />
 				<ref bean="coreFilterChain"/>
  				<!-- <sec:filter-chain pattern="/**" filters="securityContextPersistenceFilter,
  				logoutFilter,
@@ -89,6 +92,11 @@
 		<property name="passwordParameter" value="password" />
 		<property name="authenticationManager" ref="authenticationManager" />
 		<property name="filterProcessesUrl" value="/j_spring_security_check" />
+		<property name="authenticationFailureHandler">
+			<bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+				<constructor-arg value="/login.jsp?failure=true"></constructor-arg>
+			</bean>
+		</property>
 		<property name="authenticationSuccessHandler">
 			<bean class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
 				<property name="defaultTargetUrl" value="/" />
@@ -125,6 +133,7 @@
 				</bean>
 			</list>
 		</constructor-arg>
+		<property name="filterProcessesUrl" value="/j_spring_security_logout"/>
 	</bean>
 
     <bean id="logoutSuccessHandler" class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
@@ -198,7 +207,10 @@
 	</bean>
 	
 	<!-- This bean is here to allow evaluation permissions of the current user by Geonetwork -->
-	<bean id="webPrivilegeEvaluator" class="org.springframework.security.web.access.DefaultWebInvocationPrivilegeEvaluator">
+	<bean id="webPrivilegeEvaluatorCore" class="org.springframework.security.web.access.DefaultWebInvocationPrivilegeEvaluator">
 		<constructor-arg ref="filterSecurityInterceptor"/>
+	</bean>
+	<bean id="overrideWebPrivilegeEvaluator" class="org.springframework.security.web.access.DefaultWebInvocationPrivilegeEvaluator">
+		<constructor-arg ref="overridefilterSecurityInterceptor"/>
 	</bean>
 </beans>

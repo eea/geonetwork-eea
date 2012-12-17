@@ -601,8 +601,8 @@ GeoNetwork.editor.ConceptSelectionPanel = Ext.extend(Ext.Panel, {
                 this.generateXML();
             };
             
-            this.selectedKeywordStore.on('add', cb);
-            this.selectedKeywordStore.on('remove', cb);
+            this.selectedKeywordStore.on('add', cb, this);
+            this.selectedKeywordStore.on('remove', cb, this);
         }
         
         
