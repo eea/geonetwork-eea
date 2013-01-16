@@ -618,7 +618,7 @@ GeoNetwork.app = function () {
         
         return new Ext.Panel({
             id: 'tagCloudPanel',
-            renderTo: 'tag-cloud',
+//            renderTo: 'tag-cloud',
             layout: 'fit',
             border: false,
             hidden: true,
