@@ -181,7 +181,10 @@
 								<div id="search-form" style="height:100%"></div>
 								
 								<div id="tag-cloud"></div>
-
+								
+                                <h1 id="refine-search-title" style="display:none;font-size: 150% !important;margin: 0.67em 0;" class="documentFirstHeading"><span><xsl:value-of select="/root/gui/strings/refineSearch"/></span></h1>
+                                
+                                
                                 <div id="breadcrumb-facets"></div>
                                 <div id="facets-panel"></div>
 
