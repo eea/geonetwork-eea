@@ -958,6 +958,8 @@ GeoNetwork.app = function () {
             Ext.ux.Lightbox.register('a[rel^=lightbox]');
             
             app.registerTooltipLinks.call(Ext.get('resultsPanel'));
+            
+            facetsPanel.refresh(response);
         }
     };
 };
