@@ -29,7 +29,7 @@ GeoNetwork.app = function () {
     /**
      * An interactive map panel for data visualization
      */
-    var iMap, searchForm, resultsPanel, metadataResultsView, tBar, bBar,
+    var iMap, searchForm, facetsPanel, resultsPanel, metadataResultsView, tBar, bBar,
         mainTagCloudViewPanel, tagCloudViewPanel, infoPanel,
         visualizationModeInitialized = false;
     
@@ -201,6 +201,33 @@ GeoNetwork.app = function () {
             buttons: Ext.MessageBox.OK
         });
     }
+    
+    
+
+    function createFacets (searchForm) {
+        var breadcrumb = new Ext.Panel({
+            layout:'table',
+            cls: 'breadcrumb',
+            defaultType: 'button',
+            border: false,
+            split: false,
+            id: 'breadcrumb',
+            renderTo: 'breadcrumb-facets',
+            layoutConfig: {
+                columns:3
+            }
+        });
+        
+        return new GeoNetwork.FacetsPanel({
+            id : 'facetsPanel',
+            searchForm: searchForm,
+            breadcrumb: breadcrumb,
+            renderTo: 'facets-panel',
+            maxDisplayedItems: GeoNetwork.Settings.facetMaxItems || 7,
+            facetListConfig: GeoNetwork.Settings.facetListConfig || []
+        });
+        
+    };
     
     /**
      * Create a default search form with advanced mode button
@@ -848,6 +875,9 @@ GeoNetwork.app = function () {
 
             // Search form
             searchForm = createSearchForm();
+            
+            //FacetsPanel
+            facetsPanel = createFacets(searchForm);
             
             // Search result
             resultsPanel = createResultsPanel(permalinkProvider);

@@ -182,6 +182,10 @@
 								
 								<div id="tag-cloud"></div>
 								<h1 id="parent-fieldname-title" style="font-size: 150% !important;margin: 0.67em 0;" class="documentFirstHeading"><span id="loginLb">Admin login</span></h1>
+								
+                                <div id="breadcrumb-facets"></div>
+                                <div id="facets-panel"></div>
+                                
 								<div id="login-form"></div>
 								
 								<br />
