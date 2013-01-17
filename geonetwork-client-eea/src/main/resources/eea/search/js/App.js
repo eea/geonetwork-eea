@@ -265,42 +265,42 @@ GeoNetwork.app = function () {
         
         
         // Multi select keyword
-        var themekeyStore = new GeoNetwork.data.OpenSearchSuggestionStore({
-            url: services.opensearchSuggest,
-            rootId: 1,
-            baseParams: {
-                field: 'keyword'
-            }
-        });
-//        FIXME : could not underline current search criteria in tpl
-//        var tpl = '<tpl for="."><div class="x-combo-list-item">' + 
-//            '{[values.value.replace(Ext.getDom(\'E_themekey\').value, \'<span>\' + Ext.getDom(\'E_themekey\').value + \'</span>\')]}' + 
-//          '</div></tpl>';
-        var themekeyField = new Ext.ux.form.SuperBoxSelect({
-            hideLabel: false,
-            minChars: 0,
-            queryParam: 'q',
-            hideTrigger: false,
-            id: 'E_themekey',
-            name: 'E_themekey',
-            store: themekeyStore,
-            valueField: 'value',
-            displayField: 'value',
-            valueDelimiter: ' or ',
-//            tpl: tpl,
-            fieldLabel: OpenLayers.i18n('keyword')
-//            FIXME : Allow new data is not that easy
-//            allowAddNewData: true,
-//            addNewDataOnBlur: true,
-//            listeners: {
-//                newitem: function (bs,v, f){
-//                    var newObj = {
-//                            value: v
-//                        };
-//                    bs.addItem(newObj, true);
-//                }
+//        var themekeyStore = new GeoNetwork.data.OpenSearchSuggestionStore({
+//            url: services.opensearchSuggest,
+//            rootId: 1,
+//            baseParams: {
+//                field: 'keyword'
 //            }
-        });
+//        });
+////        FIXME : could not underline current search criteria in tpl
+////        var tpl = '<tpl for="."><div class="x-combo-list-item">' + 
+////            '{[values.value.replace(Ext.getDom(\'E_themekey\').value, \'<span>\' + Ext.getDom(\'E_themekey\').value + \'</span>\')]}' + 
+////          '</div></tpl>';
+//        var themekeyField = new Ext.ux.form.SuperBoxSelect({
+//            hideLabel: false,
+//            minChars: 0,
+//            queryParam: 'q',
+//            hideTrigger: false,
+//            id: 'E_themekey',
+//            name: 'E_themekey',
+//            store: themekeyStore,
+//            valueField: 'value',
+//            displayField: 'value',
+//            valueDelimiter: ' or ',
+////            tpl: tpl,
+//            fieldLabel: OpenLayers.i18n('keyword')
+////            FIXME : Allow new data is not that easy
+////            allowAddNewData: true,
+////            addNewDataOnBlur: true,
+////            listeners: {
+////                newitem: function (bs,v, f){
+////                    var newObj = {
+////                            value: v
+////                        };
+////                    bs.addItem(newObj, true);
+////                }
+////            }
+//        });
         
         var when = new Ext.form.FieldSet({
             title: OpenLayers.i18n('when'),
@@ -335,7 +335,8 @@ GeoNetwork.app = function () {
             hidden: true
         });
         
-        advancedCriteria.push(themekeyField, orgNameField, typeCodeList, 
+        advancedCriteria.push(//themekeyField, 
+                orgNameField, typeCodeList, 
                                 categoryField, 
                                 when, spatialTypes, denominatorField,
 //                                catalogueField, groupField, 
