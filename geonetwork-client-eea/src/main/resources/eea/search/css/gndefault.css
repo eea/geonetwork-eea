@@ -56,8 +56,22 @@ pre.code {
 }
 #tagCloudPanel {
   display:block;
-  height: 240px;
+  max-height: 240px;
 }
+
+#facets li {
+	display:block;
+}
+
+#facets ul, #facets li {
+	padding-left: 6px;
+}
+
+#facets > ul > li {
+	font-weight: bolder;
+    padding-top: 5px;
+}
+
 .info {
   float : left;
   width : 60%;

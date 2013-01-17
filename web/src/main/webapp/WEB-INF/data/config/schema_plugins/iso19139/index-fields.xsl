@@ -116,6 +116,12 @@
 						<Field name="tempExtentBegin" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}" store="true" index="true"/>
 					</xsl:if>
 				</xsl:for-each>
+				
+				<xsl:variable name="publishedDataSet" select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']"/>
+				<xsl:variable name="publishedDataSetYes" select="$publishedDataSet != ''"/>
+                <xsl:if test="$publishedDataSetYes">
+                   <Field name="publishedDataset" string="Published Dataset" store="true" index="true"/>
+                </xsl:if>
 
 				<!-- fields used to search for metadata in paper or digital format -->
 
@@ -131,7 +137,6 @@
 					</xsl:if>
 				</xsl:for-each>
 			</xsl:for-each>
-
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
             <xsl:for-each select="gmd:pointOfContact[1]/*/gmd:role/*/@codeListValue">
@@ -208,6 +213,17 @@
 				<xsl:for-each select="gmd:type/gmd:MD_KeywordTypeCode/@codeListValue">
 					<Field name="keywordType" string="{string(.)}" store="true" index="true"/>
 				</xsl:for-each>
+				
+				
+				
+                //GEMET themes
+                
+                <xsl:variable name="valuekeyword" select="gmd:keyword/gco:CharacterString|gmd:keyword/gmx:Anchor|gmd:keyword/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString"/>
+                <xsl:for-each select="gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString">
+                    <xsl:if test="string(.) = 'GEMET - Concepts, version 3.0'">
+                        <Field name="gemetKeyword" string="{$valuekeyword}" store="true" index="true"/>
+                    </xsl:if>
+                </xsl:for-each>
 			</xsl:for-each>
 	
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->		
@@ -525,7 +541,8 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
 		<xsl:for-each select="gmd:dateStamp/gco:DateTime">
-			<Field name="changeDate" string="{string(.)}" store="true" index="true"/>
+            <Field name="changeDate" string="{string(.)}" store="true" index="true"/>
+			<Field name="changeDateYear" string="{substring(string(.), 0, 5)}" store="true" index="true"/>
 		</xsl:for-each>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
