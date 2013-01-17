@@ -17,7 +17,7 @@
 	<def>
 		<hits>  
             <item name="inspireTheme" plural="inspireThemes" indexKey="inspiretheme" max="15"/>
-            <item name="organization" plural="organizations" indexKey="orgName" max="15"/>   
+            <item name="orgName" plural="orgNames" indexKey="orgName" max="15"/>   
             <item name="type" plural="types" indexKey="type" max="15"/>            
             <item name="serviceType" plural="serviceTypes" indexKey="serviceType" max="15"/>  
             <item name="gemetKeyword" plural="gemetKeywords" indexKey="gemetKeyword" max="15"/>
@@ -45,7 +45,7 @@
 		</results>
 		<results_with_summary>
 		    <item name="inspireTheme" plural="inspireThemes" indexKey="inspiretheme" max="15"/>
-            <item name="organization" plural="organizations" indexKey="orgName" max="15"/>   
+            <item name="orgName" plural="orgNames" indexKey="orgName" max="15"/>   
             <item name="type" plural="types" indexKey="type" max="15"/>            
             <item name="serviceType" plural="serviceTypes" indexKey="serviceType" max="15"/>  
             <item name="gemetKeyword" plural="gemetKeywords" indexKey="gemetKeyword" max="15"/>
