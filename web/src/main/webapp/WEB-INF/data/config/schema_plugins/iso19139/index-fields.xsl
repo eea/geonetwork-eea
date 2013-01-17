@@ -120,7 +120,7 @@
 				<xsl:variable name="publishedDataSet" select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']"/>
 				<xsl:variable name="publishedDataSetYes" select="$publishedDataSet != ''"/>
                 <xsl:if test="$publishedDataSetYes">
-                   <Field name="publishedDataset" string="Yes" store="true" index="true"/>
+                   <Field name="publishedDataset" string="Published Dataset" store="true" index="true"/>
                 </xsl:if>
 
 				<!-- fields used to search for metadata in paper or digital format -->
