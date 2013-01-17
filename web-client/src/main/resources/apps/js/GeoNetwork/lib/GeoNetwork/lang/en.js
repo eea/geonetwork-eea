@@ -511,6 +511,11 @@ GeoNetwork.Lang.en = {
     'orgNames': 'Organizations',
     'types': 'Types',
     'serviceTypes': 'Service types',
+    'years' : 'Years',
+    'gemetKeywords' : 'GEMET Keywords',
+    'gemetKeyword' : 'GEMET Keyword',
+    'publishedDatasets' : 'Published Datasets',
+    'publishedDataset' : 'Published Dataset',
     //tabbed search
     'Home': "Home",
     'Map': "Map",

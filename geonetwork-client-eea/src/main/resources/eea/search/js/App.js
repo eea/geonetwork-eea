@@ -29,7 +29,7 @@ GeoNetwork.app = function () {
     /**
      * An interactive map panel for data visualization
      */
-    var iMap, searchForm, resultsPanel, metadataResultsView, tBar, bBar,
+    var iMap, searchForm, facetsPanel, resultsPanel, metadataResultsView, tBar, bBar,
         mainTagCloudViewPanel, tagCloudViewPanel, infoPanel,
         visualizationModeInitialized = false;
     
@@ -202,6 +202,33 @@ GeoNetwork.app = function () {
         });
     }
     
+    
+
+    function createFacets (searchForm) {
+        var breadcrumb = new Ext.Panel({
+            layout:'table',
+            cls: 'breadcrumb',
+            defaultType: 'button',
+            border: false,
+            split: false,
+            id: 'breadcrumb',
+            renderTo: 'breadcrumb-facets',
+            layoutConfig: {
+                columns:3
+            }
+        });
+        
+        return new GeoNetwork.FacetsPanel({
+            id : 'facetsPanel',
+            searchForm: searchForm,
+            breadcrumb: breadcrumb,
+            renderTo: 'facets-panel',
+            maxDisplayedItems: GeoNetwork.Settings.facetMaxItems || 7,
+            facetListConfig: GeoNetwork.Settings.facetListConfig || []
+        });
+        
+    };
+    
     /**
      * Create a default search form with advanced mode button
      *
@@ -238,42 +265,42 @@ GeoNetwork.app = function () {
         
         
         // Multi select keyword
-        var themekeyStore = new GeoNetwork.data.OpenSearchSuggestionStore({
-            url: services.opensearchSuggest,
-            rootId: 1,
-            baseParams: {
-                field: 'keyword'
-            }
-        });
-//        FIXME : could not underline current search criteria in tpl
-//        var tpl = '<tpl for="."><div class="x-combo-list-item">' + 
-//            '{[values.value.replace(Ext.getDom(\'E_themekey\').value, \'<span>\' + Ext.getDom(\'E_themekey\').value + \'</span>\')]}' + 
-//          '</div></tpl>';
-        var themekeyField = new Ext.ux.form.SuperBoxSelect({
-            hideLabel: false,
-            minChars: 0,
-            queryParam: 'q',
-            hideTrigger: false,
-            id: 'E_themekey',
-            name: 'E_themekey',
-            store: themekeyStore,
-            valueField: 'value',
-            displayField: 'value',
-            valueDelimiter: ' or ',
-//            tpl: tpl,
-            fieldLabel: OpenLayers.i18n('keyword')
-//            FIXME : Allow new data is not that easy
-//            allowAddNewData: true,
-//            addNewDataOnBlur: true,
-//            listeners: {
-//                newitem: function (bs,v, f){
-//                    var newObj = {
-//                            value: v
-//                        };
-//                    bs.addItem(newObj, true);
-//                }
+//        var themekeyStore = new GeoNetwork.data.OpenSearchSuggestionStore({
+//            url: services.opensearchSuggest,
+//            rootId: 1,
+//            baseParams: {
+//                field: 'keyword'
 //            }
-        });
+//        });
+////        FIXME : could not underline current search criteria in tpl
+////        var tpl = '<tpl for="."><div class="x-combo-list-item">' + 
+////            '{[values.value.replace(Ext.getDom(\'E_themekey\').value, \'<span>\' + Ext.getDom(\'E_themekey\').value + \'</span>\')]}' + 
+////          '</div></tpl>';
+//        var themekeyField = new Ext.ux.form.SuperBoxSelect({
+//            hideLabel: false,
+//            minChars: 0,
+//            queryParam: 'q',
+//            hideTrigger: false,
+//            id: 'E_themekey',
+//            name: 'E_themekey',
+//            store: themekeyStore,
+//            valueField: 'value',
+//            displayField: 'value',
+//            valueDelimiter: ' or ',
+////            tpl: tpl,
+//            fieldLabel: OpenLayers.i18n('keyword')
+////            FIXME : Allow new data is not that easy
+////            allowAddNewData: true,
+////            addNewDataOnBlur: true,
+////            listeners: {
+////                newitem: function (bs,v, f){
+////                    var newObj = {
+////                            value: v
+////                        };
+////                    bs.addItem(newObj, true);
+////                }
+////            }
+//        });
         
         var when = new Ext.form.FieldSet({
             title: OpenLayers.i18n('when'),
@@ -308,7 +335,8 @@ GeoNetwork.app = function () {
             hidden: true
         });
         
-        advancedCriteria.push(themekeyField, orgNameField, typeCodeList, 
+        advancedCriteria.push(//themekeyField, 
+                orgNameField, typeCodeList, 
                                 categoryField, 
                                 when, spatialTypes, denominatorField,
 //                                catalogueField, groupField, 
@@ -591,7 +619,7 @@ GeoNetwork.app = function () {
         
         return new Ext.Panel({
             id: 'tagCloudPanel',
-            renderTo: 'tag-cloud',
+//            renderTo: 'tag-cloud',
             layout: 'fit',
             border: false,
             hidden: true,
@@ -849,6 +877,9 @@ GeoNetwork.app = function () {
             // Search form
             searchForm = createSearchForm();
             
+            //FacetsPanel
+            facetsPanel = createFacets(searchForm);
+            
             // Search result
             resultsPanel = createResultsPanel(permalinkProvider);
             
@@ -928,6 +959,9 @@ GeoNetwork.app = function () {
             Ext.ux.Lightbox.register('a[rel^=lightbox]');
             
             app.registerTooltipLinks.call(Ext.get('resultsPanel'));
+
+            Ext.get("refine-search-title").show();
+            facetsPanel.refresh(response);
         }
     };
 };
