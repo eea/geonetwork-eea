@@ -433,6 +433,12 @@ GeoNetwork.app = function () {
             defaults: {
                 width : 180
             },
+            listeners: {
+                onreset: function () {
+                    facetsPanel.reset();
+                    this.fireEvent('search');
+                }
+            },
             items: formItems
         });
     }
