@@ -15,8 +15,16 @@
 -->
 <summary>
 	<def>
-		<hits>
-			<item name="keyword" plural="keywords" indexKey="keyword" max="15"/>
+		<hits>  
+            <item name="inspireTheme" plural="inspireThemes" indexKey="inspiretheme" max="15"/>
+            <item name="organisation" plural="organisations" indexKey="orgName" max="15"/>   
+            <item name="type" plural="types" indexKey="type" max="15"/>            
+            <item name="serviceType" plural="serviceTypes" indexKey="serviceType" max="15"/>  
+            <item name="gemetKeyword" plural="gemetKeywords" indexKey="gemetKeyword" max="15"/>
+            <item name="year" plural="years" indexKey="changeDateYear" max="15"/>
+            <item name="publishedDataset" plural="publishedDatasets" indexKey="publishedDataset" max="15"/>          
+<!--
+   			<item name="keyword" plural="keywords" indexKey="keyword" max="15"/>
 			<item name="inspireTheme" plural="inspireThemes" indexKey="inspiretheme" sortBy="value" sortOrder="asc" max="35"/>
 			<item name="denominator" plural="denominators" indexKey="denominator" sortBy="numValue" sortOrder="desc"/>
 			<item name="spatialRepresentationType" plural="spatialRepresentationTypes" indexKey="spatialRepresentationType"/>
@@ -26,6 +34,7 @@
 			<item name="type" plural="types" indexKey="type"/>
 			<item name="createDateYear" plural="createDateYears" indexKey="createDateYear"
 				sortBy="value" sortOrder="desc" max="40"/>
+				-->
 		</hits>
 		<titles>
 			<item name="title" plural="titles" indexKey="title" sortBy="freq" sortOrder="desc" max="100"
@@ -35,7 +44,15 @@
 			<item name="keyword" plural="keywords" indexKey="keyword" max="100"/>
 		</results>
 		<results_with_summary>
-			<item name="keyword" plural="keywords" indexKey="keyword" max="15"/>
+		    <item name="inspireTheme" plural="inspireThemes" indexKey="inspiretheme" max="15"/>
+            <item name="organisation" plural="organisations" indexKey="orgName" max="15"/>   
+            <item name="type" plural="types" indexKey="type" max="15"/>            
+            <item name="serviceType" plural="serviceTypes" indexKey="serviceType" max="15"/>  
+            <item name="gemetKeyword" plural="gemetKeywords" indexKey="gemetKeyword" max="15"/>
+            <item name="year" plural="years" indexKey="changeDateYear" max="15"/>
+            <item name="publishedDataset" plural="publishedDatasets" indexKey="publishedDataset" max="15"/>          
+<!--
+ 			<item name="keyword" plural="keywords" indexKey="keyword" max="15"/>
 			<item name="inspireTheme" plural="inspireThemes" indexKey="inspiretheme" sortBy="value" sortOrder="asc" max="35"/>
 			<item name="denominator" plural="denominators" indexKey="denominator" sortBy="value" sortOrder="asc" max="20"/>
 			<item name="spatialRepresentationType" plural="spatialRepresentationTypes" indexKey="spatialRepresentationType"/>
@@ -45,6 +62,7 @@
 			<item name="type" plural="types" indexKey="type"/>
 			<item name="createDateYear" plural="createDateYears" indexKey="createDateYear"
 				sortOrder="asc" max="40"/>
+				-->
 		</results_with_summary>
 	</def>
 </summary>
