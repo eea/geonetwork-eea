@@ -156,8 +156,8 @@ EEA.Templates.THUMBNAIL = new Ext.XTemplate(
         '<ul>',
             '<tpl for=".">',
                 '<li class="md md-thumbnail" id="md{uuid}">',
-                '<div class="md-wrap" id="{uuid}" title="{abstract}">',
-                    GeoNetwork.Templates.TITLE,
+                '<div class="md-wrap" id="{uuid}" title="{abstract}"  style="{featurecolorCSS}">',
+                    GeoNetwork.Templates.SHORT_TITLE,
                     '<div class="thumbnail">',
                         '<tpl if="thumbnail">',
                             '<a rel="lightbox" href="{thumbnail}"><img src="{thumbnail}" alt="Thumbnail"/></a>', 
@@ -175,7 +175,6 @@ EEA.Templates.THUMBNAIL = new Ext.XTemplate(
             '</tpl>',
         '</ul>'
     );
-
 
 /** api: constructor 
  *  .. class:: GeoNetwork.Templates.FULL()

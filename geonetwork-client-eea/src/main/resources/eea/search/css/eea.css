@@ -44,7 +44,16 @@ ul li.tag-cloud {
 /* Avoid some Plone rules */
 .md-view ul li * h1 {
   text-shadow: none !important;
+  height: 3em;
+  word-break: hyphenate;
+  overflow: hidden;
 }
+
+.md-view * div.thumbnail img {
+	height: 150px;
+	width: 150px;
+}
+
 #login-form input {
   font-size: 100% !important;
 }
