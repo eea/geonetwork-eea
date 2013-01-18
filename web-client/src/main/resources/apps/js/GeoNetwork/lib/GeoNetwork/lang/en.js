@@ -565,7 +565,10 @@ GeoNetwork.Lang.en = {
     "cifsLink": "CIFS (Common Internet File System) link",
     "ftpsLink": "FTPS link",
     'login': 'Admin login',
-    "schematron-rules-eea": "EEA validation"
+    "schematron-rules-eea": "EEA validation",
+    'inspirethemes': 'INSPIRE Themes',
+    'years': 'Years',
+    'gemetKeywords': 'GEMET keywords'
 };
 
 OpenLayers.Util.extend(OpenLayers.Lang.en, GeoNetwork.Lang.en);

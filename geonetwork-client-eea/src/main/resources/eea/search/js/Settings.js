@@ -75,6 +75,15 @@ GeoNetwork.Settings.results = {
         //loadRelationForAll: undefined
 };
 
+//List of facet to display. If none, the server configuration is use.
+GeoNetwork.Settings.facetListConfig = [{name: 'inspirethemes'},
+                                    {name: 'orgNames'}, 
+                                    {name: 'types'},  
+                                    {name: 'serviceTypes'}, 
+                                    {name: 'gemetKeywords'}, 
+                                    {name: 'years'}, 
+                                    {name: 'publishedDatasets'}];
+
 //Latest update info query
 GeoNetwork.Settings.latestQuery = "from=1&to=6&sortBy=changeDate&fast=index";
 //GeoNetwork.Settings.latestTpl = EEA.Templates.THUMBNAIL;
