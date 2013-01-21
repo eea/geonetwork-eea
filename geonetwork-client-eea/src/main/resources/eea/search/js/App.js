@@ -210,11 +210,21 @@ GeoNetwork.app = function () {
             cls: 'breadcrumb',
             defaultType: 'button',
             border: false,
+            defaults: {
+                bodyStyle: 'width:100%'
+            },
             split: false,
             id: 'breadcrumb',
             renderTo: 'breadcrumb-facets',
             layoutConfig: {
-                columns:3
+                columns:3,
+                cellCls: 'breadcrumb-cell',
+                extraCls: 'breadcrumb-table'
+//                tableAttrs: {
+//                    style: {
+//                        width: '33%'
+//                    }
+//                }
             }
         });
         
@@ -238,6 +248,26 @@ GeoNetwork.app = function () {
         
                 // Add advanced mode criteria to simple form - start
         var advancedCriteria = [];
+
+        var opts = GeoNetwork.util.SearchFormTools.getOptions(catalogue.services);
+        advancedCriteria.push(opts);
+        
+
+        var inspire = {
+                xtype: 'fieldset',
+                title: OpenLayers.i18n('inspireSearchOptions'),
+                autoHeight: true,
+                autoWidth: true,
+                collapsible: true,
+                collapsed: (urlParameters.inspire ? false : true),
+                defaultType: 'checkbox',
+                defaults: {
+                    width: 160
+                },
+                items: GeoNetwork.util.INSPIRESearchFormTools.getINSPIREFields(catalogue.services, true, {withAnnex: true, withRelated: true, withTheme: true})
+            };
+        advancedCriteria.push(inspire);
+        
         var services = catalogue.services;
         var orgNameStore = new GeoNetwork.data.OpenSearchSuggestionStore({
             url: services.opensearchSuggest,
@@ -341,6 +371,7 @@ GeoNetwork.app = function () {
                                 when, spatialTypes, denominatorField,
 //                                catalogueField, groupField, 
                                 metadataTypeField, validField, ownerField, isHarvestedField);
+        
         var adv = {
             xtype: 'fieldset',
             title: OpenLayers.i18n('advancedSearchOptions'),
@@ -355,19 +386,6 @@ GeoNetwork.app = function () {
             items: advancedCriteria
         };
         
-        var inspire = {
-                xtype: 'fieldset',
-                title: OpenLayers.i18n('inspireSearchOptions'),
-                autoHeight: true,
-                autoWidth: true,
-                collapsible: true,
-                collapsed: (urlParameters.inspire ? false : true),
-                defaultType: 'checkbox',
-                defaults: {
-                    width: 160
-                },
-                items: GeoNetwork.util.INSPIRESearchFormTools.getINSPIREFields(catalogue.services, true, {withAnnex: true, withRelated: true, withTheme: true})
-            };
         var formItems = [];
         
         var any_or_id = new GeoNetwork.form.OpenSearchSuggestionTextField({
@@ -381,10 +399,10 @@ GeoNetwork.app = function () {
         });
         var mapField = GeoNetwork.util.SearchFormTools.getSimpleMap(GeoNetwork.map.BACKGROUND_LAYERS, GeoNetwork.map.MAP_OPTIONS, GeoNetwork.searchDefault.activeMapControlExtent, {width: 290}, false);
         
-        var opts = GeoNetwork.util.SearchFormTools.getOptions(catalogue.services);
         
-        formItems.push(any_or_id, mapField, opts,
-                    inspire, adv);
+        formItems.push(any_or_id, mapField,// opts,
+                    //inspire, 
+                adv);
         // Add advanced mode criteria to simple form - end
         
         

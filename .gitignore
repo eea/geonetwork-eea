@@ -31,3 +31,4 @@ web-client/src/main/resources/apps/search/js/App-mini.js
 web-client/src/main/resources/apps/tabsearch/js/App-mini.js
 *.iml
 .idea/
+geonetwork-client-eea/src/main/resources/eea/search/css/eea-mini.css
