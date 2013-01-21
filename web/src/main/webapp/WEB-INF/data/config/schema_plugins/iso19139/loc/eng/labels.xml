@@ -1886,6 +1886,11 @@
 		<label>Protocol</label>
 		<description>Connection protocol to be used</description>
 		<helper>
+			<!-- EEA Custom protocols -->
+			<protocolChoice value="EEA:FILEPATH">File path (from the level below gis_sdi)</protocolChoice>
+			<protocolChoice value="EEA:FOLDERPATH">Folder path (from the level below gis_sdi)</protocolChoice>
+			<protocolChoice value="EEA:DBPG">PostGIS database table</protocolChoice>
+			<!-- EEA Custom protocols | end -->
 			<option show="y" value="ESRI:AIMS--http--configuration">ArcIMS Map Service Configuration File
 				(*.AXL)
 			</option>
