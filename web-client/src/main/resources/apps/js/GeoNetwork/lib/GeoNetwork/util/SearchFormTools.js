@@ -378,17 +378,15 @@ GeoNetwork.util.SearchFormTools = {
         var sortByField = new Ext.form.TextField({
             name: 'E_sortBy',
             id: 'E_sortBy',
-            inputType: 'hidden',
-            linkedCombo: combo
+            inputType: 'hidden'
         });
         var sortOrderField = new Ext.form.TextField({
             name: 'E_sortOrder',
             id: 'sortOrder',
-            inputType: 'hidden',
-            linkedCombo: combo
+            inputType: 'hidden'
         });
         combo.setValue(defaultValue || 'relevance#');
-        return [sortByField, sortOrderField, combo];
+        return [sortByField, sortOrderField];
     },
     /** api:method[getSortByStore]
      *  
@@ -893,31 +891,48 @@ GeoNetwork.util.SearchFormTools = {
         });
         
         // TODO : restore slider state
+        var middle = min+max/2;
         var slider = new Ext.slider.MultiSlider({
-            disabled: disabled ? true : false,
+            hidden: disabled ? true : false,
+            initialized: false,
             width: width,
             minValue: min,
             maxValue: max,
             increment: increment,
-            values: [min, max],
+            values: [middle, middle], // Set min, max. If not thumb.el in MS.setValue return undefined. And init position when displayed
             formFields: [denominatorFrom, denominatorTo],
             plugins: tip,
             listeners: {
+                'show': function(cmp){
+                    // Initialized thumbs when visible for the first time
+                    //
+                    // There is a bug on startup where min and max slider are not displayed
+                    // at the min and max values of the slider.
+                    // Set values to the middle on startup and move the thumbs when enabled
+                    // and located in the middle.
+                    if (!cmp.initialized) {
+                        cmp.setValue(0, min, false);
+                        cmp.setValue(1, max, false);
+                        cmp.initialized = true;
+                    }
+                },
                 'change': function(sliders, newValue, thumb){
                     sliders.formFields[thumb.index].setValue(newValue);
                 }
             }
         });
-        
         var scaleCk = new Ext.form.Checkbox({
             fieldLabel: OpenLayers.i18n('scale'),
             name: 'scaleOn',
             value: disabled ? true : false,
             handler: function (ch, checked){
-                slider.setDisabled(!checked);
+                slider.setVisible(checked);
                 if (!checked) {
                     denominatorFrom.setValue('');
                     denominatorTo.setValue('');
+                } else{
+                    denominatorFrom.setValue(slider.getValues()[0]);
+                    denominatorTo.setValue(slider.getValues()[1]);
                 }
             }
         });

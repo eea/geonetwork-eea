@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:fo="http://www.w3.org/1999/XSL/Format">
+							  xmlns:fo="http://www.w3.org/1999/XSL/Format">
 
 
   <xsl:include href="../header.xsl"/>
   <xsl:include href="../banner.xsl"/>
+  <xsl:include href="../eea-layout.xsl"/>
   
   <xsl:variable name="widgetPath">../../apps</xsl:variable>
   <xsl:variable name="indent" select="100"/>
-  
-  <xsl:template mode="css" match="/" priority="2">
-    <link rel="stylesheet" type="text/css" href="{$widgetPath}/js/ext/resources/css/ext-all.css"/>
-    <link rel="stylesheet" type="text/css"
-      href="{$widgetPath}/js/ext-ux/FileUploadField/file-upload.css"/>
-    <link rel="stylesheet" type="text/css" href="{$widgetPath}/css/gnmapdefault.css"/>
-    <link rel="stylesheet" type="text/css" href="{$widgetPath}/css/gnmetadatadefault.css"/>
-    <link rel="stylesheet" type="text/css"
-      href="{$widgetPath}/js/GeoNetwork/resources/css/metadata-view.css"/>
-  </xsl:template>
+
+	<xsl:template mode="css" match="/" priority="2">
+		<link rel="stylesheet" type="text/css" href="{$widgetPath}/js/ext/resources/css/ext-all.css"/>
+		<link rel="stylesheet" type="text/css" href="{$widgetPath}/js/ext-ux/FileUploadField/file-upload.css"/>
+		<link rel="stylesheet" type="text/css" href="{$widgetPath}/css/gnmapdefault.css"/>
+		<link rel="stylesheet" type="text/css" href="{$widgetPath}/css/gnmetadatadefault.css"/>
+		<link rel="stylesheet" type="text/css" href="{$widgetPath}/css/metadata-view.css"/>
+	</xsl:template>
 
   <xsl:template mode="script" match="/" priority="2">
-
+    
     <script type="text/javascript" src="{$widgetPath}/js/ext/adapter/ext/ext-base.js"/>
     <script type="text/javascript" src="{$widgetPath}/js/ext/ext-all-debug.js"/>
     <script type="text/javascript" src="{$widgetPath}/js/proj4js-compressed.js"/>
@@ -31,42 +30,42 @@
       OpenLayers.ProxyHostURL = '../../proxy?url=';
       
       OpenLayers.ProxyHost = function(url){
-          /**
-           * Do not use proxy for local domain.
-           * This is required to keep the session activated.
-           */
-          if (url &amp;&amp; url.indexOf(window.location.host) != -1) {
-              return url;
-          } else {
-              return OpenLayers.ProxyHostURL + encodeURIComponent(url);
-          }
+      /**
+      * Do not use proxy for local domain.
+      * This is required to keep the session activated.
+      */
+      if (url &amp;&amp; url.indexOf(window.location.host) != -1) {
+      return url;
+      } else {
+      return OpenLayers.ProxyHostURL + encodeURIComponent(url);
+      }
       };
       Ext.onReady(function(){
-        GeoNetwork.Util.setLang('<xsl:value-of select="/root/gui/language"/>');
-        
-        catalogue = new GeoNetwork.Catalogue({
-                      statusBarId : 'info',
-                      hostUrl: '../..',
-                      lang: '<xsl:value-of select="/root/gui/language"/>',
-                      mdOverlayedCmpId : 'resultsPanel'
-                  });
-        
-        
-        var manager = new GeoNetwork.admin.ThesaurusManagerPanel({
-              catalogue: catalogue,
-              renderTo: 'manager',
-              autoWidth : true,
-              layout : 'border',
-              height: 680
-        });
+      GeoNetwork.Util.setLang('<xsl:value-of select="/root/gui/language"/>');
+      
+      catalogue = new GeoNetwork.Catalogue({
+      statusBarId : 'info',
+      hostUrl: '../..',
+      lang: '<xsl:value-of select="/root/gui/language"/>',
+      mdOverlayedCmpId : 'resultsPanel'
+      });
+      
+      var manager = new GeoNetwork.admin.ThesaurusManagerPanel({
+      catalogue: catalogue,
+      renderTo: 'manager',
+      autoWidth : true,
+      layout : 'border',
+      height: 680
+      });
       })
     </script>
   </xsl:template>
-
+  
   <xsl:template match="/">
     <html>
       <head>
         <xsl:call-template name="header"/>
+        <xsl:call-template name="eea-head"/>
         <xsl:apply-templates mode="script" select="/"/>
         
         <style type="text/css">
@@ -76,10 +75,11 @@
         </style>
       </head>
       <body>
-        <xsl:call-template name="banner"/>
+        <xsl:call-template name="eea-header"/>
         <div id="content_container">
           <xsl:call-template name="content"/>
         </div>
+        <xsl:call-template name="eea-footer"/>
       </body>
     </html>
   </xsl:template>
@@ -110,7 +110,6 @@
           </button>
         </td>
       </tr>
-      <tr><td class="blue-content" colspan="3"/></tr>
     </table> 
   </xsl:template>
 

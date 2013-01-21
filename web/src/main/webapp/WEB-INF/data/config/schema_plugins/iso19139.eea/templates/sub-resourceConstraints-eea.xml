@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmd:MD_Constraints xmlns:gmd="http://www.isotc211.org/2005/gmd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml"
+    xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <gmd:useLimitation>
+        <gco:CharacterString>Unless otherwise indicated, re-use of content on the EEA website for
+            commercial or non-commercial purposes is permitted free of charge, provided that the
+            source is acknowledged. The EEA re-use policy follows Directive 2003/98/EC of the
+            European Parliament and the Council on the re-use of public sector information
+            throughout the European Union and Commission Decision 2006/291/EC, Euratom on the re-use
+            of Commission information. The EEA accepts no responsibility or liability whatsoever for
+            the re-use of content accessible on its website. Any inquiries about re-use of content
+            on the EEA website should be addressed to Ove Caspersen, EEA, Kongens Nytorv 6, DK-1050
+            Copenhagen K, Tel +45 33 36 71 00, Fax +45 33 36 71 99, e-mail copyrights at
+            eea.europa.eu</gco:CharacterString>
+    </gmd:useLimitation>
+</gmd:MD_Constraints>

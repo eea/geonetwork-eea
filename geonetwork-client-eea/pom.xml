@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>geonetwork</artifactId>
+    <groupId>org.geonetwork-opensource</groupId>
+    <version>2.9.0-SNAPSHOT</version>
+  </parent>
+  <groupId>org.geonetwork-opensource</groupId>
+  <artifactId>geonetwork-client-eea</artifactId>
+  <version>2.9.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>GeoNetwork EEA web client module</name>
+  <description></description>
+  
+  <licenses>
+    <license>
+      <name>General Public License (GPL)</name>
+      <url>http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  
+  
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.1.2</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>yuicompressor-maven-plugin</artifactId>
+        <!--  mvn net.alchim31.maven:yuicompressor-maven-plugin:compress -->
+        <executions>
+          <execution>
+            <!-- 
+                This phase does not belong to the default lifecycle for a jar/war packaging.
+                It has to be run explicitely as mvn command argument for generating obfuscated js. 
+             -->
+            <phase>initialize</phase>
+            <goals>
+              <goal>compress</goal>
+            </goals>
+          </execution>
+          <!--          <execution>
+            <id>gn-jslint</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>jslint</goal>
+            </goals>
+          </execution>-->
+        </executions>
+        <configuration>
+          <nosuffix>true</nosuffix>
+          <gzip>false</gzip>
+          <force>true</force>
+          <nomunge>true</nomunge>
+          <jswarn>${minify.verbose}</jswarn>
+          <excludes>
+            <exclude>**/eea/search/js/App-mini.js</exclude>
+          </excludes>
+          <aggregations>
+            <aggregation>
+              <output>src/main/resources/eea/search/css/eea-mini.css</output>
+              <includes>
+                <include>${project.build.directory}/classes/eea/search/css/eea.css</include>
+                <include>${project.build.directory}/classes/eea/search/css/gndefault.css</include>
+              </includes>
+            </aggregation>
+            <aggregation>
+              <output>src/main/resources/eea/search/js/App-mini.js</output>
+              <includes>
+                <include>../../../../../../../web-client/target/classes/apps/js/GeoNetwork-mini-nomap.js</include>
+                <include>${project.build.directory}/classes/eea/search/js/Settings.js</include>
+                <include>${project.build.directory}/classes/eea/search/js/map/Settings.js</include>
+                <include>${project.build.directory}/classes/eea/search/js/Shortcuts.js</include>
+                <include>${project.build.directory}/classes/eea/search/js/Templates.js</include>
+                <include>${project.build.directory}/classes/eea/search/js/App.js</include>
+              </includes>
+            </aggregation>
+            <aggregation>
+              <output>src/main/resources/gisc/search/js/App-mini.js</output>
+              <includes>
+                <include>../../../../../../../web-client/target/classes/apps/js/GeoNetwork-mini.js</include>
+                <include>${project.build.directory}/classes/gisc/search/js/Settings.js</include>
+                <include>${project.build.directory}/classes/gisc/search/js/map/Settings.js</include>
+                <include>${project.build.directory}/classes/gisc/search/js/map/MapApp.js</include>
+                <include>${project.build.directory}/classes/gisc/search/js/Shortcuts.js</include>
+                <include>${project.build.directory}/classes/gisc/search/js/App.js</include>
+              </includes>
+            </aggregation>
+          </aggregations>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <properties>
+    <geonetwork.build.dir>${project.build.directory}/${project.build.finalName}</geonetwork.build.dir>
+    <minify.verbose>false</minify.verbose>
+  </properties>
+  
+  
+</project>

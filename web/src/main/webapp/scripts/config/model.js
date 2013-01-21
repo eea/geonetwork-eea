@@ -34,6 +34,7 @@ ConfigModel.prototype.getConfig_OK = function(node)
             SERVER_PROTOCOL   : xml.evalXPath(node, 'server/protocol'),
 			SERVER_HOST       : xml.evalXPath(node, 'server/host'),
 			SERVER_PORT       : xml.evalXPath(node, 'server/port'),
+			SERVER_SECURE_PORT       : xml.evalXPath(node, 'server/securePort'),
 			INTRANET_NETWORK  : xml.evalXPath(node, 'intranet/network'),
 			INTRANET_NETMASK  : xml.evalXPath(node, 'intranet/netmask'),
 
@@ -57,13 +58,14 @@ ConfigModel.prototype.getConfig_OK = function(node)
 			OAI_TOKENTIMEOUT  : xml.evalXPath(node, 'oai/tokentimeout'),
 
 			XLINKRESOLVER_ENABLE      : xml.evalXPath(node, 'xlinkResolver/enable'),
+			HIDEWITHHELDELEMENTS_ENABLE      : xml.evalXPath(node, 'hidewithheldelements/enable'),
+			HIDEWITHHELDELEMENTS_keepMarkedElement      : xml.evalXPath(node, 'hidewithheldelements/keepMarkedElement'),
 
 			SEARCHSTATS_ENABLE        : xml.evalXPath(node, 'searchStats/enable'),
 
-            AUTODETECT_ENABLE : xml.evalXPath(node, 'autodetect/enable'),
-            REQUESTED_LANGUAGE_ONLY : xml.evalXPath(node, 'requestedLanguage/only'),
-            REQUESTED_LANGUAGE_SORTED : xml.evalXPath(node, 'requestedLanguage/sorted'),
-            REQUESTED_LANGUAGE_IGNORED : xml.evalXPath(node, 'requestedLanguage/ignored'),
+      AUTODETECT_ENABLE : xml.evalXPath(node, 'autodetect/enable'),
+      REQUESTED_LANGUAGE_ONLY : xml.evalXPath(node, 'requestedLanguage/only'),
+      REQUESTED_LANGUAGE_SORTED : xml.evalXPath(node, 'requestedLanguage/sorted'),
 
 			DOWNLOADSERVICE_LEAVE         : xml.evalXPath(node, 'downloadservice/leave'),
 			DOWNLOADSERVICE_SIMPLE         : xml.evalXPath(node, 'downloadservice/simple'),
@@ -95,18 +97,6 @@ ConfigModel.prototype.getConfig_OK = function(node)
 			FEEDBACK_MAIL_HOST: xml.evalXPath(node, 'feedback/mailServer/host'),
 			FEEDBACK_MAIL_PORT: xml.evalXPath(node, 'feedback/mailServer/port'),
 			REMOVEDMD_DIR     : xml.evalXPath(node, 'removedMetadata/dir'),
-
-			LDAP_USE          : xml.evalXPath(node, 'ldap/use'),
-			LDAP_HOST         : xml.evalXPath(node, 'ldap/host'),
-			LDAP_PORT         : xml.evalXPath(node, 'ldap/port'),
-			LDAP_DEF_PROFILE  : xml.evalXPath(node, 'ldap/defaultProfile'),
-            LDAP_ATTR_UID     : xml.evalXPath(node, 'ldap/uidAttr'),
-			LDAP_DN_BASE      : xml.evalXPath(node, 'ldap/distinguishedNames/base'),
-			LDAP_DN_USERS     : xml.evalXPath(node, 'ldap/distinguishedNames/users'),
-			LDAP_ATTR_NAME    : xml.evalXPath(node, 'ldap/userAttribs/name'),
-			LDAP_ATTR_PROFILE : xml.evalXPath(node, 'ldap/userAttribs/profile'),
-            LDAP_ATTR_GROUP   : xml.evalXPath(node, 'ldap/userAttribs/group'),
-            LDAP_DEF_GROUP    : xml.evalXPath(node, 'ldap/defaultGroup'),
 
 			SHIB_USE              : xml.evalXPath(node, 'shib/use'),
 			SHIB_PATH             : xml.evalXPath(node, 'shib/path'),
@@ -163,6 +153,7 @@ ConfigModel.updateTemp =
 '		<protocol>{SERVER_PROTOCOL}</protocol>'+
 '		<host>{SERVER_HOST}</host>'+
 '		<port>{SERVER_PORT}</port>'+
+'		<securePort>{SERVER_SECURE_PORT}</securePort>'+
 '	</server>'+
 '	<intranet>'+
 '		<network>{INTRANET_NETWORK}</network>'+
@@ -199,6 +190,10 @@ ConfigModel.updateTemp =
 '	<xlinkResolver>'+
 '		<enable>{XLINKRESOLVER_ENABLE}</enable>'+
 '	</xlinkResolver>'+
+'	<hidewithheldelements>'+
+'		<enable>{HIDEWITHHELDELEMENTS_ENABLE}</enable>'+
+'		<keepMarkedElement>{HIDEWITHHELDELEMENTS_keepMarkedElement}</keepMarkedElement>'+
+'	</hidewithheldelements>'+
 '	<searchStats>'+
 '		<enable>{SEARCHSTATS_ENABLE}</enable>'+
 '	</searchStats>'+
@@ -208,7 +203,6 @@ ConfigModel.updateTemp =
 '	<requestedLanguage>'+
 '        <only>{REQUESTED_LANGUAGE_ONLY}</only>' +
 '        <sorted>{REQUESTED_LANGUAGE_SORTED}</sorted>' +
-'        <ignored>{REQUESTED_LANGUAGE_IGNORED}</ignored>' +
 '	</requestedLanguage>'+
 '	<downloadservice>'+
 '		<leave>{DOWNLOADSERVICE_LEAVE}</leave>'+
@@ -258,23 +252,6 @@ ConfigModel.updateTemp =
 '	<removedMetadata>'+
 '		<dir>{REMOVEDMD_DIR}</dir>'+
 '	</removedMetadata>'+
-'	<ldap>'+
-'		<use>{LDAP_USE}</use>'+
-'		<host>{LDAP_HOST}</host>'+
-'		<port>{LDAP_PORT}</port>'+
-'		<defaultProfile>{LDAP_DEF_PROFILE}</defaultProfile>'+
-'		<defaultGroup>{LDAP_DEF_GROUP}</defaultGroup>'+
-'		<uidAttr>{LDAP_ATTR_UID}</uidAttr>'+        
-'		<distinguishedNames>'+
-'			<base>{LDAP_DN_BASE}</base>'+
-'			<users>{LDAP_DN_USERS}</users>'+
-'		</distinguishedNames>'+
-'		<userAttribs>'+
-'			<name>{LDAP_ATTR_NAME}</name>'+
-'			<profile>{LDAP_ATTR_PROFILE}</profile>'+
-'			<group>{LDAP_ATTR_GROUP}</group>'+
-'		</userAttribs>'+
-'	</ldap>'+
 '	<shib>'+
 '		<use>{SHIB_USE}</use>'+
 '		<path>{SHIB_PATH}</path>'+

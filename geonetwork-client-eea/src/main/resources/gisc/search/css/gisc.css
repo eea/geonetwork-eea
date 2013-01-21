@@ -1,0 +1,95 @@
+/*#lang-form {
+    display: none;
+}*/
+.metadata * table.gn {
+    font-size: inherit !important;
+}
+/*ul li.tag-cloud {
+    text-align: left !important;
+    float: none !important;
+}*/
+.x-superboxselect-item-close {
+    background: url(../../../apps/js/ext-ux/SuperBoxSelect/close.png) no-repeat scroll left 0px !important;
+}
+
+/* added for GISC Catalogue header */
+#header div#headereea div {
+  float: none !important;
+  display: block !important;
+}
+#toolribbon {
+    color: #315076;
+    font-size: 80%;
+    height: 30px;
+}
+#toolribbon a {
+    background-color: #FFFFFF;
+    border-right: 1px dotted #6F7072;
+    color: #000000;
+    display: inline-block;
+    height: 16px;
+    padding: 3px 0.5em 1px;
+    text-decoration: none;
+    vertical-align: middle;
+}
+a#eealink {
+    background: url('../img/eeaicon.gif') no-repeat scroll left center transparent;
+    padding-left: 18px;
+}
+#left_topnav ul {
+    display: inline;
+    float: left;
+    list-style-type: none;
+    margin: 0;
+    padding: 0.3em 0 0;
+}
+#left_topnav li {
+    display: inline;
+    margin: 0;
+    padding 0;
+}
+#left_topnav {
+    text-align: left;
+}
+#headereea { 
+    border-top: 4px solid #6F7072;
+    clear: both;
+    width: 100% !important;
+    height:100px;
+    background: transparent;
+    float: none !important;
+    display: block !important;
+}
+#headereea a { border: medium none; }
+#headereea a .leftfl { float: left; border: medium none; }
+#headereea a .rightfl { float: right; padding-right:0.8em; }
+#headereea { background: #005bac url('../img/ew-header.jpg') repeat-y top right; }
+.page_title {
+    font-size:60px;
+    font-weight:bold;
+    color:#f5f5f5;
+    margin-left:20px;
+}
+.page_title a {
+    text-decoration:none;
+    color:#f5f5f5;
+}
+.page_subtitle {
+    font-size:18px;
+    font-weight:bold;
+    color:#bed2f0; 
+    margin-left:20px;
+}
+#breadcrumbtrail {
+    border-bottom: 1px dotted #8FA771;
+    color: #7D7D7D;
+    font-family: verdana,arial,helvetica,sans-serif;
+    font-size: 0.8em;
+    line-height: 2.3em;
+    padding: 1px 0 1px 1em;
+}
+#breadcrumbtrail a { 
+    color: #888888;
+    font-weight: bold;
+    text-decoration: none;
+}

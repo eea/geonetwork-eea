@@ -23,7 +23,6 @@
 
 package org.fao.geonet.kernel.csw.services.getrecords;
 
-import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import jeeves.utils.Log;
 import jeeves.utils.Util;
@@ -42,7 +41,6 @@ import org.fao.geonet.csw.common.exceptions.InvalidParameterValueEx;
 import org.fao.geonet.csw.common.exceptions.NoApplicableCodeEx;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.SchemaManager;
-import org.fao.geonet.kernel.SelectionManager;
 import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.kernel.search.LuceneConfig;
 import org.fao.geonet.kernel.search.spatial.Pair;
@@ -52,6 +50,7 @@ import org.jdom.Namespace;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -63,13 +62,20 @@ import java.util.Set;
  */
 public class SearchController {
     
-	private final CatalogSearcher _searcher;
-    public SearchController(File summaryConfig, LuceneConfig luceneConfig) {
-        _searcher = new CatalogSearcher(summaryConfig, luceneConfig);
+	private LuceneConfig _luceneConfig;
+	private final Set<String> _selector;
+	private final Set<String> _uuidselector;
+
+	public SearchController(LuceneConfig luceneConfig) {
+		_luceneConfig = luceneConfig;
+		
+		_selector = Collections.singleton("_id");
+		_uuidselector = Collections.singleton("_uuid");
+		
     }
 	
-    public CatalogSearcher getSearcher() {
-    	return _searcher;
+    public void setLuceneConfig(LuceneConfig newConfig) {
+    	_luceneConfig = newConfig;
     }
     
 	//---------------------------------------------------------------------------
@@ -107,12 +113,13 @@ public class SearchController {
 
         Element results = new Element("SearchResults", Csw.NAMESPACE_CSW);
 
-        // search for results, filtered and sorted
-        Pair<Element, List<ResultItem>> summaryAndSearchResults = _searcher.search(context, filterExpr, filterVersion,
+        CatalogSearcher searcher = new CatalogSearcher(_luceneConfig, _selector, _uuidselector);
+        
+        context.getUserSession().setProperty(Geonet.Session.SEARCH_RESULT, searcher);
+        
+		// search for results, filtered and sorted
+        Pair<Element, List<ResultItem>> summaryAndSearchResults = searcher.search(context, filterExpr, filterVersion,
                 typeName, sort, resultType, startPos, maxRecords, maxHitsFromSummary, cswServiceSpecificContraint);
-
-        // store search results in user session
-        storeInUserSession(context, filterExpr);
 
         // retrieve actual metadata for results
         int counter = retrieveMetadataMatchingResults(context, results, summaryAndSearchResults, maxRecords, setName,
@@ -181,35 +188,6 @@ public class SearchController {
             }
         }
         return counter;
-    }
-    /**
-     * Stores searcher (with results) in user session.
-     *
-     * @param context service context
-     * @param filterExpr FilterExpression
-     */
-    private void storeInUserSession(ServiceContext context, Element filterExpr)  {
-        //
-        // keep results in user session
-        //
-        UserSession session = context.getUserSession();
-        session.setProperty(Geonet.Session.SEARCH_RESULT, _searcher);
-        //
-        // clear selection from session when query filter change
-        //
-    QueryReprentationForSession sessionQueryReprentation = (QueryReprentationForSession) session.getProperty(Geonet.Session.SEARCH_REQUEST_ID);
-    QueryReprentationForSession requestQueryReprentation = new QueryReprentationForSession(context, filterExpr);
-
-    if (sessionQueryReprentation == null ||
-            !requestQueryReprentation.equals(sessionQueryReprentation)) {
-            // possibly close old selection
-            SelectionManager oldSelection = (SelectionManager)session.getProperty(Geonet.Session.SELECTED_RESULT);
-		    if (oldSelection != null){
-                oldSelection.close();
-                oldSelection = null;
-            }
-        }
-        session.setProperty(Geonet.Session.SEARCH_REQUEST_ID, requestQueryReprentation);
     }
 
     /**

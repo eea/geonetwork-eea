@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<labels xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="../../../labels.xsd" xmlns:gco="http://www.isotc211.org/2005/gco"
+ xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:srv="http://www.isotc211.org/2005/srv"
+ xmlns:gml="http://www.opengis.net/gml" xmlns:gts="http://www.isotc211.org/2005/gts"
+ xmlns:gmx="http://www.isotc211.org/2005/gmx">
+
+ <!-- Based on https://taskman.eionet.europa.eu/Help/wiki/catalogue/metadata_guidelines -->
+
+ <element name="gmd:code" id="207.0"
+  context="gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code">
+  <label>Unique resource identifier</label>
+  <description>Alphanumeric value identifying an instance in the namespace.</description>
+  <help><![CDATA[
+   The Coordinate Reference System shall be referred to with its EPSG code 
+   (<a href="http://www.spatialreference.org/">the spatial reference website</a> provides 
+   a search interface to the EPSG database). When there is not any EPSG code to describe a CRS, 
+   the CRS shall be described in the metadata. Contact Paul Hasenohr for further details.]]>
+   </help>
+  <condition>mandatory</condition>
+  <helper>
+   <option value="urn:ogc:def:crs:EPSG:7.1:3035"
+    title="Lambert Azimuthal Equal Area 52N 10E projection based on ETRS89 datum">Lambert Azimuthal
+    Equal Area (EPSG 3035)</option>
+   <option value="urn:ogc:def:crs:EPSG:7.1:4258"
+    title="ETRS89">ETRS89 (EPSG 4258)</option>
+   <option value="urn:ogc:def:crs:EPSG:7.1:4326"
+    title="WGS 84">WGS 84 (EPSG 4326)</option>
+  </helper>
+ </element>
+ <element name="gmd:codeSpace" id="208.1">
+  <label>Codespace</label>
+  <description>Name or identifier of the person or organization responsible for
+   namespace</description>
+  <helper>
+   <option value="OGP Surveying &amp; Positioning Committee">OGP Surveying &amp; Positioning
+    Committee</option>
+  </helper>
+ </element>
+ <element name="gmd:title" id="360.0"
+  context="gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title">
+  <label>Title</label>
+  <description>Name by which the cited resource is known</description>
+  <condition>mandatory</condition>
+  <help>
+   <![CDATA[The title should be self-explanatory and should not contain acronyms unless they are widely known. 
+   In any case, should an acronym be used in the title, it shall be made explicit in the abstract.
+   For datasets with versions (directory name containing the dataset ending with _revXX), 
+   the version number and the dataset creation date shall be added at the end of the title, 
+   separated from the title with a space followed with an hyphen and a space as shown in 
+   the example (Corine Land Cover 1990 - 2000 changes - <b>version 13, Feb. 2010</b>)]]>
+  </help>
+ </element>
+
+
+ <element name="gmd:date" id="570.0"
+  context="gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date">
+  <label>Date</label>
+  <description>Reference date for the cited resource (YYYY-MM-DD)</description>
+  <condition>mandatory</condition>
+  <help>
+   <![CDATA[The <b>date of publication</b> shall only be present for datasets which are already published on the EEA website.
+  For datasets which are not published on the EEA website, this metadata element shall be removed.<br/>
+  The date of creation shall be equal to the date of publication for datasets which are already published on the EEA website.
+  <br/>
+  The <b>date of creation</b> shall be equal to the date of publication for datasets which are already published on the EEA website.
+  
+  For datasets which are not published on the EEA website, this date might be retrieved from the metadata file generated 
+  by the EEA metadata editor which could be available together with the dataset. If no suitable creation date can be found, 
+  it shall default to 1950-06-01.
+  ]]>
+  </help>
+ </element>
+
+
+ <element name="gmd:edition" id="363.0"
+  context="gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:edition">
+  <label>Edition</label>
+  <description>Version of the cited resource</description>
+  <help><![CDATA[
+   If the dataset has a revision number (such as the Corine Land Cover changes 1990-2000 version 13), 
+   this revision number shall be written in this metadata element.
+   ]]></help>
+ </element>
+
+
+ <element name="gmd:code" id="207.0"
+  context="gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code">
+  <label>Unique resource identifier</label>
+  <description>Alphanumeric value identifying an instance in the namespace.</description>
+  <help><![CDATA[
+   This identifier shall be unique and ideally meaningful.
+   This identifier shall be set to the directory name (written according to 
+   <a href="https://taskman.eionet.europa.eu/Help/wiki/ds/fbs_ref_dataset_l4">this convention</a>) 
+   in which the dataset is contained.]]>
+  </help>
+ </element>
+
+ <element name="gmd:abstract" id="25.0">
+  <label>Abstract</label>
+  <description>Brief narrative summary of the content of the resource(s)</description>
+  <condition>mandatory</condition>
+  <help><![CDATA[When the text is imported from a previous metadata record or from the EEA website, 
+   the dataset name in the abstract (if present) might need some editing.
+ Acronyms should be written in full when first used.]]></help>
+ </element>
+
+
+ <element name="gmd:pointOfContact" id="29.0" context="gmd:MD_DataIdentification">
+  <label>Point of contact</label>
+  <description>Identification of, and means of communication with, person(s) and
+   organizations(s) associated with the resource(s)</description>
+  <help><![CDATA[
+    <h2>Point of contact</h2>
+   The responsible party acting as Point of Contact is the EEA Information 
+   Centre for any dataset owned by EEA.
+   The responsible party acting as Point of Contact is the organization or company owning 
+   the dataset when the latter is not owned by EEA.<br/>
+   <h2>Custodian</h2>
+   This metadata element applies only to datasets owned by EEA.<br/>
+   <ul>
+    <li>The custodian should be the Data Centre responsible for the resource. 
+    In cases where there is not any responsible data centre, enter a default value of Other.</li>
+    <li>The metadata element positionName/characterString shall be edited accordingly and take one of these values:
+     <ul>
+      <li>European air pollution data centre</li>
+      <li>European biodiversity data centre</li>
+      <li>European climate change data centre</li>
+      <li>Environmental data centre for land use</li>
+      <li>European water data centre</li>
+      <li>Other</li>
+     </ul>
+    </li>
+   </ul>
+   ]]></help>
+ </element>
+
+ <element name="gmd:contact" id="29.0" context="gmd:MD_Metadata">
+  <label>Point of contact</label>
+  <description>Identification of, and means of communication with, person(s) and
+   organizations(s) associated with the resource(s)</description>
+  <help><![CDATA[
+  This element refers to the metadata point of contact.
+  We place as default value the responsible for metadata about spatial datasets newly published 
+  on the EEA website (Mauro who is working in SES2). This might be adjusted in future.<br/>
+  ]]></help>
+ </element>
+
+
+ <element name="gmd:positionName" id="377.0">
+  <label>Position name</label>
+  <description>Role or position of the responsible person</description>
+  <condition>conditional</condition>
+  <helper>
+   <option value="European air pollution data centre">European air pollution data centre</option>
+   <option value="European biodiversity data centre">European biodiversity data centre</option>
+   <option value="European climate change data centre">European climate change data centre</option>
+   <option value="Environmental data centre for land use">Environmental data centre for land
+    use</option>
+   <option value="European water data centre">European water data centre</option>
+   <option value="Other">Other</option>
+  </helper>
+ </element>
+
+
+ <element name="gmd:maintenanceAndUpdateFrequency" id="143.0">
+  <label>Maintenance and update frequency</label>
+  <description>Frequency with which changes and additions are made to the resource after the
+   initial resource is completed</description>
+  <condition>mandatory</condition>
+  <help>
+   <![CDATA[This metadata element applies only to datasets with a revision number.
+   In case no frequency from the list above is satisfactory, the following resourceMaintenance 
+   metadata element should be used instead with the relevant frequency expressed as 
+   PeriodDuration? (in this example, a frequency of 
+   1 year and 6 months is expressed with P1Y6M0DT0H0M0S which stands for a period of 1Year and 6Months):]]>
+  </help>
+ </element>
+ 
+ 
+ <element name="gmd:descriptiveKeywords" id="33.0">
+  <label>Descriptive keywords</label>
+  <description>Provides category keywords, their type, and reference source</description>
+  <help>
+   <![CDATA[
+   <h2>INSPIRE Themes</h2>
+   <ul>
+   <li>There shall be one keyword/characterString element per Inspire spatial theme to 
+   which the dataset belongs.</li>
+   <li>Inspire spatial data themes should be assigned based on information contained 
+   in tables 4A, 4B and 4C of Geospatial data requirements for spatial analysis, review 2009 
+   (document available on request).</li>
+   <li>Inspire spatial theme names shall be retrieved from the  English version of the GEMET 
+   - Inspire themes list without any further editing (no change in capitalization etc.).</li>
+   </ul>
+   <h2>GEMET Concepts</h2>
+   <ul>
+     <li>There shall be one keyword/characterString element per GEMET concept to which 
+     the dataset belongs.</li>
+     <li>There should be at least 2-3 GEMET concepts per dataset.</li>
+     <li>GEMET concept names shall be retrieved from the  
+     <a href="http://www.eionet.europa.eu/gemet/index_html?langcode=en">English version of the GEMET - Concepts list</a> (sorted by themes) 
+     without any further editing (no change in capitalization etc.).</li>
+   </ul>
+   <h2>EEA keywords</h2>
+   <ul>
+     <li>EEA keywords are intended to be used by search engines (i.e. facetted search on 
+     EEA website, search functionality in Geonetwork through web and CSW interfaces)</li>
+     <li>EEA keywords shall be short, meaningful and shall not duplicate other metadata 
+     elements which can act as keywords too (i.e. spatialRepresentationType, 
+     Inspire themes, EEA categories, topicCategory)</li>
+     <li><a href="https://taskman.eionet.europa.eu/Help/wiki/catalogue/eea_keywords">Already existing keywords</a>
+     should be reused.<li>
+     <li>Where relevant, a keyword related to the spatial coverage shall be used: EU15, 
+     EU10, EU25, EU27, EFTA4, EEA32</li>
+   </ul>
+   <h2>EEA data categories</h2>
+   This metadata element is used to discriminate between geospatial datasets, maps, figures, charts, etc.
+   We are currently reviewing only geospatial datasets with an explicit or implicit spatial component, 
+   therefore this metadata element does not need to be edited.
+   ]]>
+  </help>
+ </element>
+ 
+ 
+ <element name="gmd:resourceConstraints" id="35.0">
+  <label>Resource constraints</label>
+  <description>Provides information about constraints which apply to the
+   resource(s)</description>
+  <help>
+   <![CDATA[
+   Datasets owned by EEA and which can be freely distributed (this is the default for EEA owned datasets).
+   For datasets which are not owned by EEA but are distributed by EEA, contact Paul Hasenohr
+   For datasets which are protected by intellectual property rights (typically datasets acquired
+   from external providers like Gisco) set copyright and license for the legal constraints.
+   ]]>
+  </help>
+ </element>
+ 
+ 
+ <element name="gmd:scaleDenominator" id="94.0">
+  <label>Scale Denominator</label>
+  <description>Denominator of the representative fraction on a source map</description>
+  <help>Although it is possible to specify several spatial resolutions, we require 
+   to have only one (smallest scale or coarsest resolution).</help>
+ </element>
+ 
+ 
+ <element name="gmd:EX_GeographicBoundingBox" id="343.0">
+  <label>Geographic bounding box</label>
+  <description>Geographic position of the dataset</description>
+  <help>
+   <![CDATA[
+   Coordinates are expressed in decimal degrees with positive east and north.
+   When rounding up decimal values, make sure to do it in such a way 
+   that the bounding box gets larger and not smaller:
+   <ul>
+     <li>westBoundLongitude = -33.90432 rounded up to two decimals becomes westBoundLongitude = -33.91</li>
+     <li>westBoundLongitude = 3.4262 rounded up to two decimals becomes westBoundLongitude = 3.42</li>
+     <li>eastBoundLongitude = 38.1471 rounded up to two decimals becomes eastBoundLongitude = 38.15</li>
+     <li>eastBoundLongitude = -1.2156 rounded up to two decimals becomes eastBoundLongitude = -1.21</li>
+     <li>same principle apply by analogy for north and south latitudes.</li>
+   </ul>
+   ]]>
+  </help>
+ </element>
+ 
+ 
+ <element name="gmd:EX_TemporalExtent" id="350.0">
+  <label>Temporal Extent</label>
+  <description>Time period covered by the content of the dataset</description>
+  <help>
+   <![CDATA[
+   This element describes the time period covered by the content of the dataset.
+   The time coverage written in the default template does not correctly describe the dataset 
+   (Corine Land Cover changes over 1990-2000), a more accurate description would use as:
+   <ul>
+     <li>starting date: date when first set of images and corresponding ground truth records have been acquired</li>
+     <li>ending date: date when last set of images and corresponding ground truth records have been acquired</li>
+   </ul>
+   A full year should be expressed as starting on January, 1st and ending on December, 31st.<br/>
+   In case a time should be specified in addition to a date, time should be expressed as GMT and the following format should 
+   be used: 1977-03-10T11:45:30.<br/>
+   For time series with today as end date, the indeterminatePosition attribute should be set to "now".
+   ]]>
+  </help>
+ </element>
+ 
+ <element name="gmd:name" context="gmd:MD_Format" id="285.0">
+  <label>Name</label>
+  <description>Name of the data transfer format(s)</description>
+  <help>The format in which the resource is stored should be expressed 
+   using a code from this list which is derived from the codes used 
+   by the libraries GDAL and OGR (if a format is missing, contact Paul Hasenohr):
+   We remind that use of unpublished formats should be avoided as much as possible 
+   to ensure the best possible interoperability.</help>
+  <condition>mandatory</condition>
+  <helper rel="gmd:version">
+   <option value="">-- Raster --</option>
+   <option value="AAIGrid">Arc/Info ASCII Grid</option>
+   <option value="AIG">Arc/Info Binary Grid (.adf)</option>
+   <option value="CEOS">CEOS format (used by some satellite image providers)</option>
+   <option value="DIMAP">DIMAP format (used by some satellite image providers)</option>
+   <option value="ECW">ERMapper Compressed Wavelets (.ecw)</option>
+   <option value="EHdr">ESRI .hdr Labelled</option>
+   <option value="ENVI">ENVI .hdr Labelled Raster</option>
+   <option value="GRASS">GRASS Rasters</option>
+   <option value="GTiff" title="1.0">TIFF / BigTIFF / GeoTIFF (if no georeferencing information is available in the TIFF file itself, an ESRI world file [.tfw] must be present)</option>
+   <option value="HDF">Hierarchical Data Format Release (specify the version number [4 or 5] in the metadata element version)</option>
+   <option value="HFA">Erdas Imagine (.img)</option>
+   <option value="LAN">Erdas 7.x .LAN and .GIS</option>
+   <option value="MrSID">Multi-resolution Seamless Image Database</option>
+   <option value="netCDF">NetCDF</option>
+   <option value="XYZ">ASCII Gridded XYZ</option>
+   
+   <option value="">-- Vector --</option>
+   <option value="AVCBin">Arc/Info Binary Coverage</option>
+   <option value="AVCE00">Arc/Info .E00 (ASCII) Coverage</option>
+   <option value="CSV">Comma Separated Value (.csv)</option>
+   <option value="FGeo">ESRI File GeoDatabase</option>
+   <option value="GML" title="3.1.1">Geography Markup Language</option>
+   <option value="GRASS">GRASS vector</option>
+   <option value="KML">Keyhole Markup Language</option>
+   <option value="MIF" title="4.5">MapInfo File</option>
+   <option value="PGeo">ESRI Personal GeoDatabase</option>
+   <option value="SHP" title="1.0">ESRI Shapefile</option>
+   <option value="Postgis">Postgresql/Postgis database</option>
+   
+   
+  </helper>
+ </element>
+ 
+ 
+ <element name="gmd:transferOptions" id="273.0">
+  <label>Transfer options</label>
+  <description>Provides information about technical means and media by which a resource is
+   obtained from the distributor</description>
+  <help>
+   If the dataset has already been published, the permalink to the resource on the EEA website
+   shall be provided in the linkage element with WWW:LINK-1.0-http--link as related protocol.
+   The filepath starting from gis_sdi to the file which needs to be opened in order to access
+   the resource shall be provided in the linkage element with EEA:FILEPATH as related protocol.
+  </help>
+ </element>
+ 
+ 
+ <element name="gmd:LI_Lineage" id="82.0">
+  <label>Lineage</label>
+  <description>Information about the events or source data used in constructing the data
+   specified by the scope or lack of knowledge about lineage</description>
+  <help>All relevant steps taken in order to create the datasets shall be described here (
+   process history) while addressing version specificities where suitable.
+   The overall quality of the dataset should be included as well in this metadata element.</help>
+ </element>
+</labels>

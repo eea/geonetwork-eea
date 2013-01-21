@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codelists xmlns:gmd="http://www.isotc211.org/2005/gmd">
+    <codelist name="gmd:MD_SpatialRepresentationTypeCode">
+        <entry>
+            <code>vector</code>
+            <label>Vector</label>
+            <description>Vector data is used to represent geographic data</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry>
+            <code>grid</code>
+            <label>Grid</label>
+            <description>Grid data is used to represent geographic data</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry>
+            <code>textTable</code>
+            <label>Text, table</label>
+            <description>Textual or tabular data is used to represent geographic data</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry>
+            <code>tin</code>
+            <label>TIN</label>
+            <description>Triangulated irregular network</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry hideInEditMode="true">
+            <code>stereoModel</code>
+            <label>Stereo model</label>
+            <description>Three-dimensional view formed by the intersecting homologous rays of an
+                overlapping pair of images</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry hideInEditMode="true">
+            <code>video</code>
+            <label>Video</label>
+            <description>Scene from a video recording</description>
+        </entry>
+    </codelist>
+    
+    <codelist name="gmd:MD_ScopeCode">
+        <entry hideInEditMode="true">
+            <code>attribute</code>
+            <label>Attribute</label>
+            <description>Information applies to the attribute class</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry hideInEditMode="true">
+            <code>attributeType</code>
+            <label>Attribute type</label>
+            <description>Information applies to the characteristic of a feature</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry hideInEditMode="true">
+            <code>collectionHardware</code>
+            <label>Collection hardware</label>
+            <description>Information applies to the collection hardware class</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry hideInEditMode="true">
+            <code>collectionSession</code>
+            <label>Collection session</label>
+            <description>Information applies to the collection session</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry>
+            <code>dataset</code>
+            <label>Dataset</label>
+            <description>Information applies to the dataset</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry>
+            <code>series</code>
+            <label>Series</label>
+            <description>Information applies to the series</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry hideInEditMode="true">
+            <code>nonGeographicDataset</code>
+            <label>Non geographic dataset</label>
+            <description>Information applies to non-geographic data</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry hideInEditMode="true">
+            <code>dimensionGroup</code>
+            <label>Dimension group</label>
+            <description>Information applies to a dimension group</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry hideInEditMode="true">
+            <code>feature</code>
+            <label>Feature</label>
+            <description>Information applies to a feature</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry hideInEditMode="true">
+            <code>featureType</code>
+            <label>Feature type</label>
+            <description>Information applies to a feature type</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry hideInEditMode="true">
+            <code>propertyType</code>
+            <label>Property type</label>
+            <description>Information applies to a property type</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry hideInEditMode="true">
+            <code>fieldSession</code>
+            <label>Field session</label>
+            <description>Information applies to a field session</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry hideInEditMode="true">
+            <code>software</code>
+            <label>Software</label>
+            <description>Information applies to a computer program or routine</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry>
+            <code>service</code>
+            <label>Service</label>
+            <description>Information applies to a capability which a service provider entity makes
+                available to a service user entity through a set of interfaces that define a behaviour,
+                such as a use case</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry hideInEditMode="true">
+            <code>model</code>
+            <label>Model</label>
+            <description>Information applies to a copy or imitation of an existing or hypothetical
+                object</description>
+        </entry>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <entry hideInEditMode="true">
+            <code>tile</code>
+            <label>Tile</label>
+            <description>Information applies to a tile, a spatial subset of geographic
+                data</description>
+        </entry>
+    </codelist>
+</codelists>

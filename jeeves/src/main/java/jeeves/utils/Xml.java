@@ -26,6 +26,7 @@ package jeeves.utils;
 import jeeves.exceptions.XSDValidationErrorEx;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.FeatureKeys;
+import org.apache.commons.lang.SystemUtils;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
@@ -73,6 +74,8 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -191,7 +194,7 @@ public final class Xml
 
 			result = (Element)jdoc.getRootElement().detach();
 		} catch (Exception e) {
-			System.out.println("Threw exception "+e);
+		    Log.error(Log.ENGINE, "Error loading URL " + url.getPath() + " .Threw exception "+e);
 			e.printStackTrace();
 		}
 		return result;
@@ -423,17 +426,52 @@ public final class Xml
      * @return
      * @throws TransformerException
      */
-  	public Source resolve(String href, String base) throws TransformerException {
-		 Resolver resolver = ResolverWrapper.getInstance();
-		 CatalogResolver catResolver = resolver.getCatalogResolver();
-          if(Log.isDebugEnabled(Log.XML_RESOLVER)) Log.debug(Log.XML_RESOLVER, "Trying to resolve "+href+":"+base);
-     Source s = catResolver.resolve(href, base);
-		 if (s != null) {
-             if(Log.isDebugEnabled(Log.XML_RESOLVER)) Log.debug(Log.XML_RESOLVER, "Resolved as "+s.getSystemId());
-		 }
-		 return s;
-		}
-	}
+     public Source resolve(String href, String base) throws TransformerException {
+        Resolver resolver = ResolverWrapper.getInstance();
+        CatalogResolver catResolver = resolver.getCatalogResolver();
+        if(Log.isDebugEnabled(Log.XML_RESOLVER)) {
+            Log.debug(Log.XML_RESOLVER, "Trying to resolve "+href+":"+base);
+        }
+        Source s = catResolver.resolve(href, base);
+        // If resolver has a blank XSL file to replace non existing resolved file ...
+        String blankXSLFile = resolver.getBlankXSLFile();
+        if (blankXSLFile != null && s.getSystemId().endsWith(".xsl")) {
+            // The resolved resource does not exist, set it to blank file path to not trigger FileNotFound Exception
+            try {
+                if(Log.isDebugEnabled(Log.XML_RESOLVER)) {
+                    Log.debug(Log.XML_RESOLVER, "  Check if exist " + s.getSystemId());
+                }
+                File f;
+                if (SystemUtils.IS_OS_WINDOWS) {
+                    String path = s.getSystemId();
+                    // fxp
+                    path = path.replaceAll("file:\\/", "");
+                    // heikki
+                    path = path.replaceAll("file:", "");
+
+                    f = new File(path);
+                }
+                else {
+                    f = new File(new URI(s.getSystemId()));
+                }
+                if (!(f.exists())) {
+                    if(Log.isDebugEnabled(Log.XML_RESOLVER)) {
+                        Log.debug(Log.XML_RESOLVER, "  Resolved resource " + s.getSystemId() + " does not exist. blankXSLFile returned instead.");
+                    }
+                    s.setSystemId(blankXSLFile);
+                }
+            }
+            catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+         
+         if (Log.isDebugEnabled(Log.XML_RESOLVER) && s != null) {
+             Log.debug(Log.XML_RESOLVER, "Resolved as "+s.getSystemId());
+         }
+         return s;
+         }
+     }
 
 	//--------------------------------------------------------------------------
 
@@ -465,7 +503,7 @@ public final class Xml
 			// Add the following to get timing info on xslt transformations
 			//transFact.setAttribute(FeatureKeys.TIMING,true);
 		} catch (IllegalArgumentException e) {
-			System.out.println("WARNING: transformerfactory doesnt like saxon attributes!");
+		    Log.warning(Log.ENGINE, "WARNING: transformerfactory doesnt like saxon attributes!");
 			//e.printStackTrace();
 		} finally {
 			Transformer t = transFact.newTransformer(srcSheet);
@@ -490,7 +528,7 @@ public final class Xml
 			Method cacheMethod = transFact.getClass().getDeclaredMethod("clearCache", null);
 			cacheMethod.invoke(transFact, new Object[0]);
 		} catch (Exception e) {
-			System.out.println("Failed to find/invoke clearCache method - continuing ("+e.getMessage()+")");
+			Log.error(Log.ENGINE, "Failed to find/invoke clearCache method - continuing ("+e.getMessage()+")");
 		}
 
 	}
@@ -529,7 +567,7 @@ public final class Xml
 			factory.setAttribute(FeatureKeys.LINE_NUMBERING,true);
 			factory.setAttribute(FeatureKeys.RECOVERY_POLICY,Configuration.RECOVER_SILENTLY);
 		} catch (IllegalArgumentException e) {
-			System.out.println("WARNING: transformerfactory doesnt like saxon attributes!");
+		    Log.warning(Log.ENGINE, "WARNING: transformerfactory doesnt like saxon attributes!");
 			//e.printStackTrace();
 		} finally {
    		Transformer transformer = factory.newTransformer(xslt);

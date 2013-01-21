@@ -238,11 +238,13 @@ public class SelectionManager {
 			selection.clear();
 
 		if (type.equals(SELECTION_METADATA)) {
-			Element request = (Element)session.getProperty(Geonet.Session.SEARCH_REQUEST);
+		    Element request = (Element)session.getProperty(Geonet.Session.SEARCH_REQUEST);
 			Object searcher = null;
 			
 			// Run last search if xml.search or q service is used (ie. last searcher is not stored in current session).
 			if (request != null) {
+	            request = (Element) request.clone();
+	            request.addContent(new Element(Geonet.SearchResult.BUILD_SUMMARY).setText("false"));
 				GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 				SearchManager searchMan = gc.getSearchmanager();
 				try {
@@ -263,7 +265,7 @@ public class SelectionManager {
 				if (searcher instanceof LuceneSearcher)
 					uuidList = ((LuceneSearcher) searcher).getAllUuids(maxhits);
 				else if (searcher instanceof CatalogSearcher)
-					uuidList = ((CatalogSearcher) searcher).getAllUuids(maxhits);
+					uuidList = ((CatalogSearcher) searcher).getAllUuids(maxhits, context);
 				else
 					return;
 

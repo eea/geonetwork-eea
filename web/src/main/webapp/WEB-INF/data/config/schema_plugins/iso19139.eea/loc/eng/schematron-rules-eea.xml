@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<strings>
+    <EEASRS>Coordinate reference system.</EEASRS>
+    <EEASRS.alert>
+        <div>The Coordinate Reference System shall be referred to with its EPSG code </div>
+    </EEASRS.alert>
+    <EEASRS.report>Coordinate Reference System found: </EEASRS.report>
+    
+    <EEATITLE>Dataset citation</EEATITLE>
+    <EEATITLE.alert>Metadata title not found.</EEATITLE.alert>
+    <EEATITLE.report>Metadata title is </EEATITLE.report>
+    
+    <EEAPUBDATE.alert>Publication date is not defined for a dataset published on EEA website at URL: </EEAPUBDATE.alert>
+    <EEAPUBDATE.report>Publication date of the dataset on EEA website is </EEAPUBDATE.report>
+    
+    <EEACREATIONDATE.alert>Creation date is not defined.</EEACREATIONDATE.alert>
+    <EEACREATIONDATE.report>Creation date is </EEACREATIONDATE.report>
+    
+    <EEAEDITION.alert>Revision number in data directory does not match dataset edition.</EEAEDITION.alert>
+    <EEAEDITION.report>Dataset edition (also found in directory name) is </EEAEDITION.report>
+    
+    <EEAID.alert>The dataset identifier is missing.</EEAID.alert>
+    <EEAID.report>The dataser identifier is </EEAID.report>
+    
+    <EEAABSTRACT.alert>The abstract is missing.</EEAABSTRACT.alert>
+    <EEAABSTRACT.report>The dataset is described by an abstract.</EEAABSTRACT.report>
+    
+    <EEAPOC.alert>The responsible party acting as point of contact is not described.</EEAPOC.alert>
+    <EEAPOC.report>The dataset point of contact is described.</EEAPOC.report>
+    
+    <EEACUSTODIAN.alert>The responsible party acting as custodian is not described.</EEACUSTODIAN.alert>
+    <EEACUSTODIAN.report>The dataset custodian is described.</EEACUSTODIAN.report>
+    
+    <EEA_UP_FREQ.alert>Update frequency is required for a dataset with a revision number.</EEA_UP_FREQ.alert>
+    <EEA_UP_FREQ.report>Dataset (with an edition number) update frequency is </EEA_UP_FREQ.report>
+    
+    <EEA_KEYWORD_GEMET.alert>There shall be one keyword from GEMET.</EEA_KEYWORD_GEMET.alert>
+    <EEA_KEYWORD_GEMET.report> GEMET concept(s) found.</EEA_KEYWORD_GEMET.report>
+    
+    <EEA_KEYWORD_EEA.alert>There shall be one keyword from EEA keywords</EEA_KEYWORD_EEA.alert>
+    <EEA_KEYWORD_EEA.report> EEA keyword(s) found.</EEA_KEYWORD_EEA.report>
+    
+    <EEA_CATEGORY.alert>There shall be one EEA category.</EEA_CATEGORY.alert>
+    <EEA_CATEGORY.report> EEA category found.</EEA_CATEGORY.report>
+    
+    <EEA_RESCONSTRAINT.alert>No resource constraint found.</EEA_RESCONSTRAINT.alert>
+    <EEA_RESCONSTRAINT.report>Resource constraint is </EEA_RESCONSTRAINT.report>
+    
+    <EEA_SPATIAL_TYPE.alert>No spatial representation type found.</EEA_SPATIAL_TYPE.alert>
+    <EEA_SPATIAL_TYPE.report>The dataset spatial representation type is </EEA_SPATIAL_TYPE.report>
+    
+    <EEA_SPATIAL_RESOLUTION.alert>No spatial resolution found.</EEA_SPATIAL_RESOLUTION.alert>
+    <EEA_SPATIAL_RESOLUTION.report>The dataset spatial resolution is </EEA_SPATIAL_RESOLUTION.report>
+    
+    <EEA_TEMPORAL.alert>The time period covered by the content of the dataset is not described.</EEA_TEMPORAL.alert>
+    <EEA_TEMPORAL.report>The time period covered by the content of the dataset is described.</EEA_TEMPORAL.report>
+</strings>

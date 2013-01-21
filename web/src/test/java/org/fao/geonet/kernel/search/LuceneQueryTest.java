@@ -1,12 +1,14 @@
 package org.fao.geonet.kernel.search;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import junit.framework.TestCase;
 
-import org.apache.lucene.analysis.KeywordAnalyzer;
-import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.core.KeywordAnalyzer;
+import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.search.Query;
 import org.fao.geonet.kernel.search.LuceneConfig.LuceneConfigNumericField;
 import org.jdom.DefaultJDOMFactory;
@@ -29,11 +31,13 @@ public class LuceneQueryTest extends TestCase {
 	public LuceneQueryTest(String name) throws Exception {
 		super(name);
 
-		_analyzer = new PerFieldAnalyzerWrapper(new GeoNetworkAnalyzer());
-        _analyzer.addAnalyzer("_uuid", new GeoNetworkAnalyzer());
-        _analyzer.addAnalyzer("parentUuid", new GeoNetworkAnalyzer());
-        _analyzer.addAnalyzer("operatesOn", new GeoNetworkAnalyzer());
-        _analyzer.addAnalyzer("subject", new KeywordAnalyzer());
+		Map<String, Analyzer> analyzers = new HashMap<String, Analyzer>();
+		analyzers.put("_uuid", new GeoNetworkAnalyzer());
+		analyzers.put("parentUuid", new GeoNetworkAnalyzer());
+		analyzers.put("operatesOn", new GeoNetworkAnalyzer());
+		analyzers.put("subject", new KeywordAnalyzer());
+		
+		_analyzer = new PerFieldAnalyzerWrapper(new GeoNetworkAnalyzer(), analyzers);
 
         LuceneConfig lc = new LuceneConfig("src/main/webapp/", null, "WEB-INF/config-lucene.xml");
     	
@@ -84,7 +88,7 @@ public class LuceneQueryTest extends TestCase {
 		// build lucene query
 		Query query = new LuceneQueryBuilder(_tokenizedFieldSet, _numericFieldSet, _analyzer, null).build(lQI);
 		// verify query
-		assertEquals("unexpected Lucene query", "+(category:\"yyy\" inspiretheme:\"xxx\" title:xxx any:yyy) +_isTemplate:n", query.toString());
+		assertEquals("unexpected Lucene query", "+(category:yyy inspiretheme:xxx title:xxx any:yyy) +_isTemplate:n", query.toString());
     }
 
     /**
@@ -109,7 +113,7 @@ public class LuceneQueryTest extends TestCase {
 		// build lucene query
 		Query query = new LuceneQueryBuilder(_tokenizedFieldSet, _numericFieldSet, _analyzer, null).build(lQI);
 		// verify query
-		assertEquals("unexpected Lucene query", "+(inspiretheme:\"xxx\" title:xxx) +_isTemplate:n +any:yyy", query.toString());
+		assertEquals("unexpected Lucene query", "+(inspiretheme:xxx title:xxx) +_isTemplate:n +any:yyy", query.toString());
     }
 
     /**
@@ -130,7 +134,7 @@ public class LuceneQueryTest extends TestCase {
 		// build lucene query
 		Query query = new LuceneQueryBuilder(_tokenizedFieldSet, _numericFieldSet, _analyzer, null).build(lQI);
 		// verify query
-		assertEquals("unexpected Lucene query", "+(title:xxx title:zzz any:xxx any:zzz) +_isTemplate:n", query.toString());
+		assertEquals("unexpected Lucene query", "+(title:xxx title:zzz (+any:xxx +any:zzz)) +_isTemplate:n", query.toString());
 
     }
 
@@ -152,7 +156,7 @@ public class LuceneQueryTest extends TestCase {
 		// build lucene query
 		Query query = new LuceneQueryBuilder(_tokenizedFieldSet, _numericFieldSet, _analyzer, null).build(lQI);
 		// verify query
-		assertEquals("unexpected Lucene query", "+(title:xxx inspiretheme:\"xxx\" any:xxx) +_isTemplate:n", query.toString());
+		assertEquals("unexpected Lucene query", "+(title:xxx inspiretheme:xxx any:xxx) +_isTemplate:n", query.toString());
     }
 
 
@@ -174,7 +178,7 @@ public class LuceneQueryTest extends TestCase {
 		// build lucene query
 		Query query = new LuceneQueryBuilder(_tokenizedFieldSet, _numericFieldSet, _analyzer, null).build(lQI);
 		// verify query
-		assertEquals("unexpected Lucene query", "+(title:xxx title:zzz inspiretheme:\"xxx zzz\" any:xxx any:zzz) +_isTemplate:n", query.toString());
+		assertEquals("unexpected Lucene query", "+(title:xxx title:zzz inspiretheme:xxx zzz (+any:xxx +any:zzz)) +_isTemplate:n", query.toString());
     }
 
     /**
@@ -237,7 +241,7 @@ public class LuceneQueryTest extends TestCase {
 		// build lucene query
 		Query query = new LuceneQueryBuilder(_tokenizedFieldSet, _numericFieldSet, _analyzer, null).build(lQI);
 		// verify query
-		assertEquals("unexpected Lucene query", "+(title:xxx _uuid:\"xxx\") +_isTemplate:n", query.toString());
+		assertEquals("unexpected Lucene query", "+(title:xxx _uuid:xxx) +_isTemplate:n", query.toString());
     }
 
     /**
@@ -318,7 +322,7 @@ public class LuceneQueryTest extends TestCase {
 		// build lucene query
 		Query query = new LuceneQueryBuilder(_tokenizedFieldSet, _numericFieldSet, _analyzer, null).build(lQI);
 		// verify query
-		assertEquals("unexpected Lucene query", "+(title:xxx title:yyy any:xxx any:yyy) +_isTemplate:n", query.toString());
+		assertEquals("unexpected Lucene query", "+(title:xxx title:yyy (+any:xxx +any:yyy)) +_isTemplate:n", query.toString());
     }
 
 
@@ -531,7 +535,7 @@ public class LuceneQueryTest extends TestCase {
 		// build lucene query
 		Query query = new LuceneQueryBuilder(_tokenizedFieldSet, _numericFieldSet, _analyzer, null).build(lQI);
 		// verify query
-		assertEquals("unexpected Lucene query", "+any:asjemenou~0.5740458 +_isTemplate:n", query.toString());
+		assertEquals("unexpected Lucene query", "+any:asjemenou~2 +_isTemplate:n", query.toString());
 	}
 
 	/**
@@ -636,7 +640,7 @@ public class LuceneQueryTest extends TestCase {
 		JDOMFactory factory = new DefaultJDOMFactory();
 		Element request = factory.element("request");
 		Element any = factory.element("any");
-		any.addContent("fucking hell");
+		any.addContent("bloody hell");
 		request.addContent(any);
 		Element similarity = factory.element("similarity");
 		similarity.addContent("0.6885496183206108");
@@ -646,7 +650,7 @@ public class LuceneQueryTest extends TestCase {
 		// build lucene query
 		Query query = new LuceneQueryBuilder(_tokenizedFieldSet, _numericFieldSet, _analyzer, null).build(lQI);
 		// verify query
-		assertEquals("unexpected Lucene query", "+(+any:fucking~0.68854964 +any:hell~0.68854964) +_isTemplate:n", query.toString());
+		assertEquals("unexpected Lucene query", "+(+any:bloody~2 +any:hell~2) +_isTemplate:n", query.toString());
 	}
 
 	/**
@@ -703,7 +707,7 @@ public class LuceneQueryTest extends TestCase {
 		// build lucene query
 		Query query = new LuceneQueryBuilder(_tokenizedFieldSet, _numericFieldSet, _analyzer, null).build(lQI);
 		// verify query
-		assertEquals("unexpected Lucene query", "+(any:hoep~0.59694654 any:poep~0.59694654) +_isTemplate:n", query.toString());
+		assertEquals("unexpected Lucene query", "+(any:hoep~2 any:poep~2) +_isTemplate:n", query.toString());
 	}
 
 	/**
@@ -732,7 +736,7 @@ public class LuceneQueryTest extends TestCase {
 		JDOMFactory factory = new DefaultJDOMFactory();
 		Element request = factory.element("request");
 		Element any = factory.element("all");
-		any.addContent("fucking hell");
+		any.addContent("bloody hell");
 		request.addContent(any);
 		Element similarity = factory.element("similarity");
 		similarity.addContent("0.6885496183206108");
@@ -742,7 +746,7 @@ public class LuceneQueryTest extends TestCase {
 		// build lucene query
 		Query query = new LuceneQueryBuilder(_tokenizedFieldSet, _numericFieldSet, _analyzer, null).build(lQI);
 		// verify query
-		assertEquals("unexpected Lucene query", "+(+any:fucking~0.68854964 +any:hell~0.68854964) +_isTemplate:n", query.toString());
+		assertEquals("unexpected Lucene query", "+(+any:bloody~2 +any:hell~2) +_isTemplate:n", query.toString());
 	}
 
 	/**
