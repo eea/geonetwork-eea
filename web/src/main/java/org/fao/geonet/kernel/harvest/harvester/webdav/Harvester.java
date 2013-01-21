@@ -175,10 +175,9 @@ class Harvester {
 		//
         // insert metadata
         //
-        int userid = 1;
         String group = null, isTemplate = null, docType = null, title = null, category = null;
         boolean ufo = false, indexImmediate = false;
-        String id = dataMan.insertMetadata(context, dbms, schema, md, context.getSerialFactory().getSerial(dbms, "Metadata"), uuid, userid, group, params.uuid,
+        String id = dataMan.insertMetadata(context, dbms, schema, md, context.getSerialFactory().getSerial(dbms, "Metadata"), uuid, Integer.parseInt(params.owner), group, params.uuid,
                      isTemplate, docType, title, category, rf.getChangeDate(), rf.getChangeDate(), ufo, indexImmediate);
 
 
@@ -191,7 +190,7 @@ class Harvester {
 		addCategories(id);
 
 		dbms.commit();
-		dataMan.indexMetadataGroup(dbms, id);
+		dataMan.indexMetadata(dbms, id);
 		result.added++;
 	}
 
@@ -328,7 +327,7 @@ class Harvester {
 			dbms.execute("DELETE FROM MetadataCateg WHERE metadataId=?", Integer.parseInt(record.id));
 			addCategories(record.id);
 			dbms.commit();
-			dataMan.indexMetadataGroup(dbms, record.id);
+			dataMan.indexMetadata(dbms, record.id);
 			result.updated++;
 		}
 	}
