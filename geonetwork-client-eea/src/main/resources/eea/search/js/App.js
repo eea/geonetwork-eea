@@ -210,11 +210,21 @@ GeoNetwork.app = function () {
             cls: 'breadcrumb',
             defaultType: 'button',
             border: false,
+            defaults: {
+                bodyStyle: 'width:100%'
+            },
             split: false,
             id: 'breadcrumb',
             renderTo: 'breadcrumb-facets',
             layoutConfig: {
-                columns:3
+                columns:3,
+                cellCls: 'breadcrumb-cell',
+                extraCls: 'breadcrumb-table'
+//                tableAttrs: {
+//                    style: {
+//                        width: '33%'
+//                    }
+//                }
             }
         });
         

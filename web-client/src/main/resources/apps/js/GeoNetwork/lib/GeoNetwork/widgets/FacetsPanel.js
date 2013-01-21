@@ -369,9 +369,21 @@ GeoNetwork.FacetsPanel = Ext.extend(Ext.Panel, {
             this.breadcrumb.add(new Ext.Button({
                 id: data.bcid,
                 text: data.value,
-                menu: scrollMenu
+                menu: scrollMenu,
+                iconCls: "facetButton"
             }));
             this.breadcrumb.doLayout();
+            
+            //TODO wait until the rest of the browsers (even Chrome!!) follow the standard CSS
+            if(!Ext.isGecko){
+                var width = ((this.breadcrumb.el.getWidth() / 3) - 15) + "px";
+                
+                Ext.each(Ext.DomQuery.select("em", this.breadcrumb.el.dom), 
+                        function(el){
+                                Ext.get(el).setStyle("width", width);
+                                }
+                );
+            }
         }
         this.searchForm.fireEvent('search');
     },

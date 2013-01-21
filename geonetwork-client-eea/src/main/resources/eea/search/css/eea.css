@@ -78,3 +78,18 @@ ul li.tag-cloud {
 #editorPanel * .help * a {
     font-weight: bold;
 }
+
+
+/** Facets **/
+/**Show only three button facets on the same row**/
+#breadcrumb td.x-table-layout-cell {
+    width: 33%;
+}
+#breadcrumb table.x-table-layout {
+	table-layout: fixed;
+}
+/** Not enough for Chrome, which will need some js **/
+#breadcrumb .facetButton {
+	width: 100%;
+	overflow: hidden;
+}
