@@ -378,17 +378,15 @@ GeoNetwork.util.SearchFormTools = {
         var sortByField = new Ext.form.TextField({
             name: 'E_sortBy',
             id: 'E_sortBy',
-            inputType: 'hidden',
-            linkedCombo: combo
+            inputType: 'hidden'
         });
         var sortOrderField = new Ext.form.TextField({
             name: 'E_sortOrder',
             id: 'sortOrder',
-            inputType: 'hidden',
-            linkedCombo: combo
+            inputType: 'hidden'
         });
         combo.setValue(defaultValue || 'relevance#');
-        return [sortByField, sortOrderField, combo];
+        return [sortByField, sortOrderField];
     },
     /** api:method[getSortByStore]
      *  
