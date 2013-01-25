@@ -51,11 +51,10 @@ import org.fao.geonet.lib.Lib;
 import org.fao.geonet.services.util.z3950.RepositoryInfo;
 import org.jdom.Element;
 
-//=============================================================================
+public class Info implements Service {
+    private static final String READ_ONLY = "readonly";
 
-public class Info implements Service
-{
-	private String xslPath;
+    private String xslPath;
 	private String xmlPath;
 	private String otherSheets;
 	private ServiceConfig _config;
@@ -146,15 +145,30 @@ public class Info implements Service
 			
 			else if (type.equals("auth"))
 				result.addContent(getAuth(context));
-			
+
+            else if(type.equals(READ_ONLY))
+                result.addContent(getReadOnly(gc));
 			else
 				throw new BadParameterEx("Unknown type parameter value.", type);
 		}
 		
 		result.addContent(getEnv(context));
 
-		return Xml.transform(result, xslPath +"/info.xsl");
+		Element response = Xml.transform(result, xslPath +"/info.xsl");
+
+        return response;
 	}
+
+    /**
+     * Returns whether GN is in read-only mode (true or false).
+     * @param gc
+     * @return
+     */
+    private Element getReadOnly(GeonetContext gc) {
+        Element readOnly = new Element(READ_ONLY);
+        readOnly.setText(Boolean.toString(gc.isReadOnly()));
+        return readOnly;
+    }
 
 	private Element getAuth(ServiceContext context) {
 		Element auth = new Element("auth");
@@ -498,6 +512,3 @@ public class Info implements Service
 						.addContent(new Element("baseURL").setText(context.getBaseUrl()));
 	}
 }
-
-//=============================================================================
-

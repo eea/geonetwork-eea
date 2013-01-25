@@ -1342,8 +1342,16 @@ public class DataManager {
      * @throws Exception hmm
      */
 	public void increasePopularity(ServiceContext srvContext, String id) throws Exception {
-		GeonetContext gc = (GeonetContext) srvContext.getHandlerContext(Geonet.CONTEXT_NAME);
-		gc.getThreadPool().runTask(new IncreasePopularityTask(srvContext, id));
+        // READONLYMODE
+        GeonetContext gc = (GeonetContext) srvContext.getHandlerContext(Geonet.CONTEXT_NAME);
+        if(!gc.isReadOnly()) {
+		    gc.getThreadPool().runTask(new IncreasePopularityTask(srvContext, id));
+        }
+        else {
+            if(Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
+                Log.debug(Geonet.DATA_MANAGER, "GeoNetwork is operating in read-only mode. IncreasePopularity is skipped.");
+            }
+        }
 	}
 
     /**
@@ -1357,38 +1365,38 @@ public class DataManager {
      * @throws Exception hmm
      */
 	public int rateMetadata(Dbms dbms, int id, String ipAddress, int rating) throws Exception {
-		//
-		// update rating on the database
-		//
-		String query = "UPDATE MetadataRating SET rating=? WHERE metadataId=? AND ipAddress=?";
-		int res = dbms.execute(query, rating, id, ipAddress);
+            //
+            // update rating on the database
+            //
+            String query = "UPDATE MetadataRating SET rating=? WHERE metadataId=? AND ipAddress=?";
+            int res = dbms.execute(query, rating, id, ipAddress);
 
-		if (res == 0) {
-			query = "INSERT INTO MetadataRating(metadataId, ipAddress, rating) VALUES(?,?,?)";
-			dbms.execute(query, id, ipAddress, rating);
-		}
+            if (res == 0) {
+                query = "INSERT INTO MetadataRating(metadataId, ipAddress, rating) VALUES(?,?,?)";
+                dbms.execute(query, id, ipAddress, rating);
+            }
 
-        //
-		// calculate new rating
-        //
-		query = "SELECT sum(rating) as total FROM MetadataRating WHERE metadataId=?";
-		List list = dbms.select(query, id).getChildren();
-		String sum = ((Element) list.get(0)).getChildText("total");
-		query = "SELECT count(*) as numr FROM MetadataRating WHERE metadataId=?";
-		list  = dbms.select(query, id).getChildren();
-		String count = ((Element) list.get(0)).getChildText("numr");
-		rating = (int)(Float.parseFloat(sum) / Float.parseFloat(count) + 0.5);
-        if(Log.isDebugEnabled(Geonet.DATA_MANAGER))
-            Log.debug(Geonet.DATA_MANAGER, "Setting rating for id:"+ id +" --> rating is:"+rating);
-        //
-		// update metadata and reindex it
-        //
-		query = "UPDATE Metadata SET rating=? WHERE id=?";
-		dbms.execute(query, rating, id);
+            //
+            // calculate new rating
+            //
+            query = "SELECT sum(rating) as total FROM MetadataRating WHERE metadataId=?";
+            List list = dbms.select(query, id).getChildren();
+            String sum = ((Element) list.get(0)).getChildText("total");
+            query = "SELECT count(*) as numr FROM MetadataRating WHERE metadataId=?";
+            list  = dbms.select(query, id).getChildren();
+            String count = ((Element) list.get(0)).getChildText("numr");
+            rating = (int)(Float.parseFloat(sum) / Float.parseFloat(count) + 0.5);
+            if(Log.isDebugEnabled(Geonet.DATA_MANAGER))
+                Log.debug(Geonet.DATA_MANAGER, "Setting rating for id:"+ id +" --> rating is:"+rating);
+            //
+            // update metadata and reindex it
+            //
+            query = "UPDATE Metadata SET rating=? WHERE id=?";
+            dbms.execute(query, rating, id);
 
-        indexInThreadPoolIfPossible(dbms,Integer.toString(id));
+            indexInThreadPoolIfPossible(dbms,Integer.toString(id));
 
-		return rating;
+            return rating;
 	}
 
 	//--------------------------------------------------------------------------
@@ -3006,6 +3014,7 @@ public class DataManager {
 		String port    = settingMan.getValue(Geonet.Settings.SERVER_PORT);
 		addElement(info, Edit.Info.Elem.BASEURL, protocol + "://" + host + (port == "80" ? "" : ":" + port) + baseURL);
 		addElement(info, Edit.Info.Elem.LOCSERV, "/srv/en" );
+
 		return info;
 	}
 

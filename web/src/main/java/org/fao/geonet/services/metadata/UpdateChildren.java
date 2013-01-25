@@ -31,6 +31,7 @@ import jeeves.utils.Util;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.services.NotInReadOnlyModeService;
 import org.jdom.Element;
 
 import java.util.HashMap;
@@ -38,18 +39,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
-//=============================================================================
-
-/** 
+/**
  * A simple service that returns a small report
  * about children update process. 
  *
  * @author m.coudert
  */
-
-public class UpdateChildren implements Service
-{
+public class UpdateChildren extends NotInReadOnlyModeService {
 	//--------------------------------------------------------------------------
 	//---
 	//--- Init
@@ -65,7 +61,7 @@ public class UpdateChildren implements Service
 	//---
 	//--------------------------------------------------------------------------
 
-	public Element exec(Element params, ServiceContext context) throws Exception
+	public Element serviceSpecificExec(Element params, ServiceContext context) throws Exception
 	{
 		String parentUuid = Util.getParam(params,"parentUuid");
 		String childrenIds = Util.getParam(params, "childrenIds");
@@ -101,5 +97,3 @@ public class UpdateChildren implements Service
 		return response.setText(report); 
 	}
 }
-
-//=============================================================================

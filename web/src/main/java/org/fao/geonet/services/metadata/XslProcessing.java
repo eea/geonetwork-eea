@@ -39,6 +39,7 @@ import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.MdInfo;
 import org.fao.geonet.kernel.SchemaManager;
+import org.fao.geonet.services.NotInReadOnlyModeService;
 import org.fao.geonet.services.Utils;
 import org.fao.geonet.util.ISODate;
 import org.jdom.Element;
@@ -49,8 +50,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-//=============================================================================
 
 /**
  * Process a metadata with an XSL transformation declared for the metadata
@@ -86,8 +85,7 @@ import java.util.Set;
  * 
  * @author fxprunayre
  */
-
-public class XslProcessing implements Service {
+public class XslProcessing extends NotInReadOnlyModeService {
 	private String _appPath;
 
 	public void init(String appPath, ServiceConfig params) throws Exception {
@@ -97,7 +95,14 @@ public class XslProcessing implements Service {
 		// in order to not to check process each time.
 	}
 
-	public Element exec(Element params, ServiceContext context)
+    /**
+     *
+     * @param params
+     * @param context
+     * @return
+     * @throws Exception
+     */
+	public Element serviceSpecificExec(Element params, ServiceContext context)
 			throws Exception {
 
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
