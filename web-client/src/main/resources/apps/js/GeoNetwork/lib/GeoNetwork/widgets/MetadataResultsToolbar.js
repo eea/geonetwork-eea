@@ -451,8 +451,9 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
             '<b class="menu-title">' + OpenLayers.i18n('onSelection') + '</b>',
             mefExportAction, 
             csvExportAction, 
-            printAction,
-            this.addLayerAction// ,{
+            printAction
+//            ,
+//            this.addLayerAction// ,{
         // text : 'Display selection only'
         // }
         );
