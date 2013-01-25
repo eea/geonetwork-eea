@@ -40,6 +40,7 @@ import jeeves.utils.Util;
 import jeeves.utils.Xml;
 import jeeves.xlink.Processor;
 
+import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.util.ISODate;
@@ -133,11 +134,14 @@ public abstract class XmlSerializer {
     		boolean hideWithheldElements = sm.getValueAsBool("system/"+Geonet.Config.HIDE_WITHHELD_ELEMENTS+"/enable", false);
     		if(ServiceContext.get() != null) {
     			ServiceContext context = ServiceContext.get();
+    			GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
     			String ownerId = record.getChildText("owner");
     			UserSession userSession = context.getUserSession();
     			boolean isOwner = userSession != null && ownerId != null && ownerId.equals(userSession.getUserId());
     			boolean isAdmin = userSession != null && userSession.getProfile() != null && context.getProfileManager().getProfilesSet(userSession.getProfile()).contains(ProfileManager.ADMIN);
-    			if(isAdmin || isOwner) {
+    			// TODO: improve XmlSerializerTest for that UC
+    			boolean canEdit = userSession != null && gc != null && gc.getAccessManager().hasEditPermission(context, id);
+    			if(isAdmin || isOwner || canEdit) {
     				hideWithheldElements = false;
     			}
     		}
@@ -250,35 +254,38 @@ public abstract class XmlSerializer {
      * @param xml
      * @param changeDate
      * @param updateDateStamp
-     *
+     * @param uuid null to not update metadata uuid column or the uuid value to be used for the update.
      * @throws SQLException
      */
-	protected void updateDb(Dbms dbms, String id, Element xml, String changeDate, String root, boolean updateDateStamp) throws SQLException {
+	protected void updateDb(Dbms dbms, String id, Element xml, String changeDate, String root, boolean updateDateStamp, String uuid) throws SQLException {
 		if (resolveXLinks()) Processor.removeXLink(xml);
 
-		String query = "UPDATE Metadata SET data=?, changeDate=?, root=? WHERE id=?";
-        String queryMinor = "UPDATE Metadata SET data=?, root=? WHERE id=?";
-
+		
 		Vector<Serializable> args = new Vector<Serializable>();
 
 		fixCR(xml);
-		args.add(Xml.getString(xml));
-
-        if (updateDateStamp) {
-            if (changeDate == null)	{
-                args.add(new ISODate().toString());
-            } else {
-                args.add(changeDate);
-            }
-        }
-
- 		args.add(root);
-		args.add(new Integer(id));
-
+		String metadata = Xml.getString(xml);
+		int metadataId = new Integer(id);
+		
         if (updateDateStamp)  {
-            dbms.execute(query, args.toArray());
+            if (changeDate == null)	{
+                changeDate = new ISODate().toString();
+            }
+            if (uuid != null)  {
+                String queryWithUUIDUpdate = "UPDATE Metadata SET data=?, changeDate=?, root=?, uuid=? WHERE id=?";
+                dbms.execute(queryWithUUIDUpdate, metadata, changeDate, root, uuid, metadataId);
+            } else {
+                String query = "UPDATE Metadata SET data=?, changeDate=?, root=? WHERE id=?";
+                dbms.execute(query, metadata, changeDate, root, metadataId);
+            }
         } else {
-            dbms.execute(queryMinor, args.toArray());
+            if (uuid != null)  {
+                String queryMinorWithUUIDUpdate = "UPDATE Metadata SET data=?, root=?, uuid=? WHERE id=?";
+                dbms.execute(queryMinorWithUUIDUpdate, metadata, root, uuid, metadataId);
+            } else {
+                String queryMinor = "UPDATE Metadata SET data=?, root=? WHERE id=?";
+                dbms.execute(queryMinor, metadata, root, metadataId);
+            }
         }
 	}
 
@@ -321,7 +328,7 @@ public abstract class XmlSerializer {
 	   throws Exception;
 
 	public abstract void update(Dbms dbms, String id, Element xml, 
-		 String changeDate, boolean updateDateStamp, ServiceContext context) 
+		 String changeDate, boolean updateDateStamp, String uuid, ServiceContext context) 
 		 throws Exception;
 
 	public abstract String insert(Dbms dbms, String schema, Element xml, 
