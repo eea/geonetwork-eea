@@ -426,13 +426,64 @@ GeoNetwork.FacetsPanel = Ext.extend(Ext.Panel, {
         // Search in current filter
         var filter = this.currentFilterStore.query('id', filterKey).get(0);
         
-        var field = Ext.getCmp(filter.get('fieldid')),
-            switcher = Ext.getCmp(filter.get('bcid'));
+        var field = undefined;
+        var switcher = undefined;
+        if(filter != null){
+             field = Ext.getCmp(filter.get('fieldid'));
+             switcher = Ext.getCmp(filter.get('bcid'));
+             // Remove search form reference
+             this.searchForm.remove(field);
+        } else {
+            //We didn't have this on the currentFilterStore because...??
+            //FIXME
+            //Probably because we used a filter that returned no results (maybe
+            //because I cannot see them, privileges) and then it became mad
+            //Nevermind, get rid of it. Now.
+            switcher = Ext.getCmp("bc_" + filterKey);
+        }
         
-        // Remove search form reference
-        this.searchForm.remove(field);
-        // Remove breadcrumb reference
-        this.breadcrumb && this.breadcrumb.remove(switcher);
+        if(switcher != null){
+            //As the table layout don't support real updates,
+            // to remove breadcrumb reference we have to hack it:
+            var parent = Ext.get(switcher.el.parent());
+            this.breadcrumb && this.breadcrumb.remove(switcher);
+            
+            //We manually update DOM moving backwards the elements:
+            var tr = Ext.get(parent.parent());
+            var nextParent = Ext.get(parent.next());
+            while(tr != null) { //same row
+                while(nextParent != null) {
+                    Ext.each(nextParent.dom.childNodes, function(el){
+                        parent.dom.appendChild(el);
+                    });
+                    parent = nextParent;
+                    nextParent = Ext.get(parent.next());
+                }
+                //go down to the next column;
+                tr = Ext.get(tr.next());
+                if(tr != null) {
+                    nextParent = Ext.get(tr.dom.childNodes[0]);
+                }
+            }
+            
+            tr = Ext.get(parent.parent());
+            parent.remove();
+            
+            
+            //and we have to prepare the layout to work on next addFacet
+            var layout = this.breadcrumb.layout;
+            if(layout.currentColumn <= 0){
+                layout.currentRow = layout.currentRow - 1;
+                layout.currentColumn = layout.columns - 1;
+                layout.cells.pop();
+                if(tr != null){
+                    tr.remove();
+                }
+            } else {
+                layout.currentColumn = layout.currentColumn - 1;
+                layout.cells[layout.cells.length - 1].pop();
+            }
+        }
         
         this.currentFilterStore.remove(filter);
         
