@@ -116,7 +116,7 @@ GeoNetwork.app = function () {
      */
     function createLoginForm() {
         var loginForm = new GeoNetwork.LoginForm({
-            renderTo: 'login-form',
+            renderTo: 'cat-login-form',
             catalogue: catalogue,
             width: 300,
             layout: 'form'
