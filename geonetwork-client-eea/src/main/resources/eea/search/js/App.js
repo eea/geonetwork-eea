@@ -160,6 +160,7 @@ GeoNetwork.app = function () {
             }
         });
         loginForm.add(newMetadataButton);
+        loginForm.doLayout();
         return newMetadataButton;
     }
     /**
