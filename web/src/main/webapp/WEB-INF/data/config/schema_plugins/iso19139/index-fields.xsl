@@ -217,15 +217,11 @@
 				</xsl:for-each>
 				
 				
-				
-                //GEMET themes
-                
-                <xsl:variable name="valuekeyword" select="gmd:keyword/gco:CharacterString|gmd:keyword/gmx:Anchor|gmd:keyword/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString"/>
-                <xsl:for-each select="gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString">
-                    <xsl:if test="string(.) = 'GEMET - Concepts, version 3.0'">
-                        <Field name="gemetKeyword" string="{$valuekeyword}" store="true" index="true"/>
-                    </xsl:if>
-                </xsl:for-each>
+				<xsl:if test="gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'GEMET - Concepts, version 3.0'">
+					<xsl:for-each select="gmd:keyword">
+						<Field name="gemetKeyword" string="{gco:CharacterString|gmx:Anchor}" store="true" index="true"/>
+					</xsl:for-each>
+				</xsl:if>
 			</xsl:for-each>
 	
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->		
