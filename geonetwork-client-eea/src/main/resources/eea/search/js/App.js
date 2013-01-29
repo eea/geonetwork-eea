@@ -1021,6 +1021,10 @@ Ext.onReady(function (){
 // When scrolling down in window, change search form top position
 window.onscroll = function (e) {
     var content = Ext.get('visual-portal-wrapper');
+    var searchForm = Ext.DomQuery.jsSelect('h1.documentFirstHeading', 'slide-menu')[0];
+    var searchFormTitle = Ext.get(searchForm);
+    var searchFormDiv = Ext.get(searchForm).next();
+    
     var pos = 0, searchFormTopUnderHeader = content.getTop();
     if (window.pageYOffset)//usual
         pos = window.pageYOffset;
@@ -1032,7 +1036,8 @@ window.onscroll = function (e) {
     var e = Ext.get('slide-menu');
     
     // Close to the bottom of the page - stop moving the panel
-    var newTop = pos < searchFormTopUnderHeader ? 5 : pos - searchFormTopUnderHeader;
+    var facetTop = searchFormTopUnderHeader + searchFormTitle.getHeight() + searchFormDiv.getHeight() + 30;
+    var newTop = pos < facetTop ? 5 : pos - facetTop;
     var bottom = newTop + e.getHeight();
 
     if (!(bottom > content.getBottom() - 150)) {
