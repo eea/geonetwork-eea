@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:srv="http://www.isotc211.org/2005/srv"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco"
     xmlns:geonet="http://www.fao.org/geonetwork" exclude-result-prefixes="#all" version="2.0">
     
@@ -42,6 +44,16 @@
     
     <!-- Remove all descriptive keyword with a thesaurus from $thesaurus -->
     <xsl:template match="gmd:descriptiveKeywords[$thesaurus != '' and contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, $thesaurus)]" priority="2"/>
+
+    <xsl:template
+        match="srv:operatesOn"
+        priority="2">
+        <xsl:copy>
+            <xsl:copy-of select="@uuidref"/>
+            <xsl:attribute name="xlink:href" select="replace(@xlink:href, 'internal-catalogue', 'catalogue')"/>
+        </xsl:copy>
+    </xsl:template>
+    
 
     <!-- Do a copy of every nodes and attributes -->
     <xsl:template match="@*|node()">
