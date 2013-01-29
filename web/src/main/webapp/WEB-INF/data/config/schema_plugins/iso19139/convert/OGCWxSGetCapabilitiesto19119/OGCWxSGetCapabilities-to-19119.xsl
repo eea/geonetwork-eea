@@ -324,6 +324,44 @@ Mapping between :
 						</DQ_DomainConsistency>
 					</report>
 					</xsl:for-each>
+					
+					<!-- EEA custom harvesting rule -->
+					<xsl:if test="not(//inspire_vs:ExtendedCapabilities)">
+						<report>
+							<DQ_DomainConsistency>
+								<result>
+									<DQ_ConformanceResult>
+										<specification>
+											<CI_Citation>
+												<title>
+													<gco:CharacterString>Commission Regulation (EC) No 976/2009 of 
+														19 October 2009 implementing Directive 2007/2/EC of the 
+														European Parliament and of the Council as regards the Network Services</gco:CharacterString>
+												</title>
+												<date>
+													<CI_Date>
+														<date>
+															<gco:Date>2009-10-20</gco:Date>
+														</date>
+														<dateType>
+															<CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+														</dateType>
+													</CI_Date>
+												</date>
+											</CI_Citation>
+										</specification>
+										<explanation>
+											<gco:CharacterString>See the referenced specification</gco:CharacterString>
+										</explanation>
+										<pass>
+											<gco:Boolean>false</gco:Boolean>
+										</pass>
+									</DQ_ConformanceResult>
+								</result>
+							</DQ_DomainConsistency>
+						</report>
+					</xsl:if>
+					
 					<lineage>
 						<LI_Lineage>
 							<statement gco:nilReason="missing">

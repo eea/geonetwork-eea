@@ -269,10 +269,12 @@
 		</xsl:for-each>
 		
 		<srv:serviceType>
-			<gco:LocalName codeSpace="www.w3c.org">
+			<gco:LocalName>
 				<xsl:choose>
 					<xsl:when test="//inspire_vs:ExtendedCapabilities/inspire_common:SpatialDataServiceType"><xsl:value-of select="//inspire_vs:ExtendedCapabilities/inspire_common:SpatialDataServiceType"/></xsl:when>
-					<xsl:when test="name(.)='WMT_MS_Capabilities' or name(.)='WMS_Capabilities'">OGC:WMS</xsl:when>
+					<!--<xsl:when test="name(.)='WMT_MS_Capabilities' or name(.)='WMS_Capabilities'">OGC:WMS</xsl:when>-->
+					<!-- EEA custom harvesting rule -->
+					<xsl:when test="name(.)='WMT_MS_Capabilities' or name(.)='WMS_Capabilities'">view</xsl:when>
 					<xsl:when test="name(.)='WCS_Capabilities'">OGC:WCS</xsl:when>
 					<xsl:when test="name(.)='wps:Capabilities'">OGC:WPS</xsl:when>
 					<xsl:otherwise>OGC:WFS</xsl:otherwise>
