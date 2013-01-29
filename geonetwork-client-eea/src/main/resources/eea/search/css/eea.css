@@ -93,3 +93,7 @@ ul li.tag-cloud {
 	width: 100%;
 	overflow: hidden;
 }
+
+#slide-menu h1 {
+    cursor: pointer;
+}

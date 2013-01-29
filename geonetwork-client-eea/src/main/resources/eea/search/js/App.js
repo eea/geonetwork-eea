@@ -1007,6 +1007,14 @@ Ext.onReady(function (){
     /* Focus on full text search field */
     Ext.getDom('E_any_OR_identifier').focus(true);
     
+    var titles = Ext.DomQuery.jsSelect('h1.documentFirstHeading', 'slide-menu');
+    
+    Ext.each(titles, function (item) {
+        Ext.get(item).on('click', function () {
+            Ext.get(item).next().setVisibilityMode(Ext.Element.DISPLAY);
+            Ext.get(item).next().toggle();
+        });
+    });
 });
 
 
