@@ -263,7 +263,7 @@ GeoNetwork.app = function () {
                 collapsed: (urlParameters.inspire ? false : true),
                 defaultType: 'checkbox',
                 defaults: {
-                    width: 160
+                    width: 140
                 },
                 items: GeoNetwork.util.INSPIRESearchFormTools.getINSPIREFields(catalogue.services, true, {withAnnex: true, withRelated: true, withTheme: true})
             };
