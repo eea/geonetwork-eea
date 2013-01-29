@@ -180,17 +180,13 @@
 								<h1 id="parent-fieldname-title" style="font-size: 150% !important;margin: 0.67em 0;" class="documentFirstHeading"><span id="searchLb">Search</span></h1>
 								<div id="search-form" style="height:100%"></div>
 								
-								<div id="tag-cloud"></div>
-								
                                 <h1 id="refine-search-title" style="display:none;font-size: 150% !important;margin: 0.67em 0;" class="documentFirstHeading"><span><xsl:value-of select="/root/gui/strings/refineSearch"/></span></h1>
-                                
-                                
-                                <div id="breadcrumb-facets"></div>
-                                <div id="facets-panel"></div>
-
-								<h1 id="parent-fieldname-title" style="font-size: 150% !important;margin: 0.67em 0;" class="documentFirstHeading"><span id="loginLb">Admin login</span></h1>
+                                <div>
+                                	<div id="breadcrumb-facets"></div>
+                                	<div id="facets-panel"></div>
+                                </div>
 								
-                                
+								<h1 id="parent-fieldname-title" style="font-size: 150% !important;margin: 0.67em 0;" class="documentFirstHeading"><span id="loginLb">Admin login</span></h1>
 								<div id="cat-login-form"></div>
 								
 								<br />
