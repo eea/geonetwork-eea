@@ -81,7 +81,7 @@ GeoNetwork.Settings.facetListConfig = [{name: 'inspirethemes'},
                                     {name: 'types'},  
                                     {name: 'serviceTypes'}, 
                                     {name: 'gemetKeywords'}, 
-                                    {name: 'years'}, 
+                                    {name: 'createDateYears'}, 
                                     {name: 'publishedDatasets'}];
 
 //Latest update info query

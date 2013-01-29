@@ -21,7 +21,8 @@
             <item name="type" plural="types" indexKey="type" max="15"/>
             <item name="serviceType" plural="serviceTypes" indexKey="serviceType" max="15"/>
             <item name="gemetKeyword" plural="gemetKeywords" indexKey="gemetKeyword" max="15"/>
-            <item name="year" plural="years" indexKey="changeDateYear" max="15"/>
+			<item name="createDateYear" plural="createDateYears" indexKey="createDateYear"
+				sortBy="value" sortOrder="desc" max="40"/>
             <item name="publishedDataset" plural="publishedDatasets" indexKey="publishedDataset" max="15"/>
 <!--
    			<item name="keyword" plural="keywords" indexKey="keyword" max="15"/>
