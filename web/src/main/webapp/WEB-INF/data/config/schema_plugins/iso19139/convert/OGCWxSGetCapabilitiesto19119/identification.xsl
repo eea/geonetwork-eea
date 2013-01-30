@@ -241,7 +241,7 @@
 							or . = 'restricted'
 							">
 							<accessConstraints>
-									<MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RestrictionCode" 
+								<MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RestrictionCode" 
 									codeListValue="{.}"/>
 							</accessConstraints>
 						</xsl:when>
@@ -257,7 +257,7 @@
 						<xsl:otherwise>
 							<accessConstraints>
 								<MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RestrictionCode" 
-								codeListValue="otherRestrictions"/>
+									codeListValue="otherRestrictions"/>
 							</accessConstraints>
 							<otherConstraints>
 								<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
