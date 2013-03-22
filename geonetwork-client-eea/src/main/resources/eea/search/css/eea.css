@@ -2,7 +2,8 @@
     overflow: hidden !important;
 }
 .md-path {
-    padding: 2px;
+    margin-left: 28px;
+    color: #444;
 }
 #portal-column-one {
     width: 300px !important;
