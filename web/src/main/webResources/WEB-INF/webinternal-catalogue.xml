@@ -25,7 +25,7 @@
     </context-param>
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/config-securitycatalogue.xml</param-value>
+        <param-value>/WEB-INF/config-securityinternal-catalogue.xml</param-value>
     </context-param>
     <listener>
         <listener-class>jeeves.config.springutil.JeevesContextLoaderListener</listener-class>
