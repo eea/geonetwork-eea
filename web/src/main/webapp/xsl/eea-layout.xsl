@@ -9,9 +9,9 @@
     exclude-result-prefixes="#all">
   
   <xsl:template name="eea-head">
-      <xsl:variable name="xhtml">&head;</xsl:variable>
+      <xsl:variable name="xhtml"><head>&head;</head></xsl:variable>
       <xsl:variable name="head" select="exslt:node-set($xhtml)"/>
-      <xsl:copy-of select="$head/html/head/*[name()!='base']"/>
+      <xsl:copy-of select="$head/head/*[name()!='base']"/>
   </xsl:template>
 
   <xsl:template name="eea-footer">
