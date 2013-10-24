@@ -286,49 +286,7 @@
   </help>
  </element>
  
- <element name="gmd:name" context="gmd:MD_Format" id="285.0">
-  <label>Name</label>
-  <description>Name of the data transfer format(s)</description>
-  <help>The format in which the resource is stored should be expressed 
-   using a code from this list which is derived from the codes used 
-   by the libraries GDAL and OGR (if a format is missing, contact Paul Hasenohr):
-   We remind that use of unpublished formats should be avoided as much as possible 
-   to ensure the best possible interoperability.</help>
-  <condition>mandatory</condition>
-  <helper rel="gmd:version">
-   <option value="">-- Raster --</option>
-   <option value="AAIGrid">Arc/Info ASCII Grid</option>
-   <option value="AIG">Arc/Info Binary Grid (.adf)</option>
-   <option value="CEOS">CEOS format (used by some satellite image providers)</option>
-   <option value="DIMAP">DIMAP format (used by some satellite image providers)</option>
-   <option value="ECW">ERMapper Compressed Wavelets (.ecw)</option>
-   <option value="EHdr">ESRI .hdr Labelled</option>
-   <option value="ENVI">ENVI .hdr Labelled Raster</option>
-   <option value="GRASS">GRASS Rasters</option>
-   <option value="GTiff" title="1.0">TIFF / BigTIFF / GeoTIFF (if no georeferencing information is available in the TIFF file itself, an ESRI world file [.tfw] must be present)</option>
-   <option value="HDF">Hierarchical Data Format Release (specify the version number [4 or 5] in the metadata element version)</option>
-   <option value="HFA">Erdas Imagine (.img)</option>
-   <option value="LAN">Erdas 7.x .LAN and .GIS</option>
-   <option value="MrSID">Multi-resolution Seamless Image Database</option>
-   <option value="netCDF">NetCDF</option>
-   <option value="XYZ">ASCII Gridded XYZ</option>
-   
-   <option value="">-- Vector --</option>
-   <option value="AVCBin">Arc/Info Binary Coverage</option>
-   <option value="AVCE00">Arc/Info .E00 (ASCII) Coverage</option>
-   <option value="CSV">Comma Separated Value (.csv)</option>
-   <option value="FGeo">ESRI File GeoDatabase</option>
-   <option value="GML" title="3.1.1">Geography Markup Language</option>
-   <option value="GRASS">GRASS vector</option>
-   <option value="KML">Keyhole Markup Language</option>
-   <option value="MIF" title="4.5">MapInfo File</option>
-   <option value="PGeo">ESRI Personal GeoDatabase</option>
-   <option value="SHP" title="1.0">ESRI Shapefile</option>
-   <option value="Postgis">Postgresql/Postgis database</option>
-   
-   
-  </helper>
- </element>
+ 
  
  
  <element name="gmd:transferOptions" id="273.0">
