@@ -709,7 +709,7 @@ GeoNetwork.app = function () {
                     id: 'newwindow',
                     qtip: OpenLayers.i18n('newWindow'),
                     handler: function (e, toolEl, panel, tc){
-                        Ext.get('content').setVisible(true);
+                        Ext.get('portal-columns').setVisible(true);
                         window.open(GeoNetwork.Util.getBaseUrl(location.href) + "#edit=" + panel.getComponent('editorPanel').metadataId);
                         panel.hide();
                     },
@@ -731,10 +731,10 @@ GeoNetwork.app = function () {
                 height: 800,
                 listeners: {
                     close: function () {
-                        Ext.get('content').setVisible(true);
+                        Ext.get('portal-columns').setVisible(true);
                     },
                     hide: function () {
-                        Ext.get('content').setVisible(true);
+                        Ext.get('portal-columns').setVisible(true);
                     }
                 }
             });
@@ -748,7 +748,7 @@ GeoNetwork.app = function () {
         if (metadataId) {
             // hide main container to avoid to have 2 scrollbars 
             // when editor is open.
-            var content = Ext.get('content');
+            var content = Ext.get('portal-columns');
             content.setVisibilityMode(Ext.Element.DISPLAY);
             content.setVisible(false);
             
