@@ -333,13 +333,22 @@
       <xsl:with-param name="content">
         <xsl:choose>
           <xsl:when test="$remote=false()"><fo:basic-link text-decoration="underline" color="blue">
-              <xsl:attribute name="external-destination"> url('<xsl:value-of
-                select="concat($server/protocol, '://', $server/host,':', $server/port, /root/gui/url,'?uuid=', $metadata/geonet:info/uuid)"
-                />') </xsl:attribute>
+							<xsl:choose>
+								<xsl:when test="/root/gui/config/client/@widget='true'">
+									<xsl:attribute name="external-destination"> url('<xsl:value-of
+										select="concat($server/protocol, '://', $server/host,':', $server/port, /root/gui/url, '/apps/tabsearch/', /root/gui/config/client/@url,'?uuid=', $metadata/geonet:info/uuid , '&amp;hl=', /root/gui/language)"
+									/>') </xsl:attribute>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:attribute name="external-destination"> url('<xsl:value-of
+										select="concat($server/protocol, '://', $server/host,':', $server/port, /root/gui/url, '/srv/',/root/gui/language, '/' ,/root/gui/config/client/@url,'?uuid=', $metadata/geonet:info/uuid)"
+									/>') </xsl:attribute>
+								</xsl:otherwise>
+							</xsl:choose>
               <xsl:value-of select="$gui/strings/show"/>
           </fo:basic-link> | <fo:basic-link text-decoration="underline" color="blue">
             <xsl:attribute name="external-destination"> url('<xsl:value-of
-              select="concat($server/protocol, '://', $server/host,':', $server/port, /root/gui/url, '/srv/en/xml.metadata.get?uuid=', $metadata/geonet:info/uuid)"
+              select="concat($server/protocol, '://', $server/host,':', $server/port, /root/gui/url, '/srv/',/root/gui/language,'/xml.metadata.get?uuid=', $metadata/geonet:info/uuid)"
             />') </xsl:attribute>
             <xsl:value-of select="$gui/strings/show"/> (XML)
           </fo:basic-link> | </xsl:when>
@@ -390,7 +399,7 @@
               padding-left="4pt">
               <fo:external-graphic padding-right="4pt">
                 <xsl:attribute name="src"> url('<xsl:value-of
-                    select="concat( //server/protocol, '://', //server/host,':', //server/port, /root/gui/url,'/images/logos/', /root/gui/env/site/siteId,'.gif')"
+                    select="concat( /root/gui/env/server/protocol, '://', /root/gui/env/server/host,':', /root/gui/env/server/port, /root/gui/url,'/images/logos/', /root/gui/env/site/siteId,'.gif')"
                   />')" </xsl:attribute>
               </fo:external-graphic>
               <xsl:value-of select="upper-case(/root/gui/env/site/name)"/> (<xsl:value-of

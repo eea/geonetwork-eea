@@ -13,9 +13,9 @@
     <MergeFactor>10</MergeFactor>
 
     <!-- Default Lucene version to use (mainly for Analyzer creation). -->
-    <luceneVersion>36</luceneVersion>
+    <luceneVersion>4_9</luceneVersion>
     <!-- How often to check if a commit is required -->
-    <commitInterval>30000</commitInterval>
+    <commitInterval>1000</commitInterval>
     <!-- If true then NRTManagerReopenThread will control how often the reader are reopened.
     	 If false then the reader will be opened everytime they are obtained.  -->
     <useNRTManagerReopenThread>true</useNRTManagerReopenThread>
@@ -94,7 +94,6 @@
       <field name="_featured" tagName="featured"/>
       <field name="_owner" tagName="owner"/>
       <field name="_userinfo" tagName="userinfo"/>
-      <field name="_isPublishedToAll" tagName="isPublishedToAll"/>
       <field name="_ownername" tagName="ownername"/>
       <field name="_cat" tagName="category"/>
       <field name="_valid" tagName="valid"/>
@@ -104,7 +103,9 @@
       <field name="_valid_xsd" tagName="valid_xsd"/>
       <field name="_selected" tagName="selected"/>
       <field name="_source" tagName="source"/>
+      <field name="_status" tagName="status"/>
       <field name="_edit" tagName="edit"/>
+      <field name="_root" tagName="root"/>
       <field name="_title" tagName="title" multilingualSortField="true"/>
       <field name="_docLocale" tagName="docLocale"/>
       <field name="_locale" tagName="_locale"/>
@@ -128,6 +129,8 @@
       <field name="geoBox" tagName="geoBox"/>
       <field name="_indexingError" tagName="idxError"/>
       <field name="_indexingErrorMsg" tagName="idxMsg"/>
+      <field name="_op0" tagName="publishedForGroup"/>
+      <field name="_groupOwner" tagName="groupOwner"/>
     </dumpFields>
   </search>
 
@@ -177,6 +180,7 @@
   -->
   <fieldSpecificAnalyzer>
     <Field name="_uuid" analyzer="org.fao.geonet.kernel.search.GeoNetworkAnalyzer"/>
+    <Field name="standardName" analyzer="org.apache.lucene.analysis.core.KeywordAnalyzer"/>
     <Field name="parentUuid" analyzer="org.fao.geonet.kernel.search.GeoNetworkAnalyzer"/>
     <Field name="operatesOn" analyzer="org.fao.geonet.kernel.search.GeoNetworkAnalyzer"/>
     <Field name="operatesOnIdentifier" analyzer="org.fao.geonet.kernel.search.GeoNetworkAnalyzer"/>
@@ -198,6 +202,8 @@
     <Field name="keyword" analyzer="org.apache.lucene.analysis.core.KeywordAnalyzer"/>
     <Field name="inspirerelated" analyzer="org.apache.lucene.analysis.core.KeywordAnalyzer"/>
     <Field name="_groupPublished" analyzer="org.apache.lucene.analysis.core.KeywordAnalyzer"/>
+    <Field name="_source" analyzer="org.apache.lucene.analysis.core.KeywordAnalyzer"/>
+    
   </fieldSpecificAnalyzer>
   
   <fieldSpecificSearchAnalyzer>

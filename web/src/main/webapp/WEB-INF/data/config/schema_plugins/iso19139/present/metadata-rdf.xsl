@@ -203,9 +203,9 @@
   <!-- Service 
     Create a simple rdf:Description. To be improved.
     
-    xpath: //srv:SV_ServiceIdentification||//*[@gco:isoType='srv:SV_ServiceIdentification']
+    xpath: //srv:SV_ServiceIdentification||//*[contains(@gco:isoType, 'SV_ServiceIdentification')]
   -->
-  <xsl:template match="srv:SV_ServiceIdentification|*[@gco:isoType='srv:SV_ServiceIdentification']" mode="to-dcat">
+  <xsl:template match="srv:SV_ServiceIdentification|*[contains(@gco:isoType, 'SV_ServiceIdentification')]" mode="to-dcat">
     <rdf:Description rdf:about="{$url}/resource/{iso19139:getResourceCode(../../.)}">
       <xsl:call-template name="to-dcat"/>
     </rdf:Description>
@@ -217,9 +217,9 @@
     "A collection of data, published or curated by a single source, and available for access or 
     download in one or more formats."
     
-    xpath: //gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']
+    xpath: //gmd:MD_DataIdentification|//*[contains(@gco:isoType, 'MD_DataIdentification')]
   -->
-  <xsl:template match="gmd:MD_DataIdentification|*[@gco:isoType='gmd:MD_DataIdentification']" mode="to-dcat">
+  <xsl:template match="gmd:MD_DataIdentification|*[contains(@gco:isoType, 'MD_DataIdentification')]" mode="to-dcat">
     <dcat:Dataset rdf:about="{$url}/resource/{iso19139:getResourceCode(../../.)}">
       <xsl:call-template name="to-dcat"/>
     </dcat:Dataset>
@@ -316,7 +316,7 @@
     
     <!-- "An entity responsible for making the dataset available" -->
     <xsl:for-each select="gmd:pointOfContact/*/gmd:organisationName/gco:CharacterString[.!='']">
-      <dct:publisher rdf:resource="{$url}/organization/{.}"/>
+      <dct:publisher rdf:resource="{$url}/organization/{encode-for-uri(.)}"/>
     </xsl:for-each>
     <!-- xpath: gmd:identificationInfo/*/gmd:pointOfContact -->
     

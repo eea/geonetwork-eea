@@ -266,6 +266,17 @@
 					</xsl:choose>
 				</MD_LegalConstraints>
 			</resourceConstraints>
+			
+			<xsl:if test="lower-case(.) = 'none'">
+				<resourceConstraints>
+					<MD_Constraints>
+						<useLimitation>
+							<gco:CharacterString>no conditions apply</gco:CharacterString>
+						</useLimitation>
+					</MD_Constraints>
+				</resourceConstraints>
+			</xsl:if>
+			
 		</xsl:for-each>
 		
 		<srv:serviceType>
@@ -360,7 +371,7 @@
 									</xsl:variable>
 											
 									<westBoundLongitude>
-										<gco:Decimal><xsl:copy-of select="math:min(exslt:node-set($boxes)/*[name(.)='xmin'])"/></gco:Decimal>
+										<gco:Decimal><xsl:value-of select="math:min(exslt:node-set($boxes)/*[name(.)='xmin'])"/></gco:Decimal>
 									</westBoundLongitude>
 									<eastBoundLongitude>
 										<gco:Decimal><xsl:value-of select="math:max(exslt:node-set($boxes)/*[name(.)='xmax'])"/></gco:Decimal>
@@ -713,7 +724,11 @@
 					<equivalentScale>
 						<MD_RepresentativeFraction>
 							<denominator>
-							  <gco:Integer><xsl:value-of select="if ($maxScale) then $maxScale else format-number(round($maxScaleHint div math:sqrt(2) * 72 div 2.54 * 100), '0')"/></gco:Integer>
+								<gco:Integer><xsl:value-of select="if ($maxScale) 
+																		then $maxScale 
+																		else if ($maxScaleHint = 'Infinity') 
+																			then $maxScaleHint 
+																			else  format-number(round($maxScaleHint div math:sqrt(2) * 72 div 2.54 * 100), '0')"/></gco:Integer>
 							</denominator>
 						</MD_RepresentativeFraction>
 					</equivalentScale>
@@ -766,7 +781,7 @@
 									</xsl:variable>
 											
 									<westBoundLongitude>
-										<gco:Decimal><xsl:copy-of select="exslt:node-set($boxes)/*[name(.)='xmin']"/></gco:Decimal>
+										<gco:Decimal><xsl:value-of select="exslt:node-set($boxes)/*[name(.)='xmin']"/></gco:Decimal>
 									</westBoundLongitude>
 									<eastBoundLongitude>
 										<gco:Decimal><xsl:value-of select="exslt:node-set($boxes)/*[name(.)='xmax']"/></gco:Decimal>

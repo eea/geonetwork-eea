@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>2.9.0-SNAPSHOT</version>
+    <version>2.11.0-SNAPSHOT</version>
   </parent>
   <artifactId>geonetwork-itest</artifactId>
   <packaging>pom</packaging>
@@ -77,7 +77,7 @@
           <artifactItems>
             <artifactItem>
               <groupId>${project.groupId}</groupId>
-              <artifactId>geonetwork-main</artifactId>
+              <artifactId>web-app</artifactId>
               <version>${project.version}</version>
               <type>war</type>
             </artifactItem>
@@ -120,12 +120,12 @@
         <version>${jetty.version}</version>
         <configuration>
           <connectors>
-            <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+            <connector implementation="org.eclipse.jetty.server.bio.SocketConnector">
               <port>${jettyPort}</port>
               <maxIdleTime>60000</maxIdleTime>
               <requestHeaderSize>20000</requestHeaderSize>
             </connector>
-            <connector implementation="org.eclipse.jetty.server.ssl.SslSelectChannelConnector">
+            <connector implementation="org.eclipse.jetty.server.ssl.SslSocketConnector">
               <!-- Note: If another server needs to communicate with this one with
                     https then it needs the environment variables set as follows:
                     -Djavax.net.ssl.trustStore=keystore.jks -Djavax.net.ssl.trustStorePassword=password
@@ -140,7 +140,7 @@
               <requestHeaderSize>20000</requestHeaderSize>
             </connector>
           </connectors>
-          <webApp>${geonetworkWar}/geonetwork-main.war</webApp>
+          <war>${geonetworkWar}/web-app.war</war>
           <webAppConfig>
             <contextPath>/geonetwork</contextPath>
           </webAppConfig>

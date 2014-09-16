@@ -113,11 +113,13 @@ GeoNetwork.Templates = Ext.extend(Ext.XTemplate, {
     }
 });
 
+GeoNetwork.Templates.SHORT_TITLE ='<h1><span class="checkbox"><input type="checkbox" <tpl if="selected==\'true\'">checked="true"</tpl> class="selector" onclick="javascript:catalogue.metadataSelect((this.checked?\'add\':\'remove\'), [\'{uuid}\']);"/>&nbsp;</span><a href="#" onclick="javascript:catalogue.metadataShow(\'{uuid}\');return false;">{[Ext.util.Format.ellipsis(values.title, 40, true)]}</a>' +
+                                    '<span class="md-action-menu"> - <a rel="mdMenu">' + OpenLayers.i18n('mdMenu') + '</a></span></h1>';
 
 GeoNetwork.Templates.SHORT_TITLE ='<h1><input type="checkbox" <tpl if="selected==\'true\'">checked="true"</tpl> class="selector" onclick="javascript:catalogue.metadataSelect((this.checked?\'add\':\'remove\'), [\'{uuid}\']);"/><a href="#" onclick="javascript:catalogue.metadataShow(\'{uuid}\');return false;">{[Ext.util.Format.ellipsis(values.title, 50, true)]}</a>' +
                                 '<span class="md-action-menu"> - <a rel="mdMenu">' + OpenLayers.i18n('mdMenu') + '</a></span></h1>';
 
-GeoNetwork.Templates.TITLE = '<h1><input type="checkbox" <tpl if="selected==\'true\'">checked="true"</tpl> class="selector" onclick="javascript:catalogue.metadataSelect((this.checked?\'add\':\'remove\'), [\'{uuid}\']);"/><a href="#" onclick="javascript:catalogue.metadataShow(\'{uuid}\');return false;">{title}</a>' +
+GeoNetwork.Templates.TITLE = '<h1><input type="checkbox" <tpl if="selected==\'true\'">checked="true"</tpl> class="selector" onclick="javascript:catalogue.metadataSelect((this.checked?\'add\':\'remove\'), [\'{uuid}\']);"/>&nbsp;<a href="#" onclick="javascript:catalogue.metadataShow(\'{uuid}\');return false;">{title}</a>' +
                                 '<span class="md-action-menu"> - <a rel="mdMenu">' + OpenLayers.i18n('mdMenu') + '</a></span></h1>';
 GeoNetwork.Templates.RATING_TPL = '<tpl if="isharvested==\'n\' || harvestertype==\'geonetwork\'"><div class="rating">' +
                                            '<input type="radio" name="rating{values.uuid}" <tpl if="rating==\'1\'">checked="true"</tpl> value="1"/>' + 
@@ -164,19 +166,15 @@ GeoNetwork.Templates.THUMBNAIL = new Ext.XTemplate(
             '<tpl for=".">',
                 '<li class="md md-thumbnail" style="{featurecolorCSS}">',
                 '<div class="md-wrap" id="{uuid}" title="{abstract}">',
-                    GeoNetwork.Templates.TITLE,
+                    GeoNetwork.Templates.SHORT_TITLE,
                     '<div class="thumbnail">',
                         '<tpl if="thumbnail">',
-                            '<a rel="lightbox" href="{thumbnail}"><img src="{thumbnail}" alt="Thumbnail"/></a>', 
+                            '<a rel="lightbox" href="{overview}"><img src="{thumbnail}" alt="Thumbnail"/></a>', 
                         '</tpl>',
                         '<tpl if="thumbnail==\'\'"></tpl>',
                     '</div>',
-                    '<tpl for="links">',
-                    '<tpl if="values.type == \'application/vnd.ogc.wms_xml\'">',
-                    // FIXME : ref to app
-                        '<a href="#" class="md-mn addLayer" title="{title}" alt="{title}" onclick="app.switchMode(\'1\', true);app.getIMap().addWMSLayer([[\'{title}\', \'{href}\', \'{name}\', \'{uuid}\']]);">&nbsp;</a>',
-                    '</tpl>',
-                    '</tpl>',
+                    '<div class="md-links md-links-{id}" data-filter="application/vnd.ogc.wms_xml">',
+                    '</div>',
                 '</div>',
                 '</li>',
             '</tpl>',
@@ -205,31 +203,35 @@ GeoNetwork.Templates.FULL = new Ext.XTemplate(
                             '{value}{[xindex==xcount?"":", "]}',
                         '</tpl></p>',
                     '</tpl>',
-                    '<div class="md-links" id="md-links-{id}">',
+                    '<div class="md-links md-links-{id}">',
                     '</div>',
                 '</td><td class="thumb">',
                         GeoNetwork.Templates.RATING_TPL,
                         '<div class="thumbnail">',
                             '<tpl if="thumbnail">',
-                                '<a rel="lightbox" href="{thumbnail}"><img src="{thumbnail}" alt="Thumbnail"/></a>', 
+                                '<a rel="lightbox" href="{overview}"><img src="{thumbnail}" alt="Thumbnail"/></a>', 
                             '</tpl>',
                             '<tpl if="thumbnail==\'\'"></tpl>',
                         '</div>',
-                '</td><td class="icon">',
+                '</td>',
                 // Validity and category information
-                '<tpl if="valid != \'-1\'">',
-                    '<span class="badge badge-',
-                        '<tpl if="valid == \'1\'">success</tpl>',
-                        '<tpl if="valid == \'0\'">error</tpl>',
-                        '" title="' + OpenLayers.i18n('validityInfo'),
-                        '<tpl for="valid_details">',
-                          '{values.type}: ',
-                            '<tpl if="values.valid == \'1\'">' + OpenLayers.i18n('valid')  + '</tpl>',
-                            '<tpl if="values.valid == \'0\'">' + OpenLayers.i18n('notValid')  + '</tpl>',
-                            '<tpl if="values.valid == \'-1\'">' + OpenLayers.i18n('notDetermined')  + '</tpl>',
-                            '<tpl if="values.ratio != \'\'"> ({values.ratio}) </tpl> - ',
-                        '</tpl>',
-                    '">&nbsp;</span>',
+                '<tpl if="catalogue.isIdentified()">',
+                  '<td>',
+                    '<tpl if="catalogue.isIdentified() && valid != \'-1\'">',
+                        '<span class="badge badge-',
+                            '<tpl if="valid == \'1\'">success</tpl>',
+                            '<tpl if="valid == \'0\'">error</tpl>',
+                            '" title="' + OpenLayers.i18n('validityInfo'),
+                            '<tpl for="valid_details">',
+                              '{values.type}: ',
+                                '<tpl if="values.valid == \'1\'">' + OpenLayers.i18n('valid')  + '</tpl>',
+                                '<tpl if="values.valid == \'0\'">' + OpenLayers.i18n('notValid')  + '</tpl>',
+                                '<tpl if="values.valid == \'-1\'">' + OpenLayers.i18n('notDetermined')  + '</tpl>',
+                                '<tpl if="values.ratio != \'\'"> ({values.ratio}) </tpl> - ',
+                            '</tpl>',
+                        '">&nbsp;</span>',
+                    '</tpl>',
+                  '</td>',
                 '</tpl>',
                 '</td><td class="icon" title="' + OpenLayers.i18n('metadataCategories') + '">',
                 '<tpl for="category">',
@@ -242,7 +244,7 @@ GeoNetwork.Templates.FULL = new Ext.XTemplate(
                       // metadata contact are not displayed.
                       '<tpl if="applies==\'resource\'">',
                           '<span title="{role} - {applies}"><tpl if="values.logo !== undefined && values.logo !== \'\'">',
-                              '<img src="{logo}" class="orgLogo"/>',
+                              '<img src="{logo}" class="orgLogo"/>&nbsp;',
                           '</tpl>',
                           '{name}&nbsp;&nbsp;</span>',
                       '</tpl>',
@@ -251,6 +253,9 @@ GeoNetwork.Templates.FULL = new Ext.XTemplate(
                       '<br/><span class="md-mn md-mn-user" title="' + OpenLayers.i18n('ownerName') + '">{ownername} - ' + OpenLayers.i18n('lastUpdate') + '{[values.changedate.split(\'T\')[0]]}</span>',
                   '</tpl>',
                 '</div>',
+//                '<tpl if="edit==\'true\' && idxMsg">',
+//                    '<div class="label label-warning">{idxMsg}</div>',
+//                '</tpl>',
             '</li>',
         '</tpl>',
     '</ul>',
@@ -274,3 +279,15 @@ GeoNetwork.Templates.Relation = {
                 '<tpl if="subType!=\'\'"><span class="badge relation-type">{subType}</span></tpl>',
                  '</li>']
 };
+
+GeoNetwork.Templates.KEYWORD_ITEM = new Ext.XTemplate(
+    '<tpl for=".">',
+        '<div class="ux-mselect-item" title="{definition}">{value}</div>',
+    '</tpl>'
+);
+
+GeoNetwork.Templates.THESAURUS_HEADER = new Ext.XTemplate(
+    '<tpl for=".">',
+        '<div class="thesaurusInfo"><span class="title">{title}</span><span class="theme">{theme}</span><span class="filename">({filename})</span></div>',
+    '</tpl>'
+);

@@ -6,7 +6,7 @@
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" 
 	xmlns:gco="http://www.isotc211.org/2005/gco"
 	exclude-result-prefixes="gco gmd dc exslt geonet"
-    >
+	>
 
 	<!--
 	show metadata form
@@ -15,11 +15,12 @@
 	<xsl:include href="main.xsl"/>
 	<xsl:include href="metadata.xsl"/>
 
-    <xsl:variable name="protocol" select="/root/gui/env/server/protocol" />
+	<xsl:variable name="protocol" select="/root/gui/env/server/protocol" />
 	<xsl:variable name="host" select="/root/gui/env/server/host" />
 	<xsl:variable name="port" select="/root/gui/env/server/port" />
 	<xsl:variable name="baseURL" select="concat($protocol,'://',$host,':',$port,/root/gui/url)" />
 	<xsl:variable name="serverUrl" select="concat($protocol,'://',$host,':',$port,/root/gui/locService)" />
+	<xsl:variable name="showMap" select="/root/gui/config/metadata-show/@showMapPanel" />
 
 	<xsl:template mode="css" match="/">
 		<xsl:if test="$currTab!='xml'">
@@ -32,28 +33,197 @@
 	additional scripts
 	-->
 	<xsl:template mode="script" match="/">
-		<script type="text/javascript" src="{/root/gui/url}/scripts/core/kernel/kernel.js"/>
+
 		<xsl:call-template name="geoHeader"/>
-		<xsl:call-template name="jsHeader">
-			<xsl:with-param name="small" select="false()"/>
-		</xsl:call-template>
-		
-		<xsl:choose>
-            <xsl:when test="/root/request/debug">
-	    		<script type="text/javascript" src="{/root/gui/url}/scripts/editor/metadata-show.js"></script>
-	    		<script type="text/javascript" src="{/root/gui/url}/scripts/editor/metadata-editor.js"></script>
-        		<script type="text/javascript" src="{/root/gui/url}/scripts/editor/simpletooltip.js"></script>
-		    </xsl:when>
-            <xsl:otherwise>
-				<script type="text/javascript" src="{/root/gui/url}/scripts/lib/gn.editor.js"></script>
-            </xsl:otherwise>
-        </xsl:choose>		
+		<xsl:call-template name="ext-ux"/>
+
+        <xsl:variable name="minimize">
+            <xsl:choose>
+                <xsl:when test="/root/request/debug">?minimize=false</xsl:when>
+                <xsl:otherwise></xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <script type="text/javascript" src="{/root/gui/url}/static/gn.search.js{$minimize}"/><xsl:text>&#10;</xsl:text>
+
+        <!-- Editor JS is still required here at least for batch operation -->
+        <script type="text/javascript" src="{/root/gui/url}/static/gn.editor.js{$minimize}"/><xsl:text>&#10;</xsl:text>
+        <script type="text/javascript" src="{/root/gui/url}/static/gn.libs.map.js{$minimize}"/><xsl:text>&#10;</xsl:text>
+        <script type="text/javascript" src="{/root/gui/url}/static/kernel.js{$minimize}"/><xsl:text>&#10;</xsl:text>
+
+		<xsl:variable name="urlWMS"><xsl:copy-of select="/root/request/url"/></xsl:variable>
+		<xsl:variable name="typeWMS"><xsl:copy-of select="/root/request/type"/></xsl:variable>
+
+
+		<xsl:if test="normalize-space($showMap)!='false'">
+		<script type="text/javascript">
+
+			function init() {};
+
+
+			var getIMServiceURL = function(service){
+				// FIXME: the "/intermap/" context should be parametrized
+				return "/intermap/srv/"+Env.lang+"/"+service;
+			};
+
+
+			Ext.onReady(function(){
+
+				var GNCookie = new Ext.state.CookieProvider({
+					expires: new Date(new Date().getTime()+(1000*60*60*24*365))
+										//1 year from now
+					});
+
+				Ext.state.Manager.setProvider(GNCookie);
+
+				GeoNetwork.MapStateManager.loadMapState();
+
+				initMapViewer();
+				var mapViewport =  GeoNetwork.mapViewer.getViewport();
+
+				var viewport = new Ext.Panel({
+					region: 'center',
+					layout:'border',
+					border:false,
+					autoScroll:true,
+					items:[
+						// North: header
+						{
+							region:'north',
+							contentEl :'header',
+							border:false
+						},
+
+						// Center: Content
+						{
+							region:'center',
+							layout:'border',
+							border:false,
+							layoutConfig:{
+							animate:true
+						}, 
+						items:[
+							{region:'center',
+							border:false,
+							layout: 'border',
+							items: 
+								[{region:'center',
+								id: 'main-viewport',
+								border:false,
+								layout: 'border',
+								items: [
+									{region:'north',
+									id: 'north-map-panel',
+									title: '<xsl:value-of select="/root/gui/strings/mapViewer"/>',
+									border:false,
+									collapsible: true,
+									collapsed: true,
+									split: true,
+									height: 450,
+									minSize: 300,
+									//maxSize: 500,
+									layout: 'fit',
+									listeners: {
+											collapse: collapseMap,
+											expand: expandMap
+											},
+									items: [mapViewport]
+									
+									},
+									{region:'center', 
+									contentEl :'content',
+									border:false,
+									autoScroll: true
+								}]
+							}]
+						}]
+					}]
+				});
+
+				mainViewport = new Ext.Viewport({
+							layout:'border',
+							border:false,
+							autoScroll: true,
+							items:[viewport]
+				});
+
+
+				<!-- If a WMS server & layername(s) are passed, it will be opened 
+					 in the map viewer the large map viewer will also be opened -->
+				var urlWMS="<xsl:value-of select="$urlWMS"/>";
+				var typeWMS="<xsl:value-of select="$typeWMS"/>";
+				servicesWMS = new Array();
+				<xsl:for-each select="/root/request/service">
+					<xsl:text>servicesWMS.push("</xsl:text><xsl:value-of select="."/><xsl:text>");</xsl:text>
+				</xsl:for-each>
+				if (urlWMS!='') {
+				if (servicesWMS.length!=null || servicesWMS.length>0) {
+						if (typeWMS!='') {
+							imc_addServices(urlWMS, servicesWMS, typeWMS, im_servicesAdded);
+							openIntermap();
+						}
+					}
+				}
+			});
+
+			function initMapViewer() {
+				var mapOptions = <xsl:value-of select='/root/gui/config/mapViewer/@options'/>;
+
+				// Load layers defined in config file
+				var layers = [];
+
+				<xsl:for-each select="/root/gui/config/mapViewer/layers/layer">
+					layers.push(["<xsl:value-of select='@tocName'/>","<xsl:value-of select='@server'/>",<xsl:value-of select='@params'/>, <xsl:value-of select='@options'/>]);
+				</xsl:for-each>
+
+				// Init projection list
+				<xsl:for-each select="/root/gui/config/mapViewer/proj/crs">
+				GeoNetwork.ProjectionList.push(["<xsl:value-of select='@code'/>","<xsl:value-of select='@name'/>"]);
+				</xsl:for-each>
+
+				// Init WMS server list
+				<xsl:for-each select="/root/gui/config/mapViewer/servers/server">
+				GeoNetwork.WMSList.push(["<xsl:value-of select='@name'/>","<xsl:value-of select='@url'/>"]);
+				</xsl:for-each>
+
+				var scales = <xsl:value-of select='/root/gui/config/mapViewer/scales/@values'/>;
+
+				// Initialize map viewer
+				GeoNetwork.mapViewer.init(backgroundLayers, mapOptions, scales);
+				GeoNetwork.CatalogueInterface.init(GeoNetwork.mapViewer.getMap());
+				GeoNetwork.MapStateManager.applyMapState(GeoNetwork.mapViewer.getMap());
+				}
+
+			function collapseMap(pnl) {
+				Ext.getCmp('main-viewport').layout.north.getCollapsedEl().titleEl.dom.innerHTML = '<xsl:value-of select="/root/gui/strings/showMap"/>';
+			}
+			
+			function expandMap(pnl) {
+				Ext.getCmp('main-viewport').layout.north.getCollapsedEl().titleEl.dom.innerHTML = '<xsl:value-of select="/root/gui/strings/mapViewer"/>';
+			}
+
+		</script>
+		</xsl:if>
 	</xsl:template>
-	
+
+	<xsl:template name="content">
+		<!-- Page content -->
+		<div id="content" >
+			<xsl:call-template name="pageContent"/>
+		</div>
+		<xsl:if test="$currTab!='xml'">
+			<!-- Map panel -->
+			<div id="map_container" style="overflow:hidden; clear: both;">
+				<div id="form_wmc" style="display:none"></div>
+				<div id="ol_map"></div>
+			</div>
+		</xsl:if>
+	</xsl:template>
+
 	<!--
 	page content
 	-->
-	<xsl:template name="content">
+	<xsl:template name="pageContent">
 		<xsl:param name="schema">
 			<xsl:apply-templates mode="schema" select="."/>
 		</xsl:param>
@@ -87,6 +257,7 @@
 								<tr><td class="padded-content" height="100%" align="center" valign="top">
 									<xsl:call-template name="buttons">
 										<xsl:with-param name="metadata" select="$metadata"/>
+										<xsl:with-param name="buttonBarId" select="1"/>
 									</xsl:call-template>
 								</td></tr>
 							</xsl:variable>
@@ -155,7 +326,12 @@
 							</td></tr>
 							
 							<xsl:if test="$buttons!=''">
-								<xsl:copy-of select="$buttons"/>
+								<tr><td class="padded-content" height="100%" align="center" valign="top">
+									<xsl:call-template name="buttons">
+										<xsl:with-param name="metadata" select="$metadata"/>
+										<xsl:with-param name="buttonBarId" select="2"/>
+									</xsl:call-template>
+								</td></tr>
 							</xsl:if>
 							
 						</table>

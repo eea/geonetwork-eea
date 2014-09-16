@@ -1,4 +1,7 @@
-GeoNetwork.Settings = {};
+GeoNetwork.Settings = {
+//  hideAngularEditor: true,
+//  hideExtEditor: false
+};
 
 // Default to absolute path without apps/search
 // GeoNetwork.URL = '../..';
@@ -23,7 +26,8 @@ OpenLayers.ProxyHost = function(url){
 GeoNetwork.Util.defaultLocale = 'eng';
 // Restrict locales to a subset of languages
 //GeoNetwork.Util.locales = [
-//            ['fr', 'Français']
+//        ['en', 'English', 'eng'], 
+//        ['fr', 'Français', 'fre']
 //    ];
 GeoNetwork.searchDefault = {
     activeMapControlExtent: false
@@ -31,9 +35,23 @@ GeoNetwork.searchDefault = {
 GeoNetwork.advancedFormButton = true;
 
 GeoNetwork.Settings.editor = {
+    disableIfSubmittedForEditor: false,
     defaultViewMode : 'simple',
+    // Define which edit mode to use by default
+    // according to metadata schema
+    editMode: {
+//        'iso19139': 'identification'
+    },
     editHarvested: false
 //    defaultViewMode : 'inspire'
+};
+
+GeoNetwork.Settings.privileges = {
+        // Customize column to be displayed and the order
+        columnOrder: ['0', '5', '1', '2', '3']
+        // Use topGroups to place those groups with internet, intranet groups
+        // on top of the privileges panel.
+//        topGroups: ['82']
 };
 
 // Define if default mode should be used for HTML print output instead of tabs only
@@ -42,6 +60,13 @@ GeoNetwork.printDefaultForTabs = false;
 // Define if label needs to be displayed for login form next to username/password fields
 GeoNetwork.hideLoginLabels = true;
 
+// Define custom user menu for quick search links
+//GeoNetwork.Settings.userQuickLinks = {
+//        'Editor': [{
+//            label : OpenLayers.i18n('templates'),
+//            criteria : {"E_template" : "y"}
+//        }]
+//    };
 
 // Define which type of search to use
 // Old mode (xml.search with lucene, db access and XSL formatting)
@@ -49,13 +74,19 @@ GeoNetwork.hideLoginLabels = true;
 // IndexOnly mode (xml.search with lucene only) - recommended
 GeoNetwork.Settings.mdStore = GeoNetwork.data.MetadataResultsFastStore;
 
+GeoNetwork.Settings.tagCloud = {
+//    root: 'inspireThemes.inspireTheme'
+    root: 'keywords.keyword'
+};
+
 // List of facet to display. If none, the server configuration is use.
-GeoNetwork.Settings.facetListConfig = [{name: 'orgNames'}, 
-                                       {name: 'types'},  
-                                       {name: 'serviceTypes'}, 
-                                       {name: 'denominators'}, 
-                                       {name: 'keywords'}, 
-                                       {name: 'createDateYears'}];
+GeoNetwork.Settings.facetListConfig = [{name: 'orgNames'},
+                                       {name: 'types'},
+                                       {name: 'serviceTypes'},
+                                       {name: 'denominators'},
+                                       {name: 'keywords'},
+                                       {name: 'createDateYears'},
+                                       {name: 'formats'}];
 GeoNetwork.Settings.facetMaxItems = 7;
 
 // Latest update info query
@@ -88,4 +119,4 @@ GeoNetwork.WMSList = [['Geoserver', 'http://localhost/geoserver/wms?']];
 
 GeoNetwork.defaultViewMode = 'view-simple';
 
-Ext.BLANK_IMAGE_URL = '../js/ext/resources/images/default/s.gif';
+Ext.BLANK_IMAGE_URL = '../../apps/js/ext/resources/images/default/s.gif';

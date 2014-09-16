@@ -281,20 +281,19 @@ function initAdvancedSearch()
 	initCalendar();
 }
 
-function runAdvancedSearch(type)
-{
-  if (type != "pdf")
-	   preparePresent();
-
-	setSort();
-
-	var pars = $('advanced_search_form').serialize(true);
-
-    if (type == "pdf")
-       gn_searchpdf(pars);
-    else
-	   // Load results via AJAX
-	   gn_search(pars);
+function runAdvancedSearch(type) {
+    if (type !== "pdf") {
+        preparePresent();
+    }
+    setSort();
+    var pars = $('advanced_search_form').serialize(true);
+    
+    if (type === "pdf")  {
+        gn_searchpdf(pars);
+    } else {
+        // Load results via AJAX
+        gn_search(pars);
+    }
 }
 
 function resetAdvancedSearch()
@@ -578,7 +577,7 @@ function doRegionSearch(regionlist)
 function getRegion(region)
 {
     if (region) 
-			var pars = "id="+region;
+			var pars = "id="+encodeURIComponent(region);
 
     var myAjax = new Ajax.Request(
         getGNServiceURL('xml.region.get'),
@@ -588,10 +587,10 @@ function getRegion(region)
             onSuccess: function(req) {
     					//Response received
     					var node = req.responseXML;
-    					var northcc = xml.evalXPath(node, 'response/record/north');
-    					var southcc = xml.evalXPath(node, 'response/record/south');
-    					var eastcc = xml.evalXPath(node, 'response/record/east');
-    					var westcc = xml.evalXPath(node, 'response/record/west');
+    					var northcc = xml.evalXPath(node, 'regions/region/north');
+    					var southcc = xml.evalXPath(node, 'regions/region/south');
+    					var eastcc = xml.evalXPath(node, 'regions/region/east');
+    					var westcc = xml.evalXPath(node, 'regions/region/west');
 
     					$('northBL').value=northcc;
     					$('southBL').value=southcc;
@@ -1178,7 +1177,6 @@ function toggleWhen() {
 
 function addWMSLayer(layers) {
 	Ext.getCmp("north-map-panel").expand();
-	mainViewport.doLayout();
     GeoNetwork.mapViewer.addWMSLayer(layers);
 }
 

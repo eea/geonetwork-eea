@@ -30,11 +30,11 @@
         </xsl:call-template>
       </xsl:with-param>
       <xsl:with-param name="logo">
-        <img src="../../images/logos/{//geonet:info/source}.gif" alt="logo"/>
+        <img src="../../images/logos/{//geonet:info/source}.gif" alt="logo" class="logo"/>
       </xsl:with-param>
       <xsl:with-param name="relatedResources">
         <xsl:apply-templates mode="relatedResources"
-          select="gmd:distributionInfo"
+          select="."
         />
       </xsl:with-param>
       <xsl:with-param name="tabs" select="$tabs"/>
@@ -107,10 +107,11 @@
           </xsl:with-param>
         </xsl:call-template>
 
-
+        <xsl:variable name="modifiedDate" select="gmd:dateStamp/*[1]"/>
         <span class="madeBy">
-          <xsl:value-of select="/root/gui/strings/changeDate"/><xsl:value-of select="substring-before(gmd:dateStamp, 'T')"/> | 
-          <xsl:value-of select="/root/gui/strings/uuid"/><xsl:value-of select="gmd:fileIdentifier"/>
+          <xsl:value-of select="/root/gui/strings/changeDate"/>&#160;<xsl:value-of 
+            select="if (contains($modifiedDate, 'T')) then substring-before($modifiedDate, 'T') else $modifiedDate"/> | 
+          <xsl:value-of select="/root/gui/strings/uuid"/>&#160;<xsl:value-of select="gmd:fileIdentifier"/>
         </span>
 
       </xsl:with-param>
@@ -207,7 +208,7 @@
         </xsl:for-each>
         
         <xsl:if test="descendant::gmx:FileName">
-          <img src="{descendant::gmx:FileName/@src}" alt="logo" class="orgLogo" style="float:right;"/>
+          <img src="{descendant::gmx:FileName/@src}" alt="logo" class="logo orgLogo" style="float:right;"/>
           <!-- FIXME : css -->
         </xsl:if>
       </xsl:with-param>
@@ -257,10 +258,15 @@
           </xsl:choose>
           
         </xsl:for-each>
-        <xsl:if test="gmd:type/gmd:MD_KeywordTypeCode/@codeListValue">
+        
+        
+        <xsl:variable name="type" select="gmd:type/gmd:MD_KeywordTypeCode/@codeListValue"/>
+        <xsl:if test="$type != ''">
           (<xsl:value-of
-            select="gmd:type/gmd:MD_KeywordTypeCode/@codeListValue"/>)
+            select="/root/gui/schemas/*[name(.)='iso19139']/codelists/codelist[@name = 'gmd:MD_KeywordTypeCode']/
+            entry[code = $type]/label"/>)
         </xsl:if>
+        
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
@@ -512,13 +518,13 @@
   <!-- List of related resources defined in the online resource section of the metadata record.
 -->
   <xsl:template mode="relatedResources"
-    match="gmd:distributionInfo">
+    match="*">
     <table class="related">
       <tbody>
         <tr style="display:none;"><!-- FIXME needed by JS to append other type of relation from xml.relation service -->
           <td class="main"></td><td></td>
         </tr>
-        <xsl:for-each-group select="descendant::gmd:onLine[gmd:CI_OnlineResource/gmd:linkage/gmd:URL!='']" group-by="gmd:CI_OnlineResource/gmd:protocol">
+        <xsl:for-each-group select="gmd:distributionInfo/descendant::gmd:onLine[gmd:CI_OnlineResource/gmd:linkage/gmd:URL!='']" group-by="gmd:CI_OnlineResource/gmd:protocol">
         <tr>
           <td class="main">
             <!-- Usually, protocole format is OGC:WMS-version-blahblah, remove ':' and get
@@ -583,6 +589,11 @@
                               '{gmd:CI_OnlineResource/gmd:linkage/gmd:URL}', 
                               '{gmd:CI_OnlineResource/gmd:name/gco:CharacterString}', '{generate-id()}']]);">&#160;</a>
                   </xsl:if>
+                  <xsl:if test="contains(current-grouping-key(), 'WMC')">
+                    &#160;
+                    <a href="#" class="md-mn addLayer"
+                       onclick="app.switchMode('1', true);app.getIMap().addWMC('{gmd:CI_OnlineResource/gmd:linkage/gmd:URL}');">&#160;</a>
+                  </xsl:if>
                 </li>
               </xsl:for-each>
             </ul>
@@ -604,7 +615,7 @@
         else geonet:get-thumbnail-url($fileName, //geonet:info, /root/gui/locService)"/>
   
       <a href="{$url}" rel="lightbox-viewset">
-        <img class="logo" src="{$url}" alt="thumbnail"
+        <img class="thumbnail" src="{$url}" alt="thumbnail"
           title="{gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString}"/>
       </a>
     </xsl:if>

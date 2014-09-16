@@ -1,5 +1,9 @@
 var getGNServiceURL = function(service) {
-	return Env.locService+"/"+service;
+    if (service.indexOf("/") == 0) {
+        return Env.locService+service;
+    } else {
+        return Env.locService+'/'+service;
+    }
 };
 
 function findPos(obj) 
@@ -651,7 +655,16 @@ function doFileUploadSubmit(form)
 						name.value = fname.getAttribute('title');
 						$('di_'+$F(ref)).show();
 						$('db_'+$F(ref)).hide();
-					
+
+            // Dublin core specific specific code to make possible distinguish
+            // if the field (for the time being only dct:references) contains "normal" text or uploaded file
+            // dublin-core updated-fixed-info.xsl uses the prefix upload@ to process properly the value
+            var dc = $('dc_'+$F(ref));
+            if (dc != null) {
+              name.value = "upload@" + fname.getAttribute('title');
+            }
+            // End Dublin core editor specific code
+
 						// show file upload results - save form when dialog closes
 						Modalbox.show(doc.body.innerHTML,
 							{	

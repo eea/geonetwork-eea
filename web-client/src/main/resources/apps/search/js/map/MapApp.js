@@ -274,7 +274,9 @@ GeoNetwork.mapApp = function() {
             },
             autoLoad: true
         });
-        
+        printProvider.on('printexception', function (provider, response) {
+          alert(response.responseText);
+        });
         printPage = new GeoExt.data.PrintPage({
             printProvider: printProvider
         });
@@ -1348,7 +1350,17 @@ var processLayersSuccess = function(response) {
             
             map.addLayer(featureinfolayer);
         },
-
+        addWMC: function (url) {
+            var map = this.getMap();
+            
+            OpenLayers.Request.GET({
+                url: url, 
+                scope: this,
+                callback: function (response) {
+                    GeoNetwork.WMCManager.loadWmc(map, response.responseText);
+                 }
+            });
+        },
         /**
          * Add a list of WMS layers to the map
          *

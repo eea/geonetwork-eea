@@ -100,13 +100,16 @@
   <!-- these elements should be boxed -->
   <!-- ===================================================================== -->
 
-  <xsl:template mode="iso19139" match="gmd:identificationInfo|gmd:distributionInfo|gmd:descriptiveKeywords|gmd:thesaurusName|
+  <xsl:template mode="iso19139" match="gmd:identificationInfo|gmd:distributionInfo|
+              gmd:portrayalCatalogueInfo|gmd:portrayalCatalogueCitation|
+              gmd:descriptiveKeywords|gmd:thesaurusName|
               *[name(..)='gmd:resourceConstraints']|gmd:spatialRepresentationInfo|gmd:pointOfContact|
               gmd:dataQualityInfo|gmd:contentInfo|gmd:distributionFormat|
               gmd:referenceSystemInfo|gmd:spatialResolution|gmd:offLine|gmd:projection|gmd:ellipsoid|gmd:extent[name(..)!='gmd:EX_TemporalExtent']|gmd:attributes|gmd:verticalCRS|
               gmd:geographicBox|gmd:EX_TemporalExtent|gmd:MD_Distributor|
               srv:containsOperations|srv:SV_CoupledResource|
-              gmd:metadataConstraints|gmd:aggregationInfo|gmd:report/*|gmd:result/*">
+              gmd:metadataConstraints|gmd:aggregationInfo|gmd:report/*|gmd:result/*|
+              gmd:processStep|gmd:lineage">
     <xsl:param name="schema"/>
     <xsl:param name="edit"/>
     
@@ -772,7 +775,7 @@
             <xsl:variable name="link">
               <xsl:choose>
                 <xsl:when test="geonet:is-image(gmx:FileName/@src)">
-                  <div class="logo-wrap"><img src="{gmx:FileName/@src}"/></div>
+                  <div class="logo-wrap"><img class="logo" src="{gmx:FileName/@src}"/></div>
                 </xsl:when>
                 <xsl:otherwise>
                   <a href="{gmx:FileName/@src}"><xsl:value-of select="gmx:FileName"/></a>
@@ -998,7 +1001,7 @@
       <xsl:choose>
         <xsl:when test="starts-with($schema,'iso19139.')">
           <xsl:copy-of
-            select="$labels/schemas/*[name(.)=$schema]/codelists/codelist[@name = $qname]" />
+            select="$labels/schemas/*[name(.)=$schema]/codelists/codelist[@name = $qname and not(@displayIf)]" />
         </xsl:when>
         <xsl:otherwise />
       </xsl:choose>
@@ -1011,7 +1014,7 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:copy-of
-            select="$labels/schemas/*[name(.)='iso19139']/codelists/codelist[@name = $qname]" />
+            select="$labels/schemas/*[name(.)='iso19139']/codelists/codelist[@name = $qname and not(@displayIf)]" />
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -1357,15 +1360,20 @@
     <xsl:param name="thesaurusId"/>
     <xsl:param name="listOfKeywords"/>
     <xsl:param name="listOfTransformations"/>
-    <xsl:param name="transformation"/>
+    <xsl:param name="transformation"/> 
+    <xsl:param name="maxKeywords" select="'100'"/>
+    <xsl:param name="searchOnLoad" select="'true'"/>
+    <xsl:param name="itemSelectorHeight" select="'undefined'" required="no"/>
+    <xsl:param name="itemSelectorWidth" select="'undefined'" required="no"/>
+    <xsl:param name="identificationMode" select="'value'" required="no"/>
     
     <!-- The widget configuration -->
     <div class="thesaurusPickerCfg" id="thesaurusPicker_{$elementRef}" 
       config="{{mode: '{$widgetMode}', thesaurus:'{$thesaurusId
-      }',keywords: ['{$listOfKeywords
+      }', maxKeywords: {$maxKeywords}, searchOnLoad: '{$searchOnLoad}', keywords: ['{$listOfKeywords
       }'], transformations: [{$listOfTransformations
       }], transformation: '{$transformation
-      }'}}"/>
+      }', identificationMode: '{$identificationMode}', itemSelectorHeight: {$itemSelectorHeight}, itemSelectorWidth: {$itemSelectorWidth}}}"/>
     
     <!-- The widget container -->
     <div class="thesaurusPicker" id="thesaurusPicker_{$elementRef}_panel"/>
@@ -1397,16 +1405,19 @@
           <xsl:with-param name="content">
             
             <xsl:variable name="thesaurusName" select="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString"></xsl:variable>
-            <xsl:variable name="thesaurusCode" select="if (gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/
-              gmd:identifier/gmd:MD_Identifier/gmd:code) then gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/
-              gmd:identifier/gmd:MD_Identifier/gmd:code else /root/gui/thesaurus/thesauri/thesaurus[title=$thesaurusName]/key"/>
+            <xsl:variable name="thesaurusCode" select="if (gmd:thesaurusName/gmd:CI_Citation/
+              gmd:identifier/gmd:MD_Identifier/gmd:code/*[1]) then gmd:thesaurusName/gmd:CI_Citation/
+              gmd:identifier/gmd:MD_Identifier/gmd:code/*[1] else /root/gui/thesaurus/thesauri/thesaurus[title=$thesaurusName]/key"/>
+            
+            <!-- Check that thesaurus is available locally. Check that the thesaurus is available in the catalogue to not 
+              to try to initialize a widget with a non existing thesaurus.  -->
+            <xsl:variable name="isThesaurusAvailable"
+              select="count(/root/gui/thesaurus/thesauri/thesaurus[key = $thesaurusCode]) > 0"></xsl:variable>
             
             <xsl:choose>
               <!-- If a thesaurus is attached to that keyword group 
-              use a snippet editor. 
-              TODO : check that the thesaurus is available in the catalogue to not 
-              to try to initialize a widget with a non existing thesaurus. -->
-              <xsl:when test="$thesaurusCode != ''">
+              use a snippet editor.-->
+              <xsl:when test="$isThesaurusAvailable">
                 <xsl:apply-templates select="gmd:MD_Keywords" mode="snippet-editor">
                   <xsl:with-param name="edit" select="$edit"/>
                   <xsl:with-param name="schema" select="$schema"/>
@@ -1468,10 +1479,11 @@
 									</xsl:choose>
 
               </xsl:for-each>
-              <xsl:if test="gmd:MD_Keywords/gmd:type/gmd:MD_KeywordTypeCode/@codeListValue!=''">
-                <xsl:text> (</xsl:text>
-                <xsl:value-of select="gmd:MD_Keywords/gmd:type/gmd:MD_KeywordTypeCode/@codeListValue"/>
-                <xsl:text>)</xsl:text>
+              <xsl:variable name="type" select="gmd:MD_Keywords/gmd:type/gmd:MD_KeywordTypeCode/@codeListValue"/>
+              <xsl:if test="$type">
+                (<xsl:value-of
+                  select="/root/gui/schemas/*[name(.)='iso19139']/codelists/codelist[@name = 'gmd:MD_KeywordTypeCode']/
+                  entry[code = $type]/label"/>)
               </xsl:if>
               <xsl:text>.</xsl:text>
             </xsl:variable>
@@ -1869,17 +1881,14 @@
 
     <!-- dataset or resource info in its own box -->
   
-    <xsl:for-each select="gmd:identificationInfo/gmd:MD_DataIdentification|
-            gmd:identificationInfo/srv:SV_ServiceIdentification|
-            gmd:identificationInfo/*[@gco:isoType='gmd:MD_DataIdentification']|
-            gmd:identificationInfo/*[@gco:isoType='srv:SV_ServiceIdentification']">
+    <xsl:for-each select="gmd:identificationInfo/*">
       <xsl:call-template name="complexElementGuiWrapper">
         <xsl:with-param name="title">
         <xsl:choose>
           <xsl:when test="$dataset=true()">
             <xsl:value-of select="/root/gui/schemas/iso19139/labels/element[@name='gmd:MD_DataIdentification']/label"/>
           </xsl:when>
-          <xsl:when test="local-name(.)='SV_ServiceIdentification' or @gco:isoType='srv:SV_ServiceIdentification'">
+          <xsl:when test="local-name(.)='SV_ServiceIdentification' or contains(@gco:isoType, 'SV_ServiceIdentification')">
             <xsl:value-of select="/root/gui/schemas/iso19139/labels/element[@name='srv:SV_ServiceIdentification']/label"/>
           </xsl:when>
           <xsl:otherwise>
@@ -2556,7 +2565,6 @@
     <xsl:param name="schema"/>
   
     <xsl:variable name="id" select="generate-id(.)"/>
-    <tr><td colspan="2"><div id="{$id}"/></td></tr>
     <xsl:apply-templates mode="complexElement" select=".">
       <xsl:with-param name="schema" select="$schema"/>
       <xsl:with-param name="edit"   select="true()"/>
@@ -2638,14 +2646,17 @@
   <!-- online resources: WMS get map -->
   <!-- ============================================================================= -->
 
-  <xsl:template mode="iso19139" match="gmd:CI_OnlineResource[starts-with(gmd:protocol/gco:CharacterString,'OGC:WMS-') and contains(gmd:protocol/gco:CharacterString,'-get-map') and gmd:name]" priority="2">
+  <xsl:template mode="iso19139" match="gmd:CI_OnlineResource[
+               starts-with(gmd:protocol/gco:CharacterString,'OGC:WMS') or
+               starts-with(gmd:protocol/gco:CharacterString,'OGC:WMC') or
+               starts-with(gmd:protocol/gco:CharacterString,'OGC:OWS')]" priority="2">
     <xsl:param name="schema"/>
     <xsl:param name="edit"/>
     <xsl:variable name="metadata_id" select="//geonet:info/id" />
     <xsl:variable name="linkage" select="gmd:linkage/gmd:URL" />
     <xsl:variable name="name" select="normalize-space(gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType)" />
     <xsl:variable name="description" select="normalize-space(gmd:description/gco:CharacterString)" />
-    
+
     <xsl:choose>
       <xsl:when test="$edit=true()">
         <xsl:apply-templates mode="iso19139EditOnlineRes" select=".">
@@ -2653,29 +2664,24 @@
         </xsl:apply-templates>
       </xsl:when>
       <xsl:when test="string(//geonet:info/dynamic)='true' and string($name)!='' and string($linkage)!=''">
-      <!-- Create a link for a WMS service that will open in the map viewer -->
+        <!-- Create a link for a WMS service that will open in the map viewer -->
         <xsl:apply-templates mode="simpleElement" select=".">
           <xsl:with-param name="schema"  select="$schema"/>
           <xsl:with-param name="title"  select="/root/gui/strings/interactiveMap"/>
           <xsl:with-param name="text">
-            <a href="javascript:addWMSLayer([['{$name}','{$linkage}','{$name}','{$metadata_id}']])" title="{/root/strings/interactiveMap}">
-                <xsl:choose>
-                <xsl:when test="string($description)!=''">
-                  <xsl:value-of select="$description"/>
+            <xsl:variable name="fn">
+              <xsl:choose>
+                <xsl:when test="starts-with(gmd:protocol/gco:CharacterString,'OGC:WMC') or
+               starts-with(gmd:protocol/gco:CharacterString,'OGC:OWS')">
+                  <xsl:value-of select="concat('app.getIMap().addWMC(''', $linkage, ''')')"/>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="$name"/>
+                  <xsl:value-of select="concat('app.getIMap().addWMSLayer([[''', $name, ''',''', $linkage, ''',''', $name, ''',''', $metadata_id, ''']])')"/>
                 </xsl:otherwise>
               </xsl:choose>
-            </a><br/>(OGC-WMS Server: <xsl:value-of select="$linkage"/> )
-          </xsl:with-param>
-        </xsl:apply-templates>
-        <!-- Create a link for a WMS service that will open in Google Earth through the reflector -->
-        <xsl:apply-templates mode="simpleElement" select=".">
-          <xsl:with-param name="schema"  select="$schema"/>
-          <xsl:with-param name="title"  select="/root/gui/strings/viewInGE"/>
-          <xsl:with-param name="text">
-            <a href="{/root/gui/locService}/google.kml?uuid={//geonet:info/uuid}&amp;layers={$name}" title="{/root/strings/interactiveMap}">
+            </xsl:variable>
+
+            <a href="javascript:{$fn}" title="{/root/strings/interactiveMap}">
               <xsl:choose>
                 <xsl:when test="string($description)!=''">
                   <xsl:value-of select="$description"/>
@@ -2684,15 +2690,33 @@
                   <xsl:value-of select="$name"/>
                 </xsl:otherwise>
               </xsl:choose>
-              &#160;
-              <img src="{/root/gui/url}/images/google_earth_link.gif" height="20px" width="20px" alt="{/root/gui/strings/viewInGE}" title="{/root/gui/strings/viewInGE}" style="border: 0px solid;"/>
-            </a>
+            </a><br/>(URL : <xsl:value-of select="$linkage"/> )
           </xsl:with-param>
         </xsl:apply-templates>
+        <!-- Create a link for a WMS service that will open in Google Earth through the reflector -->
+        <xsl:if test="starts-with(gmd:protocol/gco:CharacterString,'OGC:WMS')">
+          <xsl:apply-templates mode="simpleElement" select=".">
+            <xsl:with-param name="schema"  select="$schema"/>
+            <xsl:with-param name="title"  select="/root/gui/strings/viewInGE"/>
+            <xsl:with-param name="text">
+              <a href="{/root/gui/locService}/google.kml?uuid={//geonet:info/uuid}&amp;layers={$name}" title="{/root/strings/interactiveMap}">
+                <xsl:choose>
+                  <xsl:when test="string($description)!=''">
+                    <xsl:value-of select="$description"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="$name"/>
+                  </xsl:otherwise>
+                </xsl:choose>
+                &#160;
+                <img src="{/root/gui/url}/images/google_earth_link.gif" height="20px" width="20px" alt="{/root/gui/strings/viewInGE}" title="{/root/gui/strings/viewInGE}" style="border: 0px solid;"/>
+              </a>
+            </xsl:with-param>
+          </xsl:apply-templates>
+        </xsl:if>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
-
   <!-- ============================================================================= -->
   <!-- online resources: WMS get capabilities -->
   <!-- ============================================================================= -->
@@ -2803,14 +2827,17 @@
             <xsl:variable name="ref" select="gco:CharacterString/geonet:element/@ref"/>
             <xsl:variable name="isXLinked" select="count(ancestor-or-self::node()[@xlink:href]) > 0"/>
             <xsl:variable name="fref" select="../gmd:name/gco:CharacterString/geonet:element/@ref|../gmd:name/gmx:MimeFileType/geonet:element/@ref"/>
-            <xsl:variable name="relatedJsAction">
-            	<xsl:value-of select="concat('checkForFileUpload(&quot;',$fref,'&quot;, &quot;',$ref,'&quot;, this.options[this.selectedIndex].value);')" />
-      		</xsl:variable>
             
             <!-- Look for the helper to check if a radio edit mode is activated
             If yes, hide the input text which will be updated when clicking the radio
             or the other option. -->
             <xsl:variable name="helper" select="geonet:getHelper($schema, ., /root/gui)"/>
+            
+            <xsl:variable name="relatedJsAction">
+              <xsl:value-of select="concat('checkForFileUpload(&quot;',$fref,'&quot;, &quot;',$ref,'&quot;, ', 
+                (if (contains($helper/@editorMode, 'radio')) then 'this.value' else 'this.options[this.selectedIndex].value')
+                , ');')" />
+            </xsl:variable>
             
             <input type="text" id="_{$ref}" name="_{$ref}" value="{$value}">
               <xsl:if test="contains($helper/@editorMode, 'radio')">
@@ -2971,13 +2998,22 @@
       </xsl:variable>
       
       <xsl:variable name="title">
-        <xsl:apply-templates mode="escapeXMLEntities" select="/root/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"/>
+        <xsl:apply-templates mode="escapeXMLEntities" select="/root/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString">
+          <xsl:with-param name="includingCRLF" select="true()"/>
+        </xsl:apply-templates>
+      </xsl:variable>
+    
+      <xsl:variable name="abstract">
+        <xsl:apply-templates mode="escapeXMLEntities" select="/root/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:abstract/gco:CharacterString">
+          <xsl:with-param name="includingCRLF" select="true()"/>
+        </xsl:apply-templates>
       </xsl:variable>
     
       <button type="button" class="content repository" 
         onclick="javascript:Ext.getCmp('editorPanel').showGeoPublisherPanel('{/root/*/geonet:info/id}',
         '{/root/*/geonet:info/uuid}', 
         '{$title}',
+        '{$abstract}',
         '{$layer}', 
         '{$access}', 'gmd:onLine', '{ancestor::gmd:MD_DigitalTransferOptions/geonet:element/@ref}', [{$bbox}]);" 
         alt="{/root/gui/strings/publishHelp}" 
@@ -3034,7 +3070,7 @@
         </xsl:call-template>
       </xsl:variable>
       
-      <xsl:apply-templates mode="briefster" select="gmd:identificationInfo/gmd:MD_DataIdentification|gmd:identificationInfo/*[@gco:isoType='gmd:MD_DataIdentification']|gmd:identificationInfo/srv:SV_ServiceIdentification">
+      <xsl:apply-templates mode="briefster" select="gmd:identificationInfo/*">
         <xsl:with-param name="id" select="$id"/>
         <xsl:with-param name="langId" select="$langId"/>
         <xsl:with-param name="info" select="$info"/>
@@ -3719,6 +3755,7 @@
         <xsl:when test="name(.)='gmd:abstract'">large</xsl:when>
         <xsl:when test="name(.)='gmd:supplementalInformation'
           or name(.)='gmd:purpose'
+          or name(.)='gmd:orderingInstructions'
           or name(.)='gmd:statement'">medium</xsl:when>
         <xsl:when test="name(.)='gmd:description'
           or name(.)='gmd:specificUsage'

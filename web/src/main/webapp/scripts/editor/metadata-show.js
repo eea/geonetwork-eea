@@ -1,8 +1,12 @@
 // Functions called from the metadata viewer
 
-			var getGNServiceURL = function(service) {
-			  return Env.locService+"/"+service;
-			};
+            var getGNServiceURL = function(service) {
+                if (service.indexOf("/") == 0) {
+                    return Env.locService+service;
+                } else {
+                    return Env.locService+'/'+service;
+                }
+            };
 
 // for processing categories and privileges buttons
 
@@ -164,8 +168,16 @@
 			}
 
 			function runFileDownload(href,title) {
+        var url = "";
+
+        if (href.startsWith("http")) {
+          url = href;
+        } else {
+          url = getGNServiceURL(href);
+        }
+
 				if (href.include("resources.get")) { // do the file download direct
-					location.replace(getGNServiceURL(href));
+					location.replace(url);
 				} else { // show some dialog beforehand eg. constraints
 					Modalbox.show(getGNServiceURL(href),{title:title, height:400, width:600});
 				}

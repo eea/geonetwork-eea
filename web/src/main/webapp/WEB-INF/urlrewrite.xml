@@ -74,6 +74,41 @@
         <from>^(.*)/it/(.*)$</from>
         <to type="permanent-redirect" last="true">%{context-path}$1/ita/$2</to>
     </rule>
+    <rule>
+        <note>
+            Retrieves robots.txt filemap pointing to sitemaps for better indexing.
+        </note>
+        <from>^/robots.txt$</from>
+        <to type="forward" last="true">/srv/eng/robots.txt</to>
+    </rule>
+
+    <!-- Use new home service because it performs a faster redirect -->
+    <rule>
+        <from>^/([^/]*)/(\w\w\w)/home$</from>
+        <to type="permanent-redirect" last="true">%{context-path}/home?hl=$2&amp;node=$1</to>
+    </rule>
+
+    <!-- Use redirects to handle the initial entry points -->
+    <rule>
+        <from>^/$</from>
+        <to type="permanent-redirect" last="true">%{context-path}/home</to>
+    </rule>
+    <rule>
+      <from>^/\?(.*)$</from>
+      <to type="permanent-redirect" last="true">%{context-path}/home?$1</to>
+    </rule>
+    <rule>
+        <from>^/index.html$</from>
+        <to type="permanent-redirect" last="true">%{context-path}/home</to>
+    </rule>
+    <rule>
+        <from>^/index.jsp$</from>
+        <to type="permanent-redirect" last="true">%{context-path}/home</to>
+    </rule>
+    <rule>
+      <from>^/(?!home$)([a-zA-Z0-9_\-]+)$</from>
+      <to type="permanent-redirect" last="true">%{context-path}/home?node=$1</to>
+    </rule>
 
     <!-- Rules for RESTful urls for metadata retrieve -->
     <rule>
@@ -123,30 +158,39 @@
     </rule>
 
     <rule>
-        <note>
-            Retrieves html format for a metadata.
-            Example URL: http://localhost:8080/geonetwork/metadata/eng/da165110-88fd-11da-a88f-000d939bc5d8
-
-            Using type="forward" seem not fine with the redirect done in the home service to classic/widgets UI
-        </note>
-        <from>^/metadata/(.*)/(.*)$</from>
-        <to type="permanent-redirect">%{context-path}/srv/$1/home?uuid=$2</to>
+      <note>
+        Retrieves html format for a metadata (one node mode only).
+        Example URL: http://localhost:8080/geonetwork/metadata/da165110-88fd-11da-a88f-000d939bc5d8
+      </note>
+      <from>^/metadata/(.*)$</from>
+      <to type="permanent-redirect">%{context-path}/?uuid=$1</to>
     </rule>
-    
     <rule>
-        <note>
-            Retrieves robots.txt filemap pointing to sitemaps for better indexing.
-        </note>
-        <from>^/robots.txt$</from>
-        <to type="forward">/srv/eng/robots.txt</to>
+      <note>
+        Retrieves html format for a metadata (multinode mode).
+        Example URL: http://localhost:8080/geonetwork/{{nodeid}}/metadata/da165110-88fd-11da-a88f-000d939bc5d8
+        redirect to
+        http://localhost:8080/geonetwork/?node={{nodeid}}&amp;uuid=ca5e22d6-5bd3-4b6a-bcfb-11462f76cd10
+      </note>
+      <from>^/([a-zA-Z0-9_\-]+)/metadata/(.*)$</from>
+      <to type="permanent-redirect">%{context-path}/?uuid=$2&amp;node=$1</to>
     </rule>
-        
+
     <rule>
         <note>
             map the old xml.user.login to the new login url
         </note>
         <from>^.*/.*/xml.user.login(\?.*)</from>
         <to type="permanent-redirect" last="true">%{context-path}/j_spring_security_check$1</to>
+    </rule>
+    
+    <!-- Rule for rss.latest to rss.search?sortBt=changeDate -->
+    <rule>
+        <note>
+            map the old rss.latest service
+        </note>
+        <from>^(.*)/rss.latest(\.*)</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/rss.search?sortBy=changeDate</to>
     </rule>
     
     <!-- hide jsession id from google bot -->

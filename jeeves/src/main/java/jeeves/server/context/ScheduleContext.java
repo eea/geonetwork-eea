@@ -24,10 +24,10 @@
 package jeeves.server.context;
 
 import jeeves.monitor.MonitorManager;
-import jeeves.server.resources.ProviderManager;
-import jeeves.utils.Log;
-import jeeves.utils.SerialFactory;
+import org.fao.geonet.utils.Log;
+import org.springframework.context.ConfigurableApplicationContext;
 
+import javax.persistence.EntityManager;
 import java.util.Hashtable;
 
 //=============================================================================
@@ -45,9 +45,9 @@ public class ScheduleContext extends BasicContext
 	//---
 	//--------------------------------------------------------------------------
 
-	public ScheduleContext(String name, MonitorManager mm, ProviderManager pm, SerialFactory sf, Hashtable<String, Object> contexts)
-	{
-		super(mm, pm, sf, contexts);
+	public ScheduleContext(String name, ConfigurableApplicationContext appContext, Hashtable<String, Object> contexts,
+                           EntityManager entityManager) {
+		super(appContext, contexts, entityManager);
 
 		logger = Log.createLogger(Log.SCHEDULER +"."+ name);
 		this.scheduleName = name;

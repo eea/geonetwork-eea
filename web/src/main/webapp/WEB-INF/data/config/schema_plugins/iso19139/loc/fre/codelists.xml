@@ -784,7 +784,7 @@
 	<codelist name="gmd:MD_GeometricObjectTypeCode">
 		<entry>
 			<code>complex</code>
-			<label>Complexes</label>
+			<label>Complexe</label>
 			<description>Ensemble de primitives géométriques représentées comme l'union d'autres primitives</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -796,7 +796,7 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>curve</code>
-			<label>Lignes</label>
+			<label>Ligne</label>
 			<description>Primitive géométrique à une dimension représentant une image continue d'une ligne</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1235,44 +1235,44 @@
 	<codelist name="gmd:MD_ProgressCode">
 		<entry>
 			<code>completed</code>
-			<label>Terminé</label>
-			<description>La production du jeu de données est terminée</description>
+			<label>Finalisé</label>
+			<description>Production de la ressource finalisée</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>historicalArchive</code>
-			<label>Données historiques</label>
-			<description>Jeu de données historique</description>
+			<label>Archivé</label>
+			<description>Ressource archivée hors ligne</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>obsolete</code>
 			<label>Obsolète</label>
-			<description>Jeu de données obsolète</description>
+			<description>Ressource obsolète</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>onGoing</code>
-			<label>Mis à jour</label>
-			<description>Jeu de données ayant des mises à jour continues</description>
+			<label>Mis à jour continue</label>
+			<description>Ressource continuellement mise à jour</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>planned</code>
 			<label>Planifié</label>
-			<description>Jeu de données planifié</description>
+			<description>Ressource créée ou mise à jour sur base d'une date fixée</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>required</code>
-			<label>Requis</label>
-			<description>Jeu de données devant être produit</description>
+			<label>Création ou mise à jour requise</label>
+			<description>Ressource qui doit être générée ou mise à jour</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>underDevelopment</code>
-			<label>En cours</label>
-			<description>Jeu de données en cours d’élaboration</description>
+			<label>En cours de création</label>
+			<description>Ressource en cours de création</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 	</codelist>
@@ -1328,7 +1328,7 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 	</codelist>
 	<!-- ==================================================== -->
-	<codelist name="gmd:MD_ScopeCode">
+	<codelist name="gmd:MD_ScopeCode" editorMode="radio">
 		<entry>
 			<code>attribute</code>
 			<label>Attribut</label>
@@ -1440,7 +1440,34 @@
 			<label>Publication</label>
 			<description>Ce sont des produits finis tels que les ouvrages, brochures, articles, rapports, matériel audiovisuel...</description>
 		</entry>-->
+		
+		
+		<!-- Used for facet translation only and not displayed in editor -->
+		<entry>
+			<code>map</code>
+			<label>Carte</label>
+			<description></description>
+		</entry>
+		<entry>
+			<code>staticMap</code>
+			<label>Carte statique</label>
+			<description></description>
+		</entry>
+		<entry>
+			<code>interactiveMap</code>
+			<label>Carte interactive</label>
+			<description></description>
+		</entry>
 	</codelist>
+<!--
+	Example to customize scope code codelist for a service metadata record.
+	<codelist name="gmd:MD_ScopeCode" displayIf="/ancestor::node()[name()='gmd:MD_Metadata']/gmd:identificationInfo/srv:SV_ServiceIdentification">
+		<entry>
+			<code>service</code>
+			<label>Service</label>
+			<description>Informations appliquées à un service Internet</description>
+		</entry>
+	</codelist>-->
 	<!-- ==================================================== -->
 	<codelist name="gmd:MD_SpatialRepresentationTypeCode">
 		<entry>
@@ -1452,25 +1479,25 @@
 		<entry>
 			<code>grid</code>
 			<label>Raster</label>
-			<description>Donnée raster</description>
+			<description>Donnée raster ou matricielle</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>textTable</code>
-			<label>Table texte</label>
-			<description>Texte ou donnée tabulaire</description>
+			<label>Tabulaire</label>
+			<description>Fichier texte ou table</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>tin</code>
-			<label>Tin</label>
+			<label>TIN</label>
 			<description>Réseau de triangle irrégulier (Triangulated Irregular Network)</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>stereoModel</code>
-			<label>Vue 3D</label>
-			<description>Vue en 3 dimensions</description>
+			<label>Modèle stéréoscopique</label>
+			<description>Vue tridimensionnelle formée par l'intersection des rayons homologues d'une paire d'images se recouvrant</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
@@ -1495,19 +1522,19 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>biota</code>
-			<label>Biologie, faune et flore</label>
+			<label>Biote</label>
 			<description>Flore et faune dans un écosystème naturel. Exemples : habitat, écologie, faune sauvage, faune aquatique, sciences biologiques, zones humides, végétation, biodiversité</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>boundaries</code>
-			<label>Limites politiques et administratives</label>
+			<label>Limites</label>
 			<description>Exemples : limites de pays, de provinces, de départements, de communes</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>climatologyMeteorologyAtmosphere</code>
-			<label>Climatologie, météorologie</label>
+			<label>Climatologie/Météorologie/Atmosphère</label>
 			<description>Processus et phénomènes atmosphériques. Exemples : climat, météorologie, conditions atmosphériques, changements climatiques, couverture nuageuse</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1519,7 +1546,7 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>elevation</code>
-			<label>Altimétrie</label>
+			<label>Altitude</label>
 			<description>Hauteurs au dessous et dessus du niveau de la mer. Exemples : altitude, bathymétrie, MNT, pentes et calculs dérivés de l’altitude</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1531,7 +1558,7 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>geoscientificInformation</code>
-			<label>Sciences de la terre, géosciences</label>
+			<label>Informations géoscientifiques</label>
 			<description>Informations relatives aux sciences de la terre. Exemples : composants et processus géophysiques, géologie, minéralogie, tectonique, risque sismique</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1543,19 +1570,19 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>imageryBaseMapsEarthCover</code>
-			<label>Carte de référence de la couverture terrestre</label>
+			<label>Imagerie/Cartes de base/Occupation des terres</label>
 			<description>Carte de référence. Exemples : occupation des terres, imagerie aérienne et satellitale, carte thématiques, carte topographiques</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>intelligenceMilitary</code>
-			<label>Infrastructures militaires</label>
+			<label>Renseignement/Secteur militaire</label>
 			<description>Bases militaires et infrastructures</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>inlandWaters</code>
-			<label>Eaux intérieures, Hydrographie</label>
+			<label>Eaux intérieures</label>
 			<description>Exemples : fleuves, rivières, glaciers, lacs salés, systèmes hydrographiques, barrages, débits, qualité de l’eau</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1573,31 +1600,31 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>planningCadastre</code>
-			<label>Cadastre, aménagement</label>
+			<label>Planification/Cadastre</label>
 			<description>Exemples : carte d’utilisation des terres, plan d’occupation des sols, planification pour la prévention des risques</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>society</code>
 			<label>Société</label>
-			<description>Caractéristiques des sociétés et des cultures. Exemples :lois, anthropologie, éducation, données démographiques, archéologique, suivi des systèmes  sociaux, croyances, us et coutumes, crimes et justices</description>
+			<description>Caractéristiques des sociétés et des cultures. Exemples :lois, anthropologie, éducation, données démographiques, archéologique, suivi des systèmes	sociaux, croyances, us et coutumes, crimes et justices</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>structure</code>
-			<label>Constructions et ouvrages</label>
+			<label>Structure</label>
 			<description>Aménagements urbains. Exemples : musée, église, usines, maisons, monuments, boutiques, immeubles</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>transportation</code>
-			<label>Infrastructures de transport</label>
-			<description>Moyens de transports des personnes et des biens. Exemples :  routes, aéroports, tunnels, viaducs, ponts, chemin de fer</description>
+			<label>Transport</label>
+			<description>Moyens de transports des personnes et des biens. Exemples :	routes, aéroports, tunnels, viaducs, ponts, chemin de fer</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>utilitiesCommunication</code>
-			<label>Télécommunication, approvisionnement et énergie</label>
+			<label>Services d'utilité publique/Communication</label>
 			<description>Systèmes de distribution de gestion ou de stockage de l’énergie, de l’eau, des déchets. Infrastructures et services de communication. Exemples : source d’énergie solaire, hydroélectrique, nucléaire, épuration et distribution des eaux, réseau de distribution électrique, de gaz, réseau de télécommunication, radio.</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1882,4 +1909,45 @@
         </entry>
     </codelist>
 	
+	<codelist name="gco:nilReason">
+		<entry>
+			<code>missing</code>
+			<label>Manquant</label>
+		</entry>
+		<entry>
+			<code>inapplicable</code>
+			<label>Non appliquable</label>
+		</entry>
+		<entry>
+			<code>template</code>
+			<label>Modèle</label>
+		</entry>
+		<entry>
+			<code>unknown</code>
+			<label>Inconnu</label>
+		</entry>
+		<entry>
+			<code>withheld</code>
+			<label>Avec autorisation</label>
+		</entry>
+	</codelist>
+	
+	<codelist name="indeterminatePosition">
+		<entry>
+			<code>after</code>
+			<label>Après</label>
+		</entry>
+		<entry>
+			<code>before</code>
+			<label>Avant</label>
+		</entry>
+		<entry>
+			<code>now</code>
+			<label>Maintenant</label>
+		</entry>
+		<entry>
+			<code>unknown</code>
+			<label>Inconnu</label>
+		</entry>
+	</codelist>
 </codelists>

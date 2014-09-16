@@ -22,9 +22,11 @@ OpenLayers.ProxyHost = function(url){
 
 GeoNetwork.Util.defaultLocale = 'eng';
 // Restrict locales to a subset of languages
+//Restrict locales to a subset of languages
 //GeoNetwork.Util.locales = [
-//            ['fr', 'Français']
-//    ];
+//      ['en', 'English', 'eng'], 
+//      ['fr', 'Français', 'fre']
+//  ];
 GeoNetwork.searchDefault = {
     activeMapControlExtent: false
 };
@@ -86,4 +88,4 @@ GeoNetwork.WMSList = [['Geoserver', 'http://localhost/geoserver/wms?']];
 
 GeoNetwork.defaultViewMode = 'view-simple';
 
-Ext.BLANK_IMAGE_URL = '../js/ext/resources/images/default/s.gif';
+Ext.BLANK_IMAGE_URL = '../../apps/js/ext/resources/images/default/s.gif';

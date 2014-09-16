@@ -3,12 +3,12 @@
 							  xmlns:fo="http://www.w3.org/1999/XSL/Format">
 
 
-  <xsl:include href="../header.xsl"/>
-  <xsl:include href="../banner.xsl"/>
-  <xsl:include href="../eea-layout.xsl"/>
-  
-  <xsl:variable name="widgetPath">../../apps</xsl:variable>
-  <xsl:variable name="indent" select="100"/>
+	<xsl:include href="../header.xsl"/>
+	<xsl:include href="../banner.xsl"/>
+    <xsl:include href="../eea-layout.xsl"/>
+
+	<xsl:variable name="widgetPath">../../apps</xsl:variable>
+	<xsl:variable name="indent" select="100"/>
 
 	<xsl:template mode="css" match="/" priority="2">
 		<link rel="stylesheet" type="text/css" href="{$widgetPath}/js/ext/resources/css/ext-all.css"/>
@@ -24,7 +24,13 @@
     <script type="text/javascript" src="{$widgetPath}/js/ext/ext-all-debug.js"/>
     <script type="text/javascript" src="{$widgetPath}/js/proj4js-compressed.js"/>
     <script type="text/javascript" src="{$widgetPath}/js/GeoNetwork-mini.js"/>
-    <script type="text/javascript" language="JavaScript">
+   		<xsl:if test="/root/request/debug">
+            <script type="text/javascript" src="{$widgetPath}/js/GeoNetwork/lib/GeoNetwork/data/ThesaurusFeedStore.js" />
+            <script type="text/javascript" src="{$widgetPath}/js/GeoNetwork/lib/GeoNetwork/data/ThesaurusStore.js" />
+            <script type="text/javascript" src="{$widgetPath}/js/GeoNetwork/lib/GeoNetwork/widgets/admin/ThesaurusManagerPanel.js" />
+
+		</xsl:if>
+	 <script type="text/javascript" language="JavaScript">
       var catalogue;
       
       OpenLayers.ProxyHostURL = '../../proxy?url=';
@@ -52,6 +58,7 @@
       
       var manager = new GeoNetwork.admin.ThesaurusManagerPanel({
       catalogue: catalogue,
+	  feed: '<xsl:value-of select="/root/gui/config/repository/thesaurus"/>',
       renderTo: 'manager',
       autoWidth : true,
       layout : 'border',
