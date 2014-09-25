@@ -131,7 +131,16 @@
         -->
         <init-param>
             <param-name>jeeves.configuration.overrides.file</param-name>
-            <param-value>${system.specific.overrides},${web.xml.main.config.overrides}${web.xml.widget.config.overrides}</param-value>
+            <param-value>${system.specific.overrides},${web.xml.main.config.overrides},${web.xml.widget.config.overrides}</param-value>
+        </init-param>
+    </filter> 
+    <!-- Custom for EEA, to be able to deploy plain javascript files -->
+    <filter>
+        <filter-name>plainfilter</filter-name>
+        <filter-class>org.fao.geonet.resources.PlainFilter</filter-class>
+        <init-param>
+            <param-name>baseUrl</param-name>
+            <param-value>/eea/</param-value>
         </init-param>
     </filter>
     <filter>
@@ -202,6 +211,11 @@
     <filter-mapping>
         <filter-name>resources</filter-name>
         <url-pattern>/htmlcache/*</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>plainfilter</filter-name>
+        <url-pattern>/eea/*</url-pattern>
     </filter-mapping>
 
     <!-- Print servlet -->
