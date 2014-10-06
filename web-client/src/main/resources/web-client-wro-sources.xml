@@ -389,6 +389,29 @@
             <jsSource webappPath="apps/html5ui/js/BreadCrumb.js"/>
             <jsSource webappPath="apps/html5ui/js/App.js"/>
     </declarative>
+    <!-- EEA -->
+    <declarative name="geonetwork-client-eea-app" pathOnDisk="${project.basedir}/../geonetwork-client-eea/src/main/resources/eea/search/js/App-mini.js">
+            <jsSource webappPath="${project.basedir}/src/main/resources/apps/js/geonetwork-client-mini-nomap.js"/>
+			<jsSource webappPath="eea/search/js/Settings.js"/>
+			<jsSource webappPath="eea/search/js/Settings.js"/>
+			<jsSource webappPath="eea/search/js/map/Settings.js"/>
+			<jsSource webappPath="eea/search/js/Shortcuts.js"/>
+			<jsSource webappPath="eea/search/js/Templates.js"/>
+			<jsSource webappPath="eea/search/js/App.js"/>
+    </declarative>
+    <declarative name="geonetwork-client-gisc-app" pathOnDisk="${project.basedir}/../geonetwork-client-eea/src/main/resources/eea/search/js/App-mini.js">
+            <jsSource webappPath="${project.basedir}/src/main/resources/apps/js/geonetwork-client-mini-nomap.js"/>
+			<jsSource webappPath="gisc/search/js/Settings.js"/>
+			<jsSource webappPath="gisc/search/js/map/Settings.js"/>
+			<jsSource webappPath="gisc/search/js/Shortcuts.js"/>
+			<jsSource webappPath="gisc/search/js/Templates.js"/>
+			<jsSource webappPath="gisc/search/js/App.js"/>
+    </declarative>
+    <declarative name="geonetwork-client-eea-style_css" pathOnDisk="${project.basedir}/../geonetwork-client-eea/src/main/resources">
+         <cssSource webappPath="eea/search/css/eea-mini.css" />
+         <cssSource webappPath="eea/search/css/eea.css" />
+         <cssSource webappPath="eea/search/css/gndefault.css"/>
+    </declarative>
     <!-- search/css/style.css
     <declarative name="geonetwork-client-style_css" pathOnDisk="${project.basedir}/src/main/resources">
          <cssSource webappPath="apps/js/OpenLayers/theme/dark/style.css" />

@@ -7,9 +7,7 @@
     <groupId>org.geonetwork-opensource</groupId>
     <version>2.11.0-SNAPSHOT</version>
   </parent>
-  <groupId>org.geonetwork-opensource</groupId>
   <artifactId>geonetwork-client-eea</artifactId>
-  <version>2.11.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>GeoNetwork EEA web client module</name>
   <description></description>
@@ -46,28 +44,28 @@
         </executions>
       </plugin>
 
-      <plugin>
+      <!-- <plugin>
         <groupId>net.alchim31.maven</groupId>
         <artifactId>yuicompressor-maven-plugin</artifactId>
-        <!--  mvn net.alchim31.maven:yuicompressor-maven-plugin:compress -->
+         mvn net.alchim31.maven:yuicompressor-maven-plugin:compress
         <executions>
           <execution>
-            <!-- 
+            
                 This phase does not belong to the default lifecycle for a jar/war packaging.
                 It has to be run explicitely as mvn command argument for generating obfuscated js. 
-             -->
+            
             <phase>initialize</phase>
             <goals>
               <goal>compress</goal>
             </goals>
           </execution>
-          <!--          <execution>
+                   <execution>
             <id>gn-jslint</id>
             <phase>compile</phase>
             <goals>
               <goal>jslint</goal>
             </goals>
-          </execution>-->
+          </execution>
         </executions>
         <configuration>
           <nosuffix>true</nosuffix>
@@ -110,7 +108,7 @@
             </aggregation>
           </aggregations>
         </configuration>
-      </plugin>
+      </plugin> -->
 
     </plugins>
   </build>
