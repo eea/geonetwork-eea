@@ -24,20 +24,6 @@
     <replaceText xpath="general/maxUploadSize">100</replaceText>
     <replaceAtt xpath="appHandler/param[@name = 'luceneDir']" attName="value" value="WEB-INF/lucene"/>
     <replaceAtt xpath="appHandler/param[@name = 'dataDir']" attName="value" value="WEB-INF/data"/>
-    <replaceXML xpath="resources">
-      <resource enabled="true">
-        <name>main-db</name>
-        <provider>jeeves.resources.dbms.ApacheDBCPool</provider>
-        <config>
-          <user>${db.user}</user>
-          <password>${db.pass}</password>
-          <driver>${db.driver}</driver>
-          <url>${db.url}</url>
-          <poolSize>33</poolSize>
-          <validationQuery>SELECT 1</validationQuery>
-        </config>
-      </resource>
-    </replaceXML>
   </file>
 
   <!-- Add custom CSW service -->

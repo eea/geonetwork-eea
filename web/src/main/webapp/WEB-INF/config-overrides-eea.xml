@@ -33,37 +33,6 @@
     <replaceAtt xpath="appHandler/param[@name = 'dataDir']" attName="value" value="WEB-INF/data"/>
     <replaceAtt xpath="appHandler/param[@name = 'useSubversion']" attName="value" value="false"/>
     <replaceAtt xpath="appHandler/param[@name = 'maxWritesInTransaction']" attName="value" value="1"/>
-    
-    
-    <replaceXML xpath="resources">
-      <!-- The JNDI connection enabled -->
-      <resource enabled="false">
-        <name>main-db</name>
-        <provider>jeeves.resources.dbms.JNDIPool</provider>
-        <config>
-          <context>java:/comp/env</context>
-          <resourceName>${resource.name}</resourceName>
-          <url>${db.url}</url>
-          <provideDataStore>true</provideDataStore>
-          <maxOpenPreparedStatements>300</maxOpenPreparedStatements>
-        </config>
-      </resource>
-      <!-- The direct connection disabled -->
-      <resource enabled="true">
-        <name>main-db</name>
-        <provider>jeeves.resources.dbms.ApacheDBCPool</provider>
-        <config>
-          <user>${db.user}</user>
-          <password>${db.pass}</password>
-          <driver>${db.driver}</driver>
-          <url>${db.url}</url>
-          <poolSize>20</poolSize>
-          <minIdle>0</minIdle>
-          <maxIdle>10</maxIdle>
-          <validationQuery>SELECT 1</validationQuery>
-        </config>
-      </resource>
-    </replaceXML>
   </file>
 
   <!-- Lucene configuration -->
