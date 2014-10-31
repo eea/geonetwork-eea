@@ -44,7 +44,8 @@
     "to-iso19139-keyword-as-xlink-help": "Useful for creating a link between the record and the thesaurus. An xlink:href attribute is added to the gmd:descriptiveKeywords element.",
     "to-iso19139-keyword": "text (recommended)",
     "to-iso19139-keyword-help": "Default mode. Insert keyword as simple text using gco:CharacterString element.",
-    "searchAContact": "Search for a contact ...",
+    "searchAcontact": "Search contact ...",
+    "searchAonLine": "Search online source ...",
     "addContact": "Add contact",
     "addContactUsingXLink": "Add contact (using XLink)",
     "addContactAsText-help": "Default mode. Add the contact into the record.",
@@ -111,7 +112,7 @@
     "gmd:MD_Distribution": "Online resources",
     "importEntry": "Import directory entry",
     "xmlSnippet": "XML snippet",
-    "addRecord": "Add dataset",
+    "addRecord": "Add record",
     "yourMetadata": "Your metadata",
     "unsupportedSchemaAlert": "Metadata <strong>{{title}}</strong> is using <strong>{{schema}}</strong> standard. This is not supported by the editor. <a href='#'>Return to editor board</a>.",
     "geopublisher": "Publish as WMS, WFS, WCS",
@@ -167,5 +168,8 @@
     "importRecords": "Import",
     "importFromDirReport": "{{success}}/{{records}} record(s) imported successfully in {{time}} seconds.",
     "setMetadataGroup": "Change metadata group",
-    "current": "current"
+    "current": "current",
+    "searchKeyword": "Search ...",
+    "searchOrTypeKeyword": "Type or search ...",
+    "tagsAllowed": " tag(s) allowed"
 }

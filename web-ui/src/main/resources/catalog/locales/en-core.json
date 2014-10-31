@@ -8,10 +8,14 @@
     "signedInAs": " ",
     "needHelp": "Need help",
     "docNotFound": "<strong>Warning !</strong> Page <a href='{{page}}'>{{page}}</a> not found in documentation.",
-    
+    "search": "Search",
+
     "METADATA": "Metadata",
     "TEMPLATE": "Template",
     "SUB_TEMPLATE": "Directory entry",
+    "VALID": "Valid",
+    "INVALID": "Invalid",
+    "NEVER_CALCULATED": "Never validated",
     
     "eng": "English",
     "fre": "Français",
