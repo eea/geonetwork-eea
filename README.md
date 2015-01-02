@@ -53,3 +53,16 @@ issue to consider when writing JUnit tests in Geonetwork and that is the separat
 *org.fao.geonet.utils.GeonetHttpRequestFactory*: When making Http requests you should use org.fao.geonet.utils.GeonetHttpRequestFactory instead
     of directly using HttpClient.  This is because there are mock instances of org.fao.geonet.utils.GeonetHttpRequestFactory that can
     be used to mock responses when performing tests.
+
+
+
+
+# EEA
+
+## Migration
+### November 2014
+
+Add in database settings, metadata/editor/schemaConfig:
+```
+,"iso19139.eea":{"defaultTab":"default","displayToolTip":false,"related":{"display":true,"categories":[]},"suggestion":{"display":true},"validation":{"display":true}}
+```
