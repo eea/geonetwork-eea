@@ -287,7 +287,7 @@ GeoNetwork.app = function () {
         var catalogueField = GeoNetwork.util.SearchFormTools.getCatalogueField(services.getSources, services.logoUrl, true);
         var groupField = GeoNetwork.util.SearchFormTools.getGroupField(services.getGroups, true);
         var metadataTypeField = GeoNetwork.util.SearchFormTools.getMetadataTypeField(true);
-        var categoryField = GeoNetwork.util.SearchFormTools.getCategoryField(services.getCategories, '../images/default/category/', true);
+        var categoryField = GeoNetwork.util.SearchFormTools.getCategoryField(services.getCategories, '../../apps/images/default/category/', true);
         var validField = GeoNetwork.util.SearchFormTools.getValidField(true);
         var spatialTypes = GeoNetwork.util.SearchFormTools.getSpatialRepresentationTypeField(null, true);
         var denominatorField = GeoNetwork.util.SearchFormTools.getScaleDenominatorField(true);
@@ -574,7 +574,6 @@ GeoNetwork.app = function () {
             lang: this.lang,
             currTab: GeoNetwork.defaultViewMode || 'simple',
             printDefaultForTabs: GeoNetwork.printDefaultForTabs || false,
-            printUrl: GeoNetwork.printUrl || 'print.html',
             catalogue: this,
             maximized: maximized || false,
             metadataUuid: uuid,
