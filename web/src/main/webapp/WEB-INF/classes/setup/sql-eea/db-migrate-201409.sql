@@ -16,3 +16,5 @@ CREATE INDEX ParamsNDX1 ON Params(requestId);
 CREATE INDEX ParamsNDX2 ON Params(queryType);
 CREATE INDEX ParamsNDX3 ON Params(termField);
 CREATE INDEX ParamsNDX4 ON Params(termText);
+
+ALTER TABLE schematron RENAME COLUMN file TO filename;
