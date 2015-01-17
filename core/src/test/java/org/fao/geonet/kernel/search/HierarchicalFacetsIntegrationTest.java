@@ -73,7 +73,7 @@ public class HierarchicalFacetsIntegrationTest extends AbstractCoreIntegrationTe
                 MetadataType.METADATA, ReservedGroup.intranet.getId(), Params.GENERATE_UUID);
         }
 
-        luceneSearcher = searchManager.newSearcher(SearchManager.LUCENE, Geonet.File.SEARCH_LUCENE);
+// FIXME : does not compile        luceneSearcher = searchManager.newSearcher(SearchManager.LUCENE, Geonet.File.SEARCH_LUCENE);
     }
 
     @Test
