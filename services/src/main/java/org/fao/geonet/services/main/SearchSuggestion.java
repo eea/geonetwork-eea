@@ -27,15 +27,7 @@ import com.google.common.collect.ComparisonChain;
 import jeeves.interfaces.Service;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
-import org.apache.lucene.facet.taxonomy.TaxonomyReader;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.WildcardQuery;
-import org.fao.geonet.exceptions.BadParameterEx;
-import org.fao.geonet.kernel.search.IndexAndTaxonomy;
-import org.fao.geonet.kernel.search.LuceneConfig;
-import org.fao.geonet.kernel.search.index.GeonetworkMultiReader;
+import org.fao.geonet.kernel.search.SearcherType;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.Util;
 import org.apache.commons.lang.StringUtils;
@@ -44,12 +36,10 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.search.SearchManager.TermFrequency;
-import org.fao.geonet.utils.Xml;
 import org.jdom.Attribute;
-import org.jdom.Content;
 import org.jdom.Element;
 
-import java.io.IOException;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -154,7 +144,7 @@ public class SearchSuggestion implements Service {
     /**
      * Set default parameters
      */
-    public void init(String appPath, ServiceConfig config) throws Exception {
+    public void init(Path appPath, ServiceConfig config) throws Exception {
         _threshold = Integer.valueOf(config.getValue(PARAM_THRESHOLD));
         String maxNumberOfTerms = config.getValue(CONFIG_PARAM_MAX_NUMBER_OF_TERMS);
         _maxNumberOfTerms = Integer.valueOf(maxNumberOfTerms);
@@ -204,19 +194,19 @@ public class SearchSuggestion implements Service {
 
         // Starts with element first
         if (sortBy.equalsIgnoreCase(SORT_BY_OPTION.STARTSWITHFIRST.toString())) {
-            listOfSuggestions = new TreeSet<SearchManager.TermFrequency>(new StartsWithComparator(searchValueWithoutWildcard));
+            listOfSuggestions = new TreeSet<>(new StartsWithComparator(searchValueWithoutWildcard));
         } else if (sortBy.equalsIgnoreCase(SORT_BY_OPTION.ALPHA.toString())) {
             // Sort by alpha and frequency
-            listOfSuggestions = new TreeSet<SearchManager.TermFrequency>();
+            listOfSuggestions = new TreeSet<>();
         } else {
-            listOfSuggestions = new TreeSet<SearchManager.TermFrequency>(new FrequencyComparator());
+            listOfSuggestions = new TreeSet<>(new FrequencyComparator());
         }
         
         // If a field is stored, field values could be retrieved from the index
         // The main advantage is that only values from records visible to the
         // user are returned, because the search filter the results first.
         if (origin.equals("") || origin.equals(RECORDS_FIELD_VALUES)) {
-            LuceneSearcher searcher = (LuceneSearcher) sm.newSearcher(SearchManager.LUCENE, Geonet.File.SEARCH_LUCENE);
+            LuceneSearcher searcher = (LuceneSearcher) sm.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
 
             searcher.getSuggestionForFields(context, fieldName, searchValue, _config, maxNumberOfTerms, threshold, listOfSuggestions);
         }

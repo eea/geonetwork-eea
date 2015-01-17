@@ -13,23 +13,50 @@
     gss: 'http://www.isotc211.org/2005/gss',
     gts: 'http://www.isotc211.org/2005/gts',
     srv: 'http://www.isotc211.org/2005/srv',
-    xlink: 'http://www.w3.org/1999/xlink'
+    xlink: 'http://www.w3.org/1999/xlink',
+    cit: 'http://www.isotc211.org/namespace/cit/1.0/2014-07-11',
+    mdb: 'http://www.isotc211.org/namespace/mdb/1.0/2014-07-11',
+    mri: 'http://www.isotc211.org/namespace/mri/1.0/2014-07-11',
+    mrd: 'http://www.isotc211.org/namespace/mrd/1.0/2014-07-11',
+    mcc: 'http://www.isotc211.org/namespace/mcc/1.0/2014-07-11'
   });
 
+  /**
+   * Map of elements used when retrieving codelist
+   * according to the metadata schema.
+   */
+  module.value('gnElementsMap', {
+    protocol: {
+      'iso19139': 'gmd:protocol',
+      'iso19115-3': 'cit:protocol'
+    },
+    roleCode: {
+      'iso19139': 'gmd:CI_RoleCode',
+      'iso19115-3': 'cit:CI_RoleCode'
+    },
+    associationType: {
+      'iso19139': 'gmd:DS_AssociationTypeCode',
+      'iso19115-3': 'mri:DS_AssociationTypeCode'
+    },
+    initiativeType: {
+      'iso19139': 'gmd:DS_InitiativeTypeCode',
+      'iso19115-3': 'mri:DS_InitiativeTypeCode'
+    }
+  });
 
   module.factory('gnSchemaManagerService',
       ['$q', '$http', '$cacheFactory',
        function($q, $http, $cacheFactory) {
          /**
-          * Cache field info and codelist info
-          *
-          * TODO: Maybe we could improve caching ?
-          * On page load, many codelist are retrieved
-          * and the first one is not returned before
-          * others are requested and as such are not
-          * yet populated in the cache. Not sure how
-          * this could be improved ?
-          */
+         * Cache field info and codelist info
+         *
+         * TODO: Maybe we could improve caching ?
+         * On page load, many codelist are retrieved
+         * and the first one is not returned before
+         * others are requested and as such are not
+         * yet populated in the cache. Not sure how
+         * this could be improved ?
+         */
          var infoCache = $cacheFactory('infoCache');
 
          return {
@@ -48,7 +75,8 @@
                  return requestBody;
                };
 
-               $http.post('md.element.info@json', getPostRequestBody(), {
+               $http.post('md.element.info?_content_type=json',
+               getPostRequestBody(), {
                  headers: {'Content-type': 'application/xml'}
                }).
                success(function(data) {
@@ -59,11 +87,11 @@
              return defer.promise;
            },
            /**
-            * Retrieve field information (ie. name, description, helpers).
-            * Information are cached in the infoCache.
-            *
-            * Return a promise.
-            */
+           * Retrieve field information (ie. name, description, helpers).
+           * Information are cached in the infoCache.
+           *
+           * Return a promise.
+           */
            getElementInfo: function(config) {
              //<request>
              //  <element schema="iso19139"
@@ -96,7 +124,7 @@
                if (requestBody === null) {
                  defer.reject({error: 'Invalid config.', config: config});
                } else {
-                 $http.post('md.element.info@json', requestBody, {
+                 $http.post('md.element.info?_content_type=json', requestBody, {
                    headers: {'Content-type': 'application/xml'}
                  }).
                  success(function(data) {

@@ -3,15 +3,6 @@
 ALTER TABLE operations DROP COLUMN reserved;
 ALTER TABLE services DROP COLUMN id;
 
-INSERT INTO HarvesterSettings VALUES  (1,NULL,'harvesting',NULL);
--- Copy all harvester's root nodes config
-INSERT INTO HarvesterSettings SELECT id, 1, name, value FROM Settings WHERE parentId = 2;
--- Copy all harvester's properties (Greater than last 2.10.1 settings ie. keepMarkedElement)
-INSERT INTO HarvesterSettings SELECT * FROM Settings WHERE id > 958 AND parentId > 2;
--- Drop harvester config from Settings table
-DELETE FROM Settings WHERE id > 958;
-DELETE FROM Settings WHERE id=2;
-
 
 ALTER TABLE Settings ALTER name TYPE varchar(512);
 
@@ -175,6 +166,8 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES
   ('map/proj4js', '[{"code":"EPSG:2154","value":"+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"}]', 0, 9591, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES
   ('metadata/editor/schemaConfig', '{"iso19110":{"defaultTab":"default","displayToolTip":false,"related":{"display":true,"readonly":true,"categories":["dataset"]},"validation":{"display":true}},"iso19139":{"defaultTab":"inspire","displayToolTip":false,"related":{"display":true,"categories":[]},"suggestion":{"display":true},"validation":{"display":true}},"dublin-core":{"defaultTab":"default","related":{"display":true,"readonly":false,"categories":["parent","onlinesrc"]},}}', 0, 10000, 'n');
+
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('metadata/resourceIdentifierPrefix', 'http://localhost:8080/geonetwork/', 0, 10001, 'n');
 
 
 ALTER TABLE StatusValues ADD displayorder int;

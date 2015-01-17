@@ -23,26 +23,15 @@
 
 package org.fao.geonet.services.main;
 
-import static org.springframework.data.jpa.domain.Specifications.where;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import jeeves.component.ProfileManager;
 import jeeves.constants.Jeeves;
 import jeeves.interfaces.Service;
 import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
-
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.domain.Constants;
 import org.fao.geonet.domain.Group_;
 import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.ReservedGroup;
@@ -57,16 +46,14 @@ import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.region.RegionsDAO;
 import org.fao.geonet.kernel.search.MetaSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
+import org.fao.geonet.kernel.search.SearcherType;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.GroupRepository;
 import org.fao.geonet.repository.IsoLanguageRepository;
 import org.fao.geonet.repository.MetadataCategoryRepository;
-import org.fao.geonet.repository.MetadataRatingByIpRepository;
 import org.fao.geonet.repository.OperationRepository;
 import org.fao.geonet.repository.SettingRepository;
-import org.fao.geonet.repository.SettingRepositoryCustom;
-import org.fao.geonet.repository.SettingRepositoryImpl;
 import org.fao.geonet.repository.SortUtils;
 import org.fao.geonet.repository.SourceRepository;
 import org.fao.geonet.repository.StatusValueRepository;
@@ -77,18 +64,23 @@ import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.repository.specification.UserSpecs;
 import org.fao.geonet.services.util.z3950.RepositoryInfo;
 import org.fao.geonet.utils.Xml;
-import org.hibernate.cfg.SettingsFactory;
-import org.hsqldb.lib.HashMap;
 import org.jdom.Element;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specifications;
+
+import java.nio.file.Path;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Info implements Service {
     private static final String READ_ONLY = "readonly";
     private static final String INDEX = "index";
     
-    private String xslPath;
-	private String otherSheets;
+    private Path xslPath;
+	private Path otherSheets;
 	private ServiceConfig _config;
 
 	//--------------------------------------------------------------------------
@@ -103,10 +95,10 @@ public class Info implements Service {
      * @param config
      * @throws Exception
      */
-	public void init(String appPath, ServiceConfig config) throws Exception
+	public void init(Path appPath, ServiceConfig config) throws Exception
 	{
-		xslPath = appPath + Geonet.Path.STYLESHEETS+ "/xml";
-		otherSheets = appPath + Geonet.Path.STYLESHEETS;
+		xslPath = appPath.resolve(Geonet.Path.STYLESHEETS).resolve("xml");
+		otherSheets = appPath.resolve(Geonet.Path.STYLESHEETS);
 		_config = config;
 	}
 
@@ -234,7 +226,7 @@ public class Info implements Service {
 		}
 		
 		result.addContent(getEnv(context));
-		Element response = Xml.transform(result, xslPath +"/info.xsl");
+		Element response = Xml.transform(result, xslPath.resolve("info.xsl"));
 
         return response;
 	}
@@ -447,7 +439,7 @@ public class Info implements Service {
 
 	private Element getTemplates(ServiceContext context) throws Exception
 	{
-		String styleSheet = otherSheets +"/portal-present.xsl";
+		Path styleSheet = otherSheets.resolve("portal-present.xsl");
 		Element result = search(context).setName(Jeeves.Elem.RESPONSE);
 		Element root   = new Element("root");
 
@@ -487,7 +479,7 @@ public class Info implements Service {
 		ServiceConfig config = new ServiceConfig();
 
 		SearchManager searchMan = gc.getBean(SearchManager.class);
-		MetaSearcher  searcher  = searchMan.newSearcher(SearchManager.LUCENE, Geonet.File.SEARCH_LUCENE);
+		MetaSearcher  searcher  = searchMan.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
 
 		searcher.search(context, params, config);
 

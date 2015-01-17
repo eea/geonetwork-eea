@@ -44,7 +44,8 @@
        'gn_import_controller',
        'gn_editorboard_controller', 'gn_share',
        'gn_directory_controller', 'gn_utility_directive',
-       'gn_scroll_spy', 'gn_thesaurus', 'ui.bootstrap.datetimepicker']);
+       'gn_scroll_spy', 'gn_thesaurus', 'ui.bootstrap.datetimepicker',
+       'ngRoute']);
 
   var tplFolder = '../../catalog/templates/editor/';
 
@@ -141,7 +142,6 @@
           }
         }
       };
-
       // Controller initialization
       var init = function() {
         gnConfigService.load().then(function(c) {
@@ -152,6 +152,7 @@
           // Check requested metadata exists
           gnSearchManagerService.gnSearch({
             _id: $routeParams.id,
+            _content_type: 'json',
             _isTemplate: 'y or n or s',
             fast: 'index'
           }).then(function(data) {
@@ -206,6 +207,7 @@
               });
 
               $scope.gnCurrentEdit = gnCurrentEdit;
+              $scope.tocIndex = null;
 
               // Create URL for loading the metadata form
               // appending a random int in order to avoid
@@ -213,7 +215,6 @@
               $scope.editorFormUrl = gnEditor
                 .buildEditUrlPrefix('md.edit') + '&starteditingsession=yes&' +
                   '_random=' + Math.floor(Math.random() * 10000);
-
 
               window.onbeforeunload = function() {
                 // TODO: could be better to provide
@@ -233,6 +234,13 @@
        */
       $scope.onFormLoad = function() {
         gnEditor.onFormLoad();
+        $scope.$watch('tocIndex', function(newValue, oldValue) {
+          $timeout(function() {
+            if (angular.isDefined($scope.tocIndex) && $scope.tocIndex != '') {
+              $scope.switchToTab(gnCurrentEdit.tab);
+            }
+          });
+        });
       };
 
       /**

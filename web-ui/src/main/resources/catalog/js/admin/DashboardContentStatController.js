@@ -72,7 +72,8 @@
           sortBy: 'popularity'
         };
         $scope.statistics.md.rating = {
-          sortBy: 'rating'
+          sortBy: '_rating',
+          _rating: '1 or 2 or 3 or 4 or 5'
         };
 
         $scope.paginationInfo = {
@@ -148,6 +149,35 @@
       getMetadataStat('owner');
       getMetadataStat('groupowner');
 
+    }]);
+
+  module.filter('mdRated', function() {
+    return function(input) {
+      var ret = [];
+      if (angular.isArray(input)) {
+        for (var i = 0; i < input.length; ++i) {
+          if (input[i].rating > 0) {
+            ret.push(input[i]);
+          }
+        }
+      }
+      return ret;
+    }
+  });
+
+  module.controller('GnDashboardContentStatControllerPopularity', [
+    '$scope',
+    function($scope) {
+      $scope.searchObj = {
+        params: $scope.statistics.md.popularity
+      };
+    }]);
+  module.controller('GnDashboardContentStatControllerRating', [
+    '$scope',
+    function($scope) {
+      $scope.searchObj = {
+        params: $scope.statistics.md.rating
+      };
     }]);
 
 })();

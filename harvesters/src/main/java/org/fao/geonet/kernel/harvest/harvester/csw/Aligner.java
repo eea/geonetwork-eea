@@ -31,30 +31,36 @@ import org.fao.geonet.csw.common.CswOperation;
 import org.fao.geonet.csw.common.CswServer;
 import org.fao.geonet.csw.common.ElementSetName;
 import org.fao.geonet.csw.common.requests.GetRecordByIdRequest;
+import org.fao.geonet.domain.ISODate;
 import org.fao.geonet.domain.Metadata;
 import org.fao.geonet.domain.MetadataType;
 import org.fao.geonet.domain.OperationAllowedId_;
 import org.fao.geonet.domain.Pair;
 import org.fao.geonet.exceptions.OperationAbortedEx;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.UpdateDatestamp;
 import org.fao.geonet.kernel.harvest.BaseAligner;
-import org.fao.geonet.kernel.harvest.harvester.*;
+import org.fao.geonet.kernel.harvest.harvester.CategoryMapper;
+import org.fao.geonet.kernel.harvest.harvester.GroupMapper;
+import org.fao.geonet.kernel.harvest.harvester.HarvestError;
+import org.fao.geonet.kernel.harvest.harvester.HarvestResult;
+import org.fao.geonet.kernel.harvest.harvester.HarvesterUtil;
+import org.fao.geonet.kernel.harvest.harvester.RecordInfo;
+import org.fao.geonet.kernel.harvest.harvester.UUIDMapper;
 import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.repository.OperationAllowedRepository;
-import org.fao.geonet.repository.Updater;
 import org.fao.geonet.utils.Xml;
-import org.fao.geonet.repository.Updater;
 import org.jdom.Element;
 import org.jdom.xpath.XPath;
 
-import javax.annotation.Nonnull;
-
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.fao.geonet.utils.AbstractHttpRequest.Method.GET;
-
-import javax.annotation.Nonnull;
 import static org.fao.geonet.utils.AbstractHttpRequest.Method.POST;
 
 //=============================================================================
@@ -103,8 +109,10 @@ public class Aligner extends BaseAligner
 			}
 		}
 
-		if(oper.getPreferredOutputSchema() != null) {
-			request.setOutputSchema(oper.getPreferredOutputSchema());
+        if (this.params.outputSchema != null && !this.params.outputSchema.isEmpty()) {
+            request.setOutputSchema(this.params.outputSchema);
+        } else if(oper.getPreferredOutputSchema() != null) {
+            request.setOutputSchema(oper.getPreferredOutputSchema());
 		}
 
         if(oper.getPreferredServerVersion() != null) {
@@ -137,7 +145,7 @@ public class Aligner extends BaseAligner
 
         dataMan.flush();
 
-        Pair<String, Map<String, String>> filter =
+        Pair<String, Map<String, Object>> filter =
                 HarvesterUtil.parseXSLFilter(params.xslfilter, log);
         processName = filter.one();
         processParams = filter.two();
@@ -221,8 +229,6 @@ public class Aligner extends BaseAligner
         //
         // insert metadata
         //
-        String group = null, isTemplate = null, docType = null, title = null, category = null;
-        boolean ufo = false, indexImmediate = false;
         final int ownerId;
         if (params.ownerId == null) {
             if (context.getUserSession() != null) {
@@ -233,24 +239,27 @@ public class Aligner extends BaseAligner
         } else {
             ownerId = Integer.parseInt(params.ownerId);
         }
-        String id = dataMan.insertMetadata(context, schema, md, ri.uuid,
-                ownerId, group, params.uuid,
-                isTemplate, docType, category, ri.changeDate, ri.changeDate, ufo, indexImmediate);
+        Metadata metadata = new Metadata().setUuid(ri.uuid);
+        metadata.getDataInfo().
+                setSchemaId(schema).
+                setRoot(md.getQualifiedName()).
+                setType(MetadataType.METADATA).
+                setChangeDate(new ISODate(ri.changeDate)).
+                setCreateDate(new ISODate(ri.changeDate));
+        metadata.getSourceInfo().
+                setSourceId(params.uuid).
+                setOwner(ownerId);
+        metadata.getHarvestInfo().
+                setHarvested(true).
+                setUuid(params.uuid);
 
-		int iId = Integer.parseInt(id);
+        addCategories(metadata, params.getCategories(), localCateg, context, log, null, false);
 
-		dataMan.setTemplateExt(iId, MetadataType.METADATA);
-		dataMan.setHarvestedExt(iId, params.uuid);
+        metadata = dataMan.insertMetadata(context, metadata, md, true, false, false, UpdateDatestamp.NO, false, false);
+
+        String id = String.valueOf(metadata.getId());
 
         addPrivileges(id, params.getPrivileges(), localGroups, dataMan, context, log);
-        context.getBean(MetadataRepository.class).update(Integer.parseInt(id), new Updater<Metadata>() {
-            @Override
-            public void apply(@Nonnull Metadata entity) {
-                addCategories(entity, params.getCategories(), localCateg, context, log, null);
-            }
-        });
-
-        dataMan.flush();
 
         dataMan.indexMetadata(id, false);
 		result.addedMetadata++;
@@ -297,7 +306,7 @@ public class Aligner extends BaseAligner
                 boolean ufo = false;
                 boolean index = false;
                 String language = context.getLanguage();
-                final Metadata metadata = dataMan.updateMetadata(context, id, md, validate, ufo, index, language, ri.changeDate, false);
+                final Metadata metadata = dataMan.updateMetadata(context, id, md, validate, ufo, index, language, ri.changeDate, true);
 
                 OperationAllowedRepository repository = context.getBean(OperationAllowedRepository.class);
 				repository.deleteAllByIdAttribute(OperationAllowedId_.metadataId, Integer.parseInt(id));
@@ -305,7 +314,7 @@ public class Aligner extends BaseAligner
                 addPrivileges(id, params.getPrivileges(), localGroups, dataMan, context, log);
 
                 metadata.getCategories().clear();
-                addCategories(metadata, params.getCategories(), localCateg, context, log, null);
+                addCategories(metadata, params.getCategories(), localCateg, context, log, null, true);
 
                 dataMan.flush();
 
@@ -373,15 +382,15 @@ public class Aligner extends BaseAligner
 			response = list.get(0);
 			response = (Element) response.detach();
 
-            // validate it here if requested
-            if (params.validate) {
-                if(!dataMan.validate(response))  {
-                    log.info("Ignoring invalid metadata with uuid " + uuid);
-                    result.doesNotValidate++;
-                    return null;
-                }
+
+            try {
+                params.validate.validate(dataMan, context, response);
+            } catch (Exception e) {
+                log.info("Ignoring invalid metadata with uuid " + uuid);
+                result.doesNotValidate++;
+                return null;
             }
-            
+
             if(params.rejectDuplicateResource) {
                 if (foundDuplicateForResource(uuid, response)) {
                     return null;
@@ -483,5 +492,5 @@ public class Aligner extends BaseAligner
     private GetRecordByIdRequest request;
 
     private String processName;
-    private Map<String, String> processParams = new HashMap<String, String>();
+    private Map<String, Object> processParams = new HashMap<String, Object>();
 }

@@ -49,12 +49,8 @@ public class LDAPUtils {
 	 * @param user
 	 * @throws Exception
 	 */
-    static void saveUser(LDAPUser user,
-                         UserRepository userRepo,
-                         GroupRepository groupRepo,
-                         UserGroupRepository userGroupRepo,
-                         boolean importPrivilegesFromLdap,
-                         boolean createNonExistingLdapGroup) throws Exception {
+    static synchronized void saveUser(LDAPUser user, UserRepository userRepo, GroupRepository groupRepo, UserGroupRepository userGroupRepo,
+            boolean importPrivilegesFromLdap, boolean createNonExistingLdapGroup) throws Exception {
         String userName = user.getUsername();
         if (Log.isDebugEnabled(Geonet.LDAP)) {
             Log.debug(Geonet.LDAP, "LDAP user sync for " + userName + " ...");
@@ -62,10 +58,14 @@ public class LDAPUtils {
         User loadedUser = userRepo.findOneByUsername(userName);
         User toSave;
         if (loadedUser != null) {
-            if (importPrivilegesFromLdap) {
-                loadedUser.setProfile(user.getUser().getProfile());
+            // If we don't import privileges from LDAP
+            // Set the LDAP user profile to be the one set
+            // in the local database. If not, the db profile
+            // would be always reset by merge.
+            if (!importPrivilegesFromLdap) {
+                user.getUser().setProfile(loadedUser.getProfile());
             }
-            loadedUser.mergeUser(user.getUser(), true);
+            loadedUser.mergeUser(user.getUser(), false);
             if (Log.isDebugEnabled(Geonet.LDAP)) {
                 Log.debug(Geonet.LDAP, "  - Update LDAP user " + user.getUsername() + " (" + loadedUser.getId() + ") in local database.");
             }
@@ -82,12 +82,12 @@ public class LDAPUtils {
             toSave = user.getUser();
         }
         toSave.getSecurity().setAuthType(LDAPConstants.LDAP_FLAG);
-        userRepo.saveAndFlush(toSave);
+        toSave = userRepo.save(toSave);
+        user.setUser(toSave);
 
 		// Add user groups
-		if (importPrivilegesFromLdap && !Profile.Administrator.equals(user.getUser().getProfile())) {
-            userGroupRepo.deleteAllByIdAttribute(UserGroupId_.userId,
-                    singleton(toSave.getId()));
+		if (importPrivilegesFromLdap) {
+            userGroupRepo.deleteAllByIdAttribute(UserGroupId_.userId, singleton(user.getUser().getId()));
 			for(Map.Entry<String, Profile> privilege : user.getPrivileges().entries()) {
 				// Add group privileges for each groups
 				
@@ -99,7 +99,7 @@ public class LDAPUtils {
 				
 				if (group == null && createNonExistingLdapGroup) {
 				    group = new Group().setName(groupName);
-				    groupRepo.save(group);
+				    group = groupRepo.save(group);
 				    
 				    if (Log.isDebugEnabled(Geonet.LDAP)) {
                         Log.debug(Geonet.LDAP, "  - Add LDAP group " + groupName + " for user.");
@@ -109,23 +109,20 @@ public class LDAPUtils {
                     if (Log.isDebugEnabled(Geonet.LDAP)) {
                         Log.debug(Geonet.LDAP, "  - Add LDAP group " + groupName + " for user.");
                     }
-                    UserGroup ug = new UserGroup()
-                            .setId(new UserGroupId(toSave, group))
-                            .setGroup(group)
-                            .setUser(toSave)
-                            .setProfile(profile);
-				    userGroupRepo.save(ug);
+                    UserGroupId usergroupId = new UserGroupId(user.getUser(), group);
+                    UserGroup usergroup = new UserGroup();
+                    usergroup.setId(usergroupId);
+                    usergroup.setGroup(group);
+                    usergroup.setUser(toSave);
+                    usergroup.setProfile(profile);
+				    userGroupRepo.save(usergroup);
 					
-                    if (profile == Profile.Reviewer) {
-                        try {
-                            if (Log.isDebugEnabled(Geonet.LDAP)) {
-                                Log.debug(Geonet.LDAP, "  - Profile is Reviewer; also adding Editor");
-                            }
-						    userGroupRepo.save(new UserGroup()
-                                    .setId(new UserGroupId(toSave, group))
-                                    .setGroup(group)
-                                    .setUser(toSave)
-                                    .setProfile(Profile.Editor));
+						if (profile == Profile.Reviewer) {
+						    try {
+                                if (Log.isDebugEnabled(Geonet.LDAP)) {
+                                    Log.debug(Geonet.LDAP, "  - Profile is Reviewer; also adding Editor");
+                                }
+						    userGroupRepo.save(new UserGroup().setId(new UserGroupId(user.getUser(), group)).setProfile(Profile.Editor));
 						} catch (Exception e) {
 						    Log.debug(Geonet.LDAP,
 						            "  - User is already editor for that group."

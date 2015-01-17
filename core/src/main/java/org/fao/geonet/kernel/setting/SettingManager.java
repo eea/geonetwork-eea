@@ -22,29 +22,32 @@
 //==============================================================================
 
 package org.fao.geonet.kernel.setting;
+import org.fao.geonet.NodeInfo;
+import jeeves.server.sources.http.ServletPathFinder;
 
-import java.sql.SQLException;
-import java.util.*;
-
-import javax.annotation.Nonnull;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import jeeves.constants.Jeeves;
 import jeeves.server.context.ServiceContext;
-
-import org.fao.geonet.repository.LanguageRepository;
-import org.fao.geonet.repository.SortUtils;
-import org.fao.geonet.utils.Log;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.HarvesterSetting;
 import org.fao.geonet.domain.Setting;
+import org.fao.geonet.domain.SettingDataType;
 import org.fao.geonet.domain.Setting_;
+import org.fao.geonet.repository.LanguageRepository;
 import org.fao.geonet.repository.SettingRepository;
+import org.fao.geonet.repository.SortUtils;
+import org.fao.geonet.utils.Log;
 import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Component;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import javax.annotation.Nonnull;
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.ServletContext;
 
 /**
  * A convenience class for updating and accessing settings.  One of the primary needs of this
@@ -75,6 +78,19 @@ public class SettingManager {
 
     @PersistenceContext
     private EntityManager _entityManager;
+    @Autowired
+    private LanguageRepository languageRepository;
+    @Autowired
+    private NodeInfo nodeInfo;
+    @Autowired
+    private ServletContext servletContext;
+
+    private ServletPathFinder pathFinder;
+
+    @PostConstruct
+    private void init() {
+        this.pathFinder = new ServletPathFinder(servletContext);
+    }
 
     /**
      * Get all settings as xml.
@@ -92,9 +108,7 @@ public class SettingManager {
 
         for (Setting setting : settings) {
             if (asTree) {
-                if (setting.getName().startsWith("system")) {
-                    buildXmlTree(env, pathElements, setting);
-                }
+                buildXmlTree(env, pathElements, setting);
             } else {
                 Element settingEl = new Element("setting");
                 settingEl.setAttribute("name", setting.getName());
@@ -120,8 +134,15 @@ public class SettingManager {
                 currentElement.setAttribute("name", path.substring(1));
                 currentElement.setAttribute("position", String.valueOf(setting.getPosition()));
                 if (i == segments.length - 1) {
-                    currentElement.setAttribute("datatype", String.valueOf(setting.getDataType().ordinal()));
-                    currentElement.setAttribute("datatypeName", setting.getDataType().name());
+                    final SettingDataType dataType;
+                    if (setting.getDataType() != null) {
+                        dataType = setting.getDataType();
+                    } else {
+                        dataType = SettingDataType.STRING;
+                    }
+                    currentElement.setAttribute("datatype", String.valueOf(dataType.ordinal()));
+                    currentElement.setAttribute("datatypeName", dataType.name());
+
                     currentElement.setText(setting.getValue());
                 }
                 parent.addContent(currentElement);
@@ -295,16 +316,32 @@ public class SettingManager {
        setValue(SYSTEM_SITE_SITE_ID_PATH, siteUuid);
     }
 
+    /**
+     * Return complete site URL including language
+     * eg. http://localhost:8080/geonetwork/srv/eng
+     *
+     * @param context
+     * @return
+     */
     public @Nonnull String getSiteURL(@Nonnull ServiceContext context) {
-        String lang = context.getLanguage();
-        if(lang == null) {
-            lang = context.getBean(LanguageRepository.class).findOneByDefaultLanguage().getId();
+        return getSiteURL(context.getLanguage());
+    }
+    /**
+     * Return complete site URL including language
+     * eg. http://localhost:8080/geonetwork/srv/eng
+     *
+     * @return
+     */
+    public @Nonnull String getSiteURL(String language) {
+        if(language == null) {
+            language = languageRepository.findOneByDefaultLanguage().getId();
         }
-        String baseURL = context.getBaseUrl();
+
+        String baseURL = pathFinder.getBaseUrl();
         String protocol = getValue(Geonet.Settings.SERVER_PROTOCOL);
         String host    = getValue(Geonet.Settings.SERVER_HOST);
         String port    = getValue(Geonet.Settings.SERVER_PORT);
-        String locServ = baseURL +"/"+ context.getNodeId() +"/" + lang;
+        String locServ = baseURL +"/"+ this.nodeInfo.getId() +"/" + language + "/";
 
         return protocol + "://" + host + (port.equals("80") ? "" : ":" + port) + locServ;
     }

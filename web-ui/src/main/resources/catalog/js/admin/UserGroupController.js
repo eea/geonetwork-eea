@@ -3,8 +3,9 @@
 
   goog.require('gn_dbtranslation');
 
-  var module = angular.module('gn_usergroup_controller',
-      ['gn_dbtranslation']);
+  var module = angular.module('gn_usergroup_controller', [
+    'gn_dbtranslation',
+    'blueimp.fileupload']);
 
 
   /**
@@ -16,6 +17,13 @@
     '$translate', '$timeout',
     function($scope, $routeParams, $http, $rootScope, 
         $translate, $timeout) {
+
+      $scope.searchObj = {
+        params: {
+          template: 'y or n',
+          sortBy: 'title'
+        }
+      };
 
       $scope.pageMenu = {
         folder: 'usergroup/',
@@ -48,7 +56,6 @@
       // On going changes group ...
       $scope.groupUpdated = false;
       $scope.groupSearch = {};
-
 
       // Scope for user
       // List of catalog users
@@ -93,7 +100,7 @@
       function loadUsers() {
         $scope.isLoadingUsers = true;
         $http.get('admin.user.list@json').success(function(data) {
-          $scope.users = data;
+          $scope.users = data.users;
           $scope.isLoadingUsers = false;
         }).error(function(data) {
           // TODO
@@ -166,14 +173,14 @@
         $scope.userSelected = null;
         $scope.userGroups = null;
 
-        $http.get('admin.user@json?id=' + u.id)
+        $http.get('admin.user@json?id=' + u.value.id)
           .success(function(data) {
               $scope.userSelected = data;
               $scope.userIsAdmin =
                   (data.profile === 'Administrator');
 
               // Load user group and then select user
-              $http.get('admin.usergroups.list@json?id=' + u.id)
+              $http.get('admin.usergroups.list@json?id=' + u.value.id)
               .success(function(groups) {
                     $scope.userGroups = groups;
                   }).error(function(data) {
@@ -188,7 +195,7 @@
         // Retrieve records in that group
         $scope.$broadcast('resetSearch', {
           template: 'y or n',
-          _owner: u.id,
+          _owner: u.value.id,
           sortBy: 'title'
         });
 
@@ -364,23 +371,42 @@
         }, 100);
       };
 
-      $scope.saveGroup = function(formId) {
-        $http.get('admin.group.update?' + $(formId).serialize())
-        .success(function(data) {
-              $scope.unselectGroup();
-              loadGroups();
-              $rootScope.$broadcast('StatusUpdated', {
-                msg: $translate('groupUpdated'),
-                timeout: 2,
-                type: 'success'});
-            })
-        .error(function(data) {
-              $rootScope.$broadcast('StatusUpdated', {
-                title: $translate('groupUpdateError'),
-                error: data,
-                timeout: 0,
-                type: 'danger'});
-            });
+
+      var uploadImportMdDone = function() {
+        angular.element('#group-logo-upload').scope().queue = [];
+
+        $scope.unselectGroup();
+        loadGroups();
+        $rootScope.$broadcast('StatusUpdated', {
+          msg: $translate('groupUpdated'),
+          timeout: 2,
+          type: 'success'});
+
+      };
+      var uploadImportMdError = function(data) {
+        $rootScope.$broadcast('StatusUpdated', {
+          title: $translate('groupUpdateError'),
+          error: data,
+          timeout: 0,
+          type: 'danger'});
+      };
+
+      // upload directive options
+      $scope.mdImportUploadOptions = {
+        autoUpload: false,
+        done: uploadImportMdDone,
+        fail: uploadImportMdError
+      };
+
+      $scope.saveGroup = function(formId, logoUploadDivId) {
+        var uploadScope = angular.element(logoUploadDivId).scope();
+        if (uploadScope.queue.length > 0) {
+          uploadScope.submit();
+        } else {
+          $http.get('admin.group.update?' + $(formId).serialize())
+          .success(uploadImportMdDone())
+          .error(uploadImportMdError);
+        }
       };
 
       $scope.deleteGroup = function(formId) {

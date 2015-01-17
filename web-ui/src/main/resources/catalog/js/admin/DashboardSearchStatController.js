@@ -80,8 +80,8 @@
           // No date defined, get min and max of search range
           // and init dateFrom and dateTo to query full time range
           if ($scope.dateFrom === null) {
-            $scope.dateFrom = $scope.dateMin;
-            $scope.dateTo = $scope.dateMax;
+            $scope.dateFrom = new Date($scope.dateMin);
+            $scope.dateTo = new Date($scope.dateMax);
             return;
           }
 
@@ -249,13 +249,13 @@
       }
 
       $scope.searchStatisticExport = function() {
-        $http.get('stat.tableExport?tableToExport=requests')
+        $http.get('statistics-search-export?tableToExport=requests')
         .success(function(data) {
               $scope.requestsExport = $sce.trustAsHtml(data);
             }).error(function(data) {
               // TODO
             });
-        $http.get('stat.tableExport?tableToExport=params')
+        $http.get('statistics-search-export?tableToExport=params')
         .success(function(data) {
               $scope.paramsExport = $sce.trustAsHtml(data);
             }).error(function(data) {

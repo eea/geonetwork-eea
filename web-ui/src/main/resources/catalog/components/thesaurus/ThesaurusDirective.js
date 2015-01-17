@@ -36,6 +36,7 @@
              elementRef: '@',
              domId: '@',
              selectorOnly: '@',
+             transformation: '@',
              // Comma separated values of thesaurus keys
              include: '@'
            },
@@ -50,6 +51,10 @@
                  scope.include ? (
                      scope.include.indexOf(',') !== -1 ?
                       scope.include.split(',') : [scope.include]) : [];
+
+             scope.allowFreeTextKeywords =
+             (attrs.allowFreeTextKeywords === undefined) ||
+             (attrs.allowFreeTextKeywords == 'true');
 
              // TODO: Remove from list existing thesaurus
              // in the record ?
@@ -80,7 +85,8 @@
                          thesaurusIdentifier;
                } else {
                  gnThesaurusService
-                         .getXML(thesaurusIdentifier).then(
+                         .getXML(thesaurusIdentifier,  null,
+                                 attrs.transformation).then(
                          function(data) {
                    // Add the fragment to the form
                    scope.snippet = gnEditorXMLService.

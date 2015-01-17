@@ -7,19 +7,23 @@
         <label class="col-sm-3 control-label">
           <span data-translate="">associationType</span>
         </label>
-        <div class="col-sm-5" data-schema-info-combo="codelist"
+        <div class="col-sm-5">
+          <div data-schema-info-combo="codelist"
           data-selected-info="associationType"
-          data-gn-schema-info="gmd:DS_AssociationTypeCode" lang="lang"></div>
+          data-gn-schema-info="associationType" lang="lang"></div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-3 control-label">
           <span data-translate="">initiativeType</span>
         </label>
-        <div class="col-sm-5" data-schema-info-combo="codelist"
+        <div class="col-sm-5">
+          <div data-schema-info-combo="codelist"
           data-selected-info="initiativeType"
-          data-gn-schema-info="gmd:DS_InitiativeTypeCode"
+          data-gn-schema-info="initiativeType"
           lang="lang"
           data-allow-blank=""></div>
+        </div>
       </div>
 
       <div class="form-group">
@@ -29,7 +33,7 @@
               class="fa fa-search" /></span> <input class="form-control"
               data-ng-change="triggerSearch()" type="text"
               data-toggle="dropdown"
-              data-ng-model="params.any"
+              data-ng-model="searchObj.params.any"
               placeholder="{{'search' | translate}}"/>
             <ul class="dropdown-menu" role="menu">
               <li data-ng-repeat="md in searchResults.records"><a
