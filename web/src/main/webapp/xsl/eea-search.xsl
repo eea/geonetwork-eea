@@ -10,7 +10,7 @@
 		indent="yes"
 		encoding="UTF-8" />
 	
-	<xsl:include href="eea-layout.xsl"/>
+	<xsl:include href="../xslt/eea-layout.xsl"/>
 	
 	<xsl:template match="/">
 		<html>

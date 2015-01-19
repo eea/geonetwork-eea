@@ -12,6 +12,8 @@
 
   <xsl:include href="base-layout-cssjs-loader.xsl"/>
 
+  <xsl:include href="eea-layout.xsl"/>
+
   <xsl:template match="/">
     <html ng-app="{$angularModule}" lang="{$lang}" id="ng-app">
       <head>
@@ -26,6 +28,8 @@
         <meta name="description" content=""/>
         <meta name="keywords" content=""/>
 
+
+        <xsl:call-template name="eea-head"/>
 
         <link rel="icon" type="image/gif" href="../../images/logos/favicon.gif"/>
         <link href="rss.search?sortBy=changeDate" rel="alternate" type="application/rss+xml"
@@ -42,6 +46,9 @@
       and a facet search to get main site information.
       -->
       <body data-ng-controller="GnCatController">
+
+        <xsl:call-template name="eea-header"/>
+
         <xsl:choose>
           <xsl:when test="ends-with($service, 'nojs')">
             <!-- No JS degraded mode ... -->
@@ -68,6 +75,9 @@
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
+
+
+        <xsl:call-template name="eea-footer"/>
       </body>
     </html>
   </xsl:template>
