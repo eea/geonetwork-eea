@@ -6,6 +6,10 @@
 
 .gn-metadata-view {
 
+  .nav li:hover {
+    background-color: @nav-open-link-hover-color;
+  }
+
   h1 {
     font-size: 18px;
   }
@@ -175,6 +179,18 @@
   .pad-right {
     margin-right: .4em;
   }
+  .dropdown-menu {
+    font-size: 90%;
+  }
+}
+
+.gn-related-resources {
+  .gn-related-item {
+    button.btn-block {
+      text-align: left;
+      padding-left: 15px;
+    }
+  }
 }
 
 
@@ -187,7 +203,8 @@ img.graphic-overview.large {
 }
 
 img.graphic-overview:not(.large):hover {
-  cursor: pointer; cursor: hand;
+  cursor: pointer;
+  cursor: hand;
 }
 
 img.graphic-overview.large.dropdown-menu {
@@ -198,7 +215,7 @@ img.graphic-overview.large.dropdown-menu {
   max-width: 128px;
 }
 
-.overview img:not(.graphic-overview) {
+.overview img:not(.graphic-overview):not(.icon) {
   max-width: 500px;
   max-height: 500px;
   padding-left: 1em;

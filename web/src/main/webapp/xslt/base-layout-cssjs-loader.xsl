@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="2.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:util="java:org.fao.geonet.util.XslUtil">
   <!-- Template to load CSS and Javascript -->
 
 
@@ -22,16 +24,7 @@
     </xsl:if>
 
     <link rel="shortcut icon" type="image/x-icon" href="../../images/logos/favicon.ico" />
-
-    <xsl:choose>
-      <xsl:when test="$angularApp = 'gn_search'">
-        <link href="{/root/gui/url}/static/{$angularModule}.css{$minimizedParam}" rel="stylesheet" media="screen" />
-        <!--<link href="{/root/gui/url}/catalog/tmp/{$searchView}.css" rel="stylesheet" media="screen" />-->
-    </xsl:when>
-    <xsl:otherwise>
-      <link href="{/root/gui/url}/static/{$angularApp}.css{$minimizedParam}" rel="stylesheet" media="screen" />
-    </xsl:otherwise>
-    </xsl:choose>
+    <link href="{/root/gui/url}/static/{$customFilename}.css{$minimizedParam}" rel="stylesheet" media="screen" />
 
     <link href="{/root/gui/url}/static/{/root/gui/nodeId}_custom_style.css{$minimizedParam}" rel="stylesheet" media="screen" />
   </xsl:template>
@@ -56,6 +49,7 @@
         <script src="{$uiResourcesPath}lib/angular/angular-resource.js"></script>
         <script src="{$uiResourcesPath}lib/angular/angular-route.js"></script>
         <script src="{$uiResourcesPath}lib/angular/angular-sanitize.js"></script>
+        <script src="{$uiResourcesPath}lib/angular/angular-cookies.js"></script>
 
         <script src="{$uiResourcesPath}lib/angular-translate.js"></script>
         <script src="{$uiResourcesPath}lib/angular-md5.js"></script>
@@ -72,7 +66,7 @@
         <script src="{$uiResourcesPath}lib/style/bootstrap/dist/js/bootstrap.js"></script>
         <script src="{$uiResourcesPath}lib/jquery.ext/jquery-ui-slider.min.js"></script>
         <script src="{$uiResourcesPath}lib/proj4js-compressed.js"></script>
-        <script src="{$uiResourcesPath}lib/ngeo/ngeo-whitespace.js"></script>
+        <script src="{$uiResourcesPath}lib/ngeo/ngeo-debug.js"></script>
         <xsl:if test="$withD3">
           <script src="{$uiResourcesPath}lib/d3.v3.js"></script>
           <script src="{$uiResourcesPath}lib/nv.d3.js"></script>
@@ -125,22 +119,23 @@
             <script src="{/root/gui/url}/static/{$angularModule}.js{$minimizedParam}"></script>
         </xsl:otherwise>
     </xsl:choose>
-    <xsl:if test="$owsContext">
-      <script type="text/javascript">
-        var module = angular.module('gn_search');
-        module.config(['gnViewerSettings', function(gnViewerSettings) {
+
+
+    <xsl:variable name="mapConfig"
+                  select="util:getSettingValue('map/config')"/>
+
+    <script type="text/javascript">
+      var module = angular.module('gn_search');
+      module.config(['gnViewerSettings', function(gnViewerSettings) {
+        <xsl:if test="$owsContext">
           gnViewerSettings.owsContext = '<xsl:value-of select="$owsContext"/>';
-        }]);
-      </script>
-    </xsl:if>
-    <xsl:if test="$wmsUrl and $layerName">
-      <script type="text/javascript">
-        var module = angular.module('gn_search');
-        module.config(['gnViewerSettings', function(gnViewerSettings) {
+        </xsl:if>
+        <xsl:if test="$wmsUrl and $layerName">
           gnViewerSettings.wmsUrl = '<xsl:value-of select="$wmsUrl"/>';
           gnViewerSettings.layerName = '<xsl:value-of select="$layerName"/>';
-        }]);
-      </script>
-    </xsl:if>
+        </xsl:if>
+        gnViewerSettings.mapConfig = <xsl:value-of select="$mapConfig"/>;
+      }]);
+    </script>
   </xsl:template>
 </xsl:stylesheet>

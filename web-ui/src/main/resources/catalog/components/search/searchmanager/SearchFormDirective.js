@@ -11,13 +11,13 @@
 
 
   goog.require('gn_catalog_service');
-  goog.require('gn_facets_directive');
+  goog.require('gn_facets');
   goog.require('gn_search_form_results_directive');
   goog.require('gn_selection_directive');
 
   var module = angular.module('gn_search_form_controller', [
     'gn_catalog_service',
-    'gn_facets_directive',
+    'gn_facets',
     'gn_selection_directive',
     'gn_search_form_results_directive'
   ]);
@@ -27,7 +27,7 @@
    */
   var searchFormController =
       function($scope, $location, gnSearchManagerService,
-               gnFacetService, Metadata) {
+               gnFacetService, Metadata, gnSearchLocation) {
     var defaultParams = {
       fast: 'index',
       _content_type: 'json'
@@ -40,7 +40,7 @@
     /** Object were are stored result search information */
     $scope.searchResults = {
       records: [],
-      count: 0
+      count: -1
     };
 
     $scope.searching = 0;
@@ -181,11 +181,17 @@
         if (angular.equals(params, $location.search())) {
           triggerSearchFn(false);
         } else {
-          $location.search(params);
+          gnSearchLocation.setSearch(params);
         }
       };
 
       $scope.$on('$locationChangeSuccess', function() {
+        // We are not in a url search so leave
+        if (!gnSearchLocation.isSearch()) return;
+
+        // We are getting back to the search, no need to reload it
+        if ($location.absUrl() == gnSearchLocation.lastSearchUrl) return;
+
         var params = angular.copy($location.search());
         for (var o in facetsParams) {
           delete params[o];
@@ -257,12 +263,13 @@
     '$location',
     'gnSearchManagerService',
     'gnFacetService',
-    'Metadata'
+    'Metadata',
+    'gnSearchLocation'
   ];
 
   module.directive('ngSearchForm', [
-    '$location',
-    function($location) {
+    'gnSearchLocation',
+    function(gnSearchLocation) {
       return {
         restrict: 'A',
         scope: true,
@@ -270,6 +277,7 @@
         controllerAs: 'controller',
         link: function(scope, element, attrs) {
 
+          console.log('link searchFormDirective');
           scope.resetSearch = function(htmlQuery) {
             scope.controller.resetSearch();
             //TODO: remove geocat ref
@@ -279,11 +287,16 @@
             }
           };
 
-          if (attrs.runsearch) {
+          // Run a first search on directive rendering if attr is specified
+          // Don't run it on page load if the permalink is 'on' and the
+          // $location is not set to 'search'
+          if (attrs.runsearch &&
+              (!scope.searchObj.permalink || gnSearchLocation.isSearch())) {
 
             // get permalink params on page load
             if (scope.searchObj.permalink) {
-              angular.extend(scope.searchObj.params, $location.search());
+              angular.extend(scope.searchObj.params,
+                  gnSearchLocation.getParams());
             }
 
             var initial = jQuery.isEmptyObject(scope.searchObj.params);
