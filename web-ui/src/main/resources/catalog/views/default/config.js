@@ -83,20 +83,17 @@
 
           /** Facets configuration */
           searchSettings.facetsConfig = [{
-            key: 'type',
-            value: 'types'
-          }, {
-            key: 'keyword',
-            value: 'keywords'
+            key: 'inspireTheme',
+            value: 'inspireThemes'
+          },  {
+            key: 'inspireAnnex',
+            value: 'inspireAnnexes'
           }, {
             key: 'category',
             value: 'categories'
           }, {
             key: 'orgName',
             value: 'orgNames'
-          }, {
-            key: 'format',
-            value: 'formats'
           }, {
             key: 'spatialRepresentationType',
             value: 'spatialRepresentationTypes'
@@ -112,6 +109,9 @@
           }, {
             key: 'metadataPOC',
             value: 'metadataPOCs'
+          }, {
+            key: 'type',
+            value: 'types'
           }, {
             key: 'serviceType',
             value: 'serviceTypes'
