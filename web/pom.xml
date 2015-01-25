@@ -556,6 +556,12 @@
                   <directory>${project.basedir}/../schemas/iso19139/src/main/plugin</directory>
                   <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
                 </resource>
+                <!-- TODO Only for the editor WAR
+                <resource>
+                  <directory>${project.basedir}/../schemas/iso19139.eea/src/main/plugin</directory>
+                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+                </resource>
+                -->
                 <resource>
                   <directory>${project.basedir}/../schemas/iso19110/src/main/plugin</directory>
                   <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
