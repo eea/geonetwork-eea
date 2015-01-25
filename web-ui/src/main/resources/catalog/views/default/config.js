@@ -101,9 +101,6 @@
             key: 'denominator',
             value: 'denominators'
           }, {
-            key: 'format',
-            value: 'formats'
-          }, {
             key: 'createDateYear',
             value: 'createDateYears'
           }, {
