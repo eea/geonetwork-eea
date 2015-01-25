@@ -59,10 +59,41 @@ issue to consider when writing JUnit tests in Geonetwork and that is the separat
 
 # EEA
 
+
+
+
+## Build
+
+```
+git clone https://github.com/eea/geonetwork-eea.git
+cd geonetwork-eea
+git submodule init
+git submodule update
+
+mvn clean install -DskipTests -Penv-catalogue
+
+cd web
+
+mvn jetty:run
+
+```
+
 ## Migration
-### November 2014
+### January 2015
+
+Target version: GN 3.0
 
 Add in database settings, metadata/editor/schemaConfig:
 ```
 ,"iso19139.eea":{"defaultTab":"default","displayToolTip":false,"related":{"display":true,"categories":[]},"suggestion":{"display":true},"validation":{"display":true}}
 ```
+Remove index to force rebuild (Lucene version changed).
+
+
+
+## API issue
+
+Error at xsl:include on line 15 column 39 of base-layout.xsl:
+  XTSE0165: java.net.UnknownHostException: www.eea.europa.eu
+2015-01-19 12:01:28,683 ERROR [jeeves.service] -    -> exception during transformation for : admin.console
+
