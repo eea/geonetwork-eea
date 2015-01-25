@@ -57,7 +57,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     </bean>
     
     
-    
+    <bean id="ldapUtils" class="org.fao.geonet.kernel.security.ldap.LDAPUtils"/>
     
     
     <!-- User information retrieval could be defined in 3 ways by configuration. Only one could be defined
@@ -72,10 +72,13 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
             <map/>
         </property>
         <property name="ldapBaseDn" value="${ldap.base.dn}"/>
-        <property name="importPrivilegesFromLdap" value="${ldap.privilege.import}"/>
-        <property name="createNonExistingLdapGroup" value="${ldap.privilege.create.nonexisting.groups}" />
-		<property name="createNonExistingLdapUser" value="${ldap.privilege.create.nonexisting.users}" />
-		<property name="ldapManager" ref="ldapUserDetailsService" />
+        <property name="importPrivilegesFromLdap"
+                  value="${ldap.privilege.import}"/>
+        <property name="createNonExistingLdapGroup"
+                  value="${ldap.privilege.create.nonexisting.groups}" />
+        <property name="createNonExistingLdapUser"
+                  value="${ldap.privilege.create.nonexisting.users}" />
+        <property name="ldapManager" ref="ldapUserDetailsService" />
         <property name="contextSource" ref="contextSource" />
     </bean>
     

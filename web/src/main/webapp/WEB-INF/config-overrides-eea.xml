@@ -9,14 +9,14 @@
   <import file="/WEB-INF/config-overrides-eea-props.xml"/>
 
 
-  <file name=".*/WEB-INF/config-gui.xml">
+  <!--<file name=".*/WEB-INF/config-gui.xml">
     <replaceAtt xpath="client" attName="widget" value="true"/>
     <replaceAtt xpath="client" attName="url" value="${widget.url}"/>
     <replaceAtt xpath="client" attName="createParameter" value="#create"/>
     <replaceAtt xpath="client" attName="stateId" value="s"/>
     <replaceAtt xpath="client" attName="parameters" value="${widget.parameters}"/>
     <replaceXML xpath="map/proj">
-      <crs code="EPSG:4326" default="1" edit="1"/><!-- WGS84 is mandatory because ISO store it by default in LatLong-->
+      <crs code="EPSG:4326" default="1" edit="1"/>&lt;!&ndash; WGS84 is mandatory because ISO store it by default in LatLong&ndash;&gt;
       <crs code="EPSG:3035"
         def="+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs"
       />
@@ -25,7 +25,7 @@
       <flatException for="topicCategory,date"/>
       <exception for="resourceConstraints,spatialRepresentationType,pointOfContact,hierarchyLevel,topicCategory,descriptiveKeywords"/>
     </replaceXML>
-  </file>
+  </file>-->
   <file name=".*/WEB-INF/config.xml">
     <replaceText xpath="general/uploadDir">../../data/tmp</replaceText>
     <replaceText xpath="general/maxUploadSize">100</replaceText>
