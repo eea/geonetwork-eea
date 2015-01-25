@@ -14,9 +14,9 @@
         <i class="fa fa-pencil"></i>
       </a>
 
-      <!--Source catalog Logo-->
+      <!--Source catalog Logo
       <img ng-src="../../images/logos/{{md.source}}.gif"
-             class="gn-source-logo"/>
+             class="gn-source-logo"/>-->
 
       <!-- Thumbnail -->
       <div class="gn-md-thumbnail">
@@ -27,7 +27,7 @@
 
       <div class="row">
         <div class="col-md-12">
-          <div class="gn-md-category"
+          <!--<div class="gn-md-category"
                data-ng-class="::md.category.length > 0 ? '' : 'invisible'">
             <span data-translate="">listOfCategories</span>
             <a data-ng-repeat="cat in ::md.category"
@@ -37,8 +37,9 @@
                 <img data-ng-src="../../images/category/{{cat}}.png"/>
               </i>
             </a>
-          </div>
+          </div>-->
 
+          {{md.inspireannex}}
         </div>
       </div>
 
@@ -76,7 +77,7 @@
         </div>
       </div>
       <div class="row gn-md-details">
-        <div class="col-md-12">
+        <div class="col-md-6">
           <p data-ng-if="md.getContacts().resource">
             <!--<h5 data-translate="">contacts</h5>-->
             {{::md.getContacts().resource}}
@@ -86,16 +87,16 @@
             <h5 data-translate="">license</h5>
             <span data-ng-repeat="c in ::md.Constraints">{{c}}, </span>
           </p>-->
-          <!--<p data-ng-if="md.keyword">
+          <p data-ng-if="md.inspireTheme">
             <span class="badge" data-ng-repeat="k in ::md.keyword">{{k}}</span>
-          </p>-->
+          </p>
         </div>
       </div>
     </div>
   </div>
 
 
-  <div class="gn-md-links">
+  <!--<div class="gn-md-links">
     <div class="btn-group"
          data-ng-class="::links.length > 0 ? '' : 'invisible'">
       <button type="button"
@@ -150,6 +151,6 @@
         <li><a href="#" data-translate="">addAllLayersToMap</a></li>
       </ul>
     </div>
-  </div>
+  </div>-->
   </li>
 </ul>

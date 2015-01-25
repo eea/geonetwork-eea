@@ -61,6 +61,12 @@
             }
           };
 
+          var addToEEAMap = function(link, uuid) {
+            var url = 'https://sdi.eea.europa.eu/eea/databrowser/?uuid=';
+            console.log(link);
+            return window.open(url + uuid, '_blank');
+          };
+
           this.map = {
             'WMS' : {
               iconClass: 'fa-globe',
@@ -107,6 +113,16 @@
               label: 'download',
               action: openLink
             },
+            'EEAFILE' : {
+              iconClass: 'fa-download',
+              label: 'download',
+              action: openLink
+            },
+            'EEAMAP' : {
+              iconClass: 'fa-globe',
+              label: 'addToMap',
+              action: addToEEAMap
+            },
             'LINK' : {
               iconClass: 'fa-link',
               label: 'openPage',
@@ -132,9 +148,9 @@
             return this.map[type].action || this.map['DEFAULT'].action;
           };
 
-          this.doAction = function(type, parameters) {
+          this.doAction = function(type, parameters, uuid) {
             var f = this.getAction(type);
-            f(parameters);
+            f(parameters, uuid);
           };
 
           this.getType = function(resource) {
@@ -143,10 +159,23 @@
                           .contains('WMS'))) {
               return 'WMS';
             } else if ((resource.protocol && resource.protocol
-                      .contains('WFS')) ||
-               (resource.serviceType && resource.serviceType
-                          .contains('WFS'))) {
+                .contains('WFS')) ||
+              (resource.serviceType && resource.serviceType
+                .contains('WFS'))) {
               return 'WFS';
+            } else if (resource.protocol &&
+              (
+                resource.protocol
+                  .contains('EEA:FOLDERPATH') ||
+                resource.protocol
+                  .contains('EEA:FILEPATH')
+              )) {
+              return 'EEAFILE';
+            } else if (resource.protocol &&
+              !resource.protocol.contains('EEA:FOLDERPATH') &&
+              !resource.url.contains('.mdb') &&
+              !resource.url.contains('.gdp')) {
+              return 'EEAMAP';
             } else if ((resource.protocol && resource.protocol
                       .contains('KML')) ||
                (resource.serviceType && resource.serviceType

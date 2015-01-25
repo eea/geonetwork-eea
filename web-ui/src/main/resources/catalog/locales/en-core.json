@@ -164,5 +164,12 @@
     "createChild": "Create a child",
     "privileges": "Privileges",
     "whoCanAccess": "Who has access",
-    "actions" : "Actions"
+    "actions" : "Actions",
+    "webdavLink": "WebDAV (Web-based Distributed Authoring and Versioning) link",
+    "cifsLink": "CIFS (Common Internet File System) link",
+    "ftpsLink": "FTPS link",
+    "schematron-rules-eea": "EEA validation",
+    "inspirethemes": "INSPIRE Themes",
+    "years": "Years",
+    "gemetKeywords": "GEMET keywords"
 }
