@@ -58,8 +58,6 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     </bean>
     
     
-    <bean id="ldapUtils" class="org.fao.geonet.kernel.security.ldap.LDAPUtils"/>
-    
     
     <!-- User information retrieval could be defined in 3 ways by configuration. Only one could be defined
          for an LDAP provider.                                                                             -->
