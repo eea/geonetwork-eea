@@ -218,6 +218,8 @@
       <filter-name>plainfilter</filter-name>
       <url-pattern>/eea/*</url-pattern>
     </filter-mapping>
+
+    <filter-mapping>
         <filter-name>resources</filter-name>
         <url-pattern>/map/*</url-pattern>
     </filter-mapping>
