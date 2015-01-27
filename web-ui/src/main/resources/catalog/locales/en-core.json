@@ -88,6 +88,8 @@
     "notifications": "Notifications",
     "orgName": "Contact for the resource",
     "orgNames": "Contact for the resource",
+    "topicCat" : "Topic Category",
+    "topicCats" : "Topic Categories",
     "organisation": "Organisation",
     "organization": "Organization",
     "owner": "Owner",
@@ -171,5 +173,6 @@
     "schematron-rules-eea": "EEA validation",
     "inspirethemes": "INSPIRE Themes",
     "years": "Years",
-    "gemetKeywords": "GEMET keywords"
+    "gemetKeywords": "GEMET keywords",
+    "reset" : "Reset"
 }
