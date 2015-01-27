@@ -7,21 +7,21 @@
     <div>
       <div class="gn-md-thumbnail">
         <img class="gn-img-thumbnail"
-             data-ng-src="{{md.getThumbnails().small}}"
-             data-ng-if="md.getThumbnails().small"/>
+             data-ng-src="{{md.getThumbnails().list[0].url}}"
+             data-ng-if="md.getThumbnails().list[0].url"/>
       </div>
       <div class="gn-md-title">
         <a >
           {{md.title || md.defaultTitle}}
         </a>
         <br/>
-        <a data-ng-repeat="cat in ::md.category"
+        <!--<a data-ng-repeat="cat in ::md.category"
            data-ng-href="#/search?_cat={{cat}}">
           <i class="fa"
              title="{{cat | translate}}">
             <img data-ng-src="../../images/category/{{cat}}.png"/>
           </i>
-        </a>
+        </a>-->
       </div>
     </div>
     <div class="hidden">
