@@ -111,6 +111,8 @@
       <field name="_defaultTitle" tagName="defaultTitle"/>
       <field name="abstract" tagName="abstract"/>
       <field name="keyword" tagName="keyword"/>
+      <field name="inspiretheme" tagName="inspiretheme"/>
+      <field name="inspireannex" tagName="inspireannex"/>
       <field name="parentUuid" tagName="parentId"/>
       <field name="type" tagName="type"/>
       <field name="image" tagName="image"/>

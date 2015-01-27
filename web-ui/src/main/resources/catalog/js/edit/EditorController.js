@@ -213,7 +213,7 @@
             if ($scope.metadataFound) {
               // TODO: Set metadata title in page HEAD ?
               $scope.layout.hideTopToolBar = true;
-
+              $('#portal-top').addClass('hidden');
               angular.extend(gnCurrentEdit, {
                 id: $routeParams.id,
                 formId: '#gn-editor-' + $routeParams.id,
@@ -433,6 +433,8 @@
       };
       var closeEditor = function() {
         $scope.layout.hideTopToolBar = false;
+        $('#portal-top').removeClass('hidden');
+
         // Close the editor tab
         window.onbeforeunload = null;
         // Go to editor home
