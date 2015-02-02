@@ -7,13 +7,15 @@
   goog.require('gn_thesaurus');
   goog.require('sxt_categorytree');
   goog.require('sxt_panier_directive');
+  goog.require('sxt_viewer_directive');
 
   var module = angular.module('gn_search_sextant', [
     'gn_search',
     'gn_search_sextant_config',
     'sxt_panier_directive',
     'gn_thesaurus',
-    'sxt_categorytree'
+    'sxt_categorytree',
+    'sxt_viewer_directive'
   ]);
 
   module.value('sxtGlobals', {});
@@ -169,11 +171,13 @@
         addMdLayerToMap: function(link, md) {
 
           var label, theme = md.sextantTheme;
-          for (var i = 0; i < sxtGlobals.sextantTheme.length; i++) {
-            var t = sxtGlobals.sextantTheme[i];
-            if (t.props.uri == theme) {
-              label = t.label;
-              break;
+          if(angular.isArray(sxtGlobals.sextantTheme)) {
+            for (var i = 0; i < sxtGlobals.sextantTheme.length; i++) {
+              var t = sxtGlobals.sextantTheme[i];
+              if (t.props.uri == theme) {
+                label = t.label;
+                break;
+              }
             }
           }
           gnOwsCapabilities.getWMSCapabilities(link.url).then(function(capObj) {

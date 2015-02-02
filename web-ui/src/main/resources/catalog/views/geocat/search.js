@@ -34,6 +34,7 @@
 
       angular.extend($scope.searchObj, {
         advancedMode: false,
+        homePage: false,
         searchMap: gnSearchSettings.searchMap
       });
 
@@ -70,11 +71,11 @@
 
       $scope.resultviewFns = {
         addMdLayerToMap: function(link) {
-          gnMap.addWmsToMap(gnSearchSettings.searchMap, {
+          map.addLayer(gnMap.createOlWMS(gnSearchSettings.searchMap, {
             LAYERS: link.name
           },{
             url: link.url
-          });
+          }));
         }
       };
 
@@ -85,6 +86,15 @@
 
       gnMdView.initFormatter('.gn-resultview');
       $('#anySearchField').focus();
+    }]);
+
+  module.controller('gnsGeocatToolbar', [
+    '$scope',
+    'gnSearchLocation',
+    function($scope, gnSearchLocation) {
+      $scope.goToHomepage = function() {
+        gnSearchLocation.setHome();
+      };
     }]);
 
   module.controller('gnsGeocatHome', [
@@ -127,12 +137,31 @@
     '$q',
     '$location',
     'gnMap',
-
+    'gnSearchLocation',
     function($scope, gnHttp, gnHttpServices, gnRegionService,
         $timeout, suggestService, $http, gnSearchSettings,
              gnSearchManagerService, ngeoDecorateInteraction, $q,
-             $location, gnMap) {
+             $location, gnMap, gnSearchLocation) {
 
+      // init routing
+      var routeHomepage = function() {
+        if (gnSearchLocation.isUndefined()) {
+          $location.path('/home');
+        }
+        else if(gnSearchLocation.isHome()) {
+          $scope.searchObj.homePage = true;
+
+          var url = 'qi@json?summaryOnly=true';
+          gnSearchManagerService.search(url).then(function(data) {
+            $scope.searchResults.facet = data.facet;
+          });
+        }
+        else {
+          $scope.searchObj.homePage = false;
+        }
+      };
+      routeHomepage();
+      $scope.$on('$locationChangeSuccess', routeHomepage);
 
       // Will store regions input values
       $scope.regions = {};
@@ -442,15 +471,6 @@
           elem.scrollTop = elem.scrollHeight;
         }, 0);
       };
-
-      if ($scope.initial) {
-        var url = 'qi@json?summaryOnly=true';
-        gnSearchManagerService.search(url).then(function(data) {
-          $scope.searchResults.facet = data.facet;
-        });
-      } else if ($location.path().indexOf('/metadata/') != 0) {
-        $scope.triggerSearch(true);
-      }
     }]);
 
   module.directive('gcFixMdlinks', [

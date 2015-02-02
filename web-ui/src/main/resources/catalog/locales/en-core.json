@@ -174,5 +174,6 @@
     "inspirethemes": "INSPIRE Themes",
     "years": "Years",
     "gemetKeywords": "GEMET keywords",
-    "reset" : "Reset"
+    "reset" : "Reset",
+    "stop": "Stop"
 }

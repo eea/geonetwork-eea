@@ -1134,8 +1134,9 @@
     <module>sde</module>
     <module>domain</module>
     <module>oaipmh</module>
-    <module>schemas</module>
+    <module>events</module>
     <module>core</module>
+    <module>schemas</module>
     <module>csw-server</module>
     <module>harvesters</module>
     <module>healthmonitor</module>
@@ -1144,6 +1145,7 @@
     <module>geonetwork-client-eea</module>
     <module>web</module>
     <module>e2e-tests</module>
+    <module>inspire-atom</module>
   </modules>
 
   <profiles>

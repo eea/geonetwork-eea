@@ -176,5 +176,6 @@
     "gemetKeywords": "GEMET keywords",
     "whoCanAccess": "Qui à accès ?",
     "actions": "Actions",
-    "reset": "Reset"
+    "reset": "Reset",
+    "backToList": "Back To List"
 }
