@@ -2,8 +2,9 @@
    which has to be applied for all apps
    (ie. admin, search, login, editor). */
 
-/* Override plone style interacting with bootstrap */
-.container, .container-fluid, .gn-editor-board {
+/* Override EEA plone style interacting with bootstrap */
+.container, .container-fluid,
+.gn-editor-board, .gn-editor-container {
   .panel {
     display: block;
   }
@@ -12,5 +13,16 @@
   }
   li {
     display: inherit;
+  }
+  a:visited, a:link, a {
+    color: #333333;
+  }
+  .date {
+    font-weight: inherit;
+    color: #333333;
+    text-align: inherit;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    text-shadow: none;
   }
 }
