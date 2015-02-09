@@ -816,7 +816,6 @@
         <geonetwork.webapp.name>map-catalogue</geonetwork.webapp.name>
         <geonetwork.web.xml>webmap-catalogue.xml</geonetwork.web.xml>
         <war.excludes>xml/schemas/**,WEB-INF/web*.xml,WEB-INF/data/config/schema_plugins/iso19139.eea/**</war.excludes>
-        <disable.iso19139.autodetect></disable.iso19139.autodetect>
       </properties>
     </profile>
     <profile>
@@ -832,7 +831,6 @@
         <geonetwork.webapp.name>internal-catalogue</geonetwork.webapp.name>
         <geonetwork.web.xml>webinternal-catalogue.xml</geonetwork.web.xml>
         <war.excludes>xml/schemas/**,WEB-INF/web*.xml,WEB-INF/data/config/schema_plugins/iso19139.eea/**</war.excludes>
-        <disable.iso19139.autodetect></disable.iso19139.autodetect>
       </properties>
     </profile>
     <profile>
@@ -848,7 +846,6 @@
         <geonetwork.webapp.name>editor-catalogue</geonetwork.webapp.name>
         <geonetwork.web.xml>webeditor-catalogue.xml</geonetwork.web.xml>
         <war.excludes>WEB-INF/web*.xml</war.excludes>
-        <disable.iso19139.autodetect>OFF</disable.iso19139.autodetect>
       </properties>
     </profile>
     <profile>
@@ -864,7 +861,6 @@
         <geonetwork.webapp.name>catalogue</geonetwork.webapp.name>
         <geonetwork.web.xml>webcatalogue.xml</geonetwork.web.xml>
         <war.excludes>WEB-INF/web*.xml,WEB-INF/data/config/schema_plugins/iso19139.eea/**</war.excludes>
-        <disable.iso19139.autodetect></disable.iso19139.autodetect>
       </properties>
     </profile>
     <profile>
@@ -903,7 +899,6 @@
   </profiles>
 
   <properties>
-    <disable.iso19139.autodetect></disable.iso19139.autodetect>
     <geonetwork.version>${project.version}</geonetwork.version>
     <geonetwork.subversion>SNAPSHOT</geonetwork.subversion>
     <geonetwork.webapp.dir>${basedir}/src/main/webapp</geonetwork.webapp.dir>
