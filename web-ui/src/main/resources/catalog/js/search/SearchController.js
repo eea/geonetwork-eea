@@ -114,6 +114,26 @@
       $scope.$on('StatusUpdated', function(e, status) {
         gnAlertService.addAlert(status);
       });
+      
+      
+
+      /**
+       * Callback sent to gn-country-picker directive.
+       * Called on region selection from typeahead.
+       * Zoom to extent.
+       */
+      $scope.onRegionSelect = function(region) {
+        $scope.$apply(function() {
+          $scope.searchObj.params.geometry = "POLYGON((" + 
+                  parseFloat(region.west) + ' ' + parseFloat(region.north) + 
+                  ',' + parseFloat(region.west) + ' ' + parseFloat(region.south) + 
+                  ',' + parseFloat(region.east) + ' ' + parseFloat(region.south) + 
+                  ',' + parseFloat(region.east) + ' ' + parseFloat(region.north) + 
+                  ',' + parseFloat(region.west) + ' ' + parseFloat(region.north) + "))";
+          $scope.location = region.name;
+          
+        });
+      };
 
     }]);
 })();

@@ -111,7 +111,7 @@
             <item facet="serviceType"/>
             <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
             <item facet="createDateYear" sortOrder="asc" max="40"/>
-        </summaryType>>
+        </summaryType>
         <summaryType name="suggestions">
             <item facet="keyword"/>
             <item facet="title" sortOrder="desc" max="100"/>
