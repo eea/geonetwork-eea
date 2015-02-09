@@ -722,7 +722,7 @@
 <!--      <webAppSourceDirectory>${build.webapp.resources}</webAppSourceDirectory> -->
           <webApp>
             <contextPath>/geonetwork</contextPath>
-            <descriptor>${project.build.directory}/WEB-INF/web.xml</descriptor>
+            <descriptor>${project.build.directory}/WEB-INF/webgeonetwork.xml</descriptor>
             <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
             <resourcesAsCSV>
               ${project.basedir}/src/main/webapp,
@@ -815,7 +815,7 @@
         <env>prod</env>
         <geonetwork.webapp.name>map-catalogue</geonetwork.webapp.name>
         <geonetwork.web.xml>webmap-catalogue.xml</geonetwork.web.xml>
-        <war.excludes>xml/schemas/**,WEB-INF/web*.xml,WEB-INF/data/config/schema_plugins/iso19139.eea/**</war.excludes>
+        <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
       </properties>
     </profile>
     <profile>
@@ -830,7 +830,7 @@
         <env>prod</env>
         <geonetwork.webapp.name>internal-catalogue</geonetwork.webapp.name>
         <geonetwork.web.xml>webinternal-catalogue.xml</geonetwork.web.xml>
-        <war.excludes>xml/schemas/**,WEB-INF/web*.xml,WEB-INF/data/config/schema_plugins/iso19139.eea/**</war.excludes>
+        <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
       </properties>
     </profile>
     <profile>
