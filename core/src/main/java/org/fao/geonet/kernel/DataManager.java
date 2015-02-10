@@ -37,13 +37,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
-
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import jeeves.transaction.TransactionManager;
 import jeeves.transaction.TransactionTask;
 import jeeves.xlink.Processor;
-
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jetty.util.ConcurrentHashSet;
 import org.fao.geonet.GeonetContext;
@@ -145,9 +143,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
-import org.xml.sax.InputSource;
 
-import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -168,20 +164,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.Root;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 import static org.fao.geonet.kernel.schema.MetadataSchema.SCHEMATRON_DIR;
 import static org.fao.geonet.repository.specification.MetadataSpecs.hasMetadataUuid;
@@ -224,9 +212,6 @@ public class DataManager {
     private java.nio.file.Path dataDir;
     private java.nio.file.Path thesaurusDir;
     private java.nio.file.Path stylePath;
-    
-    private XPathExpression lookForProgress = null;
-    private DocumentBuilder builder = null;
 
 
     private String baseURL;
@@ -243,25 +228,6 @@ public class DataManager {
      */
     public EditLib getEditLib() {
         return editLib;
-    }
-    
-    private void setUpLookForProgress() {
-        XPath xpath = (XPathFactory.newInstance()).newXPath();
-        try {
-            lookForProgress = xpath.compile("/*[local-name()='MD_Metadata']/"
-                    + "identificationInfo/MD_DataIdentification"
-                    + "/status/MD_ProgressCode/@codeListValue");
-        } catch (XPathExpressionException e) {
-            Log.error(Geonet.DATA_MANAGER, e.getMessage(), e);
-        }
-
-        DocumentBuilderFactory factory = DocumentBuilderFactory
-                .newInstance();
-        try {
-            builder = factory.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            Log.error(Geonet.DATA_MANAGER, e.getMessage(), e);
-        }
     }
 
     /**
@@ -578,17 +544,7 @@ public class DataManager {
             final String  popularity = String.valueOf(fullMd.getDataInfo().getPopularity());
             final String  rating     = String.valueOf(fullMd.getDataInfo().getRating());
             final String  displayOrder = fullMd.getDataInfo().getDisplayOrder() == null ? null : String.valueOf(fullMd.getDataInfo().getDisplayOrder());
-            
-            
-            if(lookForProgress == null) {
-                setUpLookForProgress();
-            }
-            String xml = fullMd.getData();
-            org.w3c.dom.Document doc = builder
-                    .parse(new InputSource(new StringReader(xml)));
 
-            final String  progress   = lookForProgress.evaluate(doc);
-            
             if(Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
                 Log.debug(Geonet.DATA_MANAGER, "record schema (" + schema + ")"); //DEBUG
                 Log.debug(Geonet.DATA_MANAGER, "record createDate (" + createDate + ")"); //DEBUG
@@ -608,7 +564,6 @@ public class DataManager {
             moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.RATING,      rating,      true, true));
             moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.DISPLAY_ORDER,displayOrder, true, false));
             moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.EXTRA,       extra,       false, true));
-            moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.PROGRESS,       progress,       true, true));
 
             // If the metadata has an atom document, index related information
             InspireAtomFeedRepository inspireAtomFeedRepository = _applicationContext.getBean(InspireAtomFeedRepository.class);
