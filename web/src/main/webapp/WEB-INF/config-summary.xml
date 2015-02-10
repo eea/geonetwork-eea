@@ -70,6 +70,7 @@
         <facet name="title" indexKey="title" label="titles"/>
         <facet name="subTemplateType" indexKey="_root" label="subTemplateTypes"/>
         <facet name="groupOwner" indexKey="_groupOwner" label="groupOwners"/>
+        <facet name="groupPublished" indexKey="_groupPublished" label="groupPublisheds"/>
         <facet name="gemetKeyword" indexKey="gemetKeyword" label="gemetKeyword"/>
         <facet name="publishedDataset" indexKey="publishedDataset" label="publishedDataset"/>
     </facets>
@@ -89,6 +90,7 @@
             <item facet="format" max="15" sortBy="value"/>
             <item facet="gemetKeyword"/>
             <item facet="publishedDataset"/>
+            <item facet="groupPublished"/>
         </summaryType>
         <summaryType name="subtemplates">
             <item facet="subTemplateType"/>
@@ -111,6 +113,7 @@
             <item facet="serviceType"/>
             <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
             <item facet="createDateYear" sortOrder="asc" max="40"/>
+            <item facet="groupPublished"/>
         </summaryType>
         <summaryType name="suggestions">
             <item facet="keyword"/>
