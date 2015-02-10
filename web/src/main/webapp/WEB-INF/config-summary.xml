@@ -61,6 +61,8 @@
         <facet name="denominator" indexKey="denominator" label="denominators"/>
         <facet name="spatialRepresentationType" indexKey="spatialRepresentationType"
             label="spatialRepresentationTypes"/>
+        <facet name="progress" indexKey="progress"
+            label="progress"/>
         <facet name="orgName" indexKey="orgName" label="orgNames" localized="true"/>
         <facet name="metadataPOC" indexKey="metadataPOC" label="metadataPOCs"/>
         <facet name="serviceType" indexKey="serviceType" label="serviceTypes"/>
@@ -90,7 +92,8 @@
             <item facet="format" max="15" sortBy="value"/>
             <item facet="gemetKeyword"/>
             <item facet="publishedDataset"/>
-            <item facet="groupPublished"/>
+            <item facet="groupPublished"/> 
+            <item facet="progress" translator="codelist:gmd:MD_ProgressCode"/>
         </summaryType>
         <summaryType name="subtemplates">
             <item facet="subTemplateType"/>
@@ -108,6 +111,7 @@
             <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
             <item facet="denominator" sortBy="value" sortOrder="asc" max="20"/>
             <item facet="spatialRepresentationType" translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
+            <item facet="progress" translator="codelist:gmd:MD_ProgressCode"/>
             <item facet="orgName" max="15"/>
             <item facet="metadataPOC" max="15"/>
             <item facet="serviceType"/>
@@ -120,7 +124,7 @@
             <item facet="title" sortOrder="desc" max="100"/>
             <item facet="inspireTheme" sortBy="value" sortOrder="asc"/>
             <item facet="denominator" sortBy="value" sortOrder="asc"/>
-            <item facet="spatialRepresentationType" translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
+            <item facet="progress" translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
             <item facet="orgName" max="100"/>
             <item facet="metadataPOC"/>
             <item facet="serviceType"/>
