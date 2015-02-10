@@ -124,7 +124,8 @@
             <item facet="title" sortOrder="desc" max="100"/>
             <item facet="inspireTheme" sortBy="value" sortOrder="asc"/>
             <item facet="denominator" sortBy="value" sortOrder="asc"/>
-            <item facet="progress" translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
+            <item facet="spatialRepresentationType" translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
+            <item facet="progress" translator="codelist:gmd:MD_ProgressCode"/>
             <item facet="orgName" max="100"/>
             <item facet="metadataPOC"/>
             <item facet="serviceType"/>
