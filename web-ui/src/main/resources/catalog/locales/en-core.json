@@ -191,5 +191,15 @@
     "_isHarvested": "Harvested",
     "isTemplatey": "Template",
     "isTemplates": "Directory",
-    "isTemplaten": "Record"
+    "isTemplaten": "Record",
+    "signinFailure": "Incorrect username or password.",
+    "attributeName": "Attribute name",
+    "attributeDefinition": "Definition",
+    "attributeValues": "List of values",
+    "valueName": "Name",
+    "valueDefinition": "Definition",
+    "valueCode": "Code",
+    "addRecord": "Add new record",
+    "ImportRecord": "Import new records",
+    "directoryManager": "Manage directory"
 }

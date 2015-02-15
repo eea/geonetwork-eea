@@ -96,6 +96,7 @@
       <field name="_userinfo" tagName="userinfo"/>
       <field name="_ownername" tagName="ownername"/>
       <field name="_cat" tagName="category"/>
+      <field name="topicCat" tagName="topicCat"/>
       <field name="_valid" tagName="valid"/>
       <field name="_valid_schematron-rules-geonetwork" tagName="valid_schematron-rules-geonetwork"/>
       <field name="_valid_schematron-rules-iso" tagName="valid_schematron-rules-iso"/>
@@ -113,7 +114,7 @@
       <field name="createDate" tagName="creationDate"/>
       <field name="revisionDate" tagName="revisionDate"/>
       <field name="publicationDate" tagName="publicationDate"/>
-      <field name="abstract" tagName="abstract"/>
+      <field name="abstract" tagName="abstract" multilingualSortField="true"/>
       <field name="keyword" tagName="keyword"/>
       <field name="parentUuid" tagName="parentId"/>
       <field name="type" tagName="type"/>
@@ -125,6 +126,7 @@
       <field name="crs" tagName="crs"/>
       <field name="credit" tagName="credit"/>
       <field name="status" tagName="status"/>
+      <field name="status_text" tagName="status_text" multilingualSortField="true"/>
       <field name="updateFrequency" tagName="updateFrequency"/>
       <field name="lineage" tagName="lineage"/>
       <field name="responsibleParty" tagName="responsibleParty"/>

@@ -3,13 +3,14 @@
 
   goog.require('gn_search_manager');
 
-  var module = angular.module('gn_cat_controller', ['gn_search_manager']);
+  var module = angular.module('gn_cat_controller',
+      ['gn_search_manager']);
 
 
   module.constant('gnGlobalSettings', {
     proxyUrl: '../../proxy?url=',
     locale: {},
-    isMapViewerEnabled : false
+    isMapViewerEnabled: false
   });
 
   /**
@@ -24,10 +25,10 @@
   module.controller('GnCatController', [
     '$scope', '$http', '$q', '$rootScope', '$translate',
     'gnSearchManagerService', 'gnConfigService', 'gnConfig',
-    'gnGlobalSettings',
+    'gnGlobalSettings', '$location',
     function($scope, $http, $q, $rootScope, $translate,
             gnSearchManagerService, gnConfigService, gnConfig,
-            gnGlobalSettings) {
+            gnGlobalSettings, $location) {
       $scope.version = '0.0.1';
       // TODO : add language
       var tokens = location.href.split('/');
@@ -40,11 +41,13 @@
       $scope.proxyUrl = gnGlobalSettings.proxyUrl;
       $scope.logoPath = '../../images/harvesting/';
       $scope.isMapViewerEnabled = gnGlobalSettings.isMapViewerEnabled;
+      $scope.isDebug = window.location.search.indexOf('debug') !== -1;
+
       $scope.pages = {
         home: 'home',
-        admin: 'admin.console',
         signin: 'catalog.signin'
       };
+
       $scope.layout = {
         hideTopToolBar: false
       };

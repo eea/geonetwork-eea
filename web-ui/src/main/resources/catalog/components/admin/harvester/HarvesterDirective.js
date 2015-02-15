@@ -23,9 +23,9 @@
             'identification.html',
         link: function(scope, element, attrs) {
           scope.lang = 'eng'; // FIXME
-          scope.openTranslationModal= function() {
+          scope.openTranslationModal = function() {
             var translations = scope.harvester.site.translations;
-            if (translations === undefined) {
+            if (translations === undefined || angular.isArray(translations)) {
               translations = {};
               scope.harvester.site.translations = translations;
             }
@@ -167,7 +167,9 @@
                }
              };
              function loadGroups() {
-               $http.get('info@json?type=groups', {cache: true})
+               $http.get('info?_content_type=json&' +
+               'type=groupsIncludingSystemGroups',
+               {cache: true})
                  .success(function(data) {
                  scope.groups = data !== 'null' ? data.group : null;
                });

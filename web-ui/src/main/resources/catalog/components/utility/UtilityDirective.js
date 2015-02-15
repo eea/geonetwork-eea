@@ -357,6 +357,44 @@
   });
 
 
+  /**
+   * Make an element able to collapse/expand
+   * the next element. An icon is added before
+   * the element to indicate the status
+   * collapsed or expanded.
+   */
+  module.directive('gnSlideToggle', [
+    function() {
+      return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+
+          element.on('click', function(e) {
+            /**
+             * Toggle collapse-expand fieldsets
+             * TODO: This is in conflict with click
+             * event added by field tooltip
+             */
+            var legend = $(this);
+            //getting the next element
+            var content = legend.nextAll();
+            //open up the content needed - toggle the slide-
+            //if visible, slide up, if not slidedown.
+            content.slideToggle(attrs.duration || 250, function() {
+              //execute this after slideToggle is done
+              //change the icon of the legend based on
+              // visibility of content div
+              if (content.is(':visible')) {
+                legend.removeClass('collapsed');
+              } else {
+                legend.addClass('collapsed');
+              }
+            });
+          });
+        }
+      };
+    }]);
+
   module.directive('gnClickAndSpin', ['$parse',
     function($parse) {
       return {
@@ -664,17 +702,94 @@
         element.on('click', function(e) {
           var next = element.next();
           next.collapse('toggle');
-          /*
-          if(scope.collapsed) {
-            next.show();
-          }
-          else {
-            next.hide();
-          }
-          */
         });
       }
     };
   }]);
 
+
+  /**
+   * Directive which create the href attribute
+   * for an element preserving the debug mode
+   * if activated and adding an active class
+   * to the parent element (required to highlight
+   * element in navbar)
+   */
+  module.directive('gnActiveTbItem', ['$location', function($location) {
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs) {
+        var link = attrs.gnActiveTbItem, href,
+            isCurrentService = false;
+
+        // Insert debug mode between service and route
+        if (link.indexOf('#') !== -1) {
+          var tokens = link.split('#');
+          isCurrentService = window.location.pathname.
+              match('.*' + tokens[0] + '$') !== null;
+          href =
+              (isCurrentService ? '' :
+              tokens[0] + (scope.isDebug ? '?debug' : '')
+              ) + '#' +
+              tokens[1];
+        } else {
+          isCurrentService = window.location.pathname.
+              match('.*' + link + '$') !== null;
+          href =
+              isCurrentService ? '#/' : link + (scope.isDebug ? '?debug' : '');
+
+        }
+
+        // Set the href attribute for the element
+        // with the link containing the debug mode
+        // or not
+        element.attr('href', href);
+
+        function checkActive() {
+          // Ignore the service parameters and
+          // check url contains path
+          var isActive = $location.absUrl().replace(/\?.*#/, '#').
+              match('.*' + link + '.*') !== null;
+
+          if (isActive) {
+            element.parent().addClass('active');
+          } else {
+            element.parent().removeClass('active');
+          }
+        }
+
+        scope.$on('$locationChangeSuccess', checkActive);
+
+        checkActive();
+      }
+    };
+  }]);
+
+  module.directive('gnJsonText', function() {
+    return {
+      restrict: 'A',
+      require: 'ngModel',
+      link: function(scope, element, attr, ngModel) {
+        function into(input) {
+          return ioFn(input, 'parse');
+        }
+        function out(input) {
+          return ioFn(input, 'stringify');
+        }
+        function ioFn(input, method) {
+          var json;
+          try {
+            json = JSON[method](input);
+            ngModel.$setValidity('json', true);
+          } catch (e) {
+            ngModel.$setValidity('json', false);
+          }
+          return json;
+        }
+        ngModel.$parsers.push(into);
+        ngModel.$formatters.push(out);
+
+      }
+    };
+  });
 })();
