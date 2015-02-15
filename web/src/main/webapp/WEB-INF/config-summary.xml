@@ -63,6 +63,8 @@
         <facet name="denominator" indexKey="denominator" label="denominators"/>
         <facet name="spatialRepresentationType" indexKey="spatialRepresentationType"
             label="spatialRepresentationTypes"/>
+        <facet name="progress" indexKey="progress"
+            label="progress"/>
         <facet name="orgName" indexKey="orgName" label="orgNames" localized="true"/>
         <facet name="metadataPOC" indexKey="metadataPOC" label="metadataPOCs"/>
         <facet name="serviceType" indexKey="serviceType" label="serviceTypes"/>
@@ -76,6 +78,8 @@
         <facet name="status" indexKey="_status" label="status"/>
         <facet name="standard" indexKey="_schema" label="standards"/>
         <facet name="subTemplateType" indexKey="_root" label="subTemplateTypes"/>
+        <facet name="groupOwner" indexKey="_groupOwner" label="groupOwners"/>
+        <facet name="groupPublished" indexKey="_groupPublished" label="groupPublisheds"/>
         <facet name="gemetKeyword" indexKey="gemetKeyword" label="gemetKeyword"/>
         <facet name="publishedDataset" indexKey="publishedDataset" label="publishedDataset"/>
         <facet name="groupOwner" indexKey="_groupOwner" label="groupOwners" localized="true"/>
@@ -98,6 +102,8 @@
             <item facet="format" max="15" sortBy="value"/>
             <item facet="gemetKeyword"/>
             <item facet="publishedDataset"/>
+            <item facet="groupPublished"/> 
+            <item facet="progress" translator="codelist:gmd:MD_ProgressCode"/>
         </summaryType>
         <summaryType name="subtemplates">
             <item facet="subTemplateType"/>
@@ -129,18 +135,21 @@
             <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
             <item facet="denominator" sortBy="value" sortOrder="asc" max="20"/>
             <item facet="spatialRepresentationType" translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
+            <item facet="progress" translator="codelist:gmd:MD_ProgressCode"/>
             <item facet="orgName" max="15"/>
             <item facet="metadataPOC" max="15"/>
             <item facet="serviceType"/>
             <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
             <item facet="createDateYear" sortOrder="asc" max="40"/>
-        </summaryType>>
+            <item facet="groupPublished"/>
+        </summaryType>
         <summaryType name="suggestions">
             <item facet="keyword"/>
             <item facet="title" sortOrder="desc" max="100"/>
             <item facet="inspireTheme" sortBy="value" sortOrder="asc"/>
             <item facet="denominator" sortBy="value" sortOrder="asc"/>
             <item facet="spatialRepresentationType" translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
+            <item facet="progress" translator="codelist:gmd:MD_ProgressCode"/>
             <item facet="orgName" max="100"/>
             <item facet="metadataPOC"/>
             <item facet="serviceType"/>

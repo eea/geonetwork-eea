@@ -693,6 +693,10 @@
 	      ... gmd:*_DataIdentification / hierachicalLevel is used and return dataset, serie, ... 
 	      </xsl:otherwise>-->
 	    </xsl:choose>
+	    
+	    <xsl:for-each select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:status/gmd:MD_ProgressCode/@codeListValue">
+            <Field name="progress" string="{string(.)}" store="true" index="true"/>
+	    </xsl:for-each>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->		
 

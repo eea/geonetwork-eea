@@ -56,6 +56,15 @@
           gnFacetConfigService.loadConfig(scope.summaryType).
               then(function(data) {
                 scope.facetConfig = data;
+                
+               //Remove duplicated multiSelect facets
+                $.each(scope.facetConfig, function(e) {
+                  var name = scope.facetConfig[e].name;
+                  if($("*[data-gn-facet-multiselect='" + name + "']").length > 0 
+                      || $("*[gn-facet-multiselect='" + name + "']").length > 0) {
+                    delete scope.facetConfig[e];
+                  }
+                });
               });
         }
       };
