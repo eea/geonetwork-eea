@@ -8,13 +8,13 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 " >
 
-	<import resource="config-spring-env.xml" />
-	<import resource="config-security/config-security.xml" />
-	<import resource="config-summary.xml" />
+	<import resource="../../../../target/webapp/WEB-INF/config-spring-env.xml" />
+	<import resource="../../webapp/WEB-INF/config-security/${geonetwork.config.security}.xml" />
+	<import resource="../../webapp/WEB-INF/config-summary.xml" />
 	<import resource="classpath:JZkitApplicationContext.xml" />
 
-	<import resource="config-db/initial_data.xml" />
-	<import resource="config-print/config-spring-print.xml" />
+	<import resource="../../webapp/WEB-INF/config-db/initial_data.xml" />
+	<import resource="../../webapp/WEB-INF/config-print/config-spring-print.xml" />
 
 
     <!-- Uncomment if you want to use a non-shapefile datastore -->
@@ -22,7 +22,7 @@
 	<!--<import resource="config-db/postgis-alternate-datasource.xml"/> -->
 
 	<!-- Import the versioning configuration (subversion etc...) -->
-	<import resource="config-versioning.xml" />
+	<import resource="../../webapp/WEB-INF/config-versioning.xml" />
 
 
 	<bean id="scheduler"
