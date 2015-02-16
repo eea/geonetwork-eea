@@ -1,0 +1,1619 @@
+
+/* - ++resource++jquery.css - */
+@media all {
+/* http://www.eea.europa.eu/portal_css/++resource++jquery.css?original=1 */
+/* */
+
+}
+
+
+/* - ++resource++jquery.tokeninput.mac.css - */
+@media all {
+/* http://www.eea.europa.eu/portal_css/++resource++jquery.tokeninput.mac.css?original=1 */
+/* */
+fieldset.token-input-mac {
+position: relative;
+padding: 0;
+margin: 5px 0;
+background: #fff;
+width: 400px;
+border: 1px solid #A4BDEC;
+border-radius: 10px;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+}
+fieldset.token-input-mac.token-input-dropdown-mac {
+border-radius: 10px 10px 0 0;
+-moz-border-radius: 10px 10px 0 0;
+-webkit-border-radius: 10px 10px 0 0;
+box-shadow: 0 5px 20px 0 rgba(0,0,0,0.25);
+-moz-box-shadow: 0 5px 20px 0 rgba(0,0,0,0.25);
+-webkit-box-shadow: 0 5px 20px 0 rgba(0,0,0,0.25);
+}
+ul.token-input-list-mac {
+overflow: hidden;
+height: auto !important;
+height: 1%;
+cursor: text;
+font-size: 12px;
+font-family: Verdana;
+min-height: 1px;
+z-index: 999;
+margin: 0;
+padding: 3px;
+background: transparent;
+}
+ul.token-input-list-mac.error {
+border: 1px solid #C52020;
+}
+ul.token-input-list-mac li {
+list-style-type: none;
+}
+li.token-input-token-mac p {
+display: inline;
+padding: 0;
+margin: 0;
+}
+li.token-input-token-mac span {
+color: #a6b3cf;
+margin-left: 5px;
+font-weight: bold;
+cursor: pointer;
+}
+/* */
+li.token-input-token-mac {
+font-family: "Lucida Grande", Arial, serif;
+font-size: 9pt;
+line-height: 12pt;
+overflow: hidden;
+height: 16px;
+margin: 3px;
+padding: 0 10px;
+background: none;
+background-color: #dee7f8;
+color: #000;
+cursor: default;
+border: 1px solid #a4bdec;
+border-radius: 15px;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+float: left;
+}
+li.token-input-highlighted-token-mac {
+background-color: #bbcef1;
+border: 1px solid #598bec;
+color: #000;
+}
+li.token-input-selected-token-mac {
+background-color: #598bec;
+border: 1px solid transparent;
+color: #fff;
+}
+li.token-input-highlighted-token-mac span.token-input-delete-token-mac {
+color: #000;
+}
+li.token-input-selected-token-mac span.token-input-delete-token-mac {
+color: #fff;
+}
+li.token-input-input-token-mac {
+border: none;
+background: transparent;
+float: left;
+padding: 0;
+margin: 0;
+}
+li.token-input-input-token-mac input {
+border: 0;
+width: 100px;
+padding: 3px;
+background-color: transparent;
+margin: 0;
+}
+div.token-input-dropdown-mac {
+position: absolute;
+border: 1px solid #A4BDEC;
+border-top: none;
+left: -1px;
+right: -1px;
+background-color: #fff;
+overflow: hidden;
+cursor: default;
+font-size: 10pt;
+font-family: "Lucida Grande", Arial, serif;
+padding: 5px;
+border-radius: 0 0 10px 10px;
+-moz-border-radius: 0 0 10px 10px;
+-webkit-border-radius: 0 0 10px 10px;
+box-shadow: 0 5px 20px 0 rgba(0,0,0,0.25);
+-moz-box-shadow: 0 5px 20px 0 rgba(0,0,0,0.25);
+-webkit-box-shadow: 0 5px 20px 0 rgba(0,0,0,0.25);
+clip:rect(0px, 1000px, 1000px, -10px);
+}
+div.token-input-dropdown-mac p {
+font-size: 8pt;
+margin: 0;
+padding: 0 5px;
+font-style: italic;
+color: #aaa;
+}
+div.token-input-dropdown-mac h3.token-input-dropdown-category-mac {
+font-family: "Lucida Grande", Arial, serif;
+font-size: 10pt;
+font-weight: bold;
+border: none;
+padding: 0 5px;
+margin: 0;
+}
+div.token-input-dropdown-mac ul {
+margin: 0;
+padding: 0;
+}
+div.token-input-dropdown-mac ul li {
+list-style-type: none;
+cursor: pointer;
+background: none;
+background-color: #fff;
+margin: 0;
+padding: 0 0 0 25px;
+}
+div.token-input-dropdown-mac ul li.token-input-dropdown-item-mac {
+background-color: #fff;
+}
+div.token-input-dropdown-mac ul li.token-input-dropdown-item-mac.odd {
+background-color: #ECF4F9;
+border-radius: 15px;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+}
+div.token-input-dropdown-mac ul li.token-input-dropdown-item-mac span.token-input-dropdown-item-description-mac {
+float: right;
+font-size: 8pt;
+font-style: italic;
+padding: 0 10px 0 0;
+color: #999;
+}
+div.token-input-dropdown-mac ul li strong {
+font-weight: bold;
+text-decoration: underline;
+font-style: none;
+}
+div.token-input-dropdown-mac ul li.token-input-selected-dropdown-item-mac,
+div.token-input-dropdown-mac ul li.token-input-selected-dropdown-item-mac.odd {
+background-color: #598bec;
+color: #fff;
+border-radius: 15px;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+}
+div.token-input-dropdown-mac ul li.token-input-selected-dropdown-item-mac span.token-input-dropdown-item-description-mac,
+div.token-input-dropdown-mac ul li.token-input-selected-dropdown-item-mac.odd span.token-input-dropdown-item-description-mac {
+color: #fff;
+}
+
+}
+
+
+/* - ++resource++jquery.tokeninput.facebook.css - */
+@media all {
+/* http://www.eea.europa.eu/portal_css/++resource++jquery.tokeninput.facebook.css?original=1 */
+/* */
+ul.token-input-list-facebook {
+overflow: hidden;
+height: auto !important;
+height: 1%;
+width: 400px;
+border: 1px solid #8496ba;
+cursor: text;
+font-size: 12px;
+font-family: Verdana;
+min-height: 1px;
+z-index: 999;
+margin: 0;
+padding: 0;
+background-color: #fff;
+list-style-type: none;
+clear: left;
+}
+ul.token-input-list-facebook li input {
+border: 0;
+width: 100px;
+padding: 3px 8px;
+background-color: white;
+margin: 2px 0;
+-webkit-appearance: caret;
+}
+li.token-input-token-facebook {
+overflow: hidden;
+height: auto !important;
+height: 15px;
+margin: 3px;
+padding: 1px 3px;
+background-color: #eff2f7;
+color: #000;
+cursor: default;
+border: 1px solid #ccd5e4;
+font-size: 11px;
+border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+float: left;
+white-space: nowrap;
+}
+li.token-input-token-facebook p {
+display: inline;
+padding: 0;
+margin: 0;
+}
+li.token-input-token-facebook span {
+color: #a6b3cf;
+margin-left: 5px;
+font-weight: bold;
+cursor: pointer;
+}
+li.token-input-selected-token-facebook {
+background-color: #5670a6;
+border: 1px solid #3b5998;
+color: #fff;
+}
+li.token-input-input-token-facebook {
+float: left;
+margin: 0;
+padding: 0;
+list-style-type: none;
+}
+div.token-input-dropdown-facebook {
+position: absolute;
+width: 400px;
+background-color: #fff;
+overflow: hidden;
+border-left: 1px solid #ccc;
+border-right: 1px solid #ccc;
+border-bottom: 1px solid #ccc;
+cursor: default;
+font-size: 11px;
+font-family: Verdana;
+z-index: 1;
+}
+div.token-input-dropdown-facebook p {
+margin: 0;
+padding: 5px;
+font-weight: bold;
+color: #777;
+}
+div.token-input-dropdown-facebook ul {
+margin: 0;
+padding: 0;
+}
+div.token-input-dropdown-facebook ul li {
+background-color: #fff;
+padding: 3px;
+margin: 0;
+list-style-type: none;
+}
+div.token-input-dropdown-facebook ul li.token-input-dropdown-item-facebook {
+background-color: #fff;
+}
+div.token-input-dropdown-facebook ul li.token-input-dropdown-item2-facebook {
+background-color: #fff;
+}
+div.token-input-dropdown-facebook ul li em {
+font-weight: bold;
+font-style: normal;
+}
+div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-facebook {
+background-color: #3b5998;
+color: #fff;
+}
+}
+
+
+/* - ++resource++jquery.tokeninput.css - */
+@media all {
+/* http://www.eea.europa.eu/portal_css/++resource++jquery.tokeninput.css?original=1 */
+ul.token-input-list {
+overflow: hidden;
+height: auto !important;
+height: 1%;
+width: 400px;
+border: 1px solid #999;
+cursor: text;
+font-size: 12px;
+font-family: Verdana;
+z-index: 999;
+margin: 0;
+padding: 0;
+background-color: #fff;
+list-style-type: none;
+clear: left;
+}
+ul.token-input-list li {
+list-style-type: none;
+}
+ul.token-input-list li input {
+border: 0;
+width: 350px;
+padding: 3px 8px;
+background-color: white;
+-webkit-appearance: caret;
+}
+li.token-input-token {
+overflow: hidden;
+height: auto !important;
+height: 1%;
+margin: 3px;
+padding: 3px 5px;
+background-color: #d0efa0;
+color: #000;
+font-weight: bold;
+cursor: default;
+display: block;
+}
+li.token-input-token p {
+float: left;
+padding: 0;
+margin: 0;
+}
+li.token-input-token span {
+float: right;
+color: #777;
+cursor: pointer;
+}
+li.token-input-selected-token {
+background-color: #08844e;
+color: #fff;
+}
+li.token-input-selected-token span {
+color: #bbb;
+}
+div.token-input-dropdown {
+position: absolute;
+width: 400px;
+background-color: #fff;
+overflow: hidden;
+border-left: 1px solid #ccc;
+border-right: 1px solid #ccc;
+border-bottom: 1px solid #ccc;
+cursor: default;
+font-size: 12px;
+font-family: Verdana;
+z-index: 1;
+}
+div.token-input-dropdown p {
+margin: 0;
+padding: 5px;
+font-weight: bold;
+color: #777;
+}
+div.token-input-dropdown ul {
+margin: 0;
+padding: 0;
+}
+div.token-input-dropdown ul li {
+background-color: #fff;
+padding: 3px;
+list-style-type: none;
+}
+div.token-input-dropdown ul li.token-input-dropdown-item {
+background-color: #fafafa;
+}
+div.token-input-dropdown ul li.token-input-dropdown-item2 {
+background-color: #fff;
+}
+div.token-input-dropdown ul li em {
+font-weight: bold;
+font-style: normal;
+}
+div.token-input-dropdown ul li.token-input-selected-dropdown-item {
+background-color: #d0efa0;
+}
+
+}
+
+
+/* - ++resource++jquery.select2uislider.css - */
+@media all {
+/* http://www.eea.europa.eu/portal_css/++resource++jquery.select2uislider.css?original=1 */
+/* */
+.ui-slider  {
+text-decoration: none !important;
+}
+.ui-slider .ui-slider-handle  {
+overflow: visible !important;
+}
+.ui-slider .ui-slider-tooltip {
+display: none;
+}
+.ui-slider .screenReaderContext {
+position: absolute;
+width: 0;
+height: 0;
+overflow: hidden;
+left: -999999999px;
+}
+.ui-slider .ui-state-active .ui-slider-tooltip, .ui-slider .ui-state-focus .ui-slider-tooltip, .ui-slider .ui-state-hover .ui-slider-tooltip {
+display: block;
+position: absolute;
+bottom: 2.5em;
+text-align: center;
+padding: .3em .2em .4em;
+font-size: .9em;
+width: 8em;
+margin-left: -3.7em;
+}
+.ui-slider .ui-slider-tooltip .ui-tooltip-pointer-down, .ui-slider .ui-slider-tooltip .ui-tooltip-pointer-down-inner {
+position: absolute;
+display: block;
+width:0;
+height:0;
+border-bottom-width: 0;
+background: none;
+}
+.ui-slider .ui-slider-tooltip .ui-tooltip-pointer-down {
+border-left: 7px dashed transparent;
+border-right: 7px dashed transparent;
+border-top-width: 8px;
+bottom:	-8px;
+right: auto;
+left: 50%;
+margin-left: -7px;
+}
+.ui-slider .ui-slider-tooltip .ui-tooltip-pointer-down-inner {
+border-left: 6px dashed transparent;
+border-right: 6px dashed transparent;
+border-top: 7px solid #fff;
+bottom:	auto;
+top: -9px;
+left: -6px;
+}
+.ui-slider a {
+text-decoration: none;
+}
+.ui-slider ol, .ui-slider li, .ui-slider dl, .ui-slider dd, .ui-slider dt {
+list-style: none;
+margin: 0;
+padding: 0;
+}
+.ui-slider ol, .ui-slider dl {
+position: relative;
+top: 1.3em;
+width: 100%;
+}
+.ui-slider dt {
+top: 1.5em;
+position: absolute;
+padding-top: .2em;
+text-align: center;
+border-bottom: 1px dotted #ddd;
+height: .7em;
+color: #999;
+}
+.ui-slider dt span {
+background: #fff;
+padding: 0 .5em;
+}
+.ui-slider li, .ui-slider dd {
+position: absolute;
+overflow: visible;
+color: #666;
+}
+.ui-slider span.ui-slider-label {
+position: absolute;
+}
+.ui-slider li span.ui-slider-label, .ui-slider dd span.ui-slider-label {
+display: none;
+}
+.ui-slider li span.ui-slider-label-show, .ui-slider dd span.ui-slider-label-show {
+display: block;
+}
+.ui-slider span.ui-slider-tic {
+position: absolute;
+left: 0;
+height: .8em;
+top: -1.3em;
+}
+.ui-slider li span.ui-widget-content, .ui-slider dd span.ui-widget-content {
+border-right: 0;
+border-left-width: 1px;
+border-left-style: solid;
+border-top: 0;
+border-bottom: 0;
+}
+.ui-slider .first .ui-slider-tic, .ui-slider .last .ui-slider-tic {
+display: none;
+}
+
+}
+
+
+/* - ++resource++jquery.jqzoom.css - */
+@media all {
+/* http://www.eea.europa.eu/portal_css/++resource++jquery.jqzoom.css?original=1 */
+div.jqZoomTitle
+{
+z-index:5000;
+text-align:center;
+font-size:11px;
+font-family:Tahoma;
+height:16px;
+padding-top:2px;
+position:absolute;
+top: 0;
+left: 0;
+width: 100%;
+color: #FFF;
+background: #999;
+}
+.jqZoomPup
+{
+overflow:hidden;
+background-color: #FFF;
+-moz-opacity:0.6;
+opacity: 0.6;
+filter: alpha(opacity = 60);
+z-index:10;
+border: solid #c4c4c4;
+cursor:crosshair;
+}
+.jqZoomPup img
+{
+border: 0;
+}
+.preload {
+-moz-opacity:0.8;
+opacity: 0.8;
+filter: alpha(opacity = 80);
+color: #333;
+font-size: 12px;
+font-family: Tahoma;
+text-decoration: none;
+border: 1px solid #CCC;
+padding: 8px;
+text-align:center;
+background: white url(../../++resource++jqzoom/zoomloader.gif) no-repeat 43px 30px;
+width:90px;
+*width:100px;
+height:43px;
+*height:55px;
+z-index:10;
+position:absolute;
+top:3px;
+left:3px;
+}
+.jqZoomWindow
+{
+border: 1px solid #999;
+background-color: #FFF;
+}
+
+}
+
+
+/* - ++resource++jquery.galleryview.css - */
+@media all {
+/* http://www.eea.europa.eu/portal_css/++resource++jquery.galleryview.css?original=1 */
+/* */
+/* */
+#photos { visibility: hidden; }
+/* */
+.gallery { background: white; border: 1px solid #aaa; padding: 5px;}
+/* */
+.loader { background: url(../../++resource++galleryview/loader.gif) center center no-repeat white; }
+/* */
+.gallery .panel {
+background: black;
+}
+/* */
+/* */
+.gallery .panel-overlay,
+.gallery .panel .overlay-background {
+min-height: 60px;
+padding: 1em;
+display: block;
+background-color: transparent;
+background-color: rgba(0, 0, 0, 0.7);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#B2000000,endColorstr=#B2000000);
+zoom: 1;
+}
+/* */
+.gallery .panel .overlay-background { background: #222; }
+/* */
+.gallery .panel .panel-overlay { color: white; font-size: 13px; }
+.gallery .panel .panel-overlay a { color: white; text-decoration: underline; font-weight: bold; }
+/* */
+/* */
+.filmstrip { margin: 5px; }
+/* */
+.frame {}
+/* */
+.frame .img_wrap { border: 1px solid #aaa; }
+/* */
+.frame.current .img_wrap { border-color: #000; }
+/* */
+.frame img { border: none; }
+/* */
+.frame .caption { font-size: 11px; text-align: center; color: #888; }
+/* */
+.frame.current .caption { color: #000; }
+/* */
+.pointer {
+border-color: #000;
+}
+/* */
+/* */
+*html .pointer {
+filter: chroma(color=pink);
+}
+body.gallery_fancybox_view .gallery {
+border: none;
+}
+.gallery .nav-next,
+.gallery .nav-prev,
+.gallery .nav-next-overlay,
+.gallery .nav-prev-overlay
+{
+position: absolute;
+z-index: 1100;
+cursor: pointer;
+}
+.gallery .nav-next {
+right: 10px;
+}
+.gallery .nav-prev {
+left: 10px;
+}
+.gallery .nav-prev-overlay,
+.gallery .nav-next-overlay {
+z-index: 1099;
+opacity: 0.75;
+}
+.gallery .nav-next-overlay {
+right: 0;
+}
+.gallery .nav-prev-overlay {
+left: 0;
+}
+
+}
+
+
+/* - ++resource++jquery.fancybox.css - */
+@media all {
+/* http://www.eea.europa.eu/portal_css/++resource++jquery.fancybox.css?original=1 */
+#fancybox-loading {
+position: fixed;
+top: 50%;
+left: 50%;
+width: 40px;
+height: 40px;
+margin-top: -20px;
+margin-left: -20px;
+cursor: pointer;
+overflow: hidden;
+z-index: 1104;
+display: none;
+}
+#fancybox-loading div {
+position: absolute;
+top: 0;
+left: 0;
+width: 40px;
+height: 480px;
+background-image: url('../../++resource++fancybox/fancybox.png');
+}
+#fancybox-overlay {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+z-index: 1100;
+display: none;
+}
+#fancybox-tmp {
+padding: 0;
+margin: 0;
+border: 0;
+overflow: auto;
+display: none;
+}
+#fancybox-wrap {
+position: absolute;
+top: 0;
+left: 0;
+padding: 20px;
+z-index: 1101;
+outline: none;
+display: none;
+}
+#fancybox-outer {
+position: relative;
+width: 100%;
+height: 100%;
+background: #fff;
+}
+#fancybox-content {
+width: 0;
+height: 0;
+padding: 0;
+outline: none;
+position: relative;
+overflow: hidden;
+z-index: 1102;
+border: 0px solid #fff;
+}
+#fancybox-hide-sel-frame {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: transparent;
+z-index: 1101;
+}
+#fancybox-close {
+position: absolute;
+top: -15px;
+right: -15px;
+width: 30px;
+height: 30px;
+background: transparent url('../../++resource++fancybox/fancybox.png') -40px 0px;
+cursor: pointer;
+z-index: 1103;
+display: none;
+}
+#fancybox-error {
+color: #444;
+font: normal 12px/20px Arial;
+padding: 14px;
+margin: 0;
+}
+#fancybox-img {
+width: 100%;
+height: 100%;
+padding: 0;
+margin: 0;
+border: none;
+outline: none;
+line-height: 0;
+vertical-align: top;
+}
+#fancybox-frame {
+width: 100%;
+height: 100%;
+border: none;
+display: block;
+}
+#fancybox-left, #fancybox-right {
+position: absolute;
+bottom: 0px;
+height: 100%;
+width: 35%;
+cursor: pointer;
+outline: none;
+background: transparent url('../../++resource++fancybox/blank.gif');
+z-index: 1102;
+display: none;
+}
+#fancybox-left {
+left: 0px;
+}
+#fancybox-right {
+right: 0px;
+}
+#fancybox-left-ico, #fancybox-right-ico {
+position: absolute;
+top: 50%;
+left: -9999px;
+width: 30px;
+height: 30px;
+margin-top: -15px;
+cursor: pointer;
+z-index: 1102;
+display: block;
+}
+#fancybox-left-ico {
+background-image: url('../../++resource++fancybox/fancybox.png');
+background-position: -40px -30px;
+}
+#fancybox-right-ico {
+background-image: url('../../++resource++fancybox/fancybox.png');
+background-position: -40px -60px;
+}
+#fancybox-left:hover, #fancybox-right:hover {
+visibility: visible; /* */
+}
+#fancybox-left:hover span {
+left: 20px;
+}
+#fancybox-right:hover span {
+left: auto;
+right: 20px;
+}
+.fancybox-bg {
+position: absolute;
+padding: 0;
+margin: 0;
+border: 0;
+width: 20px;
+height: 20px;
+z-index: 1001;
+}
+#fancybox-bg-n {
+top: -20px;
+left: 0;
+width: 100%;
+background-image: url('../../++resource++fancybox/fancybox-x.png');
+}
+#fancybox-bg-ne {
+top: -20px;
+right: -20px;
+background-image: url('../../++resource++fancybox/fancybox.png');
+background-position: -40px -162px;
+}
+#fancybox-bg-e {
+top: 0;
+right: -20px;
+height: 100%;
+background-image: url('../../++resource++fancybox/fancybox-y.png');
+background-position: -20px 0px;
+}
+#fancybox-bg-se {
+bottom: -20px;
+right: -20px;
+background-image: url('../../++resource++fancybox/fancybox.png');
+background-position: -40px -182px;
+}
+#fancybox-bg-s {
+bottom: -20px;
+left: 0;
+width: 100%;
+background-image: url('../../++resource++fancybox/fancybox-x.png');
+background-position: 0px -20px;
+}
+#fancybox-bg-sw {
+bottom: -20px;
+left: -20px;
+background-image: url('../../++resource++fancybox/fancybox.png');
+background-position: -40px -142px;
+}
+#fancybox-bg-w {
+top: 0;
+left: -20px;
+height: 100%;
+background-image: url('../../++resource++fancybox/fancybox-y.png');
+}
+#fancybox-bg-nw {
+top: -20px;
+left: -20px;
+background-image: url('../../++resource++fancybox/fancybox.png');
+background-position: -40px -122px;
+}
+#fancybox-title {
+font-family: Helvetica;
+font-size: 12px;
+z-index: 1102;
+}
+.fancybox-title-inside {
+padding-bottom: 10px;
+text-align: center;
+color: #333;
+background: #fff;
+position: relative;
+}
+.fancybox-title-outside {
+padding-top: 10px;
+color: #fff;
+}
+.fancybox-title-over {
+position: absolute;
+bottom: 0;
+left: 0;
+color: #FFF;
+text-align: left;
+}
+#fancybox-title-over {
+padding: 10px;
+background-image: url('../../++resource++fancybox/fancy_title_over.png');
+display: block;
+}
+.fancybox-title-float {
+position: absolute;
+left: 0;
+bottom: -20px;
+height: 32px;
+}
+#fancybox-title-float-wrap {
+border: none;
+border-collapse: collapse;
+width: auto;
+}
+#fancybox-title-float-wrap td {
+border: none;
+white-space: nowrap;
+}
+#fancybox-title-float-left {
+padding: 0 0 0 15px;
+background: url('../../++resource++fancybox/fancybox.png') -40px -90px no-repeat;
+}
+#fancybox-title-float-main {
+color: #FFF;
+line-height: 29px;
+font-weight: bold;
+padding: 0 0 3px 0;
+background: url('../../++resource++fancybox/fancybox-x.png') 0px -40px;
+}
+#fancybox-title-float-right {
+padding: 0 0 0 15px;
+background: url('../../++resource++fancybox/fancybox.png') -55px -90px no-repeat;
+}
+#fancybox-title-wrap {
+color: #FFFFFF;
+line-height: 20px;
+font-family: Arial;
+font-weight: bold;
+text-align: center;
+}
+/* */
+.fancybox-ie6 #fancybox-close { background: transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_close.png', sizingMethod='scale'); }
+.fancybox-ie6 #fancybox-left-ico { background: transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_nav_left.png', sizingMethod='scale'); }
+.fancybox-ie6 #fancybox-right-ico { background: transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_nav_right.png', sizingMethod='scale'); }
+.fancybox-ie6 #fancybox-title-over { background: transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_title_over.png', sizingMethod='scale'); zoom: 1; }
+.fancybox-ie6 #fancybox-title-float-left { background: transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_title_left.png', sizingMethod='scale'); }
+.fancybox-ie6 #fancybox-title-float-main { background: transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_title_main.png', sizingMethod='scale'); }
+.fancybox-ie6 #fancybox-title-float-right { background: transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_title_right.png', sizingMethod='scale'); }
+.fancybox-ie6 #fancybox-bg-w, .fancybox-ie6 #fancybox-bg-e, .fancybox-ie6 #fancybox-left, .fancybox-ie6 #fancybox-right, #fancybox-hide-sel-frame {
+height: expression(this.parentNode.clientHeight + "px");
+}
+#fancybox-loading.fancybox-ie6 {
+position: absolute; margin-top: 0;
+top: expression( (-20 + (document.documentElement.clientHeight ? document.documentElement.clientHeight/2 : document.body.clientHeight/2 ) + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop )) + 'px');
+}
+#fancybox-loading.fancybox-ie6 div	{ background: transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_loading.png', sizingMethod='scale'); }
+/* */
+.fancybox-ie .fancybox-bg { background: transparent !important; }
+.fancybox-ie #fancybox-bg-n { filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_shadow_n.png', sizingMethod='scale'); }
+.fancybox-ie #fancybox-bg-ne { filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_shadow_ne.png', sizingMethod='scale'); }
+.fancybox-ie #fancybox-bg-e { filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_shadow_e.png', sizingMethod='scale'); }
+.fancybox-ie #fancybox-bg-se { filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_shadow_se.png', sizingMethod='scale'); }
+.fancybox-ie #fancybox-bg-s { filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_shadow_s.png', sizingMethod='scale'); }
+.fancybox-ie #fancybox-bg-sw { filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_shadow_sw.png', sizingMethod='scale'); }
+.fancybox-ie #fancybox-bg-w { filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_shadow_w.png', sizingMethod='scale'); }
+.fancybox-ie #fancybox-bg-nw { filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../++resource++fancybox/fancy_shadow_nw.png', sizingMethod='scale'); }
+}
+
+
+/* - ++resource++plone.app.jquerytools.dateinput.css - */
+@media screen {
+/* http://www.eea.europa.eu/portal_css/++resource++plone.app.jquerytools.dateinput.css?original=1 */
+/* */
+/* */
+.date {
+border:1px solid #ccc;
+font-size:18px;
+padding:4px;
+text-align:center;
+width:194px;
+-moz-box-shadow:0 0 10px #eee inset;
+box-shadow:0 0 10px #eee inset;
+}
+/* */
+#calroot {
+margin-top:-1px;
+width:198px;
+padding:2px;
+background-color:#fff;
+font-size:11px;
+border:1px solid #ccc;
+z-index:1;
+-moz-border-radius:5px;
+border-radius:5px;
+-webkit-border-radius:5px;
+-moz-box-shadow: 0 0 15px #666;
+-webkit-box-shadow: 0 0 15px #666;
+box-shadow: 0 0 15px #666;
+}
+/* */
+#calhead {
+padding:2px 0;
+height:22px;
+}
+#caltitle {
+font-size:14px;
+color:#0150D1;
+float:left;
+text-align:center;
+width:155px;
+line-height:20px;
+text-shadow:0 1px 0 #ddd;
+}
+#calnext, #calprev {
+display:block;
+width:20px;
+height:20px;
+background:transparent url(prev.gif) no-repeat scroll center center;
+float:left;
+cursor:pointer;
+}
+#calnext {
+background-image:url(next.gif);
+float:right;
+}
+#calprev.caldisabled, #calnext.caldisabled {
+visibility:hidden;
+}
+/* */
+#caltitle select {
+font-size:10px;
+}
+/* */
+#caldays {
+height:14px;
+border-bottom:1px solid #ddd;
+}
+#caldays span {
+display:block;
+float:left;
+width:28px;
+text-align:center;
+}
+/* */
+#calweeks {
+background-color:#fff;
+margin-top:4px;
+}
+/* */
+.calweek {
+clear:left;
+height:22px;
+}
+/* */
+.calweek a {
+display:block;
+float:left;
+width:27px;
+height:20px;
+text-decoration:none;
+font-size:11px;
+margin-left:1px;
+text-align:center;
+line-height:20px;
+color:#666;
+-moz-border-radius:3px;
+-webkit-border-radius:3px;
+}
+/* */
+.calweek a:hover, .calfocus {
+background-color:#ddd;
+}
+/* */
+a.calsun {
+color:red;
+}
+/* */
+a.caloff {
+color:#ccc;
+}
+a.caloff:hover {
+background-color:rgb(245, 245, 250);
+}
+/* */
+a.caldisabled {
+background-color:#efefef !important;
+color:#ccc	!important;
+cursor:default;
+}
+/* */
+#calcurrent {
+background-color:#498CE2;
+color:#fff;
+}
+/* */
+#caltoday {
+background-color:#333;
+color:#fff;
+}
+/* */
+.caltrigger {
+background:url('popup_calendar.png') no-repeat 0 0;
+height: 16px;
+width: 16px;
+display: inline-block;
+border-bottom: none !important;
+vertical-align: middle;
+}
+#calprev {
+background-image:url(++resource++plone.app.jquerytools.prev.gif);
+}
+#calnext {
+background-image:url(++resource++plone.app.jquerytools.next.gif);
+}
+#calroot {
+z-index: 10000;
+}
+}
+
+
+/* - eea.geotags.css - */
+@media all {
+/* =Helpers */
+.pointer {
+  cursor: pointer;
+}
+
+.formHelp {
+  font-size: 90%;
+  color: #808285;
+  margin: 0 0 0.2em 0;
+  display: block;
+}
+
+.pull-left {
+  float: left;
+}
+
+.eea-geotags-popup {
+  box-shadow: 0 0 100px #000;
+  border-radius: 0;
+}
+
+.eea-geotags-popup .ui-dialog-titlebar {
+  background: #fff;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Dialog */
+.geo-dialog {
+  width: 100%;
+  height: 100%;
+}
+
+.eea-geotags-popup .ui-dialog-titlebar-close {
+  visibility: hidden;
+}
+
+.geo-splitter {
+  border: 1px solid #8CACBB;
+  width: 100%;
+  height: 100%;
+}
+
+.geo-splitter .vsplitbar {
+  width: 5px;
+  background-color: #ffffff;
+}
+
+.geo-splitter .vsplitbar a {
+  text-decoration: none;
+  color: #8CACBB;
+  font-size: 18px;
+  border: 1px solid #8CACBB;
+  background-color: #ffffff;
+
+  opacity: 0.5;
+  filter: alpha(opacity = 50);
+}
+
+.geo-splitter .vsplitbar a:hover {
+  opacity: 1;
+  filter: alpha(opacity = 100);
+}
+
+.geo-splitter .vsplitbar a {
+  float: right;
+  margin-left: 0;
+  margin-right: 4px;
+  padding: 5px 5px 10px 5px;
+  border-style: none none solid solid;
+  -moz-border-radius-bottomleft:5px;
+  -webkit-border-bottom-left-radius:5px;
+}
+
+.geo-leftside .vsplitbar a {
+  float: left;
+  margin-left: 4px;
+  border-style: none solid solid none;
+  -moz-border-radius-bottomright:5px;
+  -webkit-border-bottom-right-radius:5px;
+}
+
+.geo-left {
+  z-index: 1020 !important;
+}
+
+/* Left panel */
+.geo-sidebar {
+  height: 99%;
+  overflow: hidden;
+}
+
+.geo-sidebar-area {
+  height: 100%;
+  border: none;
+  min-width: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.geo-sidebar-area li {
+  display: list-item;
+}
+.geo-sidebar-area .panes {
+  border: 1px solid #DDDDDD;
+  border-top-width: 0;
+}
+
+.geo-results-search label {
+  display: block;
+  line-height: 2em;
+  margin: 1em 0;
+  text-align: left;
+}
+
+.geo-results-search > label > span {
+  width: 100%;
+  display: inline-block;
+}
+.geo-sidebar-button {
+  height: 100%;
+  font-size: 18px;
+  color: #8CACBB;
+  cursor: pointer;
+  border: 1px solid #8CACBB;
+  border-right-style: none;
+}
+
+.geo-sidebar-button div {
+  height: 30px;
+}
+
+.geo-sidebar-button:hover {
+  background-color: #e9efcd;
+}
+
+.geo-hints {
+  background: #FBF9EE;
+  border: 1px dotted #95b229;
+
+}
+.geo-hints ol,
+.geo-hints ul {
+    list-style-type: square;
+}
+
+.geo-hints legend {
+  margin-left: 1em;
+}
+
+.geo-suggestions {
+  background: #FBF9EE;
+  border: 1px dotted #95b229;
+  padding: 1em;
+  margin-top: 0.5em;
+}
+
+/* Sidebar area search results
+------------------------------ */
+.geo-results {
+  padding: 0;
+}
+
+.geo-results form {
+  width: 100%;
+}
+
+.geo-results select {
+  width: 100%;
+}
+
+.geo-results input[type=text] {
+  width: 75%;
+}
+
+.geo-results input[type=submit] {
+  width: 20%;
+}
+
+.geo-results-area {
+  height: 85%;
+  overflow: auto;
+}
+
+.geo-results-area h3, .geo-results-area h4 {
+  margin: 0;
+}
+
+.geo-results-area .geo-point-view {
+  cursor: pointer;
+}
+
+.geo-point-view {
+  padding: 1em;
+}
+
+.geo-point-view .title {
+  color: #578308;
+  cursor: pointer;
+  font-size: 115%;
+  font-weight: normal;
+}
+
+.geo-point-view .subtitle {
+  color: #495B6B;
+  font-size: 95%;
+  font-weight: normal;
+}
+
+.geo-point-view .tags {
+  color: #95B229;
+  font-size: 85%;
+  font-weight: normal;
+}
+
+.geo-point-view:hover {
+  background: #FBF9EE;
+  border: 1px dotted #95b229;
+}
+
+.geo-mapcanvas {
+  height: 100%;
+  border: 1px solid #8CACBB;
+}
+
+.geo-preview-mapcanvas {
+  height: 400px;
+  border: 1px solid #8CACBB;
+}
+
+.geo-marker {
+  padding-bottom: 1em;
+  border: 1px dotted #ffffff;
+  cursor: pointer;
+}
+
+.geo-marker .ui-icon {
+  float: right;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.geo-marker:hover .ui-icon {
+  visibility: visible;
+}
+
+.geo-marker:hover {
+  background: #FBF9EE;
+  border-color: #95b229;
+}
+
+.geo-marker .title {
+  color: #578308;
+  cursor: pointer;
+  font-size: 115%;
+  font-weight: normal;
+}
+
+.geo-marker .subtitle {
+  color: #495B6B;
+  font-size: 95%;
+  font-weight: normal;
+}
+
+.geo-marker .tags {
+  color: #95B229;
+  font-size: 85%;
+  font-weight: normal;
+}
+
+.geo-marker h3, .geo-marker h4 {
+  margin: 0;
+}
+
+.geo-preview-marker {
+  padding-bottom: 1em;
+  border: 1px dotted #ffffff;
+  cursor: pointer;
+}
+
+.geo-preview-marker .title {
+  color: #578308;
+  cursor: pointer;
+  font-size: 115%;
+  font-weight: normal;
+}
+
+.geo-preview-marker .subtitle {
+  color: #495B6B;
+  font-size: 95%;
+  font-weight: normal;
+}
+
+.geo-preview-marker .tags {
+  color: #95B229;
+  font-size: 85%;
+  font-weight: normal;
+}
+
+.geo-preview-marker h3, .geo-preview-marker h4 {
+  margin: 0;
+}
+
+.geo-loading {
+  background: url(../../++resource++geo-images/ajax-loader-small.gif) no-repeat center top;
+  height: 11px;
+}
+
+/* */
+
+/* Advanced tab */
+.geo-advanced select {
+  width: 100%;
+}
+
+/* Right panel */
+.geo-right {
+  border-right: 1px solid #8CACBB;
+  height: 100%;
+}
+
+.geo-basket {
+  height: 100%;
+  overflow: hidden;
+}
+.geo-basket .geo-hints {
+  margin: 0.5em 0.5em 1.5em 0.5em;
+}
+.geo-basket .ui-icon,
+.geo-point-view .ui-icon {
+  float: right;
+  cursor: pointer;
+}
+
+.geo-basket-area h2,
+.eea-accordion-panel > h2,
+.geo-basket-area h2.ui-state-default {
+  padding: 0.5em;
+  font-weight: normal;
+  margin: 0;
+  font-size: 16px;
+  background-color: #777c1f;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#b1c748), to(#777c1f));
+  background-image: -webkit-linear-gradient(center top , #b1c748, #777c1f);
+  background-image:    -moz-linear-gradient(center top , #b1c748, #777c1f);
+  background-image:     -ms-linear-gradient(center top , #b1c748, #777c1f);
+  background-image:      -o-linear-gradient(center top , #b1c748, #777c1f);
+  color: #FFF;
+}
+
+.geo-sidebar-area .eea-accordion-panel > h2 {
+  font-size: 150%;
+}
+.eea-accordion-title .ui-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 0.8em;
+}
+
+.geo-basket-area {
+  height: 100%;
+}
+
+.geo-basket-area h3, .geo-basket-area h4 {
+  margin: 0;
+}
+
+.geo-basket-items {
+  padding: 1em 1em 1em 0.5em;
+  height: 92%;
+  overflow: auto;
+}
+
+.geo-basket-items .ui-pulsate-item {
+  background-color: #e9efcd;
+}
+
+/* View macro */
+#eeaEsriMap {
+  padding: 0;
+  height: 400px;
+  width: 100%;
+  border: 2px solid black;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 2px 2px 4px #ADADAD;
+  -moz-box-shadow: 2px 2px 4px #ADADAD;
+  box-shadow: 2px 2px 4px #ADADAD;
+  margin: 1em 0;
+}
+
+.ui-dialog #eeaEsriMap{
+  border: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+#eeaEsriMap table{
+  display: table;
+}
+
+.eea-location-listing {
+  text-align: left;
+  color: #666;
+  line-height: 2em;
+}
+.eea-location-listing.events {
+  text-align: left;
+}
+
+.eea-location-listing a {
+  color: black;
+  display: inline-block;
+  background: #ECECEC;
+  padding: 0 5px;
+  margin: 2px 0;
+  font-size: 10px;
+  word-break: keep-all;
+}
+
+.eea-location-listing a:hover {
+  background: orange;
+  color: white !important;
+  border-color: #205c90;
+}
+
+#eeaEsriMapLoadingImg {
+  position: relative;
+  margin-left: 48%;
+  margin-top: 30%;
+  z-index:100;
+}
+
+div .esriScalebar {
+  position: relative;
+  margin-top: -15px;
+}
+
+.visualHidden {
+  display: none;
+}
+
+.esriInfoImg {
+  float: left;
+  margin: 5px;
+}
+
+.esriPopup .contentPane {
+  max-height: 200px !important;
+}
+
+
+.filters-ctl {
+  padding: 1em 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.filters-area {
+  font-weight: bold;
+}
+.filters-area label {
+  display: inline-block;
+  width: 92%;
+  padding-left: 0.4em;
+  cursor: pointer;
+}
+
+.filters-area .eea-icon {
+  display: inline-block;
+  vertical-align: bottom;
+  float: right;
+  margin-top: -3em;
+}
+
+.input-block {
+  display: block;
+  width: 100%;
+}
+
+
+}
+

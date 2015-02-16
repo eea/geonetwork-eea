@@ -1,0 +1,739 @@
+
+/* - ++resource++google.analytics.css - */
+@media all {
+/* http://www.eea.europa.eu/portal_css/++resource++google.analytics.css?original=1 */
+.google-analytics .connected {
+color: green;
+}
+.google-analytics .broken {
+color: red;
+}
+.google-analytics .controlpanel-listing {
+width: 98%;
+}
+
+}
+
+
+/* - ++resource++jquery.colorpicker.css - */
+@media screen {
+/* http://www.eea.europa.eu/portal_css/++resource++jquery.colorpicker.css?original=1 */
+.colorpicker {
+width: 356px;
+height: 176px;
+overflow: hidden;
+position: absolute;
+background: url(../../++resource++colorpicker-images/colorpicker_background.png);
+font-family: Arial, Helvetica, sans-serif;
+display: none;
+}
+.colorpicker_color {
+width: 150px;
+height: 150px;
+left: 14px;
+top: 13px;
+position: absolute;
+background: #f00;
+overflow: hidden;
+cursor: crosshair;
+}
+.colorpicker_color div {
+position: absolute;
+top: 0;
+left: 0;
+width: 150px;
+height: 150px;
+background: url(../../++resource++colorpicker-images/colorpicker_overlay.png);
+}
+.colorpicker_color div div {
+position: absolute;
+top: 0;
+left: 0;
+width: 11px;
+height: 11px;
+overflow: hidden;
+background: url(../../++resource++colorpicker-images/colorpicker_select.gif);
+margin: -5px 0 0 -5px;
+}
+.colorpicker_hue {
+position: absolute;
+top: 13px;
+left: 171px;
+width: 35px;
+height: 150px;
+cursor: n-resize;
+}
+.colorpicker_hue div {
+position: absolute;
+width: 35px;
+height: 9px;
+overflow: hidden;
+background: url(../../++resource++colorpicker-images/colorpicker_indic.gif) left top;
+margin: -4px 0 0 0;
+left: 0px;
+}
+.colorpicker_new_color {
+position: absolute;
+width: 60px;
+height: 30px;
+left: 213px;
+top: 13px;
+background: #f00;
+}
+.colorpicker_current_color {
+position: absolute;
+width: 60px;
+height: 30px;
+left: 283px;
+top: 13px;
+background: #f00;
+}
+.colorpicker input {
+background-color: transparent;
+border: 1px solid transparent;
+position: absolute;
+font-size: 10px;
+font-family: Arial, Helvetica, sans-serif;
+color: #898989;
+top: 4px;
+right: 11px;
+text-align: right;
+margin: 0;
+padding: 0;
+height: 11px;
+}
+.colorpicker_hex {
+position: absolute;
+width: 72px;
+height: 22px;
+background: url(../../++resource++colorpicker-images/colorpicker_hex.png) top;
+left: 212px;
+top: 142px;
+}
+.colorpicker_hex input {
+right: 6px;
+}
+.colorpicker_field {
+height: 22px;
+width: 62px;
+background-position: top;
+position: absolute;
+}
+.colorpicker_field span {
+position: absolute;
+width: 12px;
+height: 22px;
+overflow: hidden;
+top: 0;
+right: 0;
+cursor: n-resize;
+}
+.colorpicker_rgb_r {
+background-image: url(../../++resource++colorpicker-images/colorpicker_rgb_r.png);
+top: 52px;
+left: 212px;
+}
+.colorpicker_rgb_g {
+background-image: url(../../++resource++colorpicker-images/colorpicker_rgb_g.png);
+top: 82px;
+left: 212px;
+}
+.colorpicker_rgb_b {
+background-image: url(../../++resource++colorpicker-images/colorpicker_rgb_b.png);
+top: 112px;
+left: 212px;
+}
+.colorpicker_hsb_h {
+background-image: url(../../++resource++colorpicker-images/colorpicker_hsb_h.png);
+top: 52px;
+left: 282px;
+}
+.colorpicker_hsb_s {
+background-image: url(../../++resource++colorpicker-images/colorpicker_hsb_s.png);
+top: 82px;
+left: 282px;
+}
+.colorpicker_hsb_b {
+background-image: url(../../++resource++colorpicker-images/colorpicker_hsb_b.png);
+top: 112px;
+left: 282px;
+}
+.colorpicker_submit {
+position: absolute;
+width: 22px;
+height: 22px;
+background: url(../../++resource++colorpicker-images/colorpicker_submit.png) top;
+left: 322px;
+top: 142px;
+overflow: hidden;
+}
+.colorpicker_focus {
+background-position: center;
+}
+.colorpicker_hex.colorpicker_focus {
+background-position: bottom;
+}
+.colorpicker_submit.colorpicker_focus {
+background-position: bottom;
+}
+.colorpicker_slider {
+background-position: bottom;
+}
+
+}
+
+
+/* - ++resource++eea.alchemy.css - */
+@media screen {
+/* http://www.eea.europa.eu/portal_css/++resource++eea.alchemy.css?original=1 */
+.eea-alchemy-tag {
+}
+#content .eea-alchemy-tag a,
+#content .eea-alchemy-tag a:visited,
+#content p .eea-alchemy-tag a,
+.eea-alchemy-tag a, .eea-alchemy-tag a:visited {
+border-bottom-style: dashed;
+border-bottom-width: 1px;
+border-bottom-color: #346F83;
+}
+.template-alchemy-controlpanel .textType,
+.template-alchemy-controlpanel .field input[type="text"][size] {
+width: 40%;
+}
+.template-alchemy-controlpanel table.sequencewidget{
+width: 100%;
+}
+.template-alchemy-controlpanel table.sequencewidget td:first-child {
+width: 2em;
+}
+
+}
+
+
+/* - presentational_styles.css - */
+@media all {
+/* http://www.eea.europa.eu/portal_css/presentational_styles.css?original=1 */
+/* */
+/* */
+/* */
+/* */
+/* */
+dl.portalMessage dt,
+dl.system-message dt {
+color: #333333;
+}
+div.attention, div.caution,
+div.danger, div.error, div.hint,
+div.important, div.note, div.tip,
+div.warning,
+#error-handling,
+.portalMessage,
+.system-message {
+background-color: #C7E0E9;
+color: #333333;
+font-size: 120%;
+margin: 1em 0;
+padding: 1em 1.5em 1em 5.5em;
+vertical-align: middle;
+border: none;
+}
+.extra .attention,
+.extra .caution,
+.extra .danger,
+.extra .error,
+.extra .hint,
+.extra .important,
+.extra .note,
+.extra .tip,
+.extra .warning {
+padding-left: 1.5em;
+}
+.system-message:before, .portalMessage:before, .portalMessage .eea-icon:before {
+float: left;
+display: block;
+font-family: 'FontAwesome';
+font-weight: normal;
+font-style: normal;
+line-height: inherit;
+text-decoration: inherit;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+speak: none;
+margin-left: -2.3em;
+font-size: 150%;
+}
+div.attention:before, div.caution:before,
+div.danger:before, div.error:before, div.hint:before,
+div.important:before, div.note:before, div.tip:before,
+div.warning:before {
+float: left;
+display: block;
+margin-right: .3em;
+font-family: 'FontAwesome';
+}
+div.hint, div.tip, div.note,
+.ideaMessage,
+.informationMessage,
+.noteMessage,
+.smileyMessage,
+.thumbsUpMessage,
+.yesMessage {
+background-color: #C7E0E9;
+}
+div.attention, div.caution,
+div.danger, div.error, div.important,
+div.warning,
+#error-handling,
+.errorMessage,
+.warningMessage {
+background-color: #FFFABE;
+}
+div.attention:before, div.caution:before,
+div.danger:before, div.important:before,
+div.warning:before,
+.attentionMessage:before {
+content: "\f0e7";
+vertical-align: baseline;
+line-height: 2;
+}
+.attentionMessage:before {
+line-height: 1;
+}
+.attentionMessage,
+.noMessage {
+background-color: #FFFABE;
+}
+div.error,
+.errorMessage {
+color: red;
+}
+.ideaMessage:before {
+content: "\f0eb";
+}
+.informationMessage:before {
+content: "\f05a";
+}
+.info:before {
+content: "\f05a";
+}
+.noMessage:before {
+content: "\f00d";
+}
+.noteMessage:before {
+content: "\f15c";
+}
+.rosetteMessage:before {
+content: "\f0ac";
+}
+.rosetteMessage {
+color: #666666;
+}
+.smileyMessage:before {
+content: "\f118";
+}
+.thumbsUpMessage:before {
+content: "\f164";
+}
+div.error:before,
+.errorMessage:before,
+.error:before,
+.warningMessage:before
+{
+content: "\f071";
+}
+.yesMessage:before {
+content: "\f00c";
+}
+/* */
+blockquote {
+width: 70%;
+margin: 1.0em auto;
+padding: 1.5em 1em 1em 3em;
+background: #f3f3f3 url(http://www.eea.europa.eu/open_quote.gif) 0.5em 0.75em no-repeat;
+color: #000000;
+clear:both;
+}
+/* */
+.pullquote {
+margin: 0 1em 0.5em 0.5em;
+font-weight: bold;
+line-height: 1.25em;
+float: right;
+width: 35%;
+clear: right;
+color: #444;
+font-size: 1.6em;
+letter-spacing: -0.08em !important;
+}
+.callout {
+background: #eee;
+padding: 1em;
+border-left: 1em solid #ccc;
+clear: both;
+}
+.keyFact {
+background: #C7E0E9;
+padding: 1.5em;
+border-left: 1em solid #346F83;
+clear: both;
+}
+/* */
+pre {
+background-color: #222;
+color: White;
+font-family: Consolas, Inconsolata, Menlo, "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace;
+padding: 1em;
+overflow-x: auto;
+font-size: 90%;
+margin-bottom: 1em;
+line-height: 1.25em;
+}
+/* */
+.figureContainer, .figureContainer50Left, .figureContainer50Right {
+page-break-inside: avoid;
+}
+.figureContainer {
+width: 100%;
+}
+.figureContainer50Left {
+float: left;
+width: 50%;
+}
+.figureContainer50Right {
+float: right;
+width: 50%;
+}
+/* */
+
+}
+
+
+/* - ++resource++eea.progressbar.css - */
+@media screen {
+/* http://www.eea.europa.eu/portal_css/++resource++eea.progressbar.css?original=1 */
+.progressbar {
+width: 100%;
+height: 15px;
+border: 1px dotted #ccc;
+background-color: #eee;
+}
+.progressbar-step {
+float: left;
+height: 100%;
+background: #eee;
+position: relative;
+box-shadow: 0px 0px 1px orange;
+}
+.progressbar-step::before {
+content: attr(data-tip);
+position:absolute;
+z-index: 999;
+white-space:nowrap;
+bottom:9999px;
+background:inherit;
+color:#000;
+padding:0.5em;
+line-height: 24px;
+height: 24px;
+opacity: 0;
+transition:opacity 0.4s ease-out;
+border-radius: 5px;
+border: 1px solid #ccc;
+box-shadow: 5px 5px 10px #999;
+}
+.progressbar-step:hover::before {
+opacity: 1;
+bottom: 25px;
+z-index: 99990;
+}
+#portal-column-two .progressbar-step::before {
+right: 0;
+}
+.progressbar .progress-odd {
+opacity: 1.0;
+padding: 0;
+margin: 0;
+}
+.progressbar .progress-odd:hover {
+}
+.progressbar .progress-even {
+opacity: 1.0;
+padding: 0;
+margin: 0;
+}
+.progressbar .progress-even:hover {
+}
+.progressbar-closed {
+background-color: #BAE0BA;
+}
+.progressbar-next {
+background-color: #ffd280;
+}
+.progressbar-current {
+background-color: #ffd280;
+}
+.progressbar-remaining {
+background-color: #eee;
+box-shadow: none;
+}
+.progressbar-label {
+text-align: right;
+}
+.progressbar-label-closed {
+color: green;
+}
+.progressbar-label-opened {
+color: orange;
+}
+.progressbar-arrow-down {
+width: 0px;
+height: 0px;
+border-left: 2px solid transparent;
+border-right: 2px solid transparent;
+border-top: 5px solid #999;
+float: right;
+top: -7px;
+right: -2px;
+position: relative;
+visibility: hidden;
+}
+.progressbar .state-pending {
+background-color: #ffd280;
+}
+.progressbar .state-private {
+background-color: #ff8080;
+}
+.progressbar .state-published {
+background-color: #BAE0BA;
+}
+.progressbar .state-retracted {
+background-color: #ff8080;
+}
+.progressbar .state-marked_for_deletion {
+background-color: #ff8080;
+}
+.progressbar .progress-value {
+visibility: hidden;
+float: right;
+margin-top: -15px;
+}
+/* */
+.collection-listing {
+width: 100%;
+}
+.listing-header-progress {
+min-width: 40%;
+}
+/* */
+.progressbar-viewlet {
+float: right;
+padding: 0.2em 0.24em 0 0;
+width: 100%;
+border: 1px dotted #ccc;
+border-radius: 10px;
+}
+.progressbar-viewlet legend {
+text-align: right;
+padding: 0 0.5em;
+}
+.progressbar-viewlet .eea-progressbar {
+padding: 1em;
+}
+.progressbar-viewlet .progressbar {
+min-width: 150px;
+}
+.progressbar-viewlet .progressbar-label {
+}
+.progressbar {
+}
+.progressbar-step:first-child {
+}
+.progressbar-step:last-child {
+}
+.progresstrail {
+width: 100%;
+height: auto;
+margin: 2em 0;
+}
+.progresstrail .eea-icon {
+display: block;
+top: -6px;
+position: relative;
+line-height: 10px;
+font-size: 2em;
+}
+.progresstrail:after {
+content: "";
+clear: both;
+display: block;
+}
+.progresstrail-step {
+float: left;
+height: 100%;
+position: relative;
+text-align: center;
+border-top: 1px solid #cccccc;
+color: #bbbbbb;
+font-size: 80%;
+font-weight: bold;
+}
+.progresstrail-step::before {
+content: attr(data-description);
+width: 250px;
+position:absolute;
+z-index: 999;
+bottom:9999px;
+background: #f3f3f3;
+color: #555;
+padding: 1em;
+line-height: 2;
+opacity: 0;
+transition:opacity 0.4s ease-out;
+box-shadow: 2px 2px 5px #999;
+}
+.progresstrail-step:hover::before {
+opacity: 1;
+bottom: 110%;
+z-index: 99990;
+}
+#portal-column-two .progresstrail-step::before {
+right: 0;
+}
+.progresstrail-current {
+color: #555;
+}
+.progresstrail .eea-icon:before {
+background: white;
+}
+[class*="state-trail-"]:before {
+content: "\f10c";
+}
+.trail-checked:before {
+color: green;
+}
+.trail-first:before {
+content: "\f10c";
+}
+.trail-last:before {
+content: "\f10c";
+}
+.trail-current:before {
+color: #555;
+content: "\f111";
+}
+.trail-done:before {
+content: "\f058";
+}
+.portletItem .progresstrail-body {
+display: none;
+}
+.portletItem .progresstrail-step::before {
+content: attr(data-titledesc);
+bottom: 20px;
+}
+.progresstrail-mask {
+position: relative;
+top:-1px;
+width:50%;
+height: 1px;
+background-color:transparent;
+display: block;
+}
+.progresstrail-mask.first {
+background: #FFFFFF;
+left: 0;
+}
+.progresstrail-mask.last {
+background: #FFFFFF;
+left: 50%;
+}
+.progressbar-viewlet.trail {
+border: none;
+}
+.progressbar-viewlet.trail legend {
+display: none;
+}
+.progressbar-viewlet.metadata {
+padding: 0;
+}
+.progressbar-viewlet.metadata legend {
+display: none;
+}
+.eea-progress-metadata .progress-metadata {
+width: 100%;
+overflow: hidden;
+}
+.eea-progress-metadata .progress-metadata-inner {
+width: 20000%
+}
+.eea-progress-metadata .progress-nav {
+padding: 1em 0.5em 0;
+text-align: right;
+}
+.eea-progress-metadata .progress-nav span {
+cursor: pointer;
+border: 1px solid #ccc;
+padding: 0.5em;
+border-radius: 5px;
+color: #999;
+}
+.eea-progress-metadata-bar {
+padding: 2em 0.5em;
+background: #F5F5F5;
+border-bottom-right-radius: 10px;
+border-bottom-left-radius: 10px;
+clear: both;
+}
+.eea-progress-metadata-bar .metadata-bar {
+width: 94%;
+border: 1px solid #ccc;
+height: 10px;
+float: left;
+margin-right: 0.5em;
+border-radius: 3px;
+}
+.eea-progress-metadata-bar .metadata-progress {
+height: 100%;
+background: #039e57;
+}
+.eea-progress-metadata-bar .metadata-value {
+font-size: 10px;
+padding: 0;
+margin: 0;
+line-height: 1;
+}
+.eea-progress-metadata .progress-field {
+float: left;
+min-height: 40px;
+}
+.eea-progress-metadata .progress-field div {
+padding: 0.5em 1em;
+}
+.eea-progress-metadata .progress-field .eea-icon {
+float: left;
+display: block;
+}
+.eea-progress-metadata .invalid {
+color: #000;
+}
+.eea-progress-metadata .valid {
+text-decoration: line-through;
+color: #999;
+}
+.eea-progress-metadata .valid .eea-icon {
+color: #039E57;
+}
+.eea-progress-metadata span.end {
+background: #eee;
+color: #ccc;
+}
+.eea-progress-metadata .progress-field .progress-label {
+margin-left: 25px;
+display: block;
+}
+.eea-progress-metadata .progress-field .button {
+margin-left: 25px;
+}
+
+}
+

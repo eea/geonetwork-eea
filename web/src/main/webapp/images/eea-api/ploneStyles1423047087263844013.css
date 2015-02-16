@@ -1,0 +1,2591 @@
+
+/* - ++resource++eea.uberlisting.css/uberlisting_view.css - */
+@media screen {
+/* http://www.eea.europa.eu/portal_css/++resource++eea.uberlisting.css/uberlisting_view.css?original=1 */
+#uber-view-switch {
+margin: 2em 0 !important;
+width: 100%;
+height: auto;
+background: white;
+border: 1px solid #ccc;
+border-radius: 3px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+-o-border-radius: 3px;
+overflow: hidden;
+}
+#uber-view-switch li {
+cursor: pointer;
+display: block;
+float: left;
+border-right: 1px solid #CCC;
+border-bottom: 1px solid #CCC;
+margin: 0 0 -1px 0;
+list-style: none outside none;
+line-height: 2.8em;
+}
+#uber-view-switch li.last {
+border-right: 0;
+}
+#uber-view-switch a {
+padding: 0.7em 0.8em 0.8em 0.8em;
+display: block;
+height: 30px;
+line-height: 2.5em;
+}
+#uber-view-switch img {
+margin: 0;
+padding: 0;
+opacity: 0.5;
+filter: alpha(opacity=50);
+}
+#uber-view-switch a.selected, #uber-view-switch a:hover {
+background: #F3F3F3;
+}
+#uber-view-switch a.selected img {
+opacity: 1;
+filter: alpha(opacity=100);
+}
+#selected-template {
+display: none;
+}
+
+}
+
+
+/* - ++resource++eea.daviz.tutorials.css - */
+@media screen {
+/* http://www.eea.europa.eu/portal_css/++resource++eea.daviz.tutorials.css?original=1 */
+.daviz-tutorials iframe {
+float:left;
+margin-right:2px;
+}
+.daviz-tutorials .daviz-tutorials-search{
+float: left;
+width:576px;
+border:1px solid rgb(85,85,85);
+padding-right:2px;
+}
+.daviz-tutorials .daviz-tutorials-main-playlist{
+margin-left:10px;
+overflow:auto;
+border-bottom:1px solid rgb(85,85,85);
+}
+.daviz-tutorials img {
+height:40px;
+float:left;
+border:2px solid rgb(26,26,26);
+}
+.daviz-tutorials .daviz-tutorials-videos .daviz-tutorials-videoitem{
+height:40px;
+padding:10px;
+color: rgb(85,85,85);
+cursor: pointer;
+}
+.daviz-tutorials .daviz-tutorials-videos .daviz-tutorials-videoitem:hover{
+background-color: #bbbbbb;
+}
+.daviz-tutorials .daviz-tutorials-videos .daviz-tutorials-videoitem div{
+float:left;
+width:400px;
+}
+.daviz-tutorials .daviz-tutorials-videos .daviz-tutorials-videoitem.hidden-item {
+display:none;
+}
+.daviz-tutorials .daviz-tutorials-videos .daviz-tutorials-videoitem.nowplaying{
+background-color: #aaaaaa;
+}
+.daviz-tutorials .daviz-tutorials-videos .daviz-tutorials-videoitem.nowplaying img{
+border:2px solid red;
+}
+.by-difficulty {
+margin-left:10px;
+float:left;
+}
+.by-topic {
+float:right;
+width:300px
+}
+.daviz-tutorials-tagcloud {
+padding:10px;
+}
+.daviz-tutorials-tagcloud ul {
+list-style-type: square;
+color: #999;
+padding-left: 20px;
+font-family: Arial, FreeSans, sans-serif;
+font-size: 13px;
+margin:0 !important;
+}
+.daviz-tutorials-tagcloud label {
+display: block;
+font-family: Arial, FreeSans, sans-serif;
+color: rgb(85, 85, 85);
+font-weight: normal;
+font-size:16px;
+}
+.daviz-tutorials-main-playlist-title,
+.daviz-tutorials-main-playlist-title-label{
+padding-left:10px;
+padding-top:10px;
+font-size:16px;
+font-weight:bold;
+float:left;
+}
+.daviz-tutorials-main-playlist-title{
+font-style:italic;
+}
+.daviz-tutorials-tagcloud ul a{
+border-bottom:0 !important;
+}
+.daviz-tutorials-tagcloud ul a.selected{
+font-weight:bold;
+color: #888 !important;
+}
+.eea-tutorial {
+float:right;
+line-height:24px;
+margin-left:10px;
+margin-right:10px;
+margin-top:5px;
+font-size:11px;
+}
+.eea-tutorial span.tutorial-title{
+float:right;
+color: #205c90;
+text-decoration:underline;
+}
+.eea-tutorial a{
+float:left;
+border:0 !important;
+}
+.eea-tutorial .tutorial-icon{
+float:right;
+color: #205c90;
+font-size:24px;
+}
+.eea-tutorial .message{
+margin-right:5px;
+color:#999;
+float:left;
+}
+}
+
+
+/* - ++resource++eea.pdf.css - */
+@media screen {
+/* http://www.eea.europa.eu/portal_css/++resource++eea.pdf.css?original=1 */
+/* */
+.portaltype-pdftheme .eea-pdf-thumb,
+.portaltype-pdftool .eea-pdf-thumb {
+float: left;
+padding: 0.5em 1em 0.5em 0;
+}
+.portaltype-pdftool .tileItem {
+clear: both;
+}
+.portaltype-pdftheme div.documentByLine,
+.portaltype-pdftool div.documentByLine {
+display: none ! important;
+}
+.portaltype-pdftheme .documentActions,
+.portaltype-pdftool .documentActions {
+display: none;
+}
+.eea-pdf-email input[type=email] {
+min-width: 500px;
+max-width: 85%;
+height: 30px;
+}
+.eea-pdf-email ::-webkit-input-placeholder {
+padding-right: 3px;
+text-align: right;
+}
+.eea-pdf-email  :-moz-placeholder {
+padding-right: 3px;
+text-align: right;
+}
+.eea-pdf-email ::-moz-placeholder {
+padding-right: 3px;
+text-align: right;
+}
+.eea-pdf-email :-ms-input-placeholder {
+padding-right: 3px;
+text-align: right;
+}
+.eea-pdf-email .formHelp {
+font-size: 90%;
+color: #808285;
+}
+.eea-pdf-email textarea[name=body] {
+visibility: hidden;
+}
+.eea-pdf-email .context {
+min-height: 30px;
+padding: 7px 11px;
+}
+#content-core .eea-pdf-body dt,
+.eea-pdf-body dt {
+display: inline;
+}
+.eea-pdf-body dt:before {
+content: '';
+display: block;
+}
+#content-core .eea-pdf-body dd,
+.eea-pdf-body dd {
+display: inline;
+margin: 0;
+}
+
+}
+
+
+/* - ploneCustom.css - */
+@media screen {
+/* http://www.eea.europa.eu/portal_css/ploneCustom.css?original=1 */
+/* */
+/* */
+/* */
+div.width-3\3a 4 { width:    58.5%;  }
+div.position-1\3a 4 {margin-left:    -79.875%;}
+div.width-1\3a 4 { width: 36%;    } /* */
+/* */
+#plonebrowser .width-1\3a 4 { width:    22.75%; } /* */
+div.width-1\3a 2 { width:    52.25%; } /* */
+div.position-3\3a 4 {margin-left: -36.5%;}
+/* */
+/* */
+#galleryView {
+border: none;
+}
+.ui-widget {
+font-family: 'Open Sans', Verdana, Helvetica, Arial, sans-serif;
+}
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+font-size: 12px;
+padding: 3px;
+}
+#faceted-form .faceted-widget {
+margin: 0 0 1em 0;
+padding-bottom: 0.5em;
+}
+#faceted-form #center-content-area {
+padding: 0 0.5em 0 0.5em;
+}
+#faceted-form .faceted-widget fieldset {
+border-style: none !important;
+}
+#faceted-form .faceted-widget {
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+background-color: #f3f3f3;
+}
+#faceted-form .widget-fieldset legend {
+color: #ffffff;
+padding: 5px 10px;
+font-size: 14px;
+line-height: 1.6;
+font-weight: normal;
+text-shadow: 1px 1px 1px #555555;
+}
+.widget-fieldset {
+padding: 0 !important;
+margin: 5px !important;
+}
+#faceted-form .widget-fieldset form,
+#faceted-form .faceted-criteria-hide-show,
+#faceted-form .faceted-criteria-reset {
+padding-top: 1em;
+}
+.widget-fieldset ul li input {
+vertical-align: middle;
+margin-top: 2px;
+}
+.widget-fieldset ul li label {
+font-size: 11px;
+line-height: 15px;
+padding-left: 5px;
+padding-bottom: 5px;
+}
+.widget-fieldset ul li span {
+padding-left: 3px;
+color: #2c8da2;
+}
+.faceted-checkboxes-widget fieldset,
+.faceted-radio-widget fieldset {
+margin: 0;
+}
+.faceted-checkboxes-widget fieldset form ul,
+.faceted-radio-widget fieldset form ul {
+margin: 0 0 0 5px !important;
+}
+#tag-cloud {
+background-color: #f3f3f3;
+}
+#tag-cloud .portletFooter {
+margin: 0 1em 1em 0;
+}
+.tags-cloud {
+padding: 0.5em 1em !important;
+}
+/* */
+.faceted-top-widgets .faceted-widget form,
+.faceted-center-widgets .faceted-widget form {
+min-width: 510px;
+}
+.faceted_letter_selected {
+background: transparent !important;
+font-weight: bold;
+}
+.faceted_letter,
+.faceted_letter:hover {
+font-size: 11px;
+font-weight: normal;
+}
+#right-area, #left-area {
+width: 215px !important;
+}
+#faceted-form .left-area-js {
+margin-left: 220px !important;
+min-width: 535px;
+}
+#faceted-form .right-area-js {
+margin-right: 220px !important;
+min-width: 520px;
+}
+#faceted-form .tags-cloud li {
+color: #346f83 !important;
+}
+#faceted-form .tags-cloud li:hover {
+background-color: #f6a800 !important;
+color: white !important;
+}
+.ui-accordion .ui-state-default,
+.ui-accordion .ui-state-active {
+margin: 0 !important;
+background-color:  #f6a800;
+}
+.ui-accordion .ui-accordion-content {
+padding: 0 !important;
+}
+#center-and-left-area {
+clear: both !important;
+}
+/* */
+.faceted-tagscloud-widget,
+.faceted-tagscloud-widget .widget-fieldset,
+.faceted-criteria-widget,
+.faceted-criteria-widget .widget-fieldset {
+height: auto !important;
+}
+#faceted-top-column fieldset {
+width: 50%;
+}
+.faceted-top-widgets .faceted-widget .widget-fieldset form input[type="text"],
+.faceted-center-widgets .faceted-widget .widget-fieldset form input[type="text"]{
+min-width:82%;
+height: 22px;
+font-size: 16px;
+padding: 5px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+background: #FFFFFF;
+-webkit-transition: border-color .218s;
+-moz-transition: border .218s;
+-ms-transition: border .218s;
+-o-transition: border-color .218s;
+transition: border-color .218s;
+-webkit-transition: box-shadow .218s;
+-moz-transition: box-shadow .218s;
+-ms-transition: box-shadow .218s;
+-o-transition: box-shadow .218s;
+transition: box-shadow .218s;
+}
+.faceted-top-widgets .faceted-widget .widget-fieldset form input[type="text"]:focus,
+.faceted-center-widgets .faceted-widget .widget-fieldset form input[type="text"]:focus {
+-webkit-box-shadow: 1px 1px 3px #DFDFDF;
+-moz-box-shadow: 1px 1px 3px #DFDFDF;
+-ms-box-shadow: 1px 1px 3px #DFDFDF;
+-o-box-shadow: 1px 1px 3px #DFDFDF;
+box-shadow: 1px 1px 3px #DFDFDF;
+border-color: #b1c748;
+}
+.faceted-top-widgets .faceted-widget,
+.faceted-center-widgets .faceted-widget {
+background-color: #f3f3f3;
+min-height: 110px;
+}
+.faceted-top-widgets .faceted-widget .faceted-textwidget-place-all,
+.faceted-top-widgets .faceted-widget .faceted-textwidget-place-current,
+.faceted-center-widgets .faceted-widget .faceted-textwidget-place-all,
+.faceted-center-widgets .faceted-widget .faceted-textwidget-place-current {
+display: inline-block;
+float: left;
+clear: right;
+margin-right: 20px;
+}
+.faceted-top-widgets .faceted-widget .widget-fieldset form .searchButton,
+.faceted-center-widgets .faceted-widget .widget-fieldset form .searchButton {
+color:#fff;
+background:#346F83;
+background: -webkit-gradient(linear,0% 40%,0% 70%,from(#478EA5),to(#346F83));
+background: -webkit-linear-gradient(#478EA5, #346F83); /* */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#478EA5', endColorstr='#346F83'); /* */
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#478EA5', endColorstr='#346F83')"; /* */
+background: -moz-linear-gradient(270deg, #478EA5, #346F83) repeat scroll 0 0 transparent;
+background-image: -ms-linear-gradient(top,#478EA5,#346F83);
+background-image: -o-linear-gradient(top,#478EA5,#346F83);
+background-image: linear-gradient(top,#478EA5,#346F83);
+font: bold 12px 'Open Sans', Verdana, Helvetica, Arial, sans-serif;
+padding: 7px 11px;
+display: inline-block;
+text-shadow: 0 1px 0 #000;
+-webkit-transition: border-color .218s;
+-moz-transition: border .218s;
+-ms-transition: border .218s;
+-o-transition: border-color .218s;
+transition: border-color .218s;
+-webkit-transition: box-shadow .218s;
+-ms-transition: box-shadow .218s;
+-moz-transition: box-shadow .218s;
+-o-transition: box-shadow .218s;
+transition: box-shadow .218s;
+border: 1px solid #DCDCDC;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;
+float: right;
+}
+.faceted-top-widgets .faceted-widget .widget-fieldset form .searchButton:hover,
+.faceted-center-widgets .faceted-widget .widget-fieldset form .searchButton:hover {
+background-color:#f6a800;
+background: -webkit-gradient(linear,0% 40%,0% 70%,from(orange),to(#FF9123));
+background: -webkit-linear-gradient(orange, #FF9123); /* */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='orange', endColorstr='#FF9123'); /* */
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='orange', endColorstr='#FF9123')"; /* */
+background: -moz-linear-gradient(270deg, orange, #FF9123) repeat scroll 0 0 transparent;
+background-image: -ms-linear-gradient(top,orange,#FF9123);
+background-image: -o-linear-gradient(top,orange,#FF9123);
+background-image: linear-gradient(top,orange,#FF9123);
+color: #FFFFFF;
+cursor:pointer;
+border-color: #999999;
+-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+-ms-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+-o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+text-shadow: none;
+}
+.faceted-resultsperpage-widget select {
+padding: 3px;
+width: 50px;
+}
+.faceted-criteria dd {
+margin-left: 22px !important;
+}
+.faceted-criteria-toggle-button,
+.faceted-criteria-count-holder {
+position: relative;
+top: -10px;
+margin-right: 5px;
+padding: 0;
+}
+.faceted-criteria-count-holder {
+display: none;
+}
+#portal-columns input[type="submit"], .standardButton, .qq-upload-button,
+.searchButton,
+input.plonebutton,
+input.context,
+input.destructive,
+input.standalone {
+color:#fff !important;
+background:#346F83;
+background-image: -webkit-gradient(linear,0% 40%,0% 70%,from(#478EA5),to(#346F83));
+background: -webkit-linear-gradient(#478EA5, #346F83); /* */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#478EA5', endColorstr='#346F83'); /* */
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#478EA5', endColorstr='#346F83')"; /* */
+background-image: -moz-linear-gradient(270deg, #478EA5, #346F83);
+background-image: -ms-linear-gradient(top,#478EA5,#346F83);
+background-image: -o-linear-gradient(top,#478EA5,#346F83);
+background-image: linear-gradient(top,#478EA5,#346F83);
+font: bold 12px 'Open Sans', Verdana, Helvetica, Arial, sans-serif;
+padding: 7px 11px;
+position: relative;
+display: inline-block;
+text-shadow: 0 1px 1px #000;
+-webkit-transition: border-color .218s;
+-moz-transition: border .218s;
+-ms-transition: border-color .218s;
+-o-transition: border-color .218s;
+transition: border-color .218s;
+-webkit-transition: box-shadow .218s;
+-moz-transition: box-shadow .218s;
+-ms-transition: box-shadow .218s;
+-o-transition: box-shadow .218s;
+transition: box-shadow .218s;
+border: 1px solid #346F83;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;
+}
+#portal-columns input[type="submit"]:hover, .standardButton:hover,
+#content a.standardButton:hover,
+.qq-upload-button:hover,
+.searchButton:hover,
+input.context:hover,
+input.destructive:hover,
+input.standalone:hover {
+background-color:#f6a800;
+background-image: -webkit-gradient(linear,0% 40%,0% 70%,from(orange),to(#FF9123));
+background: -webkit-linear-gradient(orange, #FF9123); /* */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='orange', endColorstr='#FF9123'); /* */
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='orange', endColorstr='#FF9123')"; /* */
+background-image: -moz-linear-gradient(270deg, orange, #FF9123);
+background-image: -ms-linear-gradient(top,orange,#FF9123);
+background-image: -o-linear-gradient(top,orange,#FF9123);
+background-image: linear-gradient(top,orange,#FF9123);
+color: #FFFFFF !important;
+cursor:pointer;
+border-color: #999999;
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+-ms-box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+-o-box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+text-shadow: none;
+}
+.standardButton a, .standardButton a:hover, .standardButton a:visited {
+color: #FFFFFF !important;
+}
+#faceted-text-search input[type="text"] {
+-webkit-transition: box-shadow 0.218s ease 0s;
+-moz-transition: box-shadow 0.218s ease 0s;
+-ms-transition: box-shadow 0.218s ease 0s;
+-o-transition: box-shadow 0.218s ease 0s;
+transition: box-shadow 0.218s ease 0s;
+background: none repeat scroll 0 0 #FFFFFF;
+-webkit-border-radius: 3px 3px 3px 3px;
+-moz-border-radius: 3px 3px 3px 3px;
+border-radius: 3px 3px 3px 3px;
+font-size: 16px;
+height: 22px;
+padding: 5px;
+width: 68%;
+}
+.section-publications #c10_widget.faceted-widget,
+.section-publications #c10_widget fieldset {
+background-color: transparent;
+padding:0 !important;
+margin:0 !important;
+}
+.faceted-top-widgets .faceted-widget .widget-fieldset form .faceted-textwidget-place-all label,
+.faceted-top-widgets .faceted-widget .widget-fieldset form .faceted-textwidget-place-current label,
+.faceted-center-widgets .faceted-widget .widget-fieldset form .faceted-textwidget-place-all label,
+.faceted-center-widgets .faceted-widget .widget-fieldset form .faceted-textwidget-place-current label{
+display: inline;
+float: none;
+font-size: 11px;
+line-height: 13px;
+padding-bottom: 0;
+width: 120px;
+}
+.faceted-results {
+padding: 0;
+}
+/* */
+/* */
+/* */
+#soer-search-area {
+margin:20px 0 50px 0;
+clear: both;
+}
+#soerSearchBox strong {
+display: block;
+margin: 5px 0;
+}
+/* */
+#soerSearchBox .portletHeader {
+margin-bottom: 10px;
+padding: 5px;
+float: left;
+}
+#soerSearchBox .moreLink {
+float: right;
+margin-top: 1em;
+}
+#soer-search-area #faceted-text-search {
+float: left;
+margin-right: 1em;
+}
+#soer-search-area #topic-search {
+float: right;
+width: 308px;
+}
+#soer-search-area #topic-search select {
+font-size:16px;
+height:34px;
+padding:5px;
+margin-bottom:10px;
+width: 244px;
+}
+#soerSearchBox dd, #video-portlet dd{
+margin: 0;
+padding: 0;
+}
+#geo1_widget li {
+text-transform: uppercase;
+}
+.section-soer .slidePortlet a.moreLink,
+.section-soer-draft .slidePortlet a.moreLink {
+display: inline;
+}
+.section-soer #boxes .portlet,
+.section-soer-draft #boxes .portlet {
+height: 181px;
+}
+.section-soer #search-url,
+.section-soer-draft #search-url {
+display: none;
+}
+.section-soer #video-portlet img,
+.section-soer-draft #video-portlet img {
+width: 100%;
+}
+.section-soer #free-text-space,
+.section-soer-draft #free-text-space {
+min-height: 150px;
+}
+/* */
+/* */
+.link-without-style {
+/* */
+text-decoration: none;
+}
+.eea-template {
+display: none;
+}
+body.section-signals #nonfolderish-subfolder-view-items {
+display: none;
+}
+#belowContent .portletHeader {
+font-size: 130%;
+margin: 0.83em 0;
+border-bottom: 1px solid #ececec;
+padding-bottom: 0.25em;
+color: #2D749C;
+background: transparent;
+}
+#belowContent .portlet {
+float: none;
+width: 100%;
+padding: 0;
+}
+.eea-rounded-corners {
+border-radius: 3px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+-o-border-radius: 3px;
+}
+.eea-horizontal-list li {
+float: left;
+margin: 0 0.5em 0 0;
+}
+.eea-no-list-style {
+list-style: none none;
+margin: 1em 0;
+}
+.subfolder .moreLink {
+float: left;
+margin: 1em 0 2em 1em;
+font-weight: bold;
+}
+/* */
+#visual-portal-wrapper .eea-tabs {
+padding: 0 10px 0 0;
+margin: 0;
+font-size: 12px;
+line-height: normal!important;
+list-style: none none;
+-webkit-border-radius: 10px 10px 0 0;
+-moz-border-radius: 10px 10px 0 0;
+border-radius: 10px 10px 0 0;
+background-color: #2c8da2;
+}
+#visual-portal-wrapper .eea-tabs > li {
+float: left;
+margin: 0;
+padding: 0;
+}
+#visual-portal-wrapper .eea-tabs > li > a {
+display: block;
+color: #fff;
+text-shadow: 1px 1px 1px #000000;
+text-decoration: none;
+white-space: nowrap;
+padding: 8px 8px;
+}
+#visual-portal-wrapper .eea-tabs.two-rows > li > a {
+height: 40px;
+white-space: normal;
+max-width: 144px;
+}
+#visual-portal-wrapper .eea-tabs > li:first-child > a {
+-webkit-border-radius: 8px 0 0 0;
+-moz-border-radius: 8px 0 0 0;
+border-radius: 8px 0 0 0;
+}
+#visual-portal-wrapper .eea-tabs > li > a:hover {
+color: #005e7d;
+text-decoration: none;
+text-shadow: 1px 1px 1px #FFFFFF;
+background-color: #f3f3f3;
+}
+#visual-portal-wrapper .eea-tabs > li > .current,
+#visual-portal-wrapper .eea-tabs > li > .current:hover {
+cursor: default;
+color: #005e7d;
+text-decoration: none;
+text-shadow: 1px 1px 1px #FFFFFF;
+background-color: #f3f3f3;
+}
+/* */
+#visual-portal-wrapper .eea-tabs:before,
+#visual-portal-wrapper .eea-tabs:after {
+display: table;
+content: " ";
+}
+#visual-portal-wrapper .eea-tabs:after {
+clear: both;
+}
+.eea-tabs-panel {
+padding: 20px;
+background-color: #f3f3f3;
+}
+.eea-tabs-panel .listingBar {
+margin: 0 0 1em 0;
+padding: 0 1em;
+}
+.highlights .portalMessage,
+.eea-tabs-panel .portalMessage {
+margin-top: 0;
+position: relative;
+top: 10px;
+margin-bottom: 10px;
+display: block;
+}
+.eea-tabs-panels {
+border: 1px solid #DDD;
+border-top: 0;
+background-color: #f3f3f3;
+padding: 10px;
+}
+.eea-accordion-panels {
+border: 1px solid #DDD;
+border-top: 0;
+padding: 10px;
+}
+.eea-accordion-panel h2 {
+background-color: #f3f3f3;
+padding: 10px;
+}
+#relatedItems .eea-tabs-panels {
+padding: 1px;
+}
+/* */
+.eea-accordion-panels {
+padding: 0;
+}
+.eea-accordion-panel .pane {
+padding: 10px;
+overflow: hidden;
+}
+.eea-accordion-title, .eea-accordion-panel > h2 {
+background: #E2E2E2 none;
+border: 1px solid #E0E0E0;
+margin: 0;
+font-size: 115%;
+color: #00446A;
+line-height: 3em;
+padding: 0 10px;
+font-weight: bold;
+}
+.eea-accordion-title-manual-icons {
+text-shadow: none;
+padding: 0 1em;
+margin: 2px 0 0 0; /* */
+line-height: 3em;
+cursor: pointer;
+}
+.eea-accordion-panel > h2 .eea-icon:before,
+.eea-accordion-title > .eea-icon:before {
+content: "\f053";
+}
+.eea-accordion-panel h2:hover > .eea-icon:before,
+.eea-accordion-panel .eea-accordion-title.current > .eea-icon:before {
+content: "\f078";
+}
+.eea-accordion-title:hover, .eea-accordion-panel > h2:hover {
+cursor: pointer;
+background-color: #F0F0F0;
+}
+.eea-accordion-title.current,
+.eea-accordion-panel > h2.current {
+background-color: #F0F0F0;
+}
+.eea-accordion-title a,
+.eea-accordion-panel > h2 a {
+color: #00446A !important;
+}
+/* */
+.ui-widget-content a {
+color: #346f83;
+}
+/* */
+.eea-tooltip-markup-top,
+.eea-tooltip-markup-bottom,
+.eea-tooltip-markup-left,
+.eea-tooltip-markup-right {
+display: none;
+font-size: 12px;
+height: 70px;
+width: 160px;
+padding: 25px;
+color: white;
+text-align: left;
+text-decoration: none;
+}
+.eea-tooltip-markup-top {
+background: transparent url(http://www.eea.europa.eu/++resource++tools/green_arrow_top.png);
+}
+.eea-tooltip-markup-bottom {
+background: transparent url(http://www.eea.europa.eu/++resource++tools/green_arrow_bottom.png);
+margin-top: 15px;
+}
+.eea-tooltip-markup-left {
+background: transparent url(http://www.eea.europa.eu/++resource++tools/green_arrow_left.png);
+padding-right: 45px;
+}
+.eea-tooltip-markup-right {
+background: transparent url(http://www.eea.europa.eu/++resource++tools/green_arrow_right.png);
+padding-left: 45px;
+}
+/* */
+.eea-tooltip-markup {
+display: none;
+z-index: 100;
+}
+.eea-tooltip-markup .tooltip-box-br {
+background: transparent url(http://www.eea.europa.eu/++resource++tools/x-green-bottom-right.png) no-repeat right bottom;
+position:relative;
+max-height:1000px;
+min-height:50px;
+min-width:100px;
+width:250px;
+padding-bottom:3px;
+}
+.eea-tooltip-markup .tooltip-box-tl {
+background: transparent url(http://www.eea.europa.eu/++resource++tools/x-green-top-left.png) no-repeat left top;
+position:relative;
+left:-30px;
+top:-20px;
+margin-right:-19px;
+max-height:1000px;
+min-height:50px;
+min-width:100px;
+width: 269px;
+}
+.eea-tooltip-markup .tooltip-box-rcontent {
+background: transparent url(http://www.eea.europa.eu/++resource++tools/x-green-arrow-left.png) no-repeat left center;
+position: relative;
+top: 11px;
+padding:2em 1em 2em 3em;
+text-align:justify;
+font-size: 12px;
+color:#ffffff;
+}
+.eea-tooltip-markup .tooltip-box-lcontent {
+background: transparent url(http://www.eea.europa.eu/++resource++tools/x-green-arrow-right.png) no-repeat right center;
+position: relative;
+top: 11px;
+right: -31px;
+padding:2em 3.5em 2em 1em;
+text-align:justify;
+font-size: 12px;
+color:#ffffff;
+}
+.eea-tooltip-markup .tooltip-box-bcontent {
+background: transparent url(http://www.eea.europa.eu/++resource++tools/x-green-arrow-top.png) no-repeat center top;
+color:#FFFFFF;
+font-size:12px;
+left:10px;
+padding:2.5em 1.5em 1em 2.5em;
+position:relative;
+text-align:justify;
+top:-2px;
+}
+.eea-tooltip-markup .tooltip-box-tcontent {
+background: transparent url(http://www.eea.europa.eu/++resource++tools/x-green-arrow-bottom.png) no-repeat center bottom;
+bottom:-22px;
+color:#FFFFFF;
+font-size:12px;
+left:10px;
+padding:0.5em 1.5em 2.5em 2.5em;
+position:relative;
+text-align:justify;
+}
+/* */
+#print-warning {
+display: none;
+}
+.documentContent {
+background: transparent;
+padding: 0 0 2em 0;
+}
+#translation-disclaimer .note {
+background:transparent url(http://glossary.eea.europa.eu/misc_/EEAGlossary/note_ico.gif) no-repeat scroll 0.3em 50%;
+padding:0.2em 0.3em 0.3em 22px;
+color:#8F8F8F;
+font-size:1em;
+/* */
+}
+#translation-disclaimer {
+margin: 0 1em 0 1em;
+display: inline-block;
+}
+/* */
+.media-player {
+text-align:center;
+}
+.media-player .embeddedvideo {
+width: 100%;
+}
+.media-player #embeddedvideo.sixteen-nine {
+height: 338px;
+}
+.media-player #embeddedvideo.four-three {
+height: 450px;
+}
+.mediacaption {
+color: #76797C;
+text-align:center;
+font-size: 11px;
+display: block;
+padding:3px;
+margin: auto;
+}
+#objmetadata_pbwidgets_wrapper{
+width: 100%;
+border-right: 0;
+background-color: transparent;
+}
+.related-in-content-area .portlet {
+margin-left: 2em;
+}
+#auto-related .tileImage,
+#related-multimedia .tileImage {
+float: none;
+}
+#related-portlets {
+float: right;
+margin-left: 2em;
+clear: right;
+}
+#auto-related .portletItem {
+padding-bottom:0.5em;
+clear: both;
+}
+/* */
+#auto-related .embeddedMedia {
+clear: none !important;
+}
+#related-portlets #auto-related,
+#related-portlets #related-multimedia,
+#related-portlets #related-pages,
+#related-portlets #themes-object {
+float: none;
+clear: none;
+margin-left: 2em;
+}
+#auto-related h2,
+#related-multimedia h2,
+#related-pages h2 {
+margin-top: 0;
+}
+#auto-related dd {
+padding: 0;
+margin: 0 0 1em 0;
+}
+#auto-related dd.portletFooter {
+padding:1em;
+}
+#auto-related dt {
+background-color:transparent;
+padding-left: 0;
+}
+#related-multimedia-top dd.embeddedMedia,
+#related-multimedia dd.embeddedMedia,
+.portlet dd.embeddedMedia {
+background-color: #FFFFFF;
+border: 1px solid #DFDFDF;
+-webkit-box-shadow: 1px 1px 2px #BFBFBF;
+-moz-box-shadow: 1px 1px 2px #BFBFBF;
+-ms-box-shadow: 1px 1px 2px #BFBFBF;
+-o-box-shadow: 1px 1px 2px #BFBFBF;
+box-shadow: 1px 1px 2px #BFBFBF;
+padding: 0 0 15px 0  !important;
+margin: 0 15px 15px 0 !important;
+text-align: center;
+float: left;
+width: 165px;
+min-height: 210px;
+}
+.portlet dd.embeddedMedia .tileImage {
+border: none !important;
+margin: 15px auto !important;
+}
+#related-multimedia-top dd.embeddedMedia {
+float: left;
+margin: 0.5em 0 0.5em 0.25em;
+}
+.portlet dd.embeddedMedia {
+margin-bottom: 1em;
+}
+#related-multimedia-top {
+border:none;
+margin:0;
+padding:0;
+}
+dd.embeddedMedia .magnify {
+float: right;
+}
+#media-content-spacer {
+clear: left;
+padding-top: 1em;
+}
+/* */
+#content span.link-external  {
+background: none;
+padding: 0;
+}
+.flowplayer a,
+.documentContent ul li a,
+.documentContent td a {
+display: inline;
+text-decoration: none !important;
+}
+/* */
+#content dl.publicationMessage a {
+border: 0;
+color: #346f83;
+}
+dl a:hover, dd a:hover, dt a:hover {
+color: #8e004d !important;
+}
+#content .featured p:last-child {
+margin-bottom: 0;
+}
+a.moreLink {
+border: 0 !important;
+background: transparent url("sprite-eeaimages.png") no-repeat scroll -441px -9px;
+display: inline-block;
+padding-left: 25px;
+height: 18px;
+font-size: 11px;
+line-height: 1.6;
+}
+/* */
+/* */
+.field {
+top: 0;
+left: 0;
+margin: 0 0 1em 0;
+}
+.field .field {
+margin: 1em 0 0 0;
+}
+.fieldRequired {
+background: url(http://www.eea.europa.eu/required.gif) center left no-repeat;
+padding: 0 0 0 8px;
+color: transparent;
+}
+.fieldUploadFile {
+text-align: right;
+margin-right: 0.75em;
+display: none;
+}
+.fieldTextFormat {
+text-align: right;
+margin-right: 0.75em;
+}
+.formHelp {
+font-size: 90%;
+color: #808285;
+margin: 0 0 0.2em 0;
+display: block;
+}
+.formHelp:hover {
+color: #333333;
+cursor: default;
+}
+.formControls {
+margin: 1em 0;
+}
+form[name="edit_form"] div.formControls {
+margin: 1em 1em 1em 0;
+}
+.error {
+/* */
+background-color: #febe86;
+padding: 1em;
+margin: 0 0 1em 0;
+}
+.error .fieldRequired {
+color: #febe86;
+}
+/* */
+#translationfeedback textarea, #translationfeedback input#sender_from_address {
+width:97%;
+margin-bottom:0.1em;
+}
+#portlet-translationfeedback {
+margin-left:0.25em;
+margin-right:0.25em;
+}
+#translationfeedback input.standalone {
+float:right;
+}
+/* */
+.noborder,
+.documentEditable * .noborder {
+border: none;
+margin: 0;
+background: transparent none;
+}
+/* */
+#visual-portal-wrapper {
+margin: 0 auto;
+overflow: visible !important;
+padding: 0;
+display: block;
+clear: both;
+position: relative;
+}
+/* */
+.portal-logo {
+background: url(http://www.eea.europa.eu/logo.gif) no-repeat 0 8px;
+border: 0;
+margin: 0;
+padding: 0;
+float: left;
+position: relative;
+}
+#printLogo {
+display: none;
+}
+.portal-logo a {
+display: block;
+text-decoration: none;
+overflow: hidden;
+border: 0;
+margin: 0;
+padding: 89px 0 0 0; /* */
+height: 0 !important;
+width: 335px;
+cursor: pointer;
+}
+.portal-logo a:hover {
+/* */
+background-color: transparent;
+}
+h3.site-description {
+border: medium none;
+color: #FFFFFF;
+display: inline-block;
+font-size: 12px;
+font-weight: normal;
+font-style: italic;
+margin: 30px 0;
+position: relative;
+text-decoration: none;
+text-shadow: none;
+width: 240px;
+max-height: 30px;
+}
+#header-holder {
+width: 100%;
+min-width: 995px;
+clear: both;
+display: block;
+position: relative;
+background-color: #777c1f;
+background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b1c748), to(#777c1f));
+background-image: -webkit-linear-gradient(center top , #b1c748, #777c1f);
+background-image:    -moz-linear-gradient(center top , #b1c748, #777c1f);
+background-image:     -ms-linear-gradient(center top , #b1c748, #777c1f);
+background-image:      -o-linear-gradient(center top , #b1c748, #777c1f);
+background: linear-gradient(#b1c748, #777c1f); /* */
+}
+#portal-header {
+display: block;
+clear: both;
+position: relative;
+margin: 0 auto;
+}
+.header-holder #portal-top .cell {
+float: none;
+}
+#cross-site-top {
+background-color: white;
+height: 25px;
+margin: 0;
+padding: 0;
+width: 100%;
+min-width: 970px;
+border-top: 2px solid #B1C748;
+}
+.shadow {
+-webkit-box-shadow: 1px 1px 5px #afafaf;
+-moz-box-shadow: 1px 1px 5px #afafaf;
+-ms-box-shadow: 1px 1px 5px #afafaf;
+-o-box-shadow: 1px 1px 5px #afafaf;
+box-shadow: 1px 1px 5px #afafaf;
+}
+/* */
+.panel {
+display: none;
+z-index: 600;
+background: transparent;
+border: 0;
+}
+.panel-top, #tip-article-language .panel-top {
+margin: auto auto;
+background: transparent url(http://www.eea.europa.eu/panel_arrow.png);
+width: 50px;
+height: 25px;
+position: relative;
+top: 2px;
+}
+.panel .portletFooter {
+margin-top: 1em;
+}
+.panel-content, #tip-article-language .panel-content {
+background: white url(http://www.eea.europa.eu/portlet_bg.png) repeat-x;
+color: black;
+padding: 10px;
+border: 1px solid #BABBB8;
+}
+#tip-article-language{
+width: 400px;
+position: absolute;
+right: 15px;
+top: 55px;
+z-index: 602;
+}
+#tip-article-language .panel-top {
+right: 0;
+float: right;
+clear: both;
+}
+#tip-article-language .panel-content{
+clear: both;
+}
+#portal-columns {
+padding-top: 1em;
+}
+#portal-column-one .portlet-subscribtion {
+margin-top:20px;
+}
+#cross-site-top .panel .portlet-subscribtion {
+margin: 0;
+}
+#cross-site-top .panel .portlet-subscribtion .portletFooter {
+margin-bottom: 0;
+}
+#cross-site-top .panel .portlet,
+#cross-site-top .panel .portletHeader {
+background: transparent;
+}
+#tip-externalsites-etcssites li,
+.externalsites li,
+#tip-siteaction-chooselang li {
+padding-left: 1em;
+background: url("bullet.gif") no-repeat scroll left center transparent;
+display: block;
+}
+#tip-siteaction-contactus {
+font-size: 125%;
+}
+#tip-externalsites-networks, #tip-externalsites-etcssites {
+width: 400px;
+position:absolute;
+left: 0 !important;
+}
+#tip-externalsites-etcssites{
+width: 270px;
+}
+#tip-siteaction-chooselang li a {
+font-size: 11px;
+display: block;
+}
+.networkSites dt {
+background: none !important;
+}
+/* */
+#portal-skinswitcher a {
+display: block;
+float: left;
+}
+/* */
+#portal-searchbox {
+float: right;
+clear: right;
+background-color: transparent;
+margin: 25px 7px 0 0;
+padding: 0 0 0 0;
+text-align: right;
+text-transform: lowercase;
+white-space: nowrap;
+z-index: 2;
+font-size: 1.2em;
+}
+#portal-column-content #portal-searchbox {
+float: none;
+padding: 14px 0;
+margin: 0;
+background-color: #b9e148;
+text-align: center;
+}
+#portal-searchbox a {
+text-transform: none;
+color: #FFFFFF;
+border: none;
+font-size: 85%;
+margin: 0 5px 0 0;
+}
+#searchbox_terminology input,
+#searchbox_terminology input:focus,
+#portal-searchbox input.searchButton,
+#portal-searchbox input.searchButton:hover,
+.searchField {
+background: transparent url("sprite-eeaimages.png") no-repeat scroll left center;
+}
+#portal-searchbox input.searchButton {
+background-position: -385px -83px !important;
+-webkit-border-radius: 0 4px 4px 0;
+-moz-border-radius: 0 4px 4px 0;
+border-radius: 0 4px 4px 0;
+color: #FFFFFF;
+cursor: pointer;
+font-family: 'Open Sans', Verdana, Helvetica, Arial, sans-serif;
+font-size: 12px;
+font-style: normal;
+height: 29px;
+left: -5px;
+letter-spacing: 0;
+margin: 0;
+padding: 0;
+position: relative;
+width: 80px;
+}
+#portal-searchbox input.searchButton:hover {
+background-position: -385px -115px !important;
+}
+#portal-searchbox input, .searchField
+{
+height: 30px;
+padding: 0 0 0 25px;
+background-position: 0 -82px;
+font-family: 'Open Sans', Verdana, Helvetica, Arial, sans-serif;
+font-style: italic;
+color: #777777;
+border: none;
+margin: 0;
+font-size: 0.8em;
+}
+.searchField {
+width: 258px !important;
+}
+.frontpage #searchbox_terminology input[type="text"],
+.frontapage .searchField {
+width: 286px;
+}
+#searchbox_terminology input:focus,
+#portal-searchbox input:focus,
+.searchField:focus {
+font-style: normal;
+color: #000000;
+background-position: 0 -114px;
+background-color: transparent;
+outline-color: transparent;
+}
+.searchforms input {
+font-family: 'Open Sans', Verdana, Helvetica, Arial, sans-serif;
+font-style: italic;
+color: #777777;
+font-size: 0.8em;
+}
+.searchforms input:focus {
+color: #000000;
+}
+#portal-header h3.site-description {
+width: 240px;
+margin-left: 5px;
+float: left;
+/* */
+display: none;
+}
+#search_glossary_link, #search_advanced_link {
+text-decoration: underline;
+font-size: 11px;
+}
+#search_glossary_link:hover, #search_advanced_link:hover {
+text-decoration: none;
+}
+#search_glossary_link {
+float: right;
+}
+#search_advanced_link {
+float: left;
+}
+#portal-searchbox label {
+font-size: 11px;
+color: #FFFFFF;
+vertical-align: middle;
+}
+/* */
+* + html #region-content,
+* + html #portal-searchbox {
+overflow: hidden;
+}
+#portal-advanced-search {
+margin-top: 0.2em;
+clear: both;
+}
+#portal-advanced-search a {
+color: #808285;
+text-decoration: none;
+text-transform: lowercase;
+}
+/* */
+#portal-externalsites,
+#portal-siteactions {
+background-color: white;
+white-space: nowrap;
+list-style: none none;
+margin: 4px 0 4px 0;
+height: auto;
+line-height: normal;
+float: right;
+padding: 0 10px 0 0;
+clear: none;
+}
+#siteaction-subscriptions a,
+#siteaction-formobile a,
+#siteaction-contactus a {
+display: inline-block;
+line-height: 1.4;
+}
+/* */
+#siteaction-subscriptions .eea-icon:before {
+content: "\f09e";
+}
+#siteaction-formobile .eea-icon:before {
+content: "\f10b";
+}
+#siteaction-contactus .eea-icon:before {
+content: "\f0e6";
+}
+#siteaction-chooselang .eea-icon:before {
+content: "\f11d";
+}
+#siteaction-login .eea-icon:before {
+content: "\f090";
+}
+#portal-externalsites {
+float: left;
+margin-left: 1.5em;
+}
+#portal-externalsites li,
+#portal-siteactions li {
+display: inline;
+padding: 0 5px;
+}
+#portal-externalsites li:last-child,
+#portal-siteactions li:last-child {
+border: none;
+}
+#portal-externalsites li a,
+#portal-siteactions li a {
+background-color: transparent;
+height: auto;
+text-decoration: none;
+text-transform: none;
+font-size: 11px;
+}
+#siteaction-contactus {
+font-weight: bold;
+}
+.visualCaseSensitive {
+text-transform: none;
+}
+#portal-breadcrumbs {
+/* */
+border: none;
+line-height: 1.4;
+margin: 3px 0 0 0;
+position: relative;
+clear: both;
+}
+#region-content #portal-breadcrumbs {
+/* */
+padding-left: 0;
+padding-right: 0;
+margin-left: 0;
+}
+#region-content {
+border: none;
+}
+#portal-breadcrumbs a {
+text-decoration: none;
+}
+.breadcrumbSeparator {
+font-size: 120%;
+}
+.addFavorite {
+vertical-align: bottom;
+}
+#content-news h1 {
+margin-bottom: 1em;
+}
+/* */
+#content h5,
+#content h6 {
+color: #333333;
+}
+.newsItem {
+margin-bottom: 1em;
+border-bottom: 1px solid #cccccc;
+}
+.newsImage {
+border: 1px solid black;
+}
+.newsImageContainer {
+float:right;
+margin: 0 0 0.5em 1em;
+width: 202px;
+}
+.newsContent {
+padding: 0 1em 1em 1em;
+}
+.newsContent ul,
+.newsContent li {
+display: block;
+list-style: none;
+list-style-image: none;
+margin: 0;
+padding: 0;
+}
+.newsAbout {
+display: block;
+color: #808285;
+font-size: 85%;
+padding: 0;
+margin-top: 0;
+list-style: none;
+list-style-image: none;
+float: right;
+text-align: right;
+}
+.newsAbout li {
+display: inline;
+}
+.newsFooter li {
+display: inline;
+margin: 0 1em 0 0;
+}
+.documentActions ul {
+margin: 0;
+padding: 0;
+display: inline-block;
+}
+.documentActions li, .languageCodes li {
+display: inline-block !important;
+list-style: none;
+list-style-image: none;
+margin: 0;
+padding: 0;
+}
+.documentActions a {
+border: none !important;
+text-decoration: none;
+}
+/* */
+/* */
+.languageCodes {
+display: block;
+}
+#themes-tags span span span.languageCodes {
+display: none;
+}
+#article-language {
+float: right;
+margin-top: -30px;
+background: url("sprite-eeaimages.png") no-repeat scroll -430px -35px transparent;
+padding-left: 35px;
+}
+.width-full #article-language {
+min-width: 180px;
+}
+.documentByLine {
+font-size: 85%;
+font-weight: normal;
+color: #808285;
+margin: 0 0 0.5em 0;
+clear: both;
+}
+.documentByLine .portalType {
+background: #f3f3f3;
+padding: 0.5em;
+font-weight: bold;
+}
+.documentByLine .docDate {
+padding-right: 0.5em;
+}
+.documentByLineAuthor:nth-child(2) span:after,
+.documentByLineAuthor a:after, .documentByLineContributor a:after {
+content: ',';
+}
+.documentByLineAuthor:nth-child(2) a:after,
+.documentByLineAuthor:last-child a:after, .documentByLineContributor:last-child a:after {
+content: '';
+}
+.discussion {
+margin-top: 1em;
+}
+/* */
+.listingBar {
+background-color: #f3f3f3;
+padding: 0.5em 1em;
+text-align: center;
+text-transform: lowercase;
+vertical-align: top;
+margin: 1em 0;
+font-size: 11px !important;
+clear: both;
+}
+.listingBar .previous,
+.listingPrevious {
+text-align: left;
+float: left;
+margin-right: 1em;
+min-width: 110px;
+}
+.listingBar .next,
+.listingNext {
+text-align: right;
+float: right;
+margin-left: 1em;
+min-width: 100px;
+}
+.listingBar img {
+vertical-align: middle;
+}
+.listingBar a {
+font-size: 11px;
+text-decoration: none;
+}
+.tileItem {
+border-bottom: 1px dotted #cccccc;
+padding-top: 0.5em;
+margin-top: 0.5em;
+}
+.tileHeadline {
+border: none;
+font-size: 110%;
+font-weight: bold;
+background: none;
+margin:0;
+padding-left:0;
+}
+#relatedItems .tileHeadline {
+font-size: 130%;
+margin: 0.6em 0;
+}
+.tileHeadline a {
+text-decoration: none;
+}
+.tileBody {
+margin-bottom: 0.5em;
+}
+.tileContent {
+display: table-cell;
+}
+.tileImage, #content a.tileImage {
+float: left;
+margin: 1em 1em 1em 0;
+border: 1px solid #cccccc;
+}
+/* */
+#content .portlet a.tileImage {
+float: none !important;
+}
+.tileImage:hover {
+border: 1px solid #cccccc;
+}
+.highlights .tileItem, .eea-tabs-panel .tileItem {
+margin-top: 0 !important;
+}
+#news-highlights .tileItem:last-child,
+#articles-highlights .tileItem:last-child,
+#publications-highlights .tileItem:last-child,
+#multimedia-highlights .tileItem:last-child,
+#datamaps-highlights .tileItem:last-child {
+border-bottom: none;
+padding-bottom: 0;
+}
+.tileFooter {
+float: left;
+clear: both;
+display: block;
+}
+#relatedItems  {
+margin-bottom: 2em;
+clear: both;
+overflow: hidden;
+}
+#relatedItems .visualClear {
+padding-bottom: 1.5em;
+}
+/* */
+#relatedItems  h3 {
+clear: both;
+}
+/* */
+/* */
+ul.visualNoMarker,
+ol.visualNoMarker {
+list-style: none none;
+margin: 0.5em 0 0 0;
+line-height: 1em;
+}
+textarea.proportional {
+font: 100% 'Open Sans', Verdana, Helvetica, Arial, sans-serif;
+}
+.productCredits {
+text-align: right;
+font-size: 85%;
+clear: both;
+font-weight: normal;
+color: #808285;
+}
+.feedButton {
+display: block;
+float: right;
+margin-top: 1px;
+}
+.poweredBy {
+display: block;
+clear: both;
+font-size: 85%;
+font-weight: normal;
+color: #808285;
+text-align: right;
+}
+/* */
+#portal-sitemap {
+list-style: none;
+list-style-image: none;
+margin: 0;
+font-size: 90%;
+border: none;
+}
+#portal-sitemap a,
+#portal-sitemap .portletNavigationTree ,
+#portal-sitemap .portletNavigationTree  li.navTreeItem {
+border: 0;
+}
+#portal-sitemap > li > a {
+font-size: 1.4em;
+font-weight: bold;
+}
+#portal-sitemap > li {
+border: 0;
+margin-left: 1em;
+padding-bottom: 2em;
+}
+#portal-sitemap .navTreeLevel1 {
+padding-left: 1em;
+border: 0.5em solid #cccccc;
+margin: 0 0 0 0.5em;
+}
+#portal-sitemap .navTreeLevel2 {
+padding-left: 1em;
+border-left: 0.5em solid #f3f3f3;
+margin: 0 0 0 0.6em;
+}
+/* */
+.hiddenStructure {
+display: block !important;    /* */
+background: transparent none; /* */
+border: none;
+height: 1px;
+overflow: hidden;
+padding: 0;
+margin: -1px 0 0 -1px;
+width: 1px;
+}
+option.hiddenStructure {
+display: none;
+}
+.contentViews .hiddenStructure,
+.contentActions .hiddenStructure {
+position: absolute;
+top: -200px;
+left: -200px;
+}
+.contentActions {
+clear: both;
+}
+.hiddenLabel {
+display: block;
+background: transparent none; /* */
+border: none;
+height: 1px;
+overflow: hidden;
+padding: 0;
+margin: -1px 0 0 -1px;
+width: 1px;
+}
+.inline-block {
+display: inline-block;
+}
+#content .inline-block li {
+display: inline-block;
+margin-right: 1em;
+}
+/* */
+.link-plain {
+background-image: none;
+padding: 0;
+}
+.link-parent {
+display: block;
+background: transparent url(http://www.eea.europa.eu/arrowUp.gif) 4px 5px no-repeat;
+padding: 1px 0 10px 16px;
+font-size: 85%;
+text-decoration: none;
+}
+.link-user {
+background: transparent url(http://www.eea.europa.eu/user.gif) 0 1px no-repeat;
+padding: 1px 0 1px 16px;
+}
+.link-external {
+background: transparent url(http://www.eea.europa.eu/link_icon.gif) 3px 1px no-repeat;
+padding: 1px 0 1px 19px;
+}
+.link-https {
+background: transparent url(http://www.eea.europa.eu/lock_icon.gif) 0 1px no-repeat;
+padding: 1px 0 1px 16px;
+}
+.link-mailto {
+background: transparent url(http://www.eea.europa.eu/mail_icon.gif) 0 1px no-repeat;
+padding: 1px 0 1px 16px;
+}
+.link-news {
+background: transparent url(http://www.eea.europa.eu/topic_icon.gif) 0 1px no-repeat;
+padding: 1px 0 1px 16px;
+}
+.link-ftp {
+background: transparent url(http://www.eea.europa.eu/file_icon.gif) 0 1px no-repeat;
+padding: 1px 0 1px 16px;
+}
+.link-irc {
+background: transparent url(http://www.eea.europa.eu/discussionitem_icon.gif) 0 1px no-repeat;
+padding: 1px 0 1px 16px;
+}
+.link-callto {
+background: transparent url(http://www.eea.europa.eu/phone_icon.gif) 0 1px no-repeat;
+padding: 1px 0 1px 16px;
+}
+.link-webcal {
+background: transparent url(http://www.eea.europa.eu/event_icon.gif) 0 1px no-repeat;
+padding: 1px 0 1px 16px;
+}
+.link-feed, .link-rss, .link-rdf, .link-xml{
+background: transparent url(http://www.eea.europa.eu/rss.gif) 0 1px no-repeat;
+padding: 1px 0 1px 18px;
+}
+.link-comment {
+background: transparent url(http://www.eea.europa.eu/discussionitem_icon.gif) center left no-repeat;
+padding: 1px 0 1px 16px !important; /* */
+}
+.link-anchor {
+color: #808285;
+text-decoration: none;
+font-weight: normal;
+}
+/* */
+.link-pdf {
+background: transparent url(http://www.eea.europa.eu/pdf.png) 0 50% no-repeat;
+padding: 2px 0 2px 16px;
+}
+.link-doc, .link-dot, .link-wiz {
+background: transparent url(http://www.eea.europa.eu/doc.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-aif, .link-aifc, .link-aiff {
+background: transparent url(http://www.eea.europa.eu/audio.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-gif, .link-jpe, .link-jpeg, .link-jpg, .link-png {
+background: transparent url(http://www.eea.europa.eu/image.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-m4a, .link-mp2, .link-mp3, .link-mpega, .link-mpga {
+background: transparent url(http://www.eea.europa.eu/audio.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-m3u {
+background: transparent url(http://www.eea.europa.eu/audio.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-m1v, .link-mpa, .link-mpe, .link-mpeg, .link-mpg {
+background: transparent url(http://www.eea.europa.eu/video.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-mp4 {
+background: transparent url(http://www.eea.europa.eu/video.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-asf, .link-asx {
+background: transparent url(http://www.eea.europa.eu/video.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-avi {
+background: transparent url(http://www.eea.europa.eu/avi.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-xlb, .link-xls, .link-xlt, .link-csv, .link-tsv {
+background: transparent url(http://www.eea.europa.eu/xls.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-ppa, .link-pps, .link-ppt, .link-pwz {
+background: transparent url(http://www.eea.europa.eu/ppt.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-wmv, .link-wmf {
+background: transparent url(http://www.eea.europa.eu/video.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-mov, .link-qt {
+background: transparent url(http://www.eea.europa.eu/video.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-rgb {
+background: transparent url(http://www.eea.europa.eu/image.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-ram, .link-rm {
+background: transparent url(http://www.eea.europa.eu/audio.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-ai, .link-eps, .link-ps {
+background: transparent url(http://www.eea.europa.eu/ps.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-swf, .link-swfl {
+background: transparent url(http://www.eea.europa.eu/application.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-tif, .link-tiff {
+background: transparent url(http://www.eea.europa.eu/image.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-wav {
+background: transparent url(http://www.eea.europa.eu/wav.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-zip {
+background: transparent url(http://www.eea.europa.eu/zip.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-mdb, .link-dbf {
+background: transparent url(http://www.eea.europa.eu/application.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-rar {
+background: transparent url(http://www.eea.europa.eu/rar.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-txt {
+background: transparent url(http://www.eea.europa.eu/txt.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-json {
+background: transparent url(http://www.eea.europa.eu/script_code.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-exhibit {
+background: transparent url(http://www.eea.europa.eu/script_code_red.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+.link-table {
+background: transparent url(http://www.eea.europa.eu/table.png) 0 50% no-repeat;
+padding: 2px 0 2px 20px;}
+/* */
+.visualGhosted {
+opacity: 0.2;
+-moz-opacity: 0.2;
+-khtml-opacity: 0.2;
+}
+/* */
+.image-left {
+float: left;
+clear: both;
+margin:  2em 1em 0.5em 0;
+border: 0;
+}
+.image-inline {
+float: none;
+}
+.image-right {
+float: right;
+clear: both;
+margin: 0.5em;
+border: 0;
+}
+html.kupu-html,
+body.kupu {
+font-size: 100%;
+min-width: 55em;
+}
+.linkbox {
+margin-top: 2em;
+border: 1px dashed;
+}
+.media-single-item {
+margin: 1em 0;
+}
+.media-single-item dt {
+float: left;
+padding-right: 0.5em;
+}
+.media-single-item dd,
+.media-single-item dt {
+color: #9a9a99;
+font-size: 90%;
+line-height: 1.1;
+margin: 0 0 0.2em;
+}
+.richDocumentDescription {
+margin-top: 1em;
+width: 65%;
+}
+#visual-portal-wrapper, #portal-globalnav, #portal-header {
+min-width: 995px;
+max-width: 1024px;
+}
+#portal-column-content  {
+padding: 0;
+min-width: 600px;
+}
+#portal-column-one .visualPadding {
+padding: 0;
+background: transparent;
+}
+#slide-menu {
+float: left;
+width: 220px;
+border: 1px solid #ececec;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+background-color: #FFFFFF;
+}
+#portal-column-two .visualPadding {
+padding: 0 1em 1em 0;
+}
+#portal-column-two {
+margin-top: 75px;
+min-width: 350px;
+}
+/* */
+#content img.tileImage, #content div.newsImageContainer {
+float: left;
+}
+.faqSection {
+padding-left: 1em;
+}
+/* */
+.ploneSkin table, .ploneSkin tbody, .ploneSkin a, .ploneSkin img, .ploneSkin tr,
+.ploneSkin div, .ploneSkin td, .ploneSkin iframe, .ploneSkin span, .ploneSkin *,
+.ploneSkin .mceText {
+white-space: normal !important;
+}
+/* */
+body .ploneSkin .mce_formatPreview a {
+font-size: 115%;
+}
+.mceContentBody  {
+font-size: 80% !important;
+}
+/* */
+/* */
+.mceLayout,
+.ploneSkin iframe {
+width: 100% !important;
+min-height: 400px;
+}
+.ploneSkin table.mceLayout td.mceToolbar {
+height: 85px;
+}
+.mceEditor.mceFullScreen {
+background-color: #ececec !important; /* */
+width: 100% !important;
+height: 100% !important;
+z-index: 10;
+display: block;
+position: fixed;
+top: 0;
+left: 0;
+}
+.mceLayout.mceFullScreen {
+margin: 0 auto;
+background-color: #FFF;
+}
+/* */
+input[disabled], #plonebrowser input[disabled] {
+color: #6D6D6D !important;
+text-shadow: none !important;
+}
+/* */
+.plonepopup .mceMiddle span {
+top:29px;
+left:5px;
+height:100%;
+width:100%;
+background:#FFF
+}
+.ploneSkin .mceButton.mce_fullscreen {
+width: 170px !important; /* */
+}
+.mce_fullscreen > .mceVoiceLabel {
+position: relative;
+top: -18px;
+display: block !important;
+font-size: 12px;
+left: 21px;
+}
+/* */
+.ploneSkin .mceMenu {
+min-width: 220px;
+}
+/* */
+.ploneSkin table.mceListBox .mceText {
+min-width: 207px;
+}
+.mceContentBody .presentationBreak, .mceContentBody .pageBreak {
+background-color: #C7E0E9;
+border-bottom: 3px solid #000;
+padding: 0.5em;
+text-align: center;
+}
+/* */
+.mceContentBody .markPresentationalText,
+.mceContentBody .pageBreak,
+.mceContentBody .excludeFromPDF {
+background-color: #ffb;
+}
+.mceContentBody .presentationBreak:before {
+content: "Presentational Break for splitting a slide while keeping the same header";
+}
+.mceContentBody .pageBreak:before {
+content: "Print Page Break used for breaking a page when printing";
+}
+.mceContentBody .excludeFromPDF:before,
+.mceContentBody .noPageBreak:before {
+margin-right: .3em;
+padding: .3em;
+background-color: #C7E0E9;
+font-family: 'FontAwesome';
+content: "Excluded from PDF \f0a4";
+}
+.mceContentBody .noPageBreak {
+background-color: #C7E0E9;
+}
+.mceContentBody .noPageBreak:before {
+content: "No page break \f0a4";
+}
+/* */
+.presentation-images {
+display: none;
+}
+.mceContentBody .presentation-images {
+display: block;
+}
+/* */
+form[name="edit_form"] > table > tbody > tr {
+display: table-row;
+margin-left: 1em;
+}
+form[name="edit_form"] > table > tbody > tr > td {
+display : inline-block;
+margin-left : 1em;
+width: 48.6% !important;
+}
+form[name="edit_form"] table {
+display: table !important;
+}
+/* */
+.ie6 div.cell {
+float: none;
+}
+/* */
+#outdated_wrap, .message_wrap {
+background-color: #F3F3F3;
+width: 100%;
+border-top: solid 1px #778899;
+border-bottom: solid 1px #778899;
+text-align: center;
+padding:5px 0 5px 0;
+position: fixed;
+top: 0;
+z-index: 1001;
+}
+.message_wrap {
+text-align: left;
+}
+#outdated, .message_body {
+width: 960px;
+margin: 0 auto;
+}
+.message_images {
+float: left;
+padding-right: 1em;
+}
+#outdated h3 {
+border: 0;
+margin: 0;
+}
+#outdated li {
+float: left;
+background: url('http://www.eea.europa.eu/browsers.png') no-repeat;
+width: 50px;
+height: 71px;
+overflow: hidden;
+margin-left: 25px;
+}
+#outdated li a {
+width: 100%;
+height: 100%;
+display: block;
+padding-top: 45px;
+}
+#outdated_text {
+width: 30%;
+float: left;
+border-right: 1px dotted lightGrey;
+padding-right: 3em;
+}
+#outdated_ff {
+background-position: -200px 0 !important;
+}
+#outdated_ie {
+background-position: -50px 0 !important;
+}
+#outdated_chrome {
+background-position: -150px 0 !important;
+}
+#outdated_safari {
+background-position: -100px 0 !important;
+}
+#cms-browsers-links ul li {
+display: list-item;
+list-style-type: none;
+}
+/* */
+.no-bg:after {
+background-image: none !important;
+content: "" !important;
+}
+/* */
+.queryindex, .addIndex, .queryoperator, .addOperator {
+width: 105px !important;
+padding: 5px;
+}
+.queryindex, .addIndex {
+width: 150px !important;
+}
+.queryresults {
+float: none !important;
+}
+input.queryvalue {
+width: 200px !important;
+padding: 6px 0;
+}
+.multipleSelectionWidget dd {
+width: 620px !important;
+height: 350px;
+left: 0;
+z-index: 600;
+position: absolute;
+-webkit-column-count: 3;
+column-count: 3;
+}
+.multipleSelectionWidget dt {
+display: block !important;
+padding: 6px 2px;
+}
+.multipleSelectionWidget label {
+width: 195px;
+margin-left: 5px;
+float: left;
+}
+.ArchetypesQueryWidget .criteria {
+margin: 0 0 0.5em 0 !important;
+}
+/* */
+#subfolders_listing {
+font-weight: bold;
+margin: -1em 0 0 -0.5em !important;
+padding: 0;
+min-height: 37px;
+height: 3.5em;
+}
+#subfolders_listing > li {
+float: left;
+padding: 0.5em 0;
+position: relative;
+margin: 5px 0;
+min-width: 60px;
+}
+#subfolders_listing a {
+padding: 0.8em;
+}
+#subfolders_listing a:hover {
+color: #8e004d;
+text-decoration: underline;
+}
+a#subfolders_more_a, .more_dropdown_a {
+background: url("http://www.eea.europa.eu/accordion_down.png") no-repeat scroll 95% 50% transparent;
+padding-right: 2.5em;
+}
+#subfolders_listing #subfolders_more_a:hover, #subfolders_listing .moreHover, .more_dropdown_a .moreHover {
+background: url("http://www.eea.europa.eu/accordion_down.png") no-repeat scroll 95% 50% #FFF !important;
+position: relative;
+z-index: 1010;
+}
+#subfolders_listing .moreHover {
+background: none repeat scroll 0 0 #FFFFFF;
+-moz-border-bottom-colors: none;
+-moz-border-image: none;
+-moz-border-left-colors: none;
+-moz-border-right-colors: none;
+-moz-border-top-colors: none;
+border: 1px solid #666666;
+border-bottom: medium none;
+border-radius: 5px 5px 0 0;
+}
+#subfolders_listing ul a {
+min-width: 140px;
+display: block;
+}
+#subfolders_listing ul {
+position: absolute;
+background-color: #FFFFFF;
+border: 1px solid #666;
+border-radius: 0 5px 5px 5px;
+margin: 8px 0;
+padding: 0;
+z-index: 1005;
+left: -3000px;
+list-style: none;
+}
+#subfolders_listing > li:hover ul {
+left: 0;
+}
+.arrowUp {
+width: 0;
+height: 0;
+border-left: 10px solid rgba(255, 255, 255, 0);
+border-right: 10px solid rgba(255, 255, 255, 0);
+border-bottom: 10px solid #FFF;
+display: block;
+position: relative;
+top: -5px;
+left: 50%;
+}
+.overflow_hidden {
+overflow: hidden;
+}
+.hiddenElem {
+display: none !important;
+}
+/* */
+#popup_login_form {
+position: absolute;
+right: 0;
+background-color: #FFF;
+z-index: 500;
+padding: 1em;
+-webkit-box-shadow: 0px 2px 2px #333;
+-moz-box-shadow: 0px 2px 2px #333;
+-ms-box-shadow: 0px 2px 2px #333;
+-o-box-shadow: 0px 2px 2px #333;
+box-shadow: 0px 2px 2px #333;
+}
+#popup_login_form label {
+width: 8em;
+color: #000;
+}
+#popup_login_form #login-form input {
+font-size: 100%;
+}
+#popup_login_form #login-forgotten-password {
+margin-left: 1em;
+}
+/* */
+.pagination .current:before {
+content: "[";
+}
+.pagination .current:after {
+content: "]";
+}
+.page:before,
+.page:after {
+display: table;
+content: " ";
+}
+.page:after {
+clear: both;
+}
+/* */
+div.row {
+margin-left: 0;
+}
+.spinner {
+text-align: center;
+}
+/* */
+.fieldDiff .delete, #diff-table .diff_sub {
+color: red;
+text-decoration: line-through;
+background-color: transparent;
+}
+.fieldDiff .insert, #diff-table .diff_add {
+color: green;
+text-decoration: underline;
+background-color: transparent;
+}
+.tagInsert, .tagDelete {
+display: none;
+}
+/* */
+@media screen {
+.tabbedmenu ul {
+padding: 0 10px 0 0!important;
+margin: 0!important;
+font-size: 12px;
+line-height: normal!important;
+list-style-image: none!important;
+list-style-type: none!important;
+-webkit-border-radius: 10px 10px 0 0;
+-moz-border-radius: 10px 10px 0 0;
+border-radius: 10px 10px 0 0;
+background-color: #2c8da2;
+}
+.tabbedmenu ul > li {
+float: left;
+margin: 0!important;
+padding: 0!important;
+}
+/* */
+.tabbedmenu ul:before,
+.tabbedmenu ul:after {
+display: table;
+content: " ";
+}
+.tabbedmenu ul:after {
+clear: both;
+}
+.tabbedmenu ul > li > a {
+display: block;
+color: #fff!important;
+text-shadow: 1px 1px 1px #000000;
+text-decoration: none;
+white-space: nowrap;
+padding: 8px 8px;
+}
+.tabbedmenu.two-rows ul > li > a {
+height: 40px;
+white-space: normal;
+max-width: 144px;
+}
+.tabbedmenu .first-tab,
+.tabbedmenu ul > li:first-child > a {
+-webkit-border-radius: 8px 0 0 0;
+-moz-border-radius: 8px 0 0 0;
+border-radius: 8px 0 0 0;
+}
+.tabbedmenu ul > li > a:hover {
+color: #005e7d!important;
+text-decoration: none;
+text-shadow: 1px 1px 1px #FFFFFF;
+background-color: #f3f3f3;
+}
+.tabbedmenu ul > li > a.current,
+.tabbedmenu ul > li > a.current:hover {
+cursor: default;
+color: #005e7d!important;
+text-decoration: none;
+text-shadow: 1px 1px 1px #FFFFFF;
+background-color: #f3f3f3;
+}
+.border-tabbedmenu,
+.tabbedmenu-panel {
+border: 1px solid #DDD;
+border-top: 0;
+padding: 10px;
+}
+}
+.qrbox {
+display: none;
+}
+a.downloading {
+background: transparent url(http://www.eea.europa.eu/icon-downloading.gif) no-repeat center center;
+}
+a.downloading img {
+visibility: hidden;
+}
+.downloading-lock::before {
+content: '';
+display: block;
+width: 50%;
+height: 20px;
+position: absolute;
+right: 0;
+}
+#stats td {
+padding-right: 1em;
+}
+div#original_chart_div {
+overflow: hidden;
+}
+#region-content .documentExportActions {
+float: right;
+height: 0.5em;
+}
+#region-content .documentExportActions ul, .documentExportActions ul {
+list-style: none;
+padding: 0px;
+margin: 1em -0.15em 0px 0px;
+}
+#region-content .documentExportActions li, .documentExportActions li {
+display: inline;
+}
+#region-content .documentExportActions .link-pdf,
+#region-content .documentExportActions .link-epub,
+.documentExportActions .link-pdf,
+.documentExportActions .link-epub {
+background: none;
+padding: 0px;
+margin: 0px;
+}
+#content .documentExportActions a {
+color: rgb(186, 60, 13);
+border-bottom: none !important;
+}
+.documentExportActions .export-action-title {
+display: block;
+padding-left: 0.7em;
+}
+.documentExportActions .eea-icon::before {
+margin: 0px 0.15em;
+}
+#plone-document-byline {
+max-width: 80%;
+}
+/* */
+
+}
+

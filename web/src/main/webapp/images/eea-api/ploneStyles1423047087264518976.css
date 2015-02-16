@@ -1,0 +1,133 @@
+
+/* - ++resource++eea.googlecharts.iframe_resize.css - */
+@media screen {
+/* http://www.eea.europa.eu/portal_css/++resource++eea.googlecharts.iframe_resize.css?original=1 */
+.custom-overlay-mask {
+position: absolute;
+background-color: rgba(0,0,0,0.5);
+z-index: 90;
+}
+.googlechart-chartiframe-resizable {
+border: 2px solid green;
+position:absolute !important;
+z-index: 91;
+}
+.googlechart-chart-resizable {
+border: 1px solid green;
+position:absolute !important;
+z-index: 92;
+}
+.googlechart-chartarea-resizable {
+border: 1px dashed green;
+position:absolute !important;
+z-index: 93;
+}
+.googlechart-chartiframe-header {
+width: 100%;
+background-color: #e2e2e2;
+opacity: 0;
+-webkit-transition: opacity .5s;
+-moz-transition: opacity .5s;
+-o-transition: opacity .5s;
+transition: opacity .5s;
+z-index: 94;
+position: relative;
+}
+.googlechart-chartiframe-resizable:hover .googlechart-chartiframe-header{
+opacity: 1;
+}
+.googlechart-chartiframe-header-hidden{
+opacity: 0 !important;
+}
+.googlechart-chart-header {
+width: 100%;
+background-color: #e2e2e2;
+opacity: 0;
+-webkit-transition: opacity .5s;
+-moz-transition: opacity .5s;
+-o-transition: opacity .5s;
+transition: opacity .5s;
+text-align: center;
+z-index: 95;
+position: relative;
+}
+.googlechart-chart-resizable:hover .googlechart-chart-header{
+opacity: 1;
+}
+.googlechart-chart-header-hidden{
+opacity: 0 !important;
+}
+.googlechart-iframe-cancel,
+.googlechart-iframe-apply {
+float: right;
+margin-left: 3px;
+}
+input.googlechart-iframe-size {
+width: 50px;
+line-height: 1.2;
+padding: 0;
+height: 17px;
+margin-top: 5px;
+}
+.googlechart-chartarea-input {
+font-size:12px;
+background-color: #e2e2e2;
+display:inline-block;
+padding: 0 5px 5px 5px;
+opacity: 0;
+-webkit-transition: opacity .5s;
+-moz-transition: opacity .5s;
+-o-transition: opacity .5s;
+transition: opacity .5s;
+}
+.googlechart-chartarea-size-input{
+padding-top: 5px;
+text-align:center;
+position:absolute;
+overflow:auto;
+margin:auto;
+height:80px;
+width:340px;
+top:0;
+left:0;
+right:0;
+bottom:0;
+}
+.googlechart-chartarea-resizable:hover .googlechart-chartarea-input{
+opacity: 1;
+}
+.googlechart-iframe-hide-element {
+float:right;
+}
+.googlechart-resize-cleanup {
+clear: both;
+}
+.googlechart-resize-status-lock {
+position: fixed;
+top: 0px;
+left: 0px;
+width: 100%;
+height: 80px;
+-webkit-box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+-moz-box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+-o-box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+z-index: 999999999;
+background: rgb(239,239,239);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(239,239,239,0.98)), color-stop(100%,rgba(253,253,253,0.98)));
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#fdfdfd',GradientType=0 );
+border-bottom: 1px solid white;
+font-size: 20px !important;
+font-family: HelveticaNeue,Helvetica,Arial !important;
+line-height: 80px !important;
+text-align: left;
+color: #4b4b4b !important;
+-webkit-transform: translate3d(0px,0px,0px);
+}
+.googlechart-resize-ajax-loader {
+text-align: center;
+font-weight: bold;
+}
+
+}
+
