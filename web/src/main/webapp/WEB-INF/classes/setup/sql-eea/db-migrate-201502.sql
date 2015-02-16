@@ -270,7 +270,8 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system
 -- INSERT INTO Settings (name, value, datatype, position, internal) VALUES
 --  ('map/backgroundChoices', '{"contextList": []}', 0, 9590, false);
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES
-  ('map/config', '{"useOSM":false,"context":"","layer":{"url":"http://www2.demis.nl/mapserver/wms.asp?","layers":"Countries","version":"1.1.1"},"projection":"EPSG:4326","projectionList":["EPSG:4326","EPSG:2154","EPSG:3857"]}', 0, 9590, 'n');
+  ('map/config', '{"viewerMap": "../../map/config-viewer.xml", "listOfServices": {"wms": [], "wmts": []}, "useOSM":true,"context":"","layer":{"url":"http://www2.demis.nl/mapserver/wms.asp?","layers":"Countries","version":"1.1.1"},"projection":"EPSG:3857","projectionList":[{"code":"EPSG:4326","label":"WGS84 (EPSG:4326)"},{"code":"EPSG:3857","label":"Google mercator (EPSG:3857)"}]}', 0, 9590, 'n');
+
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES 
   ('map/proj4js', '[{"code":"EPSG:2154","value":"+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"}]', 0, 9591, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES
@@ -535,6 +536,8 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/metadata/prefergrouplogo', 'y', 0, 9111, 'y');
 
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/isMapViewerEnabled', 'false', 2, 9592, 'n');
+
+DROP TABLE spatialindex;
 
 UPDATE Settings SET value='3.0.0' WHERE name='system/platform/version';
 UPDATE Settings SET value='SNAPSHOT' WHERE name='system/platform/subVersion';
