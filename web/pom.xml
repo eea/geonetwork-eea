@@ -872,7 +872,7 @@
         <env>prod</env>
         <geonetwork.webapp.name>map-catalogue</geonetwork.webapp.name>
         <geonetwork.data.dir>file://\${map-catalogue.data.dir}</geonetwork.data.dir>
-        <geonetwork.log>\${catalina.out}/logs/map-catalogue.log</geonetwork.log>
+        <geonetwork.log>\${catalina.home}/logs/map-catalogue.log</geonetwork.log>
         <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
       </properties>
     </profile>
@@ -888,7 +888,7 @@
         <env>prod</env>
         <geonetwork.config.security>config-securityinternal-catalogue</geonetwork.config.security>
         <geonetwork.webapp.name>internal-catalogue</geonetwork.webapp.name>
-        <geonetwork.log>\${catalina.out}/logs/internal-catalogue.log</geonetwork.log>
+        <geonetwork.log>\${catalina.home}/logs/internal-catalogue.log</geonetwork.log>
         <geonetwork.data.dir>file://\${internal-catalogue.data.dir}</geonetwork.data.dir>
         <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
       </properties>
@@ -905,7 +905,7 @@
         <env>prod</env>
         <geonetwork.config.security>config-securityeditor-catalogue</geonetwork.config.security>
         <geonetwork.webapp.name>editor-catalogue</geonetwork.webapp.name>
-        <geonetwork.log>\${catalina.out}/logs/editor-catalogue.log</geonetwork.log>
+        <geonetwork.log>\${catalina.home}/logs/editor-catalogue.log</geonetwork.log>
         <geonetwork.data.dir>file://\${editor-catalogue.data.dir}</geonetwork.data.dir>
         <war.excludes>WEB-INF/web*.xml</war.excludes>
       </properties>
@@ -922,7 +922,7 @@
         <env>prod</env>
         <geonetwork.config.security>config-securitycatalogue</geonetwork.config.security>
         <geonetwork.webapp.name>catalogue</geonetwork.webapp.name>
-        <geonetwork.log>\${catalina.out}/logs/catalogue.log</geonetwork.log>
+        <geonetwork.log>\${catalina.home}/logs/catalogue.log</geonetwork.log>
         <geonetwork.data.dir>file://\${catalogue.data.dir}</geonetwork.data.dir>
         <war.excludes>WEB-INF/web*.xml</war.excludes>
       </properties>
