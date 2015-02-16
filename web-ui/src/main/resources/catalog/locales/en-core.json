@@ -192,6 +192,8 @@
     "isTemplatey": "Template",
     "isTemplates": "Directory",
     "isTemplaten": "Record",
+    "inspireAnnexes": "INSPIRE annexes",
+    "inspireAnnex": "INSPIRE annex",
     "signinFailure": "Incorrect username or password.",
     "attributeName": "Attribute name",
     "attributeDefinition": "Definition",

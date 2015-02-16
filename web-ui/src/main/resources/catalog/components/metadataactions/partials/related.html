@@ -29,26 +29,47 @@
 			</h4>
 
 
-			<p class="text-muted"
+			<div class="text-muted"
 				 data-ng-if="mainType === 'EEAFILE'">
 
 				<label data-translate="">webdavLink</label>
-				<input class="form-control"
-							 type="text"
-							 value="https://sdi.eea.europa.eu/data{{r.url}}">
+        <div class="input-group">
+          <input class="form-control"
+                 type="text"
+                 value="https://sdi.eea.europa.eu/data{{r.url}}"/>
+          <span class="input-group-btn">
+            <a class="btn btn-default" type="button"
+               data-ng-href="https://sdi.eea.europa.eu/data{{r.url}}"
+               data-translate="">openLink</a>
+          </span>
+        </div>
 				<label data-translate="">cifsLink</label>
-				<input class="form-control"
-							 type="text"
-							 value="\\sdi.eea.europa.eu\data{{r.url}}">
+        <div class="input-group">
+          <input class="form-control"
+                 type="text"
+                 value="\\sdi.eea.europa.eu\data{{r.url}}"/>
+          <span class="input-group-btn">
+            <a class="btn btn-default" type="button"
+               data-ng-href="https://sdi.eea.europa.eu/data{{r.url}}"
+               data-translate="">openLink</a>
+          </span>
+        </div>
 				<label data-translate="">ftpsLink</label>
-				<input class="form-control"
-							 type="text"
-							 value="ftps://sdi.eea.europa.eu/data{{r.url}}">
-			</p>
+        <div class="input-group">
+          <input class="form-control"
+                 type="text"
+                 value="ftps://sdi.eea.europa.eu/data{{r.url}}"/>
+          <span class="input-group-btn">
+            <a class="btn btn-default" type="button"
+               data-ng-href="https://sdi.eea.europa.eu/data{{r.url}}"
+               data-translate="">openLink</a>
+          </span>
+        </div>
+			</div>
 
 			<p class="text-muted"
 				 data-ng-if="mainType.indexOf('MD') == 0">
-				{{r['abstract']}}
+				{{(r['abstract'] || r.defaultAbstract) | striptags | characters:150}}
 			</p>
 			<p class="text-muted"
 				 data-ng-if="mainType === 'WMS'">
