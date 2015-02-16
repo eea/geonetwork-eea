@@ -537,6 +537,7 @@
              <configuration>
                <includeEmptyDirs>false</includeEmptyDirs>
                <outputDirectory>${build.webapp.resources}</outputDirectory>
+               <escapeString>\</escapeString>
                <resources>
                  <resource>
                    <directory>${basedir}/src/main/webResources</directory>
@@ -691,7 +692,7 @@
             </overlay>
           </overlays>           
           <packagingExcludes>${war.excludes}</packagingExcludes>
-          <webXml>${build.webapp.resources}/WEB-INF/${geonetwork.web.xml}</webXml>
+          <!--<webXml>${build.webapp.resources}/WEB-INF/${geonetwork.web.xml}</webXml>-->
           <attachClasses>true</attachClasses>
           <warName>${geonetwork.webapp.name}</warName>
           <webappDirectory>${project.build.directory}/geonetwork</webappDirectory>
@@ -826,7 +827,8 @@
         </property>
       </activation>
       <properties>
-        <geonetwork.web.xml>web.xml</geonetwork.web.xml>
+        <geonetwork.webapp.name>geonetwork</geonetwork.webapp.name>
+        <geonetwork.config.security>config-security</geonetwork.config.security>
         <env>prod</env>
       </properties>
     </profile>
@@ -842,7 +844,6 @@
         <env>prod</env>
         <geonetwork.config.security>config-security</geonetwork.config.security>
         <geonetwork.webapp.name>geonetwork</geonetwork.webapp.name>
-        <geonetwork.web.xml>webgeonetwork.xml</geonetwork.web.xml>
       </properties>
     </profile>
     <profile>
@@ -857,7 +858,6 @@
         <env>dev</env>
         <geonetwork.config.security>config-security</geonetwork.config.security>
         <geonetwork.webapp.name>geonetwork</geonetwork.webapp.name>
-        <geonetwork.web.xml>webgeonetwork.xml</geonetwork.web.xml>
       </properties>
     </profile>
     <profile>
@@ -870,9 +870,9 @@
       </activation>
       <properties>
         <env>prod</env>
-        <geonetwork.config.security>config-security</geonetwork.config.security>
         <geonetwork.webapp.name>map-catalogue</geonetwork.webapp.name>
-        <geonetwork.web.xml>webmap-catalogue.xml</geonetwork.web.xml>
+        <geonetwork.data.dir>file://\${map-catalogue.data.dir}</geonetwork.data.dir>
+        <geonetwork.log>\${catalina.out}/logs/map-catalogue.log</geonetwork.log>
         <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
       </properties>
     </profile>
@@ -888,7 +888,8 @@
         <env>prod</env>
         <geonetwork.config.security>config-securityinternal-catalogue</geonetwork.config.security>
         <geonetwork.webapp.name>internal-catalogue</geonetwork.webapp.name>
-        <geonetwork.web.xml>webinternal-catalogue.xml</geonetwork.web.xml>
+        <geonetwork.log>\${catalina.out}/logs/internal-catalogue.log</geonetwork.log>
+        <geonetwork.data.dir>file://\${internal-catalogue.data.dir}</geonetwork.data.dir>
         <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
       </properties>
     </profile>
@@ -904,7 +905,8 @@
         <env>prod</env>
         <geonetwork.config.security>config-securityeditor-catalogue</geonetwork.config.security>
         <geonetwork.webapp.name>editor-catalogue</geonetwork.webapp.name>
-        <geonetwork.web.xml>webeditor-catalogue.xml</geonetwork.web.xml>
+        <geonetwork.log>\${catalina.out}/logs/editor-catalogue.log</geonetwork.log>
+        <geonetwork.data.dir>file://\${editor-catalogue.data.dir}</geonetwork.data.dir>
         <war.excludes>WEB-INF/web*.xml</war.excludes>
       </properties>
     </profile>
@@ -920,8 +922,9 @@
         <env>prod</env>
         <geonetwork.config.security>config-securitycatalogue</geonetwork.config.security>
         <geonetwork.webapp.name>catalogue</geonetwork.webapp.name>
-        <geonetwork.web.xml>webcatalogue.xml</geonetwork.web.xml>
-        <war.excludes>WEB-INF/web*.xml,WEB-INF/data/config/schema_plugins/iso19139.eea/**</war.excludes>
+        <geonetwork.log>\${catalina.out}/logs/catalogue.log</geonetwork.log>
+        <geonetwork.data.dir>file://\${catalogue.data.dir}</geonetwork.data.dir>
+        <war.excludes>WEB-INF/web*.xml</war.excludes>
       </properties>
     </profile>
     <profile>
