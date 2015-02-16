@@ -88,7 +88,7 @@
 
     <summaryTypes>
         <summaryType name="hits">
-            <item facet="keyword" max="15"/>
+            <!--<item facet="keyword" max="15"/>-->
             <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
             <item facet="inspireAnnex" sortBy="value" sortOrder="asc" max="4"/>
             <item facet="denominator" sortBy="numValue" sortOrder="desc"/>
@@ -102,7 +102,6 @@
             <item facet="format" max="15" sortBy="value"/>
             <item facet="gemetKeyword"/>
             <item facet="publishedDataset"/>
-            <item facet="groupPublished"/> 
             <item facet="progress" translator="codelist:gmd:MD_ProgressCode"/>
         </summaryType>
         <summaryType name="subtemplates">

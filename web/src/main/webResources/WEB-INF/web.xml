@@ -6,7 +6,7 @@
           version="2.5"
           metadata-complete="true">
 
-    <display-name>geonetwork</display-name>
+    <display-name>${geonetwork.webapp.name}</display-name>
     <listener>
         <listener-class>jeeves.config.springutil.JeevesContextLoaderListener</listener-class>
     </listener>

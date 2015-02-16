@@ -20,5 +20,6 @@
  	<!--<import resource="../config-db/mysql.xml"/> -->
  	<!--<import resource="../config-db/db2.xml"/> -->
  	<!--<import resource="../config-db/postgres.xml"/>-->
+ 	<!--<import resource="../config-db/eea-postgres.xml"/>-->
  	<!--<import resource="../config-db/sqlserver.xml"/> -->
 </beans>
