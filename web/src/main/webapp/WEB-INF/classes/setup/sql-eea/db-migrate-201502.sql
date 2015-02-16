@@ -74,7 +74,11 @@ ALTER TABLE Requests ALTER COLUMN spatialfilter TYPE text;
 --Inserts new data and modifies data
 
 ALTER TABLE operations DROP COLUMN reserved;
-ALTER TABLE services DROP COLUMN id;
+ALTER TABLE ServiceParameters DROP CONSTRAINT IF EXISTS serviceparameters_service_fkey;
+ALTER TABLE ServiceParameters DROP COLUMN IF EXISTS id;
+ALTER TABLE services DROP COLUMN IF EXISTS id;
+
+CREATE TABLE SettingsBackup AS SELECT * FROM Settings;
 
 INSERT INTO HarvesterSettings VALUES  (1,NULL,'harvesting',NULL);
 -- Copy all harvester's root nodes config
@@ -293,7 +297,9 @@ INSERT INTO UserAddress (SELECT id, id FROM Users);
 INSERT INTO Email (SELECT id, email FROM Users);
 
 
-CREATE SEQUENCE HIBERNATE_SEQUENCE START WITH 4000 INCREMENT BY 1;
+-- Set the start of the sequence to the highest current id.
+-- SELECT max(id) + 1 FROM Requests;
+CREATE SEQUENCE HIBERNATE_SEQUENCE START WITH 400000 INCREMENT BY 1;
 
 
 -- Update Requests column type (integer > boolean)
@@ -502,3 +508,34 @@ CREATE INDEX ParamsNDX1 ON Params(requestId);
 CREATE INDEX ParamsNDX2 ON Params(queryType);
 CREATE INDEX ParamsNDX3 ON Params(termField);
 CREATE INDEX ParamsNDX4 ON Params(termText);
+
+DELETE FROM Settings WHERE name like 'system/csw/contactInfo%';
+DELETE FROM Settings WHERE name like 'system/csw/individualName';
+DELETE FROM Settings WHERE name like 'system/csw/positionName';
+DELETE FROM Settings WHERE name like 'system/csw/role';
+DELETE FROM Settings WHERE name like 'system/csw/title';
+DELETE FROM Settings WHERE name like 'system/csw/abstract';
+DELETE FROM Settings WHERE name like 'system/csw/fees';
+DELETE FROM Settings WHERE name like 'system/csw/accessConstraints';
+
+
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('metadata/resourceIdentifierPrefix', 'http://localhost:8080/geonetwork/', 0, 10001, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/xlinkResolver/localXlinkEnable', 'true', 2, 2311, 'n');
+
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('region/getmap/background', 'osm', 0, 9590, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('region/getmap/width', '500', 0, 9590, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('region/getmap/summaryWidth', '500', 0, 9590, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('region/getmap/mapproj', 'EPSG:3857', 0, 9590, 'n');
+
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/proxy/ignorehostlist', NULL, 0, 560, 'y');
+
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/inspire/atom', 'disabled', 0, 7230, 'y');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/inspire/atomSchedule', '0 0 0/24 ? * *', 0, 7240, 'y');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/inspire/atomProtocol', 'INSPIRE-ATOM', 0, 7250, 'y');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/metadata/prefergrouplogo', 'y', 0, 9111, 'y');
+
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/isMapViewerEnabled', 'false', 2, 9592, 'n');
+
+UPDATE Settings SET value='3.0.0' WHERE name='system/platform/version';
+UPDATE Settings SET value='SNAPSHOT' WHERE name='system/platform/subVersion';
+
