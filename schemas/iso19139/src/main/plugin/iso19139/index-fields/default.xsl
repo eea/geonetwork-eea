@@ -171,6 +171,11 @@
 					</xsl:if>
 				</xsl:for-each>
 
+        <xsl:variable name="publishedDataSet" select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']"/>
+        <xsl:variable name="publishedDataSetYes" select="$publishedDataSet != ''"/>
+        <xsl:if test="$publishedDataSetYes">
+          <Field name="publishedDataset" string="Published Dataset" store="true" index="true"/>
+        </xsl:if>
 				<!-- fields used to search for metadata in paper or digital format -->
 
 				<xsl:for-each select="gmd:presentationForm">
@@ -322,6 +327,13 @@
 				</xsl:for-each>
           </xsl:if>
 			</xsl:for-each>
+
+
+        <xsl:if test="contains(gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'GEMET - Concepts')">
+          <xsl:for-each select="gmd:keyword">
+            <Field name="gemetKeyword" string="{gco:CharacterString|gmx:Anchor}" store="true" index="true"/>
+          </xsl:for-each>
+        </xsl:if>
       </xsl:for-each>
 	
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->		
