@@ -74,9 +74,9 @@ ALTER TABLE Requests ALTER COLUMN spatialfilter TYPE text;
 --Inserts new data and modifies data
 
 ALTER TABLE operations DROP COLUMN reserved;
-ALTER TABLE ServiceParameters DROP CONSTRAINT IF EXISTS serviceparameters_service_fkey;
-ALTER TABLE ServiceParameters DROP COLUMN IF EXISTS id;
-ALTER TABLE services DROP COLUMN IF EXISTS id;
+ALTER TABLE ServiceParameters DROP CONSTRAINT serviceparameters_service_fkey;
+ALTER TABLE ServiceParameters DROP COLUMN id;
+ALTER TABLE services DROP COLUMN id;
 
 CREATE TABLE SettingsBackup AS SELECT * FROM Settings;
 
@@ -425,12 +425,12 @@ DROP TABLE USERGROUPS_TMP;
 
 -- Convert Profile column to the profile enumeration ordinal
 
-ALTER TABLE metadata DROP CONSTRAINT IF EXISTS metadata_owner_fkey;
-ALTER TABLE metadatastatus DROP CONSTRAINT IF EXISTS metadatastatus_userid_fkey;
-ALTER TABLE useraddress DROP CONSTRAINT IF EXISTS useraddress_userid_fkey;
-ALTER TABLE email DROP CONSTRAINT IF EXISTS email_user_id_fkey;
-ALTER TABLE groups DROP CONSTRAINT IF EXISTS groups_referrer_fkey;
-ALTER TABLE usergroups DROP CONSTRAINT IF EXISTS usergroups_userid_fkey;
+ALTER TABLE metadata DROP CONSTRAINT metadata_owner_fkey;
+ALTER TABLE metadatastatus DROP CONSTRAINT metadatastatus_userid_fkey;
+ALTER TABLE useraddress DROP CONSTRAINT useraddress_userid_fkey;
+ALTER TABLE email DROP CONSTRAINT email_user_id_fkey;
+ALTER TABLE groups DROP CONSTRAINT groups_referrer_fkey;
+ALTER TABLE usergroups DROP CONSTRAINT usergroups_userid_fkey;
 DROP TABLE Users;
 CREATE TABLE Users
   (
