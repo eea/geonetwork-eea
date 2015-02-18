@@ -537,6 +537,10 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system
 
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/isMapViewerEnabled', 'false', 2, 9592, 'n');
 
+UPDATE metadata SET schemaid = 'iso19139' WHERE schemaid = 'iso19139.eea';
+SELECT setval('hibernate_sequence', (SELECT 1000 + max(id) FROM requests));
+
+
 DROP TABLE spatialindex;
 
 UPDATE Settings SET value='3.0.0' WHERE name='system/platform/version';
