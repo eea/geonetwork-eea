@@ -287,6 +287,8 @@ UPDATE StatusValues SET displayorder = 5 WHERE id = 3;
 UPDATE StatusValues SET displayorder = 2 WHERE id = 4;
 UPDATE StatusValues SET displayorder = 4 WHERE id = 5;
 
+UPDATE harvesthistory SET elapsedtime = 0;
+
 
 -- Version update
 UPDATE Settings SET value='2.11.0' WHERE name='system/platform/version';
