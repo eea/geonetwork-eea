@@ -16,7 +16,7 @@
           lang: '=gnLanguageSwitcher'
         },
         template:
-            '<select class="form-control" ng-model="lang" ' +
+            '<select class="btn-default form-control" ng-model="lang" ' +
             'ng-options="key as (key | translate) for (key, value) in ' +
             'langs">' +
                 '</select>',

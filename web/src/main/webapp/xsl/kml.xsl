@@ -75,7 +75,7 @@
 										</xsl:when>
 										<!-- no thumbnail -->
 										<xsl:otherwise>
-											<img src="{$siteURL}{/root/gui/locUrl}/images/nopreview.gif" alt="{/root/gui/strings/thumbnail}"/>
+											<img src="{$siteURL}{/root/gui/locUrl}/images/nopreview.png" alt="{/root/gui/strings/thumbnail}"/>
 										</xsl:otherwise>
 									</xsl:choose>
 								</td>
@@ -87,9 +87,9 @@
 		test="/root/gui/sources/record[string(siteId)=$source]"> <a
 		href="{/root/gui/sources/record[string(siteId)=$source]/baseURL}"
 		target="_blank"> <img
-		src="{$siteURL}{/root/gui/url}/images/logos/{$source}.gif"
+		src="{$siteURL}{/root/gui/url}/images/logos/{$source}.png"
 		width="40"/> </a> </xsl:when> <xsl:otherwise> <img
-		src="{$siteURL}{/root/gui/url}/images/logos/{$source}.gif"
+		src="{$siteURL}{/root/gui/url}/images/logos/{$source}.png"
 		width="40"/> </xsl:otherwise> </xsl:choose> </td>
 	-->
 						</tr>

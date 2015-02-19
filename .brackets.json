@@ -1,0 +1,5 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/Users/maxmartinez/GitHub/geonetwork-eea/web-client/src/main/resources/apps/js/ext/pkgs/resizable-debug.js"
+    ]
+}
