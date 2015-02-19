@@ -224,6 +224,9 @@
                 .contains('WFS'))) {
               return 'WFS';
             } else if (resource.protocol &&
+              resource.protocol.contains('WWW:LINK-1.0-http--link')) {
+              return 'LINK';
+            } else if (resource.protocol &&
               (
                 resource.protocol
                   .contains('EEA:FOLDERPATH') ||
