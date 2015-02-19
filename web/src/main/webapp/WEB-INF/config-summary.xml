@@ -93,7 +93,7 @@
             <item facet="inspireAnnex" sortBy="value" sortOrder="asc" max="4"/>
             <item facet="denominator" sortBy="numValue" sortOrder="desc"/>
             <item facet="spatialRepresentationType" translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
-            <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode"/>
+            <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
             <item facet="orgName" max="15"/>
             <item facet="metadataPOC" max="15"/>
             <item facet="serviceType"/>

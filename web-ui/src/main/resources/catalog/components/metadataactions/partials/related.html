@@ -24,7 +24,7 @@
 											 mainType.indexOf('LINK') === 0 ||
 											 r.protocol === 'OGC:WFS') &&
 											 r['abstract'] && r['abstract'].length > 0">
-				{{r['abstract']}}
+        {{(r['abstract'] || r.defaultAbstract) | striptags | characters:150}}
 			</h4>
 
 
