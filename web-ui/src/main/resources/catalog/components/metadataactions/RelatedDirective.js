@@ -32,7 +32,10 @@
               list: '@'
             },
             link: function(scope, element, attrs, controller) {
-
+              scope.formatCifsLink = function (url) {
+                return url.replace(/\//g, '\\');
+              };
+              
               scope.updateRelations = function() {
                 scope.relations = [];
                 if (scope.uuid) {

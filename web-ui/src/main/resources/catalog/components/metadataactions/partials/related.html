@@ -36,36 +36,28 @@
           <input class="form-control"
                  type="text"
                  onClick="this.setSelectionRange(0, this.value.length)"
-                 value="https://sdi.eea.europa.eu/data{{r.url}}"/>
+                 value="https://sdi.eea.europa.eu/data{{r.url.substr(0, r.url.lastIndexOf('/'))}}"/>
           <span class="input-group-btn">
             <a class="btn btn-default" type="button"
-               data-ng-href="https://sdi.eea.europa.eu/data{{r.url}}"
+               data-ng-href="https://sdi.eea.europa.eu/data{{r.url.substr(0, r.url.lastIndexOf('/'))}}"
                data-translate="">openLink</a>
           </span>
         </div>
 				<label data-translate="">cifsLink</label>
-        <div class="input-group">
+        <div>
           <input class="form-control"
                  type="text"
                  onClick="this.setSelectionRange(0, this.value.length)"
-                 value="\\sdi.eea.europa.eu\data{{r.url}}"/>
-          <span class="input-group-btn">
-            <a class="btn btn-default" type="button"
-               data-ng-href="https://sdi.eea.europa.eu/data{{r.url}}"
-               data-translate="">openLink</a>
-          </span>
+                 value="\\\\sdi.eea.europa.eu\\data{{formatCifsLink(r.url)}}"/>
+
         </div>
 				<label data-translate="">ftpsLink</label>
-        <div class="input-group">
+        <div>
           <input class="form-control"
                  type="text"
                  onClick="this.setSelectionRange(0, this.value.length)"
-                 value="ftps://sdi.eea.europa.eu/data{{r.url}}"/>
-          <span class="input-group-btn">
-            <a class="btn btn-default" type="button"
-               data-ng-href="https://sdi.eea.europa.eu/data{{r.url}}"
-               data-translate="">openLink</a>
-          </span>
+                 value="ftps://sdi.eea.europa.eu/data{{r.url.substr(0, r.url.lastIndexOf('/'))}}"/>
+
         </div>
 			</div>
 
