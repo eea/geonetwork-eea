@@ -31,6 +31,7 @@ import jeeves.interfaces.Service;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
+import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.Constants;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.Util;
@@ -59,8 +60,8 @@ import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Content;
 import org.jdom.Element;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
@@ -70,6 +71,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
@@ -176,14 +178,6 @@ public class GetRelated implements Service, RelatedMetadata {
     private ServiceConfig _config = new ServiceConfig();
     private static int maxRecords = 1000;
     private static boolean forEditing = false, withValidationErrors = false, keepXlinkAttributes = false;
-    @Autowired
-    private ServiceManager serviceManager;
-    @Autowired
-    private GeonetworkDataDirectory dataDirectory;
-    @Autowired
-    private DataManager dataManager;
-    @Autowired
-    MetadataRepository metadataRepository;
 
     public void init(Path appPath, ServiceConfig config) throws Exception {
         _config = config;
@@ -201,6 +195,10 @@ public class GetRelated implements Service, RelatedMetadata {
         if (to < 0) {
             to = maxRecords;
         }
+        ConfigurableApplicationContext appContext = ApplicationContextHolder.get();
+        ServiceManager serviceManager = appContext.getBean(ServiceManager.class);
+        GeonetworkDataDirectory dataDirectory = appContext.getBean(GeonetworkDataDirectory.class);
+        MetadataRepository metadataRepository = appContext.getBean(MetadataRepository.class);
 
         final ServiceContext context = serviceManager.createServiceContext("xml.relation", lang, request);
 
@@ -221,15 +219,21 @@ public class GetRelated implements Service, RelatedMetadata {
         id = md.getId();
         uuid = md.getUuid();
 
-        Element raw = new Element("root").addContent(getRelated(context, id, uuid, type, from, to, fast));
-        Path relatedXsl = dataDirectory.getWebappDir().resolve("xsl/metadata/relation.xsl");
+        Element raw = new Element("root").addContent(Arrays.asList(
+                new Element("gui").addContent(Arrays.asList(
+                    new Element("language").setText(lang),
+                    new Element("url").setText(context.getBaseUrl())
+                )),
+                getRelated(context, id, uuid, type, from, to, fast)
+        ));
+        Path relatedXsl = dataDirectory.getWebappDir().resolve("xslt/services/metadata/relation.xsl");
 
         final Element transform = Xml.transform(raw, relatedXsl);
         final Set<String> acceptContentType = Sets.newHashSet(Iterators.forEnumeration(request.getHeaders("Accept")));
 
         byte[] response;
         String contentType;
-        if (acceptContentType == null ||
+        if (acceptContentType.isEmpty() ||
             acceptsType(acceptContentType, "xml") ||
             acceptContentType.contains("*/*")||
             acceptContentType.contains("text/plain")) {
@@ -342,6 +346,7 @@ public class GetRelated implements Service, RelatedMetadata {
                     if (sibContent != null) {
                         Element sibling = new Element("sibling");
                         sibling.setAttribute("initiative", resource.getInitiativeType());
+                        sibling.setAttribute("association", resource.getAssociationType());
                         response.addContent(sibling.addContent(sibContent));
                     }
                 }
@@ -420,9 +425,8 @@ public class GetRelated implements Service, RelatedMetadata {
         // perform the search
         if (Log.isDebugEnabled(Geonet.SEARCH_ENGINE))
             Log.debug(Geonet.SEARCH_ENGINE, "Searching for: " + type);
-        MetaSearcher searcher = searchMan.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
 
-        try {
+        try (MetaSearcher searcher = searchMan.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE)) {
             // Creating parameters for search, fast only to retrieve uuid
             Element parameters = new Element(Jeeves.Elem.REQUEST);
             if ("children".equals(type))
@@ -452,8 +456,6 @@ public class GetRelated implements Service, RelatedMetadata {
             Element relatedElement = searcher.present(context, parameters, _config);
             response.addContent(relatedElement);
             return response;
-        } finally {
-            searcher.close();
         }
     }
 

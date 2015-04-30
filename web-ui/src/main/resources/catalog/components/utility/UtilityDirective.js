@@ -4,6 +4,24 @@
   var module = angular.module('gn_utility_directive', [
   ]);
 
+  module.directive('gnConfirmClick', [
+    function() {
+      return {
+        priority: -1,
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+          element.bind('click', function(e) {
+            var message = attrs.gnConfirmClick;
+            if (message && !confirm(message)) {
+              e.stopImmediatePropagation();
+              e.preventDefault();
+            }
+          });
+        }
+      };
+    }
+  ]);
+
   /**
    * @ngdoc directive
    * @name gn_fields_directive.directive:gnCountryPicker
@@ -430,9 +448,14 @@
               //if (forceAsyncEvents[eventName] && $rootScope.$$phase) {
               //  scope.$evalAsync(callback);
               //} else {
-              callback().then(function() {
+              try {
+                callback().then(function() {
+                  done();
+                });
+              }
+              catch (e) {
                 done();
-              });
+              }
               //if (angular.isFunction(callback.then)) {
               //  callback().then(function() {
               //    done();
@@ -699,8 +722,11 @@
       scope: true,
       link: function(scope, element, attrs) {
         scope.collapsed = attrs['gnCollapse'] == 'true';
+        var next = element.next();
         element.on('click', function(e) {
-          var next = element.next();
+          scope.$apply(function() {
+            scope.collapsed = !scope.collapsed;
+          });
           next.collapse('toggle');
         });
       }
@@ -764,7 +790,7 @@
       }
     };
   }]);
-  module.filter('newlines', function () {
+  module.filter('newlines', function() {
     return function(text) {
       if (text) {
         return text.replace(/(\r)?\n/g, '<br/>');
@@ -797,6 +823,43 @@
         ngModel.$parsers.push(into);
         ngModel.$formatters.push(out);
 
+      }
+    };
+  });
+  module.directive('gnImgModal', function() {
+    return {
+      restrict: 'A',
+      link: function(scope, element, attr, ngModel) {
+
+        element.bind('click', function() {
+          var md = scope.$eval(attr['gnImgModal']);
+          var imgs = md.getThumbnails();
+          var img = imgs.big || imgs.small;
+
+          if (img) {
+            var modalElt = angular.element('' +
+                '<div class="modal fade in">' +
+                '<div class="modal-dialog in">' +
+                '  <button type=button class="btn btn-default ' +
+                'gn-btn-modal-img">&times</button>' +
+                '    <img src="' + img + '">' +
+                '</div>' +
+                '</div>');
+            modalElt.find('img').on('load', function() {
+              var w = this.clientWidth;
+              modalElt.find('.modal-dialog').css('width', w + 'px');
+            });
+
+            $(document.body).append(modalElt);
+            modalElt.modal();
+            modalElt.on('hidden.bs.modal', function() {
+              modalElt.remove();
+            });
+            modalElt.find('.gn-btn-modal-img').on('click', function() {
+              modalElt.modal('hide');
+            });
+          }
+        });
       }
     };
   });

@@ -93,6 +93,10 @@
 a {
   word-wrap: break-word;
 }
+.gn-break {
+  word-wrap: break-word;
+  word-break: break-word;
+}
 
 
 /**
@@ -106,6 +110,15 @@ a {
 [ng-cloak],
 .ng-cloak{
   display:none !important;
+}
+
+[gn-img-modal], [data-gn-img-modal] {
+  cursor: pointer;
+}
+.gn-btn-modal-img {
+  position: absolute;
+  top: -1.2em;
+  right: -1.2em;
 }
 
 /**
@@ -154,6 +167,8 @@ div.gn-scroll-spy {
   font-size: 80%;
   width: 150px;
   z-index: 999;
+  max-height: 99vh;
+  overflow: auto;
   background-color: @panel-bg;
   border-top-left-radius: @panel-border-radius;
   border-top: 1px solid @panel-default-border;
@@ -297,7 +312,7 @@ font-size: small;
 
 .tt-suggestion.tt-is-under-cursor {
   color: #fff;
-  background-color: #0097cf;
+  background-color: #428bca;
 
 }
 
@@ -314,8 +329,8 @@ font-size: small;
 
 .tt-suggestion.tt-cursor {
   color: #fff;
-  background-color: #0097cf;
-
+  background-color: #428bca;
+  cursor: pointer;
 }
 
 .bootstrap-tagsinput {

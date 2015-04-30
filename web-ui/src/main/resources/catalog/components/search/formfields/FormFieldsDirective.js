@@ -163,7 +163,7 @@
                 for (i = 0; i < added.length; i++) {
                   $(element).tagsinput('add', {
                     id: added[i],
-                    name: findLabel(data, added[i])
+                    name: data ? findLabel(data, added[i]) : added[i]
                   });
                 }
               }, true);
@@ -221,13 +221,28 @@
             }
             $http.get(url, {cache: true}).
                 success(function(data) {
-                  scope.groups = data !== 'null' ? data.group : null;
+
+                  //data-ng-if is not correctly updating groups.
+                  //So we do the filter here
+                  if (scope.excludeSpecialGroups) {
+                    scope.groups = [];
+                    angular.forEach(data.group, function(g) {
+                      if (g['@id'] > 1) {
+                        scope.groups.push(g);
+                      }
+                    });
+                  } else {
+                    scope.groups = data !== 'null' ? data.group : null;
+                  }
 
                   // Select by default the first group.
                   if ((angular.isUndefined(scope.ownerGroup) ||
                       scope.ownerGroup === '') && data.group) {
                     scope.ownerGroup = data.group[0]['@id'];
                   }
+
+
+
                 });
           }
 
@@ -572,11 +587,21 @@
                 }
                 initialized = true;
               };
+              // List is initialized only on mouseover
+              // To not do it on page load eg. in associated
+              // resource panel
               element.bind('mouseover', function() {
                 if (!initialized) {
                   init();
                 }
               });
+              // ... or you can force init on load
+              // eg. on thesaurus admin
+              if (attrs.initOnLoad) {
+                if (!initialized) {
+                  init();
+                }
+              }
             }
           };
         }]);

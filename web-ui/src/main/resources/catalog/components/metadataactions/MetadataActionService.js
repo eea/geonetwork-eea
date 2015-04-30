@@ -1,10 +1,12 @@
 (function() {
   goog.provide('gn_mdactions_service');
+
+  goog.require('gn_category');
   goog.require('gn_share');
 
 
   var module = angular.module('gn_mdactions_service', [
-    'gn_share'
+    'gn_share', 'gn_category'
   ]);
 
   module.service('gnMetadataActions', [
@@ -143,7 +145,8 @@
 
       this.openPrivilegesPanel = function(md, scope) {
         openModal({
-          title: 'privileges',
+          title: $translate('privileges') + ' - ' +
+              (md.title || md.defaultTitle),
           content: '<div gn-share="' + md.getId() + '"></div>'
         }, scope, 'PrivilegesUpdated');
       };
@@ -183,7 +186,22 @@
           content: '<div gn-share="" gn-share-batch="true"></div>'
         }, scope, 'PrivilegesUpdated');
       };
+      this.openCategoriesBatchPanel = function(scope) {
+        openModal({
+          title: 'categories',
+          content: '<div gn-batch-categories=""></div>'
+        }, scope, 'CategoriesUpdated');
+      };
 
+      this.openTransferOwnership = function(md, scope) {
+        var uuid = md ? md.getUuid() : '';
+        var ownerId = md ? md.getOwnerId() : '';
+        openModal({
+          title: 'transferOwnership',
+          content: '<div gn-transfer-ownership="' + uuid +
+              '" gn-transfer-md-owner="' + ownerId + '"></div>'
+        }, scope, 'TransferOwnership');
+      };
       /**
        * Duplicate the given metadata. Open the editor in new page.
        * @param {string} md

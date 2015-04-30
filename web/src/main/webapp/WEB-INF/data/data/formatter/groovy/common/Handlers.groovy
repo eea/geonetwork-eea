@@ -4,8 +4,13 @@ import org.fao.geonet.constants.Geonet
 import org.fao.geonet.guiservices.metadata.GetRelated
 import org.fao.geonet.kernel.GeonetworkDataDirectory
 import org.fao.geonet.services.metadata.format.groovy.Environment
-import org.fao.geonet.services.metadata.format.groovy.util.*
+import org.fao.geonet.services.metadata.format.groovy.util.AssociatedLink
+import org.fao.geonet.services.metadata.format.groovy.util.Direction
+import org.fao.geonet.services.metadata.format.groovy.util.LinkBlock
+import org.fao.geonet.services.metadata.format.groovy.util.LinkType
+import org.fao.geonet.services.metadata.format.groovy.util.NavBarItem
 import org.fao.geonet.utils.Xml
+import org.jdom.Element
 
 public class Handlers {
     private org.fao.geonet.services.metadata.format.groovy.Handlers handlers;
@@ -103,6 +108,7 @@ public class Handlers {
     <link rel="stylesheet" href="../../static/gn_bootstrap.css$minimize"/>
     <link rel="stylesheet" href="../../static/gn_metadata.css$minimize"/>
     <script src="../../static/lib.js$minimize"></script>
+    <script src="../../static/gn_formatter_lib.js$minimize"></script>
 </head>
 <body>
 """
@@ -115,7 +121,7 @@ public class Handlers {
         def required = """
 <script type="text/javascript">
 //<![CDATA[
-        ${handlers.fileResult("js/std-footer.js", [:])}
+    gnFormatter.formatterOnComplete();
 //]]>
 </script>"""
         if (func.isHtmlOutput()) {
@@ -131,60 +137,139 @@ public class Handlers {
     }
 
     def loadHierarchyLinkBlocks() {
-        def relatedTypes = ["service","children","related","parent","dataset","fcat","siblings","associated","source","hassource"]
         def uuid = this.env.metadataUUID
         def id = this.env.metadataId
 
-        LinkBlock hierarchy = new LinkBlock("hierarchy", "fa fa-sitemap")
-        def bean = this.env.getBean(GetRelated.class)
-        def relatedXsl = this.env.getBean(GeonetworkDataDirectory).getWebappDir().resolve("xsl/metadata/relation.xsl");
-        def raw = bean.getRelated(ServiceContext.get(), id, uuid, relatedTypes.join("|"), 1, 1000, true)
-        def related = Xml.transform(new org.jdom.Element("root").addContent(raw), relatedXsl);
+        LinkBlock hierarchy = new LinkBlock("associated-link", "fa fa-sitemap")
+        Element related = getRelatedReport(id, uuid)
 
         related.getChildren("relation").each { rel ->
             def type = rel.getAttributeValue("type")
-            def icon = this.env.localizedUrl + "../../images/formatter/" + type + ".png";
-
-            def linkType = new LinkType(type, icon, null)
-
-            def md = rel.getChild("metadata")
-
-            def mdEl, relUuid;
-            if (md != null) {
-                relUuid = md.getChild("info", Geonet.Namespaces.GEONET).getChildText("uuid")
-                mdEl = md;
-            } else {
-                relUuid = rel.getChildText("uuid")
-                mdEl = rel
+            def direction = Direction.CHILD
+            def association = rel.getAttributeValue("association")
+            if (type == "sibling") {
+                if (association != null && association != '') {
+                    type = association;
+                    direction = Direction.PARENT
+                }
+            } else if (type == "services" || type == "sources" || type == "parent" || type == "fcats") {
+                direction = Direction.PARENT
+            } else if( type == 'associated') {
+                Element aggIndexEl = rel.getChildren().find{it.getName() startsWith "agg_"}
+                if (aggIndexEl != null) {
+                    type = aggIndexEl.name.substring(4)
+                }
             }
 
-            if (relUuid != null) {
-                def href = createShowMetadataHref(relUuid)
-                def title = mdEl.getChildText("title")
-                if (title == null || title.isEmpty()) {
-                    title = mdEl.getChildText("defaultTitle")
-                }
+            def relatedIdInfo = addRelation(hierarchy, uuid, rel, type, direction)
 
-                if (title != null && title.length() > 60) {
-                    title = title.substring(0, 57) + "...";
-                }
+            if (relatedIdInfo != null && direction == Direction.PARENT) {
+                def parentUUID = relatedIdInfo['uuid'] as String
+                def report = getRelatedReport(relatedIdInfo['id'] as int, parentUUID)
+                report.getChildren("relation").each { potentialSiblingRel ->
+                     def relType = potentialSiblingRel.getAttributeValue("type")
+                    if (association != null) {
+                        boolean isAggSibling = potentialSiblingRel.getChildren("agg_$association").any {
+                            it.getTextTrim() == parentUUID
+                        }
+                        if (isAggSibling) {
+                            addRelation(hierarchy, parentUUID, potentialSiblingRel, association, Direction.SIBLING)
+                        }
+                    } else if (relType == 'datasets' || relType == 'hassource' || relType == 'hasfeaturecat') {
+                        addRelation(hierarchy, parentUUID, potentialSiblingRel, relType, Direction.SIBLING)
+                    } else if (relType == 'children') {
+                        addRelation(hierarchy, parentUUID, potentialSiblingRel, "siblings", Direction.SIBLING)
+                    }
 
-                if (title == null || title.isEmpty()) {
-                    title = relUuid;
                 }
-
-                hierarchy.put(linkType, new Link(href, title))
             }
         }
 
         return hierarchy;
     }
 
+    private Element getRelatedReport(int id, String uuid) {
+        def getRelatedBean = this.env.getBean(GetRelated.class)
+        def relatedXsl = this.env.getBean(GeonetworkDataDirectory).getWebappDir().resolve("xslt/services/metadata/relation.xsl");
+        def raw = getRelatedBean.getRelated(ServiceContext.get(), id, uuid, "", 1, 1000, true)
+        def withGui = new Element("root").addContent(Arrays.asList(
+                new Element("gui").addContent(Arrays.asList(
+                        new Element("language").setText(env.lang3),
+                        new Element("locUrl").setText(env.getLocalizedUrl())
+                )),
+                raw));
+        def related = Xml.transform(withGui, relatedXsl);
+        related
+    }
+
+    private Map addRelation(hierarchy, uuid, rel, type, direction) {
+        def arrow;
+        switch (direction) {
+            case Direction.CHILD:
+                arrow = "pad-left fa-long-arrow-down"
+                break
+            case Direction.PARENT:
+                arrow = "pad-left fa-long-arrow-up"
+                break
+            default:
+                arrow = "fa-arrows-h"
+        }
+        def linkType = new LinkType()
+        linkType.name = type
+        linkType.relationDirection = direction
+        linkType.iconHtml = """
+  <i class="fa ${arrow}" title="${f.translate(direction.name().toLowerCase() + "-plural")}"></i>
+"""
+        def md = rel.getChild("metadata")
+
+        def mdEl, relUuid, relId;
+
+        def relInfo = rel.getChild("info", Geonet.Namespaces.GEONET)
+
+        if (md != null) {
+            relUuid = md.getChild("info", Geonet.Namespaces.GEONET).getChildText("uuid")
+            relId = md.getChild("info", Geonet.Namespaces.GEONET).getChildText("id")
+            mdEl = md;
+        } else if (rel.getChild("info", Geonet.Namespaces.GEONET) != null && relInfo.getChildText("uuid") != null) {
+            relUuid = relInfo.getChildText("uuid")
+            relId = relInfo.getChildText("id")
+            mdEl = rel;
+        } else {
+            relUuid = rel.getChildText("uuid")
+            relId = rel.getChildText("id")
+            mdEl = rel
+        }
+
+        if (relUuid != null && env.metadataUUID != relUuid) {
+            def href = createShowMetadataHref(relUuid)
+            def title = mdEl.getChildText("title")
+            if (title == null || title.isEmpty()) {
+                title = mdEl.getChildText("defaultTitle")
+            }
+
+            if (title == null || title.isEmpty()) {
+                title = relUuid;
+            }
+
+            def cls = uuid.trim().isEmpty() ? "text-muted" : ''
+
+            def link = new AssociatedLink(href, title, cls)
+            link.setAbstract(rel.getChildText('abstract'));
+            link.setLogo(rel.getChildText('logo'));
+            link.metadataId = relUuid;
+
+            hierarchy.put(linkType, link)
+
+            return ['uuid': relUuid, 'id' : relId]
+        }
+        return null;
+    }
+
     private String createShowMetadataHref(String uuid) {
         if (uuid.trim().isEmpty()) {
             return "javascript:alert('" + this.f.translate("noUuidInLink") + "');"
         } else {
-            return this.env.localizedUrl + "md.format.html?xsl=full_view&amp;schema=iso19139&amp;uuid=" + URLEncoder.encode(uuid, "UTF-8")
+            return this.env.localizedUrl + "md.viewer#/full_view/" + URLEncoder.encode(uuid, "UTF-8")
         }
     }
 

@@ -48,6 +48,7 @@ public class Summary {
     private String formats = "";
 
     public List<LinkBlock> links = Lists.newArrayList();
+    public List<LinkBlock> associated = Lists.newArrayList();
 
     public Summary(Handlers handlers, Environment env, Functions functions) throws Exception {
         this.handlers = handlers;
@@ -68,10 +69,11 @@ public class Summary {
         params.put("abstract", abstr);
         params.put("thumbnail", thumbnailUrl());
         params.put("links", links);
+        params.put("associated", associated);
         params.put("addOverviewNavItem", addOverviewNavItem);
         params.put("navBar", navBar);
         params.put("navBarOverflow", navBarOverflow);
-        params.put("showNavOverflow", !navBarOverflow.isEmpty() || addCompleteNavItem);
+        params.put("showNavOverflow", !navBarOverflow.isEmpty());
         params.put("addCompleteNavItem", addCompleteNavItem);
         params.put("content", content);
         params.put("extents", extent != null ? extent : "");

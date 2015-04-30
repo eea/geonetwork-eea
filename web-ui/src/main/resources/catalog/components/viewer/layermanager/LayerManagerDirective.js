@@ -29,7 +29,8 @@
    */
   module.directive('gnLayermanager', [
     'gnLayerFilters',
-    function(gnLayerFilters) {
+    'gnWmsQueue',
+    function(gnLayerFilters, gnWmsQueue) {
       return {
         restrict: 'A',
         templateUrl: '../../catalog/components/viewer/layermanager/' +
@@ -73,12 +74,18 @@
 
           scope.layers = scope.map.getLayers().getArray();
           scope.layerFilterFn = gnLayerFilters.selected;
+
+          scope.failedLayers = gnWmsQueue.errors;
+          scope.removeFailed = function(layer) {
+            gnWmsQueue.removeFromError(layer);
+          };
         }
       };
     }]);
 
-  module.directive('gnLayermanagerItem', ['gnPopup',
-    function(gnPopup) {
+  module.directive('gnLayermanagerItem', [
+    'gnMdView',
+    function(gnMdView) {
       return {
         require: '^gnLayermanager',
         restrict: 'A',
@@ -91,20 +98,8 @@
           scope.showInfo = ctrl.showInfo;
           scope.moveLayer = ctrl.moveLayer;
 
-          scope.showMetadata = function(url, title) {
-            if (url) {
-              gnPopup.create({
-                title: title,
-                url: 'http://sextant.ifremer.fr/geonetwork/srv/fre/' +
-                    'metadata.formatter.html?xsl=mdviewer&style=sextant&url=' +
-                    encodeURIComponent(url),
-                content: '<div class="gn-popup-iframe">' +
-                    '<iframe frameBorder="0" border="0" ' +
-                    'style="width:100%;height:100%;" ' +
-                    'src="{{options.url}}" ></iframe>' +
-                    '</div>'
-              });
-            }
+          scope.showMetadata = function() {
+            gnMdView.openMdFromLayer(scope.layer);
           };
 
           scope.zoomToExtent = function(layer, map) {

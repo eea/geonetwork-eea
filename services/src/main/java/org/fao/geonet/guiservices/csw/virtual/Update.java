@@ -22,12 +22,15 @@
 //==============================================================================
 package org.fao.geonet.guiservices.csw.virtual;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import jeeves.server.JeevesEngine;
+import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.Service;
+import org.fao.geonet.domain.ServiceParam;
 import org.fao.geonet.domain.responses.OkResponse;
 import org.fao.geonet.repository.ServiceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -35,7 +38,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -46,11 +48,17 @@ import java.util.Map;
 @Controller("admin.config.virtualcsw.update")
 public class Update {
 
-    @Autowired
-    private ConfigurableApplicationContext jeevesApplicationContext;
+    public static final String OCCUR_PREFIX = "occur__";
 
-    @Autowired
-    private ServiceRepository serviceRepository;
+    private static String[] noneFilterParameters = {
+            Params.ID,
+            Params.OPERATION,
+            Params.SERVICENAME,
+            Params.CLASSNAME,
+            Params.SERVICEDESCRIPTION,
+            Params.SERVICED_EXPLICIT_QUERY,
+            "_content_type"
+    };
 
     @RequestMapping(value = "/{lang}/admin.config.virtualcsw.update", produces = {
             MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
@@ -60,29 +68,36 @@ public class Update {
                  @RequestParam(Params.SERVICENAME) String serviceName,
                  @RequestParam(Params.CLASSNAME) String className,
                  @RequestParam(value=Params.SERVICEDESCRIPTION, defaultValue="", required=false) String serviceDescription,
-                 @RequestParam(value=Params.FILTER_ANY, defaultValue="", required=false) String filterAny,
-                 @RequestParam(value=Params.FILTER_TITLE, defaultValue="", required=false) String filterTitle,
-                 @RequestParam(value=Params.FILTER_SUBJECT, defaultValue="", required=false) String filterSubject,
-                 @RequestParam(value=Params.FILTER_KEYWORD, defaultValue="", required=false) String filterKeyword,
-                 @RequestParam(value=Params.FILTER_DENOMINATOR, defaultValue="", required=false) String filterDenominator,
-                 @RequestParam(value=Params.FILTER_TYPE, defaultValue="", required=false) String filterType,
-                 @RequestParam(value=Params.FILTER_CATALOG, defaultValue="", required=false) String filterCatalog,
-                 @RequestParam(value=Params.FILTER_GROUP, defaultValue="", required=false) String filterGroup,
-                 @RequestParam(value=Params.FILTER_CATEGORY, defaultValue="", required=false) String filterCategory
+                 @RequestParam(value=Params.SERVICED_EXPLICIT_QUERY, defaultValue="", required=false) String explicitQuery,
+                 @RequestParam Map<String, String> filters
                  )
             throws Exception {
 
-        HashMap<String, String> filters = new HashMap<String, String>();
-        filters.put(Params.FILTER_ANY, filterAny);
-        filters.put(Params.FILTER_TITLE, filterTitle);
-        filters.put(Params.FILTER_SUBJECT, filterSubject);
-        filters.put(Params.FILTER_KEYWORD, filterKeyword);
-        filters.put(Params.FILTER_DENOMINATOR,filterDenominator);
-        filters.put(Params.FILTER_TYPE, filterType);
-        filters.put(Params.FILTER_CATALOG, filterCatalog);
-        filters.put(Params.FILTER_GROUP, filterGroup);
-        filters.put(Params.FILTER_CATEGORY, filterCategory);
+        final ConfigurableApplicationContext applicationContext = ApplicationContextHolder.get();
+        ServiceRepository serviceRepository = applicationContext.getBean(ServiceRepository.class);
 
+        for (String p : noneFilterParameters) {
+            filters.remove(p);
+        }
+
+        java.util.List<ServiceParam> params = Lists.newArrayList();
+
+        Map<String, Character> occurMapping = Maps.newHashMap();
+        for (Map.Entry<String, String> filter : filters.entrySet()) {
+            if (filter.getKey().startsWith(OCCUR_PREFIX)) {
+                String paramName = filter.getKey().substring(OCCUR_PREFIX.length());
+                final String value = filter.getValue();
+                occurMapping.put(paramName, value.length() > 0 ? value.charAt(0) : '+');
+            }
+        }
+        for (Map.Entry<String, String> filter : filters.entrySet()) {
+            if (!filter.getKey().startsWith(OCCUR_PREFIX)) {
+                final ServiceParam param = new ServiceParam(filter.getKey(), filter.getValue());
+                Character occur = occurMapping.get(filter.getKey());
+                param.setOccur(occur == null ? '+' : occur);
+                params.add(param);
+            }
+        }
         if (operation.equals(Params.Operation.NEWSERVICE)) {
             Service service = serviceRepository.findOneByName(serviceName);
 
@@ -96,11 +111,8 @@ public class Update {
             service.setClassName(className);
             service.setName(serviceName);
 
-
-            for (Map.Entry<String, String> filter : filters.entrySet()) {
-                if (filter.getValue() != null && !filter.getValue().equals("")) {
-                    service.getParameters().put(filter.getKey(), filter.getValue());
-                }
+            for (ServiceParam param : params) {
+                service.addParameter(param);
             }
             serviceRepository.save(service);
             serviceId = String.valueOf(service.getId());
@@ -109,16 +121,18 @@ public class Update {
             service.setClassName(className);
             service.setName(serviceName);
             service.setDescription(serviceDescription);
+            service.setExplicitQuery(explicitQuery);
+            service.clearParameters();
 
-            for (Map.Entry<String, String> filter : filters.entrySet()) {
-                service.getParameters().put(filter.getKey(), filter.getValue());
+            for (ServiceParam param : params) {
+                service.addParameter(param);
             }
 
             serviceRepository.save(service);
         }
 
         // launching the service on the fly
-        jeevesApplicationContext.getBean(JeevesEngine.class).loadConfigDB(jeevesApplicationContext, Integer.valueOf(serviceId));
+        applicationContext.getBean(JeevesEngine.class).loadConfigDB(applicationContext, Integer.valueOf(serviceId));
 
         return new OkResponse();
     }

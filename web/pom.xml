@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.0.1-SNAPSHOT</version>
   </parent>
 
 
@@ -97,23 +97,6 @@
           <scope>compile</scope>
       </dependency>
 
- 	<!-- This is to avoid 406 error with spring -->
-	<dependency>
-	    <groupId>com.fasterxml.jackson.core</groupId>
-	    <artifactId>jackson-databind</artifactId>
-	   <version>2.1.2</version>
-	</dependency>
- 	<dependency>  
-        <groupId>javax.xml.bind</groupId>  
-        <artifactId>jaxb-api</artifactId>  
-        <version>2.2.11</version>  
-    </dependency> 
-     <dependency>
-		<groupId>com.sun.xml.bind</groupId>
-		<artifactId>jaxb-impl</artifactId>
-		<version>2.2.7</version>
-	</dependency>
- 
       <!-- Z39.50, SRU  stuff (ie: Spring, CQL, ...)  -->
     <dependency>
       <groupId>org.dspace</groupId>
@@ -625,9 +608,11 @@
               </includes>
               <targetPath>WEB-INF/data/config/schema_plugins</targetPath>
             </resource>
+            <!--
+            Enable to use ExtJS UI
             <resource>
               <directory>${project.basedir}/../web-client/src/main/resources</directory>
-            </resource>
+            </resource>-->
             <resource>
                   <directory>${project.basedir}/../web-ui/src/main/resources</directory>
             </resource>
@@ -722,61 +707,17 @@
             <contextPath>/geonetwork</contextPath>
             <descriptor>${project.build.directory}/WEB-INF/web.xml</descriptor>
             <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-              <resourcesAsCSV>
-                ${project.basedir}/src/main/webapp,
-                ${rootProjectDir}/web-ui/src/main/resources/,
-                ${build.webapp.resources},
-                ${rootProjectDir}/web-client/src/main/resources/</resourcesAsCSV>
-            </baseResource>
-          </webApp>
-          <systemProperties>
-            <systemProperty>
-              <name>org.eclipse.jetty.server.Request.maxFormContentSize</name>
-              <value>500000</value>
-            </systemProperty>
-          </systemProperties>
-          <stopKey>JETTY_TOP</stopKey>
-          <stopPort>8090</stopPort>
-        </configuration>
-      </plugin>
-
-      <!--<plugin>
-        <groupId>org.mortbay.jetty</groupId>
-        <artifactId>jetty-maven-plugin</artifactId>
-        <configuration>
-            <contextXml>${basedir}/jetty-context.xml</contextXml>
-            <connectors>
-            <connector implementation="org.eclipse.jetty.server.bio.SocketConnector">
-              <port>8080</port>
-              <maxIdleTime>10000</maxIdleTime>
-              <requestHeaderSize>20000</requestHeaderSize>
-            </connector>
-            <connector implementation="org.eclipse.jetty.server.ssl.SslSocketConnector">
-              &lt;!&ndash; Note: If another server needs to communicate with this one with
-                    https then it needs the environment variables set as follows:
-                    -Djavax.net.ssl.trustStore=keystore.jks -Djavax.net.ssl.trustStorePassword=password
-                    &ndash;&gt;
-              <port>8443</port>
-              <keystore>${project.basedir}/keystore.jks</keystore>
-              <password>password</password>
-              <keyPassword>password</keyPassword>
-              <truststore>${project.basedir}/keystore.jks</truststore>
-              <trustPassword>password</trustPassword>
-              <maxIdleTime>60000</maxIdleTime>
-            </connector>
-          </connectors>
-          <webAppSourceDirectory>${project.build.directory}/geonetwork</webAppSourceDirectory>
-          <webAppXml>${build.webapp.resources}/WEB-INF/webgeonetwork.xml</webAppXml>
-          &lt;!&ndash;<webAppSourceDirectory>${build.webapp.resources}</webAppSourceDirectory>&ndash;&gt;
-          <webApp>
-            <contextPath>/geonetwork</contextPath>
-            <descriptor>${project.build.directory}/WEB-INF/webgeonetwork.xml</descriptor>
-            <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+           <!--
+              Enable to use ExtJS UI
+              Add
+              ${rootProjectDir}/web-client/src/main/resources/
+              to resourcesAsCSV
+            -->
             <resourcesAsCSV>
               ${project.basedir}/src/main/webapp,
               ${rootProjectDir}/web-ui/src/main/resources/,
-              ${build.webapp.resources},
-              ${rootProjectDir}/web-client/src/main/resources/</resourcesAsCSV>
+              ${build.webapp.resources}
+              </resourcesAsCSV>
             </baseResource>
           </webApp>
           <systemProperties>
@@ -788,7 +729,7 @@
           <stopKey>JETTY_TOP</stopKey>
           <stopPort>8092</stopPort>
         </configuration>
-      </plugin>-->
+      </plugin>
 
     </plugins>
   </build>
@@ -931,27 +872,6 @@
         <env>inspire</env>
       </properties>
     </profile>
-    <profile>
-      <id>widgets</id>
-      <properties>
-        <web.xml.widget.config.overrides>/WEB-INF/config-overrides-widget.xml</web.xml.widget.config.overrides>
-        <widgets.webapp.resources>,../web-client/src/main/resources/,../geonetwork-client-eea/src/main/resources/</widgets.webapp.resources>
-      </properties>
-    </profile>
-    <profile>
-      <id>widgets-tab</id>
-      <properties>
-        <web.xml.widget.config.overrides>/WEB-INF/config-overrides-widgettab.xml</web.xml.widget.config.overrides>
-        <widgets.webapp.resources>,../web-client/src/main/resources/,../geonetwork-client-eea/src/main/resources/</widgets.webapp.resources>
-      </properties>
-    </profile>
-    <profile>
-		<id>html5ui</id>
-		<properties>
-			<web.xml.widget.config.overrides>/WEB-INF/config-overrides-html5ui.xml</web.xml.widget.config.overrides>
-		</properties>
-    </profile>
-    
   </profiles>
 
   <properties>

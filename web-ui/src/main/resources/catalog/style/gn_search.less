@@ -27,7 +27,10 @@
     color: #428bca;
   }
   h4 {
-    padding-left: .8em;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 2px black solid;
   }
 }
 .gn-facet-breadcrumb {
@@ -60,9 +63,14 @@
   }
 }
 
+span.gn-facet-label {
+  display: inline-block;
+}
 
 .gn-select ul.dropdown-menu > li > a:first-letter,
-.gn-sort-by ul.dropdown-menu > li > a:first-letter {
+.gn-sort-by ul.dropdown-menu > li > a:first-letter,
+[data-gn-period-chooser] ul > li > a:first-letter,
+span.gn-facet-label:first-letter {
   text-transform: uppercase;
 }
 
@@ -123,10 +131,6 @@
   padding: 3px 10px;
 }
 
-.tt-suggestion.tt-is-under-cursor {
-  color: #fff;
-  background-color: #0097cf;
-}
 
 .tt-suggestion p {
   margin: 0;
@@ -138,11 +142,6 @@
   color: #999;
   width: 100% !important;
   border: none !important;
-}
-.tt-suggestion.tt-cursor {
-  color: #fff;
-  background-color: #0097cf;
-  cursor: pointer;
 }
 .bootstrap-tagsinput .tt-input {
   width: 100% !important;
@@ -184,6 +183,9 @@
   font-size: 90%;
   label {
     font-weight: normal;
+  }
+  [gn-collapse] {
+    cursor: pointer;
   }
   input[type='text'], select {
     .input-sm;
@@ -373,19 +375,25 @@
     border-radius: 3px;
     position: relative;
     [gn-draw-bbox-btn],
-    .btn-group-vertical {
+    .btn-group-vertical,
+    .dropdown{
       position: absolute;
       top: 4px;
       z-index: 10;
-    }
-    .btn-group-vertical {
       right: 4px;
     }
     [gn-draw-bbox-btn] {
       left: 4px;
     }
+    .dropdown {
+      left: 4px;
+      top: initial;
+      bottom: 4px;
+      .dropdown-menu {
+        font-size: 90%;
+      }
+    }
   }
-
 }
 
 .dropdown-submenu {
@@ -467,4 +475,38 @@ button:hover [role=tooltip] {
 }
 button.active [role=tooltip] {
   display: none;
+}
+
+.gn-close-btn {
+  cursor: pointer;
+  &:hover {
+    color: grey;
+  }
+}
+
+div[gn-transfer-ownership] .panel-body {
+  max-height: 45em;
+  overflow-y: auto;
+}
+
+[gn-share] {
+
+  @media (min-width: @screen-md) {
+    min-width: 800px;
+  }
+  .gn-searchgroup-input {
+    padding-left: 0;
+  }
+  .gn-share-grid {
+    th, td {
+      text-align: center;
+    }
+    th:first-child, td:first-child  {
+      text-align: left;
+    }
+    td {
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+  }
 }

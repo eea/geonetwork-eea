@@ -59,8 +59,8 @@
              */
           var mapsConfig = {
             center: [280274.03240585705, 6053178.654789996],
-            zoom: 2,
-            maxResolution: 9783.93962050256
+            zoom: 2
+            //maxResolution: 9783.93962050256
           };
 
           var viewerMap = new ol.Map({
@@ -73,7 +73,6 @@
             layers: [new ol.layer.Tile({
               source: new ol.source.OSM()
             })],
-            controls: [],
             view: new ol.View({
               center: mapsConfig.center,
               zoom: 2
@@ -125,24 +124,11 @@
           searchSettings.sortbyDefault = searchSettings.sortbyValues[0];
 
           /* Custom templates for search result views */
-          searchSettings.resultViewTpls = [
-                {
+          searchSettings.resultViewTpls = [{
                   tplUrl: '../../catalog/components/search/resultsview/' +
                   'partials/viewtemplates/grid.html',
                   tooltip: 'Grid',
                   icon: 'fa-th'
-                },
-                {
-                  tplUrl: '../../catalog/components/search/resultsview/' +
-                  'partials/viewtemplates/title.html',
-                  tooltip: 'List',
-                  icon: 'fa-list'
-                },
-                {
-                  tplUrl: '../../catalog/components/search/resultsview/' +
-                  'partials/viewtemplates/list.html',
-                  tooltip: 'Complete',
-                  icon: 'fa-th-list'
                 }];
 
           // For the time being metadata rendering is done

@@ -2,11 +2,13 @@ package org.fao.geonet.kernel;
 
 import jeeves.server.ServiceConfig;
 import jeeves.server.sources.http.JeevesServlet;
+import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.NodeInfo;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.utils.IO;
 import org.fao.geonet.utils.Log;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.IOException;
@@ -56,8 +58,6 @@ public class GeonetworkDataDirectory {
     private Path formatterDir;
     private String nodeId;
 
-    @Autowired
-    private ConfigurableApplicationContext _applicationContext;
     private boolean isDefaultNode;
 
     /**
@@ -86,15 +86,21 @@ public class GeonetworkDataDirectory {
             Log.debug(Geonet.DATA_DIRECTORY, "Check and create if needed GeoNetwork data directory");
         }
         this.webappDir = webappDir;
-        if (_applicationContext == null) {
+        final ConfigurableApplicationContext applicationContext = ApplicationContextHolder.get();
+        if (applicationContext == null) {
             this.nodeId = "srv";
             this.isDefaultNode = true;
         } else {
-            final NodeInfo nodeInfo = _applicationContext.getBean(NodeInfo.class);
+            final NodeInfo nodeInfo = applicationContext.getBean(NodeInfo.class);
             this.isDefaultNode = nodeInfo.isDefaultNode();
             this.nodeId = nodeInfo.getId();
         }
         setDataDirectory(jeevesServlet, webappName, handlerConfig);
+
+        // might be null during tests
+        if (applicationContext != null) {
+            applicationContext.publishEvent(new GeonetworkDataDirectoryInitializedEvent(applicationContext, this));
+        }
     }
     public void init(final String webappName, final Path webappDir,  Path systemDataDir,
                      final ServiceConfig handlerConfig, final JeevesServlet jeevesServlet) throws IOException {
@@ -604,5 +610,26 @@ public class GeonetworkDataDirectory {
             resourcePath = resourcePath.substring(1);
         }
         return this.webappDir.resolve(resourcePath);
+    }
+
+    /**
+     * Event is raised when GeonetworkDataDirectory has finished being initialized.
+     */
+    public static class GeonetworkDataDirectoryInitializedEvent extends ApplicationEvent {
+        private final ApplicationContext applicationContext;
+
+        public GeonetworkDataDirectoryInitializedEvent(ApplicationContext context, GeonetworkDataDirectory dataDirectory) {
+            super(dataDirectory);
+            this.applicationContext = context;
+        }
+
+        public ApplicationContext getApplicationContext() {
+            return applicationContext;
+        }
+
+        @Override
+        public GeonetworkDataDirectory getSource() {
+            return (GeonetworkDataDirectory) super.getSource();
+        }
     }
 }

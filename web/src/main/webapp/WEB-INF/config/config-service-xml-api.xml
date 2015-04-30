@@ -32,10 +32,6 @@
       </error>
     </service>
 
-    <service name="xml.regions.list" deprecated="true" xmlapi="true">
-      <class name=".services.region.List" />
-    </service>
-
     <service name="xml.regions.category.list" deprecated="true" xmlapi="true">
       <class name=".services.region.ListCategories" />
     </service>
@@ -141,7 +137,7 @@
       <class name=".services.status.Get" />
     </service>
 
-    <service name="xml.metadata.rate" xmlapi="true">
+    <service name="xml.metadata.rate" xmlapi="true" deprecated="true">
       <class name=".services.metadata.Rate" />
     </service>
 

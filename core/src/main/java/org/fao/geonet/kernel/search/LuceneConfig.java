@@ -28,6 +28,7 @@ import org.apache.lucene.facet.FacetsConfig;
 import org.apache.lucene.search.TopFieldCollector;
 import org.apache.lucene.util.NumericUtils;
 import org.apache.lucene.util.Version;
+import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.search.facet.Dimension;
@@ -39,7 +40,6 @@ import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import java.io.FileNotFoundException;
@@ -66,12 +66,8 @@ public class LuceneConfig {
 	private static final int BOOST_CLASS = 2;
 	private static final int DOC_BOOST_CLASS = 3;
 
-    @Autowired
-    GeonetworkDataDirectory geonetworkDataDirectory;
-    @Autowired
-    ApplicationContext _appContext;
-
 	private Path configurationFile;
+	private HashSet<String> fuzzyMatching;
 
 	/**
 	 * Lucene numeric field configuration
@@ -189,7 +185,10 @@ public class LuceneConfig {
      * @param luceneConfigXmlFile
      */
 	public void configure(String luceneConfigXmlFile) {
-        if(Log.isDebugEnabled(Geonet.SEARCH_ENGINE))
+		ApplicationContext _appContext = ApplicationContextHolder.get();
+		GeonetworkDataDirectory geonetworkDataDirectory = _appContext.getBean(GeonetworkDataDirectory.class);
+
+		if(Log.isDebugEnabled(Geonet.SEARCH_ENGINE))
             Log.debug(Geonet.SEARCH_ENGINE, "Loading Lucene configuration ...");
 		this.configurationFile = geonetworkDataDirectory.resolveWebResource(luceneConfigXmlFile);
         ServletContext servletContext;
@@ -203,6 +202,8 @@ public class LuceneConfig {
     }
 
 	private void load(ServletContext servletContext, String luceneConfigXmlFile) {
+		ApplicationContext _appContext = ApplicationContextHolder.get();
+		GeonetworkDataDirectory geonetworkDataDirectory = _appContext.getBean(GeonetworkDataDirectory.class);
 		try (InputStream in = IO.newInputStream(this.configurationFile)) {
 			luceneConfig = Xml.loadStream(in);
 			if (servletContext != null) {
@@ -304,6 +305,24 @@ public class LuceneConfig {
 									"Tokenized element must have a name attribute, check Lucene configuration file.");
 						} else {
 							tokenizedFields.add(name);
+						}
+					}
+				}
+			}
+
+			// similarity fields
+			elem = luceneConfig.getChild("fuzzyMatching");
+			if (elem != null && "true".equalsIgnoreCase(elem.getAttributeValue("enabled"))) {
+				fuzzyMatching = new HashSet<String>();
+				for (Object o : elem.getChildren()) {
+					if (o instanceof Element) {
+						String name = ((Element) o).getAttributeValue("name");
+						if (name == null) {
+							Log.warning(
+									Geonet.SEARCH_ENGINE,
+									"fuzzyMatching element must have a name attribute, check Lucene configuration file.");
+						} else {
+							fuzzyMatching.add(name);
 						}
 					}
 				}
@@ -486,6 +505,9 @@ public class LuceneConfig {
 		if (children == null)
 			return; // No params
 
+		ApplicationContext _appContext = ApplicationContextHolder.get();
+		GeonetworkDataDirectory geonetworkDataDirectory = _appContext.getBean(GeonetworkDataDirectory.class);
+
         if(Log.isDebugEnabled(Geonet.SEARCH_ENGINE))
             Log.debug(Geonet.SEARCH_ENGINE, "  Field: " + field + ", loading class " + clazz + " ...");
 
@@ -581,6 +603,17 @@ public class LuceneConfig {
 	 */
 	public Set<String> getTokenizedField() {
 		return this.tokenizedFields;
+	}
+
+	/**
+	 * Check if similarity can be applied to the field
+	 * @param fieldName the name of the field to check.
+	 */
+	public boolean applySimilarity(String fieldName) {
+		if (fuzzyMatching != null) {
+			return fuzzyMatching.contains(fieldName);
+		}
+		return true;
 	}
 
 	/**

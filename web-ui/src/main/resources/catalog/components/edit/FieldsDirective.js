@@ -113,12 +113,12 @@
                          element.outerWidth()) * .95;
 
                      var closeBtn = '<button onclick="$(this).' +
-                     'closest(\'div.popover\').prev().' +
-                     'popover(\'hide\');" type="button" ' +
+                     'closest(\'div.popover\').remove();" type="button" ' +
                      'class="fa fa-times btn btn-link pull-right"></button>';
 
                      element.popover({
                        title: info.description,
+                       container: 'body',
                        content: html,
                        html: true,
                        placement: placement,
@@ -142,6 +142,20 @@
                      } else {
                        element.focus();
                      }
+
+                     element.on('shown.bs.popover', function(event) {
+                       if ($('div.popover').css('top').charAt(0) === '-') {
+                         // move popover under navbar.
+                         var oldTopPopover = $('div.popover').position().top;
+                         var newTopPopover =
+                         $(".navbar:not('.ng-hide')").outerHeight() + 5;
+                         var oldTopArrow = $('.popover>.arrow').position().top;
+                         $('div.popover').css('top', newTopPopover);
+                         $('.popover>.arrow').css('top',
+                         oldTopArrow - newTopPopover + oldTopPopover);
+                       }
+                     });
+
                      isInitialized = true;
                    }
                  });
@@ -228,12 +242,12 @@
             // on touchscreen delete action will not be visible
 
             element.addClass('field-bg');
-            element.find('i.btn.fa-times.text-danger')
+            element.find('a').has('.fa-times.text-danger')
               .css('visibility', 'visible');
           });
           element.on('mouseout', function() {
             element.removeClass('field-bg');
-            element.find('i.btn.fa-times.text-danger')
+            element.find('a').has('.fa-times.text-danger')
               .css('visibility', 'hidden');
           });
         }

@@ -56,16 +56,23 @@
     'gnMap',
     'gnMdView',
     'gnMdViewObj',
+    'gnWmsQueue',
     'gnSearchLocation',
     'gnOwsContextService',
     'hotkeys',
+    'gnGlobalSettings',
     function($scope, $location, suggestService, $http, $translate,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
-             gnMap, gnMdView, mdView, gnSearchLocation, gnOwsContextService,
-             hotkeys) {
+             gnMap, gnMdView, mdView, gnWmsQueue,
+             gnSearchLocation, gnOwsContextService,
+             hotkeys, gnGlobalSettings) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
+
+      $scope.modelOptions = angular.copy(gnGlobalSettings.modelOptions);
+      $scope.modelOptionsForm = angular.copy(gnGlobalSettings.modelOptions);
+      $scope.gnWmsQueue = gnWmsQueue;
       $scope.$location = $location;
       $scope.activeTab = '/home';
       $scope.resultTemplate = gnSearchSettings.resultTemplate;
@@ -116,7 +123,9 @@
       // TODO: Previous record should be stored on the client side
       $scope.mdView = mdView;
       gnMdView.initMdView();
-
+      $scope.goToSearch = function (any) {
+        $location.path('/search').search({'any': any});
+      };
       $scope.canEdit = function(record) {
         // TODO: take catalog config for harvested records
         if (record && record['geonet:info'] &&
@@ -151,14 +160,25 @@
           titleInfo: '',
           active: false
         }};
-      $scope.addLayerToMap = function(number) {
-        // FIXME $scope.mainTabs.map.titleInfo = '+' + number;
+
+      $scope.resultviewFns = {
+        addMdLayerToMap: function (link, md) {
+
+          if (gnMap.isLayerInMap(viewerMap,
+              link.name, link.url)) {
+            return;
+          }
+          gnMap.addWmsFromScratch(viewerMap, link.url, link.name, false, md);
+      },
+        addAllMdLayersToMap: function (layers, md) {
+          angular.forEach(layers, function (layer) {
+            $scope.resultviewFns.addMdLayerToMap(layer, md);
+          });
+        },
+        loadMap: function (map, md) {
+          gnOwsContextService.loadContextFromUrl(map.url, viewerMap);
+        }
       };
-
-      $scope.$on('addLayerFromMd', function(evt, getCapLayer) {
-        gnMap.addWmsToMapFromCap(viewerMap, getCapLayer);
-      });
-
 
       // Manage route at start and on $location change
       if (!$location.path()) {

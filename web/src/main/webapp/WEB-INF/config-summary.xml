@@ -61,7 +61,7 @@
         <facet name="inspireTheme" indexKey="inspiretheme" label="inspireThemes"/>
         <facet name="inspireAnnex" indexKey="inspireannex" label="inspireAnnexes"/>
         <facet name="denominator" indexKey="denominator" label="denominators"/>
-        <facet name="spatialRepresentationType" indexKey="spatialRepresentationType"
+        <facet name="spatialRepresentationType" indexKey="cl_spatialRepresentationType"
             label="spatialRepresentationTypes"/>
         <facet name="progress" indexKey="progress"
             label="progress"/>
@@ -88,21 +88,22 @@
 
     <summaryTypes>
         <summaryType name="hits">
-            <!--<item facet="keyword" max="15"/>-->
+            <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
+            <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
             <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
             <item facet="inspireAnnex" sortBy="value" sortOrder="asc" max="4"/>
-            <item facet="denominator" sortBy="numValue" sortOrder="desc"/>
-            <item facet="spatialRepresentationType" translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
-            <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
-            <item facet="orgName" max="15"/>
-            <item facet="metadataPOC" max="15"/>
-            <item facet="serviceType"/>
-            <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
+            <item facet="keyword" max="15"/>
+            <item facet="orgName" max="25"/>
             <item facet="createDateYear" sortBy="value" sortOrder="desc" max="40"/>
             <item facet="format" max="15" sortBy="value"/>
             <item facet="gemetKeyword"/>
             <item facet="publishedDataset"/>
             <item facet="progress" translator="codelist:gmd:MD_ProgressCode"/>
+            <item facet="spatialRepresentationType" translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
+            <item facet="serviceType"/>
+            <item facet="denominator" sortBy="numValue" sortOrder="desc"/>
+            <item facet="metadataPOC" max="15"/>
+          <!--<item facet="metadataPOC" max="15"/>-->
         </summaryType>
         <summaryType name="subtemplates">
             <item facet="subTemplateType"/>
@@ -110,6 +111,7 @@
                 translator="db:org.fao.geonet.repository.GroupRepository:findOne:int"/>
         </summaryType>
         <summaryType name="manager">
+          <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
           <item facet="category" max="99" sortBy="value"
                 translator="db:org.fao.geonet.repository.MetadataCategoryRepository:findOneByName"/>
           <item facet="status" max="10" sortBy="value"

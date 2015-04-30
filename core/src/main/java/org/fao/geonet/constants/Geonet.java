@@ -419,8 +419,9 @@ public final class Geonet {
         public static final String SUMMARY_ONLY = "summaryOnly";
         public static final String REQUESTED_LANGUAGE = "requestedLanguage";
         public static final String SUMMARY_ITEMS = "summaryItems";
+		public static final java.lang.String EXTRA_DUMP_FIELDS = "extraDumpFields";
 
-        /**
+		/**
          * TODO javadoc.
          */
         public static final class ResultType  {
@@ -624,8 +625,8 @@ public final class Geonet {
         public static final String XLINK = "_xlink";
         public static final String ROOT = "_root";
         public static final String SCHEMA = "_schema";
-        public static final String CREATE_DATE = "_createDate";
-        public static final String CHANGE_DATE = "_changeDate";
+        public static final String DATABASE_CREATE_DATE = "_createDate";
+        public static final String DATABASE_CHANGE_DATE = "_changeDate";
         public static final String SOURCE = "_source";
         public static final String IS_TEMPLATE = "_isTemplate";
         public static final String UUID = "_uuid";

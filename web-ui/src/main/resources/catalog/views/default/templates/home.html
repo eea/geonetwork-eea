@@ -15,9 +15,11 @@
                class="form-control input-lg"
                autofocus=""
                data-ng-model="homeAnyField"
+               data-ng-model-options="modelOptions"
                placeholder="{{'anyPlaceHolder' | translate}}"
+               data-ng-keyup="$event.keyCode == 13 && goToSearch(homeAnyField)"
                data-typeahead="address for address in getAnySuggestions($viewValue)"
-               data-typeahead-loading="anyLoading" class="form-control"
+               data-typeahead-loading="anyLoading"
                data-typeahead-min-length="1"/>
         <span class="input-group-btn">
           <a class="btn btn-primary btn-lg"
@@ -30,7 +32,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-8" data-ng-show="searchInfo.facet['topicCats']">
+    <div class="col-sm-8" data-ng-show="searchInfo.facet['topicCats'].length > 0">
       <div class="panel panel-default">
         <div class="panel-heading" data-translate="">browseTopics</div>
           <div class="panel-body">
@@ -62,7 +64,7 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-4" data-ng-show="searchInfo.facet['types']">
+    <div class="col-sm-4" data-ng-show="searchInfo.facet['types'].length > 0">
       <div class="panel panel-default">
         <div class="panel-heading" data-translate="">browseTypes</div>
         <div class="panel-body">

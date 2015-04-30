@@ -191,16 +191,15 @@
           };
 
           this.getClassIcon = function(type) {
-            return this.map[type].iconClass ||
+            return this.map[type || 'DEFAULT'].iconClass ||
                 this.map['DEFAULT'].iconClass;
           };
 
           this.getLabel = function(type) {
-            return this.map[type].label ||
-               this.map['DEFAULT'].label;
+            return this.map[type || 'DEFAULT'].label;
           };
           this.getAction = function(type) {
-            return this.map[type].action || this.map['DEFAULT'].action;
+            return this.map[type || 'DEFAULT'].action;
           };
 
           this.doAction = function(type, parameters, uuid) {
@@ -209,48 +208,32 @@
           };
 
           this.getType = function(resource) {
-            if ((resource.protocol && resource.protocol.contains('WMS')) ||
-                (resource.serviceType && resource.serviceType
-                          .contains('WMS'))) {
-              return 'WMS';
-            } else if ((resource.protocol &&
-                        resource.protocol.contains('WMTS')) ||
-                (resource.serviceType && resource.serviceType
-                    .contains('WMTS'))) {
-              return 'WMTS';
-            } else if ((resource.protocol && resource.protocol
-                .contains('WFS')) ||
-              (resource.serviceType && resource.serviceType
-                .contains('WFS'))) {
-              return 'WFS';
-            } else if (resource.protocol &&
-              resource.protocol.contains('WWW:LINK-1.0-http--link')) {
-              return 'LINK';
-            } else if (resource.protocol &&
-              (
-                resource.protocol
-                  .contains('EEA:FOLDERPATH') ||
-                resource.protocol
-                  .contains('EEA:FILEPATH')
-              )) {
-              return 'EEAFILE';
-            } else if (resource.protocol &&
-              !resource.protocol.contains('EEA:FOLDERPATH') &&
-              !resource.url.contains('.mdb') &&
-              !resource.url.contains('.gdp')) {
-              return 'EEAMAP';
-            } else if ((resource.protocol && resource.protocol
-                      .contains('KML')) ||
-               (resource.serviceType && resource.serviceType
-                          .contains('KML'))) {
-              return 'KML';
-            } else if (resource.protocol &&
-               resource.protocol.contains('DOWNLOAD')) {
-              return 'LINKDOWNLOAD';
-            } else if (resource.protocol &&
-                    resource.protocol.contains('LINK')) {
-              return 'LINK';
-            } else if (resource['@type'] &&
+            var protocolOrType = resource.protocol + resource.serviceType;
+            if (angular.isString(protocolOrType)) {
+              if (protocolOrType.match(/wms/i)) {
+                return 'WMS';
+              } else if (protocolOrType.match(/wmts/i)) {
+                return 'WMTS';
+              } else if (protocolOrType.match(/EEA:FOLDERPATH/i)) {
+                return 'EEAFILE';
+              } else if (protocolOrType.match(/EEA:FILEPATH/i)) {
+                return 'EEAFILE';
+              } else if (!protocolOrType.match(/EEA:FOLDERPATH/i) &&
+                        !resource.url.contains('.mdb') &&
+                        !resource.url.contains('.gdp')) {
+                return 'EEAMAP';
+              } else if (protocolOrType.match(/wfs/i)) {
+                return 'WFS';
+              } else if (protocolOrType.match(/kml/i)) {
+                return 'KML';
+              } else if (protocolOrType.match(/download/i)) {
+                return 'LINKDOWNLOAD';
+              } else if (protocolOrType.match(/link/i)) {
+                return 'LINK';
+              }
+            }
+
+            if (resource['@type'] &&
                 (resource['@type'] === 'parent' ||
                     resource['@type'] === 'children')) {
               return 'MDFAMILY';
@@ -262,6 +245,7 @@
               return 'MDSOURCE';
             } else if (resource['@type'] &&
                (resource['@type'] === 'associated' ||
+               resource['@type'] === 'services' ||
                resource['@type'] === 'hasfeaturecat' ||
                resource['@type'] === 'datasets')) {
               return 'MD';
@@ -272,5 +256,22 @@
             return 'DEFAULT';
           };
         }
-          ]);
+      ]);
+
+  /**
+   * AngularJS Filter. Filters an array of relations by the given tpye.
+   * Uses : relations | relationsfilter:'children children'
+   */
+  module.filter('gnRelationsFilter', function() {
+    return function(relations, types) {
+      var result = [];
+      var types = types.split(' ');
+      angular.forEach(relations, function(rel) {
+        if (types.indexOf(rel['@type']) >= 0) {
+          result.push(rel);
+        }
+      });
+      return result;
+    }
+  });
 })();

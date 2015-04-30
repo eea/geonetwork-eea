@@ -75,7 +75,7 @@
              });
 
              scope.add = function() {
-               gnEditor.add(gnCurrentEdit.id,
+               return gnEditor.add(gnCurrentEdit.id,
                scope.elementRef, scope.elementName, scope.domId, 'before');
              };
 
@@ -84,7 +84,8 @@
                  scope.$parent.thesaurusKey = scope.thesaurusKey =
                          thesaurusIdentifier;
                } else {
-                 gnThesaurusService
+                 gnCurrentEdit.working = true;
+                 return gnThesaurusService
                          .getXML(thesaurusIdentifier,  null,
                                  attrs.transformation).then(
                          function(data) {
@@ -100,8 +101,7 @@
                      // Save the metadata and refresh the form
                      gnEditor.save(gnCurrentEdit.id, true);
                    });
-
-                     });
+                 });
                }
                return false;
              };

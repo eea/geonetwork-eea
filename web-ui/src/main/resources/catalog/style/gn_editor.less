@@ -57,16 +57,21 @@ input[type=text], input[type=number], select {
   }
 }
 
+[data-gn-metadata-category-updater] .dropdown-menu > .disabled > a:hover,
+[data-gn-metadata-group-updater] .dropdown-menu > .disabled > a:hover {
+  cursor: pointer !important;
+}
 
 .gn-editor-container {
   padding: 20px 5px;
   margin-top: 45px;
 }
 
+
 form.gn-editor {
   /* Move each sub fieldset to the left */
   @editor-fieldset-padding-left: 5px;
-  
+
   /**
    * Make space on the following element of a well 
    */
@@ -167,18 +172,6 @@ form.gn-editor {
   .gn-has-xlink {
     label, fieldset > legend {
   //    opacity: .7;
-    }
-  }
-  
-  .gn-multilingual-field {
-    .nav > li > a {
-      padding: 2px 5px;
-      margin-top: 2px;
-      font-size: 8px;
-    }
-    .label {
-      line-height: 2;
-      font-size: 8px;
     }
   }
 
@@ -344,4 +337,28 @@ form.gn-tab-inspire {
 }
 .navbar-collapse {
   padding-right: 0px;
+}
+
+.open > .dropdown-menu {
+  max-height: 25em;
+  overflow-y: auto;
+}
+
+.schematron-result-list-label-info .text-info {
+  color: @label-primary-bg;
+}
+
+.gn-multilingual-field {
+  .nav > li > a {
+    padding: 2px 5px;
+    margin-top: 2px;
+    font-size: 8px;
+  }
+  .label {
+    line-height: 2;
+    font-size: 8px;
+  }
+  .no-data a {
+    color: @gray-light;
+  }
 }

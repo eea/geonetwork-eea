@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import org.fao.geonet.languages.IsoLanguagesMapper;
 import org.fao.geonet.services.metadata.format.FormatType;
 import org.fao.geonet.services.metadata.format.FormatterParams;
+import org.fao.geonet.services.metadata.format.FormatterWidth;
 import org.jdom.Element;
 import org.springframework.security.core.Authentication;
 
@@ -20,8 +21,8 @@ import java.util.Map;
 public class EnvironmentProxy implements Environment {
     private static ThreadLocal<Environment> currentEnvironment = new InheritableThreadLocal<Environment>();
 
-    public static void setCurrentEnvironment(FormatterParams fparams, IsoLanguagesMapper mapper) {
-        currentEnvironment.set(new EnvironmentImpl(fparams, mapper));
+    public static void setCurrentEnvironment(FormatterParams fparams) {
+        currentEnvironment.set(new EnvironmentImpl(fparams, fparams.context.getBean(IsoLanguagesMapper.class)));
     }
     public static void clearContext() {
         currentEnvironment.set(null);
@@ -76,6 +77,11 @@ public class EnvironmentProxy implements Environment {
     @Override
     public FormatType getFormatType() {
         return get().getFormatType();
+    }
+
+    @Override
+    public FormatterWidth getEmbeddingWidth() {
+        return get().getEmbeddingWidth();
     }
 
     @Override

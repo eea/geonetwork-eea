@@ -6,24 +6,37 @@
   module.service('gnSearchLocation', [
     '$location',
     '$rootScope',
+    '$timeout',
     'gnGlobalSettings',
-    function($location, $rootScope, gnGlobalSettings) {
+    function($location, $rootScope, $timeout, gnGlobalSettings) {
 
       this.SEARCH = '/search';
       this.MAP = '/map';
       this.METADATA = '/metadata/';
       this.HOME = '/home';
 
+      var state = {};
+      var that = this;
+
+      /** ---- get methods from $location ---- **/
       this.absUrl = function() {
         return $location.absUrl();
       };
+      this.host = function() {
+        return $location.host();
+      };
+      this.path = function(path) {
+        return $location.path(path);
+      };
+      /** ---- **/
 
       this.isSearch = function() {
         return $location.path() == this.SEARCH;
       };
 
-      this.isMdView = function() {
-        return $location.path().indexOf(this.METADATA) == 0;
+      this.isMdView = function(path) {
+        var p = path || $location.path();
+        return p.indexOf(this.METADATA) == 0;
       };
 
       this.isMap = function() {
@@ -39,12 +52,9 @@
             $location.path() == '';
       };
 
-      this.saveLastUrl = function() {
-        this.lastSearchUrl = $location.absUrl();
-      };
-
       this.setUuid = function(uuid) {
         $location.path(this.METADATA + uuid);
+        this.removeParams();
       };
 
       this.getUuid = function() {
@@ -78,6 +88,15 @@
         $location.search({});
       };
 
+      this.restoreSearch = function() {
+        this.setSearch(state.lastSearchParams);
+
+        //Wait all location search are triggered
+        $timeout(function() {
+          that.lastSearchUrl = '';
+        }, 100);
+      };
+
       this.initTabRouting = function(tabs) {
         var that = this;
         var updateTabs = function() {
@@ -89,6 +108,36 @@
         updateTabs();
         $rootScope.$on('$locationChangeSuccess', updateTabs);
       };
+
+
+      /**
+       * Keep history and state of routing for to keep the search state.
+       * Actually, if you had run a search, then moved to another location,
+       * when you get back to the search, the params are kept and the search
+       * is not fired again.
+       */
+      var initSearchRouting = function(evt, newUrl, oldUrl) {
+        state.old = state.current || {path: ''};
+        state.current = {
+          params: $location.search(),
+          path: $location.path()
+        };
+        if (state.old.path != that.SEARCH &&
+            state.current.path == that.SEARCH) {
+          if (that.isMdView(state.old.path)) {
+            $rootScope.$broadcast('locationBackToSearchFromMdview');
+          }
+          $rootScope.$broadcast('locationBackToSearch');
+        }
+        if (state.old.path == that.SEARCH &&
+            state.current.path != that.SEARCH) {
+          state.lastSearchParams = state.old.params;
+          that.lastSearchUrl = oldUrl;
+        }
+      };
+      initSearchRouting();
+      $rootScope.$on('$locationChangeSuccess', initSearchRouting);
+
     }
   ]);
 })();

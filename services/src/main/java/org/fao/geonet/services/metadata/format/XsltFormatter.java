@@ -1,13 +1,15 @@
 package org.fao.geonet.services.metadata.format;
 
-import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import static org.fao.geonet.services.metadata.format.SchemaLocalizations.loadSchemaLocalizations;
 
@@ -33,8 +35,6 @@ import static org.fao.geonet.services.metadata.format.SchemaLocalizations.loadSc
  */
 @Component
 public class XsltFormatter implements FormatterImpl {
-    @Autowired
-    GeonetworkDataDirectory dataDirectory;
 
     public String format(FormatterParams fparams) throws Exception {
 
@@ -96,10 +96,10 @@ public class XsltFormatter implements FormatterImpl {
         // an xsl:param should be defined
         // eg. <xsl:param name="view"/>
         Map<String, Object> requestParameters = new HashMap<String, Object>();
-        Iterator<String> iterator = fparams.servletRequest.getParameterMap().keySet().iterator();
+        Iterator<String> iterator = fparams.webRequest.getParameterMap().keySet().iterator();
         while (iterator.hasNext()) {
             String key = iterator.next();
-            requestParameters.put(key, fparams.servletRequest.getParameterMap().get(key));
+            requestParameters.put(key, fparams.webRequest.getParameterMap().get(key));
         }
         Element transformed = Xml.transform(root, fparams.viewFile, requestParameters);
 

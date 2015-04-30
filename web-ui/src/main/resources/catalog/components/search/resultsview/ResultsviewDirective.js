@@ -141,17 +141,6 @@
             $compile(template)(scope);
           });
 
-          //TODO: remove this is defined in custom controllers
-          scope.addToMap = function(link) {
-            gnOwsCapabilities.getWMSCapabilities(link.url).then(
-                function(capObj) {
-                  var layerInfo = gnOwsCapabilities.getLayerInfoFromCap(
-                      link.name, capObj);
-                  scope.$emit('addLayerFromMd', layerInfo);
-                });
-
-          };
-
           scope.zoomToMdExtent = function(md, map) {
             var extent = gnMap.getBboxFromMd(md);
             if (extent) {
@@ -185,7 +174,7 @@
           scope.links = scope.md.getLinksByType('LINK');
           scope.downloads = scope.md.getLinksByType('DOWNLOAD');
           scope.layers = scope.md.getLinksByType('OGC', 'kml');
-
+          scope.maps = scope.md.getLinksByType('ows');
         }
       };
     }]);

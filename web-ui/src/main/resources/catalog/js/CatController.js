@@ -10,7 +10,14 @@
   module.constant('gnGlobalSettings', {
     proxyUrl: '../../proxy?url=',
     locale: {},
-    isMapViewerEnabled: false
+    isMapViewerEnabled: false,
+    modelOptions: {
+      updateOn: 'default blur',
+      debounce: {
+        default: 300,
+        blur: 0
+      }
+    }
   });
 
   /**
@@ -35,13 +42,18 @@
       $scope.lang = tokens[5];
       $scope.nodeId = tokens[4];
       // TODO : get list from server side
-      $scope.langs = {'fre': 'fr', 'eng': 'en', 'spa': 'sp'};
+      $scope.langs = {'eng': 'en', 'dut': 'du', 'fre': 'fr',
+        'ger': 'ge', 'kor': 'ko', 'spa': 'es'};
+      // Lang names to be displayed in language selector
+      $scope.langLabels = {'eng': 'English', 'dut': 'Nederlands',
+        'fre': 'Français', 'ger': 'Deutsch', 'kor': '한국의', 'spa': 'Español'};
       $scope.url = '';
       $scope.base = '../../catalog/';
       $scope.proxyUrl = gnGlobalSettings.proxyUrl;
       $scope.logoPath = '../../images/harvesting/';
       $scope.isMapViewerEnabled = gnGlobalSettings.isMapViewerEnabled;
       $scope.isDebug = window.location.search.indexOf('debug') !== -1;
+
 
       $scope.pages = {
         home: 'home',
@@ -134,13 +146,16 @@
             return !this.isAnonymous();
           },
           canEditRecord: function(md) {
-            if (md === null) {
+            if (!md) {
               return false;
             }
 
             // The md provide the information about
             // if the current user can edit records or not.
-            var editable = md['geonet:info'].edit == 'true';
+            var editable = angular.isDefined(md) &&
+                angular.isDefined(md['geonet:info']) &&
+                angular.isDefined(md['geonet:info'].edit) &&
+                md['geonet:info'].edit == 'true';
 
 
             // A second filter is for harvested record
