@@ -186,6 +186,16 @@
     </rule>
     <rule>
       <note>
+        Redirect from search to catalog.search
+        Example URL: http://localhost:8080/geonetwork/{{nodeid}}/{{lang}}/search?uuid=5b5e72fb-b15f-4ad2-be5d-3ffc5f3c83b8
+        redirect to
+        http://localhost:8080/geonetwork/{{nodeid}}/{{lang}}/catalog.search&amp;uuid=ca5e22d6-5bd3-4b6a-bcfb-11462f76cd10
+      </note>
+      <from>^/([a-zA-Z0-9_\-]+)/(.*)/search\?.*uuid=(.*)</from>
+      <to type="permanent-redirect">%{context-path}/$1/$2/catalog.search?uuid=$3</to>
+    </rule>
+     <rule>
+      <note>
         Retrieves html format for a metadata (multinode mode).
         Example URL: http://localhost:8080/geonetwork/{{nodeid}}/metadata/da165110-88fd-11da-a88f-000d939bc5d8
         redirect to
