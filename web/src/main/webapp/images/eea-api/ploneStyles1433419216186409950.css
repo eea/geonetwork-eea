@@ -237,6 +237,10 @@ padding: 1em 1.5em 1em 5.5em;
 vertical-align: middle;
 border: none;
 }
+/* */
+.portalMessage {
+background-color: #f3f3f3;
+}
 .extra .attention,
 .extra .caution,
 .extra .danger,
@@ -261,6 +265,10 @@ text-decoration: inherit;
 speak: none;
 margin-left: -2.3em;
 font-size: 150%;
+}
+/* */
+#portal-column-two .portalMessage .eea-icon:before {
+margin-left: -1.3em;
 }
 div.attention:before, div.caution:before,
 div.danger:before, div.error:before, div.hint:before,
@@ -306,6 +314,9 @@ background-color: #FFFABE;
 div.error,
 .errorMessage {
 color: red;
+}
+.archiveMessage:before {
+content: "\f1da";
 }
 .ideaMessage:before {
 content: "\f0eb";

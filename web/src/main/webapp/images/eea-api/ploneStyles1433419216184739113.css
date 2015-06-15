@@ -1,0 +1,252 @@
+
+/* - print.css - */
+@media print {
+/* http://www.eea.europa.eu/portal_css/print.css?original=1 */
+/* */
+/* */
+body {
+font-family: 'Open Sans', Verdana, Helvetica, Arial, sans-serif;
+font-size: 9pt;
+min-width: 10cm;
+width: auto;
+}
+#portal-visual-wrapper {
+width: 100%;
+margin: 0;
+padding: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+border: none;
+font-family: 'Open Sans', Verdana, Helvetica, Arial, sans-serif;
+width: auto;
+page-break-inside: avoid;
+page-break-after: avoid;
+}
+/* */
+#portal-column-content {
+width: 100%;
+}
+ul, ol, dl {
+padding-right: 0.5em;
+}
+ul {
+list-style-type: square;
+}
+.documentDescription {
+font-weight: bold;
+}
+pre {
+border: 1pt dotted black;
+white-space: pre;
+font-size: 8pt;
+overflow: auto;
+padding: 1em 0;
+}
+table.listing,
+table.listing td {
+border-collapse: collapse;
+}
+td a img {
+display: none;
+}
+a {
+color: Black !important;
+text-decoration: none !important;
+}
+a:link, a:visited {
+color: #520;
+background: transparent;
+}
+a img {
+border: none;
+}
+#content {
+white-space: normal;
+}
+#content a.noPrint:link:after,
+#content a.noPrint:visited:after {
+content: '';
+}
+#printLogo {
+display: block !important;
+float: right;
+width: 7.5cm;
+}
+h2.highlight {
+padding-top: 1em;
+}
+#print-warning {
+display: none;
+}
+.portlet-rss * {
+clear: both;
+}
+/* */
+.documentEditable .documentContent {
+border:none !important;
+}
+#portal-column-content {
+margin:0 !important;
+}
+body {
+background-image:none !important;
+}
+#box-classification {
+float:none !important;
+}
+.keyMessage {
+page-break-inside:avoid !important;
+}
+.indicator-figure-plus-container {
+page-break-inside:avoid !important;
+}
+.indicator-figure-plus .figure-title {
+clear:both !important;
+}
+/* */
+/* */
+.pageBreak {
+page-break-before: always;
+}
+.noPageBreak {
+page-break-inside: avoid;
+}
+/* */
+#content dt {
+margin:1em 0 0.625em;
+}
+#content p, #content table {
+margin-bottom:0.625em;
+margin-top:0.625em;
+}
+#content .documentDescription, #content #description {
+margin:0.5em 0 1.31em;
+}
+/* */
+#relatedItems .eea-tabs-panel {
+display: block !important;
+}
+#relatedItems .photoAlbumEntry {
+clear: both;
+margin: 0;
+}
+#relatedItems .photoAlbumEntryWrapper {
+display: none;
+}
+#relatedItems .photoAlbumEntryDescription {
+display: none;
+}
+#relatedItems a:link:after,#relatedItems a:visited:after {
+content:" [" attr(href) "] ";
+}
+#relatedItems h2 {
+margin: 50pt 0 20pt 0;
+padding: 0;
+}
+#relatedItems h3 {
+margin: 0;
+padding: 0;
+}
+/* */
+#content-core ul.formTabs,
+.standardButton,
+.googlechart_filters,
+#auto-related,
+#related-multimedia,
+.languageCodes,
+#themes-object,
+#cross-site-top,
+#portal-footer img,
+#portal-siteactions,
+.hiddenStructure,
+.hiddenElem,
+#portal-searchbox,
+#portal-globalnav .plain,
+#portal-globalnav .selected,
+#portal-globalnav,
+#portal-personaltools,
+#portal-breadcrumbs,
+#edit-bar,
+#portal-column-one,
+#portal-column-two,
+#portal-languageselector,
+.contentViews,
+.contentActions,
+.help,
+.legend,
+div.portalWarningMessage,
+div.portalStopMessage,
+div.documentActions,
+.documentByLine,
+#multimedia-highlights,
+body.frontpage .portlet-promotions,
+.moreLink,
+.skipnav,
+.visualNoPrint,
+.visualClear,
+.progressbar-viewlet,
+.eea-progressbar,
+#languageCodes,
+#commenting,
+#viewlet-below-content,
+#relatedItems .eea-tabs,
+.managePortletsLink,
+#portal-colophon,
+#kss-spinner,
+#review-history,
+#content-history,
+.listingBar,
+.link-presentation,
+input.standalone,
+.overlay,
+.managePortletsFallback,
+.close,
+.link-parent,
+.draggingHook,
+#foldercontents-order-column,
+input.context,
+.site-description,
+.table-definition-map,
+.documentExportActions,
+.sorter_ctl,
+.message_wrap,
+.portal-logo a {
+/* */
+display: none !important;
+}
+/* */
+.image-left {
+float: left;
+clear: both;
+margin: 0.5em 1em 0.5em 0;
+border: 0.4pt solid Black;
+}
+.image-inline {
+float: none;
+}
+.image-right {
+float: right;
+clear: both;
+margin: 0.5em;
+border: 0.4pt solid Black;
+}
+dd.image-caption {
+text-align:left;
+padding: 0;
+margin:0;
+}
+dl.captioned {
+padding: 0.8em;
+}
+.newsImageContainer {
+float:right;
+margin: 0 0 0.5em 1em;
+width: 16em;
+}
+.qrbox {
+display: none;
+}
+/* */
+
+}
+

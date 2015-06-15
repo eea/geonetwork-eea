@@ -192,8 +192,18 @@ display: none ! important;
 .portaltype-pdftool .documentActions {
 display: none;
 }
+.eea-pdf-overlay {
+min-width: 700px;
+max-width: 720px;
+}
+.eea-pdf-overlay .pb-ajax > div {
+width: auto;
+}
+.field.eea-pdf-email {
+margin-bottom: 0;
+}
 .eea-pdf-email input[type=email] {
-min-width: 500px;
+min-width: 300px;
 max-width: 85%;
 height: 30px;
 }
@@ -216,9 +226,11 @@ text-align: right;
 .eea-pdf-email .formHelp {
 font-size: 90%;
 color: #808285;
+margin-top: 1em;
 }
 .eea-pdf-email textarea[name=body] {
 visibility: hidden;
+position: absolute;
 }
 .eea-pdf-email .context {
 min-height: 30px;
@@ -246,6 +258,10 @@ margin: 0;
 /* http://www.eea.europa.eu/portal_css/ploneCustom.css?original=1 */
 /* */
 /* */
+/* */
+.frontpage .promo-item-desc {
+display: none;
+}
 /* */
 div.width-3\3a 4 { width:    58.5%;  }
 div.position-1\3a 4 {margin-left:    -79.875%;}
@@ -277,9 +293,6 @@ padding: 0 0.5em 0 0.5em;
 border-style: none !important;
 }
 #faceted-form .faceted-widget {
--webkit-border-radius: 3px;
--moz-border-radius: 3px;
-border-radius: 3px;
 background-color: #f3f3f3;
 }
 #faceted-form .widget-fieldset legend {
@@ -389,20 +402,7 @@ min-width:82%;
 height: 22px;
 font-size: 16px;
 padding: 5px;
--webkit-border-radius: 3px;
--moz-border-radius: 3px;
-border-radius: 3px;
 background: #FFFFFF;
--webkit-transition: border-color .218s;
--moz-transition: border .218s;
--ms-transition: border .218s;
--o-transition: border-color .218s;
-transition: border-color .218s;
--webkit-transition: box-shadow .218s;
--moz-transition: box-shadow .218s;
--ms-transition: box-shadow .218s;
--o-transition: box-shadow .218s;
-transition: box-shadow .218s;
 }
 .faceted-top-widgets .faceted-widget .widget-fieldset form input[type="text"]:focus,
 .faceted-center-widgets .faceted-widget .widget-fieldset form input[type="text"]:focus {
@@ -411,7 +411,7 @@ transition: box-shadow .218s;
 -ms-box-shadow: 1px 1px 3px #DFDFDF;
 -o-box-shadow: 1px 1px 3px #DFDFDF;
 box-shadow: 1px 1px 3px #DFDFDF;
-border-color: #b1c748;
+border-color: #009966;
 }
 .faceted-top-widgets .faceted-widget,
 .faceted-center-widgets .faceted-widget {
@@ -430,54 +430,19 @@ margin-right: 20px;
 .faceted-top-widgets .faceted-widget .widget-fieldset form .searchButton,
 .faceted-center-widgets .faceted-widget .widget-fieldset form .searchButton {
 color:#fff;
-background:#346F83;
-background: -webkit-gradient(linear,0% 40%,0% 70%,from(#478EA5),to(#346F83));
-background: -webkit-linear-gradient(#478EA5, #346F83); /* */
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#478EA5', endColorstr='#346F83'); /* */
--ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#478EA5', endColorstr='#346F83')"; /* */
-background: -moz-linear-gradient(270deg, #478EA5, #346F83) repeat scroll 0 0 transparent;
-background-image: -ms-linear-gradient(top,#478EA5,#346F83);
-background-image: -o-linear-gradient(top,#478EA5,#346F83);
-background-image: linear-gradient(top,#478EA5,#346F83);
+background-color: #006699;
 font: bold 12px 'Open Sans', Verdana, Helvetica, Arial, sans-serif;
 padding: 7px 11px;
 display: inline-block;
-text-shadow: 0 1px 0 #000;
--webkit-transition: border-color .218s;
--moz-transition: border .218s;
--ms-transition: border .218s;
--o-transition: border-color .218s;
-transition: border-color .218s;
--webkit-transition: box-shadow .218s;
--ms-transition: box-shadow .218s;
--moz-transition: box-shadow .218s;
--o-transition: box-shadow .218s;
-transition: box-shadow .218s;
 border: 1px solid #DCDCDC;
--webkit-border-radius: 2px;
--moz-border-radius: 2px;
-border-radius: 2px;
 float: right;
 }
 .faceted-top-widgets .faceted-widget .widget-fieldset form .searchButton:hover,
 .faceted-center-widgets .faceted-widget .widget-fieldset form .searchButton:hover {
 background-color:#f6a800;
-background: -webkit-gradient(linear,0% 40%,0% 70%,from(orange),to(#FF9123));
-background: -webkit-linear-gradient(orange, #FF9123); /* */
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='orange', endColorstr='#FF9123'); /* */
--ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='orange', endColorstr='#FF9123')"; /* */
-background: -moz-linear-gradient(270deg, orange, #FF9123) repeat scroll 0 0 transparent;
-background-image: -ms-linear-gradient(top,orange,#FF9123);
-background-image: -o-linear-gradient(top,orange,#FF9123);
-background-image: linear-gradient(top,orange,#FF9123);
 color: #FFFFFF;
 cursor:pointer;
 border-color: #999999;
--webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
--moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
--ms-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
--o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 text-shadow: none;
 }
 .faceted-resultsperpage-widget select {
@@ -504,34 +469,14 @@ input.context,
 input.destructive,
 input.standalone {
 color:#fff !important;
-background:#346F83;
-background-image: -webkit-gradient(linear,0% 40%,0% 70%,from(#478EA5),to(#346F83));
-background: -webkit-linear-gradient(#478EA5, #346F83); /* */
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#478EA5', endColorstr='#346F83'); /* */
--ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#478EA5', endColorstr='#346F83')"; /* */
-background-image: -moz-linear-gradient(270deg, #478EA5, #346F83);
-background-image: -ms-linear-gradient(top,#478EA5,#346F83);
-background-image: -o-linear-gradient(top,#478EA5,#346F83);
-background-image: linear-gradient(top,#478EA5,#346F83);
+background-color: #006699;
+background-image: none;
 font: bold 12px 'Open Sans', Verdana, Helvetica, Arial, sans-serif;
 padding: 7px 11px;
 position: relative;
 display: inline-block;
 text-shadow: 0 1px 1px #000;
--webkit-transition: border-color .218s;
--moz-transition: border .218s;
--ms-transition: border-color .218s;
--o-transition: border-color .218s;
-transition: border-color .218s;
--webkit-transition: box-shadow .218s;
--moz-transition: box-shadow .218s;
--ms-transition: box-shadow .218s;
--o-transition: box-shadow .218s;
-transition: box-shadow .218s;
 border: 1px solid #346F83;
--webkit-border-radius: 2px;
--moz-border-radius: 2px;
-border-radius: 2px;
 }
 #portal-columns input[type="submit"]:hover, .standardButton:hover,
 #content a.standardButton:hover,
@@ -541,22 +486,9 @@ input.context:hover,
 input.destructive:hover,
 input.standalone:hover {
 background-color:#f6a800;
-background-image: -webkit-gradient(linear,0% 40%,0% 70%,from(orange),to(#FF9123));
-background: -webkit-linear-gradient(orange, #FF9123); /* */
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='orange', endColorstr='#FF9123'); /* */
--ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='orange', endColorstr='#FF9123')"; /* */
-background-image: -moz-linear-gradient(270deg, orange, #FF9123);
-background-image: -ms-linear-gradient(top,orange,#FF9123);
-background-image: -o-linear-gradient(top,orange,#FF9123);
-background-image: linear-gradient(top,orange,#FF9123);
 color: #FFFFFF !important;
 cursor:pointer;
 border-color: #999999;
--webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
--moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
--ms-box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
--o-box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
-box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
 text-shadow: none;
 }
 .standardButton a, .standardButton a:hover, .standardButton a:visited {
@@ -569,9 +501,6 @@ color: #FFFFFF !important;
 -o-transition: box-shadow 0.218s ease 0s;
 transition: box-shadow 0.218s ease 0s;
 background: none repeat scroll 0 0 #FFFFFF;
--webkit-border-radius: 3px 3px 3px 3px;
--moz-border-radius: 3px 3px 3px 3px;
-border-radius: 3px 3px 3px 3px;
 font-size: 16px;
 height: 22px;
 padding: 5px;
@@ -711,10 +640,7 @@ margin: 0;
 font-size: 12px;
 line-height: normal!important;
 list-style: none none;
--webkit-border-radius: 10px 10px 0 0;
--moz-border-radius: 10px 10px 0 0;
-border-radius: 10px 10px 0 0;
-background-color: #2c8da2;
+background-color: #006699;
 }
 #visual-portal-wrapper .eea-tabs > li {
 float: left;
@@ -732,12 +658,7 @@ padding: 8px 8px;
 #visual-portal-wrapper .eea-tabs.two-rows > li > a {
 height: 40px;
 white-space: normal;
-max-width: 144px;
-}
-#visual-portal-wrapper .eea-tabs > li:first-child > a {
--webkit-border-radius: 8px 0 0 0;
--moz-border-radius: 8px 0 0 0;
-border-radius: 8px 0 0 0;
+max-width: 150px;
 }
 #visual-portal-wrapper .eea-tabs > li > a:hover {
 color: #005e7d;
@@ -946,6 +867,9 @@ display: none;
 background: transparent;
 padding: 0 0 2em 0;
 }
+#content-core {
+clear:both;
+}
 #translation-disclaimer .note {
 background:transparent url(http://glossary.eea.europa.eu/misc_/EEAGlossary/note_ico.gif) no-repeat scroll 0.3em 50%;
 padding:0.2em 0.3em 0.3em 22px;
@@ -1132,7 +1056,7 @@ display: block;
 color: #333333;
 cursor: default;
 }
-.formControls {
+div.formControls {
 margin: 1em 0;
 }
 form[name="edit_form"] div.formControls {
@@ -1169,23 +1093,31 @@ background: transparent none;
 /* */
 #visual-portal-wrapper {
 margin: 0 auto;
-overflow: visible !important;
+overflow: hidden;
 padding: 0;
 display: block;
 clear: both;
 position: relative;
 }
+@media (min-width: 1025px) {
+#visual-portal-wrapper {
+overflow: visible;
+}
+}
 /* */
+#printLogo {
+padding: 0 0 0 0.5em;
+display: block;
+width: auto;
+height: 55px;
+margin-top: 14px;
+}
 .portal-logo {
-background: url(http://www.eea.europa.eu/logo.gif) no-repeat 0 8px;
 border: 0;
 margin: 0;
 padding: 0;
 float: left;
 position: relative;
-}
-#printLogo {
-display: none;
 }
 .portal-logo a {
 display: block;
@@ -1193,9 +1125,7 @@ text-decoration: none;
 overflow: hidden;
 border: 0;
 margin: 0;
-padding: 89px 0 0 0; /* */
-height: 0 !important;
-width: 335px;
+padding: 0;
 cursor: pointer;
 }
 .portal-logo a:hover {
@@ -1222,31 +1152,27 @@ min-width: 995px;
 clear: both;
 display: block;
 position: relative;
-background-color: #777c1f;
-background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b1c748), to(#777c1f));
-background-image: -webkit-linear-gradient(center top , #b1c748, #777c1f);
-background-image:    -moz-linear-gradient(center top , #b1c748, #777c1f);
-background-image:     -ms-linear-gradient(center top , #b1c748, #777c1f);
-background-image:      -o-linear-gradient(center top , #b1c748, #777c1f);
-background: linear-gradient(#b1c748, #777c1f); /* */
+}
+#portal-top {
+background-color: #FFFFFF;
 }
 #portal-header {
 display: block;
 clear: both;
 position: relative;
 margin: 0 auto;
+overflow: hidden;
+height: 90px;
 }
 .header-holder #portal-top .cell {
 float: none;
 }
 #cross-site-top {
-background-color: white;
-height: 25px;
+background-color: #006699;
 margin: 0;
 padding: 0;
 width: 100%;
 min-width: 970px;
-border-top: 2px solid #B1C748;
 }
 .shadow {
 -webkit-box-shadow: 1px 1px 5px #afafaf;
@@ -1274,7 +1200,7 @@ top: 2px;
 margin-top: 1em;
 }
 .panel-content, #tip-article-language .panel-content {
-background: white url(http://www.eea.europa.eu/portlet_bg.png) repeat-x;
+background: white;
 color: black;
 padding: 10px;
 border: 1px solid #BABBB8;
@@ -1341,11 +1267,15 @@ display: block;
 float: left;
 }
 /* */
+.searchSection {
+left: -5px;
+position: relative;
+}
 #portal-searchbox {
 float: right;
 clear: right;
 background-color: transparent;
-margin: 25px 7px 0 0;
+margin: 25px 0 0 0;
 padding: 0 0 0 0;
 text-align: right;
 text-transform: lowercase;
@@ -1362,7 +1292,7 @@ text-align: center;
 }
 #portal-searchbox a {
 text-transform: none;
-color: #FFFFFF;
+color: #346f83;
 border: none;
 font-size: 85%;
 margin: 0 5px 0 0;
@@ -1375,10 +1305,7 @@ margin: 0 5px 0 0;
 background: transparent url("sprite-eeaimages.png") no-repeat scroll left center;
 }
 #portal-searchbox input.searchButton {
-background-position: -385px -83px !important;
--webkit-border-radius: 0 4px 4px 0;
--moz-border-radius: 0 4px 4px 0;
-border-radius: 0 4px 4px 0;
+background: #006699 none;
 color: #FFFFFF;
 cursor: pointer;
 font-family: 'Open Sans', Verdana, Helvetica, Arial, sans-serif;
@@ -1454,13 +1381,8 @@ float: left;
 }
 #portal-searchbox label {
 font-size: 11px;
-color: #FFFFFF;
+color: #346f83;
 vertical-align: middle;
-}
-/* */
-* + html #region-content,
-* + html #portal-searchbox {
-overflow: hidden;
 }
 #portal-advanced-search {
 margin-top: 0.2em;
@@ -1474,7 +1396,6 @@ text-transform: lowercase;
 /* */
 #portal-externalsites,
 #portal-siteactions {
-background-color: white;
 white-space: nowrap;
 list-style: none none;
 margin: 4px 0 4px 0;
@@ -1491,15 +1412,6 @@ display: inline-block;
 line-height: 1.4;
 }
 /* */
-#siteaction-subscriptions .eea-icon:before {
-content: "\f09e";
-}
-#siteaction-formobile .eea-icon:before {
-content: "\f10b";
-}
-#siteaction-contactus .eea-icon:before {
-content: "\f0e6";
-}
 #siteaction-chooselang .eea-icon:before {
 content: "\f11d";
 }
@@ -1508,7 +1420,7 @@ content: "\f090";
 }
 #portal-externalsites {
 float: left;
-margin-left: 1.5em;
+margin-left: 0.5em;
 }
 #portal-externalsites li,
 #portal-siteactions li {
@@ -1521,7 +1433,7 @@ border: none;
 }
 #portal-externalsites li a,
 #portal-siteactions li a {
-background-color: transparent;
+color: #FFF;
 height: auto;
 text-decoration: none;
 text-transform: none;
@@ -1549,6 +1461,7 @@ margin-left: 0;
 }
 #region-content {
 border: none;
+position: relative;
 }
 #portal-breadcrumbs a {
 text-decoration: none;
@@ -1608,6 +1521,9 @@ display: inline;
 display: inline;
 margin: 0 1em 0 0;
 }
+.documentActions {
+position: relative;
+}
 .documentActions ul {
 margin: 0;
 padding: 0;
@@ -1629,6 +1545,9 @@ text-decoration: none;
 .languageCodes {
 display: block;
 }
+#languageCodes {
+max-width: 80%;
+}
 #themes-tags span span span.languageCodes {
 display: none;
 }
@@ -1646,11 +1565,8 @@ font-size: 85%;
 font-weight: normal;
 color: #808285;
 margin: 0 0 0.5em 0;
-clear: both;
 }
-.documentByLine .portalType {
-background: #f3f3f3;
-padding: 0.5em;
+.documentByLine .portalType, .listHead {
 font-weight: bold;
 }
 .documentByLine .docDate {
@@ -2066,7 +1982,6 @@ min-width: 995px;
 max-width: 1024px;
 }
 #portal-column-content  {
-padding: 0;
 min-width: 600px;
 }
 #portal-column-one .visualPadding {
@@ -2077,9 +1992,6 @@ background: transparent;
 float: left;
 width: 220px;
 border: 1px solid #ececec;
--webkit-border-radius: 3px;
--moz-border-radius: 3px;
-border-radius: 3px;
 background-color: #FFFFFF;
 }
 #portal-column-two .visualPadding {
@@ -2235,15 +2147,18 @@ z-index: 1001;
 .message_wrap {
 text-align: left;
 }
+.message_wrap p {
+margin-bottom: 0.2em;
+}
 #outdated, .message_body {
 width: 960px;
 margin: 0 auto;
 }
-.message_images {
-float: left;
-padding-right: 1em;
+.message_images .eea-icon {
+font-size: 1.7em;
+color: #2d749c;
 }
-#outdated h3 {
+#outdated h3,  .message_wrap h3 {
 border: 0;
 margin: 0;
 }
@@ -2364,7 +2279,6 @@ background: none repeat scroll 0 0 #FFFFFF;
 -moz-border-top-colors: none;
 border: 1px solid #666666;
 border-bottom: medium none;
-border-radius: 5px 5px 0 0;
 }
 #subfolders_listing ul a {
 min-width: 140px;
@@ -2374,7 +2288,6 @@ display: block;
 position: absolute;
 background-color: #FFFFFF;
 border: 1px solid #666;
-border-radius: 0 5px 5px 5px;
 margin: 8px 0;
 padding: 0;
 z-index: 1005;
@@ -2414,15 +2327,24 @@ padding: 1em;
 -o-box-shadow: 0px 2px 2px #333;
 box-shadow: 0px 2px 2px #333;
 }
-#popup_login_form label {
-width: 8em;
-color: #000;
+/* */
+body.template-login_form #content,
+.pb-ajax #login-form  {
+text-align: left;
+}
+#fieldset-openid-login label, #login-form label {
+width: 6em; /* */
+}
+#login_form,
+#login-forgotten-password
+{
+margin-left: 6.5em;
 }
 #popup_login_form #login-form input {
 font-size: 100%;
 }
 #popup_login_form #login-forgotten-password {
-margin-left: 1em;
+margin-left: 6.5em;
 }
 /* */
 .pagination .current:before {
@@ -2469,10 +2391,7 @@ font-size: 12px;
 line-height: normal!important;
 list-style-image: none!important;
 list-style-type: none!important;
--webkit-border-radius: 10px 10px 0 0;
--moz-border-radius: 10px 10px 0 0;
-border-radius: 10px 10px 0 0;
-background-color: #2c8da2;
+background-color: #006699;
 }
 .tabbedmenu ul > li {
 float: left;
@@ -2499,13 +2418,7 @@ padding: 8px 8px;
 .tabbedmenu.two-rows ul > li > a {
 height: 40px;
 white-space: normal;
-max-width: 144px;
-}
-.tabbedmenu .first-tab,
-.tabbedmenu ul > li:first-child > a {
--webkit-border-radius: 8px 0 0 0;
--moz-border-radius: 8px 0 0 0;
-border-radius: 8px 0 0 0;
+max-width: 150px;
 }
 .tabbedmenu ul > li > a:hover {
 color: #005e7d!important;
@@ -2540,10 +2453,11 @@ visibility: hidden;
 .downloading-lock::before {
 content: '';
 display: block;
-width: 50%;
-height: 20px;
+width: 100%;
+height: 100%;
 position: absolute;
 right: 0;
+z-index: 9999;
 }
 #stats td {
 padding-right: 1em;
@@ -2552,8 +2466,7 @@ div#original_chart_div {
 overflow: hidden;
 }
 #region-content .documentExportActions {
-float: right;
-height: 0.5em;
+float:right;
 }
 #region-content .documentExportActions ul, .documentExportActions ul {
 list-style: none;
@@ -2563,6 +2476,8 @@ margin: 1em -0.15em 0px 0px;
 #region-content .documentExportActions li, .documentExportActions li {
 display: inline;
 }
+.eea-footer-right .link-pdf,
+.eea-footer-right .link-epub,
 #region-content .documentExportActions .link-pdf,
 #region-content .documentExportActions .link-epub,
 .documentExportActions .link-pdf,
@@ -2571,19 +2486,52 @@ background: none;
 padding: 0px;
 margin: 0px;
 }
-#content .documentExportActions a {
-color: rgb(186, 60, 13);
+#content .eea-footer-right a.download-pdf,
+#content .eea-footer-right a.download-epub {
 border-bottom: none !important;
+}
+#content .documentExportActions a {
+border-bottom: none !important;
+text-align: center;
 }
 .documentExportActions .export-action-title {
 display: block;
-padding-left: 0.7em;
 }
 .documentExportActions .eea-icon::before {
 margin: 0px 0.15em;
 }
-#plone-document-byline {
+#content .documentByLine {
 max-width: 80%;
+text-align: left;
+}
+.portaltype-fiche .link-presentation {
+display: none;
+}
+.eea-epub-download,
+.eea-pdf-download {
+font-size: 150%;
+}
+/* */
+.fiche-copyright {
+display: none;
+}
+/* */
+#viewlet-cookiepolicy {
+position: fixed;
+bottom: 0;
+width: 100%;
+left: 0%;
+margin-right: auto;
+margin-left: auto;
+margin-bottom:0;
+z-index: 100;
+padding: 0.9em;
+box-sizing: border-box;
+}
+#tlspu_cookiepolicy_form, .cookieMessage, #tlspu_cookiepolicy_message {
+margin: 0 auto;
+max-width: 970px;
+padding: 0;
 }
 /* */
 
