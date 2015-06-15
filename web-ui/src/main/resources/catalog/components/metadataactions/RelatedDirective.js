@@ -25,7 +25,7 @@
                       '../../catalog/components/metadataactions/partials/related.html';
             },
             scope: {
-              uuid: '@gnRelated',
+              md: '=gnRelated',
               template: '@',
               types: '@',
               title: '@',
@@ -37,6 +37,9 @@
               };
               
               scope.updateRelations = function() {
+                if (scope.md) {
+                  scope.uuid = scope.md.getUuid();
+                }
                 scope.relations = [];
                 if (scope.uuid) {
                   $http.get(
@@ -61,9 +64,13 @@
                 return link.title['#text'] || link.title;
               };
 
+              scope.hasAction = function(mainType) {
+                return angular.isFunction(
+                   gnRelatedResources.map[mainType].action);
+              };
               scope.config = gnRelatedResources;
 
-              scope.$watch('uuid', function() {
+              scope.$watchCollection('md', function() {
                 scope.updateRelations();
               });
 
