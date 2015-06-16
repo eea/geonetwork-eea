@@ -506,7 +506,7 @@
       $.extend(true, this, k);
       var listOfArrayFields = ['topicCat', 'category',
         'securityConstraints', 'resourceConstraints', 'legalConstraints',
-        'denominator', 'resolution', 'geoDesc', 'geoBox',
+        'denominator', 'resolution', 'geoDesc', 'geoBox', 'inspireTheme',
         'mdLanguage', 'datasetLang', 'type'];
       var record = this;
       this.linksCache = [];

@@ -50,14 +50,22 @@
                data-icon-path="../../images/category/{{['@name']}}.png">
             -->
           <div class="row">
-            <div data-ng-repeat="(key, facet) in searchInfo.facet['topicCats']"
+            <div data-ng-repeat="(key, facet) in searchInfo.facet['inspireThemes']"
+                 class="col-xs-6 col-sm-4 col-lg-3">
+              <a class="thumbnail gn-icon-bg" data-ng-href="#/search?inspiretheme={{facet['@name']}}">
+                <i class="fa fa-3x gn-icon iti-{{getInspireIcon(facet['@name'])}}"></i><br/>
+                <span class="gn-icon-label">{{facet['@name']}}</span>
+                <span class="badge">{{facet['@count']}}</span>
+              </a>
+            </div>
+            <!--<div data-ng-repeat="(key, facet) in searchInfo.facet['topicCats']"
               class="col-xs-6 col-sm-4 col-lg-3">
               <a class="thumbnail gn-icon-bg" data-ng-href="#/search?topicCat={{facet['@name']}}">
                 <i class="fa fa-3x fa-table gn-icon gn-icon-{{facet['@name']}}"></i><br/>
                 <span class="gn-icon-label">{{facet['@label']}}</span>
                 <span class="badge">{{facet['@count']}}</span>
               </a>
-            </div>
+            </div>-->
             <!--<div data-ng-repeat="(key, facet) in searchInfo.facet['categories']">-->
               <!--<a class="thumbnail gn-icon-bg" data-ng-href="#/search?_cat={{facet['@name']}}">-->
           </div>

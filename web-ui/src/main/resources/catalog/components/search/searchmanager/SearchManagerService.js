@@ -20,7 +20,7 @@
         // Retrieve facet and add name as property and remove @count
         var facets = {}, results = -1,
             listOfArrayFields = ['image', 'link',
-              'format', 'keyword', 'otherConstr',
+              'format', 'keyword', 'otherConstr', 'inspiretheme',
               'Constraints', 'SecurityConstraints'];
 
         // When using summaryOnly=true, the facet is the root element
