@@ -22,13 +22,13 @@
   </div>
 
   <div class="row">
-    <div class="col-md-3 gn-search-facet">
-      <div data-ng-show="searchResults.records.length > 0"
-           data-gn-facet-list="searchResults.facet"
+    <div data-ng-class="searchResults.records.length > 0 ? '' : 'invisible'"
+         class="col-md-3 gn-search-facet">
+      <div data-gn-facet-multiselect="progress"></div>
+      <div data-gn-facet-list="searchResults.facet"
            data-facet-config="facetsSummaryType"
            data-current-facets="currentFacets">
       </div>
-      <div data-gn-facet-multiselect="progress"></div>
     </div>
     <div class="col-md-9">
       <div class="gn-results-heading">
