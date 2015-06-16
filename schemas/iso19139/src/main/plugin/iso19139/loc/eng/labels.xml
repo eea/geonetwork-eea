@@ -2098,7 +2098,14 @@
 	<element name="gmd:protocol" id="398.0">
 		<label>Protocol</label>
 		<description>Connection protocol to be used</description>
-		<helper sort="true">
+		<helper sort="false">
+      <!-- EEA Custom protocols -->
+      <option value="EEA:FILEPATH">File path (from the level below gis_sdi)</option>
+      <option value="EEA:FOLDERPATH">Folder path (from the level below gis_sdi)</option>
+      <option value="EEA:DBPG">PostGIS database table</option>
+      <option value="">-------------------------</option>
+      <!-- EEA Custom protocols | end -->
+
 			<option value="ESRI:AIMS--http--configuration">ArcIMS Map Service Configuration File (*.AXL)
 			</option>
 			<option value="ESRI:AIMS--http-get-feature">ArcIMS Internet Feature Map Service
