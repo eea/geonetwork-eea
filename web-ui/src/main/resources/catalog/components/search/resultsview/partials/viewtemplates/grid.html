@@ -29,17 +29,18 @@
                 <span class="fa gn-icon-{{cat}}"></span>
             </i>
           </a>
-          <a data-ng-repeat="t in md.inspiretheme"
-             data-ng-href="#/search?inspiretheme={{t}}">
-            <i class="fa" title="{{t | translate}}">
-              <span class="fa iti-{{getInspireIcon(t)}}"></span>
+          <a data-ng-repeat="t in md.inspirethemewithac"
+             data-ng-href="#/search?inspiretheme={{t.split('|')[1]}}">
+            <i class="fa" title="{{t.split('|')[1]}}">
+              <span class="fa iti-{{t.split('|')[0]}}"></span>
             </i>
-          </a><!--<a data-ng-repeat="t in md.topicCat"
+          </a>
+          <a data-ng-repeat="t in md.topicCat"
              data-ng-href="#/search?topicCat={{t}}">
             <i class="fa" title="{{t | translate}}">
               <span class="fa gn-icon-{{t}}"></span>
             </i>
-          </a>-->
+          </a>
         </div>
         <div data-gn-metadata-rate="md"
              data-readonly="true"
@@ -144,6 +145,7 @@
           </div>
 
           <div class="btn-group"
+               data-ng-if="isMapViewerEnabled"
                data-ng-class="layers.length > 0 ? '' : 'invisible'">
             <button type="button"
                     class="btn btn-default dropdown-toggle"
@@ -175,6 +177,7 @@
           </div>
 
           <div class="btn-group"
+               data-ng-if="isMapViewerEnabled"
                data-ng-class="maps.length > 0 ? '' : 'invisible'">
             <button type="button"
                     class="btn btn-default dropdown-toggle"

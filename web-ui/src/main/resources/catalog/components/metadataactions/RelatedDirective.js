@@ -16,8 +16,9 @@
           'gnRelated',
           [
         '$http',
+        'gnGlobalSettings',
         'gnRelatedResources',
-        function($http, gnRelatedResources) {
+        function($http, gnGlobalSettings, gnRelatedResources) {
           return {
             restrict: 'A',
             templateUrl: function(elem, attrs) {
@@ -65,6 +66,12 @@
               };
 
               scope.hasAction = function(mainType) {
+                // Do not display add to map action when map
+                // viewer is disabled.
+                if (mainType === 'WMS' &&
+                   gnGlobalSettings.isMapViewerEnabled === false) {
+                  return false;
+                }
                 return angular.isFunction(
                    gnRelatedResources.map[mainType].action);
               };

@@ -54,7 +54,6 @@
       $scope.logoPath = '../../images/harvesting/';
       $scope.isMapViewerEnabled = gnGlobalSettings.isMapViewerEnabled;
       $scope.isDebug = window.location.search.indexOf('debug') !== -1;
-      $scope.getInspireIcon = gnUtilityService.getInspireIcon;
 
       $scope.pages = {
         home: 'home',
