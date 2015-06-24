@@ -167,7 +167,7 @@
                 select="$loc/strings/EEA_KEYWORD_GEMET.report"/> </sch:report>
             
             
-            <!-- EEA keyword list -->
+            <!-- EEA keyword list
             <sch:let name="atLeastOneKeywordFromEEA"
                 value="count(gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'EEA keyword list')]
                 /gmd:keyword[gco:CharacterString!=''])"/>
@@ -177,9 +177,9 @@
                     select="$loc/strings/EEA_KEYWORD_EEA.alert"/></sch:assert>
             <sch:report test="$atLeastOneKeywordFromEEA > 0"><sch:value-of select="$atLeastOneKeywordFromEEA"/> <sch:value-of
                 select="$loc/strings/EEA_KEYWORD_EEA.report"/> </sch:report>
+            -->
             
-            
-            <!-- EEA category - no check ? FIXME -->
+            <!-- EEA category - no check ? FIXME
             <sch:let name="atLeastOneCategoryFromEEA"
                 value="count(gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'EEA keyword list')]
                 /gmd:keyword[gco:CharacterString!=''])"/>
@@ -189,7 +189,7 @@
                     select="$loc/strings/EEA_CATEGORY.alert"/></sch:assert>
             <sch:report test="$atLeastOneCategoryFromEEA > 0"><sch:value-of select="$atLeastOneCategoryFromEEA"/> <sch:value-of
                 select="$loc/strings/EEA_CATEGORY.report"/> </sch:report>
-            
+            -->
             
             
             <!-- Resource constraint -->
