@@ -14,6 +14,7 @@
   <xsl:include href="process/linked-data-checker.xsl"/>
   <xsl:include href="process/related-metadata-checker.xsl"/>
   <xsl:include href="process/add-resource-id.xsl"/>
+  <xsl:include href="process/add-thumbnail-based-on-uuid.xsl"/>
 <!--  Disabled by default because related to INSPIRE only
   <xsl:include href="process/inspire-add-conformity.xsl"/>
   <xsl:include href="process/inspire-add-dq-toporeport.xsl"/>
@@ -29,6 +30,7 @@
     <p>linked-data-checker</p>
     <p>related-metadata-checker</p>
     <p>add-resource-id</p>
+    <p>add-thumbnail-based-on-uuid</p>
 <!--  Disabled by default because related to INSPIRE only
     <p>inspire-add-conformity</p>
     <p>inspire-add-dq-toporeport</p>
