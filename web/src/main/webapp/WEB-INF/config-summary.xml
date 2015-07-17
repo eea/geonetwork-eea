@@ -62,6 +62,7 @@
         <facet name="inspireAnnex" indexKey="inspireannex" label="inspireAnnexes"/>
         <facet name="inspireThemeWithAc" indexKey="inspirethemewithac" label="inspireThemesWithAc"/>
         <facet name="denominator" indexKey="denominator" label="denominators"/>
+        <facet name="resolution" indexKey="resolution" label="resolutions"/>
         <facet name="spatialRepresentationType" indexKey="cl_spatialRepresentationType"
             label="spatialRepresentationTypes"/>
         <facet name="progress" indexKey="progress"
@@ -74,7 +75,7 @@
         <facet name="format" indexKey="format" label="formats"/>
         <facet name="title" indexKey="title" label="titles"/>
         <facet name="metadataType" indexKey="_isTemplate" label="metadataTypes"/>
-        <facet name="isValid" indexKey="_isValid" label="isValid" localized="true"/>
+        <facet name="isValid" indexKey="_valid" label="isValid" localized="true"/>
         <facet name="isHarvested" indexKey="_isHarvested" label="isHarvested"/>
         <facet name="mdStatus" indexKey="_status" label="mdStatus"/>
         <facet name="status" indexKey="cl_status" label="status"/>
@@ -98,7 +99,7 @@
             <item facet="keyword" max="15"/>
             <item facet="orgName" max="25"/>
             <item facet="createDateYear" sortBy="value" sortOrder="desc" max="40"/>
-            <item facet="format" max="15" sortBy="value"/>
+            <item facet="format" max="15" sortBy="value" sortOrder="asc"/>
             <item facet="gemetKeyword"/>
             <item facet="publishedDataset"/>
             <item facet="progress" translator="codelist:gmd:MD_ProgressCode"/>
@@ -108,6 +109,8 @@
             <item facet="denominator" sortBy="numValue" sortOrder="desc"/>
             <item facet="metadataPOC" max="15"/>
           <!--<item facet="metadataPOC" max="15"/>-->
+            <item facet="resolution" sortBy="numValue" sortOrder="desc"/>
+            <!--<item facet="metadataPOC" max="15"/>-->
         </summaryType>
         <summaryType name="subtemplates">
             <item facet="subTemplateType"/>
