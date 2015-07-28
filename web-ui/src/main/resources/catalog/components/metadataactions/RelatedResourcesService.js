@@ -252,6 +252,8 @@
                 return 'EEAFILE';
               } else if (protocolOrType.match(/EEA:FILEPATH/i)) {
                 return 'EEAFILE';
+              } else if (protocolOrType.match(/link/i)) {
+                return 'LINK';
               } else if (!protocolOrType.match(/EEA:FOLDERPATH/i) &&
                         !resource.url.contains('.mdb') &&
                         !resource.url.contains('.gdp')) {
@@ -268,8 +270,6 @@
                 return 'KML';
               } else if (protocolOrType.match(/download/i)) {
                 return 'LINKDOWNLOAD';
-              } else if (protocolOrType.match(/link/i)) {
-                return 'LINK';
               }
             }
 
