@@ -133,7 +133,7 @@
 				</xsl:for-each>
 
                 <xsl:for-each select="gmd:identifier/gmd:RS_Identifier/gmd:code/gco:CharacterString">
-                	<Field name="identifier" string="{string(.)}" store="false" index="true"/>
+                	<Field name="identifier" string="{string(.)}" store="true" index="true"/>
 				</xsl:for-each>
 
 	
@@ -403,7 +403,11 @@
 				</xsl:for-each>
 
         <xsl:for-each select="gmd:distance/gco:Distance">
-          <Field name="resolution" string="{concat(string(.), ' ', @uom)}" store="true" index="true"/>
+          <!-- Units may be encoded as
+          http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/uom/ML_gmxUom.xml#m
+          in such case retrieve the unit acronym only. -->
+          <xsl:variable name="unit" select="if (contains(@uom, '#')) then substring-after(@uom, '#') else @uom"/>
+          <Field name="resolution" string="{concat(string(.), ' ', $unit)}" store="true" index="true"/>
         </xsl:for-each>
 			</xsl:for-each>
 
@@ -778,7 +782,7 @@
 				<xsl:variable name="crs" select="concat(string(gmd:codeSpace/gco:CharacterString),'::',string(gmd:code/gco:CharacterString))"/>
 
 				<xsl:if test="$crs != '::'">
-					<Field name="crs" string="{$crs}" store="false" index="true"/>
+					<Field name="crs" string="{$crs}" store="true" index="true"/>
 				</xsl:if>
 			</xsl:for-each>
 		</xsl:for-each>
