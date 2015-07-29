@@ -817,6 +817,7 @@
         <geonetwork.webapp.name>map-catalogue</geonetwork.webapp.name>
         <geonetwork.data.dir>file://\${map-catalogue.data.dir}</geonetwork.data.dir>
         <geonetwork.log>/var/local/gn_data/logs/map-catalogue.log</geonetwork.log>
+        <security.config.file>config-security-noldap.xml</security.config.file>
         <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
       </properties>
     </profile>
@@ -834,6 +835,7 @@
         <geonetwork.webapp.name>internal-catalogue</geonetwork.webapp.name>
         <geonetwork.log>/var/local/gn_data/logs/internal-catalogue.log</geonetwork.log>
         <geonetwork.data.dir>file://\${internal-catalogue.data.dir}</geonetwork.data.dir>
+        <security.config.file>config-security-noldap.xml</security.config.file>
         <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
       </properties>
     </profile>
@@ -851,6 +853,7 @@
         <geonetwork.webapp.name>editor-catalogue</geonetwork.webapp.name>
         <geonetwork.log>/var/local/gn_data/logs/editor-catalogue.log</geonetwork.log>
         <geonetwork.data.dir>file://\${editor-catalogue.data.dir}</geonetwork.data.dir>
+        <security.config.file>config-security.xml</security.config.file>
         <war.excludes>WEB-INF/web*.xml</war.excludes>
       </properties>
     </profile>
@@ -868,6 +871,7 @@
         <geonetwork.webapp.name>catalogue</geonetwork.webapp.name>
         <geonetwork.log>/var/local/gn_data/logs/catalogue.log</geonetwork.log>
         <geonetwork.data.dir>file://\${catalogue.data.dir}</geonetwork.data.dir>
+        <security.config.file>config-security-noldap.xml</security.config.file>
         <war.excludes>WEB-INF/web*.xml</war.excludes>
       </properties>
     </profile>
