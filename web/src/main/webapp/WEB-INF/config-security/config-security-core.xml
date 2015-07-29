@@ -70,7 +70,7 @@
 					 (default implementation does nothing but can be overridden) -->
 				<ref bean="multiNodeAuthenticationFilter" />
 				<ref bean="preAuthenticationFilter" />
-				<!--<ref bean="basicAuthenticationFilter" />-->
+				<ref bean="basicAuthenticationFilter" />
 				<ref bean="formLoginFilter" />
 				<ref bean="requestCacheFilter" />
 				<ref bean="anonymousFilter" />
