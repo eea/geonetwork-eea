@@ -114,7 +114,7 @@
 			</button>
       <button type="button"
               class="btn btn-default btn-lg btn-block"
-              data-ng-if="r.protocol.contains('EEA:FILEPATH') && !r.url.contains('.mdb') && !r.url.contains('.gdp')"
+              data-ng-if="r.protocol.contains('EEA:FILEPATH') && !r.url.contains('.mdb') && !r.url.contains('.sqlite') && !r.url.contains('.gdp')"
               data-ng-click="config.doAction('EEAMAP', r, uuid)">
 				<span class="visible-lg-*">
 					{{(config.getLabel('EEAMAP') + type) | translate}}
