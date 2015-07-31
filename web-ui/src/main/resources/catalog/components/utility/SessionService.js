@@ -27,7 +27,7 @@
         // Alert user when (time in seconds)
         alertWhen: 60,
         // Add message next to user name when (time in seconds)
-        alertInTitleWhen: 60 * 3,
+        alertInTitleWhen: 60 * 10,
         checkInterval: 5000
       };
       function getSession() {

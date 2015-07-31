@@ -52,7 +52,7 @@
   <!-- For record not having status obsolete, flag them as non
   obsolete records. Some catalog like to restrict to non obsolete
   records only the default search. -->
-  <xsl:variable name="flagNonObseleteRecords" select="false()"/>
+  <xsl:variable name="flagNonObseleteRecords" select="true()"/>
 
 
   <!-- The main metadata language -->
