@@ -77,7 +77,7 @@
     "forgetDetails": "Forgotten your details?",
     "forgetDetailsInfo": "Use password recovery to reset it.",
     "from": "From",
-    "collapseAllFacet": "Toggle all facets",
+    "collapseAllFacet": "Show/hide facets",
     "ger": "Deutsch",
     "groupOwners": "Groups",
     "hour": "Hour",
@@ -167,6 +167,7 @@
     "south": "South",
     "siblings": "Other resources",
     "sourceDatasets": "Source datasets",
+    "isSourceOfDatasets": "Is source dataset of",
     "spa": "Español",
     "spatialRepresentationTypes": "Representation types",
     "spatialRepresentationType": "Representation type",
@@ -260,5 +261,6 @@
     "addRecord": "Add new record",
     "ImportRecord": "Import new records",
     "directoryManager": "Manage directory",
-    "typeOfRecord": "Type of record"
+    "typeOfRecord": "Type of record",
+    "load": "Load"
 }

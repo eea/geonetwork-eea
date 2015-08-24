@@ -80,6 +80,7 @@
         <facet name="isHarvested" indexKey="_isHarvested" label="isHarvested"/>
         <facet name="mdStatus" indexKey="_status" label="mdStatus"/>
         <facet name="status" indexKey="cl_status" label="status"/>
+        <facet name="sourceCatalog" indexKey="_source" label="sourceCatalog"/>
         <facet name="standard" indexKey="_schema" label="standards"/>
         <facet name="subTemplateType" indexKey="_root" label="subTemplateTypes"/>
         <facet name="groupOwner" indexKey="_groupOwner" label="groupOwners"/>
@@ -91,7 +92,7 @@
         Example configuration for hierarchical facet based on
         the GeoNetwork region thesaurus or GEMET.
 
-        Do not forget to add classifier configuration on config-summary.xml
+        Do not forget to add classifier configuration on config-spring-geonetwork.xml
              -->
 
         <facet name="region" label="regions"
@@ -113,6 +114,7 @@
           <item facet="inspireThemeWithAc" sortBy="value" sortOrder="asc" max="35"/>
           <item facet="keyword" max="15"/>
           <item facet="orgName" max="25"/>
+          <item facet="sourceCatalog" translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
           <item facet="createDateYear" sortBy="value" sortOrder="desc" max="40"/>
           <item facet="format" max="15" sortBy="value" sortOrder="asc"/>
           <item facet="spatialRepresentationType" translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
@@ -133,6 +135,7 @@
               translator="db:org.fao.geonet.repository.MetadataCategoryRepository:findOneByName"/>
         <item facet="mdStatus" max="10" sortBy="value"
               translator="db:org.fao.geonet.repository.StatusValueRepository:findOne:int"/>
+        <item facet="sourceCatalog" translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
         <item facet="isValid" max="3" sortBy="value"/>
         <item facet="groupOwner" max="199" sortBy="value"
               translator="db:org.fao.geonet.repository.GroupRepository:findOne:int"/>
