@@ -148,9 +148,14 @@
               action: addWMTSToMap
             },
             'WFS' : {
-              iconClass: 'fa-link',
+              iconClass: 'fa-globe',
               label: 'webserviceLink',
               action: addWFSToMap
+            },
+            'WCS' : {
+              iconClass: 'fa-globe',
+              label: 'fileLink',
+              action: null
             },
             'MAP' : {
               iconClass: 'fa-globe',
@@ -261,6 +266,8 @@
                 return 'EEAMAP';
               } else if (protocolOrType.match(/wfs/i)) {
                 return 'WFS';
+              } else if (protocolOrType.match(/wcs/i)) {
+                return 'WCS';
               } else if (protocolOrType.match(/ows-c/i)) {
                 return 'MAP';
               } else if (protocolOrType.match(/db:/i)) {

@@ -67,7 +67,7 @@
     </filter>
     <filter-mapping>
       <filter-name>SessionTimeoutCookieFilter</filter-name>
-      <url-pattern>/*</url-pattern>
+      <url-pattern>/srv/*</url-pattern>
     </filter-mapping>
 
     <!-- url rewrite filter -->
@@ -322,6 +322,7 @@
                 application/vnd.ogc.gml,
                 application/vnd.ogc.sld+xml,
                 application/vnd.google-earth.kml+xml,
+                application/vnd.google-earth.kmz,
                 application/json
             </param-value>
         </init-param>
