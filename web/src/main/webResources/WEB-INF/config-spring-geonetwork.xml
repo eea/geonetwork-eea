@@ -126,7 +126,7 @@
   the GeoNetwork region thesaurus or GEMET.
 
   Do not forget to add facet configuration on config-summary.xml
-
+-->
   <bean id="regionKeywordClassifier"
         class="org.fao.geonet.kernel.search.classifier.TermLabel" lazy-init="true">
     <constructor-arg name="finder" ref="ThesaurusManager"/>
@@ -139,5 +139,5 @@
     <constructor-arg name="conceptScheme" value="http://geonetwork-opensource.org/gemet"/>
     <constructor-arg name="langCode" value="eng"/>
   </bean>
-  -->
+
 </beans>
