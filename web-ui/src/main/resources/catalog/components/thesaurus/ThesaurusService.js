@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 (function() {
   goog.provide('gn_thesaurus_service');
 
@@ -7,6 +30,7 @@
     function Keyword(k) {
       this.props = $.extend(true, {}, k);
       this.label = this.getLabel();
+      this.tagClass = 'label label-info gn-line-height';
     };
     Keyword.prototype = {
       getId: function() {
@@ -30,6 +54,9 @@
       },
       getTitle: function() {
         return this.props.title;
+      },
+      get: function() {
+        return this.props;
       }
     };
 
@@ -55,7 +82,8 @@
                     pThesauri: thesaurus,
                     pMode: 'searchBox',
                     maxResults: max,
-                    pKeyword: filter || ''
+                    pKeyword: filter || '',
+                    pUri: ('*' + filter + '*') || ''
                   })
               );
             };
@@ -80,6 +108,64 @@
                 });
               }
               return listOfKeywords;
+            };
+
+            // Get Top Concept from thesaurus
+            var getTopConcept = function(thesaurus) {
+              var defer = $q.defer();
+              var url = gnUrlUtils.append(
+                  'thesaurus.topconcept?_content_type=json',
+                  gnUrlUtils.toKeyValue({
+                    thesaurus: thesaurus
+                  })
+                  );
+              $http.get(url, { cache: true }).
+                  success(function(data, status) {
+                    if (data != null && data.narrower) {
+                      defer.resolve(data);
+                    } else {
+                      // not a top concept
+                      defer.reject();
+                    }
+                  }).
+                  error(function(data, status) {
+                    //                TODO handle error
+                    defer.reject();
+                  });
+              return defer.promise;
+            };
+
+            // Drive JSKOS API with these functions
+            function getConcept(thesaurus, keywordUris) {
+              var defer = $q.defer();
+              var url = gnUrlUtils.append(
+                  'thesaurus.concept?_content_type=json',
+                  gnUrlUtils.toKeyValue({
+                    thesaurus: thesaurus,
+                    id: keywordUris instanceof Array ?
+                        keywordUris.join(',') : keywordUris || ''
+                  })
+                  );
+              $http.get(url, { cache: true }).
+                  success(function(data, status) {
+                    defer.resolve(data);
+                  }).
+                  error(function(data, status) {
+                    //                TODO handle error
+                    //                defer.reject(error);
+                  });
+              return defer.promise;
+            };
+
+            // expected to promise one JSKOS concept
+            // [concept](http://gbv.github.io/jskos/jskos.html#concepts)
+            var lookupURI = function(thesaurus, keywordUri) {
+              var deferred = $q.defer();
+              // first get concept, then get links to other concepts
+              getConcept(thesaurus, keywordUri).then(function(c) {
+                deferred.resolve(c);
+              });
+              return deferred.promise;
             };
 
             return {
@@ -156,7 +242,7 @@
                */
               getAll: function(schema) {
                 var defer = $q.defer();
-                $http.get('thesaurus@json?' +
+                $http.get('thesaurus?_content_type=json&' +
                     'element=gmd:descriptiveKeywords&schema=' +
                     (schema || 'iso19139'), { cache: true }).
                     success(function(data, status) {
@@ -192,7 +278,14 @@
                       //                defer.reject(error);
                     });
                 return defer.promise;
-              }
+              },
+
+              // ConceptScheme API for JSKOS
+              lookupURI: lookupURI,
+              lookupNotation: null,
+              lookupLabel: null,
+              getTopConcept: getTopConcept,
+              suggest: null
             };
           }];
       });

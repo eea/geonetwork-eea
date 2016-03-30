@@ -1,6 +1,8 @@
 // GN Styles
 @import "../lib/style/font-awesome/less/font-awesome.less";
 @import "gn_bootstrap.less";
+@import "gn_infolist.less";
+@import "gn_badge_categories.less";
 
 @import "../lib/bootstrap.ext/tagsinput/bootstrap-tagsinput.less";
 // import the css files as less files so they are included in the final output of wro4j
@@ -369,7 +371,12 @@ span.gn-facet-label:first-letter {
     }
   }
 }
-
+.gn-img-thumbnail-caption {
+  text-align: center;
+  font-size: 90%;
+  font-style: italic;
+  color: @text-muted;
+}
 
 .gn-md-edit-btn {
   .btn();
@@ -518,11 +525,6 @@ button.active [role=tooltip] {
   &:hover {
     color: grey;
   }
-}
-
-div[gn-transfer-ownership] .panel-body {
-  max-height: 45em;
-  overflow-y: auto;
 }
 
 [gn-share] {

@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
+  ~ United Nations (FAO-UN), United Nations World Food Programme (WFP)
+  ~ and United Nations Environment Programme (UNEP)
+  ~
+  ~ This program is free software; you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation; either version 2 of the License, or (at
+  ~ your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but
+  ~ WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  ~ General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program; if not, write to the Free Software
+  ~ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+  ~
+  ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+  ~ Rome - Italy. email: geonetwork@osgeo.org
+  -->
+
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
 	xmlns:gn="http://www.fao.org/geonetwork"
 	xmlns:exslt="http://exslt.org/common"
@@ -16,10 +39,9 @@
 				<xsl:apply-templates mode="brief" select="."/>
 			</xsl:variable>
 		  
-		  
 			<xsl:variable name="metadata" select="exslt:node-set($md)/*[1]"/>
 			<xsl:variable name="mdURL" select="normalize-space(concat($baseURL, '/', /root/gui/nodeId, '/metadata/', gn:info/uuid))"/>
-			<xsl:variable name="thumbnailLink" select="normalize-space($metadata/image[@type='thumbnail'])"/>
+			<xsl:variable name="thumbnailLink" select="$metadata/image[starts-with(., 'http')]"/>
 			<xsl:variable name="bDynamic" select="gn:info/dynamic" />
 			<xsl:variable name="bDownload" select="gn:info/download" />
 			<title><xsl:value-of select="$metadata/title"/></title>
@@ -42,9 +64,9 @@
 				<xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
 				
 				<p>
-					<xsl:if test="string($thumbnailLink)!=''">
-						<a href="{$mdURL}"><img src="{$thumbnailLink}" align="left" alt="" border="0" width="100"/></a>
-					</xsl:if>
+					<xsl:for-each select="$thumbnailLink">
+						<a href="{$mdURL}"><img src="{.}" align="left" alt="" border="0" width="100"/></a>
+					</xsl:for-each>
 					<xsl:value-of select="$metadata/abstract"/>
 					<br />
 					<xsl:if test="$bDynamic">
@@ -106,11 +128,11 @@
 			</xsl:variable>
 
 			<pubDate><xsl:value-of select="concat($day,' ',$month,' ',$year,' ',$time,' EST')"/></pubDate> 
-			<guid><xsl:value-of select="$mdURL"/></guid>
-			<guid><xsl:value-of select="$mdURL"/></guid>
-			<xsl:if test="string($thumbnailLink)!='' and starts-with($thumbnailLink, 'http')">
-				<media:content url="{$thumbnailLink}" type="image/gif" width="100"/>
-			</xsl:if>
+			<guid isPermaLink="true"><xsl:value-of select="$mdURL"/></guid>
+			<!--<guid><xsl:value-of select="gn:info/uuid"/></guid>-->
+       <xsl:for-each select="$thumbnailLink">
+				<media:content url="{.}"/>
+			</xsl:for-each>
 			
 			<xsl:apply-templates select="$metadata/geoBox" mode="geobox">
 				<xsl:with-param name="rssFormat" select="/root/request/georss" />

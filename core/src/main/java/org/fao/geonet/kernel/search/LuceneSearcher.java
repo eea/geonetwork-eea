@@ -23,15 +23,26 @@
 
 package org.fao.geonet.kernel.search;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.io.WKTReader;
-import jeeves.constants.Jeeves;
-import jeeves.server.ServiceConfig;
-import jeeves.server.UserSession;
-import jeeves.server.context.ServiceContext;
+import java.io.IOException;
+import java.io.StringReader;
+import java.lang.reflect.Constructor;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.TokenStream;
@@ -102,23 +113,16 @@ import org.jdom.Content;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.lang.reflect.Constructor;
-import java.text.CharacterIterator;
-import java.text.StringCharacterIterator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.io.WKTReader;
+
+import jeeves.constants.Jeeves;
+import jeeves.server.ServiceConfig;
+import jeeves.server.UserSession;
+import jeeves.server.context.ServiceContext;
 
 /**
  * search metadata locally using lucene.
@@ -373,6 +377,7 @@ public class LuceneSearcher extends MetaSearcher implements MetadataRecordSelect
         boolean isOwner = accessManager.isOwner(context, sourceInfo);
 
         HashSet<ReservedOperation> operations;
+        boolean canEdit = false;
         if (isOwner) {
             operations = Sets.newHashSet(Arrays.asList(ReservedOperation.values()));
             if (owner != null) {
@@ -380,12 +385,19 @@ public class LuceneSearcher extends MetaSearcher implements MetadataRecordSelect
             }
         } else {
             final Collection<Integer> groups = accessManager.getUserGroups(context.getUserSession(), context.getIpAddress(), false);
+            final Collection<Integer> editingGroups = accessManager.getUserGroups(context.getUserSession(), context.getIpAddress(), true);
             operations = Sets.newHashSet();
             for (ReservedOperation operation : ReservedOperation.values()) {
                 IndexableField[] opFields = doc.getFields(Geonet.IndexFieldNames.OP_PREFIX + operation.getId());
 
                 for (IndexableField field : opFields) {
                     Integer groupId = Integer.valueOf(field.stringValue());
+                    if (operation == ReservedOperation.editing &&
+                            editingGroups.contains(groupId)) {
+                        canEdit = true;
+                        break;
+                    }
+
                     if (groups.contains(groupId)) {
                         operations.add(operation);
                         break;
@@ -393,7 +405,7 @@ public class LuceneSearcher extends MetaSearcher implements MetadataRecordSelect
                 }
             }
         }
-        if (isOwner || operations.contains(ReservedOperation.editing)) {
+        if (isOwner || canEdit) {
             addElement(infoEl, Edit.Info.Elem.EDIT, "true");
         }
 
@@ -477,7 +489,7 @@ public class LuceneSearcher extends MetaSearcher implements MetadataRecordSelect
         search(srvContext, elData, config);
 
         if (getTo() > 0) {
-            Set<String> encountered = new HashSet<String>();
+            Set<String> encountered = new LinkedHashSet<String>();
             final Iterator descendants = _elSummary.getDescendants();
             while (descendants.hasNext()) {
                 Content next = (Content) descendants.next();
@@ -1516,7 +1528,7 @@ public class LuceneSearcher extends MetaSearcher implements MetadataRecordSelect
         addElement(info, Edit.Info.Elem.CHANGE_DATE, changeDate);
         addElement(info, Edit.Info.Elem.SOURCE,      source);
 
-        HashSet<String> addedTranslation = new HashSet<String>();
+        HashSet<String> addedTranslation = new LinkedHashSet<String>();
         if ((dumpAllField || dumpFields != null) && searchLang != null && multiLangSearchTerm != null) {
             // get the translated fields and dump those instead of the non-translated
             for (String fieldName : multiLangSearchTerm) {

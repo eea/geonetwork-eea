@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 package org.fao.geonet.kernel.search.keyword;
 
 import org.fao.geonet.kernel.KeywordBean;
@@ -96,32 +119,32 @@ public final class KeywordSort {
         for (int i = 0; i < lowercase.length(); i++) {
             char currChar = lowercase.charAt(i);
             switch (currChar) {
-                case 'ö':
-                case 'ò':
-                case 'ô':
+                case '\u00f6':// o diacritic
+                case '\u00f2':// o accent
+                case '\u00f4':// o circumflex
                     builder.append('o');
                     break;
-                case 'ü':
-                case 'ù':
-                case 'û':
+                case '\u00fc':// u diacritic
+                case '\u00f9':// u accent
+                case '\u00fb':// u circumflex
                     builder.append('u');
                     break;
-                case 'é':
-                case 'ê':
-                case 'è':
+                case '\u00e9':// e accent
+                case '\u00ea':// e circumflex
+                case '\u00e8':// e accent
                     builder.append('e');
                     break;
-                case 'ä':
-                case 'à':
-                case 'â':
-                case 'á':
+                case '\u00e4':// a diacritic
+                case '\u00e0':// a accent
+                case '\u00e2':// a circumflex
+                case '\u00e1':// a accent
                     builder.append('a');
                     break;
-                case 'ç':
+                case '\u00e7':// c cedilla
                     builder.append('c');
                     break;
-                case 'ì':
-                case 'î':
+                case '\u00ec':// i accent
+                case '\u00ee':// i circumflex
                     builder.append('i');
                     break;
                 default:

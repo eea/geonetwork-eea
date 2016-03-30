@@ -1,11 +1,27 @@
-package org.fao.geonet.utils;
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
 
-import org.apache.jcs.access.exception.CacheException;
-import org.apache.xerces.dom.DOMInputImpl;
-import org.apache.xerces.util.XMLCatalogResolver;
-import org.fao.geonet.JeevesJCS;
-import org.jdom.Element;
-import org.w3c.dom.ls.LSInput;
+package org.fao.geonet.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -14,8 +30,16 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import org.apache.jcs.access.exception.CacheException;
+import org.apache.xerces.dom.DOMInputImpl;
+import org.apache.xerces.util.XMLCatalogResolver;
+import org.fao.geonet.JeevesJCS;
+import org.jdom.Element;
+import org.w3c.dom.ls.LSInput;
 
 /* Resolves system and public ids as well as URIs using oasis catalog
    as per XMLCatalogResolver, but goes further and retrieves any
@@ -67,11 +91,16 @@ public class XmlResolver extends XMLCatalogResolver {
         if (Log.isDebugEnabled(Log.XML_RESOLVER))
             Log.debug(Log.XML_RESOLVER, "Jeeves XmlResolver: Before resolution: Type: " + type + " NamespaceURI :" + namespaceURI + " " +
                                         "PublicId :" + publicId + " SystemId :" + systemId + " BaseURI:" + baseURI);
-
-        LSInput result = tryToResolveOnFs(publicId, systemId, baseURI);
-        if (result != null) {
-            return result;
-        }
+        LSInput result = null;
+        
+        try{
+            result = tryToResolveOnFs(publicId, systemId, baseURI);
+            if (result != null) {
+                return result;
+            }
+        }catch(FileSystemNotFoundException e) {
+            //Do nothing, just continue
+        }  
 
         result = super.resolveResource(type, namespaceURI, publicId, systemId, baseURI);
 

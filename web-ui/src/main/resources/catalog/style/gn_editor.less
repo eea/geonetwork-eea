@@ -9,6 +9,10 @@ body {
   
 }
 
+.gn-line-height {
+       line-height: 1.8 !important;
+ }
+
 input[type=text], input[type=number], select {
   .form-control;
 }
@@ -68,6 +72,40 @@ input[type=text], input[type=number], select {
 }
 
 
+#gn-directory-container {
+  .gn-facet-dropdown {
+    min-width: 300px;
+  }
+}
+
+.gn-editor-board {
+  .table.gn-results-editor td {
+    padding: 2px;
+
+    :nth-of-type(1) {
+      font-size: 120%;
+      padding-top: 8px;
+    }
+
+    .gn-record-details {
+      padding-left: 38px;
+    }
+  }
+}
+
+.gn-autocomplete-list {
+  position: absolute;
+  margin-top: 35px;
+  width: inherit;
+  z-index: 999;
+
+  /**/
+  .tt-suggestion:hover {
+    color: #fff;
+    background-color: #0097cf;
+  }
+}
+
 form.gn-editor {
   /* Move each sub fieldset to the left */
   @editor-fieldset-padding-left: 5px;
@@ -81,6 +119,15 @@ form.gn-editor {
   
   div.well {
     margin-bottom: 0px;
+  }
+
+  div[data-gn-toggle] {
+    position: absolute;
+    left: -4px;
+    top: 2px;
+    button {
+      padding: 2px;
+    }
   }
 
   /**
@@ -106,6 +153,9 @@ form.gn-editor {
     white-space: nowrap;
   }
 
+  .gn-associated-resource-btn {
+    .button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
+  }
 
   fieldset fieldset {
     padding-left: @editor-fieldset-padding-left;
@@ -130,6 +180,8 @@ form.gn-editor {
     margin-top: 35px;
     width: inherit;
     z-index: 999;
+    max-height: 80vh;
+    overflow: auto;
 
     /**/
     .tt-suggestion:hover {
@@ -197,6 +249,17 @@ form.gn-editor {
       > select {
         border-bottom-right-radius: 0px;
         border-top-right-radius: 0px;
+      }
+    }
+    &.gn-time-with-ind-position {
+      > select.gn-indeterminate-position {
+        width: 20%;
+      }
+      > input[type=date] {
+        width: 40%;
+      }
+      > input[type=time] {
+        width: 40%;
       }
     }
   }
@@ -307,8 +370,21 @@ form.gn-tab-inspire {
 }
 
 /* Onlinesrc styles */
-.onlinesrc-container {
-  width: 680px;
+.gn-onlinesrc-panel {
+  .list-group-item {
+    padding-left: 4px;
+    padding-right: 4px;
+    .row > div {
+      padding-left: 1px;
+      padding-right: 1px;
+
+      .onlinesrc-remove {
+        padding: 0px;
+      }
+    }
+  }
+}
+.onlinesrc-container, [gn-directory-entry-list-selector] {
   .list-group {
     max-height:50%;
     overflow: auto;
@@ -321,6 +397,15 @@ form.gn-tab-inspire {
     max-height: 50vh;
     li.active {
         background-color: #428bca;
+    }
+  }
+}
+
+table.gn-data-store {
+  td {
+    word-break: break-all;
+    .btn {
+      padding: 1px 1px;
     }
   }
 }
@@ -374,5 +459,24 @@ form.gn-tab-inspire {
   }
   .no-data a {
     color: @gray-light;
+  }
+}
+
+.gn-batch-editor {
+  .gn-resultview li.list-group-item {
+    margin-bottom: 0px;
+    padding: 4px;
+  }
+  li.gn-batch-editor-info {
+    margin-top: 11px;
+  }
+  [data-ng-search-form] .gn-top-search .gn-form-any {
+    max-width: 80vw;
+  }
+}
+
+form.gn-tab-xml {
+  div[data-gn-toggle] {
+    display:none;
   }
 }

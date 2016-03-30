@@ -41,6 +41,7 @@ import java.nio.file.Path;
  * Delete an uploaded file from the data directory.
  * 
  */
+@Deprecated
 public class Get extends NotInReadOnlyModeService {
 
     public void init(Path appPath, ServiceConfig params) throws Exception {
@@ -56,6 +57,12 @@ public class Get extends NotInReadOnlyModeService {
 
         // delete the file
         Path file = Lib.resource.getDir(context, access, id).resolve(filename);
+        
+        if(filename.contains("..")
+                || filename.startsWith("://", 1) 
+                || filename.startsWith("/")) {
+            throw new SecurityException("Wrong filename");
+        }
 
         Files.deleteIfExists(file);
 

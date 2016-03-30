@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 (function() {
   goog.provide('gn_needhelp_directive');
 
@@ -22,8 +45,8 @@
    * display only an icon and no label.
    *
    */
-  module.directive('gnNeedHelp', ['$http', '$translate',
-    function($http, $translate) {
+  module.directive('gnNeedHelp', ['$rootScope', '$http', '$translate',
+    function($rootScope, $http, $translate) {
       // // add popup to document body
       // var modalObj = angular.element(
       //     '<div class="modal gn-doc">' +
@@ -41,31 +64,6 @@
       //     '</div>');
       // angular.element(window.document.body).append(modalObj);
 
-      // Help configuration TODO: move to an external file or db ?
-      var helpLinks = {
-        helpBaseUrl: 'http://geonetwork-opensource.org/manuals/trunk/',
-        defaultLang: 'eng',
-        pages: {
-          editor: {
-            eng: 'eng/users/quickstartguide/new_metadata/index.html',
-            fre: 'fra/users/editor/index.html'
-          },
-          editor_sharing: {
-            eng: 'eng/users/managing_metadata/ownership/index.html',
-            fre: 'fra/users/editor/metadata_ownership/index.html'
-          },
-          editor_geopublisher: {
-            eng: 'eng/users/quickstartguide/new_metadata/linking.html' +
-                '#publish-uploaded-data-as-wms-wfs',
-            fre: 'fra/users/editor/metadata_link/linking.html' +
-                '#publier-les-donnees-telechargees-en-wms-wfs-wcs'
-          },
-          admin_settings: {
-            eng: 'eng/users/admin/configuration/index.html',
-            fre: 'fra/users/admin/configuration/index.html'
-          }
-        }
-      };
       return {
         restrict: 'A',
         replace: true,
@@ -78,11 +76,14 @@
           //     var modalBody = $(modalObj).find('.modal-body').get(0);
           scope.iconOnly = attrs.iconOnly === 'true';
 
+          var helpBaseUrl = 'http://geonetwork-opensource.org/manuals/trunk/';
+          var defaultLang = 'eng';
+
           var openPage = function(lang) {
-            var page = helpLinks.pages[attrs.gnNeedHelp] &&
-                helpLinks.pages[attrs.gnNeedHelp][lang];
+            var page = attrs.gnNeedHelp;
+            var lang = lang == 'fre' ? 'fra' : 'eng';
             if (page) {
-              var helpPageUrl = helpLinks.helpBaseUrl + page;
+              var helpPageUrl = helpBaseUrl + lang + '/users/' + page;
               window.open(helpPageUrl);
               return true;
             } else {
@@ -92,12 +93,10 @@
             }
           };
 
-          // Get lang from scope or parent scope
-          var lang = scope.lang || scope.$parent.lang;
-
+          var lang = $rootScope.lang;
           scope.showHelp = function() {
             if (!openPage(lang)) {
-              openPage(helpLinks.defaultLang);
+              openPage(defaultLang);
             }
 
             //       var helpPageUrl = docPath + attrs.gnNeedHelp + '.html';

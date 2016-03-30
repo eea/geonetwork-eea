@@ -554,7 +554,7 @@ INSERT INTO Operations (id, name) VALUES  (6,'featured');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/site/name', 'My GeoNetwork catalogue', 0, 110, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/site/siteId', '', 0, 120, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/site/organization', 'My organization', 0, 130, 'n');
-INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/platform/version', '3.0.2', 0, 150, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/platform/version', '3.1.0', 0, 150, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/platform/subVersion', 'SNAPSHOT', 0, 160, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/site/svnUuid', '', 0, 170, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/server/host', 'localhost', 0, 210, 'n');
@@ -578,18 +578,13 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/feedback/mailServer/username', '', 0, 642, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/feedback/mailServer/password', '', 0, 643, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/feedback/mailServer/ssl', 'false', 2, 641, 'y');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/feedback/mailServer/tls', 'false', 2, 644, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/removedMetadata/dir', 'WEB-INF/data/removed', 0, 710, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/selectionmanager/maxrecords', '1000', 1, 910, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/csw/enable', 'true', 2, 1210, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/csw/contactId', NULL, 0, 1220, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/csw/metadataPublic', 'false', 2, 1310, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/csw/transactionUpdateCreateXPath', 'true', 2, 1320, 'y');
-INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/shib/use', 'false', 2, 1710, 'y');
-INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/shib/path', '/geonetwork/srv/en/shib.user.login', 0, 1720, 'y');
-INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/shib/username', 'REMOTE_USER', 0, 1740, 'y');
-INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/shib/surname', 'Shib-Person-surname', 0, 1750, 'y');
-INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/shib/firstname', 'Shib-InetOrgPerson-givenName', 0, 1760, 'y');
-INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/shib/profile', 'Shib-EP-Entitlement', 0, 1770, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/userSelfRegistration/enable', 'false', 2, 1910, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/userFeedback/enable', 'true', 2, 1911, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/clickablehyperlinks/enable', 'true', 2, 2010, 'y');
@@ -599,6 +594,7 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/downloadservice/withdisclaimer', 'false', 0, 2230, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/xlinkResolver/enable', 'false', 2, 2310, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/xlinkResolver/localXlinkEnable', 'true', 2, 2311, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/xlinkResolver/ignore', 'operatesOn,featureCatalogueCitation,Anchor,source', 0, 2312, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/hidewithheldelements/enableLogging', 'false', 2, 2320, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/autofixing/enable', 'true', 2, 2410, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/searchStats/enable', 'true', 2, 2510, 'n');
@@ -613,6 +609,7 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/oai/mdmode', '1', 0, 7010, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/oai/tokentimeout', '3600', 1, 7020, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/oai/cachesize', '60', 1, 7030, 'y');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/oai/maxrecords', '10', 1, 7040, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/inspire/enable', 'false', 2, 7210, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/inspire/enableSearchPanel', 'false', 2, 7220, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/inspire/atom', 'disabled', 0, 7230, 'y');
@@ -635,6 +632,7 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/metadata/enableXmlView', 'true', 2, 9140, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/metadata/defaultView', 'simple', 0, 9150, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/metadata/allThesaurus', 'false', 2, 9160, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/metadatacreate/generateUuid', 'true', 2, 9100, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/metadataprivs/usergrouponly', 'false', 2, 9180, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/threadedindexing/maxthreads', '1', 1, 9210, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/autodetect/enable', 'false', 2, 9510, 'y');
@@ -680,6 +678,14 @@ INSERT INTO HarvesterSettings (id, parentid, name, value) VALUES  (1,NULL,'harve
 -- === Table: Users
 -- ======================================================================
 
-INSERT INTO Users (id, username, password, name, surname, profile, kind, organisation, security, authtype) VALUES  (1,'admin','46e44386069f7cf0d4f2a420b9a2383a612f316e2024b0fe84052b0b96c479a23e8a0be8b90fb8c2','admin','admin',0,'','','','');
+INSERT INTO Users (id, username, password, name, surname, profile, kind, organisation, security, authtype, enabled) VALUES  (1,'admin','46e44386069f7cf0d4f2a420b9a2383a612f316e2024b0fe84052b0b96c479a23e8a0be8b90fb8c2','admin','admin',0,'','','','', true);
 INSERT INTO Address (id, address, city, country, state, zip) VALUES  (1, '', '', '', '', '');
 INSERT INTO UserAddress (userid, addressid) VALUES  (1, 1);
+
+
+-- ======================================================================
+-- === Table: MetadataURNTemplates
+-- ======================================================================
+
+INSERT INTO MetadataIdentifierTemplate (id, name, template, isprovided) VALUES  (0, 'Custom URN', '', 'y');
+INSERT INTO MetadataIdentifierTemplate (id, name, template, isprovided) VALUES  (1, 'Autogenerated URN', '', 'y');

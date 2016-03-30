@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+  ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
+  ~ United Nations (FAO-UN), United Nations World Food Programme (WFP)
+  ~ and United Nations Environment Programme (UNEP)
+  ~
+  ~ This program is free software; you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation; either version 2 of the License, or (at
+  ~ your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but
+  ~ WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  ~ General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program; if not, write to the Free Software
+  ~ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+  ~
+  ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+  ~ Rome - Italy. email: geonetwork@osgeo.org
+  -->
+
 <xsl:stylesheet version="2.0" xmlns    ="http://www.isotc211.org/2005/gmd"
 										xmlns:gco="http://www.isotc211.org/2005/gco"
 										xmlns:gts="http://www.isotc211.org/2005/gts"
@@ -658,32 +681,64 @@
 
 
 
-		
-		<xsl:for-each-group select="//wms:Layer[wms:Name=$Name]/wms:KeywordList/wms:Keyword|wms:Service/wms:KeywordList/wms:Keyword" 
-			group-by="@vocabulary">
-			<descriptiveKeywords>
-				<MD_Keywords>
-					<xsl:for-each select="../wms:Keyword[@vocabulary = current-grouping-key()]">
-						<keyword>
-							<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-						</keyword>
-					</xsl:for-each>
-					
-					<xsl:if test="current-grouping-key() != ''">
-						<thesaurusName>
-							<CI_Citation>
-								<title>
-									<gco:CharacterString><xsl:value-of select="current-grouping-key()"/></gco:CharacterString>
-								</title>
-							</CI_Citation>
-						</thesaurusName>
-					</xsl:if>
-					<type>
-						<MD_KeywordTypeCode codeList="./resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
-					</type>
-				</MD_Keywords>
-			</descriptiveKeywords>
-		</xsl:for-each-group>
+
+    <!-- If layer does not provide any keywords, put service keywords. -->
+    <xsl:choose>
+      <xsl:when test="count(//wms:Layer[wms:Name=$Name]/wms:KeywordList/wms:Keyword) > 0">
+        <xsl:for-each-group select="//wms:Layer[wms:Name=$Name]/wms:KeywordList/wms:Keyword"
+                            group-by="@vocabulary">
+          <descriptiveKeywords>
+            <MD_Keywords>
+              <xsl:for-each select="../wms:Keyword[@vocabulary = current-grouping-key()]">
+                <keyword>
+                  <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                </keyword>
+              </xsl:for-each>
+
+              <xsl:if test="current-grouping-key() != ''">
+                <thesaurusName>
+                  <CI_Citation>
+                    <title>
+                      <gco:CharacterString><xsl:value-of select="current-grouping-key()"/></gco:CharacterString>
+                    </title>
+                  </CI_Citation>
+                </thesaurusName>
+              </xsl:if>
+              <type>
+                <MD_KeywordTypeCode codeList="./resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+              </type>
+            </MD_Keywords>
+          </descriptiveKeywords>
+        </xsl:for-each-group>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:for-each-group select="wms:Service/wms:KeywordList/wms:Keyword"
+                            group-by="@vocabulary">
+          <descriptiveKeywords>
+            <MD_Keywords>
+              <xsl:for-each select="../wms:Keyword[@vocabulary = current-grouping-key()]">
+                <keyword>
+                  <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                </keyword>
+              </xsl:for-each>
+
+              <xsl:if test="current-grouping-key() != ''">
+                <thesaurusName>
+                  <CI_Citation>
+                    <title>
+                      <gco:CharacterString><xsl:value-of select="current-grouping-key()"/></gco:CharacterString>
+                    </title>
+                  </CI_Citation>
+                </thesaurusName>
+              </xsl:if>
+              <type>
+                <MD_KeywordTypeCode codeList="./resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+              </type>
+            </MD_Keywords>
+          </descriptiveKeywords>
+        </xsl:for-each-group>
+      </xsl:otherwise>
+    </xsl:choose>
 		
 		<xsl:for-each select="//wfs:FeatureType[wfs:Name=$Name]">
 			<descriptiveKeywords>

@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 (function() {
   goog.provide('gn_date_picker_directive');
 
@@ -13,8 +36,10 @@
    *  yet widely supported.
    */
   module.directive('gnDatePicker',
-      ['$http', '$rootScope', '$filter', 'gnNamespaces', 'gnCurrentEdit',
-       function($http, $rootScope, $filter, gnNamespaces, gnCurrentEdit) {
+      ['$http', '$rootScope', '$filter', '$timeout',
+       'gnSchemaManagerService', 'gnCurrentEdit',
+       function($http, $rootScope, $filter, $timeout,
+                gnSchemaManagerService, gnCurrentEdit) {
 
          return {
            restrict: 'A',
@@ -39,16 +64,7 @@
              scope.dateTypeSupported = Modernizr.inputtypes.date;
              scope.isValidDate = true;
              scope.hideTime = scope.hideTime == 'true';
-             var namespaces = {
-               iso19139: {
-                 gco: gnNamespaces.gco,
-                 gml: gnNamespaces.gml
-               },
-               'iso19115-3': {
-                 gco: gnNamespaces.gco3,
-                 gml: gnNamespaces.gml32
-               }
-             }, datePattern = new RegExp('^\\d{4}$|' +
+             var datePattern = new RegExp('^\\d{4}$|' +
              '^\\d{4}-\\d{2}$|' +
              '^\\d{4}-\\d{2}-\\d{2}$|' +
              '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$');
@@ -152,10 +168,16 @@
                      attribute = ' indeterminatePosition="' +
                      scope.indeterminatePosition + '"';
                    }
+
+                   if (scope.dateTime == null) {
+                     scope.dateTime = '';
+                   }
+
                    scope.xmlSnippet = '<' + tag +
                    ' xmlns:' +
                         namespace + '="' +
-                        namespaces[gnCurrentEdit.schema][namespace] + '"' +
+                        gnSchemaManagerService.findNamespaceUri(namespace,
+                   gnCurrentEdit.schema) + '"' +
                    attribute + '>' +
                    scope.dateTime + '</' + tag + '>';
                  } else {
@@ -173,10 +195,15 @@
              scope.$watch('indeterminatePosition', resetDateIfNeeded);
              scope.$watch('xmlSnippet', function() {
                if (scope.id) {
-                 $(scope.id).val(scope.xmlSnippet);
-                 $(scope.id).change();
+                 // This is required on init to have the optionnaly
+                 // templateFieldDirective initialized first so
+                 // that the template is properly computed.
+                 $timeout(function() {
+                   $(scope.id).val(scope.xmlSnippet).change();
+                 });
                }
              });
+
 
              buildDate();
            }

@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 (function() {
   goog.provide('gn_mdactions_service');
 
@@ -129,18 +152,36 @@
       this.exportCSV = function() {
         window.open(gnHttp.getService('csv'), windowName, windowOption);
       };
+      this.validateMd = function(md) {
+        if (md) {
+          return gnMetadataManager.validate(md.getId()).then(function() {
+            $rootScope.$broadcast('mdSelectNone');
+            $rootScope.$broadcast('search');
+          });
+        }
+        else {
+          return callBatch('mdValidateBatch').then(function() {
+            $rootScope.$broadcast('mdSelectNone');
+            $rootScope.$broadcast('search');
+          });
+        }
+      };
 
-      this.deleteMd = function(md, searchParams) {
+      this.deleteMd = function(md) {
         if (md) {
           return gnMetadataManager.remove(md.getId()).then(function() {
             $rootScope.$broadcast('mdSelectNone');
-            $rootScope.$broadcast('resetSearch', searchParams);
+            // TODO: Here we may introduce a delay to not display the deleted
+            // record in results.
+            // https://github.com/geonetwork/core-geonetwork/issues/759
+            $rootScope.$broadcast('search');
           });
         }
         else {
           return callBatch('mdDeleteBatch').then(function() {
             $rootScope.$broadcast('mdSelectNone');
-            $rootScope.$broadcast('resetSearch', searchParams);
+            // TODO: Same here.
+            $rootScope.$broadcast('search');
           });
         }
       };
@@ -187,6 +228,9 @@
           title: 'privileges',
           content: '<div gn-share="" gn-share-batch="true"></div>'
         }, scope, 'PrivilegesUpdated');
+      };
+      this.openBatchEditing = function(scope) {
+        $location.path('/batchedit');
       };
       this.openCategoriesBatchPanel = function(scope) {
         openModal({

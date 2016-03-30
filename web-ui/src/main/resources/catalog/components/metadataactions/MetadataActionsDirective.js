@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 (function() {
   goog.provide('gn_mdactions_directive');
 
@@ -19,6 +42,7 @@
         },
         link: function(scope) {
           scope.lang = scope.$parent.lang;
+          var user = scope.$parent.user;
           scope.newStatus = {value: '0'};
 
           var metadataId = scope.md.getId();
@@ -60,6 +84,11 @@
                 });
           };
 
+          scope.cantStatus = function(status) {
+            return ((status == 5 || status == 2 || status == 3) &&
+                !user.isReviewerOrMore());
+          };
+
           init();
         }
       };
@@ -86,12 +115,33 @@
             'metadatacategoryupdater.html',
         scope: {
           currentCategories: '=gnMetadataCategoryUpdater',
-          metadataId: '='
+          metadataId: '=',
+          groupOwner: '=gnGroupOwner'
         },
         link: function(scope) {
           scope.lang = scope.$parent.lang;
           scope.categories = null;
           scope.ids = [];
+
+          scope.updateCategoriesAllowed = function() {
+            if (angular.isDefined(scope.groupOwner)) {
+              $http.get('admin.group.get?id=' + scope.groupOwner + '&' +
+                  '_content_type=json', {cache: true}).
+                  success(function(data) {
+                    scope.enableallowedcategories =
+                        (data[0].enableallowedcategories == 'true');
+                    scope.allowedcategories = [];
+                    angular.forEach(data[0].allowedcategories, function(c) {
+                      scope.allowedcategories.push(c.id);
+                    });
+                  });
+            }
+          };
+          scope.updateCategoriesAllowed();
+
+          scope.$watch('groupOwner', function(newvalue, oldvalue) {
+            scope.updateCategoriesAllowed();
+          });
 
           var init = function() {
             return $http.get('info?type=categories&' +
@@ -348,9 +398,8 @@
           scope.save = function() {
             if (scope.selectedUser && scope.selectedGroup) {
               if (angular.isDefined(mdUuid)) {
-                return gnHttp.callService('mdSelect', {
-                  selected: 'add',
-                  id: mdUuid
+                return $http.put('../api/selections/metadata', {
+                  uuids: mdUuid
                 }).success(function() {
                   updateSelection();
                 });

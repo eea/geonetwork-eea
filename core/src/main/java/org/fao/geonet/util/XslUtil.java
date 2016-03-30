@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 package org.fao.geonet.util;
 
 import java.io.IOException;
@@ -15,12 +38,15 @@ import jeeves.server.context.ServiceContext;
 
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.domain.User;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.search.CodeListTranslator;
 import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.kernel.search.Translator;
+import org.fao.geonet.kernel.setting.SettingInfo;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.languages.IsoLanguagesMapper;
+import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.schema.iso19139.ISO19139Namespaces;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
@@ -439,6 +465,17 @@ public final class XslUtil
         return allowScripting.get() == null || allowScripting.get();
     }
 
+    public static String getUserDetails(Object contactIdentifier) {
+        String contactDetails = "";
+        int contactId = Integer.parseInt((String) contactIdentifier);
+        final ServiceContext serviceContext = ServiceContext.get();
+        User user= serviceContext.getBean(UserRepository.class).findOne(contactId);
+        if (user != null) {
+            contactDetails = Xml.getString(user.asXml());
+        }
+        return contactDetails;
+    }
+
 	public static String reprojectCoords(Object minx, Object miny, Object maxx,
 			Object maxy, Object fromEpsg) {
 		String ret = "";
@@ -490,4 +527,15 @@ public final class XslUtil
 
 		return ret;
 	}
+
+    public static String getSiteUrl() {
+        ServiceContext context = ServiceContext.get();
+        SettingInfo si = new SettingInfo();
+        return si.getSiteUrl() + "/" + context.getBaseUrl();
+    }
+
+    public static String getLanguage() {
+        ServiceContext context = ServiceContext.get();
+        return context.getLanguage();
+    }
 }

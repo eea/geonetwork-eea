@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 package org.fao.geonet.services.user;
 
 import jeeves.server.UserSession;
@@ -53,6 +76,7 @@ public class UserUpdateIntegrationTest extends AbstractServiceIntegrationTest {
     private static String name = "firstname";
     private static String profile = Profile.UserAdmin.name();
     private static String organization = "c2c";
+    private static Boolean enabled = Boolean.TRUE;
 
     @Autowired
     UserGroupRepository _userGroupRepository;
@@ -99,7 +123,7 @@ public class UserUpdateIntegrationTest extends AbstractServiceIntegrationTest {
 
         update.run(session, request, Params.Operation.NEWUSER, null, username,
                 password, profile, surname, name, address, city, state, zip,
-                country, email, organization, kind);
+                country, email, organization, kind, enabled);
 
         assertEquals(2, _userRepo.count());
         List<User> users = _userRepo.findAllByProfile(Profile.UserAdmin);
@@ -154,7 +178,7 @@ public class UserUpdateIntegrationTest extends AbstractServiceIntegrationTest {
         update.run(session, request, Params.Operation.FULLUPDATE,
                 Integer.toString(startUser.getId()), username, password,
                 profile, surname, name, address, city, state, zip, country,
-                email, organization, kind);
+                email, organization, kind, enabled);
 
         assertEquals(2, _userRepo.count());
         User user = _userRepo.findOne(startUser.getId());
@@ -199,7 +223,7 @@ public class UserUpdateIntegrationTest extends AbstractServiceIntegrationTest {
 
         update.run(session, request, Params.Operation.RESETPW,
                 Integer.toString(startUser.getId()), username, password, null,
-                null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null);
 
         User user = _userRepo.findOne(startUser.getId());
         assertExpectedUser(user);
@@ -225,7 +249,7 @@ public class UserUpdateIntegrationTest extends AbstractServiceIntegrationTest {
 
         update.run(session, request, Params.Operation.RESETPW,
                 Integer.toString(startUser.getId()), username, password, null,
-                null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null);
 
         User user = _userRepo.findOne(startUser.getId());
         assertExpectedUser(user);
@@ -252,7 +276,7 @@ public class UserUpdateIntegrationTest extends AbstractServiceIntegrationTest {
         update.run(session, request, Params.Operation.EDITINFO,
                 Integer.toString(startUser.getId()), username, null, null,
                 null, "firstname", null, null, null, null, null, null, null,
-                null);
+                null, null);
 
         User user = _userRepo.findOne(startUser.getId());
         assertExpectedUser(user);
@@ -317,7 +341,7 @@ public class UserUpdateIntegrationTest extends AbstractServiceIntegrationTest {
         update.run(session, request, Params.Operation.EDITINFO,
                 Integer.toString(updatingUser.getId()), null, null,
                 Profile.Administrator.name(), null, null, null, null, null,
-                null, null, null, null, null);
+                null, null, null, null, null, null);
 
     }
 
@@ -353,7 +377,7 @@ public class UserUpdateIntegrationTest extends AbstractServiceIntegrationTest {
         update.run(session, request, Params.Operation.EDITINFO,
                 Integer.toString(startUser.getId()), null, null,
                 profile.name(), null, "newname", null, null, null, null, null,
-                null, null, null);
+                null, null, null, null);
 
     }
 
@@ -379,7 +403,7 @@ public class UserUpdateIntegrationTest extends AbstractServiceIntegrationTest {
 
         update.run(session, request, Params.Operation.RESETPW,
                 Integer.toString(toUpdateUser.getId()), null, password, null,
-                null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -412,7 +436,7 @@ public class UserUpdateIntegrationTest extends AbstractServiceIntegrationTest {
 
         update.run(session, request, Params.Operation.RESETPW,
                 Integer.toString(toUpdateUser.getId()), null, password, null,
-                null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null);
 
     }
 
@@ -445,7 +469,7 @@ public class UserUpdateIntegrationTest extends AbstractServiceIntegrationTest {
 
         update.run(session, request, Params.Operation.RESETPW,
                 Integer.toString(toUpdateUser.getId()), null, password, null,
-                null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null);
         
         User user = _userRepo.findOne(toUpdateUser.getId());
         assertExpectedUser(user);

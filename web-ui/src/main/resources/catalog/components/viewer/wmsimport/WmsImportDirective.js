@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 (function() {
   goog.provide('gn_wmsimport');
 
@@ -149,7 +172,7 @@
           map: '=gnKmlImportMap'
         },
         controllerAs: 'kmlCtrl',
-        controller: ['$scope', function($scope) {
+        controller: ['$scope', '$http', function($scope, $http) {
 
           /**
            * Create new vector Kml file from url and add it to
@@ -165,30 +188,26 @@
               return;
             }
 
-            //FIXME use global constant defined in gnGlobalSettings
             var proxyUrl = '../../proxy?url=' + encodeURIComponent(url);
-            var kmlSource = new ol.source.KML({
-              projection: 'EPSG:3857',
-              url: proxyUrl
-            });
+            $http.get(proxyUrl).then(function(response) {
+              var kmlSource = new ol.source.Vector();
+              kmlSource.addFeatures(
+                  new ol.format.KML().readFeatures(
+                  response.data, {
+                    featureProjection: $scope.map.getView().getProjection(),
+                    dataProjection: 'EPSG:4326'
+                  }));
+              var vector = new ol.layer.Vector({
+                source: kmlSource,
+                getinfo: true,
+                label: 'Fichier externe : ' + url.split('/').pop()
+              });
+              $scope.addToMap(vector, map);
+              $scope.url = '';
+              $scope.validUrl = true;
 
-            var vector = new ol.layer.Vector({
-              source: kmlSource,
-              getinfo: true,
-              label: 'Fichier externe : ' + url.split('/').pop()
-            });
-
-            var listenerKey = kmlSource.on('change', function() {
-              if (kmlSource.getState() == 'ready') {
-                kmlSource.unByKey(listenerKey);
-                $scope.addToMap(vector, map);
-                $scope.validUrl = true;
-                $scope.url = '';
-              }
-              else if (kmlSource.getState() == 'error') {
-                $scope.validUrl = false;
-              }
-              $scope.$apply();
+            }, function() {
+              $scope.validUrl = false;
             });
           };
 

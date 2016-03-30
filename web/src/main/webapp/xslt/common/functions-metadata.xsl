@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
+  ~ United Nations (FAO-UN), United Nations World Food Programme (WFP)
+  ~ and United Nations Environment Programme (UNEP)
+  ~
+  ~ This program is free software; you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation; either version 2 of the License, or (at
+  ~ your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but
+  ~ WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  ~ General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program; if not, write to the Free Software
+  ~ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+  ~
+  ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+  ~ Rome - Italy. email: geonetwork@osgeo.org
+  -->
+
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gn="http://www.fao.org/geonetwork"
   xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
@@ -18,7 +41,7 @@
     <xsl:param name="metadata" as="node()"/>
     <xsl:param name="evaluatedNode" as="node()"/>
 
-    <xsl:variable name="nodeRef" select="$evaluatedNode/*/gn:element/@ref"/>
+    <xsl:variable name="nodeRef" select="$evaluatedNode/gn:element/@ref"/>
     <xsl:variable name="node" select="$metadata//*[gn:element/@ref = $nodeRef]"/>
 
     <!--<xsl:message>#getOriginalNode ==================</xsl:message>
@@ -55,10 +78,13 @@
     Add try/catch block to log out when a label id duplicated
     in loc files. XSLv3 could be useful for that.
     -->
-    <!--<xsl:message>#<xsl:value-of select="$name"/></xsl:message>
-    <xsl:message>#<xsl:value-of select="$xpath"/></xsl:message>
-    <xsl:message>#<xsl:value-of select="$parent"/></xsl:message>-->
-    
+    <!--
+    <xsl:message>#gn-fn-metadata:getLabel</xsl:message>
+    <xsl:message>#Element name: <xsl:value-of select="$name"/></xsl:message>
+    <xsl:message>#XPath: <xsl:value-of select="$xpath"/></xsl:message>
+    <xsl:message>#Parent: <xsl:value-of select="$parent"/></xsl:message>
+    -->
+
     <xsl:variable name="escapedName">
       <xsl:choose>
         <xsl:when test="matches($name, '.*CHOICE_ELEMENT.*')">
@@ -133,7 +159,7 @@
     <xsl:param name="codelists" as="node()"/>
     <xsl:copy-of select="gn-fn-metadata:getCodeListValues($schema, $name, $codelists, false())"/>
   </xsl:function>
-  
+
   <xsl:function name="gn-fn-metadata:getCodeListValues" as="node()">
     <xsl:param name="schema" as="xs:string"/>
     <xsl:param name="name" as="xs:string"/>
@@ -142,8 +168,15 @@
 
     <xsl:variable name="codelists" select="$codelists/codelist[@name=$name]"
       exclude-result-prefixes="#all"/>
-    
-    <!-- Conditional helpers which may define an xpath expression to evaluate 
+
+    <!--
+    <xsl:message>#gn-fn-metadata:getCodeListValues</xsl:message>
+    <xsl:message>#Schema: <xsl:value-of select="$schema"/> </xsl:message>
+    <xsl:message>#Element name: <xsl:value-of select="$name"/> </xsl:message>
+    <xsl:message>#Codelist found: <xsl:copy-of select="$codelists"/> </xsl:message>
+    -->
+
+    <!-- Conditional helpers which may define an xpath expression to evaluate
         if the xpath match. Check all codelists if one define an expression.
         If the expression return a node, this codelist will be returned. -->
     <xsl:variable name="conditionalCodelist">
@@ -245,7 +278,7 @@
 
           <xsl:choose>
             <xsl:when
-                    test="count($helpersMatchingCurrentRecord) > 0">
+                    test="count($helpersMatchingCurrentRecord/*) > 0">
               <xsl:copy-of select="$helpersMatchingCurrentRecord"/>
             </xsl:when>
             <xsl:otherwise>

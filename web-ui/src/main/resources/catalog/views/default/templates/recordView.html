@@ -110,7 +110,6 @@
         </div>
 
         <h2 data-translate="">aboutThisResource</h2>
-
         <table class="table table-striped">
           <tbody>
           <tr data-ng-if="mdView.current.record.inspirethemewithac.length > 0 ||
@@ -118,6 +117,7 @@
               <th data-translate="">inspireThemes</th>
               <td>
                 <div data-ng-repeat="cat in mdView.current.record.inspirethemewithac"
+                     data-ng-click="search({'inspirethemewithac': cat})"
                      class="iti-box full {{cat.split('|')[0]}} {{cat.split('|')[0]}}-{{langs[lang]}}"
                      title="{{cat.split('|')[1]}}">
                   <div class="icon"><span class="iti-{{cat.split('|')[0]}}"></span></div>
@@ -129,17 +129,24 @@
                       mdView.current.record.topicCat.length > 0">
               <th data-translate="">listOfCategories</th>
               <td>
-                <a data-ng-repeat="cat in mdView.current.record.category"
-                   data-ng-href="#/search?_cat={{cat}}">
-                  <span class="fa gn-icon-{{cat}}" title="{{cat | translate}}"></span>
-                </a>
+                <div data-ng-repeat="cat in mdView.current.record.category"
+                     data-ng-click="search({'_cat': cat})"
+                     class="iti-box full gn-iti"
+                     title="{{('cat-' + cat) | translate}}">
+                  <div class="icon">
+                    <span class="fa gn-icon-{{cat}}"></span></div>
+                  <p class="label">{{('cat-' + cat) | translate}}</p>
+                </div>
 
-                <a data-ng-repeat="t in mdView.current.record.topicCat"
-                   data-ng-href="#/search?topicCat={{t}}">
-                  <i class="fa" title="{{t | translate}}">
-                    <span class="fa gn-icon-{{t}}"></span>
-                  </i>
-                </a>
+                <div data-ng-repeat="cat in mdView.current.record.topicCat track by $index"
+                     data-ng-click="search({'topicCat': cat})"
+                     class="iti-box full gn-iti"
+                     title="{{cat | translate}}">
+                  <div class="icon">
+                    <span class="fa gn-icon-{{cat}}"></span>
+                  </div>
+                  <p class="label">{{cat | translate}}</p>
+                </div>
               </td>
             </tr>
             <tr data-ng-if="mdView.current.record.inspiretheme.length > 0 ||
@@ -223,7 +230,7 @@
                     {{c.role | translate}}
                   </h3>
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                       <address>
                         <strong>
                           {{c.org}}<br/>
@@ -244,6 +251,11 @@
                           <span data-translate="">call</span> {{c.phone}}
                         </a>
                       </address>
+                    </div>
+                    <div class="col-md-4">
+                      <img data-ng-if="c.logo"
+                           class="gn-source-logo"
+                           data-ng-src="{{::c.logo}}"/>
                     </div>
                   </div>
                 </div>
@@ -270,7 +282,7 @@
         <h2 data-translate="">technicalInformation</h2>
 
 
-        <div data-ng-if="mdView.current.record['geonet:info'].schema === 'iso19110'"
+        <div data-ng-if="mdView.current.record.attributeTable"
              data-gn-attribute-table-renderer="mdView.current.record.attributeTable">
         </div>
 
@@ -313,7 +325,7 @@
             <tr data-ng-if="mdView.current.record.format">
               <th data-translate="">format</th>
               <td>
-                <span data-ng-repeat="f in mdView.current.record.format" class="badge">{{f}}</span>
+                <span data-ng-repeat="f in mdView.current.record.format track by $index" class="badge">{{f}}</span>
               </td>
             </tr>
             <tr data-ng-if="mdView.current.record.lineage">
@@ -370,7 +382,7 @@
                   {{c.role | translate}}
                 </h3>
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-8">
                     <address>
                       <strong>
                         {{c.org}}<br/>
@@ -391,6 +403,11 @@
                         <span data-translate="">call</span> {{c.phone}}
                       </a>
                     </address>
+                  </div>
+                  <div class="col-md-4">
+                    <img data-ng-if="c.logo"
+                         class="gn-source-logo"
+                         data-ng-src="{{::c.logo}}"/>
                   </div>
                 </div>
               </div>
@@ -421,12 +438,15 @@
             <span data-translate="">overview</span>
           </h4>
 
-          <p data-ng-repeat="img in mdView.current.record.overviews">
-          <img data-gn-img-modal="md"
-               class="gn-img-thumbnail img-thumbnail"
-               alt="{{img.label}}"
-               data-ng-src="{{img.url}}"/>
-          </p>
+          <div data-ng-repeat="img in mdView.current.record.overviews">
+            <img data-gn-img-modal="img"
+                 class="gn-img-thumbnail img-thumbnail"
+                 alt="{{img.label}}"
+                 data-ng-src="{{img.url}}"/>
+
+            <div class="gn-img-thumbnail-caption"
+                 data-ng-show="img.label">{{img.label}}</div>
+          </div>
         </section></br>
 
 
@@ -533,15 +553,21 @@
             <i class="fa fa-fw fa-share-square-o"></i>
             <span data-translate="">shareOn</span>
           </h4>
-          <a data-ng-href="https://plus.google.com/share?url={{mdView.current.record.encodedUrl}}"
+          <a data-ng-href="https://plus.google.com/share?url={{socialMediaLink | encodeURIComponent}}"
              target="_blank"
              class="btn btn-lg btn-default"><i class="fa fa-fw fa-google-plus"></i></a>
-          <a data-ng-href="https://twitter.com/share?url={{mdView.current.record.encodedUrl}}"
+          <a data-ng-href="https://twitter.com/share?url={{socialMediaLink | encodeURIComponent}}"
              target="_blank"
              class="btn btn-lg btn-default"><i class="fa fa-fw fa-twitter"></i></a>
-          <a data-ng-href="https://www.facebook.com/sharer.php?u={{mdView.current.record.encodedUrl}}"
+          <a data-ng-href="https://www.facebook.com/sharer.php?u={{socialMediaLink | encodeURIComponent}}"
              target="_blank"
              class="btn btn-lg btn-default"><i class="fa fa-fw fa-facebook"></i></a>
+          <a data-ng-href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{socialMediaLink | encodeURIComponent}}"
+             target="_blank" 
+             class="btn btn-lg btn-default"><i class="fa fa-fw fa-linkedin"></i></a>
+          <a data-ng-href="mailto:?subject={{mdView.current.record.title || mdView.current.record.defaultTitle}}&amp;body={{socialMediaLink | encodeURIComponent}}"
+             target="_blank" 
+             class="btn btn-lg btn-default"><i class="fa fa-fw fa-envelope-o"></i></a>
         </section></br>
 
         <section>

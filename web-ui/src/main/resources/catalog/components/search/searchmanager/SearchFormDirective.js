@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 (function() {
   goog.provide('gn_search_form_controller');
 
@@ -161,6 +184,55 @@
           });
     };
 
+
+    /**
+     * triggerWildSubtemplateSearch
+     *
+     * Run a search with the actual $scope.params
+     * merged with the params from facets state.
+     * Update the paginationInfo object with the total
+     * count of metadata found. Note that this search
+     * is for subtemplates with _root element provided as function
+     * param and wildcard char appended
+     */
+    this.triggerWildSubtemplateSearch = function(element) {
+
+      angular.extend($scope.params, defaultParams);
+
+      // Don't add facet extra params to $scope.params but
+      // compute them each time on a search.
+      var params = angular.copy($scope.params);
+      if ($scope.currentFacets.length > 0) {
+        angular.extend(params,
+            gnFacetService.getParamsFromFacets($scope.currentFacets));
+      }
+
+      // Add wildcard char to search, limit to subtemplates and the _root
+      // element of the subtemplate we want
+      if (params.any) params.any = params.any + '*';
+      else params.any = '*';
+
+      params._isTemplate = 's';
+      params._root = element;
+      params.from = '1';
+      params.to = '20';
+
+      gnSearchManagerService.gnSearch(params).then(
+          function(data) {
+            $scope.searchResults.records = data.metadata;
+            $scope.searchResults.count = data.count;
+            $scope.searchResults.facet = data.facet;
+
+            // compute page number for pagination
+            if ($scope.searchResults.records.length > 0 &&
+                $scope.hasPagination) {
+              $scope.paginationInfo.pages = Math.ceil(
+                  $scope.searchResults.count /
+                      $scope.paginationInfo.hitsPerPage, 0);
+            }
+          });
+    };
+
     /**
      * If we use permalink, the triggerSerach call will in fact just update
      * the url with the params, then the event $locationChangeSuccess will call
@@ -242,6 +314,10 @@
       $scope.controller.resetSearch(searchParams);
     });
 
+    $scope.$on('search', function() {
+      $scope.triggerSearch();
+    });
+
     $scope.$on('clearResults', function() {
       $scope.searchResults = {
         records: [],
@@ -250,6 +326,7 @@
     });
 
     $scope.triggerSearch = this.triggerSearch;
+    $scope.triggerWildSubtemplateSearch = this.triggerWildSubtemplateSearch;
   };
 
   searchFormController['$inject'] = [

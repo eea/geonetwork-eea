@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 (function() {
   goog.provide('gn_catalog_service');
 
@@ -43,7 +66,27 @@
            * @return {HttpPromise} Future object
            */
         remove: function(id) {
-          var url = gnUrlUtils.append('md.delete@json',
+          var url = gnUrlUtils.append('md.delete?_content_type=json&',
+              gnUrlUtils.toKeyValue({
+                id: id
+              })
+              );
+          return $http.get(url);
+        },
+
+        /**
+         * @ngdoc method
+         * @name gnMetadataManager#validate
+         * @methodOf gnMetadataManager
+         *
+         * @description
+         * Validate a metadata from catalog
+         *
+         * @param {string} id Internal id of the metadata
+         * @return {HttpPromise} Future object
+         */
+        validate: function(id) {
+          var url = gnUrlUtils.append('md.validate?_content_type=json&',
               gnUrlUtils.toKeyValue({
                 id: id
               })
@@ -66,10 +109,12 @@
            * @param {boolean} withFullPrivileges privileges to assign.
            * @param {boolean} isTemplate type of the metadata
            * @param {boolean} isChild is child of a parent metadata
+           * @param {string} metadataUuid, the uuid of the metadata to create
+           *                 (when metadata uuid is set to manual)
            * @return {HttpPromise} Future object
            */
         copy: function(id, groupId, withFullPrivileges, 
-            isTemplate, isChild) {
+            isTemplate, isChild, metadataUuid) {
           var url = gnUrlUtils.append('md.create',
               gnUrlUtils.toKeyValue({
                 _content_type: 'json',
@@ -77,7 +122,8 @@
                 id: id,
                 template: isTemplate ? (isTemplate === 's' ? 's' : 'y') : 'n',
                 child: isChild ? 'y' : 'n',
-                fullPrivileges: withFullPrivileges ? 'true' : 'false'
+                fullPrivileges: withFullPrivileges ? 'true' : 'false',
+                metadataUuid: metadataUuid
               })
               );
           return $http.get(url);
@@ -116,7 +162,7 @@
          */
         importFromDir: function(data) {
           return $http({
-            url: 'md.import@json?' + data,
+            url: 'md.import?_content_type=json&' + data,
             method: 'GET',
             transformResponse: function(defaults) {
               try {
@@ -170,12 +216,16 @@
            * @param {boolean} withFullPrivileges privileges to assign.
            * @param {boolean} isTemplate type of the metadata
            * @param {boolean} isChild is child of a parent metadata
+           * @param {string} tab is the metadata editor tab to open
+           * @param {string} metadataUuid, the uuid of the metadata to create
+           *                 (when metadata uuid is set to manual)
            * @return {HttpPromise} Future object
            */
         create: function(id, groupId, withFullPrivileges, 
-            isTemplate, isChild, tab) {
+            isTemplate, isChild, tab, metadataUuid) {
+
           return this.copy(id, groupId, withFullPrivileges,
-              isTemplate, isChild).success(function(data) {
+              isTemplate, isChild, metadataUuid).success(function(data) {
             var path = '/metadata/' + data.id;
             if (tab) {
               path += '/tab/' + tab;
@@ -288,20 +338,19 @@
    */
 
   module.value('gnHttpServices', {
-    mdCreate: 'md.create@json',
-    mdView: 'md.view@json',
-    mdInsert: 'md.insert@json',
-    mdDelete: 'md.delete@json',
+    mdCreate: 'md.create?_content_type=json&',
+    mdView: 'md.view?_content_type=json&',
+    mdInsert: 'md.insert?_content_type=json&',
+    mdDelete: 'md.delete?_content_type=json&',
     mdDeleteBatch: 'md.delete.batch',
-    mdEdit: 'md.edit@json',
-    mdEditSave: 'md.edit.save@json',
-    mdEditSaveonly: 'md.edit.saveonly@json',
-    mdEditSaveandclose: 'md.edit.save.and.close@json',
-    mdEditCancel: 'md.edit.cancel@json',
-    getRelations: 'md.relations@json',
-    suggestionsList: 'md.suggestion@json',
-    getValidation: 'md.validate@json',
-    mdSelect: 'metadata.select?_content_type=json', // TODO: CHANGE
+    mdEdit: 'md.edit?_content_type=json&',
+    mdEditSave: 'md.edit.save?_content_type=json&',
+    mdEditSaveonly: 'md.edit.saveonly?_content_type=json&',
+    mdEditSaveandclose: 'md.edit.save.and.close?_content_type=json&',
+    mdEditCancel: 'md.edit.cancel?_content_type=json&',
+    getRelations: 'md.relations?_content_type=json&',
+    suggestionsList: 'md.suggestion?_content_type=json&',
+    getValidation: 'md.validate?_content_type=json&',
 
     mdGetPDFSelection: 'pdf.selection.search', // TODO: CHANGE
     mdGetRDF: 'rdf.metadata.get',
@@ -309,8 +358,9 @@
     mdGetXML19139: 'xml_iso19139',
     csv: 'csv.search',
 
-    mdPrivileges: 'md.privileges.update@json',
-    mdPrivilegesBatch: 'md.privileges.batch.update@json',
+    mdPrivileges: 'md.privileges.update?_content_type=json&',
+    mdPrivilegesBatch: 'md.privileges.batch.update?_content_type=json&',
+    mdValidateBatch: 'md.validation',
     publish: 'md.publish',
     unpublish: 'md.unpublish',
 
@@ -323,8 +373,8 @@
 
     country: 'regions.list?_content_type=json&categoryId=' +
         'http://geonetwork-opensource.org/regions%23country',
-    regionsList: 'regions.category.list@json',
-    region: 'regions.list@json',
+    regionsList: 'regions.category.list?_content_type=json&',
+    region: 'regions.list?_content_type=json&',
 
     suggest: 'suggest',
 
@@ -332,12 +382,13 @@
     search: 'q',
     internalSearch: 'qi',
     subtemplate: 'subtemplate',
-    lang: 'lang@json',
-    removeThumbnail: 'md.thumbnail.remove@json',
+    lang: 'lang?_content_type=json&',
+    removeThumbnail: 'md.thumbnail.remove?_content_type=json&',
     removeOnlinesrc: 'resource.del.and.detach', // TODO: CHANGE
     geoserverNodes: 'geoserver.publisher?_content_type=json&',
     suggest: 'suggest',
-    facetConfig: 'search/facet/config'
+    facetConfig: 'search/facet/config',
+    selectionLayers: 'selection.layers'
   });
 
   /**
@@ -543,11 +594,11 @@
   module.factory('Metadata', function() {
     function Metadata(k) {
       $.extend(true, this, k);
-      var listOfArrayFields = ['topicCat', 'category',
+      var listOfArrayFields = ['topicCat', 'category', 'keyword',
         'securityConstraints', 'resourceConstraints', 'legalConstraints',
         'denominator', 'resolution', 'geoDesc', 'geoBox', 'inspirethemewithac',
         'status', 'status_text', 'crs', 'identifier', 'responsibleParty',
-        'mdLanguage', 'datasetLang', 'type'];
+        'mdLanguage', 'datasetLang', 'type', 'link'];
       var record = this;
       this.linksCache = [];
       $.each(listOfArrayFields, function(idx) {
@@ -614,25 +665,29 @@
           groupId = types[0];
           types.splice(0, 1);
         }
-        if (this.linksCache[key]) {
+        if (this.linksCache[key] && !groupId) {
           return this.linksCache[key];
         }
         angular.forEach(this.link, function(link) {
           var linkInfo = formatLink(link);
-          types.forEach(function(type) {
-            if (type.substr(0, 1) == '#') {
-              if (linkInfo.protocol == type.substr(1, type.length - 1) &&
-                  (!groupId || groupId == linkInfo.group)) {
-                ret.push(linkInfo);
+          if (types.length > 0) {
+            types.forEach(function(type) {
+              if (type.substr(0, 1) == '#') {
+                if (linkInfo.protocol == type.substr(1, type.length - 1) &&
+                    (!groupId || groupId == linkInfo.group)) {
+                  ret.push(linkInfo);
+                }
               }
-            }
-            else {
-              if (linkInfo.protocol.indexOf(type) >= 0 &&
-                  (!groupId || groupId == linkInfo.group)) {
-                ret.push(linkInfo);
+              else {
+                if (linkInfo.protocol.indexOf(type) >= 0 &&
+                    (!groupId || groupId == linkInfo.group)) {
+                  ret.push(linkInfo);
+                }
               }
-            }
-          });
+            });
+          } else {
+            ret.push(linkInfo);
+          }
         });
         this.linksCache[key] = ret;
         return ret;
@@ -661,7 +716,8 @@
        * @return {{metadata: Array, resource: Array}}
        */
       getAllContacts: function() {
-        if (angular.isUndefined(this.allContacts)) {
+        if (angular.isUndefined(this.allContacts) &&
+            angular.isDefined(this.responsibleParty)) {
           this.allContacts = {metadata: [], resource: []};
           for (var i = 0; i < this.responsibleParty.length; i++) {
             var s = this.responsibleParty[i].split('|');

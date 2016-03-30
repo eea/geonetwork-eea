@@ -1,10 +1,58 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 package org.fao.geonet.kernel.search.index;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import javax.annotation.PreDestroy;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.facet.FacetField;
 import org.apache.lucene.facet.taxonomy.TaxonomyWriter;
-import org.apache.lucene.index.*;
+import org.apache.lucene.index.ConcurrentMergeScheduler;
+import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.IndexableField;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.index.TrackingIndexWriter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.fao.geonet.ApplicationContextHolder;
@@ -16,20 +64,10 @@ import org.fao.geonet.kernel.search.index.GeonetworkNRTManager.AcquireResult;
 import org.fao.geonet.utils.Log;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
  * Keeps track of the lucene indexes that currently exist so that we don't have
  * to keep polling filesystem
- * 
+ *
  * @author jeichar
  */
 public class LuceneIndexLanguageTracker {
@@ -42,6 +80,7 @@ public class LuceneIndexLanguageTracker {
 	private AtomicBoolean initialized = new AtomicBoolean(false);
 	private Lock lock = new ReentrantLock();
 	private AtomicInteger _openReaderCounter = new AtomicInteger(0);
+	private AtomicBoolean destroyed = new AtomicBoolean(false);
 
     public LuceneIndexLanguageTracker() {
         // used by spring
@@ -339,17 +378,35 @@ public class LuceneIndexLanguageTracker {
         }
     }
 
+    @PreDestroy
+    public synchronized void destroy() throws IOException {
+        if (destroyed.get() == true) {
+            return;
+        }
+        Log.warning(Geonet.LUCENE_TRACKING, "LuceneIndexLanguageTracker:destroy() called, closing indexes ...");
+        try {
+            close(TimeUnit.MINUTES.toMillis(1), true, false);
+            Log.warning(Geonet.LUCENE_TRACKING, "LuceneIndexLanguageTracker:destroy() Done.");
+            destroyed.set(true);
+        } catch (Exception e) {
+            Log.error(Geonet.LUCENE_TRACKING, "error occured while closing the indexes", e);
+        }
+    }
+
     /**
      * Close all indices and clear all caches.
      *
      * @param timeoutInMillis the time to wait for all readers to close before closing indices
      * @param closeTaxonomy if true close taxonomy reader.  Normally true unless called from reset.
+     * @param lazyInitRequired if true, call to lazyInit is made before cleaning up. Should be avoided
+     *   in case of destruction (because the beans needed in the lazyInit call might be already destroyed).
      * @throws IOException
      */
-    public void close(long timeoutInMillis, boolean closeTaxonomy) throws IOException {
+    public void close(long timeoutInMillis, boolean closeTaxonomy, boolean lazyInitRequired) throws IOException {
         lock.lock();
         try{
-            lazyInit();
+            if (lazyInitRequired)
+                lazyInit();
 
             List<Throwable> errors = new ArrayList<Throwable>(5);
             try {
@@ -361,7 +418,10 @@ public class LuceneIndexLanguageTracker {
             if (closeTaxonomy) {
                 // before a writer closes the IndexWriter, it must close() the
                 // TaxonomyWriter.
-                taxonomyIndexTracker.close(errors);
+                // taxonomyIndexTracker can be null if init() failed somehow (trying to get an unfreed lock)
+                if (taxonomyIndexTracker != null) {
+                    taxonomyIndexTracker.close(errors);
+                }
             }
 
             for (GeonetworkNRTManager manager : searchManagers.values()) {
@@ -400,6 +460,9 @@ public class LuceneIndexLanguageTracker {
         } finally {
             lock.unlock();
         }
+    }
+    public void close(long timeoutInMillis, boolean closeTaxonomy) throws IOException {
+        close(timeoutInMillis, closeTaxonomy, true);
     }
 
     public void optimize() throws Exception {

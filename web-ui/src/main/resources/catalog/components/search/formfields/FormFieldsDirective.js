@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 (function() {
 
   goog.provide('gn_formfields_directive');
@@ -503,9 +526,9 @@
    * the gnCurrentEdit object or 'iso19139' if not defined.
    */
   .directive('schemaInfoCombo', ['$http', 'gnSchemaManagerService',
-        'gnCurrentEdit', 'gnElementsMap',
+        'gnCurrentEdit',
         function($http, gnSchemaManagerService,
-                 gnCurrentEdit, gnElementsMap) {
+                 gnCurrentEdit) {
           return {
             restrict: 'A',
             replace: true,
@@ -541,13 +564,18 @@
                 // on top of the list.
               };
 
+              scope.gnCurrentEdit = gnCurrentEdit;
+              scope.$watch('gnCurrentEdit.schema',
+                  function(newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                      init();
+                    }
+                  });
 
               var init = function() {
-                var schema = gnCurrentEdit.schema || 'iso19139';
-                var element = (gnElementsMap[attrs['gnSchemaInfo']] &&
-                    gnElementsMap[attrs['gnSchemaInfo']][schema]) ||
-                    attrs['gnSchemaInfo'];
-                var config = schema + '|' + element + '|||';
+                var schema = attrs['schema'] ||
+                    gnCurrentEdit.schema || 'iso19139';
+                var config = schema + '|' + attrs['gnSchemaInfo'] + '|||';
 
                 scope.type = attrs['schemaInfoCombo'];
                 if (scope.type == 'codelist') {
@@ -656,11 +684,13 @@
         'ngeoDecorateInteraction',
         function(gnMap, goDecoI) {
 
-          var extentFromValue = function(value) {
-            if (!value) {
+          var extentFromValue = function(str) {
+            if (str === undefined || str === '') {
               return ['', '', '', ''];
             }
-            return value.split(',');
+            return str.split(',').map(function(val) {
+              return parseFloat(val);
+            });
           };
 
           var valueFromExtent = function(extent) {
@@ -679,6 +709,7 @@
 
             link: function(scope, element, attrs) {
               scope.crs = scope.crs || 'EPSG:4326';
+              scope.extent = extentFromValue(scope.value);
 
               var style = new ol.style.Style({
                 fill: new ol.style.Fill({
@@ -696,13 +727,18 @@
               scope.map.addInteraction(dragboxInteraction);
 
               // Create overlay to show bbox
-              var featureOverlay = new ol.FeatureOverlay({
-                style: style
+              var layer = new ol.layer.Vector({
+                source: new ol.source.Vector({
+                  useSpatialIndex: false
+                }),
+                style: style,
+                updateWhileAnimating: true,
+                updateWhileInteracting: true
               });
-              featureOverlay.setMap(scope.map);
+              scope.map.addLayer(layer);
 
               var clearMap = function() {
-                featureOverlay.getFeatures().clear();
+                layer.getSource().clear();
               };
 
               dragboxInteraction.on('boxstart', clearMap);
@@ -716,7 +752,7 @@
               };
 
               scope.updateMap = function() {
-                featureOverlay.getFeatures().clear();
+                layer.getSource().clear();
                 if (scope.extent == ['', '', '', '']) {
                   return;
                 }
@@ -726,7 +762,7 @@
               .transform(scope.crs, scope.map.getView().getProjection());
                 f = new ol.Feature();
                 f.setGeometry(geom);
-                featureOverlay.addFeature(f);
+                layer.getSource().addFeature(f);
               };
 
               dragboxInteraction.on('boxend', function() {
@@ -737,8 +773,11 @@
                 var extent = geom.getExtent();
                 scope.extent = extent.map(function(coord) {
                   return Math.round(coord * 10000) / 10000;
-                }); scope.value = valueFromExtent(scope.extent);
+                });
+                scope.value = valueFromExtent(scope.extent);
                 scope.updateMap();
+
+                scope.$apply();
               });
               scope.dragboxInteraction = dragboxInteraction;
 
@@ -749,7 +788,7 @@
 
               element.on('$destroy', function() {
                 clearMap();
-                scope.map.removeLayer(featureOverlay);
+                scope.map.removeLayer(layer);
               });
             }
           };

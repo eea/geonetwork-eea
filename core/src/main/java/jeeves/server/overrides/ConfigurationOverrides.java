@@ -1,6 +1,30 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 package jeeves.server.overrides;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.spi.LoggerRepository;
@@ -43,6 +67,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.servlet.ServletContext;
 
 /**
@@ -512,6 +537,11 @@ public class ConfigurationOverrides {
             String propKey = matcher.group(1);
             String propValue = properties.getProperty(propKey);
 
+            // if property begins with "env:", it will be replaced later on
+            if (propKey.startsWith("env:")) {
+                continue;
+            }
+
             if (propValue == null) {
                 throw new IllegalArgumentException("Found a reference to a variable: " + propKey + " which is not a valid property.  Check the spelling");
             }
@@ -619,6 +649,17 @@ public class ConfigurationOverrides {
 
     public static abstract class ResourceLoader {
         protected InputStream loadInputStream(String resource) throws IOException {
+            // resolves env variables before trying to resolve the actual file
+            Pattern p = Pattern.compile("\\$\\{env:([^\\}]*)\\}");
+            Matcher m = p.matcher(resource);
+            while (m.find()) {
+                String repl = m.group();
+                String subst = System.getProperty(m.group(1), "");
+                if (StringUtils.isEmpty(subst)) {
+                    Log.warning(Log.JEEVES, "Unable to resolve environmnent variable " + m.group(1) + ", replacing with empty string");
+                }
+                resource = resource.replace((CharSequence) repl, subst);
+            }
             Path file = resolveFile(resource);
             if(file == null) {
                 return fallbackInputStream(resource);

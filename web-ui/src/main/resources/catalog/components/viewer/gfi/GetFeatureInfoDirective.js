@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 (function() {
   goog.provide('gn_gfi_directive');
 
@@ -10,6 +33,61 @@
 
   module.value('gfiTemplateURL', gfiTemplateURL);
 
+  module.directive('gnVectorFeatureToolTip', [function() {
+    return {
+      restrict: 'A',
+      scope: {
+        map: '=gnVectorFeatureToolTip'
+      },
+      link: function(scope, element, attrs) {
+        $('body').append('<div id="feature-info" data-content=""' +
+            'style="position: absolute; z-index: 100;"/>');
+        var info = $('#feature-info');
+        info.popover({
+          animation: false,
+          trigger: 'manual',
+          placement: 'top',
+          html: true,
+          title: 'Feature info'
+        });
+
+        var displayFeatureInfo = function(pixel) {
+          info.css({
+            left: pixel[0] + 'px',
+            top: (pixel[1] + 45) + 'px'
+          });
+          var feature = scope.map.forEachFeatureAtPixel(pixel,
+              function(feature, layer) {
+                return feature;
+              });
+          if (feature) {
+            var props = feature.getProperties();
+            var tooltipContent = '<ul>';
+            $.each(props, function(key, values) {
+              if (typeof values !== 'object') {
+                tooltipContent += '<li>' + key + ': ' + values + '</li>';
+              }
+            });
+            tooltipContent += '</ul>';
+            info.popover('hide');
+            info.data('bs.popover').options.content = tooltipContent;
+            info.popover('show');
+          } else {
+            info.popover('hide');
+          }
+        };
+
+        scope.map.on('pointermove', function(evt) {
+          if (evt.dragging) {
+            //info.hide();
+            info.popover('hide');
+            return;
+          }
+          displayFeatureInfo(scope.map.getEventPixel(evt.originalEvent));
+        });
+      }
+    };
+  }]);
   /**
    * @ngdoc directive
    * @name gn_viewer.directive:gnGfi

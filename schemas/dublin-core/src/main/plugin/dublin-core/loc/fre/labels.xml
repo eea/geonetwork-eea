@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
+  ~ United Nations (FAO-UN), United Nations World Food Programme (WFP)
+  ~ and United Nations Environment Programme (UNEP)
+  ~
+  ~ This program is free software; you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation; either version 2 of the License, or (at
+  ~ your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but
+  ~ WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  ~ General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program; if not, write to the Free Software
+  ~ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+  ~
+  ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+  ~ Rome - Italy. email: geonetwork@osgeo.org
+  -->
+
 <labels xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/">
   <element name="simpledc">
     <label>Métadonnées</label>
@@ -10,7 +33,7 @@
   </element>
 
   <element name="dc:creator">
-    <label>Créateur</label>
+    <label>Contact pour la métadonnée</label>
     <description>Nom de la personne, de l'organisation ou du service à l'origine de la rédaction du
       document.</description>
     <example/>
@@ -30,7 +53,7 @@
   </element>
 
   <element name="dc:publisher">
-    <label>Editeur</label>
+    <label>Contact pour la ressource</label>
     <description>Nom de la personne, de l'organisation ou du service à l'origine de la publication
       du document.</description>
     <example/>
@@ -153,6 +176,20 @@
   <element name="dct:accrualPeriodicity">
     <label>Méthode / Fréquence de mise à jour</label>
     <description>The frequency with which items are added to a collection.</description>
+    <helper>
+      <option value="continual">Continue</option>
+      <option value="daily">Journalière</option>
+      <option value="weekly">Hebdomadaire</option>
+      <option value="fortnightly">Bi-mensuelle</option>
+      <option value="monthly">Mensuelle</option>
+      <option value="quarterly">Trimestrielle</option>
+      <option value="biannually">Bi-annuelle</option>
+      <option value="annually">Annuelle</option>
+      <option value="asNeeded">Lorsque nécessaire</option>
+      <option value="irregular">Irrégulière</option>
+      <option value="notPlanned">Non planifiée</option>
+      <option value="unknown">Inconnue</option>
+    </helper>
   </element>
 
   <element name="dct:accrualPolicy">
@@ -184,7 +221,7 @@
   </element>
 
   <element name="dct:dateSubmitted">
-    <label>Date de mise à disposition</label>
+    <label>Date de publication</label>
     <description>Date de mise à disposition de la resource.</description>
   </element>
   <element name="dct:isPartOf">

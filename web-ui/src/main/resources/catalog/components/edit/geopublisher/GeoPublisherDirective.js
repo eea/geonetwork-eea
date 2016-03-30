@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 (function() {
   goog.provide('gn_geopublisher_directive');
 
@@ -58,8 +81,7 @@
                 //Uses configuration from database
                 if (gnMap.getMapConfig().context) {
                   gnOwsContextService.
-                      loadContextFromUrl(gnMap.getMapConfig().context,
-                          map, true);
+                      loadContextFromUrl(gnMap.getMapConfig().context, map);
                 }
 
                 scope.selectNode(scope.nodeId);
@@ -70,10 +92,12 @@
                 // TODO : Zoom to all extent if more than one defined
                 if (angular.isArray(gnCurrentEdit.extent) &&
                     gnCurrentEdit.extent.length > 0) {
-                  map.getView().fit(
-                      gnMap.reprojExtent(gnCurrentEdit.extent[0],
-                      'EPSG:4326', gnMap.getMapConfig().projection),
-                      map.getSize());
+                  var mdExtent = gnMap.reprojExtent(gnCurrentEdit.extent[0],
+                      'EPSG:4326', gnMap.getMapConfig().projection);
+                  // check that the extent is valid, see #1308
+                  if (mdExtent.filter(isFinite).length == 4) {
+                    map.getView().fit(mdExtent, map.getSize());
+                  }
                 }
 
                 /**
@@ -135,30 +159,6 @@
                     '?namespace=' + gsNode.namespacePrefix +
                     '&layer=' + scope.wmsLayerName);
               };
-              /**
-               * Dirty check if the node is a Mapserver REST API
-               * or a GeoServer REST API.
-               *
-               * @param {Object} gsNode
-               * @return {boolean}
-               */
-              var isMRA = function(gsNode) {
-                return gsNode.adminUrl &&
-                    gsNode.adminUrl.indexOf('/mra') !== -1;
-              };
-
-              /**
-               * Build WMS layername based on target map server.
-               *
-               * @param {Object} gsNode
-               */
-              var buildLayerName = function(gsNode) {
-                // Append prefix for GeoServer.
-                if (gsNode && !isMRA(gsNode)) {
-                  scope.wmsLayerName = gsNode.namespacePrefix +
-                      ':' + scope.wmsLayerName;
-                }
-              };
 
               /**
                * Add the layer of the node to the current
@@ -192,7 +192,11 @@
                   scope.isPublished = false;
                 }
                 else if (angular.isObject(data.layer)) {
-                  addLayerToMap(data.layer);
+                  gnMap.addWmsFromScratch(map,
+                      gsNode.wmsUrl, data.layer.name, false).
+                      then(function(layer) {
+                        gnMap.zoomLayerToExtent(layer, map);
+                      });
                   scope.isPublished = true;
                   if (action == 'check') {
                     scope.statusCode = $translate('datasetFound');
@@ -229,7 +233,6 @@
               scope.selectNode = function(nodeId) {
                 gsNode = getNodeById(nodeId);
                 scope.checkNode(nodeId);
-                buildLayerName(gsNode);
                 scope.hasStyler = !angular.isArray(gsNode.stylerUrl);
               };
 
@@ -239,6 +242,10 @@
                * a layer configuration if published.
                */
               scope.checkNode = function(nodeId) {
+                if (scope.isPublished) {
+                  map.getLayerGroup().getLayers().pop();
+                }
+                scope.isPublished = false;
                 var p = gnGeoPublisher.checkNode(nodeId, scope.name);
                 if (p) {
                   p.success(function(data) {
@@ -309,7 +316,6 @@
                     .replace(/.*\//, '')
                     .replace(/.zip$|.tif$|.tiff$|.ecw$/, '');
                 }
-                buildLayerName(gsNode);
               };
             }
           };

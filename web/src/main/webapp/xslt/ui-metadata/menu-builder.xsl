@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
+  ~ United Nations (FAO-UN), United Nations World Food Programme (WFP)
+  ~ and United Nations Environment Programme (UNEP)
+  ~
+  ~ This program is free software; you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation; either version 2 of the License, or (at
+  ~ your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but
+  ~ WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  ~ General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program; if not, write to the Free Software
+  ~ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+  ~
+  ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+  ~ Rome - Italy. email: geonetwork@osgeo.org
+  -->
+
 <xsl:stylesheet version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:gn="http://www.fao.org/geonetwork"
   xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
@@ -51,52 +74,14 @@
               </li>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:for-each select="$config/editor/views/view[not(@disabled)]">
+              <xsl:for-each select="$config/editor/views/view[not(@disabled='true')]">
 
-                <xsl:variable name="isViewDisplayed" as="xs:boolean">
-                  <!-- Evaluate XPath expression to
-                    see if view should be displayed
-                    according to the metadata record or
-                    the session information. -->
-                  <xsl:variable name="isInRecord" as="xs:boolean">
-                    <xsl:choose>
-                      <xsl:when test="@displayIfRecord">
-                        <saxon:call-template name="{concat('evaluate-', $schema, '-boolean')}">
-                          <xsl:with-param name="base" select="$metadata"/>
-                          <xsl:with-param name="in" select="concat('/../', @displayIfRecord)"/>
-                        </saxon:call-template>
-                      </xsl:when>
-                      <xsl:otherwise><xsl:value-of select="false()"/></xsl:otherwise>
-                    </xsl:choose>
-                  </xsl:variable>
-
-                  <xsl:variable name="isInServiceInfo" as="xs:boolean">
-                    <xsl:choose>
-                      <xsl:when test="@displayIfServiceInfo">
-                        <saxon:call-template name="{concat('evaluate-', $schema, '-boolean')}">
-                          <xsl:with-param name="base" select="$serviceInfo"/>
-                          <xsl:with-param name="in" select="concat('/', @displayIfServiceInfo)"/>
-                        </saxon:call-template>
-                      </xsl:when>
-                      <xsl:otherwise><xsl:value-of select="false()"/></xsl:otherwise>
-                    </xsl:choose>
-                  </xsl:variable>
-
-                  <xsl:choose>
-                    <xsl:when test="@displayIfServiceInfo and @displayIfRecord">
-                      <xsl:value-of select="$isInServiceInfo and $isInRecord"/>
-                    </xsl:when>
-                    <xsl:when test="@displayIfServiceInfo">
-                      <xsl:value-of select="$isInServiceInfo"/>
-                    </xsl:when>
-                    <xsl:when test="@displayIfRecord">
-                      <xsl:value-of select="$isInRecord"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="true()"/>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </xsl:variable>
+                <xsl:variable name="isViewDisplayed"
+                              as="xs:boolean"
+                              select="gn-fn-metadata:check-viewtab-visibility(
+                                        $schema, $metadata, $serviceInfo,
+                                        @displayIfRecord,
+                                        @displayIfServiceInfo)"/>
 
 
                 <xsl:if test="$isViewDisplayed">
@@ -139,9 +124,8 @@
       <xsl:if test="count($currentView/tab) > 1">
         <xsl:apply-templates mode="menu-builder"
           select="$config/editor/views/view[tab/@id = $tab]/tab[not(@toggle)]"/>
-        
-        
-        
+
+
         <!-- Some views may define tab to be grouped in an extra button -->
         <xsl:if test="count($config/editor/views/view[tab/@id = $tab]/tab[@toggle]) > 0">
           <li class="dropdown">
@@ -178,18 +162,27 @@
 
   <!-- Create a link to a tab based on its identifier -->
   <xsl:template mode="menu-builder" match="tab">
-    <li>
-      <xsl:if test="$tab = @id">
-        <xsl:attribute name="class">active</xsl:attribute>
-      </xsl:if>
+    <xsl:variable name="isTabDisplayed"
+                  as="xs:boolean"
+                  select="gn-fn-metadata:check-viewtab-visibility(
+                                        $schema, $metadata, $serviceInfo,
+                                        @displayIfRecord,
+                                        @displayIfServiceInfo)"/>
+    <!-- When tab displayIf filter return false, the tab is disabled.
+     Another option would be to completely hide it:
+    <xsl:if test="$isTabDisplayed">
+    </xsl:if>
+    -->
+    <li class="{if ($tab = @id) then 'active' else ''} {if ($isTabDisplayed) then '' else 'disabled'}">
       <a href="">
-        <xsl:if test="$tab != @id">
-          <xsl:attribute name="data-ng-click" 
+        <xsl:if test="$tab != @id and $isTabDisplayed">
+          <xsl:attribute name="data-ng-click"
             select="concat('switchToTab(''', @id, ''', ''', @mode, ''')')"/>
         </xsl:if>
         <xsl:variable name="tabId" select="@id"/>
         <xsl:value-of select="$strings/*[name() = $tabId]"/>
       </a>
     </li>
+
   </xsl:template>
 </xsl:stylesheet>

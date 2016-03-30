@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 (function() {
   goog.provide('gn_thesaurus_directive');
 
@@ -51,10 +74,21 @@
              scope.thesaurusKey = null;
              scope.snippet = null;
              scope.snippetRef = null;
-             var restrictTo =
-                 scope.include ? (
-                     scope.include.indexOf(',') !== -1 ?
-                      scope.include.split(',') : [scope.include]) : [];
+             var restrictionList = scope.include ? (
+             scope.include.indexOf(',') !== -1 ?
+                 scope.include.split(',') : [scope.include]) : [];
+
+             var includeThesaurus = [];
+             var excludeThesaurus = [];
+             for (var i = 0; i < restrictionList.length; i++) {
+               var t = restrictionList[i];
+               if (t.indexOf('-') === 0) {
+                 excludeThesaurus.push(t.substring(1));
+               } else {
+                 includeThesaurus.push(t);
+               }
+             }
+
 
              scope.allowFreeTextKeywords =
              (attrs.allowFreeTextKeywords === undefined) ||
@@ -64,18 +98,17 @@
              // in the record ?
              gnThesaurusService.getAll().then(
              function(listOfThesaurus) {
-               // TODO: Sort them
-               if (restrictTo.length > 0) {
-                 var filteredList = [];
-                 angular.forEach(listOfThesaurus, function(thesaurus) {
-                   if ($.inArray(thesaurus.getKey(), restrictTo) !== -1) {
-                     filteredList.push(thesaurus);
-                   }
-                 });
-                 scope.thesaurus = filteredList;
-               } else {
-                 scope.thesaurus = listOfThesaurus;
-               }
+               scope.thesaurus = [];
+               angular.forEach(listOfThesaurus, function(thesaurus) {
+                 if (excludeThesaurus.length > 0 &&
+                 $.inArray(thesaurus.getKey(), excludeThesaurus) !== -1) {
+
+                 } else if (includeThesaurus.length == 0 || (
+                 includeThesaurus.length > 0 &&
+                 $.inArray(thesaurus.getKey(), includeThesaurus) !== -1)) {
+                   scope.thesaurus.push(thesaurus);
+                 }
+               });
              });
 
              scope.add = function() {
@@ -134,10 +167,10 @@
    * TODO: explain transformation
    */
   module.directive('gnKeywordSelector',
-      ['$timeout', '$translate',
+      ['$compile', '$timeout', '$translate',
        'gnThesaurusService', 'gnEditor',
        'Keyword',
-       function($timeout, $translate,
+       function($compile, $timeout, $translate,
                gnThesaurusService, gnEditor, Keyword) {
 
          return {
@@ -161,6 +194,8 @@
            templateUrl: '../../catalog/components/thesaurus/' +
            'partials/keywordselector.html',
            link: function(scope, element, attrs) {
+             $compile(element.contents())(scope);
+             // pick up skos browser directive with compiler
 
              scope.max = gnThesaurusService.DEFAULT_NUMBER_OF_RESULTS;
              scope.filter = null;
@@ -269,6 +304,29 @@
                scope.$watch('filter', search);
              };
 
+             // Used by skos-browser to add keywords from the
+             // skos hierarchy to the current list of tags
+             scope.addThesaurusConcept = function(uri, text) {
+                var textArr = [];
+                textArr['#text'] = text;
+                var k = {
+                  uri: uri,
+                  value: textArr
+                };
+                var keyword = new Keyword(k);
+
+                var thisId = '#tagsinput_' + scope.elementRef;
+                // Add to tags
+                $(thisId).tagsinput('add', keyword);
+
+                // Update selection and snippet
+                scope.selected = $(thisId).tagsinput('items');
+                getSnippet(); // FIXME: should not be necessary
+               // as there is a watch on it ?
+
+                // Clear typeahead
+                $(thisId).tagsinput('input').typeahead('setQuery', '');
+             };
 
              // Init typeahead and tag input
              var initTagsInput = function() {
@@ -411,6 +469,10 @@
 
              if (scope.thesaurusKey) {
                init();
+               gnThesaurusService.getTopConcept(scope.thesaurusKey).then(
+               function(c) {
+                 scope.concept = c;
+               });
              }
            }
          };

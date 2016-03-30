@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 (function() {
   goog.provide('gn_facets_directive');
 
@@ -18,7 +41,8 @@
           facet: '@',
           indexKey: '@',
           params: '=',
-          currentFacets: '='
+          currentFacets: '=',
+          noCollapse: '@'
         },
         link: function(scope, element, attrs, controller) {
 
@@ -26,7 +50,12 @@
 
           // Facet is collapsed if not in current search criteria
           function isFacetsCollapse(facetKey) {
-            return !(scope.params && angular.isDefined(scope.params[facetKey]));
+            if (scope.noCollapse) {
+              return false;
+            } else {
+              return !(scope.params &&
+                  angular.isDefined(scope.params[facetKey]));
+            }
           };
 
           scope.collapsed = isFacetsCollapse(scope.indexKey);

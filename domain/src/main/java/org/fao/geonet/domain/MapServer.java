@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 package org.fao.geonet.domain;
 
 import org.fao.geonet.entitylistener.MapServerEntityListenerManager;
@@ -36,6 +59,7 @@ public class MapServer {
     private String _password;
     private String _namespaceprefix;
     private String _namespace;
+    private char _pushstyleinworkspace = Constants.YN_FALSE;
 
     /**
      * Get the id of the mapserver.
@@ -264,6 +288,29 @@ public class MapServer {
 
     public MapServer setNamespace(String _namespace) {
         this._namespace = _namespace;
+        return this;
+    }
+
+    /**
+     * Check whether the sld style should be pushed in the same workspace
+     * as the layer and datastore or in the global styles/ dir
+     */
+
+    @Column(name="pushstyleinworkspace", length = 1)
+    protected char getPushStyleInWorkspace_JpaWorkaround() {
+        return _pushstyleinworkspace;
+    }
+
+    protected void setPushStyleInWorkspace_JpaWorkaround(char _pushStyleInWorkspace) {
+        this._pushstyleinworkspace = _pushStyleInWorkspace;
+    }
+    @Transient
+    public boolean pushStyleInWorkspace() {
+        return Constants.toBoolean_fromYNChar(getPushStyleInWorkspace_JpaWorkaround());
+    }
+
+    public MapServer setPushStyleInWorkspace(boolean _pushStyleInWorkspace) {
+        setPushStyleInWorkspace_JpaWorkaround(Constants.toYN_EnabledChar(_pushStyleInWorkspace));
         return this;
     }
 

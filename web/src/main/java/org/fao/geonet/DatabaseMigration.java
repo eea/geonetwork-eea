@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 package org.fao.geonet;
 
 import com.google.common.util.concurrent.Callables;
@@ -12,6 +35,7 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.ByteArrayOutputStream;
@@ -49,7 +73,9 @@ public class DatabaseMigration implements BeanPostProcessor {
 
     private Callable<LinkedHashMap<String, List<String>>> _migration;
 
-    private Logger _logger = Log.createLogger(Geonet.GEONETWORK);
+    private String initAfter;
+
+    private Logger _logger = Log.createLogger(Geonet.GEONETWORK + ".databasemigration");
     private boolean foundErrors;
 
     @Override
@@ -59,36 +85,48 @@ public class DatabaseMigration implements BeanPostProcessor {
 
     @Override
     public final Object postProcessAfterInitialization(final Object bean, final String beanName) {
-        if (bean instanceof DataSource) {
-            try {
-                String version;
-                String subVersion;
-                ServletContext servletContext;
-                Path path;
-
-
+        try {
+            if (Class.forName(initAfter).isInstance(bean)) {
+                _logger.debug(String.format("DB Migration / Running '%s' after initialization of '%s'.", bean.getClass(), initAfter));
                 try {
-                    servletContext = _applicationContext.getBean(ServletContext.class);
-                } catch (NoSuchBeanDefinitionException e) {
-                    if (_applicationContext instanceof WebApplicationContext) {
-                        WebApplicationContext context = (WebApplicationContext) _applicationContext;
-                        servletContext = context.getServletContext();
-                    } else {
-                        _logger.warning("No servletContext found.  Database migration aborted.");
-                        return bean;
+                    String version;
+                    String subVersion;
+                    ServletContext servletContext;
+                    Path path;
+
+
+                    try {
+                        servletContext = _applicationContext.getBean(ServletContext.class);
+                    } catch (NoSuchBeanDefinitionException e) {
+                        if (_applicationContext instanceof WebApplicationContext) {
+                            WebApplicationContext context = (WebApplicationContext) _applicationContext;
+                            servletContext = context.getServletContext();
+                        } else {
+                            _logger.warning("No servletContext found.  Database migration aborted.");
+                            return bean;
+                        }
                     }
+
+                    version = this.systemInfo.getVersion();
+                    subVersion = this.systemInfo.getSubVersion();
+                    ServletPathFinder pathFinder = new ServletPathFinder(servletContext);
+
+                    path = pathFinder.getAppPath();
+                    DataSource ds = null;
+                    if (bean instanceof JpaTransactionManager) {
+                        ds = ((JpaTransactionManager) bean).getDataSource();
+                    } else {
+                        ds = ((DataSource) bean);
+                    }
+                    migrateDatabase(servletContext, path, ds, version, subVersion);
+                } catch (Throwable e) {
+                    throw new RuntimeException(e);
                 }
-
-                version = this.systemInfo.getVersion();
-                subVersion = this.systemInfo.getSubVersion();
-                ServletPathFinder pathFinder = new ServletPathFinder(servletContext);
-
-                path = pathFinder.getAppPath();
-                migrateDatabase(servletContext, path, (DataSource) bean, version, subVersion);
-            } catch (Throwable e) {
-                throw new RuntimeException(e);
+                return bean;
             }
-            return bean;
+        } catch (ClassNotFoundException e) {
+            _logger.error(String.format("DB Migration / '%s' is an invalid value for initAfter. Class not found. Error is %s", initAfter, e.getMessage()));
+            e.printStackTrace();
         }
         return bean;
     }
@@ -139,7 +177,7 @@ public class DatabaseMigration implements BeanPostProcessor {
         _logger.info("      Database version:" + dbVersion + " subversion:" + dbSubVersion);
         if (dbVersion == null || webappVersion == null) {
             _logger.warning("      Database does not contain any version information. Check that the database is a GeoNetwork "
-                            + "database with data.  Migration step aborted.");
+                            + "database with data. The database is probably empty, no migration required.");
             return true;
         }
 
@@ -375,6 +413,14 @@ public class DatabaseMigration implements BeanPostProcessor {
 
     public boolean isFoundErrors() {
         return foundErrors;
+    }
+
+    public String getInitAfter() {
+        return initAfter;
+    }
+
+    public void setInitAfter(String initAfter) {
+        this.initAfter = initAfter;
     }
 
     public static class Version implements Comparable<Version> {
