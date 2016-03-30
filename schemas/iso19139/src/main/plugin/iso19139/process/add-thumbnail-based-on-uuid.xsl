@@ -34,7 +34,10 @@
   <xsl:template name="analyze-add-thumbnail-based-on-uuid">
     <xsl:param name="root"/>
     <xsl:variable name="hasOverview"
-                  select="count($root//gmd:identificationInfo/*/gmd:graphicOverview) > 0"/>
+                  select="count($root//gmd:identificationInfo/*/
+                            gmd:graphicOverview[
+                                normalize-space(gmd:fileName/gco:CharacterString) != ''])
+                                 > 0"/>
 
     <xsl:variable name="code"
                   select="gn-fn-iso19139:thumbnail-based-on-uuid-generate($root/*/gmd:fileIdentifier/gco:CharacterString)"/>
