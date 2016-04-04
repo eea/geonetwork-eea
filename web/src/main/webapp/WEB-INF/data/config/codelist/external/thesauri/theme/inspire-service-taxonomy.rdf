@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:exslt="http://exslt.org/common" xmlns:gemet="http://www.eionet.europa.eu/gemet/2004/06/gemet-schema.rdf#">
-  <skos:ConceptScheme rdf:about="http://geonetwork-opensource.org/inspire-theme">
+  <skos:ConceptScheme rdf:about="http://geonetwork-opensource.org/inspire-service-taxonomy">
     <dc:title>INSPIRE Service taxonomy</dc:title>
     <dc:description>INSPIRE service taxonomy for GeoNetwork opensource.
 	Codelist is used for now and should be stored in gmd:keywords elements.
@@ -616,7 +616,7 @@
   <skos:Concept rdf:about="urn:inspire:service:taxonomy:workflowEnactmentService">
     <skos:prefLabel xml:lang="fr">workflowEnactmentService</skos:prefLabel>
     <skos:prefLabel xml:lang="en">workflowEnactmentService</skos:prefLabel>
-    <skos:prefLabel xml:lang="nl">workflowEnactmentService</skos:prefLabel>
+	<skos:prefLabel xml:lang="nl">workflowEnactmentService</skos:prefLabel>
     <skos:prefLabel xml:lang="sv">workflowEnactmentService</skos:prefLabel>
     <skos:prefLabel xml:lang="sl">workflowEnactmentService</skos:prefLabel>
     <skos:prefLabel xml:lang="sk">workflowEnactmentService</skos:prefLabel>
