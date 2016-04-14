@@ -12,7 +12,7 @@
 
   <!-- i18n information -->
   <xsl:variable name="add-thumbnail-based-on-uuid-loc">
-    <msg id="a" xml:lang="eng">Current record does not have overview. Add the
+    <msg id="a" xml:lang="eng">Current record does not have overview based on record UUID. Add the
       following as overview URL:
     </msg>
     <msg id="a" xml:lang="fre">Cette fiche ne contient pas d'aperçu pour la
@@ -33,14 +33,15 @@
     for that process -->
   <xsl:template name="analyze-add-thumbnail-based-on-uuid">
     <xsl:param name="root"/>
-    <xsl:variable name="hasOverview"
+      <xsl:variable name="code"
+                    select="gn-fn-iso19139:thumbnail-based-on-uuid-generate($root/*/gmd:fileIdentifier/gco:CharacterString)"/>
+
+      <xsl:variable name="hasOverview"
                   select="count($root//gmd:identificationInfo/*/
                             gmd:graphicOverview[
-                                normalize-space(gmd:fileName/gco:CharacterString) != ''])
-                                 > 0"/>
+                                normalize-space(*/gmd:fileName/gco:CharacterString) = $code])
+                                 = 1"/>
 
-    <xsl:variable name="code"
-                  select="gn-fn-iso19139:thumbnail-based-on-uuid-generate($root/*/gmd:fileIdentifier/gco:CharacterString)"/>
     <xsl:if test="not($hasOverview)">
       <suggestion process="add-thumbnail-based-on-uuid" id="{generate-id()}"
                   category="identification" target="identification">
