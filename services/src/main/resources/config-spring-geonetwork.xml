@@ -68,6 +68,7 @@
   </bean>
   <bean id="filesystemStore"
         class="org.fao.geonet.api.records.attachments.FilesystemStore"/>
+
   <bean id="resourceStore"
         class="org.fao.geonet.api.records.attachments.ResourceLoggerStore">
     <constructor-arg index="0" ref="filesystemStore"/>
@@ -81,7 +82,9 @@
     <constructor-arg index="2" value="5000" />
   </bean>
   <bean id="fsStore" class="org.fao.geonet.services.metadata.format.cache.FilesystemStore" lazy-init="true">
-    <property name="maxSizeGb" value="500" />
+    <!--<property name="maxSizeGb" value="500" />-->
+    <property name="maxSizeMb" value="500" />
+    <property name="testing" value="true"/>
   </bean>
   <bean id="formatterCacheConfig" class="org.fao.geonet.services.metadata.format.cache.ConfigurableCacheConfig" lazy-init="true">
     <!--This class allows you to configure which formatters, languages, content/type etc... to cache-->
