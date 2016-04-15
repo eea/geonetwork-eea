@@ -108,8 +108,11 @@ public class FilesystemStore implements PersistentStore {
                     "CREATE TABLE IF NOT EXISTS " + STATS_TABLE + " (" + NAME + " VARCHAR(64) PRIMARY KEY, " + VALUE + " VARCHAR(32) NOT NULL)"
 
             };
-            String init = ";INIT=" + Joiner.on("\\;").join(initSql) + ";DB_CLOSE_DELAY=-1";
-            String dbPath = testing ? "mem:" + UUID.randomUUID() : getBaseCacheDir().resolve("info-store").toString();
+            // ;LOCK_TIMEOUT=20000;DB_CLOSE_ON_EXIT=FALSE;MVCC=TRUE
+            String init = ";MVCC=TRUE;INIT=" + Joiner.on("\\;").join(initSql);
+            String dbPath = testing ?
+                    "mem:" + UUID.randomUUID() + ";DB_CLOSE_DELAY=-1" :
+                    getBaseCacheDir().resolve("info-store").toString();
             metadataDb = DriverManager.getConnection("jdbc:h2:" + dbPath + init, "fsStore", "");
 
             try (
