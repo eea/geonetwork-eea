@@ -1147,8 +1147,7 @@
 		<condition>mandatory</condition>
 	</element>
 
-  <element name="gmd:edition" id="363.0"
-           context="gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:edition">
+  <element name="gmd:edition" id="363.0">
     <label>Edition</label>
     <description>Version of the cited resource</description>
     <help><![CDATA[
