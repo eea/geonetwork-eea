@@ -63,7 +63,7 @@
               </a>
             </div>
         </span>
-        <span id="chips-card" data-ng-repeat="(key, facet) in searchInfo.facet['inspireThemesURI'] track by $index"
+        <span id="chips-card" data-ng-repeat="(key, facet) in searchInfo.facet['inspireThemesURI'] | orderBy: sortByLabel"
           class="col-xs-6 col-sm-6 col-lg-4" data-ng-show="browse === 'inspire'">
             <div class="badge-icon col-xs-3">
               <a title="{{facet['@label']}}" data-ng-href="#/search?facet.q=inspireThemeURI%2F{{facet['@name'] | encodeURIComponent | encodeURIComponent}}">

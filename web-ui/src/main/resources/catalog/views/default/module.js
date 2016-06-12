@@ -252,6 +252,10 @@
         }
       });
 
+      $scope.sortByLabel = function (v) {
+        return v['@label'];
+      };
+
       angular.extend($scope.searchObj, {
         advancedMode: false,
         from: 1,
