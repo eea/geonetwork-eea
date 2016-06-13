@@ -285,9 +285,9 @@
               } else if (protocolOrType.match(/link/i)) {
                 return 'LINK';
               } else if (!protocolOrType.match(/EEA:FOLDERPATH/i) &&
-                        !resource.url.contains('.sqlite') &&
-                        !resource.url.contains('.mdb') &&
-                        !resource.url.contains('.gdp')) {
+                 !resource.url.contains('.sqlite') &&
+                 !resource.url.contains('.mdb') &&
+                 !resource.url.contains('.gdp')) {
                 return 'EEAMAP';
               } else if (protocolOrType.match(/wfs/i)) {
                 return 'WFS';

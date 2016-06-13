@@ -70,7 +70,7 @@
              '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$');
              // Format date when datetimepicker is used.
              scope.formatFromDatePicker = function(date) {
-               var format = 'YYYY-MM-DDTHH:mm:ss';
+               var format = 'YYYY-MM-DD';
                var dateTime = moment(date);
                scope.dateInput = dateTime.format(format);
              };

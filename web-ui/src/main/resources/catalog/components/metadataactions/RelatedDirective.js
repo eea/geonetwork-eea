@@ -56,10 +56,10 @@
               list: '@'
             },
             link: function(scope, element, attrs, controller) {
-              scope.formatCifsLink = function (url) {
+              scope.formatCifsLink = function(url) {
                 return url.replace(/\//g, '\\');
               };
-              
+
               scope.updateRelations = function() {
                 if (scope.md) {
                   scope.uuid = scope.md.getUuid();

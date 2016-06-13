@@ -263,12 +263,13 @@
       return (arrData);
     };
 
-    var getInspireIcon = function (englishLabel) {
+    var getInspireIcon = function(englishLabel) {
       var map = {
         'Atmospheric conditions': 'ac',
         'Addresses': 'ad',
         'Agricultural and aquaculture facilities': 'af',
-        'Area management/restriction/regulation zones and reporting units': 'am',
+        'Area management/restriction/regulation ' +
+            'zones and reporting units': 'am',
         'Administrative units': 'au',
         'Bio-geographical regions': 'br',
         'Buildings': 'bu',
