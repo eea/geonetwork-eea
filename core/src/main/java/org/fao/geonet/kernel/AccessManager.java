@@ -23,8 +23,6 @@
 
 package org.fao.geonet.kernel;
 
-import jeeves.server.UserSession;
-import jeeves.server.context.ServiceContext;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.domain.Group;
 import org.fao.geonet.domain.Metadata;
@@ -60,6 +58,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
+
+import jeeves.server.UserSession;
+import jeeves.server.context.ServiceContext;
 
 import static org.fao.geonet.repository.specification.OperationAllowedSpecs.hasMetadataId;
 import static org.fao.geonet.repository.specification.OperationAllowedSpecs.hasOperation;
@@ -569,28 +570,28 @@ public class AccessManager {
      * @param ip
      * @return
      */
-	private long getAddress(String ip) {
-		if(ip.trim().equals("?")) {
-			return 0;
-		} else {
-			StringTokenizer st = new StringTokenizer(ip, ".");
+    private long getAddress(String ip) {
+        if (ip.trim().equals("?") || ip.trim().equals("unknown")) {
+            return 0;
+        } else {
+            StringTokenizer st = new StringTokenizer(ip, ".");
             if (!st.hasMoreElements()) {
                 return 0;
             }
-			long a1 = Integer.parseInt(st.nextToken());
+            long a1 = Integer.parseInt(st.nextToken());
             if (!st.hasMoreElements()) {
                 return 0;
             }
-			long a2 = Integer.parseInt(st.nextToken());
+            long a2 = Integer.parseInt(st.nextToken());
             if (!st.hasMoreElements()) {
                 return 0;
             }
-			long a3 = Integer.parseInt(st.nextToken());
+            long a3 = Integer.parseInt(st.nextToken());
             if (!st.hasMoreElements()) {
                 return 0;
             }
-			long a4 = Integer.parseInt(st.nextToken());
-			return a1<<24 | a2<<16 | a3<<8 | a4;
-		}
-	}
+            long a4 = Integer.parseInt(st.nextToken());
+            return a1 << 24 | a2 << 16 | a3 << 8 | a4;
+        }
+    }
 }
