@@ -33,6 +33,15 @@
   var module = angular.module('gn_editorboard_controller',
       ['gn_search', 'gn_search_form_controller', 'gn_mdactions_service']);
 
+  // On the editor catalog, search are restricted on this catalog
+  // only to not mix all records harvested (from internal for example)
+  // which are used to be linked to draft records (eg. has sources)
+  var editorCatalogId = '18291a05-a2f7-4ea5-aeaf-b3bcde240ff5';
+  // var editorCatalogId = 'd1bd08f0-16ac-47c3-b581-2e8db715530b';
+  var editorCatalogPath = '/editor-catalogue';
+  // var editorCatalogPath = '/geonetwork';
+  // Also update in module.js
+
 
   module.controller('GnEditorBoardSearchController', [
     '$scope',
@@ -60,6 +69,10 @@
         }
       };
       angular.extend($scope.searchObj, $scope.defaultSearchObj);
+
+      if (location.pathname.indexOf(editorCatalogPath) === 0) {
+        $scope.searchObj.params._source = editorCatalogId;
+      }
 
       $scope.toggleOnlyMyRecord = function() {
         $scope.onlyMyRecord = !$scope.onlyMyRecord;

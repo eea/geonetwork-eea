@@ -47,6 +47,7 @@
   // var editorCatalogId = 'd1bd08f0-16ac-47c3-b581-2e8db715530b';
   // var editorCatalogPath = '/geonetwork';
   var editorCatalogPath = '/editor-catalogue';
+  // Also update in EditorBoardController.js
 
   module.controller('gnsSearchPopularController', [
     '$scope', 'gnSearchSettings',
