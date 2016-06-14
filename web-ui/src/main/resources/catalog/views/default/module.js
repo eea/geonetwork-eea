@@ -40,6 +40,13 @@
        'gn_search_default_directive', 'gn_related_directive',
        'cookie_warning', 'gn_mdactions_directive']);
 
+  // On the editor catalog, search are restricted on this catalog
+  // only to not mix all records harvested (from internal for example)
+  // which are used to be linked to draft records (eg. has sources)
+  var editorCatalogId = '18291a05-a2f7-4ea5-aeaf-b3bcde240ff5';
+  // var editorCatalogId = 'd1bd08f0-16ac-47c3-b581-2e8db715530b';
+  // var editorCatalogPath = '/geonetwork';
+  var editorCatalogPath = '/editor-catalogue';
 
   module.controller('gnsSearchPopularController', [
     '$scope', 'gnSearchSettings',
@@ -52,6 +59,9 @@
           to: 9
         }
       };
+      if (location.pathname.indexOf(editorCatalogPath) === 0) {
+        $scope.searchObj.params._source = editorCatalogId;
+      }
     }]);
 
 
@@ -66,6 +76,9 @@
           to: 9
         }
       };
+      if (location.pathname.indexOf(editorCatalogPath) === 0) {
+        $scope.searchObj.params._source = editorCatalogId;
+      }
     }]);
   module.controller('gnsDefault', [
     '$scope',
@@ -287,5 +300,10 @@
         }
       }, gnSearchSettings.sortbyDefault);
 
+
+      if (location.pathname.indexOf(editorCatalogPath) === 0) {
+        $scope.searchObj.params._source = editorCatalogId;
+        $scope.searchObj.defaultParams._source = editorCatalogId;
+      }
     }]);
 })();
