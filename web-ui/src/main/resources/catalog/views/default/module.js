@@ -43,7 +43,7 @@
   // On the editor catalog, search are restricted on this catalog
   // only to not mix all records harvested (from internal for example)
   // which are used to be linked to draft records (eg. has sources)
-  var editorCatalogId = '18291a05-a2f7-4ea5-aeaf-b3bcde240ff5';
+  var editorCatalogId = 'd1bd08f0-16ac-47c3-b581-2e8db715530c';
   // var editorCatalogId = 'd1bd08f0-16ac-47c3-b581-2e8db715530b';
   // var editorCatalogPath = '/geonetwork';
   var editorCatalogPath = '/editor-catalogue';
