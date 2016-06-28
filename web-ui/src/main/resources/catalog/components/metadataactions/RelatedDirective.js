@@ -34,14 +34,51 @@
    * Shows a list of related records given an uuid with the actions defined in
    * config.js
    */
+  module.service('gnRelatedService', ['$http', '$q', function($http, $q) {
+    function get(uuid, types) {
+      var canceller = $q.defer();
+      var request = $http({
+        method: 'get',
+        url: 'md.relations?_content_type=json&uuid=' +
+            uuid + (types ? '&type=' +
+            types : ''),
+        timeout: canceller.promise,
+        cache: true
+      });
+
+      var promise = request.then(
+          function(response) {
+            return (response.data);
+          },
+          function() {
+            return ($q.reject('Something went wrong'));
+          }
+          );
+
+      promise.abort = function() {
+        canceller.resolve();
+      };
+
+      promise.finally(
+          function() {
+            promise.abort = angular.noop;
+            canceller = request = promise = null;
+          }
+      );
+      return (promise);
+    }
+    return {
+      get: get
+    };
+  }]);
   module
       .directive(
           'gnRelated',
           [
-        '$http',
+        'gnRelatedService',
         'gnGlobalSettings',
         'gnRelatedResources',
-        function($http, gnGlobalSettings, gnRelatedResources) {
+        function(gnRelatedService, gnGlobalSettings, gnRelatedResources) {
           return {
             restrict: 'A',
             templateUrl: function(elem, attrs) {
@@ -56,30 +93,27 @@
               list: '@'
             },
             link: function(scope, element, attrs, controller) {
+              var promise;
               scope.formatCifsLink = function(url) {
                 return url.replace(/\//g, '\\');
               };
 
               scope.updateRelations = function() {
-                if (scope.md) {
-                  scope.uuid = scope.md.getUuid();
-                }
                 scope.relations = [];
                 if (scope.uuid) {
-                  $http.get(
-                     'md.relations?_content_type=json&uuid=' +
-                     scope.uuid + (scope.types ? '&type=' +
-                     scope.types : ''), {cache: true})
-                            .success(function(data, status, headers, config) {
-                       if (data && data != 'null' && data.relation) {
-                         if (!angular.isArray(data.relation)) {
-                           scope.relations = [
-                             data.relation
-                           ];
-                         } else {
-                           for (var i = 0; i < data.relation.length; i++) {
-                             scope.relations.push(data.relation[i]);
-                           }
+                  scope.relationFound = false;
+                  (promise = gnRelatedService.get(
+                     scope.uuid, scope.types)
+                  ).then(function(data) {
+                      if (data && data != 'null' && data.relation) {
+                          if (!angular.isArray(data.relation)) {
+                              scope.relations = [
+                                  data.relation
+                              ];
+                          } else {
+                              for (var i = 0; i < data.relation.length; i++) {
+                                  scope.relations.push(data.relation[i]);
+                              }
                          }
                        }
                      });
@@ -102,8 +136,14 @@
               };
               scope.config = gnRelatedResources;
 
-              scope.$watchCollection('md', function() {
-                scope.updateRelations();
+              scope.$watchCollection('md', function(n, o) {
+                if (n && n !== o || angular.isUndefined(scope.uuid)) {
+                  if (promise && angular.isFunction(promise.abort)) {
+                    promise.abort();
+                  }
+                  scope.uuid = scope.md.getUuid();
+                  scope.updateRelations();
+                }
               });
 
               /**
