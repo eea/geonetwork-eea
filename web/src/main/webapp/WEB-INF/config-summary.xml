@@ -136,7 +136,8 @@
           <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
           <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
           <item facet="gemetKeyword"
-                translator="term:http://geonetwork-opensource.org/gemet"/>
+                translator="term:http://geonetwork-opensource.org/gemet"
+                max="60"/>
           <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
           <item facet="inspireThemeURI" sortBy="value" sortOrder="asc" max="35" translator="term:http://geonetwork-opensource.org/inspire-theme"/>
           <!--<item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>-->
