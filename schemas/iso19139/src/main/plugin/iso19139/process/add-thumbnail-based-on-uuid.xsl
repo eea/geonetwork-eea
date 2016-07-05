@@ -89,7 +89,10 @@
       <xsl:apply-templates select="gmd:pointOfContact"/>
       <xsl:apply-templates select="gmd:resourceMaintenance"/>
       <xsl:apply-templates
-              select="gmd:graphicOverview[not(gmd:MD_BrowseGraphic/gmd:fileDescription) or gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString != /root/env/type]"/>
+              select="gmd:graphicOverview[
+              */gmd:fileName/* != '' and
+              not(contains(*/gmd:fileName/*, 'blank.png'))
+              ]"/>
 
       <gmd:graphicOverview>
         <gmd:MD_BrowseGraphic>
