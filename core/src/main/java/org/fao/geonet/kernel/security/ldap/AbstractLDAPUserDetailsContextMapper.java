@@ -129,6 +129,17 @@ public abstract class AbstractLDAPUserDetailsContextMapper implements
 		// Assign default profile if not set by LDAP info or local database
 		if (user.getProfile() == null) {
 			user.setProfile(defaultProfile);
+			if (userDetails.getPrivileges().size() == 0 && defaultGroup != null) {
+				if (Log.isDebugEnabled(Geonet.LDAP)) {
+					Log.debug(
+							Geonet.LDAP,
+							"  No privilege defined, setting privilege for group "
+									+ defaultGroup + " as "
+									+ userDetails.getUser().getProfile());
+				}
+				userDetails
+						.addPrivilege(defaultGroup, userDetails.getUser().getProfile());
+			}
 		}
 
 		saveUser(userDetails);
