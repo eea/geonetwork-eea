@@ -39,31 +39,32 @@
       var canceller = $q.defer();
       var request = $http({
         method: 'get',
-        url: 'md.relations?_content_type=json&uuid=' +
-            uuid + (types ? '&type=' +
-            types : ''),
+        url: '../api/records/' + uuid + '/related?' +
+        (types ?
+        'type=' + types.split('|').join('&type=') :
+          ''),
         timeout: canceller.promise,
         cache: true
       });
 
       var promise = request.then(
-          function(response) {
-            return (response.data);
-          },
-          function() {
-            return ($q.reject('Something went wrong'));
-          }
-          );
+        function(response) {
+          return (response.data);
+        },
+        function() {
+          return ($q.reject('Something went wrong'));
+        }
+      );
 
       promise.abort = function() {
         canceller.resolve();
       };
 
       promise.finally(
-          function() {
-            promise.abort = angular.noop;
-            canceller = request = promise = null;
-          }
+        function() {
+          promise.abort = angular.noop;
+          canceller = request = promise = null;
+        }
       );
       return (promise);
     }
@@ -72,9 +73,9 @@
     };
   }]);
   module
-      .directive(
-          'gnRelated',
-          [
+    .directive(
+      'gnRelated',
+      [
         'gnRelatedService',
         'gnGlobalSettings',
         'gnRelatedResources',
@@ -83,56 +84,50 @@
             restrict: 'A',
             templateUrl: function(elem, attrs) {
               return attrs.template ||
-                      '../../catalog/components/metadataactions/partials/related.html';
+                '../../catalog/components/metadataactions/partials/related.html';
             },
             scope: {
               md: '=gnRelated',
               template: '@',
               types: '@',
               title: '@',
-              list: '@'
+              list: '@',
+              user: '='
             },
             link: function(scope, element, attrs, controller) {
               var promise;
               scope.formatCifsLink = function(url) {
                 return url.replace(/\//g, '\\');
               };
-
+              
               scope.updateRelations = function() {
                 scope.relations = [];
                 if (scope.uuid) {
                   scope.relationFound = false;
                   (promise = gnRelatedService.get(
-                     scope.uuid, scope.types)
+                      scope.uuid, scope.types)
                   ).then(function(data) {
-                      if (data && data != 'null' && data.relation) {
-                          if (!angular.isArray(data.relation)) {
-                              scope.relations = [
-                                  data.relation
-                              ];
-                          } else {
-                              for (var i = 0; i < data.relation.length; i++) {
-                                  scope.relations.push(data.relation[i]);
-                              }
-                         }
-                       }
-                     });
+                    scope.relations = data;
+                    angular.forEach(data, function(value) {
+                      if (value) {
+                        scope.relationFound = true;
+                      }
+                    });
+                  });
                 }
               };
 
               scope.getTitle = function(link) {
                 return link.title['#text'] || link.title;
               };
-
               scope.hasAction = function(mainType) {
-                // Do not display add to map action when map
-                // viewer is disabled.
-                if (mainType === 'WMS' &&
-                   gnGlobalSettings.isMapViewerEnabled === false) {
+                var fn = gnRelatedResources.map[mainType].action;
+                // If function name ends with ToMap do not display the action
+                if (fn.name.match(/.*ToMap$/) &&
+                  gnGlobalSettings.isMapViewerEnabled === false) {
                   return false;
                 }
-                return angular.isFunction(
-                   gnRelatedResources.map[mainType].action);
+                return angular.isFunction(fn);
               };
               scope.config = gnRelatedResources;
 
@@ -145,21 +140,21 @@
                   scope.updateRelations();
                 }
               });
-
-              /**
-               * Return an array of all relations of the given types
-               * @return {Array}
-               */
-              scope.getByTypes = function() {
-                var res = [];
-                var types = Array.prototype.splice.call(arguments, 0);
-                angular.forEach(scope.relations, function(rel) {
-                  if (types.indexOf(rel['@type']) >= 0) {
-                    res.push(rel);
-                  }
-                });
-                return res;
-              };
+              //
+              // /**
+              //  * Return an array of all relations of the given types
+              //  * @return {Array}
+              //  */
+              // scope.getByTypes = function() {
+              //   var res = [];
+              //   var types = Array.prototype.splice.call(arguments, 0);
+              //   angular.forEach(scope.relations, function(rel) {
+              //     if (types.indexOf(rel['@type']) >= 0) {
+              //       res.push(rel);
+              //     }
+              //   });
+              //   return res;
+              // };
             }
           };
         }]);

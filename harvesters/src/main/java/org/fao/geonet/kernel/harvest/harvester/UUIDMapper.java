@@ -23,68 +23,70 @@
 
 package org.fao.geonet.kernel.harvest.harvester;
 
-import org.fao.geonet.domain.Metadata;
-import org.fao.geonet.repository.MetadataRepository;
-
 import java.util.HashMap;
 import java.util.List;
 
-import static org.fao.geonet.repository.specification.MetadataSpecs.hasHarvesterUuid;
-import static org.springframework.data.jpa.domain.Specifications.where;
+import org.fao.geonet.repository.MetadataRepository;
+import org.fao.geonet.repository.SimpleMetadata;
 
 //=============================================================================
 
-/** Create a mapping remote ID -> local ID / change date. Retrieves all metadata
-  * of a given siteID and puts them into an hashmap.
-  */
+/**
+ * Create a mapping remote ID -> local ID / change date. Retrieves all metadata of a given siteID
+ * and puts them into an hashmap.
+ */
 
-public class UUIDMapper
-{
-	private HashMap<String, String> hmUuidDate 		 = new HashMap<String, String>();
-	private HashMap<String, String> hmUuidId   		 = new HashMap<String, String>();
-	private HashMap<String, String> hmUuidTemplate = new HashMap<String, String>();
+public class UUIDMapper {
+    private HashMap<String, String> hmUuidDate = new HashMap<String, String>();
+    private HashMap<String, String> hmUuidId = new HashMap<String, String>();
+    private HashMap<String, String> hmUuidTemplate = new HashMap<String, String>();
 
-	//--------------------------------------------------------------------------
-	//---
-	//--- Constructor
-	//---
-	//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //---
+    //--- Constructor
+    //---
+    //--------------------------------------------------------------------------
 
-	public UUIDMapper(MetadataRepository repo, String harvestUuid) throws Exception
-	{
-        final List<Metadata> all = repo.findAll(where(hasHarvesterUuid(harvestUuid)));
+    public UUIDMapper(MetadataRepository repo, String harvestUuid) throws Exception {
 
-        for (Metadata record : all) {
-            String id = record.getId() + "";
-            String uuid = record.getUuid();
-            String date = record.getDataInfo().getChangeDate().getDateAndTime();
-            String isTemplate = record.getDataInfo().getType().codeString;
+        final List<SimpleMetadata> all = repo.findAllSimple(harvestUuid);
 
-            hmUuidDate.put(uuid, date);
-            hmUuidId.put(uuid, id);
-            hmUuidTemplate.put(uuid, isTemplate);
+        //This may lead to problems if we have millions of records from the same harvester...
+        //If that happens, we may have to look for something that uses even less memory
+        for (SimpleMetadata record : all) {
+            hmUuidDate.put(record.getUuid(), record.getDate());
+            hmUuidId.put(record.getUuid(), record.getId());
+            hmUuidTemplate.put(record.getUuid(), record.getIsTemplate());
         }
-	}
+    }
 
-	//--------------------------------------------------------------------------
-	//---
-	//--- API methods
-	//---
-	//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //---
+    //--- API methods
+    //---
+    //--------------------------------------------------------------------------
 
-	public String getTemplate(String uuid) { return hmUuidTemplate.get(uuid); }
+    public String getTemplate(String uuid) {
+        return hmUuidTemplate.get(uuid);
+    }
 
-	//--------------------------------------------------------------------------
-	
-	public String getChangeDate(String uuid) { return hmUuidDate.get(uuid); }
+    //--------------------------------------------------------------------------
 
-	//--------------------------------------------------------------------------
+    public String getChangeDate(String uuid) {
+        return hmUuidDate.get(uuid);
+    }
 
-	public String getID(String uuid) { return hmUuidId.get(uuid); }
+    //--------------------------------------------------------------------------
 
-	//--------------------------------------------------------------------------
+    public String getID(String uuid) {
+        return hmUuidId.get(uuid);
+    }
 
-	public Iterable<String> getUUIDs() { return hmUuidDate.keySet(); }
+    //--------------------------------------------------------------------------
+
+    public Iterable<String> getUUIDs() {
+        return hmUuidDate.keySet();
+    }
 }
 
 //=============================================================================

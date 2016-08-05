@@ -24,7 +24,7 @@ package org.fao.geonet.kernel.security.shibboleth;
  * Some basic configuration info for Shibboleth logins.
  *
  * Mainly header names mapping to attributes.
- * 
+ *
  * @author ETj (etj at geo-solutions.it)
  */
 public class ShibbolethUserConfiguration {
@@ -53,6 +53,9 @@ public class ShibbolethUserConfiguration {
     }
 
     public void setSurnameKey(String surnameKey) {
+        if (surnameKey == null) {
+            surnameKey = "";
+        }
         this.surnameKey = surnameKey;
     }
 
@@ -61,6 +64,9 @@ public class ShibbolethUserConfiguration {
     }
 
     public void setFirstnameKey(String firstnameKey) {
+        if (firstnameKey == null) {
+            firstnameKey = "";
+        }
         this.firstnameKey = firstnameKey;
     }
 
@@ -69,6 +75,9 @@ public class ShibbolethUserConfiguration {
     }
 
     public void setProfileKey(String profileKey) {
+        if (profileKey == null) {
+            profileKey = "";
+        }
         this.profileKey = profileKey;
     }
 
@@ -77,6 +86,9 @@ public class ShibbolethUserConfiguration {
     }
 
     public void setGroupKey(String groupKey) {
+        if (groupKey == null) {
+            groupKey = "";
+        }
         this.groupKey = groupKey;
     }
 
@@ -85,14 +97,17 @@ public class ShibbolethUserConfiguration {
     }
 
     public void setDefaultGroup(String defaultGroup) {
+        if (defaultGroup == null) {
+            defaultGroup = "";
+        }
         this.defaultGroup = defaultGroup;
     }
 
     /**
      * Tell if the profile should be updated whenever the user login.
      *
-     * This info is needed when the identificatian provider provides no real mean to
-     * tell the user profile.
+     * This info is needed when the identificatian provider provides no real mean to tell the user
+     * profile.
      */
     public boolean isUpdateProfile() {
         return updateProfile;
@@ -115,6 +130,9 @@ public class ShibbolethUserConfiguration {
     }
 
     public void setEmailKey(String emailKey) {
+        if (emailKey == null) {
+            emailKey = "";
+        }
         this.emailKey = emailKey;
     }
 }

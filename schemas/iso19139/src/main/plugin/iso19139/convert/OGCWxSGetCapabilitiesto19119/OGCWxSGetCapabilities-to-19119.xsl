@@ -23,7 +23,7 @@
   -->
 
 <!--
-Mapping between : 
+Mapping between :
 - WMS 1.0.0
 - WMS 1.1.1
 - WMS 1.3.0
@@ -32,7 +32,7 @@ Mapping between :
 - WFS 1.1.0
 - WPS 0.4.0
 - WPS 1.0.0
-... to ISO19119. 
+... to ISO19119.
  -->
 <xsl:stylesheet version="2.0" xmlns    ="http://www.isotc211.org/2005/gmd"
 										xmlns:gco="http://www.isotc211.org/2005/gco"
@@ -55,21 +55,21 @@ Mapping between :
 										extension-element-prefixes="wcs ows wfs ows11 wps wps1 owsg">
 
 	<!-- ============================================================================= -->
-	
+
     <xsl:param name="uuid">uuid</xsl:param>
 	<xsl:param name="lang">eng</xsl:param>
 	<xsl:param name="topic"></xsl:param>
-	
+
 	<!-- ============================================================================= -->
-	
+
 	<xsl:include href="resp-party.xsl"/>
 	<xsl:include href="ref-system.xsl"/>
 	<xsl:include href="identification.xsl"/>
-	
+
 	<!-- ============================================================================= -->
 
 	<xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes" />
-	
+
 	<!-- ============================================================================= -->
 
 	<xsl:template match="/">
@@ -80,10 +80,10 @@ Mapping between :
 
 	<xsl:template match="WMT_MS_Capabilities|wfs:WFS_Capabilities|wcs:WCS_Capabilities|
 	       wps:Capabilities|wps1:Capabilities|wms:WMS_Capabilities">
-	
+
 		<xsl:variable name="ows">
 			<xsl:choose>
-				<xsl:when test="(local-name(.)='WFS_Capabilities' and namespace-uri(.)='http://www.opengis.net/wfs' and @version='1.1.0') 
+				<xsl:when test="(local-name(.)='WFS_Capabilities' and namespace-uri(.)='http://www.opengis.net/wfs' and @version='1.1.0')
 					or (local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengeospatial.net/wps')
 					or (local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wps/1.0.0')">true</xsl:when>
 				<xsl:otherwise>false</xsl:otherwise>
@@ -91,7 +91,7 @@ Mapping between :
 		</xsl:variable>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
+
 		<MD_Metadata>
 
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -99,7 +99,7 @@ Mapping between :
 			<fileIdentifier>
 				<gco:CharacterString><xsl:value-of select="$uuid"/></gco:CharacterString>
 			</fileIdentifier>
-		
+
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 			<language>
@@ -128,10 +128,10 @@ Mapping between :
                     codeList="./resources/codeList.xml#MD_ScopeCode"
                     codeListValue="service" />
             </hierarchyLevel>
-            
+
 			<!-- mdHrLvName -->
 
-			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->			
+			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 			<xsl:choose>
 				<xsl:when test="Service/ContactInformation|
 					wfs:Service/wfs:ContactInformation|
@@ -156,7 +156,7 @@ Mapping between :
 					<contact gco:nilReason="missing"/>
 				</xsl:otherwise>
 			</xsl:choose>
-			
+
 
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 			<xsl:variable name="df">[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]</xsl:variable>
@@ -170,7 +170,7 @@ Mapping between :
 					</xsl:otherwise>
 				</xsl:choose>
 			</dateStamp>
-			
+
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 			<metadataStandardName>
@@ -180,7 +180,7 @@ Mapping between :
 			<metadataStandardVersion>
 				<gco:CharacterString>1.0</gco:CharacterString>
 			</metadataStandardVersion>
-			
+
 
 			<!--mdExtInfo-->
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -193,7 +193,7 @@ Mapping between :
 					</xsl:apply-templates>
 				</srv:SV_ServiceIdentification>
 			</identificationInfo>
-		
+
 			<!--contInfo-->
 			<!--distInfo -->
 			 <distributionInfo>
@@ -264,12 +264,12 @@ Mapping between :
                                             </xsl:choose>
                                         </gco:CharacterString>
                                     </description>
-                                 </CI_OnlineResource>    
+                                 </CI_OnlineResource>
                              </onLine>
                         </MD_DigitalTransferOptions>
                    </transferOptions>
                </MD_Distribution>
-            </distributionInfo> 
+            </distributionInfo>
 			<!--dqInfo-->
 			<dataQualityInfo>
 				<DQ_DataQuality>
@@ -286,8 +286,8 @@ Mapping between :
 							</levelDescription>
 						</DQ_Scope>
 					</scope>
-					
-					<!-- 
+
+					<!--
 		                <inspire_common:Conformity>
 		                    <inspire_common:Specification>
 		                        <inspire_common:Title>-</inspire_common:Title>
@@ -342,13 +342,13 @@ Mapping between :
 											</pass>
 										</xsl:otherwise>
 									</xsl:choose>
-									
+
 								</DQ_ConformanceResult>
 							</result>
 						</DQ_DomainConsistency>
 					</report>
 					</xsl:for-each>
-					
+
 					<!-- EEA custom harvesting rule -->
 					<xsl:if test="not(//inspire_vs:ExtendedCapabilities)">
 						<report>
@@ -358,8 +358,8 @@ Mapping between :
 										<specification>
 											<CI_Citation>
 												<title>
-													<gco:CharacterString>Commission Regulation (EC) No 976/2009 of 
-														19 October 2009 implementing Directive 2007/2/EC of the 
+													<gco:CharacterString>Commission Regulation (EC) No 976/2009 of
+														19 October 2009 implementing Directive 2007/2/EC of the
 														European Parliament and of the Council as regards the Network Services</gco:CharacterString>
 												</title>
 												<date>
@@ -385,7 +385,7 @@ Mapping between :
 							</DQ_DomainConsistency>
 						</report>
 					</xsl:if>
-					
+
 					<lineage>
 						<LI_Lineage>
 							<statement gco:nilReason="missing">
@@ -394,14 +394,14 @@ Mapping between :
 						</LI_Lineage>
 					</lineage>
 				</DQ_DataQuality>
-				
+
 			</dataQualityInfo>
 			<!--mdConst -->
 			<!--mdMaint-->
 
 		</MD_Metadata>
 	</xsl:template>
-	
+
 	<!-- ============================================================================= -->
 
 </xsl:stylesheet>

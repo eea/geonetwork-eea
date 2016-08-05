@@ -169,6 +169,7 @@
               var delimiter = ' or ';
               var oldParams;
               var groups;
+              scope.title = attrs['gnFacetMultiselectTitle'];
 
               scope.name = attrs.gnFacetMultiselect;
               scope.contentCollapsed =
@@ -192,7 +193,7 @@
                     // Load groups label for 'publishedForGroup'
                     if (scope.facetConfig.label == 'publishedForGroup') {
                       promises.push(gnHttp.callService('info', {
-                        type: 'groups'}).
+                        type: 'groupsAll'}).
                           success(function(data) {
                             groups = data.group;
                           }));
@@ -228,8 +229,8 @@
               scope.isInSearch = function(value) {
                 return scope.searchObj.params[scope.facetConfig.key] &&
                     scope.searchObj.params[scope.facetConfig.key]
-                      .split(delimiter)
-                      .indexOf(value) >= 0;
+                    .split(delimiter)
+                    .indexOf(value) >= 0;
               };
 
               //TODO improve performance here, maybe to complex $watchers

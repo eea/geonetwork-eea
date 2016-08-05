@@ -26,14 +26,16 @@
 package org.fao.geonet.domain;
 
 import javax.persistence.AttributeConverter;
+
 import java.beans.PropertyEditorSupport;
+import java.util.Arrays;
 
 /**
  * Created by francois on 31/12/15.
  */
 public class MetadataResourceVisibilityConverter
-        extends PropertyEditorSupport
-        implements AttributeConverter<MetadataResourceVisibility, String> {
+    extends PropertyEditorSupport
+    implements AttributeConverter<MetadataResourceVisibility, String> {
     @Override
     public void setAsText(final String visibility) throws IllegalArgumentException {
         MetadataResourceVisibility value = MetadataResourceVisibility.parse(visibility.trim());
@@ -41,9 +43,9 @@ public class MetadataResourceVisibilityConverter
             setValue(value);
         } else {
             throw new IllegalArgumentException(
-                    String.format("Unsupported value '%s'. Values are %s.",
-                            visibility,
-                            MetadataResourceVisibility.values().toString()));
+                String.format("Unsupported value '%s'. Values are %s.",
+                    visibility,
+                    Arrays.toString(MetadataResourceVisibility.values())));
         }
     }
 
@@ -56,9 +58,9 @@ public class MetadataResourceVisibilityConverter
                 return "A";
             default:
                 throw new IllegalArgumentException(
-                        String.format("Unsupported value '%s'. Values are %s.",
-                                visibility,
-                                MetadataResourceVisibility.values().toString()));
+                    String.format("Unsupported value '%s'. Values are %s.",
+                        visibility,
+                        Arrays.toString(MetadataResourceVisibility.values())));
         }
     }
 
@@ -71,9 +73,9 @@ public class MetadataResourceVisibilityConverter
                 return MetadataResourceVisibility.PUBLIC;
             default:
                 throw new IllegalArgumentException(
-                        String.format("Unsupported value '%s'. Values are %s.",
-                                s,
-                                MetadataResourceVisibility.values().toString()));
+                    String.format("Unsupported value '%s'. Values are %s.",
+                        s,
+                        Arrays.toString(MetadataResourceVisibility.values())));
         }
     }
 }

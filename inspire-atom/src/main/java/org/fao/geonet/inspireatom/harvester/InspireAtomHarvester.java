@@ -24,10 +24,12 @@ package org.fao.geonet.inspireatom.harvester;
 
 
 import jeeves.server.context.ServiceContext;
+
 import org.fao.geonet.Logger;
 import org.fao.geonet.domain.Metadata;
 import org.fao.geonet.domain.MetadataType;
 import org.fao.geonet.kernel.search.SearchManager;
+import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.repository.InspireAtomFeedRepository;
 import org.fao.geonet.repository.specification.InspireAtomFeedSpecs;
@@ -44,7 +46,6 @@ import org.fao.geonet.kernel.setting.SettingManager;
 import org.jdom.Element;
 import org.springframework.data.jpa.domain.Specifications;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -56,29 +57,27 @@ import java.util.Map;
  * @author Jose García
  */
 public class InspireAtomHarvester {
+    private final static String EXTRACT_DATASETS_FROM_SERVICE_XSLT = "extract-datasetinfo-from-service-feed.xsl";
+    private final static String EXTRACT_DATASET_ID_XSLT = "extract-datasetid.xsl";
     private Logger logger = Log.createLogger(Geonet.ATOM);
-
-    /** GeoNetwork context. **/
+    /**
+     * GeoNetwork context.
+     **/
     private GeonetContext gc;
-
-    private final String EXTRACT_DATASETS_FROM_SERVICE_XSLT = "extract-datasetinfo-from-service-feed.xsl";
-
-    private final String EXTRACT_DATASET_ID_XSLT = "extract-datasetid.xsl";
 
 
     /**
      * Constructor.
      *
-     * @param geonetGontext     GeoNetwork context.
+     * @param geonetGontext GeoNetwork context.
      */
     public InspireAtomHarvester(final GeonetContext geonetGontext) {
         this.gc = geonetGontext;
     }
 
     /**
-     * Process the metadata to check if have an atom document referenced. In this case, the atom document
-     * is retrieved and stored in the metadata table.
-     *
+     * Process the metadata to check if have an atom document referenced. In this case, the atom
+     * document is retrieved and stored in the metadata table.
      */
     public final Element harvest() {
         SearchManager searchManager = gc.getBean(SearchManager.class);
@@ -86,7 +85,6 @@ public class InspireAtomHarvester {
         DataManager dataMan = gc.getBean(DataManager.class);
 
         final InspireAtomFeedRepository repository = gc.getBean(InspireAtomFeedRepository.class);
-        final MetadataRepository metadataRepository = gc.getBean(MetadataRepository.class);
 
         // Using index information, as type is only available in index and not in database.
         // If retrieved from database retrieves all iso19139 metadata and should apply for each result an xslt process
@@ -100,7 +98,7 @@ public class InspireAtomHarvester {
             logger.info("ATOM feed harvest started");
 
             // Value used in metadata editor for online resources to identify an INSPIRE atom resource
-            String atomProtocol = sm.getValue("system/inspire/atomProtocol");
+            String atomProtocol = sm.getValue(Settings.SYSTEM_INSPIRE_ATOM_PROTOCOL);
 
             // Removes all atom information from existing metadata. Harvester will reload with updated information
             logger.info("ATOM feed harvest: remove existing metadata feeds");
@@ -110,7 +108,7 @@ public class InspireAtomHarvester {
 
             // Retrieve the SERVICE metadata referencing atom feed documents
             Map<String, String> serviceMetadataWithAtomFeeds =
-                    InspireAtomUtil.retrieveServiceMetadataWithAtomFeeds(dataMan, iso19139Metadata, atomProtocol);
+                InspireAtomUtil.retrieveServiceMetadataWithAtomFeeds(dataMan, iso19139Metadata, atomProtocol);
 
             logger.info("ATOM feed harvest: processing service metadata feeds");
 
@@ -118,7 +116,7 @@ public class InspireAtomHarvester {
             //    datasetsInformation stores the dataset information for identifier and namespace for the services feed.
             //    This information is not available in the datasets feeds
             Map<String, String> datasetsInformation =
-                    processServiceMetadataFeeds(dataMan, serviceMetadataWithAtomFeeds, result);
+                processServiceMetadataFeeds(dataMan, serviceMetadataWithAtomFeeds, result);
 
             // Process DATASET metadata feeds related to the service metadata
             logger.info("ATOM feed harvest : processing dataset metadata feeds");
@@ -137,11 +135,11 @@ public class InspireAtomHarvester {
     }
 
     /**
-     * Harvest an individual metadata. Used in OpenSearchDescription service to retrieve the atom information
-     * for a metadata. Useful if metadata has been created in the catalog since the last periodical harvesting.
+     * Harvest an individual metadata. Used in OpenSearchDescription service to retrieve the atom
+     * information for a metadata. Useful if metadata has been created in the catalog since the last
+     * periodical harvesting.
      *
-     * @param context
-     * @param metadataId    Metadata identifier
+     * @param metadataId Metadata identifier
      */
     public final void harvestServiceMetadata(final ServiceContext context, final String metadataId) {
         Logger logger = Log.createLogger(Geonet.ATOM);
@@ -157,10 +155,10 @@ public class InspireAtomHarvester {
         Element result = new Element("response");
 
         try {
-            logger.info("ATOM feed harvest started for metadata: "  + metadataId);
+            logger.info("ATOM feed harvest started for metadata: " + metadataId);
 
             // Value used in metadata editor for online resources to identify an INSPIRE atom resource
-            String atomProtocol = sm.getValue("system/inspire/atomProtocol");
+            String atomProtocol = sm.getValue(Settings.SYSTEM_INSPIRE_ATOM_PROTOCOL);
 
             // Removes all atom information from existing metadata. Harvester will reload with updated information
             logger.info("ATOM feed harvest: remove existing metadata feed");
@@ -174,16 +172,16 @@ public class InspireAtomHarvester {
 
             // Retrieve the service metadata referencing atom feed document
             Map<String, String> serviceMetadataWithAtomFeed =
-                    InspireAtomUtil.retrieveServiceMetadataWithAtomFeed(dataMan, iso19139Metadata, atomProtocol);
+                InspireAtomUtil.retrieveServiceMetadataWithAtomFeed(dataMan, iso19139Metadata, atomProtocol);
 
             Map<String, String> datasetsInformation =
-                    processServiceMetadataFeeds(dataMan, serviceMetadataWithAtomFeed, result);
+                processServiceMetadataFeeds(dataMan, serviceMetadataWithAtomFeed, result);
 
             // Process dataset metadata feeds related to the service metadata
-            logger.info("ATOM feed harvest for metadata: "  + metadataId + ",  processing dataset metadata feeds");
+            logger.info("ATOM feed harvest for metadata: " + metadataId + ",  processing dataset metadata feeds");
             processDatasetsMetadataFeedsForService(context, dataMan, datasetsInformation, result);
 
-            logger.info("ATOM feed harvest finished for metadata: "  + metadataId);
+            logger.info("ATOM feed harvest finished for metadata: " + metadataId);
         } catch (Exception x) {
             logger.error("ATOM feed harvest error: " + x.getMessage());
             x.printStackTrace();
@@ -194,29 +192,28 @@ public class InspireAtomHarvester {
     /**
      * Process service metadata feeds.
      *
-     * @param dataMan
-     * @return a Map with the datasets referenced in the service feeds (dataset-id, dataset-namespace).
-     *         The namespace is only available in the service feeds. Dataset feeds seem not containing this information.
-     *
-     * @throws Exception
+     * @return a Map with the datasets referenced in the service feeds (dataset-id,
+     * dataset-namespace). The namespace is only available in the service feeds. Dataset feeds seem
+     * not containing this information.
      */
     private Map<String, String> processServiceMetadataFeeds(final DataManager dataMan,
                                                             final Map<String, String> serviceMetadataWithAtomFeeds,
                                                             Element result)
-            throws Exception {
+        throws Exception {
 
         Map<String, String> datasetsInformation = new HashMap<String, String>();
 
         final InspireAtomFeedRepository repository = gc.getBean(InspireAtomFeedRepository.class);
 
         // Process the metadata retrieving the atom feed content and store it in the catalog.
-        for (String metadataId: serviceMetadataWithAtomFeeds.keySet()) {
+        for (Map.Entry<String, String> entry : serviceMetadataWithAtomFeeds.entrySet()) {
+            String metadataId = entry.getKey();
             String metadataUuid = dataMan.getMetadataUuid(metadataId);
 
             try {
                 logger.info("Processing feed for service metadata with id:" + metadataId);
 
-                String atomUrl = serviceMetadataWithAtomFeeds.get(metadataId);
+                String atomUrl = entry.getValue();
                 logger.debug("Atom feed Url for service metadata (" + metadataId + "): " + atomUrl);
 
                 String atomFeedDocument = InspireAtomUtil.retrieveRemoteAtomFeedDocument(gc, atomUrl);
@@ -271,32 +268,28 @@ public class InspireAtomHarvester {
 
     /**
      * Process dataset metadata feeds.
-     *
-     * @param dataMan
-     * @param datasetsInformation
-     * @throws Exception
      */
     private void processDatasetsMetadataFeeds(final DataManager dataMan,
                                               final Map<String, String> datasetsInformation,
                                               Element result)
-            throws Exception {
+        throws Exception {
 
         // Retrieve the metadata referencing atom feed documents.
 
         // Value used in metadata editor for online resources to identify an INSPIRE atom resource
-        String atomProtocol = gc.getBean(SettingManager.class).getValue("system/inspire/atomProtocol");
+        String atomProtocol = gc.getBean(SettingManager.class).getValue(Settings.SYSTEM_INSPIRE_ATOM_PROTOCOL);
 
         final InspireAtomFeedRepository repository = gc.getBean(InspireAtomFeedRepository.class);
-        final MetadataRepository metadataRepository = gc.getBean(MetadataRepository.class);
 
         List<Metadata> iso19139Metadata = InspireAtomUtil.searchMetadataByType(ServiceContext.get(), gc.getBean(SearchManager.class), "dataset");
         //List<Metadata> iso19139Metadata = metadataRepository.findAll(Specifications.where(MetadataSpecs.isType(MetadataType.METADATA)).and(MetadataSpecs.isIso19139Schema()));
 
         Map<String, String> metadataWithAtomFeeds =
-                InspireAtomUtil.retrieveDatasetMetadataWithAtomFeeds(dataMan, iso19139Metadata, atomProtocol);
+            InspireAtomUtil.retrieveDatasetMetadataWithAtomFeeds(dataMan, iso19139Metadata, atomProtocol);
 
         // Process the metadata retrieving the atom feed content and store it in the catalog.
-        for (String metadataId: metadataWithAtomFeeds.keySet()) {
+        for (Map.Entry<String, String> entry : metadataWithAtomFeeds.entrySet()) {
+            String metadataId = entry.getKey();
             String metadataUuid = dataMan.getMetadataUuid(metadataId);
 
             try {
@@ -310,7 +303,7 @@ public class InspireAtomHarvester {
                 String atomDatasetNs = datasetsInformation.get(atomDatasetId);
                 logger.debug("Dataset, id=" + atomDatasetId + ", namespace=" + atomDatasetNs);
 
-                String atomUrl = metadataWithAtomFeeds.get(metadataId);
+                String atomUrl = entry.getValue();
                 logger.debug("Dataset, feedurl=" + atomUrl);
                 String atomFeedDocument = InspireAtomUtil.retrieveRemoteAtomFeedDocument(gc, atomUrl);
                 logger.debug("Dataset feed: " + atomFeedDocument);
@@ -342,15 +335,13 @@ public class InspireAtomHarvester {
     /**
      * Process the feeds for a set datasets related to a service metadata.
      *
-     * @param dataMan
-     * @param datasetsInformation       Datasets map (datasetid, namespace)
-     * @throws Exception
+     * @param datasetsInformation Datasets map (datasetid, namespace)
      */
     private void processDatasetsMetadataFeedsForService(final ServiceContext context,
                                                         final DataManager dataMan,
                                                         final Map<String, String> datasetsInformation,
                                                         final Element result)
-            throws Exception {
+        throws Exception {
 
         // Retrieve the metadata referencing atom feed documents.
 
@@ -358,17 +349,17 @@ public class InspireAtomHarvester {
         String atomProtocol = gc.getBean(SettingManager.class).getValue("system/inspire/atomProtocol");
 
         final InspireAtomFeedRepository repository = gc.getBean(InspireAtomFeedRepository.class);
-        final MetadataRepository metadataRepository = gc.getBean(MetadataRepository.class);
 
         // Process the metadata retrieving the atom feed content and store it in the catalog.
-        for (String atomDatasetId: datasetsInformation.keySet()) {
+        for (Map.Entry<String, String> entry : datasetsInformation.entrySet()) {
+            String atomDatasetId = entry.getKey();
             String metadataUuid = "";
 
             try {
                 metadataUuid = InspireAtomUtil.retrieveDatasetUuidFromIdentifier(context,
-                        gc.getBean(SearchManager.class), atomDatasetId);
+                    gc.getBean(SearchManager.class), atomDatasetId);
 
-                String atomDatasetNs = datasetsInformation.get(atomDatasetId);
+                String atomDatasetNs = entry.getValue();
                 logger.debug("Dataset, id=" + atomDatasetId + ", namespace=" + atomDatasetNs);
 
                 if (StringUtils.isEmpty(metadataUuid)) {
@@ -412,7 +403,4 @@ public class InspireAtomHarvester {
             }
         }
     }
-
-
-
 }

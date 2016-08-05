@@ -10,40 +10,28 @@
     <link rel="stylesheet" type="text/css" href="../../images/eea-api/ploneStyles1433419216184762955.css" />
     <link rel="stylesheet" type="text/css" href="../../images/eea-api/ploneStyles1433419216186409950.css" />
     <link rel="stylesheet" type="text/css" href="../../images/eea-api/ploneStyles1433419216187398911.css" media="screen" />
-    <!--[if lt IE 9]>    
+    <!--[if lt IE 9]>
 
 <link rel="stylesheet" type="text/css" href="../../images/eea-api/ploneStyles1433419216187609911.css" media="screen" />
     <![endif]-->
 
-    <!--[if IE 7]>    
+    <!--[if IE 7]>
 
 <link rel="stylesheet" type="text/css" href="../../images/eea-api/ploneStyles1433419216187675953.css" media="screen" />
     <![endif]-->
 
-    <!--[if IE 8]>    
+    <!--[if IE 8]>
 
 <link rel="stylesheet" type="text/css" href="../../images/eea-api/ploneStyles1433419216187743902.css" media="screen" />
     <![endif]-->
 
-    <!--[if IE 9]>    
+    <!--[if IE 9]>
 
 <link rel="stylesheet" type="text/css" href="../../images/eea-api/ploneStyles1433419216187803984.css" media="screen" />
     <![endif]-->
 
     <link rel="stylesheet" type="text/css" href="../../images/eea-api/ploneStyles1433419216187879086.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="../../images/eea-api/ploneStyles1433419216187983990.css" media="screen" />
-
-
-    <script type="text/javascript" src="http://www.eea.europa.eu/portal_javascripts/EEADesign2006/ploneScripts1433419228316905022.js"></script>
-    <script type="text/javascript" src="http://www.eea.europa.eu/portal_javascripts/EEADesign2006/ploneScripts1433419228320696115.js"></script>
-    <script type="text/javascript" src="http://www.eea.europa.eu/portal_javascripts/EEADesign2006/ploneScripts1433419228321556091.js"></script>
-    <script type="text/javascript" src="http://www.eea.europa.eu/portal_javascripts/EEADesign2006/ploneScripts1433419228321924925.js"></script>
-    <script type="text/javascript" src="http://www.eea.europa.eu/portal_javascripts/EEADesign2006/ploneScripts1433419228321960926.js"></script>
-    <script type="text/javascript" src="http://www.eea.europa.eu/portal_javascripts/EEADesign2006/ploneScripts1433419228322391033.js"></script>
-    <script type="text/javascript" src="http://www.eea.europa.eu/portal_javascripts/EEADesign2006/ploneScripts1433419228322715044.js"></script>
-
-
-
 
     <script type="text/javascript"> context_url='http://www.eea.europa.eu';</script>
 
@@ -61,8 +49,8 @@
             </div>
             <script type="text/javascript">
               jQuery(document).ready(function($){
-              jQuery("#portal-footer").find(".managePortletsLink
-              a").not(".managePortletsFallback").parent().remove();
+                jQuery("#portal-footer").find(".managePortletsLink a")
+                  .not(".managePortletsFallback").parent().remove();
               });
             </script>
           </div>

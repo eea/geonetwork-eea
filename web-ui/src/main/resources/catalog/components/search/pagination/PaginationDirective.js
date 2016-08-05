@@ -93,13 +93,14 @@
             scope.config.currentPage = scope.config.pages;
             scope.updateSearch();
           };
+
           if (angular.isDefined(attrs.enableEvents)) {
             var events = ['first', 'previous', 'next', 'last'];
             angular.forEach(events, function(key) {
               scope.$on(key + 'Page', function(evt, cbFn) {
-                var fn = scope[key];
-                if (angular.isFunction(fn)) {
-                  fn();
+                scope[key]();
+                if (angular.isFunction(cbFn)) {
+                  cbFn();
                 }
               });
             });
@@ -108,7 +109,7 @@
 
           if (angular.isDefined(attrs.enableHotKeys)) {
             hotkeys.bindTo(scope)
-              .add({
+                .add({
                   combo: 'ctrl+left',
                   description: $translate('hotkeyFirstPage'),
                   callback: scope.first

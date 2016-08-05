@@ -4,7 +4,6 @@
 @import (less) "../lib/style/datetimepicker.css";
 @import (less) "../lib/jquery.ext/jquery.fileupload-ui.css";
 @import "gn.less";
-
 body {
   
 }
@@ -123,10 +122,18 @@ form.gn-editor {
 
   div[data-gn-toggle] {
     position: absolute;
-    left: -4px;
+    right: 3px;
     top: 2px;
     button {
-      padding: 2px;
+      padding: 5px;
+      background-color: @brand-primary;
+      color: white;
+      -webkit-border-radius: 15px;
+      border-width: 0px;
+      i {
+        padding-left: 3px;
+        padding-top: 4px;
+      }
     }
   }
 
@@ -318,6 +325,7 @@ form.gn-editor {
       padding: 5px;
       border: 1px solid #ebebeb;
       border-radius: 3px;
+      margin-top: 10px;
   }
   .gn-field {
       border-radius: 3px;
@@ -478,5 +486,12 @@ table.gn-data-store {
 form.gn-tab-xml {
   div[data-gn-toggle] {
     display:none;
+  }
+}
+.skos-btn-icons {
+  text-decoration: none !important;
+  color: @gray;
+  &:hover {
+    color: @brand-success;
   }
 }

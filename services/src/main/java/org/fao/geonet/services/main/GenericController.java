@@ -23,11 +23,14 @@
 
 package org.fao.geonet.services.main;
 
-import jeeves.constants.Jeeves;
-import jeeves.server.JeevesEngine;
-import jeeves.server.UserSession;
-import jeeves.server.sources.ServiceRequest;
-import jeeves.server.sources.ServiceRequestFactory;
+import java.nio.file.Path;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.Util;
 import org.fao.geonet.exceptions.FileUploadTooBigEx;
@@ -38,10 +41,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.nio.file.Path;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jeeves.constants.Jeeves;
+import jeeves.server.JeevesEngine;
+import jeeves.server.UserSession;
+import jeeves.server.dispatchers.ServiceManager;
+import jeeves.server.sources.ServiceRequest;
+import jeeves.server.sources.ServiceRequestFactory;
 
 @Controller
 public class GenericController {
@@ -51,8 +56,9 @@ public class GenericController {
     @ResponseBody
     public void dispatch(@PathVariable String lang,
                          @PathVariable String service, HttpServletRequest request,
-                         HttpServletResponse response, HttpSession httpSession)
-            throws Exception {
+                         HttpServletResponse response)
+        throws Exception {
+        HttpSession httpSession = request.getSession(false);
 
         String ip = request.getRemoteAddr();
         // if we do have the optional x-forwarded-for request header then
@@ -63,7 +69,7 @@ public class GenericController {
 
         Log.info(Log.REQUEST, "==========================================================");
 
-        Log.info(Log.REQUEST,  "HTML Request (from " + ip + ") : " + request.getRequestURI());
+        Log.info(Log.REQUEST, "HTML Request (from " + ip + ") : " + request.getRequestURI());
         if (Log.isDebugEnabled(Log.REQUEST)) {
             Log.debug(Log.REQUEST, "Method       : " + request.getMethod());
             Log.debug(Log.REQUEST, "Content type : " + request.getContentType());
@@ -76,20 +82,29 @@ public class GenericController {
         }
 
         if (Log.isDebugEnabled(Log.REQUEST)) {
-            Log.debug(Log.REQUEST, "Session id is " + httpSession.getId());
+            if (httpSession != null) {
+                Log.debug(Log.REQUEST, "Session id is " + httpSession.getId());
+            } else {
+                Log.debug(Log.REQUEST, "No session created");
+            }
         }
-        UserSession session = (UserSession) httpSession.getAttribute(USER_SESSION_ATTRIBUTE_KEY);
 
-        if (session == null) {
-            // --- create session
+        UserSession session = null;
 
-            session = new UserSession();
+        if (httpSession != null) {
+            session = (UserSession) httpSession.getAttribute(USER_SESSION_ATTRIBUTE_KEY);
 
-            httpSession.setAttribute(USER_SESSION_ATTRIBUTE_KEY, session);
-            session.setsHttpSession(httpSession);
+            if (session == null) {
+                // --- create session
 
-            if (Log.isDebugEnabled(Log.REQUEST))
-                Log.debug(Log.REQUEST, "Session created for client : " + ip);
+                session = new UserSession();
+
+                httpSession.setAttribute(USER_SESSION_ATTRIBUTE_KEY, session);
+                session.setsHttpSession(httpSession);
+
+                if (Log.isDebugEnabled(Log.REQUEST))
+                    Log.debug(Log.REQUEST, "Session created for client : " + ip);
+            }
         }
 
         ServiceRequest srvReq = null;

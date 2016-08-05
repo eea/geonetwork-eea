@@ -40,7 +40,7 @@
     'gnConfigService',
     'gnConfig',
     function($scope, $routeParams, $http, $rootScope, $translate, $compile,
-            gnSearchManagerService, 
+            gnSearchManagerService,
             gnUtilityService,
             gnMetadataManager,
             gnConfigService,
@@ -71,7 +71,7 @@
       $scope.$watchCollection('groups', function() {
         if (!angular.isUndefined($scope.groups)) {
           if ($scope.groups.length == 1) {
-            $scope.ownerGroup = $scope.groups[0]['@id'];
+            $scope.ownerGroup = $scope.groups[0].id;
           }
         }
       });
@@ -109,7 +109,7 @@
 
 
           // TODO: Better handling of lots of templates
-          gnSearchManagerService.search('qi@json?' +
+          gnSearchManagerService.search('qi?_content_type=json&' +
               query + '&fast=index&from=1&to=200').
               then(function(data) {
 
@@ -248,7 +248,7 @@
         var selectedTemplate = getSelectedMdIdentifierTemplate();
 
         $scope.mdIdSelectedTemplateForLabel = selectedTemplate.template
-          .replaceAll('{', ' ').replaceAll('}', ' ');
+            .replaceAll('{', ' ').replaceAll('}', ' ');
 
         var tokens = selectedTemplate.template.match(/\{(.+?)\}/g);
 
@@ -326,7 +326,7 @@
       String.prototype.replaceAll = function(find, replace) {
         var str = this;
         return str.replace(new RegExp(find
-          .replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
+            .replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
       };
 
 
@@ -346,8 +346,8 @@
       function loadMetadataIdentifierTemplates() {
         $scope.mdIdentifierTemplateSelected = {};
 
-        $http.get('metadataIdentifierTemplates?_content_type=json')
-          .success(function(data) {
+        $http.get('../api/identifiers')
+            .success(function(data) {
               $scope.mdIdentifierTemplates = data;
 
             });
