@@ -476,7 +476,7 @@
         var field = listOfJsonFields[idx];
         if (angular.isDefined(record[field])) {
           try {
-          record[field] = angular.fromJson(record[field]);
+            record[field] = angular.fromJson(record[field]);
           } catch (e) {}
         }
       });
@@ -521,6 +521,12 @@
       },
       isPublished: function() {
         return this['geonet:info'].isPublishedToAll === 'true';
+      },
+      isValid: function() {
+        return this.valid === '1';
+      },
+      hasValidation: function() {
+        return (this.valid > -1);
       },
       isOwned: function() {
         return this['geonet:info'].owner === 'true';
