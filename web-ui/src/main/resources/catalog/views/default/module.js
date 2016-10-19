@@ -203,7 +203,9 @@
           $scope.openRecord(prevRecordId);
         }
       };
-
+      $scope.getFacetLabel = function (facet) {
+        return facet['@label'];
+      };
       $scope.infoTabs = {
         lastRecords: {
           title: 'lastRecords',
