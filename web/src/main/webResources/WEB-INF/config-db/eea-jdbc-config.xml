@@ -54,7 +54,7 @@
         <entry key="user" value="${jdbc.username}"/>
         <entry key="passwd" value="${jdbc.password}"/>
         <entry key="host" value="${jdbc.host}"/>
-        <entry key="port" value="5432"/>
+        <entry key="port" value="{jdbc.port}"/>
         <entry key="database" value="${jdbc.database}"/>
         <entry key="schema" value="public"/>
         <entry key="Loose bbox" value="true"/>
