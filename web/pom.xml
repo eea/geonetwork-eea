@@ -490,7 +490,7 @@
       <artifactId>schema-dublin-core</artifactId>
       <version>${project.version}</version>
     </dependency>
-
+<!--
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>solr-bridge</artifactId>
@@ -501,7 +501,7 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>wfsfeature-harvester</artifactId>
       <version>${project.version}</version>
-    </dependency>
+    </dependency>-->
 
 
   </dependencies>
