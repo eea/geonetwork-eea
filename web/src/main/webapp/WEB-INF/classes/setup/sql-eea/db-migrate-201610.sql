@@ -7,6 +7,7 @@ UPDATE Settings SET datatype = 3 WHERE name = 'map/proj4js';
 UPDATE Settings SET datatype = 3 WHERE name = 'metadata/editor/schemaConfig';
 
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/feedback/mailServer/ignoreSslCertificateErrors', 'false', 2, 645, 'y');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/userFeedback/enable', 'false', 2, 1911, 'n');
 
 DELETE FROM Settings WHERE name = 'system/metadata/enableSimpleView';
 DELETE FROM Settings WHERE name = 'system/metadata/enableIsoView';
