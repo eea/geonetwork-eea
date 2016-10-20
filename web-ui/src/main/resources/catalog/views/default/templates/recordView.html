@@ -126,7 +126,7 @@
                           mdView.current.record.inspirethemewithac.length > 0">
             <th data-translate="">inspireThemes</th>
             <td>
-              <div data-ng-repeat="cat in mdView.current.record.inspirethemewithac"
+              <div data-ng-repeat="cat in mdView.current.record.inspirethemewithac track by $index"
                    data-ng-click="search({'inspirethemewithac': cat})"
                    class="iti-box full {{cat.split('|')[0]}} {{cat.split('|')[0]}}-{{langs[lang]}}"
                    title="{{'clickToFilterOn' | translate}} {{cat.split('|')[1]}} ...">
