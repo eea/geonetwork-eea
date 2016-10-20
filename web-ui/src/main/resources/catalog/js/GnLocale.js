@@ -134,7 +134,8 @@
           location.href.split('/')[5] || 'eng';
       gnGlobalSettings.lang = gnLangs.getIso2Lang(gnGlobalSettings.iso3lang);
       $translateProvider.preferredLanguage(gnGlobalSettings.iso3lang);
-      $translateProvider.useSanitizeValueStrategy('sanitize');
+      // $translateProvider.useSanitizeValueStrategy('escape');
+      $translateProvider.useSanitizeValueStrategy(null);
 
       moment.lang(gnGlobalSettings.lang);
     }]);
