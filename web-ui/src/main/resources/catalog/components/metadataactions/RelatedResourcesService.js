@@ -261,7 +261,7 @@
 
           this.doAction = function(type, parameters, md) {
             var f = this.getAction(type);
-            f(parameters, md);confi
+            f(parameters, md);
           };
 
           this.getType = function(resource, type) {
