@@ -1079,7 +1079,7 @@
 
         button.on('shown.bs.popover', function() {
           var $tip = button.data('bs.popover').$tip;
-          content.css('display', 'inline').appendTo(
+          content.css('display', 'block').appendTo(
               $tip.find('.popover-content')
           );
         });
