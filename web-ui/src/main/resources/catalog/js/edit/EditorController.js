@@ -268,7 +268,7 @@
                 window.onbeforeunload = function() {
                   // TODO: could be better to provide
                   // cancelAndClose and saveAndClose button
-                  return $translate('beforeUnloadEditor',
+                  return $translate.instant('beforeUnloadEditor',
                       {timeAgo: moment(gnCurrentEdit.savedTime).fromNow()});
                 };
               }
@@ -427,7 +427,7 @@
               $scope.savedStatus = gnCurrentEdit.savedStatus;
               $scope.saveError = true;
               $rootScope.$broadcast('StatusUpdated', {
-                title: $translate('saveMetadataError'),
+                title: $translate.instant('saveMetadataError'),
                 error: error,
                 timeout: 0,
                 type: 'danger'});
@@ -457,14 +457,14 @@
               // Refresh editor form after cancel
               //  $scope.savedStatus = gnCurrentEdit.savedStatus;
               //  $rootScope.$broadcast('StatusUpdated', {
-              //    title: $translate('cancelMetadataSuccess')
+              //    title: $translate.instant('cancelMetadataSuccess')
               //  });
               //  gnEditor.refreshEditorForm(null, true);
               closeEditor();
             }, function(error) {
               $scope.savedStatus = gnCurrentEdit.savedStatus;
               $rootScope.$broadcast('StatusUpdated', {
-                title: $translate('cancelMetadataError'),
+                title: $translate.instant('cancelMetadataError'),
                 error: error,
                 timeout: 0,
                 type: 'danger'});
@@ -477,7 +477,7 @@
               closeEditor();
             }, function(error) {
               $rootScope.$broadcast('StatusUpdated', {
-                title: $translate('saveMetadataError'),
+                title: $translate.instant('saveMetadataError'),
                 error: error,
                 timeout: 0,
                 type: 'danger'});
@@ -487,14 +487,14 @@
       };
       $scope.getSaveStatus = function() {
         if (gnCurrentEdit.savedTime) {
-          return $scope.saveStatus = $translate('saveAtimeAgo',
+          return $scope.saveStatus = $translate.instant('saveAtimeAgo',
               {timeAgo: moment(gnCurrentEdit.savedTime).fromNow()});
         }
       };
       $scope.getCancelStatus = function() {
         if (gnCurrentEdit.sessionStartTime) {
           return $scope.cancelStatus =
-              $translate('cancelChangesFromNow', {
+              $translate.instant('cancelChangesFromNow', {
                 timeAgo: moment(gnCurrentEdit.sessionStartTime).fromNow()
               });
         }
