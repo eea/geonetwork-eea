@@ -20,7 +20,8 @@
                       mainType !== 'WCS' &&
                       mainType !== 'LINKDOWNLOAD' &&
                       mainType !== 'LINK' &&
-                      r.protocol !== 'OGC:WFS' ">
+                      r.protocol !== 'OGC:WFS' &&
+                      mainType !== 'EEAFILE'">
           {{(r.title | gnLocalized: lang) || r.url}}
         </h4>
         <!-- Display description if available -->
