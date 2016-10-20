@@ -183,7 +183,7 @@
 
           scope.sortGroups = function(g) {
             if (scope.sorter.predicate == 'g') {
-              return $translate(g.group);
+              return $translate.instant(g.group);
             }
             else if (scope.sorter.predicate == 'p') {
               return g.userProfile;
