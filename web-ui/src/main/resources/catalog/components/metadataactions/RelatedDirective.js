@@ -92,7 +92,8 @@
               types: '@',
               title: '@',
               list: '@',
-              user: '='
+              user: '=',
+              hasResults: '=?'
             },
             link: function(scope, element, attrs, controller) {
               var promise;
@@ -107,13 +108,14 @@
                   (promise = gnRelatedService.get(
                       scope.uuid, scope.types)
                   ).then(function(data) {
-                    scope.relations = data;
-                    angular.forEach(data, function(value) {
-                      if (value) {
-                        scope.relationFound = true;
-                      }
-                    });
-                  });
+                       scope.relations = data;
+                       angular.forEach(data, function(value) {
+                         if (value) {
+                           scope.relationFound = true;
+                           scope.hasResults = true;
+                         }
+                       });
+                     });
                 }
               };
 
