@@ -65,6 +65,8 @@
     <xsl:variable name="name" select="concat(@prefix, ':', @name)"/>
     <xsl:variable name="flatModeException"
                   select="gn-fn-metadata:isFieldFlatModeException($viewConfig, $name)"/>
+
+
     <!-- TODO: this should be common to all schemas -->
     <xsl:if test="$isEditing and
       (not($isFlatMode) or $flatModeException)">
@@ -320,7 +322,9 @@
     <xsl:variable name="labelConfig">
       <xsl:choose>
         <xsl:when test="$overrideLabel != ''">
-          <label><xsl:value-of select="$overrideLabel"/></label>
+          <element>
+            <label><xsl:value-of select="$overrideLabel"/></label>
+          </element>
         </xsl:when>
         <xsl:otherwise>
           <xsl:copy-of select="$labelConfig"/>
@@ -362,7 +366,7 @@
   <xsl:template mode="mode-iso19139" match="@uuidref" priority="2000">
     <xsl:call-template name="render-element">
       <xsl:with-param name="label"
-                      select="gn-fn-metadata:getLabel($schema, name(..), $labels)/*"/>
+                      select="gn-fn-metadata:getLabel($schema, name(..), $labels)"/>
       <xsl:with-param name="value" select="."/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="gn-fn-metadata:getXPath(.)"/>
@@ -379,7 +383,7 @@
   <xsl:template mode="mode-iso19139" match="gco:ScopedName|gco:LocalName">
     <xsl:call-template name="render-element">
       <xsl:with-param name="label"
-                      select="gn-fn-metadata:getLabel($schema, name(.), $labels)/*"/>
+                      select="gn-fn-metadata:getLabel($schema, name(.), $labels)"/>
       <xsl:with-param name="value" select="."/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="gn-fn-metadata:getXPath(.)"/>
@@ -447,7 +451,9 @@
     <xsl:variable name="labelConfig">
       <xsl:choose>
         <xsl:when test="$overrideLabel != ''">
-          <label><xsl:value-of select="$overrideLabel"/></label>
+          <element>
+            <label><xsl:value-of select="$overrideLabel"/></label>
+          </element>
         </xsl:when>
         <xsl:otherwise>
           <xsl:copy-of select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', $xpath)"/>
