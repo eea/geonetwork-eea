@@ -27,46 +27,62 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco"
     xmlns:geonet="http://www.fao.org/geonetwork" exclude-result-prefixes="#all" version="2.0">
-    
-    <!-- 
-      Usage: 
-        anonymizer?protocol=MYLOCALNETWORK:FILEPATH&email=gis@organisation.org&thesaurus=MYORGONLYTHEASURUS  
+
+    <!--
+      Usage:
+        anonymizer?protocol=MYLOCALNETWORK:FILEPATH&email=gis@organisation.org&thesaurus=MYORGONLYTHEASURUS
         * will remove gmd:onLine element with a protocol which starts with MYLOCALNETWORK:FILEPATH.
         * will replace all email ending with @organisation.org by gis@organisation.org
         * will remove all gmd:descriptiveKeywords having MYORGONLYTHEASURUS in their thesaurus name.
     -->
-    
+
     <!-- Protocol name for which online resource must be removed -->
     <xsl:param name="protocol"/>
     <!-- Generic email to use for all email in same domain (ie. after @domain.org). -->
     <xsl:param name="email"/>
     <!-- Portion of thesaurus name for which keyword should be removed -->
     <xsl:param name="thesaurus"/>
-    
-    
-    
+
+
+
     <xsl:variable name="emailDomain" select="substring-after($email, '@')"/>
-    
+
+    <!-- if copernicus.land@eea.europa.eu applies
+    * remove individual name (same as general rule)
+    * remove EEA:FILEPATH (same as general rule)
+    * keep EEA Keyword list
+    * keep all contacts
+    -->
+    <xsl:variable name="isCopernicus" select="count(//gmd:electronicMailAddress[contains(gco:CharacterString, 'copernicus')]) > 0"/>
+
     <!-- Remove individual name -->
     <xsl:template match="gmd:individualName" priority="2"/>
-    
+
     <!-- Remove organisation email by general email -->
-    <xsl:template match="gmd:electronicMailAddress[$emailDomain != '' and ends-with(gco:CharacterString, $emailDomain)]" priority="2">
+    <xsl:template match="gmd:electronicMailAddress[
+                                  not($isCopernicus) and
+                                  $emailDomain != '' and
+                                  ends-with(gco:CharacterString, $emailDomain)]" priority="2">
         <xsl:copy>
             <gco:CharacterString><xsl:value-of select="$email"/></gco:CharacterString>
         </xsl:copy>
     </xsl:template>
-    
+
     <!-- Remove all resources contact which are not pointOfContact -->
-    <xsl:template match="gmd:identificationInfo/*/gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue!='pointOfContact']" priority="2"/>
-    
+    <xsl:template match="gmd:identificationInfo/*/gmd:pointOfContact[
+                                  not($isCopernicus) and
+                                  gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue!='pointOfContact']" priority="2"/>
+
     <!-- Remove all online resource with custom protocol -->
     <xsl:template
         match="gmd:onLine[$protocol != '' and starts-with(gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString, $protocol)]"
         priority="2"/>
-    
+
     <!-- Remove all descriptive keyword with a thesaurus from $thesaurus -->
-    <xsl:template match="gmd:descriptiveKeywords[$thesaurus != '' and contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, $thesaurus)]" priority="2"/>
+    <xsl:template match="gmd:descriptiveKeywords[
+                                    not($isCopernicus) and
+                                    $thesaurus != '' and
+                                    contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, $thesaurus)]" priority="2"/>
 
     <xsl:template
         match="srv:operatesOn"
@@ -76,7 +92,7 @@
             <xsl:attribute name="xlink:href" select="replace(@xlink:href, 'internal-catalogue', 'catalogue')"/>
         </xsl:copy>
     </xsl:template>
-    
+
 
     <!-- Do a copy of every nodes and attributes -->
     <xsl:template match="@*|node()">
