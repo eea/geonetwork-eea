@@ -21,25 +21,7 @@
  * Rome - Italy. email: geonetwork@osgeo.org
  */
 
-package org.geonetwork.http.proxy.util;
-
-import javax.servlet.ServletConfig;
-
-public class ServletConfigUtil {
-    /**
-     * Removes unwanted characters from a servlet init parameter  value
-     */
-    public static String getInitParamValue(ServletConfig servletConfig, String paramName) {
-        String paramValue = servletConfig.getInitParameter(paramName);
-
-        if (paramValue != null) {
-            paramValue = paramValue.replaceAll("\n", "");
-            paramValue = paramValue.replaceAll("\r", "");
-            paramValue = paramValue.replaceAll("\t", "");
-            paramValue = paramValue.replaceAll(" ", "");
-        }
-
-        return paramValue;
-
-    }
-}
+/**
+ * API classes related with reports.
+ */
+package org.fao.geonet.api.reports;

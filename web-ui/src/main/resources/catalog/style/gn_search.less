@@ -181,15 +181,15 @@ span.gn-facet-label:first-letter {
   background-color: #fff;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
   -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
   -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
   box-shadow: 0 5px 10px rgba(0,0,0,.2);
   max-height: 350px;
   overflow-y: auto;
-  width: inherit;
+  width: calc(~"100% + 14px");
 }
 
 .tt-suggestion {
@@ -584,7 +584,13 @@ button.active [role=tooltip] {
 
   }
 }
-
+.gn-privileges-popup {
+  max-width: 750px;
+  .gn-popup-content {
+    height: 750px;
+    max-height: 750px;
+  }
+}
 .gn-popup-title {
   span {
     display: inline-block;

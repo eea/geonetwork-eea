@@ -661,9 +661,11 @@
                 metadata = getCapLayer.MetadataURL[0].OnlineResource;
               }
 
-              var layer = this.createOlWMS(map, {
-                LAYERS: getCapLayer.Name
-              }, {
+              var layerParam = {LAYERS: getCapLayer.Name};
+              if (getCapLayer.version) {
+                layerParam.VERSION = getCapLayer.version;
+              }
+              var layer = this.createOlWMS(map, layerParam, {
                 url: url || getCapLayer.url,
                 label: getCapLayer.Title,
                 attribution: attribution,
@@ -766,7 +768,7 @@
               // TODO: parse better legend & attribution
               if (angular.isArray(layer.Style) && layer.Style.length > 0) {
                 var url = layer.Style[layer.Style.length - 1]
-                    .LegendURL[0];
+                    .LegendURL[0] || url;
                 if (url) {
                   legend = url.OnlineResource;
                 }
@@ -815,7 +817,7 @@
 
                   this.loadingLayer = true;
 
-                  var parts = url.split('?');
+                  var parts = this.url_.split('?');
 
                   var url = gnUrlUtils.append(parts[0],
                       gnUrlUtils.toKeyValue({
@@ -853,7 +855,8 @@
                       });
                 },
                 strategy: ol.loadingstrategy.bbox,
-                projection: map.getView().getProjection().getCode()
+                projection: map.getView().getProjection().getCode(),
+                url: url
               });
 
               var extent = null;
@@ -981,7 +984,7 @@
            * @param {boolean} createOnly or add it to the map
            * @param {!Object} md object
            */
-          addWmsFromScratch: function(map, url, name, createOnly, md) {
+          addWmsFromScratch: function(map, url, name, createOnly, md, version) {
             var defer = $q.defer();
             var $this = this;
 
@@ -1002,6 +1005,9 @@
                     name: name,
                     msg: 'layerNotInCap'
                   }, errors = [];
+                  if (version) {
+                    o.version = version;
+                  }
                   olL = $this.addWmsToMap(map, o);
 
                   if (!angular.isArray(olL.get('errors'))) {
