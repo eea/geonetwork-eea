@@ -146,6 +146,9 @@
             sortBy: 'changeDate',
             sortOrder: ''
           }, {
+            sortBy: 'identifier',
+            sortOrder: ''
+          }, {
             sortBy: 'title',
             sortOrder: 'reverse'
           }, {
