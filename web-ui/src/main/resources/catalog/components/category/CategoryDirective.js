@@ -55,8 +55,8 @@
     }]);
 
   module.directive('gnBatchCategories', [
-    '$http', '$translate', '$q',
-    function($http, $translate, $q) {
+    '$http', '$translate', '$q', 'gnLangs',
+    function($http, $translate, $q, gnLangs) {
 
       return {
         restrict: 'A',
@@ -66,6 +66,7 @@
             'batchcategory.html',
         link: function(scope, element, attrs) {
           scope.report = null;
+          scope.lang = gnLangs.current;
 
           $http.get('../api/tags', {cache: true}).
               success(function(data) {
