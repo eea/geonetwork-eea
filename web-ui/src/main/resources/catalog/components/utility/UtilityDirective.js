@@ -357,9 +357,10 @@
               var date = null, suffix = 'Z';
               if (originalDate.indexOf(suffix,
                   originalDate.length - suffix.length) !== -1) {
-                date = moment(originalDate, 'YYYY-MM-DDtHH-mm-SSSZ');
+                date = moment(originalDate, 'YYYY-MM-DDtHH-mm-SSSZ')
+                        .utcOffset('+01:00');
               } else {
-                date = moment(originalDate);
+                date = moment(originalDate).utcOffset('+01:00');
               }
               if (date.isValid()) {
                 var fromNow = date.fromNow();
