@@ -368,6 +368,11 @@
         images
       </description>
     </entry>
+    <entry>
+      <code>revisionOf</code>
+      <label>revision of</label>
+      <description></description>
+    </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
   </codelist>
   <!-- ==================================================== -->

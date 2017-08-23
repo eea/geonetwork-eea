@@ -715,7 +715,7 @@
     <help><![CDATA[
    This identifier shall be unique and ideally meaningful.
    This identifier shall be set to the directory name (written according to
-   <a href="https://taskman.eionet.europa.eu/Help/wiki/ds/fbs_ref_dataset_l4">this convention</a>)
+   <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Dsfbs_ref_dataset_l4">this convention</a>)
    in which the dataset is contained.]]>
     </help>
   </element>
