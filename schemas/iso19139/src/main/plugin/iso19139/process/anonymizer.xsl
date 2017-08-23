@@ -53,7 +53,13 @@
     * keep EEA Keyword list
     * keep all contacts
     -->
-    <xsl:variable name="isCopernicus" select="count(//gmd:electronicMailAddress[contains(gco:CharacterString, 'copernicus')]) > 0"/>
+    <xsl:variable name="isCopernicus"
+                  select="count(//gmd:electronicMailAddress[contains(gco:CharacterString, 'copernicus')]) > 0"/>
+    <xsl:variable name="isEC"
+                  select="count(//gmd:pointOfContact/*[
+                            contains(gmd:organisationName/gco:CharacterString, 'European Commission') and
+                            gmd:role/*/@codeListValue = 'owner'
+                            ]) > 0"/>
 
     <!-- Remove individual name -->
     <xsl:template match="gmd:individualName" priority="2"/>
@@ -61,6 +67,7 @@
     <!-- Remove organisation email by general email -->
     <xsl:template match="gmd:electronicMailAddress[
                                   not($isCopernicus) and
+                                  not($isEC) and
                                   $emailDomain != '' and
                                   ends-with(gco:CharacterString, $emailDomain)]" priority="2">
         <xsl:copy>
@@ -71,6 +78,7 @@
     <!-- Remove all resources contact which are not pointOfContact -->
     <xsl:template match="gmd:identificationInfo/*/gmd:pointOfContact[
                                   not($isCopernicus) and
+                                  not($isEC) and
                                   gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue!='pointOfContact']" priority="2"/>
 
     <!-- Remove all online resource with custom protocol -->
@@ -81,6 +89,7 @@
     <!-- Remove all descriptive keyword with a thesaurus from $thesaurus -->
     <xsl:template match="gmd:descriptiveKeywords[
                                     not($isCopernicus) and
+                                    not($isEC) and
                                     $thesaurus != '' and
                                     contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, $thesaurus)]" priority="2"/>
 
