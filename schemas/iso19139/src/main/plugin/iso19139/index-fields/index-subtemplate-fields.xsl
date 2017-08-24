@@ -38,8 +38,13 @@
                   select="normalize-space(gmd:organisationName/gco:CharacterString)"/>
     <xsl:variable name="name"
                   select="normalize-space(gmd:individualName/gco:CharacterString)"/>
+    <xsl:variable name="mail"
+                  select="normalize-space(gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress[1]/gco:CharacterString)"/>
+
     <Field name="_title"
-           string="{if ($name != '') then concat($org, ' (', $name, ')') else $org}"
+           string="{if ($name != '') then concat($org, ' (', $name, ')')
+                    else if ($mail != '') then concat($org, ' (', $mail, ')')
+                    else $org}"
            store="true" index="true"/>
     <Field name="orgName" string="{$org}" store="true" index="true"/>
     <Field name="orgNameTree" string="{$org}" store="true" index="true"/>
