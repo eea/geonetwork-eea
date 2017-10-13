@@ -142,7 +142,10 @@
 
   <!-- Some elements are only containers so bypass them -->
   <xsl:template mode="render-field"
-                match="*[count(gmd:*[name() != 'gmd:PT_FreeText']) = 1]"
+                match="*[
+                          count(gmd:*[name() != 'gmd:PT_FreeText']) = 1 and
+                          count(*/@codeListValue) = 0
+                        ]"
                 priority="50">
 
     <xsl:apply-templates mode="render-value" select="@*"/>
@@ -677,27 +680,37 @@
   <!-- ... Dates - formatting is made on the client side by the directive  -->
   <xsl:template mode="render-value"
                 match="gco:Date[matches(., '[0-9]{4}')]">
-    <span data-gn-humanize-time="{.}" data-format="YYYY"></span>
+    <span data-gn-humanize-time="{.}" data-format="YYYY">
+      <xsl:value-of select="."/>
+    </span>
   </xsl:template>
 
   <xsl:template mode="render-value"
                 match="gco:Date[matches(., '[0-9]{4}-[0-9]{2}')]">
-    <span data-gn-humanize-time="{.}" data-format="MMM YYYY"></span>
+    <span data-gn-humanize-time="{.}" data-format="MMM YYYY">
+      <xsl:value-of select="."/>
+    </span>
   </xsl:template>
 
   <xsl:template mode="render-value"
                 match="gco:Date[matches(., '[0-9]{4}-[0-9]{2}-[0-9]{2}')]">
-    <span data-gn-humanize-time="{.}" data-format="DD MMM YYYY"></span>
+    <span data-gn-humanize-time="{.}" data-format="DD MMM YYYY">
+      <xsl:value-of select="."/>
+    </span>
   </xsl:template>
 
   <xsl:template mode="render-value"
                 match="gco:DateTime[matches(., '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}')]">
-    <span data-gn-humanize-time="{.}"></span>
+    <span data-gn-humanize-time="{.}">
+      <xsl:value-of select="."/>
+    </span>
   </xsl:template>
 
   <xsl:template mode="render-value"
                 match="gco:Date|gco:DateTime">
-    <span data-gn-humanize-time="{.}"></span>
+    <span data-gn-humanize-time="{.}">
+      <xsl:value-of select="."/>
+    </span>
   </xsl:template>
 
   <xsl:template mode="render-value"
