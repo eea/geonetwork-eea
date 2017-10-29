@@ -104,22 +104,21 @@
     <gmd:descriptiveKeywords>
       <xsl:choose>
         <xsl:when test="$withXlink">
-          <xsl:variable name="multiple"
-                        select="if (contains(/root/request/id, ',')) then 'true' else 'false'"/>
           <xsl:variable name="isLocalXlink"
                         select="util:getSettingValue('system/xlinkResolver/localXlinkEnable')"/>
           <xsl:variable name="prefixUrl"
                         select="if ($isLocalXlink = 'true')
-                                then  concat('local://', /root/gui/language)
+                                then concat('local://', $node, '/')
                                 else $serviceUrl"/>
 
           <xsl:attribute name="xlink:href"
-                         select="concat($prefixUrl, '/xml.keyword.get?thesaurus=', thesaurus/key,
-                              '&amp;amp;id=', replace(/root/request/id, '#', '%23'),
-                              '&amp;amp;multiple=', $multiple,
-                              if (/root/request/lang) then concat('&amp;amp;lang=', /root/request/lang) else '',
-                              if ($textgroupOnly) then '&amp;amp;textgroupOnly' else '')"/>
-          <xsl:attribute name="xlink:show">replace</xsl:attribute>
+                         select="concat(
+                                  $prefixUrl,
+                                  'api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=',
+                                   if (thesaurus/key) then thesaurus/key else /root/request/thesaurus,
+                                  '&amp;id=', /root/request/id,
+                                  if (/root/request/lang) then concat('&amp;lang=', /root/request/lang) else '',
+                                  if ($textgroupOnly) then '&amp;textgroupOnly' else '')"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:call-template name="to-md-keywords">
@@ -186,15 +185,13 @@
               <gmd:PT_FreeText>
                 <xsl:for-each select="$listOfLanguage">
                   <xsl:variable name="lang" select="."/>
-                  <xsl:if test="$textgroupOnly or $lang != $listOfLanguage[1]">
-                    <gmd:textGroup>
-                      <gmd:LocalisedCharacterString
-                        locale="#{upper-case(util:twoCharLangCode($lang))}">
-                        <xsl:value-of
-                          select="$keyword/values/value[@language = $lang]/text()"></xsl:value-of>
-                      </gmd:LocalisedCharacterString>
-                    </gmd:textGroup>
-                  </xsl:if>
+                  <gmd:textGroup>
+                    <gmd:LocalisedCharacterString
+                      locale="#{upper-case(util:twoCharLangCode($lang))}">
+                      <xsl:value-of
+                        select="$keyword/values/value[@language = $lang]/text()"></xsl:value-of>
+                    </gmd:LocalisedCharacterString>
+                  </gmd:textGroup>
                 </xsl:for-each>
               </gmd:PT_FreeText>
             </xsl:when>
@@ -204,7 +201,7 @@
                 <xsl:when test="$withAnchor">
                   <!-- TODO multilingual Anchor ? -->
                   <gmx:Anchor
-                    xlink:href="{$serviceUrl}/xml.keyword.get?thesaurus={thesaurus/key}&amp;id={uri}">
+                    xlink:href="{$serviceUrl}api/registries/vocabularies/keyword?thesaurus={thesaurus/key}&amp;id={uri}">
                     <xsl:value-of select="value"/>
                   </gmx:Anchor>
                 </xsl:when>

@@ -24,7 +24,9 @@
 (function() {
   goog.provide('gn_cors_interceptor');
 
-  var module = angular.module('gn_cors_interceptor', []);
+  goog.require('gn_urlutils_service');
+
+  var module = angular.module('gn_cors_interceptor', ['gn_urlutils_service']);
 
   /**
    * CORS Interceptor
@@ -41,21 +43,40 @@
         '$injector',
         'gnGlobalSettings',
         'gnLangs',
-        function($q, $injector, gnGlobalSettings, gnLangs) {
+        'gnUrlUtils',
+        function($q, $injector, gnGlobalSettings, gnLangs, gnUrlUtils) {
           return {
             request: function(config) {
-              if (gnLangs.current) {
+              var isGnUrl =
+                config.url.indexOf(gnGlobalSettings.gnUrl) === 0 ||
+                (config.url.indexOf('http') !== 0 &&
+                config.url.indexOf('//') !== 0);
+              if (isGnUrl && gnLangs.current &&
+                  !config.headers['Accept-Language']) {
                 config.headers['Accept-Language'] = gnLangs.current;
+              } else {
+                config.headers['Accept-Language'] = navigator.language;
               }
-              if (config.url.indexOf('http', 0) === 0) {
+              // For HTTP url and those which
+              // are not targeting the catalog
+              // add proxy if needed
+              if (config.url.indexOf('http', 0) === 0 &&
+                  config.url.indexOf(gnGlobalSettings.gnUrl) !== 0) {
                 var url = config.url.split('/');
                 url = url[0] + '/' + url[1] + '/' + url[2] + '/';
 
-                if ($.inArray(url, gnGlobalSettings.requireProxy) != -1) {
+                if ($.inArray(url, gnGlobalSettings.requireProxy) !== -1) {
                   // require proxy
                   config.url = gnGlobalSettings.proxyUrl +
                       encodeURIComponent(config.url);
                 }
+              } else if (gnGlobalSettings.gnUrl) {
+                // Relative URL in API mode
+                // are prefixed with catalog URL
+                // console.log(config.url);
+                config.url = gnGlobalSettings.gnUrl +
+                             (gnLangs.current || 'eng') + '/' +
+                             config.url;
               }
 
               return $q.when(config);
@@ -66,31 +87,38 @@
               if (config.nointercept) {
                 return $q.when(config);
               // let it pass
-              } else if (!config.status || config.status == -1) {
+              } else if (!config.status || config.status === -1) {
                 var defer = $q.defer();
 
                 if (config.url.indexOf('http', 0) === 0) {
-                  var url = config.url.split('/');
-                  url = url[0] + '/' + url[1] + '/' + url[2] + '/';
+                  if (gnUrlUtils.urlIsSameOrigin(config.url)) {
+                    // if the target URL is in the GN host,
+                    // don't use proxy and reject the promise.
+                    return $q.reject(response);
+                  } else {
+                    // if the target URL is in other site/protocol that GN,
+                    // use the proxy to make the request.
+                    var url = config.url.split('/');
+                    url = url[0] + '/' + url[1] + '/' + url[2] + '/';
 
-                  if ($.inArray(url, gnGlobalSettings.requireProxy) == -1) {
-                    gnGlobalSettings.requireProxy.push(url);
+                    if ($.inArray(url, gnGlobalSettings.requireProxy) === -1) {
+                      gnGlobalSettings.requireProxy.push(url);
+                    }
+
+                    $injector.invoke(['$http', function($http) {
+                      // This modification prevents interception (infinite
+                      // loop):
+
+                      config.nointercept = true;
+
+                      // retry again
+                      $http(config).then(function(resp) {
+                        defer.resolve(resp);
+                      }, function(resp) {
+                        defer.reject(resp);
+                      });
+                    }]);
                   }
-
-                  $injector.invoke(['$http', function($http) {
-                    // This modification prevents interception (infinite
-                    // loop):
-
-                    config.nointercept = true;
-
-                    // retry again
-                    $http(config).then(function(resp) {
-                      defer.resolve(resp);
-                    }, function(resp) {
-                      defer.reject(resp);
-                    });
-                  }]);
-
                 } else {
                   return $q.reject(response);
                 }

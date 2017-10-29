@@ -7,13 +7,44 @@
     </div>
 
     <!--Draw Button-->
-    <div class="col-md-3">
+    <div class="col-md-3" ng-if="!readOnly">
       <button class="btn btn-warning"
               title="{{'clickToDrawABox' | translate}}"
               data-ng-click="drawMap()"
               data-ng-class="{active : drawing}">
         <i class="fa fa-pencil"></i>&nbsp;<span data-translate="">drawRectangle</span>
       </button>
+    </div>
+  </div>
+
+  <div class="form-group gn-field" data-ng-show="identifierRef !== undefined">
+    <label class="col-sm-3 control-label"
+           data-translate="">bboxIdentifier</label>
+    <div class="col-sm-8 gn-value">
+      <input class="form-control"
+             data-ng-model="identifier"
+             name="{{identifierRef}}"
+             ng-disabled="readOnly"/>
+    </div>
+    <div class="col-sm-1 gn-control">
+      <a class="btn pull-right" data-ng-click="identifier = ''">
+        <i class="fa fa-times text-danger"></i>
+      </a>
+    </div>
+  </div>
+  <div class="form-group gn-field" data-ng-show="descriptionRef !== undefined">
+    <label class="col-sm-3 control-label"
+           data-translate="">bboxDescription</label>
+    <div class="col-sm-8 gn-value">
+      <input class="form-control"
+             data-ng-model="description"
+             name="{{descriptionRef}}"
+             ng-disabled="readOnly"/>
+    </div>
+    <div class="col-sm-1 gn-control">
+      <a class="btn pull-right" data-ng-click="description = ''">
+        <i class="fa fa-times text-danger"></i>
+      </a>
     </div>
   </div>
 
@@ -26,34 +57,34 @@
     <input data-ng-model="dcExtent" name="{{dcRef}}"/>
   </div>
 
+  <!--Projection selector-->
+  <div class="btn-group">
+    <button type="button" class="btn btn-link dropdown-toggle"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            title="{{'chooseAProj' | translate}}">
+      {{projs.formLabel}} <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li data-ng-repeat="proj in projs.list">
+        <a href="" data-ng-click="projs.form = proj.code; projs.formLabel = proj.label">
+          {{proj.label}}
+        </a>
+      </li>
+    </ul>
+  </div>
+
   <!--Map and coordinates inputs-->
   <table class="text-center">
     <tr align="center" valign="middle">
       <td align="left">
-
-        <!--Projection selector-->
-        <div class="btn-group">
-          <button type="button" class="btn btn-link dropdown-toggle"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                  title="{{'chooseAProj' | translate}}">
-            {{projs.formLabel}} <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li data-ng-repeat="proj in projs.list">
-              <a href="" data-ng-click="projs.form = proj.code; formLabel = proj.label">
-                {{proj.label}}
-              </a>
-            </li>
-          </ul>
-        </div>
-
       </td>
       <td>
         <div class="form-group">
           <input
             data-ng-model="extent.form[3]" type="number"
             id="drawbbox-top" placeholder="{{'north' | translate}}"
-            data-ng-change="updateBbox(true)"/>
+            data-ng-change="updateBbox(true)"
+            ng-disabled="readOnly"/>
         </div>
       </td>
       <td>
@@ -64,18 +95,20 @@
         <div class="form-group">
           <input data-ng-model="extent.form[0]" type="number"
                  id="drawbbox-left" placeholder="{{'west' | translate}}"
-                 data-ng-change="updateBbox(true)"/>
+                 data-ng-change="updateBbox(true)"
+                 ng-disabled="readOnly"/>
         </div>
       </td>
       <td class="col-middle">
-        <div id="{{mapId}}" class="map"></div>
+        <div ng-if="map" ngeo-map="map"></div>
       </td>
       <td class="col-right">
         <div class="form-group">
           <input
             data-ng-model="extent.form[2]"
             type="number" id="drawbbox-right"
-            placeholder="{{'east' | translate}}" data-ng-change="updateBbox(true)"/>
+            placeholder="{{'east' | translate}}" data-ng-change="updateBbox(true)"
+            ng-disabled="readOnly"/>
         </div>
       </td>
     </tr>
@@ -85,24 +118,10 @@
           <input
             data-ng-model="extent.form[1]" type="number"
             id="drawbbox-bottom" placeholder="{{'south' | translate}}"
-            data-ng-change="updateBbox(true)"/>
+            data-ng-change="updateBbox(true)"
+            ng-disabled="readOnly"/>
         </div>
       </td>
     </tr>
   </table>
-
-  <div class="form-group gn-field" data-ng-show="identifierRef !== undefined">
-    <label class="col-sm-3 control-label"
-           data-translate="">bboxIdentifier</label>
-    <div class="col-sm-8 gn-value">
-      <input class="form-control"
-             data-ng-model="identifier"
-             name="{{identifierRef}}"/>
-    </div>
-    <div class="col-sm-1 gn-control">
-      <a class="btn pull-right" data-ng-click="identifier = ''">
-        <i class="fa fa-times text-danger"></i>
-      </a>
-    </div>
-  </div>
 </div>

@@ -25,6 +25,7 @@ package org.fao.geonet;
 
 import com.vividsolutions.jts.geom.MultiPolygon;
 import jeeves.config.springutil.ServerBeanPropertyUpdater;
+import jeeves.constants.Jeeves;
 import jeeves.interfaces.ApplicationHandler;
 import jeeves.server.JeevesEngine;
 import jeeves.server.JeevesProxyInfo;
@@ -87,6 +88,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.ServletContext;
@@ -247,13 +249,6 @@ public class Geonetwork implements ApplicationHandler {
 
         logger.info("  - Search...");
 
-        boolean logSpatialObject = "true".equalsIgnoreCase(handlerConfig.getMandatoryValue(Geonet.Config.STAT_LOG_SPATIAL_OBJECTS));
-        boolean logAsynch = "true".equalsIgnoreCase(handlerConfig.getMandatoryValue(Geonet.Config.STAT_LOG_ASYNCH));
-        logger.info("  - Log spatial object: " + logSpatialObject);
-        logger.info("  - Log in asynch mode: " + logAsynch);
-
-        String luceneTermsToExclude = "";
-        luceneTermsToExclude = handlerConfig.getMandatoryValue(Geonet.Config.STAT_LUCENE_TERMS_EXCLUDE);
 
         LuceneConfig lc = _applicationContext.getBean(LuceneConfig.class);
         lc.configure(luceneConfigXmlFile);
@@ -283,9 +278,7 @@ public class Geonetwork implements ApplicationHandler {
 
         SettingInfo settingInfo = context.getBean(SettingInfo.class);
         searchMan = _applicationContext.getBean(SearchManager.class);
-        searchMan.init(logAsynch,
-            logSpatialObject, luceneTermsToExclude,
-            maxWritesInTransaction);
+        searchMan.init(maxWritesInTransaction);
 
 
         // if the validator exists the proxyCallbackURL needs to have the external host and
@@ -453,7 +446,10 @@ public class Geonetwork implements ApplicationHandler {
 
                     for (String formatterName : formattersToInitialize) {
                         Log.info(Geonet.GEONETWORK, "Initializing the Formatter with id: " + formatterName);
+                        final MockHttpSession servletSession = new MockHttpSession(servletContext);
+                        servletSession.setAttribute(Jeeves.Elem.SESSION,  context.getUserSession());
                         final MockHttpServletRequest servletRequest = new MockHttpServletRequest(servletContext);
+                        servletRequest.setSession(servletSession);
                         final MockHttpServletResponse response = new MockHttpServletResponse();
                         try {
                             formatService.exec("eng", FormatType.html.toString(), mdId.toString(), null, formatterName,

@@ -24,10 +24,16 @@
 (function() {
 
   goog.provide('gn_related_directive');
+
+
+
+  goog.require('gn_atom');
   goog.require('gn_relatedresources_service');
+  goog.require('gn_wms');
+  goog.require('gn_wmts');
 
   var module = angular.module('gn_related_directive', [
-    'gn_relatedresources_service'
+    'gn_relatedresources_service', 'gn_wms', 'gn_wmts', 'gn_atom'
   ]);
 
   /**
@@ -35,7 +41,7 @@
    * config.js
    */
   module.service('gnRelatedService', ['$http', '$q', function($http, $q) {
-    function get(uuid, types) {
+    this.get = function(uuid, types) {
       var canceller = $q.defer();
       var request = $http({
         method: 'get',
@@ -48,13 +54,14 @@
       });
 
       var promise = request.then(
-        function(response) {
-          return (response.data);
-        },
-        function() {
-          return ($q.reject('Something went wrong'));
-        }
-      );
+          function(response) {
+            return (response.data);
+          },
+          function() {
+            return ($q.reject('Something went wrong loading ' +
+            'related records of type ' + types));
+          }
+          );
 
       promise.abort = function() {
         canceller.resolve();
@@ -67,9 +74,16 @@
         }
       );
       return (promise);
-    }
-    return {
-      get: get
+    };
+
+    this.getMdsRelated = function(uuids, types) {
+      var url = '../api/related';
+      return $http.get(url, {
+        params: {
+          type: types,
+          uuid: uuids
+        }
+      });
     };
   }]);
   module
@@ -78,8 +92,10 @@
       [
         'gnRelatedService',
         'gnGlobalSettings',
+        'gnSearchSettings',
         'gnRelatedResources',
-        function(gnRelatedService, gnGlobalSettings, gnRelatedResources) {
+        function(gnRelatedService, gnGlobalSettings,
+                 gnSearchSettings, gnRelatedResources) {
           return {
             restrict: 'A',
             templateUrl: function(elem, attrs) {
@@ -92,6 +108,7 @@
               types: '@',
               title: '@',
               list: '@',
+              filter: '@',
               user: '=',
               hasResults: '=?'
             },
@@ -100,7 +117,7 @@
               scope.formatCifsLink = function(url) {
                 return url.replace(/\//g, '\\');
               };
-              
+
               scope.updateRelations = function() {
                 scope.relations = [];
                 if (scope.uuid) {
@@ -108,11 +125,27 @@
                   (promise = gnRelatedService.get(
                       scope.uuid, scope.types)
                   ).then(function(data) {
-                       scope.relations = data;
-                       angular.forEach(data, function(value) {
+                       scope.relations = {};
+                       angular.forEach(data, function(value, idx) {
                          if (value) {
                            scope.relationFound = true;
                            scope.hasResults = true;
+                         }
+                         if (!scope.relations[idx]) {
+                           scope.relations[idx] = [];
+                         }
+                         if (scope.filter && angular.isArray(value)) {
+                           var tokens = scope.filter.split(':'),
+                               field = tokens[0],
+                               filter = tokens[1];
+                           scope.relations[idx] = [];
+                           for (var i = 0; i < value.length; i++) {
+                             if (filter.indexOf(value[i][field]) !== -1) {
+                                scope.relations[idx].push(value[i]);
+                             }
+                           }
+                         } else {
+                           scope.relations[idx] = value;
                          }
                        });
                      });
@@ -125,12 +158,18 @@
               scope.hasAction = function(mainType) {
                 var fn = gnRelatedResources.map[mainType].action;
                 // If function name ends with ToMap do not display the action
-                if (fn.name.match(/.*ToMap$/) &&
-                  gnGlobalSettings.isMapViewerEnabled === false) {
+                if (fn && fn.name && fn.name.match(/.*ToMap$/) &&
+                   gnGlobalSettings.isMapViewerEnabled === false) {
                   return false;
                 }
                 return angular.isFunction(fn);
               };
+
+              scope.isLayerProtocol = function(mainType) {
+                return gnSearchSettings.mapProtocols.layers.
+                   indexOf(mainType) > -1;
+              };
+
               scope.config = gnRelatedResources;
 
               scope.$watchCollection('md', function(n, o) {

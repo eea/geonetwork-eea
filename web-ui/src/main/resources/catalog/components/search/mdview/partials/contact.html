@@ -39,16 +39,14 @@
 
   <!-- Group by role -->
   <div class="gn-contact" data-ng-if="mode == 'role'"
-       data-ng-repeat="(roles, contactByRole) in mdContactsByRole"
-       >
+       data-ng-repeat="(roles, contactByRole) in mdContactsByRole">
     <h3>
       <i class="fa fa-envelope"></i>
       <span>
       {{roles}}
       </span>
     </h3>
-
-    <div class="row" data-ng-repeat="(org, contact) in contactByRole | groupBy:'org'">
+    <div class="row" data-ng-repeat="(org, contact) in contactByRole | groupBy:'org'">
       <div class="col-md-8">
         <address>
           <strong>
@@ -123,6 +121,5 @@
         </li>
       </ul>
     </div>
-
   </div>
 </div>

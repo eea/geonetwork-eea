@@ -41,6 +41,7 @@ import org.fao.geonet.repository.GroupRepository;
 import org.fao.geonet.repository.SortUtils;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.UserRepository;
+import org.fao.geonet.repository.UserSavedSelectionRepository;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.repository.specification.UserSpecs;
 import org.fao.geonet.util.PasswordUtil;
@@ -197,6 +198,7 @@ public class UsersApi {
 
         UserRepository userRepository = ApplicationContextHolder.get().getBean(UserRepository.class);
         UserGroupRepository userGroupRepository = ApplicationContextHolder.get().getBean(UserGroupRepository.class);
+        UserSavedSelectionRepository userSavedSelectionRepository = ApplicationContextHolder.get().getBean(UserSavedSelectionRepository.class);
 
         if (myUserId == null || myUserId.equals(Integer.toString(userIdentifier))) {
             throw new IllegalArgumentException(
@@ -235,6 +237,8 @@ public class UsersApi {
 
         userGroupRepository.deleteAllByIdAttribute(UserGroupId_.userId,
             Arrays.asList(userIdentifier));
+
+        userSavedSelectionRepository.deleteAllByUser(userIdentifier);
 
         try {
             userRepository.delete(userIdentifier);
@@ -680,16 +684,24 @@ public class UsersApi {
 //                user.getAddresses().add(address);
 //            }
 
+            // Updating only the first (as only one supported on client side)
+            // TODO: Support multiple addresses
             Set<Address> userAddresses = user.getAddresses();
-            if (userAddresses.size() == 1) {
-                Address userAddress = (Address) userAddresses.toArray()[0];
-                for (Address address : userDto.getAddresses()) {
-                    userAddress.setAddress(address.getAddress());
-                    userAddress.setCity(address.getCity());
-                    userAddress.setCountry(address.getCountry());
-                    userAddress.setState(address.getState());
-                    userAddress.setZip(address.getZip());
-                }
+            Address userAddress;
+
+            if (userAddresses.isEmpty()) {
+                userAddress = new Address();
+                userAddresses.add(userAddress);
+            } else {
+                userAddress = (Address) userAddresses.toArray()[0];
+            }
+
+            for (Address address : userDto.getAddresses()) {
+                userAddress.setAddress(address.getAddress());
+                userAddress.setCity(address.getCity());
+                userAddress.setCountry(address.getCountry());
+                userAddress.setState(address.getState());
+                userAddress.setZip(address.getZip());
             }
         }
 

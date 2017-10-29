@@ -59,9 +59,12 @@
   module.directive('gnMetadataDisplay', [
     'gnMdView', 'gnSearchSettings', function(gnMdView, gnSearchSettings) {
       return {
-        templateUrl: '../../catalog/components/search/mdview/partials/' +
-            'mdpanel.html',
         scope: true,
+        templateUrl: function(elem, attrs) {
+          return attrs.template ||
+              '../../catalog/components/search/mdview/partials/' +
+              'mdpanel.html';
+        },
         link: function(scope, element, attrs, controller) {
 
           var unRegister;
@@ -155,7 +158,7 @@
     function($http) {
       return {
         templateUrl: '../../catalog/components/search/mdview/partials/' +
-        'contact.html',
+            'contact.html',
         restrict: 'A',
         scope: {
           mdContacts: '=gnMetadataContacts',
@@ -170,33 +173,33 @@
           if (scope.mode != 'default') {
             var groupByOrgAndMailOrName = function(resources) {
               return _.groupBy(resources,
-                function(contact) {
-                  if (contact.email) {
-                    return contact.org + '#' + contact.email;
-                  } else {
-                    return contact.org + '#' + contact.name;
-                  }
-                });
+                  function(contact) {
+                    if (contact.email) {
+                      return contact.org + '#' + contact.email;
+                    } else {
+                      return contact.org + '#' + contact.name;
+                    }
+                  });
             };
 
             var aggregateRoles = function(resources) {
               return _.map(resources,
-                function(contact) {
-                  var copy = angular.copy(contact[0]);
-                  angular.extend(copy, {
-                    roles: _.pluck(contact, 'role')
-                  });
+                  function(contact) {
+                    var copy = angular.copy(contact[0]);
+                    angular.extend(copy, {
+                      roles: _.pluck(contact, 'role')
+                    });
 
-                  return copy;
-                });
+                    return copy;
+                  });
             };
 
             if (scope.mode == 'role') {
               var contactsByOrgAndMailOrName =
-                groupByOrgAndMailOrName(scope.mdContacts);
+                  groupByOrgAndMailOrName(scope.mdContacts);
 
               var contactsWithAggregatedRoles =
-                aggregateRoles(contactsByOrgAndMailOrName);
+                  aggregateRoles(contactsByOrgAndMailOrName);
 
               /**
                * Contacts format:
@@ -208,9 +211,9 @@
                *
                */
               scope.mdContactsByRole =
-                _.groupBy(contactsWithAggregatedRoles, function(c) {
-                  return c.roles;
-                });
+                  _.groupBy(contactsWithAggregatedRoles, function(c) {
+                    return c.roles;
+                  });
             } else if (scope.mode == 'org-role') {
               /**
                * Contacts format:
@@ -222,9 +225,9 @@
                *
                */
               scope.mdContactsByOrgRole = _.groupBy(scope.mdContacts,
-                function(contact) {
-                  return contact.org;
-                });
+                  function(contact) {
+                    return contact.org;
+                  });
 
               for (var key in scope.mdContactsByOrgRole) {
                 var value = scope.mdContactsByOrgRole[key];
@@ -232,7 +235,7 @@
                 var contactsByOrgAndMailOrName = groupByOrgAndMailOrName(value);
 
                 scope.mdContactsByOrgRole[key] =
-                  aggregateRoles(contactsByOrgAndMailOrName);
+                    aggregateRoles(contactsByOrgAndMailOrName);
               }
             }
           }

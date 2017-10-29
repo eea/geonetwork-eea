@@ -20,7 +20,7 @@
 @fa-version: '4.1.0';
 @fa-font-path: '../catalog/lib/style/font-awesome/fonts';
 
-@panel-heading-height: 3.8em;
+@panel-heading-height: 2.8em;
 
 
 .gn-facet-list {
@@ -42,28 +42,56 @@
     padding-left: 1em;
     margin-bottom: 0;
     font-size: 13px;
+
+    .list-group {
+      margin-left: 0.2em;
+    }
   }
   .list-group-item {
     padding: 0.1em;
     color: #555555;
     border: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: row;
+    * { flex-shrink: 0; }
+
+    [data-gn-facet-dimension-category] {
+      width: 100%;
+    }
+
     label {
       margin-bottom: 0px;
       font-weight: 500;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      min-width: 0px;
+      flex-shrink: 1;
       &.gn-facet-active {
         color: @gray-darker
       }
     }
     input {
-      vertical-align: bottom;
-      position: relative;
-      top: -3px;
+      margin: 0px;
+      margin-top: 1px;
     }
     button {
       margin: 0px;
       padding: 0px;
       font-size: 13px;
+    }
+    .gn-facet-label {
+      flex-shrink: 1;
+      flex-grow: 0;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .badge {
+      margin: 0px 6px;
     }
   }
   .gn-facet-count, .list-group-item > span.fa {
@@ -75,6 +103,25 @@
   .list-group-item:hover {
     color: @brand-primary;
   }
+  .input-daterange {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .gn-graph {
+    margin-left: -15px;
+    margin-right: -15px;
+    overflow-x: hidden;
+    max-height: none;
+  }
+  .gn-graph-buttons {
+    position: absolute;
+    left: 1em;
+    top: 0;
+  }
+  .ui-timeline {
+    position: relative;
+  }
+
 }
 .gn-facet-breadcrumb {
   margin-top: 8px;
@@ -137,6 +184,14 @@ span.gn-facet-label {
 [data-gn-period-chooser] ul > li > a:first-letter,
 span.gn-facet-label:first-letter {
   text-transform: uppercase;
+}
+
+// fix sort-by combo case
+.gn-sort-by .btn.dropdown-toggle {
+  text-transform: lowercase;
+  &:first-letter {
+    text-transform: uppercase;
+  }
 }
 
 /* TODO: Deprecate due to change in gn-pager and gn-sort-by */
@@ -381,7 +436,6 @@ span.gn-facet-label:first-letter {
     width: 140px;
     height: 140px;
     margin-right: 15px;
-    background-image: url(../catalog/views/default/images/no-thumbnail.png);
     border: 1px solid #ddd;
     border-radius: 4px;
     overflow: hidden;
@@ -390,7 +444,43 @@ span.gn-facet-label:first-letter {
       min-height: 100%;
     }
   }
+  .gn-md-no-thumbnail {
+    background-image: url(../catalog/views/default/images/no-thumbnail.png);
+  }
 }
+
+
+.gn-top-records {
+  .well();
+
+  /* Make a wide div with an horizontal scroll */
+  [data-gn-results-container] {
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    .gn-resultview {
+      display: flex;
+    }
+
+    /* to loop over results */
+    li.gn-grid {
+      width: 200px;
+      min-width: 200px;
+      height: 200px;
+      text-align: center;
+
+      .gn-md-thumbnail {
+        display: inline-block;
+        float: none;
+        margin-right: 0px;
+        .gn-img-thumbnail {
+
+        }
+      }
+    }
+  }
+}
+
 .gn-img-thumbnail-caption {
   text-align: center;
   font-size: 90%;
@@ -520,11 +610,6 @@ span.gn-facet-label:first-letter {
   }
 }
 
-[role=tooltip] {
-  position: absolute;
-  clip: rect(1px, 1px, 1px, 1px);
-  right: 0;
-}
 button:focus [role=tooltip],
 button:hover [role=tooltip] {
   clip: auto;
@@ -605,4 +690,39 @@ button.active [role=tooltip] {
   content: " *";
   color: #a94442;
   font-weight: normal;
+}
+
+//datepicker highlight
+.gn-date-hl {
+  text-decoration: underline;
+}
+.datepicker-dropdown.datepicker-orient-bottom:before {
+  border: none;
+}
+.gn-related-list {
+  padding: 0;
+  list-style: none;
+  > li {
+    padding-left: 25px;
+    &:hover {
+      text-decoration: none;
+      color: #262626;
+      background-color: #f5f5f5;
+    }
+    &.gn-related-type {
+      padding-left: 15px;
+      padding-bottom: 1px;
+      min-width: 250px;
+      &:hover {
+        background-color: transparent;
+        cursor: default !important;
+      }
+      &:first-letter {
+        text-transform: uppercase;
+      }
+    }
+    &:not(.gn-related-type) {
+      font-size: 12px;
+    }
+  }
 }

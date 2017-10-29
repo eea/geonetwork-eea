@@ -51,22 +51,39 @@
         'gnSearchLocation',
         'gnOwsContextService',
         'gnWfsService',
+        'gnAlertService',
         '$filter',
         function(gnMap, gnOwsCapabilities, gnSearchSettings,
             ngeoDecorateLayer, gnSearchLocation, gnOwsContextService,
-            gnWfsService, $filter) {
+            gnWfsService, gnAlertService, $filter) {
 
           this.configure = function(options) {
             angular.extend(this.map, options);
           };
 
+
           var addWMSToMap = function(link, md) {
-            var layerName = $filter('gnLocalized')(link.title);
-            if (layerName) {
-              gnMap.addWmsFromScratch(gnSearchSettings.viewerMap,
-                 link.url, layerName, false, md);
-            } else {
+            // Link is localized when using associated resource service
+            // and is not when using search
+            var url = $filter('gnLocalized')(link.url) || link.url;
+
+            var isServiceLink =
+               gnSearchSettings.mapProtocols.services.
+               indexOf(link.protocol) > -1;
+
+            if (isServiceLink) {
               gnMap.addOwsServiceToMap(link.url, 'WMS');
+            } else {
+              //if this operation is called from search-from-map,
+              // the link does not contain title, but contains name directly
+              var layerName = link.name ? link.name :
+                 $filter('gnLocalized')(link.title) || link.title;
+              if (layerName) {
+                gnMap.addWmsFromScratch(gnSearchSettings.viewerMap,
+                   url, layerName, false, md);
+              } else {
+                gnMap.addOwsServiceToMap(url, 'WMS');
+              }
             }
 
             gnSearchLocation.setMap();
@@ -74,53 +91,110 @@
 
 
           var addWFSToMap = function(link, md) {
-            var ftName = $filter('gnLocalized')(link.title);
-            if (ftName) {
-              gnMap.addWfsFromScratch(gnSearchSettings.viewerMap,
-                 link.url, ftName, false, md);
+            var url = $filter('gnLocalized')(link.url) || link.url;
+
+            var isServiceLink =
+               gnSearchSettings.mapProtocols.services.
+               indexOf(link.protocol) > -1;
+
+            var isGetFeatureLink =
+               (url.toLowerCase().indexOf('request=getfeature') > -1);
+
+            if (isServiceLink && !isGetFeatureLink) {
+              gnMap.addOwsServiceToMap(url, 'WFS');
             } else {
-              gnMap.addOwsServiceToMap(link.url, 'WFS');
+              var ftName = '';
+
+              if (isGetFeatureLink) {
+                var name = 'typename';
+                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                var results = regex.exec(url);
+
+                if (results) {
+                  ftName = decodeURIComponent(results[1].replace(/\+/g, ' '));
+                }
+              } else {
+                ftName = $filter('gnLocalized')(link.title);
+              }
+
+              if (ftName) {
+                gnMap.addWfsFromScratch(gnSearchSettings.viewerMap,
+                   url, ftName, false, md);
+              } else {
+                gnMap.addOwsServiceToMap(url, 'WFS');
+              }
             }
             gnSearchLocation.setMap();
           };
 
 
-          function addWMTSToMap(link, md) {
-
+          var addWMTSToMap = function(link, md) {
+            var url = $filter('gnLocalized')(link.url) || link.url;
+            var uuid = md ? md['geonet:info'].uuid : '';
             if (link.name &&
-                (angular.isArray(link.name) && link.name.length > 0)) {
+               (angular.isArray(link.name) && link.name.length > 0)) {
               angular.forEach(link.name, function(name) {
-                gnOwsCapabilities.getWMTSCapabilities(link.url).then(
+                gnOwsCapabilities.getWMTSCapabilities(url).then(
                    function(capObj) {
                      var layerInfo = gnOwsCapabilities.getLayerInfoFromCap(
-                     name, capObj, uuid);
-                     gnMap.addWmtsToMapFromCap(
-                     gnSearchSettings.viewerMap, layerInfo, capObj);
+                      name, capObj, uuid);
+                     if (layerInfo) {
+                       gnMap.addWmtsToMapFromCap(
+                        gnSearchSettings.viewerMap, layerInfo, capObj);
+                     }
                    });
               });
               gnSearchLocation.setMap();
-            } else if (link.name && !angular.isArray(link.name)) {
-              gnOwsCapabilities.getWMTSCapabilities(link.url).then(
-                  function(capObj) {
-                    var layerInfo = gnOwsCapabilities.getLayerInfoFromCap(
+            } else if (link.name && !angular.isArray(link.name) &&
+               link.name != '') {
+              gnOwsCapabilities.getWMTSCapabilities(url).then(
+                 function(capObj) {
+                   var layerInfo = gnOwsCapabilities.getLayerInfoFromCap(
                    link.name, capObj, uuid);
-                    gnMap.addWmtsToMapFromCap(
-                        gnSearchSettings.viewerMap, layerInfo, capObj);
-                  });
+                   if (layerInfo) {
+                     gnMap.addWmtsToMapFromCap(
+                     gnSearchSettings.viewerMap, layerInfo, capObj);
+                   } else {
+                     gnAlertService.addAlert({
+                       msg: 'Unable to load layer ' + link.name,
+                       type: 'success'
+                     });
+
+                   }
+                 });
+              gnSearchLocation.setMap();
+            } else if (link.title) {
+              layerName = $filter('gnLocalized')(link.title);
+              gnOwsCapabilities.getWMTSCapabilities(url).then(
+                 function(capObj) {
+                   var layerInfo = gnOwsCapabilities.getLayerInfoFromCap(
+                   layerName, capObj, uuid);
+                   if (layerInfo) {
+                     gnMap.addWmtsToMapFromCap(
+                     gnSearchSettings.viewerMap, layerInfo, capObj);
+                   } else {
+                     gnAlertService.addAlert({
+                       msg: 'Unable to load layer ' + layerName,
+                       type: 'success'
+                     });
+                   }
+                 });
               gnSearchLocation.setMap();
             } else {
-              gnMap.addOwsServiceToMap(link.url, 'WMTS');
+              gnMap.addOwsServiceToMap(url, 'WMTS');
             }
           };
 
           function addKMLToMap(record, md) {
-            gnMap.addKmlToMap(record.name, record.url,
+            var url = $filter('gnLocalized')(record.url) || record.url;
+            gnMap.addKmlToMap(record.name, url,
                gnSearchSettings.viewerMap);
             gnSearchLocation.setMap();
           };
 
           function addMapToMap(record, md) {
-            gnOwsContextService.loadContextFromUrl(record.url,
+            var url = $filter('gnLocalized')(record.url) || record.url;
+            gnOwsContextService.loadContextFromUrl(url,
                 gnSearchSettings.viewerMap);
 
             gnSearchLocation.setMap();
@@ -131,11 +205,20 @@
           };
 
           var openLink = function(record, link) {
-            if (record.url.indexOf('http') == 0 ||
-                record.url.indexOf('ftp') == 0) {
-              return window.open(record.url, '_blank');
-            } else {
+            var url = $filter('gnLocalized')(record.url) || record.url;
+            if (url && (record.url.indexOf('\\') == 0 ||
+               url.indexOf('http') == 0 ||
+               url.indexOf('ftp') == 0)) {
+              return window.open(url, '_blank');
+            } else if (url && url.indexOf('www.') == 0) {
+              return window.open('http://' + url, '_blank');
+            } else if (record.title && record.title != '') {
               return window.location.assign(record.title);
+            } else {
+              gnAlertService.addAlert({
+                msg: 'Unable to open link',
+                type: 'success'
+              });
             }
           };
 
@@ -161,13 +244,22 @@
               label: 'addToMap',
               action: addWFSToMap
             },
+            'ATOM' : {
+              iconClass: 'fa-globe',
+              label: 'download'
+            },
             'WCS' : {
               iconClass: 'fa-globe',
               label: 'fileLink',
               action: null
             },
-            'MAP' : {
+            'SOS' : {
               iconClass: 'fa-globe',
+              label: 'fileLink',
+              action: null
+            },
+            'MAP' : {
+              iconClass: 'fa-map',
               label: 'mapLink',
               action: addMapToMap
             },
@@ -225,6 +317,26 @@
               iconClass: 'fa-globe',
               label: 'addToMap',
               action: addToEEAMap
+            },
+            'LINKDOWNLOAD-ZIP' : {
+              iconClass: 'fa-file-zip-o',
+              label: 'download',
+              action: openLink
+            },
+            'LINKDOWNLOAD-PDF' : {
+              iconClass: 'fa-file-pdf-o',
+              label: 'download',
+              action: openLink
+            },
+            'LINKDOWNLOAD-XML' : {
+              iconClass: 'fa-file-code-o',
+              label: 'download',
+              action: openLink
+            },
+            'LINKDOWNLOAD-RDF' : {
+              iconClass: 'fa-share-alt',
+              label: 'download',
+              action: openLink
             },
             'LINK' : {
               iconClass: 'fa-link',
@@ -288,6 +400,10 @@
                 return 'WFS';
               } else if (protocolOrType.match(/wcs/i)) {
                 return 'WCS';
+              } else if (protocolOrType.match(/sos/i)) {
+                return 'SOS';
+              } else if (protocolOrType.match(/atom/i)) {
+                return 'ATOM';
               } else if (protocolOrType.match(/ows-c/i)) {
                 return 'MAP';
               } else if (protocolOrType.match(/db:/i)) {
@@ -297,7 +413,24 @@
               } else if (protocolOrType.match(/kml/i)) {
                 return 'KML';
               } else if (protocolOrType.match(/download/i)) {
+                var url = $filter('gnLocalized')(resource.url) || resource.url;
+                if (url.match(/zip/i)) {
+                  return 'LINKDOWNLOAD-ZIP';
+                } else if (url.match(/pdf/i)) {
+                  return 'LINKDOWNLOAD-PDF';
+                } else if (url.match(/xml/i)) {
+                  return 'LINKDOWNLOAD-XML';
+                } else if (url.match(/rdf/i)) {
+                  return 'LINKDOWNLOAD-RDF';
+                } else {
+                  return 'LINKDOWNLOAD';
+                }
+              } else if (protocolOrType.match(/dataset/i)) {
                 return 'LINKDOWNLOAD';
+              } else if (protocolOrType.match(/link/i)) {
+                return 'LINK';
+              } else if (protocolOrType.match(/website/i)) {
+                return 'LINK';
               }
             }
 

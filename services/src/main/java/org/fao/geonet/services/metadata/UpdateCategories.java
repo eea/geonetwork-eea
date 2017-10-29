@@ -80,7 +80,7 @@ public class UpdateCategories extends NotInReadOnlyModeService {
         context.getBean(MetadataRepository.class).update(iLocalId, new Updater<Metadata>() {
             @Override
             public void apply(@Nonnull Metadata entity) {
-                entity.getCategories().clear();
+                entity.getMetadataCategories().clear();
             }
         });
 
@@ -96,7 +96,7 @@ public class UpdateCategories extends NotInReadOnlyModeService {
         }
 
         //--- index metadata
-        dataMan.indexMetadata(id, true);
+        dataMan.indexMetadata(id, true, null);
 
         //--- return id for showing
         return new Element(Jeeves.Elem.RESPONSE).addContent(new Element(Geonet.Elem.ID).setText(id));

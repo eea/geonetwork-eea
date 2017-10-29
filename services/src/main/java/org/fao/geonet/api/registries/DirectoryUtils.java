@@ -16,6 +16,7 @@ import org.fao.geonet.kernel.search.SearcherType;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.services.subtemplate.Get;
 import org.fao.geonet.util.Sha1Encoder;
+import org.fao.geonet.util.XslUtil;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Attribute;
@@ -24,11 +25,7 @@ import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.Text;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import jeeves.constants.Jeeves;
 import jeeves.server.ServiceConfig;
@@ -44,12 +41,12 @@ public class DirectoryUtils {
     /**
      * Save entries and metadata
      */
-    public static void saveEntries(ServiceContext context,
-                                   CollectResults collectResults,
-                                   String sourceIdentifier,
-                                   Integer owner,
-                                   Integer groupOwner,
-                                   boolean saveRecord) {
+    public static Map<String, Exception> saveEntries(ServiceContext context,
+                                                     CollectResults collectResults,
+                                                     String sourceIdentifier,
+                                                     Integer owner,
+                                                     Integer groupOwner,
+                                                     boolean saveRecord) {
         DataManager dataManager = context.getBean(DataManager.class);
         MetadataRepository metadataRepository = context.getBean(MetadataRepository.class);
         Table<String, String, Element> entries = collectResults.getEntries();
@@ -58,6 +55,7 @@ public class DirectoryUtils {
         Metadata record = collectResults.getRecord();
         boolean validate = false, index = false, ufo = false,
             notify = false, publicForGroup = true, refreshReaders = false;
+        Map<String, Exception> errors = new HashMap<>();
 
         while (entriesIterator.hasNext()) {
             String identifier = entriesIterator.next();
@@ -90,7 +88,7 @@ public class DirectoryUtils {
                         uuid, subtemplate.getId());
                     // TODO: Set categories ? privileges
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    errors.put(uuid, e);
                 }
             } else {
                 try {
@@ -102,7 +100,7 @@ public class DirectoryUtils {
                     collectResults.getEntryIdentifiers().put(
                         uuid, dbSubTemplate.getId());
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    errors.put(uuid, e);
                 }
             }
         }
@@ -116,6 +114,7 @@ public class DirectoryUtils {
                 e.printStackTrace();
             }
         }
+        return errors;
     }
 
     /**

@@ -1,4 +1,5 @@
 <form data-ng-keypress="updatingHarvester()">
+              <input type="hidden" name="_csrf" value="{{csrf}}"/>
 
 
   <div class="row">
@@ -75,8 +76,13 @@
 
       <p class="help-block" data-translate="">applyXSLToRecordHelp</p>
     </div>
-  </fieldset>
 
+    <div>
+      <label class="control-label" data-translate="">filesystem-beforeScript</label>
+      <input type="text" class="form-control" data-ng-model="harvesterSelected.site.beforeScript"/>
+      <p class="help-block" data-translate="">filesystem-beforeScriptHelp</p>
+    </div>
+  </fieldset>
 
   <div data-gn-harvester-privileges="harvesterSelected" data-lang="{{lang}}"/>
 </form>

@@ -67,9 +67,13 @@
       </script>
     </xsl:if>
 
+
+    <xsl:if test="$isRecaptchaEnabled and $service = 'new.account'">
+      <script src='https://www.google.com/recaptcha/api.js'></script>
+    </xsl:if>
+
     <xsl:choose>
       <xsl:when test="$isDebugMode">
-
         <script src="{$uiResourcesPath}lib/modernizr.js"></script>
         <script src="{$uiResourcesPath}lib/closure/base.js"></script>
 
@@ -96,6 +100,8 @@
         <script src="{$uiResourcesPath}lib/angular.ext/bindHtml.js"></script>
         <script src="{$uiResourcesPath}lib/angular.ext/tabs.js"></script>
         <script src="{$uiResourcesPath}lib/angular.ext/slider.js"></script>
+        <script src="{$uiResourcesPath}lib/angular.ext/date.js"></script>
+        <script src="{$uiResourcesPath}lib/angular.ext/angular-floatThead.js"></script>
         <script
           src="{$uiResourcesPath}lib/angular.ext/colorpicker/angularjs-color-picker.js"></script>
         <script src="{$uiResourcesPath}lib/tinycolor.js"></script>
@@ -126,7 +132,7 @@
                       $angularApp = 'gn_admin'">
           <script src="{$uiResourcesPath}lib/zip/zip.js"></script>
           <!-- Jsonix resources (OWS Context) -->
-          <script src="{$uiResourcesPath}lib/jsonix/jsonix/Jsonix-min.js"></script>
+          <script src="{$uiResourcesPath}lib/jsonix/jsonix/Jsonix-all.js"></script>
           <script type="text/javascript">
             zip.workerScriptsPath = "../../catalog/lib/zip/";
           </script>
@@ -139,17 +145,21 @@
         <script src="{$uiResourcesPath}lib/jquery.ext/jquery.fileupload.js"></script>
         <script src="{$uiResourcesPath}lib/jquery.ext/jquery.fileupload-process.js"></script>
         <script src="{$uiResourcesPath}lib/jquery.ext/jquery.fileupload-angular.js"></script>
+        <script src="{$uiResourcesPath}lib/jquery.ext/jquery.floatThead-slim.js"></script>
         <script src="{$uiResourcesPath}lib/bootstrap.ext/typeahead.js/typeahead.bundle.js"></script>
         <script
           src="{$uiResourcesPath}lib/bootstrap.ext/typeahead.js/handlebars-v2.0.0.js"></script>
         <script src="{$uiResourcesPath}lib/bootstrap.ext/tagsinput/bootstrap-tagsinput.js"></script>
         <script
           src="{$uiResourcesPath}lib/bootstrap.ext/datepicker/bootstrap-datepicker.js"></script>
+        <script
+          src="{$uiResourcesPath}lib/bootstrap.ext/datepicker/bootstrap-datepicker.fr.js"></script>
         <script src="{$uiResourcesPath}lib/bootstrap-table/dist/bootstrap-table.js"></script>
         <script src="{$uiResourcesPath}lib/bootstrap-table/src/extensions/export/bootstrap-table-export.js"></script>
         <!--</xsl:if>-->
 
         <script src="{$uiResourcesPath}lib/underscore/underscore-min.js"></script>
+        <script src="{$uiResourcesPath}lib/recaptcha/angular-recaptcha.min.js"></script>
       </xsl:when>
       <xsl:otherwise>
       </xsl:otherwise>
@@ -179,24 +189,14 @@
       </xsl:otherwise>
     </xsl:choose>
 
-
-    <xsl:variable name="mapConfig"
-                  select="util:getSettingValue('map/config')"/>
-
-    <xsl:variable name="bingKey"
-                  select="util:getSettingValue('map/bingKey')"/>
-
-    <xsl:variable name="isMapViewerEnabled">
-      <xsl:choose>
-        <xsl:when test="util:getSettingValue('map/isMapViewerEnabled')">
-          <xsl:value-of select="util:getSettingValue('map/isMapViewerEnabled')"/>
-        </xsl:when>
-        <xsl:otherwise>true</xsl:otherwise> <!-- default value -->
-      </xsl:choose>
-
-    </xsl:variable>
+    <xsl:variable name="appConfig"
+                  select="util:getSettingValue('ui/config')"/>
 
     <xsl:if test="$angularApp = 'gn_search'">
+      <script src="{$uiResourcesPath}lib/d3_timeseries/d3.min.js"></script>
+      <script src="{$uiResourcesPath}lib/timeline/timeline-zoomable.js"></script>
+      <link rel="stylesheet" href="{$uiResourcesPath}lib/timeline/timeline.css"/>
+      <link rel="stylesheet" href="{$uiResourcesPath}lib/d3_timeseries/nv.d3.min.css"/>
       <script type="text/javascript">
         var module = angular.module('gn_search');
         module.config(['gnViewerSettings', 'gnGlobalSettings',
@@ -209,42 +209,36 @@
           gnViewerSettings.layerName = '<xsl:value-of select="$layerName"/>';
           gnViewerSettings.layerGroup = '<xsl:value-of select="$layerGroup"/>';
         </xsl:if>
-        gnViewerSettings.mapConfig = <xsl:value-of select="$mapConfig"/>;
-        gnGlobalSettings.isMapViewerEnabled = <xsl:value-of select="$isMapViewerEnabled"/>;
-        gnViewerSettings.bingKey = '<xsl:value-of select="$bingKey"/>';
+        gnGlobalSettings.shibbolethEnabled = <xsl:value-of select="$shibbolethOn"/>;
         }]);
       </script>
     </xsl:if>
 
+    <xsl:if test="$angularApp = 'gn_login'">
+      <script type="text/javascript">
+        var module = angular.module('gn_login');
+        module.config(['gnGlobalSettings',
+        function(gnGlobalSettings) {
+        gnGlobalSettings.shibbolethEnabled = <xsl:value-of select="$shibbolethOn"/>;
+        }]);
+      </script>
+    </xsl:if>
+
+    <!-- XML highlighter JS dependency. -->
     <xsl:if test="$angularApp = 'gn_editor'">
       <script type="text/javascript" src="{$uiResourcesPath}lib/ace/ace.js"></script>
       <script type="text/javascript" src="{$uiResourcesPath}lib/angular.ext/ui-ace.js"></script>
-
-      <script type="text/javascript">
-        var module = angular.module('gn_editor');
-        module.config(['gnViewerSettings', 'gnGlobalSettings',
-        function(gnViewerSettings, gnGlobalSettings) {
-        <xsl:if test="$owsContext">
-          gnViewerSettings.owsContext = '<xsl:value-of select="$owsContext"/>';
-        </xsl:if>
-        <xsl:if test="$wmsUrl and $layerName">
-          gnViewerSettings.wmsUrl = '<xsl:value-of select="$wmsUrl"/>';
-          gnViewerSettings.layerName = '<xsl:value-of select="$layerName"/>';
-        </xsl:if>
-        gnViewerSettings.mapConfig = <xsl:value-of select="$mapConfig"/>;
-        gnGlobalSettings.isMapViewerEnabled = <xsl:value-of select="$isMapViewerEnabled"/>;
-        }]);
-      </script>
     </xsl:if>
 
-    <xsl:if test="$angularApp = 'gn_admin'">
-      <script type="text/javascript">
-        var module = angular.module('gn_admin');
-        module.config(['gnGlobalSettings',
-        function(gnGlobalSettings) {
-        gnGlobalSettings.isMapViewerEnabled = <xsl:value-of select="$isMapViewerEnabled"/>;
-        }]);
-      </script>
-    </xsl:if>
+
+    <script type="text/javascript">
+      var module = angular.module('<xsl:value-of select="$angularApp"/>');
+      module.config(['gnViewerSettings', 'gnSearchSettings', 'gnGlobalSettings',
+      function(gnViewerSettings, gnSearchSettings, gnGlobalSettings) {
+      gnGlobalSettings.init(
+      <xsl:value-of select="if ($appConfig != '') then $appConfig else '{}'"/>,
+      null, gnViewerSettings, gnSearchSettings);
+      }]);
+    </script>
   </xsl:template>
 </xsl:stylesheet>

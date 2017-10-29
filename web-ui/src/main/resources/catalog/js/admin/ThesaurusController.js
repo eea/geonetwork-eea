@@ -24,8 +24,11 @@
 (function() {
   goog.provide('gn_thesaurus_controller');
 
-  var module = angular.module('gn_thesaurus_controller',
-      ['blueimp.fileupload']);
+  goog.require('gn_multilingual_field_directive');
+
+  var module = angular.module('gn_thesaurus_controller', [
+    'blueimp.fileupload',
+    'gn_multilingual_field_directive']);
 
 
   /**
@@ -42,12 +45,26 @@
    *
    */
   module.controller('GnThesaurusController', [
-    '$scope', '$http', '$rootScope', '$translate',
-    'gnConfig', 'gnSearchManagerService', 'gnUtilityService',
-    function($scope, $http, $rootScope, $translate,
-             gnConfig, gnSearchManagerService, gnUtilityService) {
+    '$scope',
+    '$http',
+    '$rootScope',
+    '$translate',
+    'gnConfig',
+    'gnSearchManagerService',
+    'gnUtilityService',
+    'gnGlobalSettings',
+    function($scope,
+        $http,
+        $rootScope,
+        $translate,
+        gnConfig,
+        gnSearchManagerService,
+        gnUtilityService,
+        gnGlobalSettings) {
 
       $scope.gnConfig = gnConfig;
+      $scope.modelOptions = angular.copy(gnGlobalSettings.modelOptions);
+
       /**
        * Type of relations in SKOS thesaurus
        */
@@ -56,7 +73,7 @@
       /**
        * The list of thesaurus
        */
-      $scope.thesaurus = {};
+      $scope.thesaurus = [];
       /**
        * The currently selected thesaurus
        */
@@ -99,8 +116,30 @@
       $scope.keywordFilter = '';
 
       $scope.maxNumberOfKeywords = 50;
+      $scope.availableResultCounts = [50, 100, 200, 500, 1000];
+      $scope.setResultsCount = function(count) {
+        $scope.maxNumberOfKeywords = count;
+      };
 
       $scope.recordsRelatedToThesaurus = 0;
+
+      /**
+       * Language switch for keyword list
+       */
+      $scope.currentLangShown = $scope.lang;
+      $scope.availableLangs = gnConfig['ui.config'].mods.header.languages;
+      $scope.switchLang = function(lang3) {
+        $scope.currentLangShown = lang3;
+      };
+
+      /**
+       * Language list for gn-multilingual-directive
+       */
+      $scope.langList = angular.copy($scope.availableLangs);
+      angular.forEach($scope.langList, function(lang2, lang3) {
+        $scope.langList[lang3] = '#' + lang2;
+      });
+
       /**
        * The type of thesaurus import. Could be new, file or url.
        */
@@ -110,6 +149,8 @@
           creatingThesaurus = false, // Keyword creation in progress ?
           creatingKeyword = false, // Thesaurus creation in progress ?
           selectedKeywordOldId = null; // Keyword id before starting editing
+
+      $scope.searching = false;
 
       /**
        * Select a thesaurus and search its keywords.
@@ -128,17 +169,27 @@
        * Search thesaurus keyword based on filter and max number
        */
       searchThesaurusKeyword = function() {
+        $scope.searching = true;
         if ($scope.thesaurusSelected) {
+          // list of ui languages; we want the keyword info in all these
+          // put the current lang first to be used for sorting
+          var langsList = [$scope.currentLangShown];
+          Object.keys($scope.availableLangs).forEach(function(lang3) {
+            if (langsList.indexOf(lang3) === -1) {
+              langsList.push(lang3);
+            }
+          });
+
           $scope.recordsRelatedToThesaurus = 0;
           $http.get('../api/registries/vocabularies/search?type=CONTAINS' +
               '&thesaurus=' + $scope.thesaurusSelected.key +
-                      '&uri=*' +
-                      encodeURIComponent($scope.keywordFilter) + '*' +
-                      '&rows=' +
-                      ($scope.maxNumberOfKeywords ||
-                              defaultMaxNumberOfKeywords) +
-                      '&q=' + (encodeURI($scope.keywordFilter) || '*') +
-              '&lang=' + $scope.lang
+              '&uri=*' +
+              encodeURIComponent($scope.keywordFilter) + '*' +
+              '&rows=' +
+              ($scope.maxNumberOfKeywords ||
+                      defaultMaxNumberOfKeywords) +
+              '&q=' + (encodeURI($scope.keywordFilter) || '*') +
+              '&pLang=' + langsList.join(',')
           ).success(function(data) {
             $scope.keywords = data;
             gnSearchManagerService.gnSearch({
@@ -147,6 +198,8 @@
                 then(function(results) {
                   $scope.recordsRelatedToThesaurus = parseInt(results.count);
                 });
+          }).finally(function() {
+            $scope.searching = false;
           });
         }
       };
@@ -275,16 +328,27 @@
       };
 
       /**
-       * Remove a thesaurus from the catalog thesaurus repository
+       * Ask for confirmation to delete the thesaurus
        */
-      $scope.deleteThesaurus = function() {
+      $scope.deleteThesaurus = function(e) {
+        $scope.delEntryId = $scope.thesaurusSelected.key;
+        $('#gn-confirm-delete').modal('show');
+      };
+
+      /**
+       * Remove a thesaurus from the catalog thesaurus repository
+       * (this is done after a confirm dialog)
+       */
+      $scope.confirmDeleteThesaurus = function() {
         $http.get('thesaurus.remove?ref=' +
-                  $scope.thesaurusSelected.key)
+                  $scope.delEntryId)
             .success(function(data) {
               $scope.thesaurusSelected = null;
+              $scope.delEntryId = null;
               loadThesaurus();
             })
             .error(function(data) {
+              $scope.delEntryId = null;
               $rootScope.$broadcast('StatusUpdated', {
                 title: $translate.instant('thesaurusDeleteError'),
                 error: data,
@@ -344,8 +408,7 @@
                       '&id=' + encodeURIComponent(k.uri))
               .success(function(data) {
                 $scope.keywordSelectedRelation[value] = data.descKeys;
-              })
-              .error();
+              });
         });
       };
 
@@ -353,33 +416,26 @@
        * Edit an existing keyword, open the modal, search relations
        */
       $scope.editKeyword = function(k) {
-        if (k.value['#text']) {
-          $scope.keywordSelected = k;
-        } else {
-          $scope.keywordSelected = {
-            'uri': k.uri,
-            'value': {'@language': $scope.lang, '#text': k.value},
-            'definition': {'@language': $scope.lang, '#text': k.definition},
-            'defaultLang': $scope.lang
-          };
-        }
-        // Add current language labels if not set in keywords
-        if (!$scope.keywordSelected.value['#text']) {
-          $scope.keywordSelected.value['#text'] = '';
-        }
-        if (!$scope.keywordSelected.definition['#text']) {
-          $scope.keywordSelected.definition['#text'] = '';
-        }
-        selectedKeywordOldId = k.uri;
+        $scope.keywordSelected = angular.copy(k);
+        $scope.keywordSelected.oldId = $scope.keywordSelected.uri;
+
+        // create geo object (if not already there)
+        $scope.keywordSelected.geo = $scope.keywordSelected.geo || {
+          east: k.coordEast,
+          north: k.coordNorth,
+          south: k.coordSouth,
+          west: k.coordWest
+        };
+
         creatingKeyword = false;
         $('#keywordModal').modal();
-        searchRelation(k);
+        searchRelation($scope.keywordSelected);
       };
 
       /**
        * Edit a new keyword and open the modal
        */
-      $scope.addKeyword = function(k) {
+      $scope.addKeyword = function() {
         creatingKeyword = true;
         $scope.keywordSuggestedUri = '';
         $scope.keywordSelected = {
@@ -387,16 +443,18 @@
               ($scope.thesaurusSelected.defaultNamespace.indexOf('#') === -1 ?
               '#' : '') +
               gnUtilityService.randomUuid(),
-          'value': {'@language': $scope.lang, '#text': ''},
-          'definition': {'@language': $scope.lang, '#text': ''},
+          'value': '',
+          'values': {},
+          'definition': '',
+          'definitions': { },
           'defaultLang': $scope.lang
         };
         if ($scope.isPlaceType()) {
           $scope.keywordSelected.geo = {
-            west: '',
-            south: '',
-            east: '',
-            north: ''
+            west: '0',
+            south: '0',
+            east: '0',
+            north: '0'
           };
         }
         $('#keywordModal').modal();
@@ -405,23 +463,40 @@
       /**
        * Build keyword POST body message
        */
-      buildKeyword = function() {
+      buildKeywordXML = function(keywordObject) {
         var geoxml = $scope.isPlaceType() ?
-            '<west>' + $scope.keywordSelected.geo.west + '</west>' +
-            '<south>' + $scope.keywordSelected.geo.south + '</south>' +
-            '<east>' + $scope.keywordSelected.geo.east + '</east>' +
-            '<north>' + $scope.keywordSelected.geo.north + '</north>' : '';
+            '<west>' + keywordObject.geo.west + '</west>' +
+            '<south>' + keywordObject.geo.south + '</south>' +
+            '<east>' + keywordObject.geo.east + '</east>' +
+            '<north>' + keywordObject.geo.north + '</north>' : '';
 
-        var xml = '<request><newid>' + $scope.keywordSelected.uri + '</newid>' +
+        // build localized values xml
+        var localizedValues = '';
+        Object.keys(keywordObject.values).forEach(function(lang3) {
+          localizedValues +=
+              '<loc_' + lang3 + '_label>' +
+              keywordObject.values[lang3] +
+              '</loc_' + lang3 + '_label>';
+        });
+
+        // build localized definitions xml
+        var localizedDefinitions = '';
+        Object.keys(keywordObject.definitions).forEach(function(lang3) {
+          localizedDefinitions +=
+              '<loc_' + lang3 + '_definition>' +
+              keywordObject.definitions[lang3] +
+              '</loc_' + lang3 + '_definition>';
+        });
+
+        var xml = '<request><newid>' + keywordObject.uri + '</newid>' +
             '<refType>' + $scope.thesaurusSelected.dname + '</refType>' +
-            '<definition>' + $scope.keywordSelected.definition['#text'] +
-                '</definition>' +
             '<namespace>' + $scope.thesaurusSelected.defaultNamespace +
                 '</namespace>' +
             '<ref>' + $scope.thesaurusSelected.key + '</ref>' +
-            '<oldid>' + selectedKeywordOldId + '</oldid>' +
-            '<lang>' + $scope.lang + '</lang>' +
-            '<label>' + $scope.keywordSelected.value['#text'] + '</label>' +
+            '<oldid>' +
+            (keywordObject.oldId || keywordObject.uri) + '</oldid>' +
+            localizedValues +
+            localizedDefinitions +
             geoxml +
             '</request>';
 
@@ -432,9 +507,11 @@
        * Create the keyword in the thesaurus
        */
       $scope.createKeyword = function() {
-        $http.post('thesaurus.keyword.add?_content_type=json', buildKeyword(), {
-          headers: {'Content-type': 'application/xml'}
-        })
+        $http.post(
+            'thesaurus.keyword.add?_content_type=json',
+            buildKeywordXML($scope.keywordSelected),
+            { headers: {'Content-type': 'application/xml'} }
+        )
             .success(function(data) {
               var response = data[0];
               if (response && response['@message']) {
@@ -465,9 +542,10 @@
        * Update the keyword in the thesaurus
        */
       $scope.updateKeyword = function() {
-        $http.post('thesaurus.keyword.update', buildKeyword(), {
-          headers: {'Content-type': 'application/xml'}
-        })
+        $http.post('thesaurus.keyword.update',
+            buildKeywordXML($scope.keywordSelected),
+            { headers: {'Content-type': 'application/xml'} }
+        )
             .success(function(data) {
               $scope.keywordSelected = null;
               $('#keywordModal').modal('hide');
@@ -487,8 +565,12 @@
      * Remove a keyword
      */
       $scope.deleteKeyword = function(k) {
-        $scope.keywordSelected = k;
-        $http.get('thesaurus.keyword.remove?pThesaurus=' + k.thesaurus.key +
+        $scope.keywordToDelete = k;
+        $('#gn-confirm-delete-keyword').modal('show');
+      };
+      $scope.confirmDeleteKeyword = function() {
+        var k = $scope.keywordToDelete;
+        $http.get('thesaurus.keyword.remove?pThesaurus=' + k.thesaurusKey +
             '&id=' + encodeURIComponent(k.uri))
             .success(function(data) {
               searchThesaurusKeyword();
@@ -499,6 +581,9 @@
                 error: data,
                 timeout: 0,
                 type: 'danger'});
+            })
+            .finally(function() {
+              $scope.keywordToDelete = null;
             });
       };
 
@@ -507,11 +592,13 @@
        * namespace and keyword label
        */
       $scope.computeKeywordId = function() {
+        var defaultLabel = $scope.keywordSelected.values[
+            $scope.keywordSelected.defaultLang] || '';
         $scope.keywordSuggestedUri =
             $scope.thesaurusSelected.defaultNamespace +
             ($scope.thesaurusSelected.defaultNamespace.indexOf('#') === -1 ?
             '#' : '') +
-            $scope.keywordSelected.value['#text'].replace(/[^\d\w]/gi, '');
+            defaultLabel.replace(/[^\d\w]/gi, '');
       };
 
       /**
@@ -545,17 +632,13 @@
       };
 
       /**
-       * When updating number of keywords, refresh keyword list
+       * When updating keyword search params: refresh list
        */
-      $scope.$watch('maxNumberOfKeywords', function() {
-        searchThesaurusKeyword();
-      });
-
-
-      /**
-       * When updating the keyword filter, refresh keyword list
-       */
-      $scope.$watch('keywordFilter', function() {
+      $scope.$watch(function() {
+        return $scope.maxNumberOfKeywords + '##' +
+            $scope.keywordFilter + '##' +
+            $scope.currentLangShown;
+      }, function() {
         searchThesaurusKeyword();
       });
 
@@ -575,6 +658,11 @@
       }
 
       loadThesaurus();
+
+      // clear selected keyword on modal close
+      $('#keywordModal').on('hide.bs.modal', function() {
+        $scope.keywordSelected = null;
+      });
 
     }]);
 

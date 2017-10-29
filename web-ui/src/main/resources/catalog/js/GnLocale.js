@@ -45,7 +45,8 @@
       'pol' : 'pl',
       'wel' : 'cy',
       'dut' : 'nl',
-      'ice' : 'is'
+      'ice' : 'is',
+      'ita' : 'it'
     };
     var lang = specialCases[threeCharLang];
     if (angular.isDefined(lang)) {
@@ -122,7 +123,6 @@
     }]);
 
 
-  // TODO: could be improved instead of putting this in all main modules ?
   module.config(['$translateProvider', '$LOCALES', 'gnGlobalSettings',
     'gnLangs',
     function($translateProvider, $LOCALES, gnGlobalSettings, gnLangs) {
@@ -132,9 +132,11 @@
         suffix: '.json'
       });
 
-      gnGlobalSettings.iso3lang = gnGlobalSettings.locale.iso3lang ||
-          location.href.split('/')[5] || 'eng';
-      gnGlobalSettings.lang = gnLangs.getIso2Lang(gnGlobalSettings.iso3lang);
+      gnLangs.detectLang(
+          gnGlobalSettings.gnCfg.langDetector,
+          gnGlobalSettings
+      );
+
       $translateProvider.preferredLanguage(gnGlobalSettings.iso3lang);
       // $translateProvider.useSanitizeValueStrategy('escape');
       $translateProvider.useSanitizeValueStrategy('sanitizeParameters');

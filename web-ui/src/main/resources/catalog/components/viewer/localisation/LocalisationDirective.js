@@ -54,7 +54,7 @@
           function($scope, $http, gnGetCoordinate) {
 
             var parent = $scope.$parent;
-            var lang = parent.langs[parent.lang];
+            var lang = gnGlobalSettings.lang;
 
             $scope.modelOptions =
                 angular.copy(gnGlobalSettings.modelOptions);
@@ -68,6 +68,23 @@
               $scope.collapsed = true;
             };
 
+            $scope.zoomToYou = function(map) {
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(pos) {
+                  var position = new ol.geom.Point([
+                    pos.coords.longitude,
+                    pos.coords.latitude]);
+                  map.getView().setCenter(
+                      position.transform(
+                      'EPSG:4326',
+                      map.getView().getProjection()).getFirstCoordinate()
+                  );
+                });
+              } else {
+
+              }
+            };
+
             /**
              * Request geonames search. Trigger when user changes
              * the search input.
@@ -75,8 +92,7 @@
              * @param {string} query string value of the search input
              */
             this.search = function(query) {
-              if (query.length < 3) return;
-
+              if (query.length < 1) return;
               var coord = gnGetCoordinate(
                   $scope.map.getView().getProjection().getWorldExtent(), query);
 
@@ -88,7 +104,7 @@
                   view.setCenter(center);
                 }
                 moveTo($scope.map, 5, ol.proj.transform(coord,
-                    'EPSG:4326', 'EPSG:3857'));
+                    'EPSG:4326', $scope.map.getView().getProjection()));
                 return;
               }
               var formatter = function(loc) {
@@ -100,8 +116,7 @@
                 return (props.length == 0) ? '' : '—' + props.join(', ');
               };
 
-              //TODO: move api url and username to config
-              var url = 'http://api.geonames.org/searchJSON';
+              var url = gnViewerSettings.geocoder;
               $http.get(url, {
                 params: {
                   lang: lang,

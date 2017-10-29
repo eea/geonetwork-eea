@@ -23,6 +23,7 @@
 
 package org.fao.geonet.kernel.setting;
 
+import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.NodeInfo;
 import org.fao.geonet.constants.Geonet;
@@ -155,6 +156,14 @@ public class SettingManager {
      * @param path eg. system/site/name
      */
     public String getValue(String path) {
+        return getValue(path, false);
+    }
+
+    public String getValue(Settings.GNSetting setting) {
+        return getValue(setting.getName(), setting.isNullable());
+    }
+
+    public String getValue(String path, boolean nullable) {
         if (Log.isDebugEnabled(Geonet.SETTINGS)) {
             Log.debug(Geonet.SETTINGS, "Requested setting with name: " + path);
         }
@@ -170,7 +179,7 @@ public class SettingManager {
             return null;
         }
         String value = se.getValue();
-        if (value == null) {
+        if (value == null && ! nullable) {
             Log.warning(Geonet.SETTINGS, "  Requested setting with name: " + path + " but null value found. Check the settings table.");
         }
         return value;
@@ -292,6 +301,14 @@ public class SettingManager {
         return true;
     }
 
+    public boolean setValue(Settings.GNSetting setting, String value) {
+        return setValue(setting.getName(), value);
+    }
+
+    public boolean setValue(Settings.GNSetting setting, boolean value) {
+        return setValue(setting.getName(), value);
+    }
+
     /**
      * Set the setting value by key to the boolean value.
      *
@@ -313,7 +330,9 @@ public class SettingManager {
         for (Map.Entry<String, String> entry : values.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            setValue(key, value);
+            if (StringUtils.isNotEmpty(key)) {
+                setValue(key, value);
+            }
         }
         return success;
     }

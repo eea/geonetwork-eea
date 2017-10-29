@@ -314,7 +314,8 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult> {
             setType(MetadataType.METADATA);
         metadata.getSourceInfo().
             setSourceId(params.getUuid()).
-            setOwner(Integer.parseInt(params.getOwnerId()));
+            setOwner(Integer.parseInt(params.getOwnerId())).
+            setGroupOwner(Integer.valueOf(params.getOwnerIdGroup()));
         metadata.getHarvestInfo().
             setHarvested(true).
             setUuid(params.getUuid()).
@@ -328,7 +329,7 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult> {
 
         dataMan.flush();
 
-        dataMan.indexMetadata(id, true);
+        dataMan.indexMetadata(id, true, null);
         result.addedMetadata++;
     }
 
@@ -477,12 +478,12 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult> {
             repository.deleteAllByIdAttribute(OperationAllowedId_.metadataId, Integer.parseInt(record.id));
             addPrivileges(record.id, params.getPrivileges(), localGroups, dataMan, context, log);
 
-            metadata.getCategories().clear();
+            metadata.getMetadataCategories().clear();
             addCategories(metadata, params.getCategories(), localCateg, context, log, null, true);
 
             dataMan.flush();
 
-            dataMan.indexMetadata(record.id, true);
+            dataMan.indexMetadata(record.id, true, null);
             result.updatedMetadata++;
         }
     }

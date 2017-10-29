@@ -79,6 +79,7 @@ public final class Geonet {
     public static final String CSW_HARVEST = CSW + ".harvest";
     public static final String SRU = GEONETWORK + ".sru";
     public static final String SRU_SEARCH = SRU + ".search";
+    public static final String USER_WATCHLIST = GEONETWORK + ".userwatchlist";
     public static final String OAI = GEONETWORK + ".oai";
     public static final String OAI_HARVESTER = OAI + ".provider";
     // keys for logging search log
@@ -561,9 +562,6 @@ public final class Geonet {
         public static final String LUCENE_CONFIG = "luceneConfig";
         public static final String GUI_CONFIG = "guiConfig";
         public static final String PREFERRED_SCHEMA = "preferredSchema";
-        public static final String STAT_LOG_SPATIAL_OBJECTS = "statLogSpatialObjects";
-        public static final String STAT_LUCENE_TERMS_EXCLUDE = "statLuceneTermsExclude";
-        public static final String STAT_LOG_ASYNCH = "statLogAsynch";
         public static final String MAX_WRITES_IN_TRANSACTION = "maxWritesInTransaction";
         public static final String SUBVERSION_PATH = "subversionPath";
         public static final String STATUS_ACTIONS_CLASS = "statusActionsClass";

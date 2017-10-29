@@ -92,6 +92,10 @@ public class MetadataUtils {
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
         DataManager dm = gc.getBean(DataManager.class);
         Element relatedRecords = new Element("relations");
+
+        if(type == null || type.length == 0) {
+            type = RelatedItemType.class.getEnumConstants();
+        }
         List<RelatedItemType> listOfTypes = new ArrayList<RelatedItemType>(Arrays.asList(type));
 
         // Get the cached version (use by classic GUI)
@@ -198,7 +202,7 @@ public class MetadataUtils {
         if (listOfTypes.size() == 0 ||
             listOfTypes.contains(RelatedItemType.hassources)) {
             // Return records where this record is a source dataset
-            relatedRecords.addContent(search(uuid, "hassource", context, from, to, fast));
+            relatedRecords.addContent(search(uuid, "hassources", context, from, to, fast));
         }
 
         // Relation table is preserved for backward compatibility but should not be used anymore.
@@ -239,7 +243,7 @@ public class MetadataUtils {
                 parameters.addContent(new Element("operatesOn").setText(uuid));
             else if ("hasfeaturecats".equals(type))
                 parameters.addContent(new Element("hasfeaturecat").setText(uuid));
-            else if ("hassource".equals(type))
+            else if ("hassources".equals(type))
                 parameters.addContent(new Element("hassource").setText(uuid));
             else if ("associated".equals(type))
                 parameters.addContent(new Element("agg_associated").setText(uuid));

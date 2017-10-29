@@ -24,7 +24,7 @@
 
 <!--
   The main entry point for all user interface generated
-  from XSLT. 
+  from XSLT.
 -->
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -66,13 +66,15 @@
       </head>
 
 
-      <!-- The GnCatController takes care of 
+      <!-- The GnCatController takes care of
       loading site information, check user login state
       and a facet search to get main site information.
       -->
       <body data-ng-controller="GnCatController">
 
         <xsl:call-template name="eea-header"/>
+
+        <div data-gn-alert-manager=""></div>
 
         <xsl:choose>
           <xsl:when test="ends-with($service, 'nojs')">

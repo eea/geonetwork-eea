@@ -287,7 +287,7 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult> {
 
         SettingInfo si = context.getBean(SettingInfo.class);
         String siteUrl = si.getSiteUrl() + context.getBaseUrl();
-        metadataGetService = siteUrl + "/srv/en/xml.metadata.get";
+        metadataGetService = "local://"+context.getNodeId()+"/api/records/";
 
 
         //--- Create fragment harvester for atomic datasets if required
@@ -356,7 +356,7 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult> {
 
                     if (record.isTemplate.equals("s")) {
                         //--- Uncache xlinks if a subtemplate
-                        Processor.uncacheXLinkUri(metadataGetService + "?uuid=" + record.uuid);
+                        Processor.uncacheXLinkUri(metadataGetService + record.uuid);
                         result.subtemplatesRemoved++;
                     } else {
                         result.locallyRemoved++;
@@ -541,7 +541,8 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult> {
             setType(MetadataType.METADATA);
         metadata.getSourceInfo().
             setSourceId(params.getUuid()).
-            setOwner(Integer.parseInt(params.getOwnerId()));
+            setOwner(Integer.parseInt(params.getOwnerId())).
+            setGroupOwner(Integer.valueOf(params.getOwnerIdGroup()));
         metadata.getHarvestInfo().
             setHarvested(true).
             setUuid(params.getUuid()).
@@ -554,7 +555,7 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult> {
 
         addPrivileges(id, params.getPrivileges(), localGroups, dataMan, context, log);
 
-        dataMan.indexMetadata(id, true);
+        dataMan.indexMetadata(id, true, null);
 
         dataMan.flush();
     }
@@ -655,7 +656,7 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult> {
 
             if (record.isTemplate.equals("s")) {
                 //--- Uncache xlinks if a subtemplate
-                Processor.uncacheXLinkUri(metadataGetService + "?uuid=" + record.uuid);
+                Processor.uncacheXLinkUri(metadataGetService + record.uuid);
             }
         }
     }

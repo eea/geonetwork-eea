@@ -23,17 +23,22 @@
 
 (function() {
   goog.provide('gn_map_directive');
-  goog.require('gn_owscontext_service');
 
-  angular.module('gn_map_directive',
-      ['gn_owscontext_service'])
+  var METRIC_DECIMALS = 4;
+  var DEGREE_DECIMALS = 8;
 
+  var getDigitNumber = function(proj) {
+    return proj == 'EPSG:4326' ? DEGREE_DECIMALS : METRIC_DECIMALS;
+  };
+
+  angular.module('gn_map_directive', [])
       .directive(
       'gnDrawBbox',
       [
        'gnMap',
-       'gnOwsContextService',
-       function(gnMap, gnOwsContextService) {
+       'gnMapsManager',
+       'ngeoDecorateInteraction',
+       function(gnMap, gnMapsManager, ngeoDecorateInteraction) {
          return {
            restrict: 'A',
            replace: true,
@@ -46,6 +51,8 @@
              hrightRef: '@',
              identifierRef: '@',
              identifier: '@',
+             descriptionRef: '@',
+             description: '@',
              dcRef: '@',
              extentXml: '=?',
              lang: '=',
@@ -57,6 +64,9 @@
              var mapRef = scope.htopRef || scope.dcRef || '';
              scope.mapId = 'map-drawbbox-' +
              mapRef.substring(1, mapRef.length);
+
+             // set read only
+             scope.readOnly = scope.$eval(attrs['readOnly']);
 
              var extentTpl = {
                'iso19139': '<gmd:EX_Extent ' +
@@ -145,7 +155,7 @@
              };
 
              if (attrs.hleft !== '' && attrs.hbottom !== '' &&
-                 attrs.hright !== '' && attrs.htop !== '') {
+             attrs.hright !== '' && attrs.htop !== '') {
                scope.extent.md = [
                  parseFloat(attrs.hleft), parseFloat(attrs.hbottom),
                  parseFloat(attrs.hright), parseFloat(attrs.htop)
@@ -154,12 +164,13 @@
 
              var reprojExtent = function(from, to) {
                var extent = gnMap.reprojExtent(
-                   scope.extent[from],
-                   scope.projs[from], scope.projs[to]
+               scope.extent[from],
+               scope.projs[from], scope.projs[to]
                );
                if (extent && extent.map) {
+                 var decimals = getDigitNumber(scope.projs.form);
                  scope.extent[to] = extent.map(function(coord) {
-                   return Math.round(coord * 10000) / 10000;
+                   return coord.toFixed(decimals) / 1;
                  });
                }
              };
@@ -171,11 +182,13 @@
 
              scope.$watch('projs.form', function(newValue, oldValue) {
                var extent = gnMap.reprojExtent(
-                   scope.extent.form, oldValue, newValue
+                 scope.extent.form, oldValue, newValue
                );
                if (extent && extent.map) {
+                 var decimals = getDigitNumber(scope.projs.form);
+
                  scope.extent.form = extent.map(function(coord) {
-                   return Math.round(coord * 10000) / 10000;
+                   return coord.toFixed(decimals) / 1;
                  });
                }
              });
@@ -205,31 +218,26 @@
                source: source,
                style: boxStyle
              });
+             bboxLayer.setZIndex(100);
 
-             var map = new ol.Map({
-               layers: [
-                 gnMap.getLayersFromConfig(),
-                 bboxLayer
-               ],
-               renderer: 'canvas',
-               view: new ol.View({
-                 center: [0, 0],
-                 projection: scope.projs.map,
-                 zoom: 2
-               })
-             });
+             var map = gnMapsManager.createMap(gnMapsManager.EDITOR_MAP);
+             scope.map = map;
+             map.addLayer(bboxLayer);
              element.data('map', map);
 
-             //Uses configuration from database
-             if (gnMap.getMapConfig().context) {
-               gnOwsContextService.
-                   loadContextFromUrl(gnMap.getMapConfig().context, map);
-             }
+             // initialize extent & bbox on map load
+             map.get('creationPromise').then(function () {
+               drawBbox();
+
+               if (gnMap.isValidExtent(scope.extent.map)) {
+                 map.getView().fit(scope.extent.map, map.getSize());
+               }
+             });
 
              var dragbox = new ol.interaction.DragBox({
                style: boxStyle,
                condition: function() {
-                  return scope.drawing;
+                 return scope.drawing;
                }
              });
 
@@ -268,27 +276,13 @@
                }
                else {
                  coordinates = gnMap.getPolygonFromExtent(
-                     scope.extent.map);
+                 scope.extent.map);
                  geom = new ol.geom.Polygon(coordinates);
                }
                feature.setGeometry(geom);
                feature.getGeometry().setCoordinates(coordinates);
                scope.extent.map = geom.getExtent();
              };
-
-             /**
-              * When form is loaded
-              * - set map div
-              * - draw the feature with MD initial coordinates
-              * - fit map extent
-              */
-             scope.$watch('gnCurrentEdit.version', function(newValue) {
-               map.setTarget(scope.mapId);
-               drawBbox();
-               if (gnMap.isValidExtent(scope.extent.map)) {
-                 map.getView().fit(scope.extent.map, map.getSize());
-               }
-             });
 
              /**
               * Switch mode (panning or drawing)
@@ -328,6 +322,9 @@
 
                  if (attrs.identifierRef !== undefined) {
                    scope.identifier = region.id;
+                 }
+                 if (attrs.descriptionRef !== undefined) {
+                   scope.description = region.name;
                  }
 
                  reprojExtent('md', 'map');

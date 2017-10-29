@@ -127,6 +127,25 @@
           $scope.searchObj.params,
           defaultParams);
 
+      // Add hidden filters which may
+      // restrict search (do not add an existing filter)
+      if ($scope.searchObj.filters) {
+        angular.forEach($scope.searchObj.filters,
+            function(value, key) {
+              var p = $scope.searchObj.params[key];
+              if (p) {
+                if (p !== value && (!p.indexOf || p.indexOf(value) === -1)) {
+                  if (!angular.isArray(p)) {
+                    $scope.searchObj.params[key] = [p];
+                  }
+                  $scope.searchObj.params[key].push(value);
+                }
+              } else {
+                $scope.searchObj.params[key] = value;
+              }
+            });
+      }
+
       // Set default pagination if not set
       if ((!keepPagination &&
           !$scope.searchObj.permalink) ||
@@ -164,8 +183,7 @@
             $scope.searchResults.dimension = data.dimension;
 
             // compute page number for pagination
-            if ($scope.searchResults.records.length > 0 &&
-                $scope.hasPagination) {
+            if ($scope.hasPagination) {
 
               var paging = $scope.paginationInfo;
 
@@ -326,7 +344,8 @@
     $scope.$on('clearResults', function() {
       $scope.searchResults = {
         records: [],
-        count: 0
+        count: 0,
+        selectionBucket: $scope.searchObj.selectionBucket
       };
     });
 
@@ -354,8 +373,6 @@
         link: function(scope, element, attrs) {
 
           scope.resetSearch = function(htmlElementOrDefaultSearch) {
-            //TODO: remove geocat ref
-            $('.geocat-search').find('.bootstrap-tagsinput .tag').remove();
             if (angular.isObject(htmlElementOrDefaultSearch)) {
               scope.controller.resetSearch(htmlElementOrDefaultSearch);
             } else {

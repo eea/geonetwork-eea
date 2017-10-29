@@ -25,59 +25,86 @@
   goog.provide('gn_dashboard_controller');
 
 
-
-  goog.require('gn_dashboard_content_stat_controller');
-  goog.require('gn_dashboard_search_stat_controller');
+  goog.require('gn_dashboard_render_controller');
   goog.require('gn_dashboard_status_controller');
   goog.require('gn_vcs_controller');
 
   var module = angular.module('gn_dashboard_controller',
       ['gn_dashboard_status_controller',
-       'gn_dashboard_search_stat_controller',
-       'gn_dashboard_content_stat_controller',
+       'gn_dashboard_render_controller',
        'gn_vcs_controller']);
 
 
   /**
    *
    */
-  module.controller('GnDashboardController', ['$scope', '$http',
-    function($scope, $http) {
-
-
-      $scope.pageMenu = {
-        folder: 'dashboard/',
-        defaultTab: 'status',
-        tabs:
-            [{
-              type: 'status',
-              label: 'status',
-              icon: 'fa-dashboard',
-              href: '#/dashboard/status'
-            },{
-              type: 'statistics-search',
-              label: 'searchStatistics',
-              icon: 'fa-search',
-              href: '#/dashboard/statistics-search'
-            },{
-              type: 'statistics-content',
-              label: 'contentStatistics',
-              icon: 'fa-bar-chart',
-              href: '#/dashboard/statistics-content'
-            },{
-              type: 'information',
-              label: 'information',
-              icon: 'fa-list-ul',
-              href: '#/dashboard/information'
-            },{
-              type: 'versioning',
-              label: 'versioning',
-              icon: 'fa-rss',
-              href: '#/dashboard/versioning'
-            }]
-      };
-
+  module.controller('GnDashboardController', [
+    '$scope', '$http', 'gnGlobalSettings',
+    function($scope, $http, gnGlobalSettings) {
+      $scope.pageMenu = {tabs: {}};
       $scope.info = {};
+      $scope.gnUrl = gnGlobalSettings.gnUrl;
+
+      var tabs = [{
+        type: 'status',
+        label: 'status',
+        icon: 'fa-dashboard',
+        href: '#/dashboard/status'
+      },{
+        type: 'information',
+        label: 'information',
+        icon: 'fa-list-ul',
+        href: '#/dashboard/information'
+      },{
+        type: 'versioning',
+        label: 'versioning',
+        icon: 'fa-rss',
+        href: '#/dashboard/versioning'
+      }];
+
+      var dashboards = [{
+        type: 'statistics',
+        label: 'contentStatistics',
+        icon: 'fa-bar-chart',
+        href: '#/dashboard/statistics?dashboard=' +
+            encodeURIComponent('../../dashboards/app/kibana#/dashboard/' +
+            'cf5d74b0-2c25-11e7-8cd9-338183f2da0f?embed=true&_g=()')
+      }, {
+        type: 'statistics',
+        label: 'validationStatistics',
+        icon: 'fa-bar-chart',
+        href: '#/dashboard/statistics?dashboard=' +
+            encodeURIComponent('../../dashboards/app/kibana#/dashboard/' +
+            '915983d0-2c2e-11e7-a889-7bfa00c573d3?embed=true&_g=()')
+      }, {
+        type: 'statistics',
+        label: 'searchStatistics',
+        icon: 'fa-search',
+        href: '#/dashboard/statistics?dashboard=' +
+            encodeURIComponent('../../dashboards/app/kibana#/dashboard/' +
+            '5b407790-4fa1-11e7-a577-3197d1592a1d?embed=true&_g=()')
+      }];
+
+      $scope.isDashboardAvailable = false;
+      $http.get('../../warninghealthcheck').success(function(data) {
+        angular.forEach(data, function(o) {
+          if (o.name === 'DashboardAppHealthCheck' &&
+              o.status === 'OK') {
+            tabs = tabs.concat(dashboards);
+          }
+          $scope.pageMenu = {
+            folder: 'dashboard/',
+            defaultTab: 'status',
+            tabs: tabs
+          };
+        });
+      }).error(function(data) {
+        $scope.pageMenu = {
+          folder: 'dashboard/',
+          defaultTab: 'status',
+          tabs: tabs
+        };
+      });
 
       $http.get('../api/site/info').
           success(function(data) {

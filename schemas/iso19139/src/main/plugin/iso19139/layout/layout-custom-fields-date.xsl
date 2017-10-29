@@ -79,6 +79,7 @@
                 match="gmd:CI_Date/gmd:date">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
+    <xsl:param name="listOfValues" select="$iso19139codelists" required="no"/>
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
@@ -87,7 +88,7 @@
     <xsl:variable name="dateTypeElementRef"
                   select="../gn:element/@ref"/>
 
-    <div class="form-group gn-field gn-title gn-required"
+    <div class="form-group gn-field gn-date gn-required"
          id="gn-el-{$dateTypeElementRef}"
          data-gn-field-highlight="">
       <label class="col-sm-2 control-label">
@@ -97,7 +98,7 @@
         <xsl:variable name="codelist"
                       select="gn-fn-metadata:getCodeListValues($schema,
                                   'gmd:CI_DateTypeCode',
-                                  $codelists,
+                                  $listOfValues,
                                   .)"/>
         <xsl:call-template name="render-codelist-as-select">
           <xsl:with-param name="listOfValues" select="$codelist"/>
@@ -163,11 +164,11 @@
     <xsl:variable name="labelConfig"
                   select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
     <xsl:variable name="dateTypeElementRef"
-                  select="../gn:element/@ref"/>
+                  select="gn:element/@ref"/>
 
     <xsl:variable name="isRequired" select="gn:element/@min = 1 and gn:element/@max = 1"/>
 
-    <div class="form-group gn-field gn-title {if ($isRequired) then 'gn-required' else ''}"
+    <div class="form-group gn-field gn-date {if ($isRequired) then 'gn-required' else ''}"
          id="gn-el-{$dateTypeElementRef}"
          data-gn-field-highlight="">
       <label class="col-sm-2 control-label">
@@ -195,8 +196,7 @@
       </div>
       <div class="col-sm-1 gn-control">
         <xsl:call-template name="render-form-field-control-remove">
-          <xsl:with-param name="editInfo" select="../gn:element"/>
-          <xsl:with-param name="parentEditInfo" select="../../gn:element"/>
+          <xsl:with-param name="editInfo" select="gn:element"/>
         </xsl:call-template>
       </div>
     </div>

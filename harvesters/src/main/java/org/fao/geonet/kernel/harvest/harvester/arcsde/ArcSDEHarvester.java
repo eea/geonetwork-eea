@@ -22,17 +22,13 @@
 //==============================================================================
 package org.fao.geonet.kernel.harvest.harvester.arcsde;
 
-import com.google.common.base.Function;
 import jeeves.server.context.ServiceContext;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.fao.geonet.Logger;
 import org.fao.geonet.arcgis.ArcSDEConnection;
 import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.ISODate;
 import org.fao.geonet.domain.Metadata;
 import org.fao.geonet.domain.MetadataType;
@@ -368,12 +364,12 @@ public class ArcSDEHarvester extends AbstractHarvester<HarvestResult> {
         operationAllowedRepository.deleteAllByIdAttribute(OperationAllowedId_.metadataId, Integer.parseInt(id));
         aligner.addPrivileges(id, params.getPrivileges(), localGroups, dataMan, context, log);
 
-        metadata.getCategories().clear();
+        metadata.getMetadataCategories().clear();
         aligner.addCategories(metadata, params.getCategories(), localCateg, context, log, null, true);
 
         dataMan.flush();
 
-        dataMan.indexMetadata(id, true);
+        dataMan.indexMetadata(id, true, null);
     }
 
     /**
@@ -404,7 +400,8 @@ public class ArcSDEHarvester extends AbstractHarvester<HarvestResult> {
             setChangeDate(createDate);
         metadata.getSourceInfo().
             setSourceId(params.getUuid()).
-            setOwner(Integer.parseInt(params.getOwnerId()));
+            setOwner(Integer.parseInt(params.getOwnerId())).
+            setGroupOwner(Integer.valueOf(params.getOwnerIdGroup()));
         metadata.getHarvestInfo().
             setHarvested(true).
             setUuid(params.getUuid());
@@ -417,7 +414,7 @@ public class ArcSDEHarvester extends AbstractHarvester<HarvestResult> {
 
         aligner.addPrivileges(id, params.getPrivileges(), localGroups, dataMan, context, log);
 
-        dataMan.indexMetadata(id, true);
+        dataMan.indexMetadata(id, true, null);
 
         return id;
     }

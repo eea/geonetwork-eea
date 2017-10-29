@@ -196,7 +196,7 @@ public class SelfRegister extends NotInReadOnlyModeService {
         String subject = elEmail.getChildText("subject");
         String message = elEmail.getChildText("content");
 
-        return MailUtil.sendMail(email, subject, message, sm);
+        return MailUtil.sendMail(email, subject, message, null, sm);
     }
 
 
@@ -222,7 +222,7 @@ public class SelfRegister extends NotInReadOnlyModeService {
         String subject = elEmail.getChildText("subject");
         String message = elEmail.getChildText("content");
 
-        return MailUtil.sendMail(from, subject, message, sm);
+        return MailUtil.sendMail(from, subject, message, null, sm);
     }
 
     // --------------------------------------------------------------------------

@@ -34,8 +34,10 @@
         restrict: 'A',
         require: '^ngSearchForm',
         replace: true,
-        templateUrl: '../../catalog/components/search/facets/' +
-            'partials/facet-item.html',
+        templateUrl: function(elem, attrs) {
+          return attrs.template || '../../catalog/components/search/facets/' +
+            'partials/facet-item.html';
+        },
         scope: {
           facetResults: '=gnFacet',
           facet: '@',
@@ -80,8 +82,10 @@
       return {
         restrict: 'A',
         replace: true,
-        templateUrl: '../../catalog/components/search/facets/' +
-            'partials/facet-list.html',
+        templateUrl: function(elem, attrs) {
+          return attrs.template || '../../catalog/components/search/facets/' +
+            'partials/facet-list.html';
+        },
         scope: {
           facets: '=gnFacetList',
           summaryType: '=facetConfig',
@@ -124,8 +128,10 @@
         replace: true,
         scope: true,
         require: '^ngSearchForm',
-        templateUrl: '../../catalog/components/search/facets/' +
-            'partials/facet-breadcrumb.html',
+        templateUrl: function(elem, attrs) {
+          return attrs.template || '../../catalog/components/search/facets/' +
+            'partials/facet-breadcrumb.html';
+        },
         link: function(scope, element, attrs, controller) {
           scope.remove = function(f) {
             gnFacetService.remove(scope.currentFacets, f);
@@ -159,8 +165,10 @@
       return {
         restrict: 'A',
         replace: true,
-        templateUrl: '../../catalog/components/search/facets/' +
-            'partials/facet-multiselect.html',
+        templateUrl: function(elem, attrs) {
+          return attrs.template || '../../catalog/components/search/facets/' +
+            'partials/facet-multiselect.html';
+        },
         scope: true,
         compile: function compile(tElement, tAttrs, transclude) {
           return {
@@ -267,4 +275,56 @@
         }
       };
     }]);
+
+  module.directive('gnFacetGraph', ['$timeout', function($timeout) {
+
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: function(elem, attrs) {
+        return attrs.template || '../../catalog/components/search/facets/' +
+          'partials/facet-graph.html';
+      },
+      scope: {
+        field: '=',
+        callback: '='
+      },
+      link: function(scope, element, attrs, controller) {
+        if (!scope.field) { return; }
+
+        var tm = new TimeLine(element.find('.ui-timeline')[0],
+            scope.field, scope.callback);
+
+        // dates must be sorted ASC
+        scope.$watch('field.datesCount', function(counts) {
+          if (counts) {
+            var data = counts.map(function(d) {
+              return {
+                event: d.value,
+                time: {
+                  begin: d.value,
+                  end: d.value
+                },
+                value: d.count
+              };
+            });
+
+            // apply data to graph
+            tm.setTimeline(data);
+          }
+        });
+
+        // call graph resize when it is expanded
+        scope.$watch('field.expanded', function(exp) {
+          if (exp) {
+            setTimeout(function() {
+              tm.recomputeSize();
+            });
+          }
+        });
+      }
+    };
+
+  }]);
+
 })();

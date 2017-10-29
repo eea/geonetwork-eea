@@ -47,8 +47,6 @@
     'ngeo'
   ]);
 
-  module.constant('gnSearchSettings', {});
-  module.constant('gnViewerSettings', {});
 
   module.config(['$LOCALES', function($LOCALES) {
     $LOCALES.push('search');
@@ -56,6 +54,10 @@
         'type=MetadataCategory&type=Operation&type=Group');
     $LOCALES.push('/../api/0.1/standards/iso19139/' +
         'codelists/gmd%3AMD_TopicCategoryCode');
+    $LOCALES.push('/../api/0.1/standards/iso19139/' +
+        'codelists/gmd%3ADS_AssociationTypeCode');
+    $LOCALES.push('/../api/0.1/standards/iso19139/' +
+        'codelists/gmd%3ADS_InitiativeTypeCode');
   }]);
 
 })();

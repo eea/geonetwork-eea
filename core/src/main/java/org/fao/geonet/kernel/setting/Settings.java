@@ -45,11 +45,12 @@ public class Settings {
     public static final String SYSTEM_PROXY_USERNAME = "system/proxy/username";
     public static final String SYSTEM_PROXY_PASSWORD = "system/proxy/password";
     public static final String SYSTEM_PROXY_IGNOREHOSTLIST = "system/proxy/ignorehostlist";
-    public static final String SYSTEM_LUCENE_IGNORECHARS = "system/requestedLanguage/ignorechars";
+    public static final GNSetting SYSTEM_LUCENE_IGNORECHARS = new GNSetting("system/requestedLanguage/ignorechars", true);
     public static final String SYSTEM_REQUESTED_LANGUAGE_SORTED = "system/requestedLanguage/sorted";
     public static final String SYSTEM_REQUESTED_LANGUAGE_ONLY = "system/requestedLanguage/only";
     public static final String SYSTEM_AUTODETECT_ENABLE = "system/autodetect/enable";
     public static final String SYSTEM_XLINKRESOLVER_ENABLE = "system/xlinkResolver/enable";
+    public static final String SYSTEM_XLINK_ALLOW_REFERENCED_DELETION = "system/xlinkResolver/referencedDeletionAllowed";
     public static final String SYSTEM_SERVER_LOG = "system/server/log";
     public static final String SYSTEM_INSPIRE_ENABLE = "system/inspire/enable";
     public static final String SYSTEM_INSPIRE_ATOM = "system/inspire/atom";
@@ -71,17 +72,22 @@ public class Settings {
     public static final String SYSTEM_FEEDBACK_MAILSERVER_IGNORE_SSL_CERTIFICATE_ERRORS =
         "system/feedback/mailServer/ignoreSslCertificateErrors";
     public static final String SYSTEM_ENABLE_ALL_THESAURUS = "system/metadata/allThesaurus";
-    public static final String SYSTEM_SITE_SVNUUID = "system/site/svnUuid";
+    public static final GNSetting SYSTEM_SITE_SVNUUID = new GNSetting("system/site/svnUuid", true);
     public static final String SYSTEM_INTRANET_NETWORK = "system/intranet/network";
     public static final String SYSTEM_INTRANET_NETMASK = "system/intranet/netmask";
     public static final String SYSTEM_Z3950_ENABLE = "system/z3950/enable";
     public static final String SYSTEM_Z3950_PORT = "system/z3950/port";
     public static final String SYSTEM_SELECTIONMANAGER_MAXRECORDS = "system/selectionmanager/maxrecords";
     public static final String SYSTEM_CSW_ENABLE = "system/csw/enable";
+    public static final String SYSTEM_CSW_ENABLEWHENINDEXING = "system/csw/enabledWhenIndexing";
     public static final String SYSTEM_CSW_CONTACT_ID = "system/csw/contactId";
     public static final String SYSTEM_CSW_METADATA_PUBLIC = "system/csw/metadataPublic";
     public static final String SYSTEM_USERSELFREGISTRATION_ENABLE = "system/userSelfRegistration/enable";
+    public static final String SYSTEM_USERSELFREGISTRATION_RECAPTCHA_ENABLE = "system/userSelfRegistration/recaptcha/enable";
+    public static final String SYSTEM_USERSELFREGISTRATION_RECAPTCHA_PUBLICKEY = "system/userSelfRegistration/recaptcha/publickey";
+    public static final String SYSTEM_USERSELFREGISTRATION_RECAPTCHA_SECRETKEY = "system/userSelfRegistration/recaptcha/secretkey";
     public static final String SYSTEM_USERFEEDBACK_ENABLE = "system/userFeedback/enable";
+    public static final String SYSTEM_USER_LASTNOTIFICATIONDATE = "system/userFeedback/lastNotificationDate";
     public static final String SYSTEM_LOCALRATING_ENABLE = "system/localrating/enable";
     public static final String SYSTEM_XLINK_RESOLVER_IGNORE = "system/xlinkResolver/ignore";
     public static final String SYSTEM_HIDEWITHHELDELEMENTS_ENABLE_LOGGING = "system/hidewithheldelements/enableLogging";
@@ -111,5 +117,39 @@ public class Settings {
     public static final String REGION_GETMAP_WIDTH = "region/getmap/width";
     public static final String REGION_GETMAP_SUMMARY_WIDTH = "region/getmap/summaryWidth";
     public static final String METADATA_WORKFLOW_DRAFT_WHEN_IN_GROUP = "metadata/workflow/draftWhenInGroup";
+    public static final String METADATA_IMPORT_RESTRICT = "metadata/import/restrict";
+    public static final String METADATA_BACKUPARCHIVE_ENABLE = "metadata/backuparchive/enable";
     public static final String VIRTUAL_SETTINGS_SUFFIX_ISDEFINED = "IsDefined";
+
+    public static class GNSetting {
+        private String name;
+        private boolean nullable;
+
+        GNSetting(String name, boolean nullable)
+        {
+            this.name = name;
+            this.nullable = nullable;
+        }
+
+        public String getName()
+        {
+            return name;
+        }
+
+        public void setName(String name)
+        {
+            this.name = name;
+        }
+
+        public boolean isNullable()
+        {
+            return nullable;
+        }
+
+        public void setNullable(boolean nullable)
+        {
+            this.nullable = nullable;
+        }
+
+    }
 }

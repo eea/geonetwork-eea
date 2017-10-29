@@ -38,7 +38,6 @@
 
   <xsl:include href="../convert/functions.xsl"/>
   <xsl:include href="../../../xsl/utils-fn.xsl"/>
-  <xsl:include href="index-subtemplate-fields.xsl"/>
   <xsl:include href="inspire-util.xsl" />
 
   <!-- This file defines what parts of the metadata are indexed by Lucene
@@ -81,6 +80,10 @@
   obsolete records. Some catalog like to restrict to non obsolete
   records only the default search. -->
   <xsl:variable name="flagNonObseleteRecords" select="true()"/>
+
+  <!-- Choose if WMS should be also indexed
+  as a KML layers to be loaded in GoogleEarth -->
+  <xsl:variable name="indexWmsAsKml" select="false()"/>
 
 
   <!-- The main metadata language -->
@@ -556,6 +559,16 @@
             <Field name="{$fieldPrefix}UseLimitation"
                    string="{concat('link|',string(@xlink:href), '|', string(.))}" store="true" index="true"/>
         </xsl:for-each>
+
+        <xsl:for-each select="gmd:useLimitation/gmx:Anchor[not(string(@xlink:href))]">
+          <Field name="{$fieldPrefix}UseLimitation"
+                 string="{string(.)}" store="true" index="true"/>
+        </xsl:for-each>
+
+        <xsl:for-each select="gmd:useLimitation/gmx:Anchor[string(@xlink:href)]">
+          <Field name="{$fieldPrefix}UseLimitation"
+                 string="{concat('link|',string(@xlink:href), '|', string(.))}" store="true" index="true"/>
+        </xsl:for-each>
       </xsl:for-each>
 
       <!-- Index aggregation info and provides option to query by type of association
@@ -710,11 +723,14 @@
           <!-- Add KML link if WMS -->
           <xsl:if
             test="starts-with($protocol,'OGC:WMS') and string($linkage)!='' and string($title)!=''">
-            <!-- FIXME : relative path -->
-            <Field name="link" string="{concat($title, '|', $desc, '|',
-                                                '../../srv/en/google.kml?uuid=', /gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString, '&amp;layers=', $title,
-                                                '|application/vnd.google-earth.kml+xml|application/vnd.google-earth.kml+xml', '|', $tPosition)}"
-                   store="true" index="false"/>
+
+            <xsl:if test="$indexWmsAsKml">
+              <!-- FIXME : relative path -->
+              <Field name="link" string="{concat($title, '|', $desc, '|',
+                                                  '../../srv/en/google.kml?uuid=', /gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString, '&amp;layers=', $title,
+                                                  '|application/vnd.google-earth.kml+xml|application/vnd.google-earth.kml+xml', '|', $tPosition)}"
+                     store="true" index="false"/>
+            </xsl:if>
           </xsl:if>
 
           <!-- Try to detect Web Map Context by checking protocol or file extension -->
@@ -903,7 +919,7 @@
     <xsl:for-each select="gmd:referenceSystemInfo/gmd:MD_ReferenceSystem">
         <xsl:for-each select="gmd:referenceSystemIdentifier/gmd:RS_Identifier">
             <xsl:variable name="crs">
-                <xsl:for-each select="gmd:codeSpace/gco:CharacterString/text() | gmd:code/gco:CharacterString/text()">
+                <xsl:for-each select="gmd:codeSpace/*/text() | gmd:code/*/text()">
                     <xsl:value-of select="."/>
                     <xsl:if test="not(position() = last())">::</xsl:if>
                 </xsl:for-each>
@@ -912,6 +928,19 @@
             <xsl:if test="$crs != ''">
                 <Field name="crs" string="{$crs}" store="true" index="true"/>
             </xsl:if>
+
+            <xsl:variable name="crsDetails">
+            {
+              "code": "<xsl:value-of select="gmd:codeSpace/*/text()"/>:<xsl:value-of select="gmd:code/*/text()"/>",
+              "name": "<xsl:value-of select="gmd:code/*/@xlink:title"/>",
+              "url": "<xsl:value-of select="gmd:code/*/@xlink:href"/>"
+            }
+            </xsl:variable>
+
+            <Field name="crsDetails"
+                   string="{normalize-space($crsDetails)}"
+                   store="true"
+                   index="false"/>
         </xsl:for-each>
     </xsl:for-each>
 
@@ -1024,6 +1053,9 @@
   </xsl:template>
 
   <!-- ========================================================================================= -->
-
+  <!-- xlinks -->
+  <xsl:template mode="index" match="@xlink:href">
+    <Field name="xlink" string="{string(.)}" store="true" index="true"/>
+  </xsl:template>
 
 </xsl:stylesheet>

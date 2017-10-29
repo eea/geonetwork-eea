@@ -86,7 +86,7 @@
     It could be relevant to investigate if this check should be done on
     only element potentially using XLink and not all of them.
     This may have performance inpact? -->
-    <xsl:param name="isDisabled" select="ancestor-or-self::node()[@xlink:href]"/>
+    <xsl:param name="isDisabled" select="count(ancestor-or-self::node()[@xlink:href]) > 0"/>
 
     <!-- Define if the language fields should be displayed
     with the selector or below each other. -->
@@ -108,7 +108,7 @@
     <xsl:variable name="isRequired" as="xs:boolean">
       <xsl:choose>
         <xsl:when
-          test="($parentEditInfo and $parentEditInfo/@min = 1 and $parentEditInfo/@max = 1) or 
+          test="($parentEditInfo and $parentEditInfo/@min = 1 and $parentEditInfo/@max = 1) or
           (not($parentEditInfo) and $editInfo and $editInfo/@min = 1 and $editInfo/@max = 1)">
           <xsl:value-of select="true()"/>
         </xsl:when>
@@ -125,7 +125,24 @@
       <xsl:when test="$directive != ''">
         <div class="form-group" id="gn-el-{$editInfo/@ref}">
           <div class="col-lg-10">
-            <xsl:attribute name="data-{$directive}" select="$value"/>
+            <xsl:choose>
+              <xsl:when test="$isMultilingual">
+                <xsl:attribute name="data-{$directive}">
+                {
+                <xsl:for-each select="$value/values/value">
+                  <xsl:sort select="@lang"/>
+                  "<xsl:value-of select="@lang" />":
+                  {"ref" : "<xsl:value-of select="@ref" />", "value": "<xsl:value-of select="." />"}
+                  <xsl:if test="position() != last()">,</xsl:if>
+                </xsl:for-each>
+                }
+                </xsl:attribute>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:attribute name="data-{$directive}" select="$value"/>
+              </xsl:otherwise>
+            </xsl:choose>
+
             <xsl:attribute name="data-ref" select="concat('_', $editInfo/@ref)"/>
             <xsl:attribute name="data-label" select="$label/label"/>
           </div>
@@ -170,24 +187,25 @@
 
                 <xsl:for-each select="$value/values/value">
                   <xsl:sort select="@lang"/>
-
-                  <xsl:call-template name="render-form-field">
-                    <xsl:with-param name="name" select="@ref"/>
-                    <xsl:with-param name="lang" select="@lang"/>
-                    <xsl:with-param name="value" select="."/>
-                    <xsl:with-param name="type" select="$type"/>
-                    <xsl:with-param name="tooltip" select="$tooltip"/>
-                    <xsl:with-param name="isRequired" select="$isRequired"/>
-                    <xsl:with-param name="isReadOnly" select="$isReadOnly"/>
-                    <xsl:with-param name="isDisabled" select="$isDisabled"/>
-                    <xsl:with-param name="editInfo" select="$editInfo"/>
-                    <xsl:with-param name="parentEditInfo" select="$parentEditInfo"/>
-                    <!--  Helpers can't be provided for all languages
-                    <xsl:with-param name="listOfValues" select="$listOfValues"/>
-                    -->
-                    <xsl:with-param name="checkDirective"
-                                    select="upper-case(@lang) = $mainLangCode or normalize-space(@lang) = ''"/>
-                  </xsl:call-template>
+                  <xsl:if test="@lang != ''">
+                    <xsl:call-template name="render-form-field">
+                      <xsl:with-param name="name" select="@ref"/>
+                      <xsl:with-param name="lang" select="@lang"/>
+                      <xsl:with-param name="value" select="."/>
+                      <xsl:with-param name="type" select="$type"/>
+                      <xsl:with-param name="tooltip" select="$tooltip"/>
+                      <xsl:with-param name="isRequired" select="$isRequired"/>
+                      <xsl:with-param name="isReadOnly" select="$isReadOnly"/>
+                      <xsl:with-param name="isDisabled" select="$isDisabled"/>
+                      <xsl:with-param name="editInfo" select="$editInfo"/>
+                      <xsl:with-param name="parentEditInfo" select="$parentEditInfo"/>
+                      <!--  Helpers can't be provided for all languages
+                      <xsl:with-param name="listOfValues" select="$listOfValues"/>
+                      -->
+                      <xsl:with-param name="checkDirective"
+                                      select="upper-case(@lang) = $mainLangCode or normalize-space(@lang) = ''"/>
+                    </xsl:call-template>
+                  </xsl:if>
                 </xsl:for-each>
 
                 <!-- Display the helper for a multilingual field below the field.
@@ -478,15 +496,44 @@
                 </div>
               </xsl:when>
               <xsl:otherwise>
-                <button class="btn btn-default"
-                        data-gn-template-field-add-button="{$id}">
-                  <i class="{if ($btnClass != '') then $btnClass else 'fa fa-plus'}"/>
-                  <xsl:if test="$btnLabel != ''">&#160;
-                    <span>
-                      <xsl:value-of select="$btnLabel"/>
-                    </span>
+
+                <xsl:variable name="hasMultipleChoice"
+                              select="count($template/snippet) gt 1"/>
+
+                <div class="btn-group" data-gn-template-field-add-button="{$id}">
+                  <xsl:if test="$hasMultipleChoice">
+                    <xsl:attribute name="data-has-choice">true</xsl:attribute>
                   </xsl:if>
-                </button>
+
+                  <button class="btn btn-default {if ($hasMultipleChoice) then 'dropdown-toggle' else ''}">
+                    <xsl:if test="$hasMultipleChoice">
+                      <xsl:attribute name="data-toggle">dropdown</xsl:attribute>
+                      <xsl:attribute name="aria-haspopup">true</xsl:attribute>
+                      <xsl:attribute name="aria-expanded">false</xsl:attribute>
+                    </xsl:if>
+                    <i class="{if ($btnClass != '') then $btnClass else 'fa fa-plus'}"/>
+                    <xsl:if test="$btnLabel != ''">&#160;
+                      <span>
+                        <xsl:value-of select="$btnLabel"/>
+                      </span>
+                    </xsl:if>
+
+                    <xsl:if test="$hasMultipleChoice">
+                      <span class="caret"></span>
+                    </xsl:if>
+                  </button>
+                  <xsl:if test="$hasMultipleChoice">
+                    <!-- A combo with the list of snippet available -->
+                    <ul class="dropdown-menu">
+                      <xsl:for-each select="$template/snippet">
+                        <xsl:variable name="label" select="@label"/>
+                        <li><a id="{concat($id, $label)}">
+                          <xsl:value-of select="if ($strings/*[name() = $label] != '') then $strings/*[name() = $label] else $label"/>
+                        </a></li>
+                      </xsl:for-each>
+                    </ul>
+                  </xsl:if>
+                </div>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:if>
@@ -538,8 +585,9 @@
                         <xsl:attribute name="disabled"/>
                       </xsl:if>
                       <option></option>
+
                       <xsl:for-each select="$codelist/entry">
-                        <xsl:sort select="label"/>
+                        <xsl:sort select="if ($codelist/@sort = 'fixed') then position() else label"/>
                         <option value="{code}" title="{normalize-space(description)}">
                           <xsl:value-of select="label"/>
                         </option>
@@ -638,6 +686,19 @@
               <xsl:if test="not($isExisting)">
                 <input class="gn-debug" type="text" name="{$xpathFieldId}" value="{@xpath}"/>
               </xsl:if>
+
+              <xsl:variable name="hasMultipleChoice"
+                            select="count($template/snippet) gt 1"/>
+
+              <xsl:if test="$hasMultipleChoice">
+                <xsl:for-each select="$template/snippet">
+                  <textarea id="{concat($id, @label, '-value')}">
+                    <xsl:value-of select="saxon:serialize(*,
+                                        'default-serialize-mode')"/>
+                  </textarea>
+                </xsl:for-each>
+              </xsl:if>
+
               <textarea class="form-control gn-debug"
                         name="{$id}"
                         data-gn-template-field="{$id}"
@@ -647,7 +708,7 @@
                 <xsl:if test="$isMissingLabel != ''">
                   <xsl:attribute name="data-not-set-check" select="$tagId"/>
                 </xsl:if>
-                <xsl:value-of select="saxon:serialize($template/snippet/*,
+                <xsl:value-of select="saxon:serialize($template/snippet[1]/*,
                                       'default-serialize-mode')"/>
               </textarea>
             </div>
@@ -709,6 +770,7 @@
     <xsl:param name="btnLabel" required="no" as="xs:string?" select="''"/>
     <xsl:param name="btnClass" required="no" as="xs:string?" select="''"/>
 
+
     <xsl:if test="not($isDisabled) and $parentEditInfo/@ref != ''">
       <xsl:variable name="id" select="generate-id()"/>
       <xsl:variable name="qualifiedName"
@@ -732,6 +794,8 @@
         </label>
         <div class="col-sm-9">
 
+          <xsl:variable name="addDirective" select="$directive/@addDirective != ''"/>
+
           <xsl:variable name="addActionDom">
             <xsl:choose>
               <!-- When element have different types, provide
@@ -743,7 +807,7 @@
 
                     If only one choice, make a simple button
               -->
-              <xsl:when test="count($childEditInfo/gn:choose) = 1">
+              <xsl:when test="count($childEditInfo/gn:choose) = 1 and not($addDirective)">
                 <xsl:for-each select="$childEditInfo/gn:choose">
                   <xsl:variable name="label"
                                 select="gn-fn-metadata:getLabel($schema, @name, $labels, $parentName, '', '')"/>
@@ -765,7 +829,7 @@
               </xsl:when>
               <!--
                     If many choices, make a dropdown button -->
-              <xsl:when test="count($childEditInfo/gn:choose) > 1">
+              <xsl:when test="count($childEditInfo/gn:choose) > 1 and not($addDirective)">
                 <div class="btn-group">
                   <button type="button"
                           class="btn btn-default dropdown-toggle {if ($btnClass != '') then $btnClass else 'fa fa-plus'} gn-add"
@@ -817,7 +881,7 @@
           </xsl:variable>
 
           <xsl:choose>
-            <xsl:when test="$directive/@addDirective != ''">
+            <xsl:when test="$addDirective">
               <div>
                 <xsl:attribute name="{$directive/@addDirective}"/>
                 <xsl:attribute name="data-dom-id" select="$id"/>
@@ -915,7 +979,7 @@
           <xsl:if test="$lang">
             <xsl:attribute name="lang" select="$lang"/>
           </xsl:if>
-          <xsl:if test="$hidden or $hasHelper">
+          <xsl:if test="$hidden or ($hasHelper and not($isDisabled))">
             <xsl:attribute name="class" select="'hidden'"/>
           </xsl:if>
           <xsl:value-of select="$valueToEdit"/>
@@ -934,7 +998,7 @@
           <xsl:when test="$listOfValues/@editorMode = 'radio'">
 
             <xsl:for-each select="$listOfValues/entry">
-              <xsl:sort select="label"/>
+              <xsl:sort select="if ($listOfValues/@sort = 'fixed') then position() else label"/>
 
               <div class="radio row">
                 <div class="col-xs-12">
@@ -1049,7 +1113,7 @@
             <xsl:if test="$lang">
               <xsl:attribute name="lang" select="$lang"/>
             </xsl:if>
-            <xsl:if test="$hidden or $hasHelper">
+            <xsl:if test="$hidden or ($hasHelper and not($isDisabled))">
               <!-- hide the form field if helper is available, the
               value is set by the directive which provide customized
               forms -->
@@ -1078,7 +1142,8 @@
         Create an helper list for the current input element.
         Current input could be an element or an attribute (eg. uom).
         -->
-    <xsl:if test="$hasHelper">
+    <xsl:if test="$hasHelper and not($isDisabled)">
+
       <xsl:call-template name="render-form-field-helper">
         <xsl:with-param name="elementRef" select="concat('_', $editInfo/@ref)"/>
         <!-- The @rel attribute in the helper may define a related field
@@ -1127,7 +1192,8 @@
         <xsl:attribute name="display" select="'none'"/>
       </xsl:if>
       <xsl:for-each select="$listOfValues/entry">
-        <xsl:sort select="label"/>
+        <xsl:sort select="if ($listOfValues/@sort = 'fixed') then position() else label"/>
+
         <option value="{code}" title="{normalize-space(description)}">
           <xsl:if test="code = $valueToEdit">
             <xsl:attribute name="selected"/>
@@ -1431,6 +1497,9 @@
           <tr>
             <xsl:for-each select="col">
               <th>
+                <xsl:if test="@class">
+                  <xsl:attribute name="class" select="@class"/>
+                </xsl:if>
                 <div class="th-inner ">
                   <xsl:value-of select="."/>
                 </div>
@@ -1449,6 +1518,9 @@
               <td>
                 <xsl:if test="@colspan">
                   <xsl:attribute name="colspan" select="@colspan"/>
+                </xsl:if>
+                <xsl:if test="@class">
+                  <xsl:attribute name="class" select="@class"/>
                 </xsl:if>
                 <xsl:if test="@title">
                   <xsl:attribute name="title" select="@title"/>

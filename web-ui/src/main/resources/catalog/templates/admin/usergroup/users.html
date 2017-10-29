@@ -74,6 +74,7 @@
       <div class="panel-body">
         <form id="gn-user-edit" name="gnUserEdit" data-ng-keypress="updatingUser()"
               class="form-horizontal" role="form">
+              <input type="hidden" name="_csrf" value="{{csrf}}"/>
           <fieldset>
             <input type="hidden" name="id" data-ng-model="userSelected.id"
                    value="{{userSelected.id}}"/>
@@ -235,47 +236,47 @@
               </label>
 
               <div>
-                <h3 data-translate="">RegisteredUser</h3>    
-                <select multiple="multiple" 
-                        id="groups_RegisteredUser" 
+                <h3 data-translate="">RegisteredUser</h3>
+                <select multiple="multiple"
+                        id="groups_RegisteredUser"
                         name="groups_RegisteredUser"
-                        class="form-control" 
-                        data-ng-click="setUserProfile()" 
+                        class="form-control"
+                        data-ng-click="setUserProfile()"
                         data-ng-disabled="!user.isUserAdminOrMore()"
                         data-ng-model="groupsByProfile['RegisteredUser']"
                         data-ng-options="g.label[lang]|empty:g.name
                                     for g in groups
-                                    | loggedUserIsUseradminOrMore:userAdminGroups:user.isAdministrator() | 
+                                    | loggedUserIsUseradminOrMore:userAdminGroups:user.isAdministrator() |
                                     orderBy:sortByLabel
                                     track by g.id">
                   <option></option>
                 </select>
-                <h3 data-translate="">Editor</h3>   
-                <select multiple="multiple" 
-                        id="groups_Editor" 
+                <h3 data-translate="">Editor</h3>
+                <select multiple="multiple"
+                        id="groups_Editor"
                         name="groups_Editor"
-                        class="form-control" 
-                        data-ng-click="setUserProfile()" 
+                        class="form-control"
+                        data-ng-click="setUserProfile()"
                         data-ng-disabled="!user.isUserAdminOrMore()"
                         data-ng-model="groupsByProfile['Editor']"
                         data-ng-options="g.label[lang]|empty:g.name
                                     for g in groups
-                                    | loggedUserIsUseradminOrMore:userAdminGroups:user.isAdministrator() | 
+                                    | loggedUserIsUseradminOrMore:userAdminGroups:user.isAdministrator() |
                                     orderBy:sortByLabel
                                     track by g.id">
                   <option></option>
                 </select>
-                <h3 data-translate="">Reviewer</h3>                  
-                <select multiple="multiple" 
-                        id="groups_Reviewer" 
+                <h3 data-translate="">Reviewer</h3>
+                <select multiple="multiple"
+                        id="groups_Reviewer"
                         name="groups_Reviewer"
-                        class="form-control" 
-                        data-ng-click="setUserProfile()" 
+                        class="form-control"
+                        data-ng-click="setUserProfile()"
                         data-ng-disabled="!user.isUserAdminOrMore()"
                         data-ng-model="groupsByProfile['Reviewer']"
                         data-ng-options="g.label[lang]|empty:g.name
                                     for g in groups
-                                    | loggedUserIsUseradminOrMore:userAdminGroups:user.isAdministrator() | 
+                                    | loggedUserIsUseradminOrMore:userAdminGroups:user.isAdministrator() |
                                     orderBy:sortByLabel
                                     track by g.id">
                   <option></option>
@@ -286,16 +287,16 @@
 
 
                 <h3 data-translate="">UserAdmin</h3>
-                <select multiple="multiple" 
-                        id="groups_UserAdmin" 
+                <select multiple="multiple"
+                        id="groups_UserAdmin"
                         name="groups_UserAdmin"
-                        class="form-control" 
-                        data-ng-click="setUserProfile()" 
+                        class="form-control"
+                        data-ng-click="setUserProfile()"
                         data-ng-disabled="!user.isUserAdminOrMore()"
                         data-ng-model="groupsByProfile['UserAdmin']"
                         data-ng-options="g.label[lang]|empty:g.name
                                     for g in groups
-                                    | loggedUserIsUseradminOrMore:userAdminGroups:user.isAdministrator() | 
+                                    | loggedUserIsUseradminOrMore:userAdminGroups:user.isAdministrator() |
                                     orderBy:sortByLabel
                                     track by g.id">
                   <option></option>
@@ -308,21 +309,30 @@
             </fieldset>
           </fieldset>
         </form>
-        <div data-ng-search-form="">
-          <h3>
+
+        <div data-ng-search-form="" class="panel panel-default">
+          <div class="panel-heading"
+               data-gn-slide-toggle="">
+            <i class="fa fa-search"/>&nbsp;
             <ng-pluralize count="searchResults.count"
                           when="{'0': ('noRecordFound' | translate),
                     'one': '1 ' +  ('userRecord' | translate) + ' {{userSelected.name}} {{userSelected.surname}}',
                     'other': '{} ' +  ('userRecords' | translate) + ' {{userSelected.name}} {{userSelected.surname}}'}"
             ></ng-pluralize>
-          </h3>
-          <div data-ng-show="searchResults.records.length > 0"
-               data-gn-search-form-results=""
-               data-gn-search-form-results-mode="title"
-               data-search-results="searchResults"
-               data-pagination-info="paginationInfo">
+          </div>
+          <div class="panel-body">
+            <div data-ng-show="searchResults.records.length > 0"
+                 data-gn-search-form-results=""
+                 data-gn-search-form-results-mode="title"
+                 data-search-results="searchResults"
+                 data-pagination-info="paginationInfo">
+            </div>
           </div>
         </div>
+
+        <br/>
+        <div data-gn-saved-selections=""
+             data-gn-saved-selections-panel="userSelected"/>
       </div>
     </div>
   </div>
@@ -341,6 +351,7 @@
         </div>
         <div class="modal-body">
           <form id="gn-password-reset" class="form-horizontal" name="gnPasswordReset">
+              <input type="hidden" name="_csrf" value="{{csrf}}"/>
             <div class="form-group"
                  data-ng-class="gnPasswordReset.password.$error.required || gnPasswordReset.password.$error.minlength ? 'has-error' : ''">
               <label class="control-label col-sm-3" data-translate="">password</label>

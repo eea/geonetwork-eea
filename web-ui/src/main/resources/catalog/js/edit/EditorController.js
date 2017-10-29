@@ -448,34 +448,68 @@
 
         // Close the editor tab
         window.onbeforeunload = null;
-        // Go to editor home
-        $location.path('');
-        // Tentative to close the browser tab
-        window.close();
-        // This last point may trigger
-        // "Scripts may close only the windows that were opened by it."
-        // when the editor was not opened by a script.
+
+        // if there is no history, attempt to close tab
+        if (window.history.length == 1) {
+          window.close();
+          // This last point may trigger
+          // "Scripts may close only the windows that were opened by it."
+          // when the editor was not opened by a script.
+        }
+
+        window.history.back();
       };
 
       $scope.cancel = function(refreshForm) {
         $scope.savedStatus = gnCurrentEdit.savedStatus;
-        return gnEditor.cancel(refreshForm)
-            .then(function(form) {
-              // Refresh editor form after cancel
-              //  $scope.savedStatus = gnCurrentEdit.savedStatus;
-              //  $rootScope.$broadcast('StatusUpdated', {
-              //    title: $translate.instant('cancelMetadataSuccess')
-              //  });
-              //  gnEditor.refreshEditorForm(null, true);
-              closeEditor();
-            }, function(error) {
-              $scope.savedStatus = gnCurrentEdit.savedStatus;
-              $rootScope.$broadcast('StatusUpdated', {
-                title: $translate.instant('cancelMetadataError'),
-                error: error,
-                timeout: 0,
-                type: 'danger'});
-            });
+        if ($location.search()['justcreated']) {
+          // Remove newly created record
+          var md = gnCurrentEdit.metadata;
+          gnMetadataActions.deleteMd(md).
+              then(function(data) {
+                $rootScope.$broadcast('StatusUpdated', {
+                  title: $translate.instant('metadataRemoved',
+                  {title: md.title || md.defaultTitle}),
+                  timeout: 2
+                });
+                closeEditor();
+              }, function(reason) {
+                $rootScope.$broadcast('StatusUpdated', {
+                  title: $translate.instant(reason.data.error.message),
+                  timeout: 0,
+                  type: 'danger'
+                });
+              });
+
+        } else {
+          return gnEditor.cancel(refreshForm)
+              .then(function(form) {
+                // Refresh editor form after cancel
+                //  $scope.savedStatus = gnCurrentEdit.savedStatus;
+                //  $rootScope.$broadcast('StatusUpdated', {
+                //    title: $translate.instant('cancelMetadataSuccess')
+                //  });
+                //  gnEditor.refreshEditorForm(null, true);
+                closeEditor();
+              }, function(error) {
+                $scope.savedStatus = gnCurrentEdit.savedStatus;
+                $rootScope.$broadcast('StatusUpdated', {
+                  title: $translate.instant('cancelMetadataError'),
+                  error: error,
+                  timeout: 0,
+                  type: 'danger'});
+              });
+        }
+      };
+
+      function parseXmlError(error) {
+        if (error.indexOf('<?xml') === 0) {
+          var x = jQuery.parseXML(error),
+            d = x.getElementsByTagName('description'),
+            m = d[0].textContent;
+          return m;
+        }
+        return null;
       };
 
       $scope.close = function() {
@@ -483,11 +517,17 @@
             .then(function(form) {
               closeEditor();
             }, function(error) {
+              // When closing editor and if error occurs,
+              // the response is in XML. Try to get the message
+              message = parseXmlError(error);
+
               $rootScope.$broadcast('StatusUpdated', {
-                title: $translate.instant('saveMetadataError'),
-                error: error,
+                title: message ?
+                  message : $translate.instant('saveMetadataError'),
+                error: message ? undefined : error,
                 timeout: 0,
                 type: 'danger'});
+              closeEditor();
             });
         $scope.savedStatus = gnCurrentEdit.savedStatus;
         return promise;
