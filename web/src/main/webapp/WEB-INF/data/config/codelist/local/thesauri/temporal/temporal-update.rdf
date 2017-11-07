@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:dcterms="http://purl.org/dc/terms/"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <skos:ConceptScheme rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution">
+    <dc:title>Temporal resolution</dc:title>
+    <dc:description>
+    </dc:description>
+    <dc:creator>
+      <foaf:Organization>
+        <foaf:name>EEA</foaf:name>
+      </foaf:Organization>
+    </dc:creator>
+    <dcterms:modified>2017-11-07 06:07:15</dcterms:modified>
+  </skos:ConceptScheme>
+
+  <skos:Concept rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#continual">
+    <skos:prefLabel xml:lang="en">Continual</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#daily">
+    <skos:prefLabel xml:lang="en">Daily</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#weekly">
+    <skos:prefLabel xml:lang="en">Weekly</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#fortnightly">
+    <skos:prefLabel xml:lang="en">Fortnightly</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#monthly">
+    <skos:prefLabel xml:lang="en">Monthly</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#quarterly">
+    <skos:prefLabel xml:lang="en">Quarterly</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#biannually">
+    <skos:prefLabel xml:lang="en">Biannually</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#annually">
+    <skos:prefLabel xml:lang="en">Annually</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#asNeeded">
+    <skos:prefLabel xml:lang="en">As needed</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#irregular">
+    <skos:prefLabel xml:lang="en">Irregular</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#notPlanned">
+    <skos:prefLabel xml:lang="en">Not planned</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#unknown">
+    <skos:prefLabel xml:lang="en">Unknown</skos:prefLabel>
+  </skos:Concept>
+
+</rdf:RDF>
