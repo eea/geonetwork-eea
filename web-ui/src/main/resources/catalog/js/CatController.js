@@ -59,7 +59,7 @@
           'enabled': true,
           'languages': {
             'eng': 'en',
-            'dut': 'du',
+            'dut': 'nl',
             'fre': 'fr',
             'ger': 'ge',
             'kor': 'ko',
@@ -141,7 +141,8 @@
             'downloads': ['DOWNLOAD'],
             'layers': ['OGC'],
             'maps': ['ows']
-          }
+          },
+          'isFilterTagsDisplayedInSearch': false
         },
         'map': {
           'enabled': true,
@@ -188,7 +189,11 @@
         'geocoder': 'https://secure.geonames.org/searchJSON',
         'editor': {
           'enabled': true,
-          'appUrl': '../../srv/{{lang}}/catalog.edit'
+          'appUrl': '../../srv/{{lang}}/catalog.edit',
+          'isUserRecordsOnly': false,
+          'isFilterTagsDisplayed': false,
+          'createPageTpl':
+              '../../catalog/templates/editor/new-metadata-horizontal.html'
         },
         'admin': {
           'enabled': true,
