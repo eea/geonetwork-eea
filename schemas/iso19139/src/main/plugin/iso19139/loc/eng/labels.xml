@@ -2140,6 +2140,7 @@
       <option value="EEA:FILEPATH">File path (from the level below gis_sdi)</option>
       <option value="EEA:FOLDERPATH">Folder path (from the level below gis_sdi)</option>
       <option value="EEA:DBPG">PostGIS database table</option>
+      <option value="ESRI:REST">ESRI Rest service</option>
       <option value="OGC:WMS">OGC-WMS Web Map Service</option>
       <option value="">-------------------------</option>
       <!-- EEA Custom protocols | end -->
