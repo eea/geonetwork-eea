@@ -113,6 +113,7 @@
     <facet name="publishedDataset" indexKey="publishedDataset" label="publishedDataset"/>
     <facet name="groupOwner" indexKey="_groupOwner" label="groupOwners" localized="true"/>
     <facet name="publishedForGroup" indexKey="_groupPublished" label="publishedForGroup"/>
+	  <facet name="isPublishedToAll" indexKey="_isPublishedToAll" label="isPublishedToAll" />
     <!--
     Example configuration for hierarchical facet based on
     the GeoNetwork region thesaurus or GEMET.
@@ -129,6 +130,7 @@
 
     <facet name="maintenanceAndUpdateFrequency" indexKey="cl_maintenanceAndUpdateFrequency"
            label="maintenanceAndUpdateFrequencies"/>
+    <facet name="mdActions" indexKey="_mdActions" label="mdActions"/>
   </facets>
 
   <summaryTypes>
@@ -169,6 +171,7 @@
     <item facet="isValid" max="3" sortBy="value" translator="apploc:validStatus-"/>
     <item facet="groupOwner" max="199" sortBy="value"
           translator="db:org.fao.geonet.repository.GroupRepository:findOne:int"/>
+    <item facet="isPublishedToAll" max="2" sortBy="value" translator="apploc:"/>
     <item facet="publishedForGroup" max="199" sortBy="value"
           translator="db:org.fao.geonet.repository.GroupRepository:findOneByName"/>
     <item facet="standard" max="15" sortBy="value"/>
