@@ -85,7 +85,9 @@
             </div>
           </xsl:when>
           <xsl:otherwise>
-
+            <xsl:if test="$isJsEnabled">
+              <xsl:call-template name="no-js-alert"/>
+            </xsl:if>
             <!-- AngularJS application -->
             <xsl:if test="$angularApp != 'gn_search' and $angularApp != 'gn_viewer' and $angularApp != 'gn_formatter_viewer'">
               <div class="navbar navbar-default gn-top-bar"
@@ -95,11 +97,8 @@
 
               <xsl:apply-templates mode="content" select="."/>
 
-              <xsl:if test="$isJsEnabled">
-                <xsl:call-template name="javascript-load"/>
-              </xsl:if>
             <xsl:if test="$isJsEnabled">
-              <xsl:call-template name="no-js-alert"/>
+              <xsl:call-template name="javascript-load"/>
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
@@ -116,7 +115,7 @@
 
   <xsl:template name="no-js-alert">
     <noscript>
-      <div class="alert" data-ng-hide="">
+      <div class="alert alert-warning" data-ng-hide="">
         <strong>
           <xsl:value-of select="$i18n/warning"/>
         </strong>
