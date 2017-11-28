@@ -715,7 +715,7 @@
     <help><![CDATA[
    This identifier shall be unique and ideally meaningful.
    This identifier shall be set to the directory name (written according to
-   <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Dsfbs_ref_dataset_l4">this convention</a>)
+   <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Dsfbs_ref_dataset_l4" target="_blank">this convention</a>)
    in which the dataset is contained.]]>
     </help>
   </element>
@@ -859,6 +859,7 @@
     <label>Date</label>
     <description>Reference date for the cited resource (YYYY-MM-DD)</description>
     <condition>mandatory</condition>
+    <btnLabel>Add date</btnLabel>
     <help>
       <![CDATA[The <b>date of publication</b> shall only be present for datasets which are already published on the EEA website.
   For datasets which are not published on the EEA website, this metadata element shall be removed.<br/>
@@ -877,6 +878,7 @@
 		<label>Date</label>
 		<description>Reference date for the cited resource (YYYY-MM-DD)</description>
 		<condition>mandatory</condition>
+    <btnLabel>Add date</btnLabel>
 	</element>
 	<element name="gmd:date" id="570.0" context="gmd:MD_Revision">
 		<label>Date of last update</label>
@@ -1598,7 +1600,7 @@
             <option value='GML'>Geography Markup Language</option>
             <option value='GRASS'>GRASS vector</option>
             <option value='KML'>Keyhole Markup Language</option>
-            <option value='MIF'>!MapInfo File</option>
+            <option value='MIF'>MapInfo File</option>
             <option value='PGeo'>ESRI Personal GeoDatabase</option>
             <option value='SHP'>ESRI Shapefile</option>
             <option value='Postgis'>Postgresql/Postgis database</option>

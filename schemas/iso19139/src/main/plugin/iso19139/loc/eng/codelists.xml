@@ -1410,13 +1410,13 @@
       <description>Data is no longer relevant</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <entry hideInEditMode="true">
       <code>onGoing</code>
       <label>On going</label>
       <description>Data is continually being updated</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <entry hideInEditMode="true">
       <code>planned</code>
       <label>Planned</label>
       <description>Fixed date has been established upon or by which the data will be created or
@@ -1424,13 +1424,13 @@
       </description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <entry hideInEditMode="true">
       <code>required</code>
       <label>Required</label>
       <description>Data needs to be generated or updated</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <entry hideInEditMode="true">
       <code>underDevelopment</code>
       <label>Under development</label>
       <description>Data is currently in the process of being created</description>
@@ -1677,13 +1677,13 @@
       <description>Textual or tabular data is used to represent geographic data</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <entry hideInEditMode="true">
       <code>tin</code>
       <label>TIN</label>
       <description>Triangulated irregular network</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <entry hideInEditMode="true">
       <code>stereoModel</code>
       <label>Stereo model</label>
       <description>Three-dimensional view formed by the intersecting homologous rays of an
@@ -1691,7 +1691,7 @@
       </description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <entry hideInEditMode="true">
       <code>video</code>
       <label>Video</label>
       <description>Scene from a video recording</description>

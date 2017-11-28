@@ -34,6 +34,84 @@
   <xml_iso19139>Save this metadata as an ISO19139 XML file</xml_iso19139>
   <xml_iso19139Tooai_dc>Save this metadata as an OAI Dublin Core XML file</xml_iso19139Tooai_dc>
 
+  <eea>EEA</eea>
+  <eea-identification>About the resource</eea-identification>
+  <eea-date-help>
+    <div class="alert alert-info">Set at least the creation date and the publication date for a dataset published on EEA website</div>
+  </eea-date-help>
+  <eea-edition-help>
+    <div class="alert alert-info">
+      If the dataset has a revision number (such as the Corine Land Cover changes 1990-2000 version 13),
+      this revision number shall be written in this metadata element.
+    </div>
+  </eea-edition-help>
+  <eea-identifier-help>
+    <div class="alert alert-info">
+      This identifier shall be unique and ideally meaningful.
+      This identifier shall be set to the directory name (written according to
+      <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Dsfbs_ref_dataset_l4" target="_blank">this convention</a>)
+      in which the dataset is contained.
+    </div>
+  </eea-identifier-help>
+  <eea-graphicOverview-add>Add an overview</eea-graphicOverview-add>
+  <eea-classification>Classification</eea-classification>
+  <eea-classification-help>
+    <div class="alert alert-info">
+      Select first:
+      <ul>
+        <li>At least one topic defined by ISO (defaults in EEA template are <em>environment</em> and <em>geoscientific information</em> but adapt them if needed)</li>
+        <li>One of the 34 INSPIRE themes</li>
+      </ul>
+
+      Then optionnaly improve the categorization and search by adding:
+      <ul>
+        <li>GEMET themes</li>
+        <li>EEA keywords</li>
+      </ul>
+
+      EEA category is always <em>geospatial data</em> for resources published on the SDI.
+      If you really need to add more keywords, switch to the <a href="#/metadata/{{gnCurrentEdit.id}}/tab/identificationInfo">full view</a>.
+    </div>
+  </eea-classification-help>
+
+  <eea-coverage>Spatial &amp; temporal coverage</eea-coverage>
+
+  <eea-contacts>Contact information</eea-contacts>
+  <eea-contact-help>
+    <div class="alert alert-info">
+      Describe at least the <strong>point of contact</strong> and the <strong>custodian</strong> for the resources.
+      Try to pick contact from the list of predefined entries.
+      Use the <i class="btn btn-default fa fa-plus"></i> only if the contact is not registered on the list.
+      Contact <a href="mailto:sdi@eea.europe.eu">sdi [at] eea.europa.eu</a> if you think a new contact should be added to the register.
+    </div>
+  </eea-contact-help>
+
+  <eea-resourceConstraints-help>
+    <div class="alert alert-info">
+      Use the following text if EEA data re-use policy applies, otherwise add the applicable policy
+      <blockquote>
+        <em style="font-size: 60%; line-height: 10px;">Unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged.  The EEA re-use policy follows Directive 2003/98/EC of the European Parliament and the Council on the re-use of public sector information throughout the European Union and Commission Decision 2006/291/EC, Euratom on the re-use of Commission information.  The EEA accepts no responsibility or liability whatsoever for the re-use of content accessible on its website.  Any inquiries about re-use of content on the EEA website should be addressed to Ove Caspersen, EEA, Kongens Nytorv 6, DK-1050 Copenhagen K, Tel +45 33 36 71 00, Fax +45 33 36 71 99, e-mail copyrights at eea.europa.eu</em>
+      </blockquote>
+    </div>
+  </eea-resourceConstraints-help>
+  <eea-technical-details>Technical information</eea-technical-details>
+  <eea-dq>Resource constraints &amp; data quality</eea-dq>
+
+  <addSpatialRepresentationType>Add spatial representation type (ie. grid, vector, text)</addSpatialRepresentationType>
+  <addCrs>Choose a coordinate reference system</addCrs>
+  <addCrs4326>WGS 84 (EPSG:4326)</addCrs4326>
+  <addCrs4258>ETRS 89 (EPSG:4258)</addCrs4258>
+  <addCrs3035>ETRS 89 / LAEA Europe  (EPSG:3035)</addCrs3035>
+  <addCrs32628>WGS 84 / UTM zone 28N (EPSG:32628)</addCrs32628>
+  <addCrs32629>WGS 84 / UTM zone 29N (EPSG:32629)</addCrs32629>
+  <addCrs32630>WGS 84 / UTM zone 30N (EPSG:32630)</addCrs32630>
+  <addCrs32631>WGS 84 / UTM zone 31N (EPSG:32631)</addCrs32631>
+  <addCrs32632>WGS 84 / UTM zone 32N (EPSG:32632)</addCrs32632>
+  <addCrs32633>WGS 84 / UTM zone 33N (EPSG:32633)</addCrs32633>
+  <addCrs32634>WGS 84 / UTM zone 34N (EPSG:32634)</addCrs32634>
+  <addCrs32635>WGS 84 / UTM zone 35N (EPSG:32635)</addCrs32635>
+  <addCrs32740>WGS 84 / UTM zone 40S (EPSG:32740)</addCrs32740>
+
   <!-- New strings added for the AngularJS editor -->
   <!-- View and tabs -->
   <advanced>Full</advanced>
