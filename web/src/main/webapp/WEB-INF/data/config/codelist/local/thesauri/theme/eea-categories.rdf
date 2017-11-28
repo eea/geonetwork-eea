@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:dcterms="http://purl.org/dc/terms/"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <skos:ConceptScheme rdf:about="https://www.eea.europa.eu/tags">
+    <dc:title>EEA categories</dc:title>
+    <dc:description>
+    </dc:description>
+    <dc:creator>
+      <foaf:Organization>
+        <foaf:name>EEA</foaf:name>
+      </foaf:Organization>
+    </dc:creator>
+    <dcterms:modified>2011-05-11 07:57:15</dcterms:modified>
+  </skos:ConceptScheme>
+
+  <skos:Concept rdf:about='https://www.eea.europa.eu/categories/1'>
+    <skos:prefLabel xml:lang='en'>geospatial data</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+</rdf:RDF>
+
