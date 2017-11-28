@@ -206,7 +206,7 @@
 
           var openLink = function(record, link) {
             var url = $filter('gnLocalized')(record.url) || record.url;
-            if (url && (record.url.indexOf('\\') == 0 ||
+            if (url && (url.indexOf('\\') == 0 ||
                url.indexOf('http') == 0 ||
                url.indexOf('ftp') == 0)) {
               return window.open(url, '_blank');
@@ -231,8 +231,10 @@
           this.map = {
             'WMS' : {
               iconClass: 'fa-globe',
-              label: 'addToMap',
-              action: addWMSToMap
+              // label: 'addToMap',
+              // action: addWMSToMap
+              label: 'openPage',
+              action: openLink
             },
             'WMTS' : {
               iconClass: 'fa-globe',
@@ -257,6 +259,11 @@
               iconClass: 'fa-globe',
               label: 'fileLink',
               action: null
+            },
+            'ESRI:REST' : {
+              iconClass: 'fa-globe',
+              label: 'openPage',
+              action: openLink
             },
             'MAP' : {
               iconClass: 'fa-map',
@@ -383,6 +390,8 @@
                 angular.isUndefined(resource['geonet:info'])) {
               if (protocolOrType.match(/wms/i)) {
                 return 'WMS';
+              } else if (protocolOrType.match(/esri/i)) {
+                return 'ESRI:REST';
               } else if (protocolOrType.match(/wmts/i)) {
                 return 'WMTS';
               } else if (protocolOrType.match(/EEA:FOLDERPATH/i)) {

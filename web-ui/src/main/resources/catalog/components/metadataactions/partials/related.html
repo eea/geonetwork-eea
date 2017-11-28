@@ -53,10 +53,10 @@
               <input class="form-control"
                      type="text"
                      onClick="this.setSelectionRange(0, this.value.length)"
-                     value="https://sdi.eea.europa.eu/data{{r.url.substr(0, r.url.lastIndexOf('/'))}}"/>
+                     value="https://sdi.eea.europa.eu/data{{r.url.eng.substr(0, r.url.eng.lastIndexOf('/'))}}"/>
               <span class="input-group-btn">
                 <a class="btn btn-default" type="button"
-                   data-ng-href="https://sdi.eea.europa.eu/data{{r.url.substr(0, r.url.eng.lastIndexOf('/'))}}"
+                   data-ng-href="https://sdi.eea.europa.eu/data{{r.url.eng.substr(0, r.url.eng.eng.lastIndexOf('/'))}}"
                    data-translate="">openLink</a>
               </span>
             </div>
@@ -65,7 +65,7 @@
               <input class="form-control"
                      type="text"
                      onClick="this.setSelectionRange(0, this.value.length)"
-                     value="\\\\sdi.eea.europa.eu\\data{{formatCifsLink(r.url | gnLocalized: lang)}}"/>
+                     value="\\\\sdi.eea.europa.eu\\data{{formatCifsLink(r.url.eng)}}"/>
 
             </div>
             <label data-translate="">ftpsLink</label>
@@ -73,7 +73,7 @@
               <input class="form-control"
                      type="text"
                      onClick="this.setSelectionRange(0, this.value.length)"
-                     value="ftps://sdi.eea.europa.eu/data{{r.url.substr(0, (r.url.eng.lastIndexOf('/'))}}"/>
+                     value="ftps://sdi.eea.europa.eu/data{{r.url.eng.substr(0, (r.url.eng.lastIndexOf('/')))}}"/>
             </div>
           </div>
 
@@ -81,7 +81,7 @@
 
           <div data-ng-switch-when="WMS">
             <p class="text-muted">
-              <span data-ng-show="isLayerProtocol(r.protocol)"
+              <span data-ng-show="r.title && isLayerProtocol(r.protocol)"
                     data-translate=""
                     data-translate-values="{url:'{{r.url | gnLocalized: lang}}', layer:'{{r.title | gnLocalized: lang}}'}">
                 wmsLinkDetails</span>
@@ -132,6 +132,12 @@
             <span data-translate=""
                   data-translate-values="{url:'{{r.url | gnLocalized: lang}}', layer:'{{r.title | gnLocalized: lang}}'}">
                   sosLinkDetails</span>
+          </div>
+
+          <div data-ng-switch-when="ESRI:REST">
+            <span data-translate=""
+                  data-translate-values="{url:'{{r.url | gnLocalized: lang}}', layer:'{{r.title | gnLocalized: lang}}'}">
+                  esriRestLinkDetails</span>
           </div>
 
           <div data-ng-switch-when="WCS">
@@ -215,7 +221,7 @@
 
         <button type="button"
                 class="btn btn-default btn-lg btn-block"
-                data-ng-if="r.protocol.contains('EEA:FILEPATH') && !r.url.contains('.mdb') && !r.url.contains('.sqlite') && !r.url.contains('.gdp')"
+                data-ng-if="r.protocol.contains('EEA:FILEPATH') && !r.url.eng.contains('.mdb') && !r.url.eng.contains('.sqlite') && !r.url.eng.contains('.gdp')"
                 data-ng-click="config.doAction('EEAMAP', r, uuid)">
           <span class="visible-lg-*">
             {{(config.getLabel('EEAMAP', type)) | translate}}
