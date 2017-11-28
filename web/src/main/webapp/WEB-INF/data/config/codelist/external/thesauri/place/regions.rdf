@@ -15,6 +15,7 @@
     <dcterms:modified>2015-07-17 12:00:00</dcterms:modified>
     <skos:hasTopConcept rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent"/>
     <skos:hasTopConcept rdf:resource="http://www.naturalearthdata.com/ne_admin#Country"/>
+    <skos:hasTopConcept rdf:resource="http://www.naturalearthdata.com/ne_admin#CountryGroup"/>
     <skos:hasTopConcept rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/Dependency"/>
     <skos:hasTopConcept rdf:resource="http://vocab.nerc.ac.uk/collection/C19/current/#SeaVoXGazetteer"/>
   </skos:ConceptScheme>
@@ -27,6 +28,11 @@
   <skos:Concept rdf:about="http://www.naturalearthdata.com/ne_admin#Country">
     <skos:prefLabel xml:lang="en">Countries</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Pays</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://geonetwork-opensource.org/thesaurus/naturalearth-and-seavox"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://www.naturalearthdata.com/ne_admin#CountryGroup">
+    <skos:prefLabel xml:lang="en">Country groups</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Groupements de pays</skos:prefLabel>
     <skos:inScheme rdf:resource="http://geonetwork-opensource.org/thesaurus/naturalearth-and-seavox"/>
   </skos:Concept>
   <skos:Concept rdf:about="http://www.naturalearthdata.com/ne_admin#Country/Dependency">
@@ -3909,6 +3915,7 @@
         <gml:upperCorner>44.807 71.165</gml:upperCorner>
       </gml:Envelope>
     </gml:BoundedBy>
+    <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#CountryGroup"/>
     <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent/Europe"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/AUT"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/BEL"/>
@@ -3954,6 +3961,7 @@
         <gml:upperCorner>44.807 71.165</gml:upperCorner>
       </gml:Envelope>
     </gml:BoundedBy>
+    <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#CountryGroup"/>
     <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent/Europe"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/AUT"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/BEL"/>
@@ -3999,6 +4007,7 @@
         <gml:upperCorner>44.807 71.165</gml:upperCorner>
       </gml:Envelope>
     </gml:BoundedBy>
+    <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#CountryGroup"/>
     <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent/Europe"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/ALB"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/AUT"/>
@@ -4050,6 +4059,7 @@
         <gml:upperCorner>31.077 71.165</gml:upperCorner>
       </gml:Envelope>
     </gml:BoundedBy>
+    <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#CountryGroup"/>
     <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent/Europe"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/CHE"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/ISL"/>
@@ -4066,6 +4076,7 @@
         <gml:upperCorner>34.099 59.671</gml:upperCorner>
       </gml:Envelope>
     </gml:BoundedBy>
+    <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#CountryGroup"/>
     <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent/Europe"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/CYP"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/CZE"/>
@@ -4088,6 +4099,7 @@
         <gml:upperCorner>31.570 70.075</gml:upperCorner>
       </gml:Envelope>
     </gml:BoundedBy>
+    <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#CountryGroup"/>
     <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent/Europe"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/AUT"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/BEL"/>
@@ -4115,6 +4127,7 @@
         <gml:upperCorner>34.099 70.075</gml:upperCorner>
       </gml:Envelope>
     </gml:BoundedBy>
+    <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#CountryGroup"/>
     <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent/Europe"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/AUT"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/BEL"/>
@@ -4155,6 +4168,7 @@
         <gml:upperCorner>34.099 70.075</gml:upperCorner>
       </gml:Envelope>
     </gml:BoundedBy>
+    <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#CountryGroup"/>
     <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent/Europe"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/AUT"/>
     <skos:narrower rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/BEL"/>
