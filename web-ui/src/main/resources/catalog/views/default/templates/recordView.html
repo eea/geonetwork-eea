@@ -107,8 +107,8 @@
         </h1>
 
         <div class="alert alert-info"
-             data-ng-bind-html="(mdView.current.record.abstract || mdView.current.record.defaultAbstract) | newlines"/>
-        
+             data-ng-bind-html="(mdView.current.record.abstract || mdView.current.record.defaultAbstract) | linky | newlines"/>
+
         <!-- Display the first metadata status (apply to ISO19139 record) -->
         <div data-ng-if="mdView.current.record.status_text.length > 0"
              title="{{mdView.current.record.status_text[0]}}"
@@ -217,7 +217,7 @@
             <th data-translate="">securityConstraints</th>
             <td>
               <p data-ng-repeat="c in mdView.current.record.securityConstraints track by $index"
-                 data-ng-bind-html="c | newlines">
+                 data-ng-bind-html="c | linky | newlines">
               </p>
             </td>
           </tr>
@@ -227,7 +227,7 @@
             <th data-translate="">resourceConstraints</th>
             <td>
               <p data-ng-repeat="c in mdView.current.record.resourceConstraints track by $index"
-                 data-ng-bind-html="c | newlines">
+                 data-ng-bind-html="c | linky | newlines">
               </p>
             </td>
           </tr>
@@ -313,7 +313,7 @@
           <tr data-ng-if="mdView.current.record.lineage">
             <th data-translate="">lineage</th>
             <td>
-              <p data-ng-bind-html="mdView.current.record.lineage | newlines"/>
+              <p data-ng-bind-html="mdView.current.record.lineage | linky | newlines"/>
             </td>
           </tr>
           <tr>
@@ -388,7 +388,7 @@
       </div>
 
       <div class="col-md-4 gn-md-side">
-        <section data-ng-if="mdView.current.record.overviews.length > 0">
+        <section class="gn-md-side-overview" data-ng-if="mdView.current.record.overviews.length > 0">
           <h4>
             <i class="fa fa-fw fa-image"></i>
             <span data-translate="">overview</span>
@@ -405,10 +405,8 @@
             </div>
           </div>
         </section>
-        </br>
 
-
-        <section data-ng-if="mdView.current.record.geoBox.length > 0">
+        <section class="gn-md-side-extent" data-ng-if="mdView.current.record.geoBox.length > 0">
           <h4>
             <i class="fa fa-fw fa-map-marker"></i>
             <span data-translate="">extent</span>
@@ -425,9 +423,9 @@
           </p>
 
         </section>
-        </br>
 
-        <section data-ng-if="mdView.current.record.creationDate ||
+        <section class="gn-md-side-dates"
+                 data-ng-if="mdView.current.record.creationDate ||
                              mdView.current.record.publicationDate ||
                              mdView.current.record.revisionDate ||
                              mdView.current.record.tempExtentBegin ||
@@ -459,14 +457,13 @@
             <dd>
               <span data-gn-humanize-time="{{mdView.current.record.tempExtentBegin}}"
                     data-format="YYYY-MM-DD"/>
-              &nbsp;<i class="fa fa-forward"></i>&nbsp;
+              &nbsp;<i class="fa fa-fw fa-forward"></i>&nbsp;
               <span data-gn-humanize-time="{{mdView.current.record.tempExtentEnd}}"
                     data-format="YYYY-MM-DD"/>
             </dd>
           </dl>
           </p>
         </section>
-        </br>
 
         <!--<section data-ng-repeat="c in mdView.current.record.getAllContacts().resource track by $index">
           <h4>
@@ -500,8 +497,7 @@
           </div>
         </section></br>-->
 
-
-        <section>
+        <section class="gn-md-side-providedby">
           <h4>
             <i class="fa fa-fw fa-cog"></i>
             <span data-translate="">sourceCatalog</span>
@@ -509,11 +505,10 @@
           <img ng-src="{{gnUrl}}../images/logos/{{mdView.current.record.source}}.png"
                class="gn-source-logo"/>
         </section>
-        </br>
 
-        <section>
+        <section class="gn-md-side-calendar">
           <h4>
-            <i class="fa fa-calendar"></i>&nbsp;
+            <i class="fa fa-fw fa-calendar"></i>
             <span data-translate="">updatedOn</span>
           </h4>
           <p>
@@ -521,9 +516,8 @@
                   data-from-now=""></span>
           </p>
         </section>
-        </br>
 
-        <section>
+        <section class="gn-md-side-social">
           <h4>
             <i class="fa fa-fw fa-share-square-o"></i>
             <span data-translate="">shareOn</span>
@@ -557,11 +551,10 @@
             title="{{'permalink' | translate}}"
             class="btn btn-default"><i class="fa fa-fw fa-link"></i></a>
         </section>
-        </br>
 
-        <section>
+        <section class="gn-md-side-rating">
           <h4>
-            <i class="fa fa-fw"></i>
+            <i class="fa fa-fw fa-star-half-o"></i>
             <span data-translate="">rate</span>
           </h4>
           <div data-gn-metadata-rate="mdView.current.record"/>
