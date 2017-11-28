@@ -56,7 +56,7 @@
                      value="https://sdi.eea.europa.eu/data{{r.url.substr(0, r.url.lastIndexOf('/'))}}"/>
               <span class="input-group-btn">
                 <a class="btn btn-default" type="button"
-                   data-ng-href="https://sdi.eea.europa.eu/data{{r.url.substr(0, r.url.lastIndexOf('/'))}}"
+                   data-ng-href="https://sdi.eea.europa.eu/data{{r.url.substr(0, r.url.eng.lastIndexOf('/'))}}"
                    data-translate="">openLink</a>
               </span>
             </div>
@@ -65,7 +65,7 @@
               <input class="form-control"
                      type="text"
                      onClick="this.setSelectionRange(0, this.value.length)"
-                     value="\\\\sdi.eea.europa.eu\\data{{formatCifsLink(r.url)}}"/>
+                     value="\\\\sdi.eea.europa.eu\\data{{formatCifsLink(r.url | gnLocalized: lang)}}"/>
 
             </div>
             <label data-translate="">ftpsLink</label>
@@ -73,7 +73,7 @@
               <input class="form-control"
                      type="text"
                      onClick="this.setSelectionRange(0, this.value.length)"
-                     value="ftps://sdi.eea.europa.eu/data{{r.url.substr(0, r.url.lastIndexOf('/'))}}"/>
+                     value="ftps://sdi.eea.europa.eu/data{{r.url.substr(0, (r.url.eng.lastIndexOf('/'))}}"/>
             </div>
           </div>
 
