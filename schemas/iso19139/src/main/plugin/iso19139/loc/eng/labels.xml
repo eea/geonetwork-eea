@@ -71,10 +71,10 @@
     <label>Codespace</label>
     <description>Name or identifier of the person or organization responsible for
       namespace</description>
-    <helper>
+    <!--<helper>
       <option value="OGP Surveying &amp; Positioning Committee">OGP Surveying &amp; Positioning
         Committee</option>
-    </helper>
+    </helper>-->
   </element>
 	<element name="gco:Date" id="364.0" context="gmd:CI_Citation">
 		<label>Edition Date</label>

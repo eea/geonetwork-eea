@@ -541,8 +541,9 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>WGS 84 (EPSG:4326)</gco:CharacterString>
+                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:4326</gco:CharacterString>
                         </gmd:code>
+                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -554,8 +555,9 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>ETRS 89 (EPSG:4258)</gco:CharacterString>
+                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:4258</gco:CharacterString>
                         </gmd:code>
+                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -567,8 +569,9 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>ETRS 89 / LAEA Europe (EPSG:3035)</gco:CharacterString>
+                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:3035</gco:CharacterString>
                         </gmd:code>
+                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -580,8 +583,9 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>WGS 84 / UTM zone 28N (EPSG:32628)</gco:CharacterString>
+                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32628</gco:CharacterString>
                         </gmd:code>
+                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -593,8 +597,9 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>WGS 84 / UTM zone 29N (EPSG:32629)</gco:CharacterString>
+                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32629</gco:CharacterString>
                         </gmd:code>
+                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -606,8 +611,9 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>WGS 84 / UTM zone 30N (EPSG:32630)</gco:CharacterString>
+                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32630</gco:CharacterString>
                         </gmd:code>
+                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -619,8 +625,9 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>WGS 84 / UTM zone 31N (EPSG:32631)</gco:CharacterString>
+                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32631</gco:CharacterString>
                         </gmd:code>
+                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -632,8 +639,9 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>WGS 84 / UTM zone 32N (EPSG:32632)</gco:CharacterString>
+                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32632</gco:CharacterString>
                         </gmd:code>
+                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -645,8 +653,9 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>WGS 84 / UTM zone 33N (EPSG:32633)</gco:CharacterString>
+                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32633</gco:CharacterString>
                         </gmd:code>
+                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -658,8 +667,9 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>WGS 84 / UTM zone 34N (EPSG:32634)</gco:CharacterString>
+                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32634</gco:CharacterString>
                         </gmd:code>
+                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -671,8 +681,9 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>WGS 84 / UTM zone 35N (EPSG:32635)</gco:CharacterString>
+                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32635</gco:CharacterString>
                         </gmd:code>
+                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -684,8 +695,9 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>WGS 84 / UTM zone 40S (EPSG:32740)</gco:CharacterString>
+                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32740</gco:CharacterString>
                         </gmd:code>
+                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
