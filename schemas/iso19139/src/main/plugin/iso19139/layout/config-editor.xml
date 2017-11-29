@@ -417,6 +417,8 @@
         <text ref="eea-associatedResource-help"/>
         <directive data-gn-onlinesrc-list=""/>
         <directive data-gn-validation-report=""/>
+
+        <text ref="eea-contact"/>
       </sidePanel>
 
       <tab id="eea-default" default="true" mode="flat">
@@ -429,6 +431,7 @@
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:edition"/>
           <text ref="eea-identifier-help"/>
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/>
+          <text ref="eea-abstract-help"/>
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:abstract"/>
         </section>
 
@@ -518,10 +521,32 @@
             </template>
           </action>
 
+          <text ref="eea-hr"/>
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:language"/>
-          <field xpath="/gmd:MD_Metadata/gmd:distributionInfo/*/gmd:distributionFormat"
-                 or="distributionFormat" in="/gmd:MD_Metadata/gmd:distributionInfo/*"/>
 
+          <text ref="eea-hr"/>
+          <field name="eea-distributionFormat"
+                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/*/gmd:distributionFormat/*/gmd:name"/>
+          <action type="add" btnLabel="eea-distributionFormat-add" or="distributionFormat"
+                  in="/gmd:MD_Metadata/gmd:distributionInfo/*">
+            <template>
+              <snippet>
+                <gmd:distributionFormat>
+                  <gmd:MD_Format>
+                    <gmd:name>
+                      <gco:CharacterString></gco:CharacterString>
+                    </gmd:name>
+                    <gmd:version gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </gmd:version>
+                  </gmd:MD_Format>
+                </gmd:distributionFormat>
+              </snippet>
+            </template>
+          </action>
+
+
+          <text ref="eea-hr"/>
           <field xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo"/>
           <!-- Add one of the CRS proposed using the dropdown -->
           <action type="add"
@@ -709,8 +734,8 @@
           <text ref="eea-resourceConstraints-help"/>
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation"/>
 
-
-          <field xpath="/gmd:MD_Metadata/gmd:dataQuality/*/gmd:lineage"/>
+          <text ref="eea-lineage"/>
+          <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:lineage"/>
 
           <!-- Conformity -->
         </section>
