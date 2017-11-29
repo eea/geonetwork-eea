@@ -519,6 +519,8 @@
           </action>
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:language"/>
+          <field xpath="/gmd:MD_Metadata/gmd:distributionInfo/*/gmd:distributionFormat"
+                 or="distributionFormat" in="/gmd:MD_Metadata/gmd:distributionInfo/*"/>
 
           <field xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo"/>
           <!-- Add one of the CRS proposed using the dropdown -->
