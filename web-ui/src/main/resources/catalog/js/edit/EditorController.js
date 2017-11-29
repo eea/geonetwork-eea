@@ -194,7 +194,7 @@
 
                 // Default view to display is default
                 // it may be overriden by route params or custom function
-                var defaultTab = 'default';
+                var defaultTab = 'eea-default';
 
 
                 // It may be overriden by an application
