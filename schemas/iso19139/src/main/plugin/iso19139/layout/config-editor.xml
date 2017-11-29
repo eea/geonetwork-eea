@@ -414,6 +414,7 @@
   <views>
     <view name="eea" upAndDownControlHidden="true">
       <sidePanel>
+        <text ref="eea-associatedResource-help"/>
         <directive data-gn-onlinesrc-list=""/>
         <directive data-gn-validation-report=""/>
       </sidePanel>
@@ -429,14 +430,6 @@
           <text ref="eea-identifier-help"/>
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/>
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:abstract"/>
-
-
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:graphicOverview"/>
-          <action type="associatedResource"
-                  name="eea-graphicOverview-add"
-                  btnClass="fa gn-icon-thumbnail"
-                  process="onlinesrc"/>
-
         </section>
 
 
@@ -464,7 +457,7 @@
 
           <!-- -Display action only if none set. -->
           <action type="add" btnLabel="addSpatialRepresentationType" or="spatialRepresentationType"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo[*/gmd:spatialRepresentationType/*/@codeListValue != '']) = 0"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialRepresentationType/*/@codeListValue) = 0"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*">
             <template>
               <snippet>

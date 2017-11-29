@@ -88,12 +88,21 @@
 
   <eea-resourceConstraints-help>
     <div class="alert alert-info">
-      Use the following text if EEA data re-use policy applies, otherwise add the applicable policy
+      For use limitation, use the following text if EEA data re-use policy applies, otherwise add the applicable policy
       <blockquote>
         <em style="font-size: 60%; line-height: 10px;">Unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged.  The EEA re-use policy follows Directive 2003/98/EC of the European Parliament and the Council on the re-use of public sector information throughout the European Union and Commission Decision 2006/291/EC, Euratom on the re-use of Commission information.  The EEA accepts no responsibility or liability whatsoever for the re-use of content accessible on its website.  Any inquiries about re-use of content on the EEA website should be addressed to Ove Caspersen, EEA, Kongens Nytorv 6, DK-1050 Copenhagen K, Tel +45 33 36 71 00, Fax +45 33 36 71 99, e-mail copyrights at eea.europa.eu</em>
       </blockquote>
     </div>
   </eea-resourceConstraints-help>
+
+  <eea-associatedResource-help>
+    <div class="alert alert-info">
+      Define here at least one <strong>graphic overview</strong> and <strong>links</strong> to the resource
+      for data access. Define the link for internal access using the protocol "EEA:FILEPATH"
+      and a link for web download access. Optionally add a link to a related services
+      using "OGC:WMS" and/or "ESRI:REST" protocols.
+    </div>
+  </eea-associatedResource-help>
   <eea-technical-details>Technical information</eea-technical-details>
   <eea-dq>Resource constraints &amp; data quality</eea-dq>
 
