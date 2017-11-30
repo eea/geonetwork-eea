@@ -171,7 +171,7 @@
 
   <eea-contact>
     <div class="alert alert-info">
-      <i class="fa fa-question-circle"></i>&#160; If you have any question, please contact <a href="mailto:sdi@eea.europa.eu">sdi@eea.europa.eu</a>.
+      <i class="fa fa-question-circle"></i>&#160; If you have any questions, please contact <a href="mailto:sdi@eea.europa.eu">sdi@eea.europa.eu</a>.
     </div>
   </eea-contact>
   <addSpatialRepresentationType>Add spatial representation type (ie. grid, vector, text)</addSpatialRepresentationType>
