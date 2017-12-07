@@ -27,14 +27,19 @@
 
 
 
+
+
+
+
+
   goog.require('gn_atom');
-  goog.require('gn_relatedresources_service');
   goog.require('gn_related_observer_directive');
+  goog.require('gn_relatedresources_service');
   goog.require('gn_wms');
   goog.require('gn_wmts');
 
   var module = angular.module('gn_related_directive', [
-    'gn_relatedresources_service', 'gn_related_observer_directive', 'gn_wms', 
+    'gn_relatedresources_service', 'gn_related_observer_directive', 'gn_wms',
     'gn_wmts', 'gn_atom'
   ]);
 
@@ -121,6 +126,7 @@
                 return url.replace(/\//g, '\\');
               };
               var elem = element[0];
+              scope.lang = scope.lang || scope.$parent.lang;
               element.on('$destroy', function() {
                 // Unregister the directive in the observer if it is defined
                 if (controller) {
@@ -171,9 +177,9 @@
                        if (controller) {
                           controller.finishRequest(elem, scope.relationFound);
                         }
-                     } , function () {
+                     } , function() {
                         controller.finishRequest(elem, false);
-                    });
+                  });
                 }
               };
 
