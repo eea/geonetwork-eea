@@ -948,6 +948,7 @@
       </activation>
       <properties>
         <env>dev</env>
+        <geonetwork.data.dir>${geonetwork.webapp.dir}/WEB-INF/data</geonetwork.data.dir>
         <geonetwork.config.security>config-security</geonetwork.config.security>
         <geonetwork.webapp.name>geonetwork</geonetwork.webapp.name>
         <security.config.file>config-security-noldap.xml</security.config.file>
