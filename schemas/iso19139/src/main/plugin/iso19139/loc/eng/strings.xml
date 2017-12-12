@@ -35,143 +35,331 @@
   <xml_iso19139Tooai_dc>Save this metadata as an OAI Dublin Core XML file</xml_iso19139Tooai_dc>
 
   <eea>EEA</eea>
-  <eea-identification>About the resource</eea-identification>
+  <eea-identification>Identification of the resource</eea-identification>
   <eea-hr>
     <hr/>
   </eea-hr>
   <eea-lineage>
-    <hr/>
     <div class="row">
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          All relevant steps taken in order to create the datasets shall be described here (process history) while addressing version specificities where suitable. The overall quality of the dataset should be included as well in this metadata element.
+          This element provides a  statement  on  process history  and the  overall  quality  of  the  spatial  data  set.  The process history may be described with the information on the source data used and the main transformation steps that took place in creating the current data set (or dataset series). This element should also address version specificities where suitable. It should also include a statement whether the data set has been validated or quality assured, whether it is the official version (if multiple versions exist), and whether it has legal validity.
         </div>
       </div>
     </div>
-  </eea-lineage>
-  <eea-date-help>
     <hr/>
+  </eea-lineage>
+
+  <eea-title-help>
     <div class="row">
       <div class="col-sm-2"/>
       <div class="col-sm-10">
-        <div class="alert alert-info">Set at least the creation date and the publication date for a dataset published on EEA website</div>
+        <div class="alert alert-info">The title should be self-explanatory and should not contain acronyms unless they are widely known. In any case, should an acronym be used in the title, it shall be made explicit in the abstract. For datasets with versions please <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfocitationtitle" target="_blank">follow this convention</a></div>
       </div>
     </div>
+    <hr/>
+  </eea-title-help>
+
+  <eea-date-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">Set at least the creation date for the dataset, and publication date if the dataset is published on the EEA website. There shall be not more than one date of creation and publication. Optionally, date of last revision can be added when relevant.</div>
+      </div>
+    </div>
+    <hr/>
   </eea-date-help>
   <eea-edition-help>
-    <hr/>
     <div class="row">
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          If the dataset has a revision number (such as the Corine Land Cover changes 1990-2000 version 13),
-          this revision number shall be written in this metadata element.
+          If the dataset has a revision number, this number shall be written in this metadata element.
         </div>
       </div>
     </div>
+    <hr/>
   </eea-edition-help>
   <eea-distributionFormat>Format</eea-distributionFormat>
   <eea-distributionFormat-add>Add distribution format</eea-distributionFormat-add>
   <eea-abstract-help>
-    <hr/>
     <div class="row">
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          When the text is imported from a previous metadata record or from the EEA website,
-          the dataset name in the abstract (if present) might need some editing.
-          Acronyms should be written in full when first used.
+          This is a brief narrative summary of the content of the resource. The abstract provides a clear and concise statement that enables the reader to
+          understand the content of the data  or service. Ideally it should also
+          contain information about the coverage (linguistic transcriptions of the
+          extent or location), main attributes, data sources, legal references and
+          importance of the work. Acronyms should be written in full when first used.
+          When the metadata refers to a revision of an already existing dataset, it is
+          important to indicate as well the main changes on this new version.
         </div>
       </div>
     </div>
+    <hr/>
   </eea-abstract-help>
   <eea-identifier-help>
-    <hr/>
     <div class="row">
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          This identifier shall be unique and ideally meaningful.
-          This identifier shall be set to the directory name (written according to
-          <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Dsfbs_ref_dataset_l4" target="_blank">this convention</a>)
-          in which the dataset is contained.
+          The dataset identifier shall be unique and ideally meaningful, following
+          <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Dsfbs_ref_dataset_l4" target="_blank">this convention</a>.
         </div>
       </div>
     </div>
+    <hr/>
   </eea-identifier-help>
   <eea-graphicOverview-add>Add an overview</eea-graphicOverview-add>
-  <eea-classification>Classification</eea-classification>
-  <eea-classification-help>
+  <eea-classification>Classification and keywords</eea-classification>
+  <eea-topic>Classification - ISO 19115 Topic categories</eea-topic>
+  <eea-topic-help>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          Choose at least one from this code list. This is a high-level classification scheme defined in Part D 2 of the <a href="http://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32008R1205&amp;from=EN" target="_blank">INSPIRE Metadata Regulation 1205/2008/EC</a> and are derived directly from the topic categories defined in MD_TopicCategoryCode (B.5.27) of ISO 19115.
+        </div>
+      </div>
+    </div>
+  </eea-topic-help>
+
+  <eea-inspire-help>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          Choose at least one of the 34 INSPIRE Spatial Data Themes.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-inspire-help>
+
+  <eea-gemet-help>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          Choose at least 2-3 GEMET concepts.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-gemet-help>
+  <eea-country-help>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          This metadata element is used to describe the intended spatial coverage of a dataset in text form. Where appropriate, country codes such as those described <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Country_codes" target="_blank">here</a> should be used instead of listing all Member States.
+
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-country-help>
+  <eea-categories-help>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          By default the EEA category is set to “geospatial data” as the SDI only publishes metadata of geospatial datasets for now. Should you need to add more keywords here please contact <a href="mailto:sdi@eea.europe.eu">the SDI Team</a>.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-categories-help>
+  <eea-keywords-help>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          EEA keywords shall be short, meaningful and shall not duplicate other metadata elements (such as INSPIRE Themes, GEMET or EEA categories). Whenever possible, keywords from <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Catalogueeea_keywords" target="_blank">the list of terms used in the EEA website</a> to tag datasets shall be reused.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-keywords-help>
+  <eea-keyword-list>EEA keyword list</eea-keyword-list>
+  <eea-category>Category</eea-category>
+  <eea-catalogcategory-help>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          Choose additional categories if needed.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-catalogcategory-help>
+
+  <eea-coverage>Spatial &amp; temporal coverage</eea-coverage>
+  <eea-add-extent>Add bounding box</eea-add-extent>
+  <eea-bbox-help>
     <div class="row">
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          Select first:
-          <ul>
-            <li>At least one topic defined by ISO (defaults in EEA template are <em>environment</em> and <em>geoscientific information</em> but adapt them if needed)</li>
-            <li>One of the 34 INSPIRE themes</li>
-          </ul>
-
-          Then optionnaly improve the categorization and search by adding:
-          <ul>
-            <li>GEMET themes</li>
-            <li>EEA keywords</li>
-          </ul>
-
-          EEA category is always <em>geospatial data</em> for resources published on the SDI.
-          If you really need to add more keywords, switch to the <a href="#/metadata/{{gnCurrentEdit.id}}/tab/identificationInfo">full view</a>.
+        This is the actual geographic extent of the resource, represented by the minimum rectangle which encompasses all features in the dataset. The  bounding  box  shall  be  expressed  in  decimal  degrees  with  a precision of at least 2 decimals, with positive east and north. For datasets including overseas territories, it is advised to split the overall geographic extent into several bounding boxes. The coordinates of the bounding boxes shall be expressed in any geodetic coordinate reference system with the Greenwich Prime Meridian.
         </div>
       </div>
     </div>
-  </eea-classification-help>
+    <hr/>
+  </eea-bbox-help>
+  <eea-temporalresolution-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          ISO 19115-1 refers to this element as the smallest resolvable temporal period in a resource. <a href="https://link.springer.com/referenceworkentry/10.1007%2F978-0-387-35973-1_1376" target="_blank">Springer</a> defines temporal resolution as the amount of time needed to revisit and acquire data for the exact same location. When applied to remote sensing, this amount of time depends on the orbital characteristics of the sensor platform as well as sensor characteristics. This element is to be filled in in particular for time series.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-temporalresolution-help>
+  <eea-temporal-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          This element describes the time period covered by the content of the dataset, normally related to the data collection period. When the dataset refers to a (specific) full year, Begin Date should be set to 1st January of that year and End Date should be set to 31st December of that year.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-temporal-help>
 
-  <eea-coverage>Spatial &amp; temporal coverage</eea-coverage>
 
-  <eea-contacts>Contact information</eea-contacts>
+  <eea-maintenance-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          Frequency with which modifications and deletions are made to the data after it is first produced. This dataset is required for all datasets with a revision number. This element takes a value out of the codelist of ISO19115 element MD_MaintenanceFrequencyCode). In case no frequency from the list is satisfactory, switch to the <a href="#/metadata/{{gnCurrentEdit.id}}?tab=identificationInfo">full view</a> and use the element PeriodDuration as indicated in the EEA metadata guidelines.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-maintenance-help>
+  <eea-format-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          This elements provides the format(s) in which the resource is stored and distributed. The element should be expressed using codes from the list derived from those used by the libraries GDAL and OGR (if a format is missing, contact <a href="mailto:sdi@eea.europe.eu">the SDI Team</a>)
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-format-help>
+
+  <eea-additional>Additional technical information</eea-additional>
+  <eea-contacts>Responsible Party</eea-contacts>
   <eea-contact-help>
     <div class="row">
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          Describe at least the <strong>point of contact</strong> and the <strong>custodian</strong> for the resources.
-          Try to pick contact from the list of predefined entries.
-          Use the <i class="btn btn-default fa fa-plus"></i> only if the contact is not registered on the list.
-          Contact <a href="mailto:sdi@eea.europe.eu">sdi [at] eea.europa.eu</a> if you think a new contact should be added to the register.
+          Select a contact from the list of predefined entries for both roles “point of contact” and “custodian” of the dataset. Contact <a href="mailto:sdi@eea.europe.eu">the SDI team</a> if you think a new contact should be added to the register.
         </div>
       </div>
     </div>
   </eea-contact-help>
 
+  <eea-resourceConstraints>Resource Constraints</eea-resourceConstraints>
   <eea-resourceConstraints-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          This element provides a statement on any limitation that can affect the fitness of use of the resource or metadata.  The EEA template includes by default <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInforesourceConstraints" target="_blank">the standard text to be included for those datasets owned by EEA which can be freely distributed</a>. For datasets which are not owned by EEA but are distributed by EEA please insert the statement corresponding to the applicable policy. In case of a doubt please contact  <a href="mailto:sdi@eea.europe.eu">the SDI team</a>.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-resourceConstraints-help>
+
+  <eea-otherConstraints-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          Other restrictions and legal prerequisites for accessing and using the resource or metadata. For EEA datasets this element is set to “No limitations”.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-otherConstraints-help>
+
+
+  <eea-accessConstraints-help>
     <hr/>
     <div class="row">
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          For use limitation, use the following text if EEA data re-use policy applies, otherwise add the applicable policy
-          <blockquote>
-            <em style="font-size: 60%; line-height: 10px;">Unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged.  The EEA re-use policy follows Directive 2003/98/EC of the European Parliament and the Council on the re-use of public sector information throughout the European Union and Commission Decision 2006/291/EC, Euratom on the re-use of Commission information.  The EEA accepts no responsibility or liability whatsoever for the re-use of content accessible on its website.  Any inquiries about re-use of content on the EEA website should be addressed to Ove Caspersen, EEA, Kongens Nytorv 6, DK-1050 Copenhagen K, Tel +45 33 36 71 00, Fax +45 33 36 71 99, e-mail copyrights at eea.europa.eu</em>
-          </blockquote>
+          Code list based element which refers to any constraints applied to assure the protection of privacy or intellectual property and any special restriction or limitation on obtaining the resource or the metadata. By default and for EEA datasets this element is set to “Other Restrictions”. For datasets which are not owned by EEA but are distributed by EEA please select the appropriate code from the list. In case of a doubt please contact <a href="mailto:sdi@eea.europe.eu">the SDI team</a>.
         </div>
       </div>
     </div>
-  </eea-resourceConstraints-help>
+  </eea-accessConstraints-help>
+
+
+  <eea-crs-help>
+    <hr/>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          The Coordinate Reference System shall be referred to with its <a href="http://www.spatialreference.org/" target="_blank">EPSG code</a>, here we provide only those more commonly used at the EEA. Should you require any CRS not present in this list please contact <a href="mailto:sdi@eea.europe.eu">the SDI Team</a>.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-crs-help>
+
+  <eea-spatialreptype-help>
+    <hr/>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          Method used to spatially represent geographic information, based on the elements of the codelist defined in ISO 19115 MD_SpatialRepresentationTypeCode.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-spatialreptype-help>
+
+  <eea-spatialresolution-help>
+    <hr/>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          This element refers to the level of detail of the data set. It shall be expressed either as a resolution distance (typically for gridded data and imagery-derived products) or the equivalent scale (typically for maps or map-derived products), but not both. Although it is possible to specify several spatial resolutions, we require to have only one (smallest scale or coarsest resolution).
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-spatialresolution-help>
 
   <eea-associatedResource-help>
-    <div class="alert alert-info">
-      Define here at least one <strong>graphic overview</strong> and <strong>links</strong> to the resource
-      for data access. Define the link for internal access using the protocol "EEA:FILEPATH"
-      and a link for web download access. Optionally add a link to a related services
-      using "OGC:WMS" and/or "ESRI:REST" protocols.
+    <div class="alert alert-warning">
+      When available, please add the link to the WMS GetCapabilities using “OGC:WMS” protocol as well as the link to the ESRI Rest service using the “ESRI:REST” protocol. Links for internal access, web download and the graphic overview will be added by the SDI Team during the registration process.
     </div>
   </eea-associatedResource-help>
-  <eea-technical-details>Technical information</eea-technical-details>
-  <eea-dq>Resource constraints &amp; data quality</eea-dq>
+  <eea-technical-details>Spatial representation and resolution</eea-technical-details>
+  <eea-dq>Data quality</eea-dq>
+  <eea-constraints>Resource constraints</eea-constraints>
 
   <eea-contact>
     <div class="alert alert-info">
-      <i class="fa fa-question-circle"></i>&#160; If you have any questions, please contact <a href="mailto:sdi@eea.europa.eu">sdi@eea.europa.eu</a>.
+      <i class="fa fa-question-circle"></i>&#160; If you have any questions, please read the <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Cataloguemetadata_guidelines" target="_blank">detailed EEA Metadata Guidelines</a> or contact <a href="mailto:sdi@eea.europa.eu">sdi [at] eea.europa.eu</a>.
     </div>
   </eea-contact>
   <addSpatialRepresentationType>Add spatial representation type (ie. grid, vector, text)</addSpatialRepresentationType>

@@ -2447,6 +2447,7 @@
             Listed examples are not exhaustive. NOTE It is understood there are overlaps between
             general categories and the user is encouraged to select the one most
             appropriate.</description>
+    <condition>mandatory</condition>
 	</element>
 	<element name="gmd:topologyLevel" id="177.0">
 		<label>Topology level</label>

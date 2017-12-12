@@ -423,130 +423,99 @@
 
       <tab id="eea-default" default="true" mode="flat">
         <section name="eea-identification">
+
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
-          <text ref="eea-date-help"/>
+          <text ref="eea-title-help"/>
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/>
+          <text ref="eea-identifier-help"/>
+
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:date"
                  or="date" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*"/>
-          <text ref="eea-edition-help"/>
+          <text ref="eea-date-help"/>
+
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:edition"/>
-          <text ref="eea-identifier-help"/>
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/>
-          <text ref="eea-abstract-help"/>
+          <text ref="eea-edition-help"/>
+
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:abstract"/>
+          <text ref="eea-abstract-help"/>
         </section>
 
 
         <section name="eea-classification">
           <text ref="eea-classification-help"/>
 
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:topicCategory"/>
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords"/>
+          <section name="eea-topic">
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:topicCategory"
+                   or="topicCategory" in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
+            <text ref="eea-topic-help"/>
+          </section>
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']"/>
+          <text ref="eea-inspire-help"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'GEMET']"/>
+          <text ref="eea-gemet-help"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Continents, countries, sea regions of the world.']"/>
+          <text ref="eea-country-help"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA categories']"/>
+          <text ref="eea-categories-help"/>
+
+          <section name="eea-keyword-list">
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA keyword list']/*/gmd:keyword"
+                   or="keyword"
+                   in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA keyword list']/*"/>
+            <text ref="eea-keywords-help"/>
+          </section>
+
+          <section name="eea-category">
+            <directive data-gn-metadata-category-updater="mdCategories"
+                       data-metadata-uuid="gnCurrentEdit.uuid"
+                       data-gn-mode="autocomplete"/>
+            <text ref="eea-catalogcategory-help"/>
+          </section>
         </section>
 
         <section name="eea-coverage">
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent"/>
-        </section>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement"/>
+          <action type="add"
+                  btnLabel="eea-add-extent"
+                  or="extent"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+            <template>
+              <snippet>
+                <gmd:extent>
+                  <gmd:EX_Extent>
+                    <gmd:geographicElement>
+                      <gmd:EX_GeographicBoundingBox>
+                        <gmd:westBoundLongitude>
+                          <gco:Decimal></gco:Decimal>
+                        </gmd:westBoundLongitude>
+                        <gmd:eastBoundLongitude>
+                          <gco:Decimal></gco:Decimal>
+                        </gmd:eastBoundLongitude>
+                        <gmd:southBoundLatitude>
+                          <gco:Decimal></gco:Decimal>
+                        </gmd:southBoundLatitude>
+                        <gmd:northBoundLatitude>
+                          <gco:Decimal></gco:Decimal>
+                        </gmd:northBoundLatitude>
+                      </gmd:EX_GeographicBoundingBox>
+                    </gmd:geographicElement>
+                  </gmd:EX_Extent>
+                </gmd:extent>
+              </snippet>
+            </template>
+          </action>
+
+          <text ref="eea-bbox-help"/>
 
 
-        <section name="eea-contacts">
-          <text ref="eea-contact-help"/>
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact"
-                 or="pointOfContact" in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/*/gmd:temporalElement"/>
         </section>
 
 
         <section name="eea-technical-details">
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialRepresentationType"/>
 
-          <!-- -Display action only if none set. -->
-          <action type="add" btnLabel="addSpatialRepresentationType" or="spatialRepresentationType"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialRepresentationType/*/@codeListValue) = 0"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
-            <template>
-              <snippet>
-                <gmd:spatialRepresentationType>
-                  <gmd:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
-                                                        codeListValue=""/>
-                </gmd:spatialRepresentationType>
-              </snippet>
-            </template>
-          </action>
-
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/
-                    */gmd:spatialResolution/
-                      */gmd:equivalentScale/*/gmd:denominator"
-                 del="../../../.."/>
-
-
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/
-                    */gmd:spatialResolution/*/gmd:distance"
-                 del="../.."/>
-          <!--
-          if="count(gmd:MD_Metadata/gmd:identificationInfo[*/gmd:spatialRepresentationType/*/@codeListValue = 'vector']) = 1"
-          -->
-          <action type="add" btnLabel="spatialResolution" or="spatialResolution"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
-            <template>
-              <snippet>
-                <gmd:spatialResolution>
-                  <gmd:MD_Resolution>
-                    <gmd:equivalentScale>
-                      <gmd:MD_RepresentativeFraction>
-                        <gmd:denominator>
-                          <gco:Integer/>
-                        </gmd:denominator>
-                      </gmd:MD_RepresentativeFraction>
-                    </gmd:equivalentScale>
-                  </gmd:MD_Resolution>
-                </gmd:spatialResolution>
-              </snippet>
-            </template>
-          </action>
-
-          <!--
-          if="count(gmd:MD_Metadata/gmd:identificationInfo[*/gmd:spatialRepresentationType/*/@codeListValue = 'grid']) = 1"
-          -->
-          <action type="add" btnLabel="spatialDistance" or="spatialResolution"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
-            <template>
-              <snippet>
-                <gmd:spatialResolution>
-                  <gmd:MD_Resolution>
-                    <gmd:distance>
-                      <gco:Distance uom="m"/>
-                    </gmd:distance>
-                  </gmd:MD_Resolution>
-                </gmd:spatialResolution>
-              </snippet>
-            </template>
-          </action>
-
-          <text ref="eea-hr"/>
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:language"/>
-
-          <text ref="eea-hr"/>
-          <field name="eea-distributionFormat"
-                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/*/gmd:distributionFormat/*/gmd:name"/>
-          <action type="add" btnLabel="eea-distributionFormat-add" or="distributionFormat"
-                  in="/gmd:MD_Metadata/gmd:distributionInfo/*">
-            <template>
-              <snippet>
-                <gmd:distributionFormat>
-                  <gmd:MD_Format>
-                    <gmd:name>
-                      <gco:CharacterString></gco:CharacterString>
-                    </gmd:name>
-                    <gmd:version gco:nilReason="missing">
-                      <gco:CharacterString/>
-                    </gmd:version>
-                  </gmd:MD_Format>
-                </gmd:distributionFormat>
-              </snippet>
-            </template>
-          </action>
-
-
-          <text ref="eea-hr"/>
           <field xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo"/>
           <!-- Add one of the CRS proposed using the dropdown -->
           <action type="add"
@@ -725,20 +694,149 @@
               </snippet>
             </template>
           </action>
+
+          <text ref="eea-crs-help"/>
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialRepresentationType"/>
+
+          <!-- -Display action only if none set. -->
+          <action type="add" btnLabel="addSpatialRepresentationType" or="spatialRepresentationType"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialRepresentationType/*/@codeListValue) = 0"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+            <template>
+              <snippet>
+                <gmd:spatialRepresentationType>
+                  <gmd:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
+                                                        codeListValue=""/>
+                </gmd:spatialRepresentationType>
+              </snippet>
+            </template>
+          </action>
+
+          <text ref="eea-spatialreptype-help"/>
+
+
+
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/
+                    */gmd:spatialResolution/
+                      */gmd:equivalentScale/*/gmd:denominator"
+                 del="../../../.."/>
+
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/
+                    */gmd:spatialResolution/*/gmd:distance"
+                 del="../.."/>
+          <!--
+          if="count(gmd:MD_Metadata/gmd:identificationInfo[*/gmd:spatialRepresentationType/*/@codeListValue = 'vector']) = 1"
+          -->
+          <action type="add" btnLabel="spatialResolution" or="spatialResolution"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+            <template>
+              <snippet>
+                <gmd:spatialResolution>
+                  <gmd:MD_Resolution>
+                    <gmd:equivalentScale>
+                      <gmd:MD_RepresentativeFraction>
+                        <gmd:denominator>
+                          <gco:Integer/>
+                        </gmd:denominator>
+                      </gmd:MD_RepresentativeFraction>
+                    </gmd:equivalentScale>
+                  </gmd:MD_Resolution>
+                </gmd:spatialResolution>
+              </snippet>
+            </template>
+          </action>
+
+          <!--
+          if="count(gmd:MD_Metadata/gmd:identificationInfo[*/gmd:spatialRepresentationType/*/@codeListValue = 'grid']) = 1"
+          -->
+          <action type="add" btnLabel="spatialDistance" or="spatialResolution"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+            <template>
+              <snippet>
+                <gmd:spatialResolution>
+                  <gmd:MD_Resolution>
+                    <gmd:distance>
+                      <gco:Distance uom="m"/>
+                    </gmd:distance>
+                  </gmd:MD_Resolution>
+                </gmd:spatialResolution>
+              </snippet>
+            </template>
+          </action>
+
+          <text ref="eea-spatialresolution-help"/>
+
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Temporal resolution']"/>
+          <text ref="eea-temporalresolution-help"/>
+
         </section>
 
-        <section name="eea-dq">
+
+
+        <section name="eea-additional">
+
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceMaintenance"/>
+          <text ref="eea-maintenance-help"/>
 
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints[gmd:MD_LegalConstraints]"/>
-          <text ref="eea-resourceConstraints-help"/>
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:language"/>
 
-          <text ref="eea-lineage"/>
+          <text ref="eea-hr"/>
+          <field name="eea-distributionFormat"
+                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/*/gmd:distributionFormat/*/gmd:name"/>
+          <action type="add" btnLabel="eea-distributionFormat-add" or="distributionFormat"
+                  in="/gmd:MD_Metadata/gmd:distributionInfo/*">
+            <template>
+              <snippet>
+                <gmd:distributionFormat>
+                  <gmd:MD_Format>
+                    <gmd:name>
+                      <gco:CharacterString></gco:CharacterString>
+                    </gmd:name>
+                    <gmd:version gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </gmd:version>
+                  </gmd:MD_Format>
+                </gmd:distributionFormat>
+              </snippet>
+            </template>
+          </action>
+
+
+          <text ref="eea-format-help"/>
+
+        </section>
+
+
+
+        <section name="eea-dq">
           <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:lineage"/>
+          <text ref="eea-lineage"/>
 
           <!-- Conformity -->
         </section>
+
+
+        <section name="eea-resourceConstraints">
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints"/>
+          <text ref="eea-accessConstraints-help"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints"/>
+          <text ref="eea-otherConstraints-help"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation"/>
+          <text ref="eea-resourceConstraints-help"/>
+        </section>
+
+
+        <section name="eea-contacts">
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact"
+                 or="pointOfContact" in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
+          <text ref="eea-contact-help"/>
+        </section>
+
       </tab>
     </view>
     <!--Turn on INSPIRE according to system settings -->
