@@ -540,6 +540,7 @@
 		<description>Access constraints applied to assure the protection of privacy or intellectual
             property, and any special restrictions or limitations on obtaining the
             resource</description>
+    <condition>mandatory</condition>
 	</element>
 	<element name="gmd:address" id="525.0" context="gmd:CI_ResponsibleParty">
 		<label>Address</label>
@@ -941,8 +942,8 @@
 	</element>
 	<element name="gmd:denominator" id="57.0">
 		<label>Denominator</label>
-		<description>The number below the line in a vulgar fraction</description>
-		<condition>add either a denominator or a distance</condition>
+		<description>The number below the line in a vulgar fraction. Add either a denominator or a distance</description>
+		<condition>mandatory</condition>
 		<helper>
 			<option value="5000">1:5´000</option>
 			<option value="10000">1:10´000</option>
@@ -1075,8 +1076,7 @@
 	</element>
 	<element name="gmd:distance" id="61.0">
 		<label>Distance</label>
-		<description>Ground sample distance</description>
-		<condition>Provide a distance if no equivalent Scale is documented</condition>
+		<description>Ground sample distance. Provide a distance if no equivalent Scale is documented</description>
 		<helper relAtt="uom">
 			<option value="0.10" title="m">10 cm</option>
 			<option value="0.25" title="m">25 cm</option>
@@ -1088,6 +1088,7 @@
 			<option value="30" title="m">30 m</option>
 			<option value="100" title="m">100 m</option>
 		</helper>
+    <condition>mandatory</condition>
 	</element>
 	<element name="gmd:distributionFormat" id="271.0">
 		<label>Distribution format</label>
@@ -1434,10 +1435,10 @@
 	</element>
 	<element name="gmd:language" context="gmd:MD_DataIdentification"
 		id="39.0">
-		<label>Language</label>
+		<label>Language of dataset</label>
 		<description>Language(s) used within the dataset</description>
 		<help>language(s) used within the dataset</help>
-		<_condition>Mandatory</_condition>
+		<condition>mandatory</condition>
 	</element>
 	<element name="gmd:language" context="gmd:MD_FeatureCatalogueDescription"
 		id="235.0">
@@ -2261,6 +2262,7 @@
     <description>Denominator of the representative fraction on a source map</description>
     <help>Although it is possible to specify several spatial resolutions, we require
       to have only one (smallest scale or coarsest resolution).</help>
+    <condition>mandatory</condition>
   </element>
 
 	<element name="gmd:scaleFactor" id="266.0">
@@ -2354,6 +2356,7 @@
 	<element name="gmd:spatialRepresentationType" id="37.0">
 		<label>Spatial representation type</label>
 		<description>Method used to spatially represent geographic information</description>
+    <condition>mandatory</condition>
 	</element>
 	<element name="gmd:spatialResolution" id="38.0">
 		<label>Spatial resolution</label>
@@ -2382,7 +2385,7 @@
 		<label>Statement</label>
 		<description>General explanation of the data producer_s knowledge about the lineage of a
             dataset</description>
-		<condition>conditional</condition>
+		<condition>mandatory</condition>
 	</element>
 	<element name="gmd:status" id="28.0">
 		<label>Status</label>
@@ -2539,6 +2542,7 @@
 		<label>Use limitation</label>
 		<description>Limitation affecting the fitness for use of the resource. Example, _not to be
             used for navigation_</description>
+    <condition>mandatory</condition>
 	</element>
 	<element name="gmd:userContactInfo" id="66.0">
 		<label>User contact info</label>
@@ -3251,6 +3255,7 @@
     </element>
     <element name="gmd:MD_SpatialRepresentationTypeCode">
         <label>Spatial Representation Type</label>
+      <condition>mandatory</condition>
     </element>
     <element name="gmd:MD_CharacterSetCode">
         <label>Character Set</label>

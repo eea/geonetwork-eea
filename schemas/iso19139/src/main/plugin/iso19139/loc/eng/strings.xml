@@ -35,7 +35,7 @@
   <xml_iso19139Tooai_dc>Save this metadata as an OAI Dublin Core XML file</xml_iso19139Tooai_dc>
 
   <eea>EEA</eea>
-  <eea-identification>Identification of the resource</eea-identification>
+  <eea-identification>Identification of resource</eea-identification>
   <eea-hr>
     <hr/>
   </eea-hr>
@@ -81,7 +81,7 @@
     </div>
     <hr/>
   </eea-edition-help>
-  <eea-distributionFormat>Format</eea-distributionFormat>
+  <eea-distributionFormat>Distribution format</eea-distributionFormat>
   <eea-distributionFormat-add>Add distribution format</eea-distributionFormat-add>
   <eea-abstract-help>
     <div class="row">
@@ -98,7 +98,6 @@
         </div>
       </div>
     </div>
-    <hr/>
   </eea-abstract-help>
   <eea-identifier-help>
     <div class="row">
@@ -124,7 +123,13 @@
         </div>
       </div>
     </div>
+    <hr/>
   </eea-topic-help>
+  <eea-keyword-inspire>Keywords – INSPIRE theme</eea-keyword-inspire>
+  <eea-keyword-gemet>Keywords – GEMET concepts</eea-keyword-gemet>
+  <eea-keyword-cat>Keywords – EEA data categories</eea-keyword-cat>
+  <eea-keyword-list>Keywords – EEA keywords list</eea-keyword-list>
+  <eea-keyword-spatial>Keywords – Spatial coverage of the dataset</eea-keyword-spatial>
 
   <eea-inspire-help>
     <div class="row">
@@ -183,22 +188,22 @@
     </div>
     <hr/>
   </eea-keywords-help>
-  <eea-keyword-list>EEA keyword list</eea-keyword-list>
   <eea-category>Category</eea-category>
   <eea-catalogcategory-help>
     <div class="row">
       <div class="col-sm-2"></div>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          Choose additional categories if needed.
+          Choose additional categories if needed. For example, "geodatacore" is needed
+          if the resource is related to GEOSS (it will be accessible using csw-geoss endpoint).
         </div>
       </div>
     </div>
-    <hr/>
   </eea-catalogcategory-help>
 
-  <eea-coverage>Spatial &amp; temporal coverage</eea-coverage>
+  <eea-coverage>Spatial and Temporal Extent</eea-coverage>
   <eea-add-extent>Add bounding box</eea-add-extent>
+  <eea-add-temporal-extent>Add temporal extent</eea-add-temporal-extent>
   <eea-bbox-help>
     <div class="row">
       <div class="col-sm-2"/>
@@ -254,7 +259,6 @@
         </div>
       </div>
     </div>
-    <hr/>
   </eea-format-help>
 
   <eea-additional>Additional technical information</eea-additional>
@@ -297,7 +301,6 @@
 
 
   <eea-accessConstraints-help>
-    <hr/>
     <div class="row">
       <div class="col-sm-2"/>
       <div class="col-sm-10">
@@ -306,11 +309,11 @@
         </div>
       </div>
     </div>
+    <hr/>
   </eea-accessConstraints-help>
 
 
   <eea-crs-help>
-    <hr/>
     <div class="row">
       <div class="col-sm-2"/>
       <div class="col-sm-10">
@@ -323,7 +326,6 @@
   </eea-crs-help>
 
   <eea-spatialreptype-help>
-    <hr/>
     <div class="row">
       <div class="col-sm-2"/>
       <div class="col-sm-10">
@@ -336,7 +338,6 @@
   </eea-spatialreptype-help>
 
   <eea-spatialresolution-help>
-    <hr/>
     <div class="row">
       <div class="col-sm-2"/>
       <div class="col-sm-10">

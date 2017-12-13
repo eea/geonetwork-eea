@@ -110,6 +110,7 @@ input[type=text], input[type=number], select {
 
 .gn-editor-container {
   padding: 20px 5px;
+  min-height: 85vh;
 }
 
 @media only screen and (max-width: 815px) {
@@ -857,6 +858,13 @@ gn-bounding-polygon {
 .gn-tab-eea-default {
   blockquote {
     width: 100%;
+  }
+  > fieldset > legend {
+    border-bottom: groove thick #9d9d9d;
+
+  }
+  hr {
+    border-color: #9e8e8e;
   }
   .descriptiveKeywords [data-gn-field-highlight-remove],
   [data-gn-keyword-selector] .col-sm-1 {
