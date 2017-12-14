@@ -48,7 +48,6 @@
         </div>
       </div>
     </div>
-    <hr/>
   </eea-lineage>
 
   <eea-title-help>
@@ -188,14 +187,13 @@
     </div>
     <hr/>
   </eea-keywords-help>
-  <eea-category>Category</eea-category>
+  <eea-category>Catalogue category</eea-category>
   <eea-catalogcategory-help>
     <div class="row">
       <div class="col-sm-2"></div>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          Choose additional categories if needed. For example, "geodatacore" is needed
-          if the resource is related to GEOSS (it will be accessible using csw-geoss endpoint).
+          Select additional catalogue labels for your metadata. The default label is set to datasets as the EEA metadata catalogue so far only includes dataset or a dataset series metadata. Should the dataset be free, full and open for re-use, please also select the label geossdatacore so this dataset can be discovered by the <a href="http://www.geoportal.org/" target="_blank">GEOSS</a>.
         </div>
       </div>
     </div>
@@ -224,7 +222,6 @@
         </div>
       </div>
     </div>
-    <hr/>
   </eea-temporalresolution-help>
   <eea-temporal-help>
     <div class="row">
@@ -235,9 +232,9 @@
         </div>
       </div>
     </div>
-    <hr/>
   </eea-temporal-help>
 
+  <eea-add-temporal-resolution>Add temporal resolution</eea-add-temporal-resolution>
 
   <eea-maintenance-help>
     <div class="row">
@@ -268,7 +265,7 @@
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          Select a contact from the list of predefined entries for both roles “point of contact” and “custodian” of the dataset. Contact <a href="mailto:sdi@eea.europe.eu">the SDI team</a> if you think a new contact should be added to the register.
+          This element provides the identification of those organisations associated with the dataset. By default, and for EEA owned datasets, the responsible party for the roles of “point of contact” and “custodian” of the dataset is set to the EEA. If the dataset is not owned by the EEA, select a contact from the list of predefined entries. Contact <a href="mailto:sdi@eea.europe.eu">the SDI team</a> if you think a new contact should be added to the register.
         </div>
       </div>
     </div>
@@ -284,7 +281,6 @@
         </div>
       </div>
     </div>
-    <hr/>
   </eea-resourceConstraints-help>
 
   <eea-otherConstraints-help>
@@ -360,6 +356,9 @@
 
   <eea-contact>
     <div class="alert alert-info">
+      Elements with a <label style="color: #a94442;font-size: 1em;">*</label> are mandatory with respect to the EEA metadata guidelines.
+    </div>
+    <div class="alert alert-info">
       <i class="fa fa-question-circle"></i>&#160; If you have any questions, please read the <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Cataloguemetadata_guidelines" target="_blank">detailed EEA Metadata Guidelines</a> or contact <a href="mailto:sdi@eea.europa.eu">sdi [at] eea.europa.eu</a>.
     </div>
   </eea-contact>
@@ -394,7 +393,7 @@
   <distributionInfo>Distribution</distributionInfo>
   <dataQualityInfo>Quality</dataQualityInfo>
   <spatialRepresentationInfo>Spatial rep.</spatialRepresentationInfo>
-  <referenceSystemInfo>Ref. system</referenceSystemInfo>
+  <referenceSystemInfo>Ref. system *</referenceSystemInfo>
   <contentInfo>Content</contentInfo>
   <portrayalCatalogueInfo>Portrayal</portrayalCatalogueInfo>
   <metadataConstraints>Md. constraints</metadataConstraints>
