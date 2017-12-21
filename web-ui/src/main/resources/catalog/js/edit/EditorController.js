@@ -464,6 +464,8 @@
         }
       };
 
+      $scope.closeOnly = closeEditor;
+
       $scope.cancel = function(refreshForm) {
         $scope.savedStatus = gnCurrentEdit.savedStatus;
         if ($location.search()['justcreated']) {

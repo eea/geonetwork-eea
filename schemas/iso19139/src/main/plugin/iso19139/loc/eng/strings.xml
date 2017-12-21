@@ -170,7 +170,7 @@
       <div class="col-sm-2"></div>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          By default the EEA category is set to “geospatial data” as the SDI only publishes metadata of geospatial datasets for now. Should you need to add more keywords here please contact <a href="mailto:sdi@eea.europe.eu">the SDI Team</a>.
+          By default the EEA category is set to “geospatial data” as the SDI only publishes metadata of geospatial datasets for now. Should you need to add more keywords here please contact <a href="mailto:sdi@eea.europa.eu">the SDI Team</a>.
         </div>
       </div>
     </div>
@@ -252,7 +252,7 @@
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          This elements provides the format(s) in which the resource is stored and distributed. The element should be expressed using codes from the list derived from those used by the libraries GDAL and OGR (if a format is missing, contact <a href="mailto:sdi@eea.europe.eu">the SDI Team</a>)
+          This elements provides the format(s) in which the resource is stored and distributed. The element should be expressed using codes from the list derived from those used by the libraries GDAL and OGR (if a format is missing, contact <a href="mailto:sdi@eea.europa.eu">the SDI Team</a>)
         </div>
       </div>
     </div>
@@ -265,7 +265,7 @@
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          This element provides the identification of those organisations associated with the dataset. By default, and for EEA owned datasets, the responsible party for the roles of “point of contact” and “custodian” of the dataset is set to the EEA. If the dataset is not owned by the EEA, select a contact from the list of predefined entries. Contact <a href="mailto:sdi@eea.europe.eu">the SDI team</a> if you think a new contact should be added to the register.
+          This element provides the identification of those organisations associated with the dataset. By default, and for EEA owned datasets, the responsible party for the roles of “point of contact” and “custodian” of the dataset is set to the EEA. If the dataset is not owned by the EEA, select a contact from the list of predefined entries. Contact <a href="mailto:sdi@eea.europa.eu">the SDI team</a> if you think a new contact should be added to the register.
         </div>
       </div>
     </div>
@@ -277,7 +277,7 @@
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          This element provides a statement on any limitation that can affect the fitness of use of the resource or metadata.  The EEA template includes by default <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInforesourceConstraints" target="_blank">the standard text to be included for those datasets owned by EEA which can be freely distributed</a>. For datasets which are not owned by EEA but are distributed by EEA please insert the statement corresponding to the applicable policy. In case of a doubt please contact  <a href="mailto:sdi@eea.europe.eu">the SDI team</a>.
+          This element provides a statement on any limitation that can affect the fitness of use of the resource or metadata.  The EEA template includes by default <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInforesourceConstraints" target="_blank">the standard text to be included for those datasets owned by EEA which can be freely distributed</a>. For datasets which are not owned by EEA but are distributed by EEA please insert the statement corresponding to the applicable policy. In case of a doubt please contact  <a href="mailto:sdi@eea.europa.eu">the SDI team</a>.
         </div>
       </div>
     </div>
@@ -301,7 +301,7 @@
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          Code list based element which refers to any constraints applied to assure the protection of privacy or intellectual property and any special restriction or limitation on obtaining the resource or the metadata. By default and for EEA datasets this element is set to “Other Restrictions”. For datasets which are not owned by EEA but are distributed by EEA please select the appropriate code from the list. In case of a doubt please contact <a href="mailto:sdi@eea.europe.eu">the SDI team</a>.
+          Code list based element which refers to any constraints applied to assure the protection of privacy or intellectual property and any special restriction or limitation on obtaining the resource or the metadata. By default and for EEA datasets this element is set to “Other Restrictions”. For datasets which are not owned by EEA but are distributed by EEA please select the appropriate code from the list. In case of a doubt please contact <a href="mailto:sdi@eea.europa.eu">the SDI team</a>.
         </div>
       </div>
     </div>
@@ -314,7 +314,7 @@
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          The Coordinate Reference System shall be referred to with its <a href="http://www.spatialreference.org/" target="_blank">EPSG code</a>, here we provide only those more commonly used at the EEA. Should you require any CRS not present in this list please contact <a href="mailto:sdi@eea.europe.eu">the SDI Team</a>.
+          The Coordinate Reference System shall be referred to with its <a href="http://www.spatialreference.org/" target="_blank">EPSG code</a>, here we provide only those more commonly used at the EEA. Should you require any CRS not present in this list please contact <a href="mailto:sdi@eea.europa.eu">the SDI Team</a>.
         </div>
       </div>
     </div>
@@ -346,7 +346,7 @@
   </eea-spatialresolution-help>
 
   <eea-associatedResource-help>
-    <div class="alert alert-warning">
+    <div class="alert alert-info">
       When available, please add the link to the WMS GetCapabilities using “OGC:WMS” protocol as well as the link to the ESRI Rest service using the “ESRI:REST” protocol. Links for internal access, web download and the graphic overview will be added by the SDI Team during the registration process.
     </div>
   </eea-associatedResource-help>
@@ -356,10 +356,10 @@
 
   <eea-contact>
     <div class="alert alert-info">
-      Elements with a <label style="color: #a94442;font-size: 1em;">*</label> are mandatory with respect to the EEA metadata guidelines.
+      <i class="fa fa-question-circle"></i>&#160; For more details about how to create EEA metadata please read the <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Cataloguemetadata_guidelines" target="_blank">EEA Metadata Guidelines</a>. Elements with a <label style="color: #a94442;font-size: 1em;">*</label> are mandatory with respect to the EEA metadata guidelines.
     </div>
     <div class="alert alert-info">
-      <i class="fa fa-question-circle"></i>&#160; If you have any questions, please read the <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Cataloguemetadata_guidelines" target="_blank">detailed EEA Metadata Guidelines</a> or contact <a href="mailto:sdi@eea.europa.eu">sdi [at] eea.europa.eu</a>.
+      If you have any questions, please contact <a href="mailto:sdi@eea.europa.eu">sdi [at] eea.europa.eu</a>.
     </div>
   </eea-contact>
   <addSpatialRepresentationType>Add spatial representation type (ie. grid, vector, text)</addSpatialRepresentationType>
@@ -393,7 +393,7 @@
   <distributionInfo>Distribution</distributionInfo>
   <dataQualityInfo>Quality</dataQualityInfo>
   <spatialRepresentationInfo>Spatial rep.</spatialRepresentationInfo>
-  <referenceSystemInfo>Ref. system *</referenceSystemInfo>
+  <referenceSystemInfo>Ref. system</referenceSystemInfo>
   <contentInfo>Content</contentInfo>
   <portrayalCatalogueInfo>Portrayal</portrayalCatalogueInfo>
   <metadataConstraints>Md. constraints</metadataConstraints>

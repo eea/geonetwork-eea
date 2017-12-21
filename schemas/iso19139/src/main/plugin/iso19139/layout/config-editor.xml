@@ -415,8 +415,9 @@
   <views>
     <view name="eea" upAndDownControlHidden="true">
       <sidePanel>
-        <text ref="eea-associatedResource-help"/>
         <directive data-gn-onlinesrc-list=""/>
+        <text ref="eea-associatedResource-help"/>
+
         <directive data-gn-validation-report=""/>
 
         <text ref="eea-contact"/>
@@ -2585,6 +2586,7 @@
 
     </view>
 
+    <!--<view name="default" displayIfServiceInfo="count(session[profile = 'Administrator']) = 1">-->
     <view name="default">
       <sidePanel>
         <directive data-gn-onlinesrc-list=""/>
