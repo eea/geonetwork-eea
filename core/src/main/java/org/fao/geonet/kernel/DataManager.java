@@ -31,14 +31,14 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.SetMultimap;
-import com.google.common.collect.Sets;
-
+import com.google.common.collect.*;
+import jeeves.server.UserSession;
+import jeeves.server.context.ServiceContext;
+import jeeves.transaction.TransactionManager;
+import jeeves.transaction.TransactionTask;
+import jeeves.xlink.Processor;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Priority;
 import org.eclipse.jetty.util.ConcurrentHashSet;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.GeonetContext;
@@ -47,46 +47,9 @@ import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Geonet.Namespaces;
 import org.fao.geonet.constants.Params;
-import org.fao.geonet.domain.Constants;
-import org.fao.geonet.domain.Group;
-import org.fao.geonet.domain.ISODate;
-import org.fao.geonet.domain.InspireAtomFeed;
-import org.fao.geonet.domain.Metadata;
-import org.fao.geonet.domain.MetadataCategory;
-import org.fao.geonet.domain.MetadataDataInfo;
-import org.fao.geonet.domain.MetadataDataInfo_;
-import org.fao.geonet.domain.MetadataFileUpload;
-import org.fao.geonet.domain.MetadataFileUpload_;
-import org.fao.geonet.domain.MetadataHarvestInfo;
-import org.fao.geonet.domain.MetadataRatingByIp;
-import org.fao.geonet.domain.MetadataRatingByIpId;
-import org.fao.geonet.domain.MetadataSourceInfo;
-import org.fao.geonet.domain.MetadataStatus;
-import org.fao.geonet.domain.MetadataStatusId;
-import org.fao.geonet.domain.MetadataStatusId_;
-import org.fao.geonet.domain.MetadataStatus_;
-import org.fao.geonet.domain.MetadataType;
-import org.fao.geonet.domain.MetadataValidation;
-import org.fao.geonet.domain.MetadataValidationId;
-import org.fao.geonet.domain.MetadataValidationStatus;
-import org.fao.geonet.domain.Metadata_;
-import org.fao.geonet.domain.OperationAllowed;
-import org.fao.geonet.domain.OperationAllowedId;
-import org.fao.geonet.domain.OperationAllowedId_;
-import org.fao.geonet.domain.Pair;
-import org.fao.geonet.domain.Profile;
-import org.fao.geonet.domain.ReservedGroup;
-import org.fao.geonet.domain.ReservedOperation;
-import org.fao.geonet.domain.User;
-import org.fao.geonet.domain.UserGroup;
-import org.fao.geonet.domain.UserGroupId;
+import org.fao.geonet.domain.*;
 import org.fao.geonet.events.md.MetadataIndexCompleted;
-import org.fao.geonet.exceptions.JeevesException;
-import org.fao.geonet.exceptions.NoSchemaMatchesException;
-import org.fao.geonet.exceptions.SchemaMatchConflictException;
-import org.fao.geonet.exceptions.SchematronValidationErrorEx;
-import org.fao.geonet.exceptions.ServiceNotAllowedEx;
-import org.fao.geonet.exceptions.XSDValidationErrorEx;
+import org.fao.geonet.exceptions.*;
 import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.search.index.IndexingList;
@@ -94,26 +57,8 @@ import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.notifier.MetadataNotifierManager;
-import org.fao.geonet.repository.GroupRepository;
-import org.fao.geonet.repository.InspireAtomFeedRepository;
-import org.fao.geonet.repository.MetadataCategoryRepository;
-import org.fao.geonet.repository.MetadataFileUploadRepository;
-import org.fao.geonet.repository.MetadataRatingByIpRepository;
-import org.fao.geonet.repository.MetadataRepository;
-import org.fao.geonet.repository.MetadataStatusRepository;
-import org.fao.geonet.repository.MetadataValidationRepository;
-import org.fao.geonet.repository.OperationAllowedRepository;
-import org.fao.geonet.repository.SortUtils;
-import org.fao.geonet.repository.StatusValueRepository;
-import org.fao.geonet.repository.Updater;
-import org.fao.geonet.repository.UserGroupRepository;
-import org.fao.geonet.repository.UserRepository;
-import org.fao.geonet.repository.specification.MetadataFileUploadSpecs;
-import org.fao.geonet.repository.specification.MetadataSpecs;
-import org.fao.geonet.repository.specification.MetadataStatusSpecs;
-import org.fao.geonet.repository.specification.OperationAllowedSpecs;
-import org.fao.geonet.repository.specification.UserGroupSpecs;
-import org.fao.geonet.repository.specification.UserSpecs;
+import org.fao.geonet.repository.*;
+import org.fao.geonet.repository.specification.*;
 import org.fao.geonet.repository.statistic.PathSpec;
 import org.fao.geonet.resources.Resources;
 import org.fao.geonet.util.ThreadUtils;
@@ -121,11 +66,7 @@ import org.fao.geonet.utils.IO;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.fao.geonet.utils.Xml.ErrorHandler;
-import org.jdom.Attribute;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.Namespace;
+import org.jdom.*;
 import org.jdom.filter.ElementFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -140,22 +81,16 @@ import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.Root;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.Vector;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -163,19 +98,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.Root;
-
-import jeeves.server.UserSession;
-import jeeves.server.context.ServiceContext;
-import jeeves.transaction.TransactionManager;
-import jeeves.transaction.TransactionTask;
-import jeeves.xlink.Processor;
 
 import static org.fao.geonet.repository.specification.MetadataSpecs.hasMetadataUuid;
 import static org.springframework.data.jpa.domain.Specifications.where;
@@ -187,7 +109,8 @@ import static org.springframework.data.jpa.domain.Specifications.where;
 public class DataManager implements ApplicationEventPublisherAware {
 
     private static final int METADATA_BATCH_PAGE_SIZE = 100000;
-    Lock indexLock = new ReentrantLock();
+    Lock waitLoopLock = new ReentrantLock();
+    Lock indexingLock = new ReentrantLock();
     Set<String> waitForIndexing = new HashSet<String>();
     Set<String> indexing = new HashSet<String>();
     Set<IndexMetadataTask> batchIndex = new ConcurrentHashSet<IndexMetadataTask>();
@@ -264,7 +187,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param root
      * @param name
      * @param value
@@ -274,7 +196,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param md
      */
     public static void setNamespacePrefix(final Element md) {
@@ -291,7 +212,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param md
      * @param ns
      */
@@ -316,7 +236,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @return
      */
     public EditLib getEditLib() {
@@ -539,11 +458,11 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     public boolean isIndexing() {
-        indexLock.lock();
+        indexingLock.lock();
         try {
             return !indexing.isEmpty() || !batchIndex.isEmpty();
         } finally {
-            indexLock.unlock();
+            indexingLock.unlock();
         }
     }
 
@@ -566,7 +485,7 @@ public class DataManager implements ApplicationEventPublisherAware {
      * TODO javadoc.
      */
     public void indexMetadata(final String metadataId, boolean forceRefreshReaders) throws Exception {
-        indexLock.lock();
+        waitLoopLock.lock();
         try {
             if (waitForIndexing.contains(metadataId)) {
                 return;
@@ -575,16 +494,23 @@ public class DataManager implements ApplicationEventPublisherAware {
                 try {
                     waitForIndexing.add(metadataId);
                     // don't index the same metadata 2x
-                    wait(200);
+                    synchronized (this) {
+                        wait(200);
+                    }
                 } catch (InterruptedException e) {
                     return;
                 } finally {
                     waitForIndexing.remove(metadataId);
                 }
             }
-            indexing.add(metadataId);
+            indexingLock.lock();
+            try {
+                indexing.add(metadataId);
+            } finally {
+                indexingLock.unlock();
+            }
         } finally {
-            indexLock.unlock();
+            waitLoopLock.unlock();
         }
         Metadata fullMd;
 
@@ -763,14 +689,19 @@ public class DataManager implements ApplicationEventPublisherAware {
             }
             getSearchManager().index(getSchemaManager().getSchemaDir(schema), md, metadataId, moreFields, metadataType, root, forceRefreshReaders);
         } catch (Exception x) {
-            Log.error(Geonet.DATA_MANAGER, "The metadata document index with id=" + metadataId + " is corrupt/invalid - ignoring it. Error: " + x.getMessage(), x);
+            if (Log.isEnabledFor(Geonet.INDEX_ENGINE, Priority.ERROR_INT)) {
+                Log.error(Geonet.INDEX_ENGINE, "The metadata document index with id=" + metadataId
+                    + " is corrupt/invalid - ignoring it. Error: " + x.getMessage(), x);
+            }
             fullMd = null;
         } finally {
-            indexLock.lock();
+            indexingLock.lock();
             try {
                 indexing.remove(metadataId);
+            } catch (Exception e) {
+                Log.warning(Geonet.INDEX_ENGINE, "Exception removing " + metadataId + " from indexing set", e);
             } finally {
-                indexLock.unlock();
+                indexingLock.unlock();
             }
         }
         if (fullMd != null) {
@@ -784,7 +715,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param beginAt
      * @param interval
      * @throws Exception
@@ -794,7 +724,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @throws Exception
      */
     public void disableOptimizer() throws Exception {
@@ -802,7 +731,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param name
      * @return
      */
@@ -811,7 +739,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @return
      */
     public Set<String> getSchemas() {
@@ -819,7 +746,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param name
      * @return
      */
@@ -828,7 +754,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param name
      * @return
      */
@@ -921,7 +846,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param context
      * @param id
      * @param md
@@ -937,9 +861,9 @@ public class DataManager implements ApplicationEventPublisherAware {
      * Start an editing session. This will record the original metadata record in the session under
      * the {@link org.fao.geonet.constants.Geonet.Session#METADATA_BEFORE_ANY_CHANGES} + id session
      * property.
-     *
+     * <p>
      * The record contains geonet:info element.
-     *
+     * <p>
      * Note: Only the metadata record is stored in session. If the editing session upload new
      * documents or thumbnails, those documents will not be cancelled. This needs improvements.
      */
@@ -1012,7 +936,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     //--------------------------------------------------------------------------
 
     /**
-     *
      * @param md
      * @return
      * @throws Exception
@@ -1162,7 +1085,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param schema
      * @param md
      * @return
@@ -1182,7 +1104,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param schema
      * @param uuid
      * @param md
@@ -1209,7 +1130,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param md
      * @return
      * @throws Exception
@@ -1227,7 +1147,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param uuid
      * @return
      * @throws Exception
@@ -1243,7 +1162,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param id
      * @return
      * @throws Exception
@@ -1260,7 +1178,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param id
      * @return
      */
@@ -1269,7 +1186,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param id
      * @return
      */
@@ -1370,7 +1286,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     //--------------------------------------------------------------------------
 
     /**
-     *
      * @param id
      * @param displayOrder
      * @throws Exception
@@ -2051,7 +1966,7 @@ public class DataManager implements ApplicationEventPublisherAware {
     /**
      * Creates XML schematron report for each set of rules defined in schema directory. This method
      * assumes that you've run enumerateTree on the metadata
-     *
+     * <p>
      * Returns null if no error on validation.
      */
     public Element applyCustomSchematronRules(String schema, int metadataId, Element md,
@@ -2131,7 +2046,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param context
      * @param metadataId
      * @throws Exception
@@ -2149,10 +2063,10 @@ public class DataManager implements ApplicationEventPublisherAware {
         OperationAllowedRepository operationAllowedRepository = context.getBean(OperationAllowedRepository.class);
 
         if (skipAllReservedGroup) {
-            int[] exclude = new int[] {
+            int[] exclude = new int[]{
                 ReservedGroup.all.getId(),
-                    ReservedGroup.intranet.getId(),
-                    ReservedGroup.guest.getId()
+                ReservedGroup.intranet.getId(),
+                ReservedGroup.guest.getId()
             };
             operationAllowedRepository.deleteAllByMetadataIdExceptGroupId(
                 Integer.parseInt(metadataId), exclude
@@ -2163,7 +2077,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param metadataId
      * @return
      * @throws Exception
@@ -2188,7 +2101,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param context
      * @param id
      * @param small
@@ -2219,7 +2131,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param context
      * @param id
      * @param small
@@ -2232,7 +2143,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param context
      * @param id
      * @param small
@@ -2260,7 +2170,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param context
      * @param metadataId
      * @param md
@@ -2306,7 +2215,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param context
      * @param id
      * @param licenseurl
@@ -2338,7 +2246,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param context
      * @param id
      * @param licenseurl
@@ -2354,7 +2261,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param context
      * @param id
      * @param env
@@ -2389,9 +2295,9 @@ public class DataManager implements ApplicationEventPublisherAware {
 
     /**
      * Set metadata privileges.
-     *
+     * <p>
      * Administrator can set operation for any groups.
-     *
+     * <p>
      * For reserved group (ie. Internet, Intranet & Guest), user MUST be reviewer of one group. For
      * other group, if "Only set privileges to user's groups" is set in catalog configuration user
      * MUST be a member of the group.
@@ -2472,7 +2378,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param context
      * @param mdId
      * @param grpId
@@ -2484,7 +2389,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param context
      * @param mdId
      * @param grpId
@@ -2700,7 +2604,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param mdId
      * @param categId
      * @return
@@ -2717,7 +2620,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param mdId
      * @param categId
      * @throws Exception
@@ -2746,7 +2648,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param mdId
      * @return
      * @throws Exception
@@ -2846,7 +2747,7 @@ public class DataManager implements ApplicationEventPublisherAware {
     /**
      * Updates all children of the selected parent. Some elements are protected in the children
      * according to the stylesheet used in xml/schemas/[SCHEMA]/update-child-from-parent-info.xsl.
-     *
+     * <p>
      * Children MUST be editable and also in the same schema of the parent. If not, child is not
      * updated.
      *
@@ -3123,7 +3024,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param md
      * @throws Exception
      */
@@ -3161,7 +3061,6 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     /**
-     *
      * @param md
      * @param metadataId
      * @throws Exception
