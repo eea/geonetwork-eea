@@ -382,6 +382,7 @@
   <advanced>Full</advanced>
   <default>Simple</default>
   <simple>Simple</simple>
+  <simple>Simple</simple>
   <inspire>INSPIRE</inspire>
   <inspire_sds>SDS</inspire_sds>
 
@@ -486,7 +487,7 @@
   <resource_url>URL</resource_url>
   <resource_protocol>Protocol</resource_protocol>
 
-  <addCrs>Projection</addCrs>
+  <!--<addCrs>Projection</addCrs>-->
   <addCrs4936>ETRS89-XYZ</addCrs4936>
   <addCrs4937>ETRS89-GRS80h</addCrs4937>
   <addCrs4258>ETRS89-GRS80</addCrs4258>

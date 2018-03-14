@@ -451,8 +451,7 @@
           <text ref="eea-classification-help"/>
 
           <section name="eea-topic">
-            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:topicCategory"
-                   or="topicCategory" in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:topicCategory"/>
             <text ref="eea-topic-help"/>
           </section>
 

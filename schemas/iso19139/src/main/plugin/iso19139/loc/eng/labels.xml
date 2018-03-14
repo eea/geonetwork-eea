@@ -37,8 +37,8 @@
 		<description>Class of information to which the referencing entity applies</description>
 	</element>
   <element name="gmd:code" id="207.0"
-           context="gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code">
-    <label>Unique resource identifier</label>
+           context="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code">
+    <label>CRS identifier</label>
     <description>Alphanumeric value identifying an instance in the namespace.</description>
     <help><![CDATA[
    The Coordinate Reference System shall be referred to with its EPSG code
@@ -720,11 +720,11 @@
    in which the dataset is contained.]]>
     </help>
   </element>
-  <element name="gmd:code" id="207.0" context="gmd:RS_Identifier">
+  <!--<element name="gmd:code" id="207.0" context="gmd:RS_Identifier">
 		<label>Unique resource identifier</label>
 		<description>Alphanumeric value identifying an instance in the namespace</description>
 		<condition>mandatory</condition>
-	</element>
+	</element>-->
 	<element name="gmd:code" id="207.0" context="gmd:MD_Identifier">
 		<label>Code</label>
 		<description>Alphanumeric value identifying an instance in the namespace</description>
