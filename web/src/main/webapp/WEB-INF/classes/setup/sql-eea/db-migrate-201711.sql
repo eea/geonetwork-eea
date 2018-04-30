@@ -91,8 +91,28 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/userSelfRegistration/recaptcha/secretkey', '', 0, 1910, 'y');
 
 -- INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/feedback/mailServer/tls', 'false', 2, 644, 'y');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/inspire/remotevalidation/url', '', 0, 7211, 'n');
+UPDATE Settings SET internal='n' WHERE name='system/inspire/enable';
+
+UPDATE Settings SET datatype = 0, value = 'off' WHERE name = 'system/localrating/enable' and value = 'n';
+UPDATE Settings SET datatype = 0, value = 'basic' WHERE name = 'system/localrating/enable' and value = 'y';
+
+INSERT INTO GUF_RatingCriteria (id, name, isinternal) VALUES (-1, 'Average', 'y');
+INSERT INTO GUF_RatingCriteria (id, name, isinternal) VALUES (0, 'Completeness', 'n');
+INSERT INTO GUF_RatingCriteria (id, name, isinternal) VALUES (1, 'Discoverability', 'n');
+INSERT INTO GUF_RatingCriteria (id, name, isinternal) VALUES (2, 'Readability', 'n');
+INSERT INTO GUF_RatingCriteria (id, name, isinternal) VALUES (3, 'DataQuality', 'n');
+INSERT INTO GUF_RatingCriteria (id, name, isinternal) VALUES (4, 'ServiceQuality', 'n');
+
+INSERT INTO GUF_RatingCriteriaDes (iddes, langid, label) VALUES (-1,'eng', 'Average');
+INSERT INTO GUF_RatingCriteriaDes (iddes, langid, label) VALUES (0,'eng', 'Completeness#Is the information on this page complete enough to know what you can expect from this dataset?');
+INSERT INTO GUF_RatingCriteriaDes (iddes, langid, label) VALUES (1,'eng', 'Discoverability#Was it easy to find this information page?');
+INSERT INTO GUF_RatingCriteriaDes (iddes, langid, label) VALUES (2,'eng', 'Readability#Was it easy to read and understand the contents of this page?');
+INSERT INTO GUF_RatingCriteriaDes (iddes, langid, label) VALUES (3,'eng', 'Data quality#Does the dataset contain the information you expected, the dataset has enough accuracy, the data is valid/up-to-date?');
+INSERT INTO GUF_RatingCriteriaDes (iddes, langid, label) VALUES (4,'eng', 'Service quality#The dataset is provided as a service or mediatype that is easy to work with?');
 
 
-UPDATE Settings SET value='3.4.0' WHERE name='system/platform/version';
+
+UPDATE Settings SET value='3.4.2' WHERE name='system/platform/version';
 UPDATE Settings SET value='SNAPSHOT' WHERE name='system/platform/subVersion';
 
