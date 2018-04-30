@@ -1,7 +1,7 @@
 
 /* - ++resource++eea.uberlisting.css/uberlisting_view.css - */
 @media screen {
-/* http://www.eea.europa.eu/portal_css/++resource++eea.uberlisting.css/uberlisting_view.css?original=1 */
+/* https://www.eea.europa.eu/portal_css/++resource++eea.uberlisting.css/uberlisting_view.css?original=1 */
 #uber-view-switch {
 margin: 2em 0 !important;
 width: 100%;
@@ -55,7 +55,7 @@ display: none;
 
 /* - ++resource++eea.daviz.tutorials.css - */
 @media screen {
-/* http://www.eea.europa.eu/portal_css/++resource++eea.daviz.tutorials.css?original=1 */
+/* https://www.eea.europa.eu/portal_css/++resource++eea.daviz.tutorials.css?original=1 */
 .daviz-tutorials iframe {
 float:left;
 margin-right:2px;
@@ -174,7 +174,7 @@ float:left;
 
 /* - ++resource++eea.pdf.css - */
 @media screen {
-/* http://www.eea.europa.eu/portal_css/++resource++eea.pdf.css?original=1 */
+/* https://www.eea.europa.eu/portal_css/++resource++eea.pdf.css?original=1 */
 /* */
 .portaltype-pdftheme .eea-pdf-thumb,
 .portaltype-pdftool .eea-pdf-thumb {
@@ -255,7 +255,7 @@ margin: 0;
 
 /* - ploneCustom.css - */
 @media screen {
-/* http://www.eea.europa.eu/portal_css/ploneCustom.css?original=1 */
+/* https://www.eea.europa.eu/portal_css/ploneCustom.css?original=1 */
 /* */
 /* */
 /* */
@@ -781,18 +781,18 @@ text-align: left;
 text-decoration: none;
 }
 .eea-tooltip-markup-top {
-background: transparent url(http://www.eea.europa.eu/++resource++tools/green_arrow_top.png);
+background: transparent url(https://www.eea.europa.eu/++resource++tools/green_arrow_top.png);
 }
 .eea-tooltip-markup-bottom {
-background: transparent url(http://www.eea.europa.eu/++resource++tools/green_arrow_bottom.png);
+background: transparent url(https://www.eea.europa.eu/++resource++tools/green_arrow_bottom.png);
 margin-top: 15px;
 }
 .eea-tooltip-markup-left {
-background: transparent url(http://www.eea.europa.eu/++resource++tools/green_arrow_left.png);
+background: transparent url(https://www.eea.europa.eu/++resource++tools/green_arrow_left.png);
 padding-right: 45px;
 }
 .eea-tooltip-markup-right {
-background: transparent url(http://www.eea.europa.eu/++resource++tools/green_arrow_right.png);
+background: transparent url(https://www.eea.europa.eu/++resource++tools/green_arrow_right.png);
 padding-left: 45px;
 }
 /* */
@@ -801,7 +801,7 @@ display: none;
 z-index: 100;
 }
 .eea-tooltip-markup .tooltip-box-br {
-background: transparent url(http://www.eea.europa.eu/++resource++tools/x-green-bottom-right.png) no-repeat right bottom;
+background: transparent url(https://www.eea.europa.eu/++resource++tools/x-green-bottom-right.png) no-repeat right bottom;
 position:relative;
 max-height:1000px;
 min-height:50px;
@@ -810,7 +810,7 @@ width:250px;
 padding-bottom:3px;
 }
 .eea-tooltip-markup .tooltip-box-tl {
-background: transparent url(http://www.eea.europa.eu/++resource++tools/x-green-top-left.png) no-repeat left top;
+background: transparent url(https://www.eea.europa.eu/++resource++tools/x-green-top-left.png) no-repeat left top;
 position:relative;
 left:-30px;
 top:-20px;
@@ -821,7 +821,7 @@ min-width:100px;
 width: 269px;
 }
 .eea-tooltip-markup .tooltip-box-rcontent {
-background: transparent url(http://www.eea.europa.eu/++resource++tools/x-green-arrow-left.png) no-repeat left center;
+background: transparent url(https://www.eea.europa.eu/++resource++tools/x-green-arrow-left.png) no-repeat left center;
 position: relative;
 top: 11px;
 padding:2em 1em 2em 3em;
@@ -830,7 +830,7 @@ font-size: 12px;
 color:#ffffff;
 }
 .eea-tooltip-markup .tooltip-box-lcontent {
-background: transparent url(http://www.eea.europa.eu/++resource++tools/x-green-arrow-right.png) no-repeat right center;
+background: transparent url(https://www.eea.europa.eu/++resource++tools/x-green-arrow-right.png) no-repeat right center;
 position: relative;
 top: 11px;
 right: -31px;
@@ -840,7 +840,7 @@ font-size: 12px;
 color:#ffffff;
 }
 .eea-tooltip-markup .tooltip-box-bcontent {
-background: transparent url(http://www.eea.europa.eu/++resource++tools/x-green-arrow-top.png) no-repeat center top;
+background: transparent url(https://www.eea.europa.eu/++resource++tools/x-green-arrow-top.png) no-repeat center top;
 color:#FFFFFF;
 font-size:12px;
 left:10px;
@@ -850,7 +850,7 @@ text-align:justify;
 top:-2px;
 }
 .eea-tooltip-markup .tooltip-box-tcontent {
-background: transparent url(http://www.eea.europa.eu/++resource++tools/x-green-arrow-bottom.png) no-repeat center bottom;
+background: transparent url(https://www.eea.europa.eu/++resource++tools/x-green-arrow-bottom.png) no-repeat center bottom;
 bottom:-22px;
 color:#FFFFFF;
 font-size:12px;
@@ -1033,7 +1033,7 @@ margin: 0 0 1em 0;
 margin: 1em 0 0 0;
 }
 .fieldRequired {
-background: url(http://www.eea.europa.eu/required.gif) center left no-repeat;
+background: url(https://www.eea.europa.eu/required.gif) center left no-repeat;
 padding: 0 0 0 8px;
 color: transparent;
 }
@@ -1190,7 +1190,7 @@ border: 0;
 }
 .panel-top, #tip-article-language .panel-top {
 margin: auto auto;
-background: transparent url(http://www.eea.europa.eu/panel_arrow.png);
+background: transparent url(https://www.eea.europa.eu/panel_arrow.png);
 width: 50px;
 height: 25px;
 position: relative;
@@ -1791,53 +1791,53 @@ padding: 0;
 }
 .link-parent {
 display: block;
-background: transparent url(http://www.eea.europa.eu/arrowUp.gif) 4px 5px no-repeat;
+background: transparent url(https://www.eea.europa.eu/arrowUp.gif) 4px 5px no-repeat;
 padding: 1px 0 10px 16px;
 font-size: 85%;
 text-decoration: none;
 }
 .link-user {
-background: transparent url(http://www.eea.europa.eu/user.gif) 0 1px no-repeat;
+background: transparent url(https://www.eea.europa.eu/user.gif) 0 1px no-repeat;
 padding: 1px 0 1px 16px;
 }
 .link-external {
-background: transparent url(http://www.eea.europa.eu/link_icon.gif) 3px 1px no-repeat;
+background: transparent url(https://www.eea.europa.eu/link_icon.gif) 3px 1px no-repeat;
 padding: 1px 0 1px 19px;
 }
 .link-https {
-background: transparent url(http://www.eea.europa.eu/lock_icon.gif) 0 1px no-repeat;
+background: transparent url(https://www.eea.europa.eu/lock_icon.gif) 0 1px no-repeat;
 padding: 1px 0 1px 16px;
 }
 .link-mailto {
-background: transparent url(http://www.eea.europa.eu/mail_icon.gif) 0 1px no-repeat;
+background: transparent url(https://www.eea.europa.eu/mail_icon.gif) 0 1px no-repeat;
 padding: 1px 0 1px 16px;
 }
 .link-news {
-background: transparent url(http://www.eea.europa.eu/topic_icon.gif) 0 1px no-repeat;
+background: transparent url(https://www.eea.europa.eu/topic_icon.gif) 0 1px no-repeat;
 padding: 1px 0 1px 16px;
 }
 .link-ftp {
-background: transparent url(http://www.eea.europa.eu/file_icon.gif) 0 1px no-repeat;
+background: transparent url(https://www.eea.europa.eu/file_icon.gif) 0 1px no-repeat;
 padding: 1px 0 1px 16px;
 }
 .link-irc {
-background: transparent url(http://www.eea.europa.eu/discussionitem_icon.gif) 0 1px no-repeat;
+background: transparent url(https://www.eea.europa.eu/discussionitem_icon.gif) 0 1px no-repeat;
 padding: 1px 0 1px 16px;
 }
 .link-callto {
-background: transparent url(http://www.eea.europa.eu/phone_icon.gif) 0 1px no-repeat;
+background: transparent url(https://www.eea.europa.eu/phone_icon.gif) 0 1px no-repeat;
 padding: 1px 0 1px 16px;
 }
 .link-webcal {
-background: transparent url(http://www.eea.europa.eu/event_icon.gif) 0 1px no-repeat;
+background: transparent url(https://www.eea.europa.eu/event_icon.gif) 0 1px no-repeat;
 padding: 1px 0 1px 16px;
 }
 .link-feed, .link-rss, .link-rdf, .link-xml{
-background: transparent url(http://www.eea.europa.eu/rss.gif) 0 1px no-repeat;
+background: transparent url(https://www.eea.europa.eu/rss.gif) 0 1px no-repeat;
 padding: 1px 0 1px 18px;
 }
 .link-comment {
-background: transparent url(http://www.eea.europa.eu/discussionitem_icon.gif) center left no-repeat;
+background: transparent url(https://www.eea.europa.eu/discussionitem_icon.gif) center left no-repeat;
 padding: 1px 0 1px 16px !important; /* */
 }
 .link-anchor {
@@ -1847,86 +1847,86 @@ font-weight: normal;
 }
 /* */
 .link-pdf {
-background: transparent url(http://www.eea.europa.eu/pdf.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/pdf.png) 0 50% no-repeat;
 padding: 2px 0 2px 16px;
 }
 .link-doc, .link-dot, .link-wiz {
-background: transparent url(http://www.eea.europa.eu/doc.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/doc.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-aif, .link-aifc, .link-aiff {
-background: transparent url(http://www.eea.europa.eu/audio.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/audio.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-gif, .link-jpe, .link-jpeg, .link-jpg, .link-png {
-background: transparent url(http://www.eea.europa.eu/image.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/image.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-m4a, .link-mp2, .link-mp3, .link-mpega, .link-mpga {
-background: transparent url(http://www.eea.europa.eu/audio.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/audio.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-m3u {
-background: transparent url(http://www.eea.europa.eu/audio.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/audio.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-m1v, .link-mpa, .link-mpe, .link-mpeg, .link-mpg {
-background: transparent url(http://www.eea.europa.eu/video.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/video.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-mp4 {
-background: transparent url(http://www.eea.europa.eu/video.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/video.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-asf, .link-asx {
-background: transparent url(http://www.eea.europa.eu/video.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/video.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-avi {
-background: transparent url(http://www.eea.europa.eu/avi.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/avi.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-xlb, .link-xls, .link-xlt, .link-csv, .link-tsv {
-background: transparent url(http://www.eea.europa.eu/xls.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/xls.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-ppa, .link-pps, .link-ppt, .link-pwz {
-background: transparent url(http://www.eea.europa.eu/ppt.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/ppt.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-wmv, .link-wmf {
-background: transparent url(http://www.eea.europa.eu/video.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/video.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-mov, .link-qt {
-background: transparent url(http://www.eea.europa.eu/video.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/video.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-rgb {
-background: transparent url(http://www.eea.europa.eu/image.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/image.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-ram, .link-rm {
-background: transparent url(http://www.eea.europa.eu/audio.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/audio.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-ai, .link-eps, .link-ps {
-background: transparent url(http://www.eea.europa.eu/ps.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/ps.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-swf, .link-swfl {
-background: transparent url(http://www.eea.europa.eu/application.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/application.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-tif, .link-tiff {
-background: transparent url(http://www.eea.europa.eu/image.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/image.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-wav {
-background: transparent url(http://www.eea.europa.eu/wav.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/wav.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-zip {
-background: transparent url(http://www.eea.europa.eu/zip.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/zip.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-mdb, .link-dbf {
-background: transparent url(http://www.eea.europa.eu/application.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/application.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-rar {
-background: transparent url(http://www.eea.europa.eu/rar.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/rar.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-txt {
-background: transparent url(http://www.eea.europa.eu/txt.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/txt.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-json {
-background: transparent url(http://www.eea.europa.eu/script_code.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/script_code.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-exhibit {
-background: transparent url(http://www.eea.europa.eu/script_code_red.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/script_code_red.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 .link-table {
-background: transparent url(http://www.eea.europa.eu/table.png) 0 50% no-repeat;
+background: transparent url(https://www.eea.europa.eu/table.png) 0 50% no-repeat;
 padding: 2px 0 2px 20px;}
 /* */
 .visualGhosted {
@@ -2164,7 +2164,7 @@ margin: 0;
 }
 #outdated li {
 float: left;
-background: url('http://www.eea.europa.eu/browsers.png') no-repeat;
+background: url('https://www.eea.europa.eu/browsers.png') no-repeat;
 width: 50px;
 height: 71px;
 overflow: hidden;
@@ -2262,11 +2262,11 @@ color: #8e004d;
 text-decoration: underline;
 }
 a#subfolders_more_a, .more_dropdown_a {
-background: url("http://www.eea.europa.eu/accordion_down.png") no-repeat scroll 95% 50% transparent;
+background: url("https://www.eea.europa.eu/accordion_down.png") no-repeat scroll 95% 50% transparent;
 padding-right: 2.5em;
 }
 #subfolders_listing #subfolders_more_a:hover, #subfolders_listing .moreHover, .more_dropdown_a .moreHover {
-background: url("http://www.eea.europa.eu/accordion_down.png") no-repeat scroll 95% 50% #FFF !important;
+background: url("https://www.eea.europa.eu/accordion_down.png") no-repeat scroll 95% 50% #FFF !important;
 position: relative;
 z-index: 1010;
 }
@@ -2445,7 +2445,7 @@ padding: 10px;
 display: none;
 }
 a.downloading {
-background: transparent url(http://www.eea.europa.eu/icon-downloading.gif) no-repeat center center;
+background: transparent url(https://www.eea.europa.eu/icon-downloading.gif) no-repeat center center;
 }
 a.downloading img {
 visibility: hidden;

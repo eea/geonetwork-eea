@@ -181,7 +181,7 @@ function inout_moveKeywords(fromList,toList,selectThese) {
 
 
 /* - table_sorter.js - */
-// http://www.eea.europa.eu/portal_javascripts/table_sorter.js?original=1
+// https://www.eea.europa.eu/portal_javascripts/table_sorter.js?original=1
 (function($){
 function sortabledataclass(cell){var re,matches;re=new RegExp("sortabledata-([^ ]*)","g");matches=re.exec(cell.attr('class'));if(matches){return matches[1]}
 else{return null}}
@@ -196,19 +196,19 @@ function setoddeven(){var tbody=$(this);tbody.find('tr').removeClass('odd').remo
 $(function(){var blankarrow=$('<span>&#x2003;</span>').addClass('sortdirection');$('table.listing:not(.nosort) thead th:not(.nosort)').append(blankarrow.clone()).css('cursor','pointer').click(sort);$('table.listing:not(.nosort) tbody').each(setoddeven)})})(jQuery);
 
 /* - resolveuid.js - */
-// http://www.eea.europa.eu/portal_javascripts/resolveuid.js?original=1
+// https://www.eea.europa.eu/portal_javascripts/resolveuid.js?original=1
 (function($){
 function set_resolveuids(){$(".reviewHistory span:contains('uid:')").each(function(){var text=$(this).text();var uid_start=text.lastIndexOf("(uid:");var uid_end=text.lastIndexOf(")");var uid=text.slice(uid_start+5,uid_end);var msg=text.slice(0,uid_start);var base=$("base").attr('href')||document.baseURI||window.location.href.split("?")[0];var node=$("<a>").attr('href',base+'/resolveuid/'+uid).text("original");var div=$("<span>").text(msg);div.append(node);$(this).html(div)})}
 $(document).ready(set_resolveuids)})(jQuery);
 
 /* - accessibility.js - */
-// http://www.eea.europa.eu/portal_javascripts/accessibility.js?original=1
+// https://www.eea.europa.eu/portal_javascripts/accessibility.js?original=1
 function setBaseFontSize($fontsize,$reset){var $body=jQuery('body');if($reset){$body.removeClass('smallText').removeClass('largeText');createCookie("fontsize",$fontsize,365)}
 $body.addClass($fontsize)}
 jQuery(function($){var $fontsize=readCookie("fontsize");if($fontsize){setBaseFontSize($fontsize,0)}});
 
 /* - ga.js - */
-// http://www.eea.europa.eu/portal_javascripts/ga.js?original=1
+// https://www.eea.europa.eu/portal_javascripts/ga.js?original=1
 var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-184389-1']);_gaq.push(['_setDomainName',"eea.europa.eu"]);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s)})();
 
 /* - collapsibleformfields.js - */
@@ -290,7 +290,7 @@ jQuery(function($){$('.field.collapsible').do_search_collapse();});
 
 
 /* - ++resource++plone.app.discussion.javascripts/comments.js - */
-// http://www.eea.europa.eu/portal_javascripts/++resource++plone.app.discussion.javascripts/comments.js?original=1
+// https://www.eea.europa.eu/portal_javascripts/++resource++plone.app.discussion.javascripts/comments.js?original=1
 (function($){$.createReplyForm=function(comment_div){var comment_id=comment_div.attr("id");var reply_button=comment_div.find(".reply-to-comment-button");var reply_div=$("#commenting").clone(true);reply_div.find("#formfield-form-widgets-captcha").find("script").remove();reply_div.appendTo(comment_div).css("display","none");reply_div.removeAttr("id");$(reply_button).css("display","none");var reply_form=reply_div.find("form");reply_form.find("input[name='form.widgets.in_reply_to']").val(comment_id);var cancel_reply_button=reply_div.find(".cancelreplytocomment");cancel_reply_button.attr("id",comment_id);reply_form.find("input[name='form.buttons.cancel']").css("display","inline");reply_div.slideDown("slow");cancel_reply_button.css("display","inline")};$.clearForm=function(form_div){form_div.find(".error").removeClass("error");form_div.find(".fieldErrorBox").remove();form_div.find("input[type='text']").attr("value","");form_div.find("textarea").attr("value","")};$(window).load(function(){var post_comment_div=$("#commenting");var in_reply_to_field=post_comment_div.find("input[name='form.widgets.in_reply_to']");if(in_reply_to_field.val()!==""){var current_reply_id="#"+in_reply_to_field.val();var current_reply_to_div=$(".discussion").find(current_reply_id);$.createReplyForm(current_reply_to_div);$.clearForm(post_comment_div)}
 $(".reply-to-comment-button").bind("click", function(e){var comment_div=$(this).parents().filter(".comment");$.createReplyForm(comment_div);$.clearForm(comment_div)});$("#commenting #form-buttons-cancel").bind("click", function(e){e.preventDefault();var reply_to_comment_button=$(this).
 parents().
@@ -299,17 +299,17 @@ find(".reply-to-comment-button");$.reply_to_comment_form=$(this).parents().filte
 comment.nextUntil(selector).each(function(){$(this).fadeOut('fast', function(){$(this).remove()})});$(this).fadeOut('fast', function(){$(this).remove()})},error: function(req,error){return true}});return false});$(".reply").find("input[name='form.buttons.reply']").css("display","none");$(".reply").find("input[name='form.buttons.cancel']").css("display","none");$(".reply-to-comment-button").css("display","inline")})}(jQuery));
 
 /* - global_searchbox.js - */
-// http://www.eea.europa.eu/portal_javascripts/global_searchbox.js?original=1
+// https://www.eea.europa.eu/portal_javascripts/global_searchbox.js?original=1
 (function($){$(function(){var search_forms=$("#portal-searchbox, #visual-column-wrapper").find(".searchforms");var text_inputs=search_forms.find("input:text");text_inputs.each( function(){var search_label=this.title+"...";this.onfocus=function(){if(this.value==search_label){this.value=""}};this.onblur=function(){if(this.value===""){this.value=search_label}};this.value=search_label})})})(jQuery);
 
 /* - popupforms.js - */
-// http://www.eea.europa.eu/portal_javascripts/popupforms.js?original=1
+// https://www.eea.europa.eu/portal_javascripts/popupforms.js?original=1
 var common_content_filter='#content>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info';jQuery.extend(jQuery.tools.overlay.conf,{fixed:false,speed:'fast',mask:{color:'#fff',opacity:0.4,loadSpeed:0,closeSpeed:0}});(function($){$.plonepopups=$.plonepopups||{};$.extend($.plonepopups,{noformerrorshow: function noformerrorshow(el,noform){var o=$(el),emsg=o.find('dl.portalMessage.error');if(emsg.length){o.children().replaceWith(emsg);return false} else{return noform}},redirectbasehref: function redirectbasehref(el,responseText){var mo=responseText.match(/<base href="(\S+?)"/i);if(mo.length===2){return mo[1]}
 return location}})})(jQuery);jQuery(function($){if(jQuery.browser.msie&&parseInt(jQuery.browser.version,10)<7){return}
 $('#portal-personaltools a[href$="/login"], #portal-personaltools a[href$="/login_form"], .discussion a[href$="/login"], .discussion a[href$="/login_form"]').prepOverlay({subtype:'ajax',filter:common_content_filter,formselector:'form#login_form',cssclass:'overlay-login',noform: function(){if(location.href.search(/pwreset_finish$/)>=0){return 'redirect'} else{return 'reload'}},redirect: function(){var href=location.href;if(href.search(/pwreset_finish$/)>=0){return href.slice(0,href.length-14)+'logged_in'} else{return href}}});$('#siteaction-contact a').prepOverlay({subtype:'ajax',filter:common_content_filter,cssclass:'overlay-contact',formselector:'form[name="feedback_form"]',noform: function(el){return $.plonepopups.noformerrorshow(el,'close')}});$('#contextSetDefaultPage, #folderChangeDefaultPage').prepOverlay({subtype:'ajax',filter:common_content_filter,cssclass:'overlay-default_view',formselector:'form[name="default_page_form"]',noform: function(el){return $.plonepopups.noformerrorshow(el,'reload')},closeselector:'[name="form.button.Cancel"]',width:'40%'});$('dl#plone-contentmenu-actions a#plone-contentmenu-actions-delete').prepOverlay({subtype:'ajax',filter:common_content_filter,formselector:'#delete_confirmation',cssclass:'overlay-delete',noform: function(el){return $.plonepopups.noformerrorshow(el,'redirect')},redirect:$.plonepopups.redirectbasehref,closeselector:'[name="form.button.Cancel"]',width:'50%'});$('dl#plone-contentmenu-actions a#plone-contentmenu-actions-rename').prepOverlay({subtype:'ajax',filter:common_content_filter,cssclass:'overlay-rename',closeselector:'[name="form.button.Cancel"]',width:'40%'});$('dl#plone-contentmenu-factories a#plone-contentmenu-add-to-default-page').prepOverlay({subtype:'ajax',filter:common_content_filter,cssclass:'overlay-folder-factories',closeselector:'[name="form.button.Cancel"]',width:'40%'});$('#portal-personaltools a[href$="/@@register"]').prepOverlay({subtype:'ajax',filter:common_content_filter,cssclass:'overlay-register',formselector:'form.kssattr-formname-register'});$('form[name="users_add"], form[name="groups_add"]').prepOverlay({subtype:'ajax',filter:common_content_filter,cssclass:'overlay-users',formselector:'form.kssattr-formname-new-user, form[name="groups"]',noform: function(el){return $.plonepopups.noformerrorshow(el,'redirect')},redirect: function(){return location.href}});$('form[name="users_add"], form[name="groups_add"]').width($('input.add').outerWidth());$('form[name="users_add"] input.add, form[name="groups_add"] input.add').css('cursor','pointer');$('#content-history a').prepOverlay({subtype:'ajax',filter:'h2, #content-history',cssclass:'overlay-history',urlmatch:'@@historyview',urlreplace:'@@contenthistorypopup'})});
 
 /* - design.js - */
-// http://www.eea.europa.eu/portal_javascripts/design.js?original=1
+// https://www.eea.europa.eu/portal_javascripts/design.js?original=1
 jQuery(document).ready(function($){'use strict';var url_path_name=window.location.pathname;var $body=$("body");var ie;if($.browser){ie=$.browser.msie&&parseInt($.browser.version,10)} else{var nav=navigator.userAgent;ie=nav.indexOf('MSIE');ie<0?ie=false:ie=parseInt(nav.substring(ie+5,ie+7))}
 var secondary_portaltabs=$("<ul id='secondary-portaltabs'></ul>"),global_nav=$('#portal-globalnav'),global_nav_children=global_nav.children(),secondary_nav_items=global_nav_children.slice(global_nav_children.length-3);secondary_nav_items.appendTo(secondary_portaltabs);secondary_portaltabs.appendTo(global_nav);$('.eea-tabs').find('li:last-child').addClass('last-child');var $popup_login=$("#popup_login_form");$("#anon-personalbar, #siteaction-login").click(function(e){$popup_login.slideToggle();e.preventDefault()});var $navigation_submenus=$(".portletSubMenuHeader");if($navigation_submenus&&$navigation_submenus.length<2){$navigation_submenus.hide()}
 $('.js-adoptHeight').each(function(){var $el=$(arguments[1]);var $target_el=$($el.data('target-element'));$el.css('height',$target_el.outerHeight())});$(".attention, .caution, .danger, .error, .hint, .important, .note, .tip, .warning").addClass('eea-icon');$(document).ajaxComplete(function(event,xhr,settings){var url=settings.url.split('/');var method=url[url.length-1];var reset_methods=['@@googlechart.googledashboard.edit','@@googlechart.googledashboards.edit','@@googlechart.savepngchart','@@googlechart.setthumb','@@daviz.properties.edit'];if(reset_methods.indexOf(method)>-1){$.timeoutDialog.reset()}});try{$.timeoutDialog({delay:900000})}
@@ -338,7 +338,7 @@ function add_downloads_tracking_code(idx,el){el.onclick=function(){var text=el.t
 $.each(downloads_list,add_downloads_tracking_code)});
 
 /* - promotions.js - */
-// http://www.eea.europa.eu/portal_javascripts/promotions.js?original=1
+// https://www.eea.europa.eu/portal_javascripts/promotions.js?original=1
 var btn_ready=true;
 function getRandom(range){return Math.floor(Math.random()*range)}
 function updateCounter(portlet_id){var sel_index=jQuery('#'+portlet_id+' DD').index(jQuery('#'+portlet_id+' DD.active-promo')[0])+1;var max_items=jQuery('#'+portlet_id+' DD').length;jQuery("#count-"+portlet_id).html(sel_index+'/'+max_items)}

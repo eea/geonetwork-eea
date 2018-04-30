@@ -1,6 +1,6 @@
 
 /* - outdated_browser.js - */
-// http://www.eea.europa.eu/portal_javascripts/outdated_browser.js?original=1
+// https://www.eea.europa.eu/portal_javascripts/outdated_browser.js?original=1
 (function($,window,document,undef){"use strict";var notSupportedBrowsers=[{browser:'MSIE',version:8,os:'Any'},{browser:'Chrome',version:12,os:'Any'},{browser:'Firefox',version:4,os:'Any'}];
 function displayMessage(obj){$.get(obj.template, function(data){var trimmed_data=data.trim();if(!trimmed_data){return}
 var message_wrap=$(data),outdated_transition,timeout=obj.message_timer||10000;message_wrap.prependTo('body')[obj.transition](1000);outdated_transition=function(){message_wrap[obj.transition](1000, function(){window.createCookie(obj.template,obj.cookie_message,obj.cookie_days)})};if(obj.hover_fade){timeout=window.setTimeout(outdated_transition,timeout);message_wrap.hover(function(){window.clearTimeout(timeout)}, function(){outdated_transition()})}

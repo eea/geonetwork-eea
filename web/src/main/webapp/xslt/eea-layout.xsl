@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../images/eea-api/ploneStyles1433419216187879086.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="../../images/eea-api/ploneStyles1433419216187983990.css" media="screen" />
 
-    <script type="text/javascript"> context_url='http://www.eea.europa.eu';</script>
+    <script type="text/javascript"> context_url='https://www.eea.europa.eu';</script>
 
   </xsl:template>
 
@@ -62,7 +62,7 @@
           <div class="colophonWrapper">
             <div class="colophon-left">
 
-              <a href="http://www.eea.europa.eu">European Environment Agency
+              <a href="https://www.eea.europa.eu">European Environment Agency
                 (EEA)
               </a>
               <br/>
@@ -84,7 +84,7 @@
                 The European Environment Agency (EEA) is an agency of the
                 European Union.
                 <br/>
-                <a href="http://www.eea.europa.eu/legal/">Legal notice</a>
+                <a href="https://www.eea.europa.eu/legal/">Legal notice</a>
               </span>
               <img alt="EU flag" title="European Union Flag"
                    src="../../images/eea-api/eu-flag.gif"/>
@@ -99,7 +99,7 @@
             <p class="discreet colophon-links">
               engineered by
               <br/>
-              <a href="http://www.eea.europa.eu/help/contact-info">EEA Web
+              <a href="https://www.eea.europa.eu/help/contact-info">EEA Web
                 Team
               </a>
             </p>
@@ -110,12 +110,12 @@
                  title="Creative Commons Attribution License">
                 <img alt="Creative Commons Attribution License"
                      style="border-width: 0pt;"
-                     src="http://www.eea.europa.eu/creativecommons-by-2.5-dk-80x15.png"/>
+                     src="https://www.eea.europa.eu/creativecommons-by-2.5-dk-80x15.png"/>
               </a>
               <a href="https://svn.eionet.europa.eu/repositories/Zope/trunk/www.eea.europa.eu/trunk/docs/"
                  title="Software updates history">Software updates history
               </a>
-              <a href="http://www.eea.europa.eu/code"
+              <a href="https://www.eea.europa.eu/code"
                  title="Software updates history">Code for developers
               </a>
             </p>
@@ -138,7 +138,7 @@
             cookies in your web browser
           </a>
           but then our site may not work correctly. See also<a
-                  href="http://www.eea.europa.eu/legal/privacy"
+                  href="https://www.eea.europa.eu/legal/privacy"
                   title="our privacy policy">our privacy policy</a>.
         </p>
         <form id="tlspu_cookiepolicy_form">
@@ -163,7 +163,7 @@
         <div id="cross-site-top">
           <ul id="portal-externalsites">
             <li id="externalsites-networks">
-              <a href="http://www.eea.europa.eu">Networks</a>
+              <a href="https://www.eea.europa.eu">Networks</a>
             </li>
           </ul>
           <div class="panel" id="tip-externalsites-networks"
@@ -193,7 +193,7 @@
                     </li>
                     <li id="seis-network">
                       <a title="SEIS network" accesskey=""
-                         href="http://www.eea.europa.eu/about-us/what/shared-environmental-information-system">
+                         href="https://www.eea.europa.eu/about-us/what/shared-environmental-information-system">
                         Shared Environmental Information System (SEIS)
                       </a>
                     </li>
@@ -241,10 +241,10 @@
                 </dt>
                 <dd style="padding-bottom: 0.5em" class="portletFooter">
                   <a class="moreLink"
-                     href="http://www.eea.europa.eu/about-us/key-partners">EU
+                     href="https://www.eea.europa.eu/about-us/key-partners">EU
                     partners</a>&#160;&#160;
                   <a class="moreLink"
-                     href="http://www.eea.europa.eu/about-us/international-cooperation">
+                     href="https://www.eea.europa.eu/about-us/international-cooperation">
                     International cooperation
                   </a>
                 </dd>
@@ -253,28 +253,28 @@
           </div>
           <ul id="portal-siteactions">
             <li id="siteaction-subscriptions">
-              <a href="http://www.eea.europa.eu/subscription"
+              <a href="https://www.eea.europa.eu/subscription"
                  title="Subscriptions" accesskey="">
                 <span class="eea-icon eea-icon-lg"><!-- --></span>
                 Subscriptions
               </a>
             </li>
             <li id="siteaction-formobile">
-              <a href="http://www.eea.europa.eu/mobile" title="Mobile"
+              <a href="https://www.eea.europa.eu/mobile" title="Mobile"
                  accesskey="">
                 <span class="eea-icon eea-icon-lg"><!-- --></span>
                 Mobile
               </a>
             </li>
             <li id="siteaction-contactus">
-              <a href="http://www.eea.europa.eu/address.html" title="Contact us"
+              <a href="https://www.eea.europa.eu/address.html" title="Contact us"
                  accesskey="">
                 <span class="eea-icon eea-icon-lg"><!-- --></span>
                 Contact us
               </a>
             </li>
             <li id="siteaction-chooselang">
-              <a href="http://www.eea.europa.eu/chooselang"
+              <a href="https://www.eea.europa.eu/chooselang"
                  title="EEA homepage in your language" accesskey="">
                 <span class="eea-icon eea-icon-lg"><!-- --></span>
                 EEA homepage in your language
@@ -294,7 +294,7 @@
                     <dd class="portletItem">
                       <span>
                         <span>
-                          <a href="http://www.eea.europa.eu/subscription/targeted-subscription">
+                          <a href="https://www.eea.europa.eu/subscription/targeted-subscription">
                             Sign up
                           </a>
                         </span>
@@ -305,32 +305,32 @@
                     <dt>Follow us</dt>
                     <dd>
                       <img alt="Twitter icon"
-                           src="http://www.eea.europa.eu/twitter16x16.png"/>
+                           src="https://www.eea.europa.eu/twitter16x16.png"/>
                       <a href="http://twitter.com/euenvironment">Twitter</a>
                     </dd>
                     <dd>
                       <img alt="Facebook icon"
-                           src="http://www.eea.europa.eu/facebook-icon.png"/>
+                           src="https://www.eea.europa.eu/facebook-icon.png"/>
                       <a href="http://www.facebook.com/pages/European-Environment-Agency/113006845445297">
                         Facebook
                       </a>
                     </dd>
                     <dd>
                       <img alt="YouTube icon"
-                           src="http://www.eea.europa.eu/youtube16x16.png"/>
+                           src="https://www.eea.europa.eu/youtube16x16.png"/>
                       <a href="http://www.youtube.com/user/EEAvideos">YouTube
                         channel
                       </a>
                     </dd>
                     <dd>
                       <img alt="RSS logo"
-                           src="http://www.eea.europa.eu/rss.gif"/>
-                      <a href="http://www.eea.europa.eu/subscription/news-feeds">
+                           src="https://www.eea.europa.eu/rss.gif"/>
+                      <a href="https://www.eea.europa.eu/subscription/news-feeds">
                         <span>RSS Feeds</span>
                       </a>
                     </dd>
                     <dd class="portletFooter" style="padding-bottom: 0.5em">
-                      <a href="http://www.eea.europa.eu/subscription"
+                      <a href="https://www.eea.europa.eu/subscription"
                          class="moreLink">
                         <span>More</span>
                       </a>
@@ -359,7 +359,7 @@
                         <li>
                           <p>
                             <a target="_self"
-                               href="http://www.eea.europa.eu/help/infocentre/enquiries/">
+                               href="https://www.eea.europa.eu/help/infocentre/enquiries/">
                               Ask your question
                               <br/>
                             </a>
@@ -375,7 +375,7 @@
                         <li>
                           <p>
                             <a target="_self"
-                               href="http://www.eea.europa.eu/pressroom">Press
+                               href="https://www.eea.europa.eu/pressroom">Press
                               room
                               <br/>
                             </a>
@@ -384,17 +384,17 @@
                       </ul>
                       <br/>
                       <a class="internal-link" title="Staff list"
-                         href="http://www.eea.europa.eu/about-us/who/staff-list">
+                         href="https://www.eea.europa.eu/about-us/who/staff-list">
                         <strong>Contact EEA staff</strong>
                       </a>
                       <br/>
                       <a class="internal-link"
-                         href="http://www.eea.europa.eu/help/contact-info">
+                         href="https://www.eea.europa.eu/help/contact-info">
                         <strong>Contact the web team</strong>
                       </a>
                       <br/>
                       <a class="internal-link"
-                         href="http://www.eea.europa.eu/help/eea-help-centre/faqs">
+                         href="https://www.eea.europa.eu/help/eea-help-centre/faqs">
                         <strong>FAQ</strong>
                       </a>
                       <br/>
@@ -419,7 +419,7 @@
                       <br/>
                       <strong>
                         <a target="_self"
-                           href="http://www.eea.europa.eu/help/infocentre/index_html">
+                           href="https://www.eea.europa.eu/help/infocentre/index_html">
                           <br/>
                         </a>
                       </strong>
@@ -428,7 +428,7 @@
                 </table>
                 <div class="portletFooter">
                   <a class="moreLink"
-                     href="http://www.eea.europa.eu/address.html">
+                     href="https://www.eea.europa.eu/address.html">
                     <span>More</span>
                   </a>
                 </div>
@@ -442,133 +442,133 @@
               <div class="panel-content shadow">
                 <ul id="chooselang">
                   <li>
-                    <a href="http://www.eea.europa.eu/bg" title="Bulgarian">
+                    <a href="https://www.eea.europa.eu/bg" title="Bulgarian">
                       &#1041;&#1098;&#1083;&#1075;&#1072;&#1088;&#1089;&#1082;&#1080;
                       (bg)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/cs" title="Czech">&#269;e&#353;tina
+                    <a href="https://www.eea.europa.eu/cs" title="Czech">&#269;e&#353;tina
                       (cs)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/hr" title="Croatian">
+                    <a href="https://www.eea.europa.eu/hr" title="Croatian">
                       Hrvatski (hr)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/da" title="Danish">dansk
+                    <a href="https://www.eea.europa.eu/da" title="Danish">dansk
                       (da)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/nl" title="Dutch">
+                    <a href="https://www.eea.europa.eu/nl" title="Dutch">
                       Nederlands (nl)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/el" title="Greek">&#949;&#955;&#955;&#951;&#957;&#953;&#954;&#940;
+                    <a href="https://www.eea.europa.eu/el" title="Greek">&#949;&#955;&#955;&#951;&#957;&#953;&#954;&#940;
                       (el)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu" title="English">English
+                    <a href="https://www.eea.europa.eu" title="English">English
                       (en)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/et" title="Estonian">eesti
+                    <a href="https://www.eea.europa.eu/et" title="Estonian">eesti
                       (et)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/fi" title="Finnish">Suomi
+                    <a href="https://www.eea.europa.eu/fi" title="Finnish">Suomi
                       (fi)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/fr" title="French">Fran&#231;ais
+                    <a href="https://www.eea.europa.eu/fr" title="French">Fran&#231;ais
                       (fr)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/de" title="German">Deutsch
+                    <a href="https://www.eea.europa.eu/de" title="German">Deutsch
                       (de)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/hu" title="Hungarian">
+                    <a href="https://www.eea.europa.eu/hu" title="Hungarian">
                       magyar (hu)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/is" title="Icelandic">
+                    <a href="https://www.eea.europa.eu/is" title="Icelandic">
                       &#205;slenska (is)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/it" title="Italian">
+                    <a href="https://www.eea.europa.eu/it" title="Italian">
                       italiano (it)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/lv" title="Latvian">Latvie&#353;u
+                    <a href="https://www.eea.europa.eu/lv" title="Latvian">Latvie&#353;u
                       (lv)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/lt" title="Lithuanian">
+                    <a href="https://www.eea.europa.eu/lt" title="Lithuanian">
                       lietuvi&#371; (lt)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/mt" title="Maltese">Malti
+                    <a href="https://www.eea.europa.eu/mt" title="Maltese">Malti
                       (mt)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/no" title="Norwegian">
+                    <a href="https://www.eea.europa.eu/no" title="Norwegian">
                       Norsk (no)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/pl" title="Polish">polski
+                    <a href="https://www.eea.europa.eu/pl" title="Polish">polski
                       (pl)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/pt" title="Portuguese">
+                    <a href="https://www.eea.europa.eu/pt" title="Portuguese">
                       Portugu&#234;s (pt)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/ro" title="Romanian">Rom&#226;n&#259;
+                    <a href="https://www.eea.europa.eu/ro" title="Romanian">Rom&#226;n&#259;
                       (ro)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/sk" title="Slovak">sloven&#269;ina
+                    <a href="https://www.eea.europa.eu/sk" title="Slovak">sloven&#269;ina
                       (sk)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/sl" title="Slovenian">
+                    <a href="https://www.eea.europa.eu/sl" title="Slovenian">
                       Sloven&#353;&#269;ina (sl)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/es" title="Spanish">Espa&#241;ol
+                    <a href="https://www.eea.europa.eu/es" title="Spanish">Espa&#241;ol
                       (es)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/sv" title="Swedish">
+                    <a href="https://www.eea.europa.eu/sv" title="Swedish">
                       Svenska (sv)
                     </a>
                   </li>
                   <li>
-                    <a href="http://www.eea.europa.eu/tr" title="Turkish">T&#252;rk&#231;e
+                    <a href="https://www.eea.europa.eu/tr" title="Turkish">T&#252;rk&#231;e
                       (tr)
                     </a>
                   </li>
@@ -606,7 +606,7 @@
                 action="https://www.eea.europa.eu/login_form">
             <div id="login-form">
               <input type="hidden" name="came_from"
-                     value="http://www.eea.europa.eu"/>
+                     value="https://www.eea.europa.eu"/>
               <input type="hidden" name="next"/>
               <input type="hidden" name="ajax_load"/>
               <input type="hidden" name="ajax_include_head"/>
@@ -638,7 +638,7 @@
             <strong>Forgot your password?</strong>
             <p class="discreet">If you have forgotten your password,
               <span>
-                <a href="http://www.eea.europa.eu/mail_password_form?userid=None">
+                <a href="https://www.eea.europa.eu/mail_password_form?userid=None">
                   we can send you a new one
                 </a>
               </span>
@@ -653,19 +653,19 @@
         </div>
         <div id="portal-header">
           <p class="hiddenStructure">
-            <a accesskey="2" href="http://www.eea.europa.eu#content">Skip to
+            <a accesskey="2" href="https://www.eea.europa.eu#content">Skip to
               content.
             </a>
             |
             <a accesskey="6"
-               href="http://www.eea.europa.eu/getHeader#eea-portlet-navigation-tree">
+               href="https://www.eea.europa.eu/getHeader#eea-portlet-navigation-tree">
               Skip to navigation
             </a>
           </p>
           <h2 id="logo-en" class="portal-logo">
-            <a href="http://www.eea.europa.eu" accesskey="1"
+            <a href="https://www.eea.europa.eu" accesskey="1"
                title="European Environment Agency (EEA)">
-              <img src="http://www.eea.europa.eu/++resource++eea.translations.images/pdflogo-en.png"
+              <img src="https://www.eea.europa.eu/++resource++eea.translations.images/pdflogo-en.png"
                    alt="European Environment Agency (EEA)" id="printLogo"/>
             </a>
           </h2>
@@ -682,7 +682,7 @@
               <input class="searchButton" type="submit" value="Search"/>
             </form>
             <a id="search_advanced_link"
-               href="http://www.eea.europa.eu/help/advanced-search">Advanced
+               href="https://www.eea.europa.eu/help/advanced-search">Advanced
               search
             </a>
             <a id="search_glossary_link"
@@ -695,31 +695,31 @@
           <h5 class="hiddenStructure">Sections</h5>
           <ul id="portal-globalnav">
             <li id="portaltab-themes" class="plain">
-              <a href="http://www.eea.europa.eu/themes"
+              <a href="https://www.eea.europa.eu/themes"
                  title="Explore by environmental topics">Topics
               </a>
             </li>
             <li id="portaltab-data-and-maps" class="plain">
-              <a href="http://www.eea.europa.eu/data-and-maps"
+              <a href="https://www.eea.europa.eu/data-and-maps"
                  title="Environmental data, charts, maps, indicators and interactive data applications">
                 Data and maps
               </a>
             </li>
             <li id="portaltab-indicators" class="plain">
-              <a href="http://www.eea.europa.eu/data-and-maps/indicators/"
+              <a href="https://www.eea.europa.eu/data-and-maps/indicators/"
                  title="">Indicators
               </a>
             </li>
             <li id="portaltab-reports" class="plain">
-              <a href="http://www.eea.europa.eu/publications" title="">
+              <a href="https://www.eea.europa.eu/publications" title="">
                 Publications
               </a>
             </li>
             <li id="portaltab-media" class="plain">
-              <a href="http://www.eea.europa.eu/media" title="">Media</a>
+              <a href="https://www.eea.europa.eu/media" title="">Media</a>
             </li>
             <li id="portaltab-abouteea" class="plain">
-              <a href="http://www.eea.europa.eu/about-us" title="">About EEA</a>
+              <a href="https://www.eea.europa.eu/about-us" title="">About EEA</a>
             </li>
             <li id="portaltab-europe" class="plain">
               <a href="http://europa.eu/about-eu/agencies" title="">The EEA is

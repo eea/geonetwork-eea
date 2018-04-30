@@ -1,7 +1,7 @@
 
 /* - eea-icons-animation.css - */
 @media screen {
-/* http://www.eea.europa.eu/portal_css/eea-icons-animation.css?original=1 */
+/* https://www.eea.europa.eu/portal_css/eea-icons-animation.css?original=1 */
 @-webkit-keyframes wrench {
 0% {
 -webkit-transform: rotate(-12deg);
@@ -881,7 +881,7 @@ animation: burst 3s infinite linear;
 
 /* - ++resource++eea.epub.css - */
 @media screen {
-/* http://www.eea.europa.eu/portal_css/++resource++eea.epub.css?original=1 */
+/* https://www.eea.europa.eu/portal_css/++resource++eea.epub.css?original=1 */
 /* */
 .eea-epub-overlay {
 min-width: 700px;
