@@ -645,29 +645,33 @@ display:none;
 }
 
 .gn-table {
-/* Compact gn-fields displayed in table mode.
-Label and remove control are hidden. */
-:not(.gn-table-label) div.gn-field {
-padding: 0px !important;
-label,
-.col-sm-1.gn-control {
-display: none;
-}
-.col-sm-9 {
-width: 100%;
-}
-}
-.gn-table-label {
-div.gn-field {
-label,
-.col-sm-1.gn-control {
-display: block;
-}
-.col-sm-9 {
-width: 75%;
-}
-}
-}
+  /* Compact gn-fields displayed in table mode.
+  Label and remove control are hidden. */
+  :not(.gn-table-label) div.gn-field {
+    padding: 0px !important;
+    label,
+    .col-sm-1.gn-control {
+      display: none;
+    }
+    .col-sm-9 {
+      width: 100%;
+    }
+  }
+  .gn-table-label {
+    div.gn-field {
+      label,
+      .col-sm-1.gn-control {
+        display: block;
+      }
+      .col-sm-9 {
+        width: 75%;
+      }
+    }
+  }
+  .nopadding-in-table {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 // search filter boxes
