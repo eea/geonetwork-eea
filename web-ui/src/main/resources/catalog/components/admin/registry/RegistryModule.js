@@ -22,37 +22,12 @@
  */
 
 (function() {
-  goog.provide('gn_md_feedback_directive');
+  goog.provide('gn_registry');
 
-  var module = angular.module('gn_md_feedback_directive', []);
+  goog.require('gn_registry_directive');
+  goog.require('gn_registry_service');
 
-  module
-      .directive(
-          'gnMdfeedback',
-          function() {
-            return {
-              restrict: 'EC',
-              replace: true,
-              templateUrl:
-              '../../catalog/components/mdFeedback/partials/mdFeedback.html',
-              link: function postLink(scope, element, attrs) {
-
-                scope.showLabel = attrs.showLabel;
-
-                $(element).find('.modal').on('hidden.bs.modal', function() {
-                  scope.$apply(function() {
-                    scope.mdFeedbackOpen = false;
-                  });
-                });
-
-                scope.$watch('mdFeedbackOpen', function(value) {
-                  if (value == true)
-                    $(element).find('.modal').modal('show');
-                  else
-                    $(element).find('.modal').modal('hide');
-                });
-              }
-            };
-          });
-
+  angular.module('gn_registry', [
+    'gn_registry_directive', 'gn_registry_service'
+  ]);
 })();

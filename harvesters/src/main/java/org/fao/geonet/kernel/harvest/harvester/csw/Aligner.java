@@ -25,6 +25,7 @@ package org.fao.geonet.kernel.harvest.harvester.csw;
 
 import jeeves.server.context.ServiceContext;
 
+import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.Logger;
 import org.fao.geonet.constants.Geonet;
@@ -310,15 +311,8 @@ public class Aligner extends BaseAligner {
         //
         // insert metadata
         //
-        if (params.getOwnerId() == null) {
-            if (context.getUserSession() != null) {
-                ownerId = context.getUserSession().getUserIdAsInt();
-            } else {
-                ownerId = 1;
-            }
-        } else {
-            ownerId = Integer.parseInt(params.getOwnerId());
-        }
+
+        ownerId = Integer.parseInt(StringUtils.isNumeric(params.getOwnerIdUser()) ? params.getOwnerIdUser() : params.getOwnerId());
         Metadata metadata = new Metadata().setUuid(uuid);
         metadata.getDataInfo().
             setSchemaId(schema).
@@ -338,13 +332,13 @@ public class Aligner extends BaseAligner {
         } catch (NumberFormatException e) {
         }
 
-        addCategories(metadata, params.getCategories(), localCateg, context, log, null, false);
+        addCategories(metadata, params.getCategories(), localCateg, context, null, false);
 
         metadata = dataMan.insertMetadata(context, metadata, md, true, false, false, UpdateDatestamp.NO, false, false);
 
         String id = String.valueOf(metadata.getId());
 
-        addPrivileges(id, params.getPrivileges(), localGroups, dataMan, context, log);
+        addPrivileges(id, params.getPrivileges(), localGroups, dataMan, context);
 
         dataMan.indexMetadata(id, Math.random() < 0.01, null);
         result.addedMetadata++;
@@ -404,10 +398,10 @@ public class Aligner extends BaseAligner {
                 OperationAllowedRepository repository = context.getBean(OperationAllowedRepository.class);
                 repository.deleteAllByIdAttribute(OperationAllowedId_.metadataId, Integer.parseInt(id));
 
-                addPrivileges(id, params.getPrivileges(), localGroups, dataMan, context, log);
+                addPrivileges(id, params.getPrivileges(), localGroups, dataMan, context);
 
                 metadata.getMetadataCategories().clear();
-                addCategories(metadata, params.getCategories(), localCateg, context, log, null, true);
+                addCategories(metadata, params.getCategories(), localCateg, context, null, true);
 
                 dataMan.flush();
 

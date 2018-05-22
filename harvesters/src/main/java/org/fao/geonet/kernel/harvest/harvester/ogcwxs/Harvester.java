@@ -28,6 +28,7 @@ import com.google.common.collect.Lists;
 
 import jeeves.server.context.ServiceContext;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.fao.geonet.GeonetContext;
@@ -405,7 +406,8 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult> {
             setType(MetadataType.METADATA);
         metadata.getSourceInfo().
             setSourceId(params.getUuid()).
-            setOwner(Integer.parseInt(params.getOwnerId()));
+            setOwner(Integer.parseInt(
+                    StringUtils.isNumeric(params.getOwnerIdUser()) ? params.getOwnerIdUser() : params.getOwnerId()));
         metadata.getHarvestInfo().
             setHarvested(true).
             setUuid(params.getUuid()).
@@ -416,7 +418,7 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult> {
         } catch (NumberFormatException e) {
         }
 
-        addCategories(metadata, params.getCategories(), localCateg, context, log, null, false);
+        addCategories(metadata, params.getCategories(), localCateg, context, null, false);
 
         if (!dataMan.existsMetadataUuid(uuid)) {
             result.addedMetadata++;
@@ -432,7 +434,7 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult> {
         String id = String.valueOf(metadata.getId());
         uuids.add(uuid);
 
-        addPrivileges(id, params.getPrivileges(), localGroups, dataMan, context, log);
+        addPrivileges(id, params.getPrivileges(), localGroups, dataMan, context);
 
         // Add Thumbnails only after metadata insertion to avoid concurrent transaction
         // and loaded thumbnails could eventually failed anyway.
@@ -735,7 +737,8 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult> {
                 setType(MetadataType.METADATA);
             metadata.getSourceInfo().
                 setSourceId(params.getUuid()).
-                setOwner(Integer.parseInt(params.getOwnerId()));
+                setOwner(Integer.parseInt(
+                        params.getOwnerIdUser() !=  null ? params.getOwnerIdUser() : params.getOwnerId()));
             metadata.getHarvestInfo().
                 setHarvested(true).
                 setUuid(params.getUuid()).
@@ -764,7 +767,7 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult> {
             if (log.isDebugEnabled()) log.debug("    - Layer loaded in DB.");
 
             if (log.isDebugEnabled()) log.debug("    - Set Privileges and category.");
-            addPrivileges(reg.id, params.getPrivileges(), localGroups, dataMan, context, log);
+            addPrivileges(reg.id, params.getPrivileges(), localGroups, dataMan, context);
 
             if (log.isDebugEnabled()) log.debug("    - Set Harvested.");
 
