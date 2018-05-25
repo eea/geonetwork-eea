@@ -137,5 +137,8 @@ INSERT INTO GUF_RatingCriteriaDes (iddes, langid, label) VALUES (4,'eng', 'Servi
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/harvester/disabledHarvesterTypes', '', 0, 9011, 'n');
 
 
+UPDATE metadata SET data = replace(data, 'http://sdi.eea.europa.eu/public/catalogue-graphic-overview', 'https://sdi.eea.europa.eu/public/catalogue-graphic-overview');
+
+
 UPDATE Settings SET value='3.4.3' WHERE name='system/platform/version';
 UPDATE Settings SET value='SNAPSHOT' WHERE name='system/platform/subVersion';
