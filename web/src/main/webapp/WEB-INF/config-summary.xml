@@ -136,14 +136,14 @@
   <summaryTypes>
     <summaryType name="details" format="DIMENSION">
       <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
-      <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
+      <!--<item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>-->
       <item facet="gemetKeyword"
             translator="term:http://geonetwork-opensource.org/gemet"
             sortBy="value"
             sortOrder="asc"
             max="60"/>
       <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
-      <item facet="inspireThemeURI" sortBy="value" sortOrder="asc" max="35" translator="term:http://geonetwork-opensource.org/inspire-theme"/>
+      <item facet="inspireThemeURI" sortBy="value" sortOrder="asc" max="35" translator="term:http://inspire.ec.europa.eu/theme"/>
       <!--<item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>-->
       <!--<item facet="inspireThemeWithAc" sortBy="value" sortOrder="asc" max="35"/>-->
       <item facet="keyword" max="15"/>
