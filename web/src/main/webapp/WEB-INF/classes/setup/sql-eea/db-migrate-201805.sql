@@ -140,5 +140,8 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system
 UPDATE metadata SET data = replace(data, 'http://sdi.eea.europa.eu/public/catalogue-graphic-overview', 'https://sdi.eea.europa.eu/public/catalogue-graphic-overview');
 
 
+UPDATE metadata SET data = replace(data, 'external.theme.inspire-theme', 'external.theme.httpinspireeceuropaeutheme-theme');
+
+
 UPDATE Settings SET value='3.4.3' WHERE name='system/platform/version';
 UPDATE Settings SET value='SNAPSHOT' WHERE name='system/platform/subVersion';
