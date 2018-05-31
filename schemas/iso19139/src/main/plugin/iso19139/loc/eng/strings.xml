@@ -54,7 +54,7 @@
     <div class="row">
       <div class="col-sm-2"/>
       <div class="col-sm-10">
-        <div class="alert alert-info">The title should be self-explanatory and should not contain acronyms unless they are widely known. In any case, should an acronym be used in the title, it shall be made explicit in the abstract. For datasets with versions please <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfocitationtitle" target="_blank">follow this convention</a></div>
+        <div class="alert alert-info">The title should be self-explanatory and should not contain acronyms unless they are widely known. In any case, should an acronym be used in the title, it shall be made explicit in the abstract. For datasets with versions please <a href="https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfocitationtitle" target="_blank">follow this convention</a></div>
       </div>
     </div>
     <hr/>
@@ -104,7 +104,7 @@
       <div class="col-sm-10">
         <div class="alert alert-info">
           The dataset identifier shall be unique and ideally meaningful, following
-          <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Dsfbs_ref_dataset_l4" target="_blank">this convention</a>.
+          <a href="https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions" target="_blank">this convention</a>.
         </div>
       </div>
     </div>
@@ -181,7 +181,7 @@
       <div class="col-sm-2"></div>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          EEA keywords shall be short, meaningful and shall not duplicate other metadata elements (such as INSPIRE Themes, GEMET or EEA categories). Whenever possible, keywords from <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Catalogueeea_keywords" target="_blank">the list of terms used in the EEA website</a> to tag datasets shall be reused.
+          EEA keywords shall be short, meaningful and shall not duplicate other metadata elements (such as INSPIRE Themes, GEMET or EEA categories). Whenever possible, keywords from <a href="https://taskman.eionet.europa.eu/projects/public-docs/wiki/Catalogueeea_keywords" target="_blank">the list of terms used in the EEA website</a> to tag datasets shall be reused.
         </div>
       </div>
     </div>
@@ -277,7 +277,7 @@
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          This element provides a statement on any limitation that can affect the fitness of use of the resource or metadata.  The EEA template includes by default <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInforesourceConstraints" target="_blank">the standard text to be included for those datasets owned by EEA which can be freely distributed</a>. For datasets which are not owned by EEA but are distributed by EEA please insert the statement corresponding to the applicable policy. In case of a doubt please contact  <a href="mailto:sdi@eea.europa.eu">the SDI team</a>.
+          This element provides a statement on any limitation that can affect the fitness of use of the resource or metadata.  The EEA template includes by default <a href="https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInforesourceConstraints" target="_blank">the standard text to be included for those datasets owned by EEA which can be freely distributed</a>. For datasets which are not owned by EEA but are distributed by EEA please insert the statement corresponding to the applicable policy. In case of a doubt please contact  <a href="mailto:sdi@eea.europa.eu">the SDI team</a>.
         </div>
       </div>
     </div>
@@ -356,7 +356,7 @@
 
   <eea-contact>
     <div class="alert alert-info">
-      <i class="fa fa-question-circle"></i>&#160; For more details about how to create EEA metadata please read the <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Cataloguemetadata_guidelines" target="_blank">EEA Metadata Guidelines</a>. Elements with a <label style="color: #a94442;font-size: 1em;">*</label> are mandatory with respect to the EEA metadata guidelines.
+      <i class="fa fa-question-circle"></i>&#160; For more details about how to create EEA metadata please read the <a href="https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines" target="_blank">EEA Metadata Guidelines</a>. Elements with a <label style="color: #a94442;font-size: 1em;">*</label> are mandatory with respect to the EEA metadata guidelines.
     </div>
     <div class="alert alert-info">
       If you have any questions, please contact <a href="mailto:sdi@eea.europa.eu">sdi [at] eea.europa.eu</a>.
