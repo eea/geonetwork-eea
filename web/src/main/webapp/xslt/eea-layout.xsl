@@ -106,7 +106,7 @@
 
             <p class="discreet colophon-links">
               <a rel="license"
-                 href="http://creativecommons.org/licenses/by/2.5/dk/deed.en_GB"
+                 href="https://creativecommons.org/licenses/by/2.5/dk/deed.en_GB"
                  title="Creative Commons Attribution License">
                 <img alt="Creative Commons Attribution License"
                      style="border-width: 0pt;"
@@ -675,7 +675,7 @@
           </h3>
           <!-- THE SEARCHBOX DEFINITION -->
           <div id="portal-searchbox">
-            <form action="http://glossary.en.eea.europa.eu/terminology/sitesearch"
+            <form action="https://www.eea.europa.eu/help/glossary"
                   id="searchbox_terminology" class="searchforms">
               <input type="text" name="term" size="35"
                      title="Search Europe's environment"/>
@@ -686,7 +686,7 @@
               search
             </a>
             <a id="search_glossary_link"
-               href="http://glossary.en.eea.europa.eu">A-Z Glossary
+               href="https://www.eea.europa.eu/help/glossary">A-Z Glossary
             </a>
           </div>
           <script type="text/javascript">var object_archived = false;;</script>
