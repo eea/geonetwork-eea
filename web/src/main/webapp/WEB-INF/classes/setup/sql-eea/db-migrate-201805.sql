@@ -143,5 +143,10 @@ UPDATE metadata SET data = replace(data, 'http://sdi.eea.europa.eu/public/catalo
 UPDATE metadata SET data = replace(data, 'external.theme.inspire-theme', 'external.theme.httpinspireeceuropaeutheme-theme');
 
 
+DELETE FROM metadatacateg WHERE categoryid not in (11, 12, 13);
+DELETE FROM group_category WHERE category_id not in (11, 12, 13);
+DELETE FROM categoriesdes WHERE iddes not in (11, 12, 13);
+DELETE FROM categories WHERE id not in (11, 12, 13);
+
 UPDATE Settings SET value='3.4.3' WHERE name='system/platform/version';
 UPDATE Settings SET value='SNAPSHOT' WHERE name='system/platform/subVersion';
