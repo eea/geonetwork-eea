@@ -60,7 +60,6 @@ Stylesheet used to update metadata adding a reference to a parent record.
   <!-- Convert Mauro email to generic mailbox
    sdi@eea.europa.eu
    -->
-
   <xsl:template match="gmd:electronicMailAddress/gco:CharacterString[. = 'mauro.michielon@eea.europa.eu']">
     <xsl:copy>sdi@eea.europa.eu</xsl:copy>
   </xsl:template>
@@ -74,7 +73,7 @@ Stylesheet used to update metadata adding a reference to a parent record.
             <gmd:specification>
               <gmd:CI_Citation>
                 <gmd:title>
-                  <gco:CharacterString>COMMISSION REGULATION (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</gco:CharacterString>
+                  <gco:CharacterString>Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</gco:CharacterString>
                 </gmd:title>
                 <gmd:date>
                   <gmd:CI_Date>
@@ -90,11 +89,9 @@ Stylesheet used to update metadata adding a reference to a parent record.
               </gmd:CI_Citation>
             </gmd:specification>
             <gmd:explanation>
-              <gco:CharacterString>Not evaluated</gco:CharacterString>
+              <gco:CharacterString>See the referenced specification</gco:CharacterString>
             </gmd:explanation>
-            <gmd:pass gco:nilReason="unknown">
-              <gco:Boolean>false</gco:Boolean>
-            </gmd:pass>
+            <gmd:pass gco:nilReason="unknown"/>
           </gmd:DQ_ConformanceResult>
         </gmd:result>
       </gmd:DQ_DomainConsistency>
