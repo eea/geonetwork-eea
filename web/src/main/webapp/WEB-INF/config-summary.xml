@@ -158,7 +158,6 @@
       <item facet="resolution" sortBy="numValue" sortOrder="desc"/>
       <item facet="region"
             translator="term:http://geonetwork-opensource.org/thesaurus/naturalearth-and-seavox"/>
-      <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
     </summaryType>
 
   <summaryType name="manager" format="DIMENSION">
