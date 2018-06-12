@@ -866,7 +866,8 @@
 
           <text ref="eea-hr"/>
           <field name="eea-distributionFormat"
-                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/*/gmd:distributionFormat/*/gmd:name"/>
+                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/*/gmd:distributionFormat/*/gmd:name"
+                 del="../.."/>
           <action type="add" btnLabel="eea-distributionFormat-add" or="distributionFormat"
                   in="/gmd:MD_Metadata/gmd:distributionInfo/*">
             <template>
