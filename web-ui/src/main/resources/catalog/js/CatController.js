@@ -36,6 +36,17 @@
   goog.require('gn_session_service');
 
 
+  // On the editor catalog, search are restricted on this catalog
+  // only to not mix all records harvested (from internal for example)
+  // which are used to be linked to draft records (eg. has sources)
+  var editorCatalogId = 'd1bd08f0-16ac-47c3-b581-2e8db715530c';
+  // var editorCatalogId = 'd1bd08f0-16ac-47c3-b581-2e8db715530b';
+  // var editorCatalogPath = '/geonetwork';
+  var editorCatalogPath = '/editor-catalogue';
+  // Also update in EditorBoardController.js
+  // Also update in module.js
+
+
   var module = angular.module('gn_cat_controller',
       ['gn_search_manager', 'gn_session_service',
         'gn_admin_menu', 'gn_saved_selections']);
@@ -621,6 +632,11 @@
         // Retrieve main search information
         var searchInfo = userLogin.then(function(value) {
           var url = 'qi?_content_type=json&summaryOnly=true';
+
+          if (location.pathname.indexOf(editorCatalogPath) === 0) {
+            url += '&_source=' + editorCatalogId;
+          }
+
           angular.forEach(gnGlobalSettings.gnCfg.mods.search.filters,
               function(v, k) {
                 url += '&' + k + '=' + v;
