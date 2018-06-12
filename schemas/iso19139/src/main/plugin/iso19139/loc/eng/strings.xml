@@ -34,6 +34,7 @@
   <xml_iso19139>Save this metadata as an ISO19139 XML file</xml_iso19139>
   <xml_iso19139Tooai_dc>Save this metadata as an OAI Dublin Core XML file</xml_iso19139Tooai_dc>
 
+  <metadata-contact>Metadata contact</metadata-contact>
   <eea>EEA</eea>
   <eea-add-inspire-conformity>Add INSPIRE conformity</eea-add-inspire-conformity>
   <eea-identification>Identification of resource</eea-identification>

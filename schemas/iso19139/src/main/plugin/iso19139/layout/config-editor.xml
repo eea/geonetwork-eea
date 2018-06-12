@@ -1026,7 +1026,13 @@
         <section name="eea-contacts">
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact"
                  or="pointOfContact" in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
+
           <text ref="eea-contact-help"/>
+
+          <field name="metadata-contact"
+                 xpath="/gmd:MD_Metadata/gmd:contact"
+                 or="contact"
+                 in="/gmd:MD_Metadata"/>
         </section>
 
       </tab>
