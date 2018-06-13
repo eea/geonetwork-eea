@@ -513,11 +513,11 @@
       <artifactId>schema-dublin-core</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>wfsfeature-harvester</artifactId>
       <version>${project.version}</version>
-    </dependency>
+    </dependency>-->
 
     <dependency>
       <groupId>org.mitre.dsmiley.httpproxy</groupId>
