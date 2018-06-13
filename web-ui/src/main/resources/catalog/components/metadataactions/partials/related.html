@@ -61,7 +61,7 @@
                      value="https://sdi.eea.europa.eu/data{{r.url.eng.substr(0, r.url.eng.lastIndexOf('/'))}}"/>
               <span class="input-group-btn">
                 <a class="btn btn-default" type="button"
-                   data-ng-href="https://sdi.eea.europa.eu/data{{r.url.eng.substr(0, r.url.eng.eng.lastIndexOf('/'))}}"
+                   data-ng-href="https://sdi.eea.europa.eu/data{{r.url.eng.substr(0, r.url.eng.lastIndexOf('/'))}}"
                    data-translate="">openLink</a>
               </span>
             </div>
@@ -192,13 +192,13 @@
                      value="{{::r.url | gnLocalized: lang}}"/>
             </p>
           </div>
-          
+
           <div data-ng-switch-when="MDFCATS">
           <p class="text-muted">
             <h2>{{(r.title | gnLocalized: lang) }}</h2>
-            
+
            <h2 data-translate="">technicalInformation</h2>
-           
+
            <div data-gn-attribute-table-renderer="r.featureType.attributeTable.element">
 	        </div>
             </p>
