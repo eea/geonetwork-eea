@@ -51,35 +51,35 @@
             label: 'searchSelectedRecord',
             fn: searchRecordsInSelection,
             icon: 'fa-search'
-          },
-          'MapLayerlist': {
-            label: 'addToMap',
-            filterFn: function(record) {
-              var md = new Metadata(record);
-              return md.getLinksByType('OGC:WMS').length > 0;
-            },
-            fn: function(uuids, records) {
-              for (var i = 0; i < uuids.length; i++) {
-                var uuid = uuids[i], record = records[uuid];
-
-                var md = new Metadata(record);
-                angular.forEach(md.getLinksByType('OGC:WMS'), function(link) {
-                  if (gnMap.isLayerInMap(viewerMap,
-                      link.name, link.url)) {
-                    return;
-                  }
-                  gnMap.addWmsFromScratch(viewerMap,
-                      link.url, link.name,
-                      false, md).then(function(layer) {
-                    if (layer) {
-                      gnMap.feedLayerWithRelated(layer, link.group);
-                    }
-                  });
-                });
-              }
-            },
-            icon: 'fa-globe'
           }
+          // 'MapLayerlist': {
+          //   label: 'addToMap',
+          //   filterFn: function(record) {
+          //     var md = new Metadata(record);
+          //     return md.getLinksByType('OGC:WMS').length > 0;
+          //   },
+          //   fn: function(uuids, records) {
+          //     for (var i = 0; i < uuids.length; i++) {
+          //       var uuid = uuids[i], record = records[uuid];
+          //
+          //       var md = new Metadata(record);
+          //       angular.forEach(md.getLinksByType('OGC:WMS'), function(link) {
+          //         if (gnMap.isLayerInMap(viewerMap,
+          //             link.name, link.url)) {
+          //           return;
+          //         }
+          //         gnMap.addWmsFromScratch(viewerMap,
+          //             link.url, link.name,
+          //             false, md).then(function(layer) {
+          //           if (layer) {
+          //             gnMap.feedLayerWithRelated(layer, link.group);
+          //           }
+          //         });
+          //       });
+          //     }
+          //   },
+          //   icon: 'fa-globe'
+          // }
         },
         // Add user session selection types
         // * MapLayerList is a local selection used to add
@@ -94,11 +94,11 @@
           // null (ie. not preserved on page refresh).
           storage: 'localStorage',
           isAnonymousOnly: true
-        }, {
-          id: -20,
-          name: 'MapLayerlist',
-          records: [],
-          storage: null
+        // }, {
+        //   id: -20,
+        //   name: 'MapLayerlist',
+        //   records: [],
+        //   storage: null
           // }, {
           //   id: -30,
           //   name: 'DataDownloaderlist',
