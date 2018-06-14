@@ -66,36 +66,38 @@ Stylesheet used to update metadata adding a reference to a parent record.
 
   <!-- Add INSPIRE conformity -->
   <xsl:template match="gmd:lineage">
-    <gmd:report>
-      <gmd:DQ_DomainConsistency>
-        <gmd:result>
-          <gmd:DQ_ConformanceResult>
-            <gmd:specification>
-              <gmd:CI_Citation>
-                <gmd:title>
-                  <gco:CharacterString>Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</gco:CharacterString>
-                </gmd:title>
-                <gmd:date>
-                  <gmd:CI_Date>
-                    <gmd:date>
-                      <gco:Date>2010-12-08</gco:Date>
-                    </gmd:date>
-                    <gmd:dateType>
-                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
-                                           codeListValue="publication"/>
-                    </gmd:dateType>
-                  </gmd:CI_Date>
-                </gmd:date>
-              </gmd:CI_Citation>
-            </gmd:specification>
-            <gmd:explanation>
-              <gco:CharacterString>See the referenced specification</gco:CharacterString>
-            </gmd:explanation>
-            <gmd:pass gco:nilReason="unknown"/>
-          </gmd:DQ_ConformanceResult>
-        </gmd:result>
-      </gmd:DQ_DomainConsistency>
-    </gmd:report>
+    <xsl:if test="count(../gmd:report[contains(*/gmd:result/*/gmd:specification/*/gmd:title/*, '1089/2010 of 23 November 2010')]) = 0">
+      <gmd:report>
+        <gmd:DQ_DomainConsistency>
+          <gmd:result>
+            <gmd:DQ_ConformanceResult>
+              <gmd:specification>
+                <gmd:CI_Citation>
+                  <gmd:title>
+                    <gco:CharacterString>Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</gco:CharacterString>
+                  </gmd:title>
+                  <gmd:date>
+                    <gmd:CI_Date>
+                      <gmd:date>
+                        <gco:Date>2010-12-08</gco:Date>
+                      </gmd:date>
+                      <gmd:dateType>
+                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                                             codeListValue="publication"/>
+                      </gmd:dateType>
+                    </gmd:CI_Date>
+                  </gmd:date>
+                </gmd:CI_Citation>
+              </gmd:specification>
+              <gmd:explanation>
+                <gco:CharacterString>See the referenced specification</gco:CharacterString>
+              </gmd:explanation>
+              <gmd:pass gco:nilReason="unknown"/>
+            </gmd:DQ_ConformanceResult>
+          </gmd:result>
+        </gmd:DQ_DomainConsistency>
+      </gmd:report>
+    </xsl:if>
 
     <xsl:copy-of select="."/>
   </xsl:template>
