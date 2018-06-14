@@ -897,6 +897,7 @@
         <geonetwork.config.security>config-security</geonetwork.config.security>
         <geonetwork.webapp.name>geonetwork</geonetwork.webapp.name>
         <security.config.file>config-security-noldap.xml</security.config.file>
+        <wro.debug>true</wro.debug>
       </properties>
     </profile>
     <profile>
