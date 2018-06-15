@@ -201,7 +201,7 @@
 
 
       $scope.goToSearch = function (any) {
-        $location.path('/search').search({'any': any});
+        $location.path('/search').search({'any': any, 'facet.q': 'status/notobsolete'});
       };
       $scope.canEdit = function(record) {
         // TODO: take catalog config for harvested records
