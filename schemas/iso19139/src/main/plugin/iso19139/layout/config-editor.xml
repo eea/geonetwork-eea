@@ -973,7 +973,8 @@
 
           <action type="add"
                   btnLabel="eea-add-inspire-conformity"
-                  if="count(gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency) = 0"
+                  if="count(gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency[
+                              contains(gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString, 'No 1089/2010')]) = 0"
                   or="report"
                   in="/gmd:MD_Metadata/gmd:dataQualityInfo/*">
             <template>
