@@ -69,6 +69,14 @@
         amended
       </description>
     </entry>
+
+    <entry>
+      <code>superseded</code>
+      <label>Superseded</label>
+      <description>Date identifies when the resource was superseded or replaced
+        by another resource
+      </description>
+    </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
   </codelist>
   <!-- ==================================================== -->
@@ -1408,6 +1416,12 @@
       <code>obsolete</code>
       <label>Obsolete</label>
       <description>Data is no longer relevant</description>
+    </entry>
+
+    <entry>
+      <code>superseded</code>
+      <label>Superseded</label>
+      <description>Replaced by new item</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry hideInEditMode="true">
