@@ -52,7 +52,7 @@
       $scope.queue = [];
       $scope.params = {
         metadataType: 'METADATA',
-        uuidProcessing: 'NOTHING',
+        uuidProcessing: 'GENERATEUUID',
         xml: '',
         file: '',
         url: '',
