@@ -45,10 +45,9 @@ import springfox.documentation.annotations.ApiIgnore;
 @Controller("eealayoutupdate")
 public class EEALayoutUpdateAPI {
 
-    @ApiOperation(value = "Refresh EEA Template from API", nickname = "refreshTemplate")
-    @RequestMapping(value = "/eealayoutupdate/refreshTemplate", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ApiOperation(value = "Refresh EEA Template from API", nickname = "refreshtemplate")
+    @RequestMapping(value = "/eealayoutupdate/refreshtemplate", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
-    @PreAuthorize("hasRole('Administrator')")
     @ResponseBody
     public void refreshTemplate(@ApiIgnore
     final HttpServletResponse response) {
