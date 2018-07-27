@@ -1011,6 +1011,8 @@
               </snippet>
             </template>
           </action>
+
+          <text ref="eea-conformity-help"/>
         </section>
 
 

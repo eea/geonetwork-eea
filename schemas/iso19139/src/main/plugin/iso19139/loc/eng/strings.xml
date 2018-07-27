@@ -71,6 +71,15 @@
     </div>
     <hr/>
   </eea-date-help>
+  <eea-conformity-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">This data quality element informs about the outcome of the evaluation of the data set against the INSPIRE regulation as regards interoperability of spatial datasets and services. By default, we set it to "Not evaluated".</div>
+      </div>
+    </div>
+    <hr/>
+  </eea-conformity-help>
   <eea-edition-help>
     <div class="row">
       <div class="col-sm-2"/>
@@ -160,7 +169,7 @@
       <div class="col-sm-2"></div>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          This metadata element is used to describe the intended spatial coverage of a dataset in text form. Where appropriate, country codes such as those described <a href="https://taskman.eionet.europa.eu/projects/sdi/wiki/Country_codes" target="_blank">here</a> should be used instead of listing all Member States.
+          This metadata element is used to describe the intended spatial coverage of a dataset in text form. Where appropriate, country codes such as those described <a href="https://taskman.eionet.europa.eu/projects/public-docs/wiki/Country_codes" target="_blank">here</a> should be used instead of listing all Member States.
 
         </div>
       </div>
@@ -349,7 +358,7 @@
 
   <eea-associatedResource-help>
     <div class="alert alert-info">
-      When available, please add the link to the WMS GetCapabilities using “OGC:WMS” protocol as well as the link to the ESRI Rest service using the “ESRI:REST” protocol. Links for internal access, web download and the graphic overview will be added by the SDI Team during the registration process.
+      When available, please add the link to the web download using the Web address (URL) protocol, to the WMS GetCapabilities and corresponding layer using “OGC:WMS” protocol as well as the link to the ESRI Rest service using the “ESRI:REST” protocol. Links for internal access, the graphic overview and related data sources will be added by the SDI Team during the registration process.
     </div>
   </eea-associatedResource-help>
   <eea-technical-details>Spatial representation and resolution</eea-technical-details>
