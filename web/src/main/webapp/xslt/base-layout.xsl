@@ -37,7 +37,7 @@
   <xsl:include href="base-layout-cssjs-loader.xsl"/>
   <xsl:include href="skin/default/skin.xsl"/>
 
-  <xsl:include href="eea-layout.xsl"/>
+  <xsl:include href="eea-layout-api.xsl"/>
 
   <xsl:template match="/">
     <html ng-app="{$angularModule}" lang="{$lang}" id="ng-app">
