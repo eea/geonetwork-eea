@@ -290,4 +290,16 @@
     <!-- EEA HEADER END -->
   </xsl:template>
 
+  <xsl:template name="eea-script-api">
+    <!-- EEA HEADER START -->
+    <xsl:variable name="s">
+      <xsl:copy-of select="java:getSCRIPTS()" />
+    </xsl:variable>
+    <script type="text/javascript">
+      <xsl:value-of disable-output-escaping="yes"
+        select="$s" />
+    </script>
+    <!-- EEA HEADER END -->
+  </xsl:template>
+
 </xsl:stylesheet>

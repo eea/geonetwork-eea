@@ -60,6 +60,8 @@
           </xsl:when>
           <xsl:otherwise>
             <xsl:call-template name="eea-head-api"/>
+            <xsl:call-template name="eea-script-api"/>
+
           </xsl:otherwise>
         </xsl:choose>
 

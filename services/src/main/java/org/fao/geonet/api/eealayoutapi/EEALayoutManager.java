@@ -109,7 +109,6 @@ public class EEALayoutManager {
 
                 sb.append(inline);
             }
-            sb.append("<script src=\"../../srv/api/eealayoutupdate/script\" /></head>");
 
             Document doc = Jsoup.parse(sb.toString());
 
