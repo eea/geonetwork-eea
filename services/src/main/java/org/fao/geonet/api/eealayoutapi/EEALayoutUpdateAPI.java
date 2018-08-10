@@ -60,7 +60,7 @@ public class EEALayoutUpdateAPI {
     }
 
     @ApiOperation(value = "Get EEA <head> content", nickname = "getHead")
-    @RequestMapping(value = "/eealayoutupdate/head", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = "/eealayoutupdate/head", produces = MediaType.APPLICATION_XHTML_XML_VALUE, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @PreAuthorize("hasRole('Administrator')")
     @ResponseBody
@@ -70,7 +70,7 @@ public class EEALayoutUpdateAPI {
     }
 
     @ApiOperation(value = "Get EEA embedded scripts", nickname = "getScript")
-    @RequestMapping(value = "/eealayoutupdate/script", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = "/eealayoutupdate/script", produces = MediaType.APPLICATION_XHTML_XML_VALUE, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String getScript(@ApiIgnore
@@ -80,7 +80,7 @@ public class EEALayoutUpdateAPI {
     }
 
     @ApiOperation(value = "Get EEA footer html", nickname = "getFooter")
-    @RequestMapping(value = "/eealayoutupdate/footer", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = "/eealayoutupdate/footer", produces = MediaType.APPLICATION_XHTML_XML_VALUE, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @PreAuthorize("hasRole('Administrator')")
     @ResponseBody
@@ -90,7 +90,7 @@ public class EEALayoutUpdateAPI {
     }
 
     @ApiOperation(value = "Get EEA header html content", nickname = "getHeader")
-    @RequestMapping(value = "/eealayoutupdate/header", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = "/eealayoutupdate/header", produces = MediaType.APPLICATION_XHTML_XML_VALUE, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @PreAuthorize("hasRole('Administrator')")
     @ResponseBody
