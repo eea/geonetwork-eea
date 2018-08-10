@@ -54,9 +54,8 @@
         <meta name="description" content=""/>
         <meta name="keywords" content=""/>
 
-
         <xsl:choose>
-          <xsl:when test="$requestParameters/noeeaapi">
+          <xsl:when test="$requestParameters/noeeaapi or $env/system/eea/templateapi = 'false'">
             <xsl:call-template name="eea-head"/>
           </xsl:when>
           <xsl:otherwise>
@@ -81,7 +80,7 @@
       <body data-ng-controller="GnCatController">
 
         <xsl:choose>
-          <xsl:when test="$requestParameters/noeeaapi">
+          <xsl:when test="$requestParameters/noeeaapi or $env/system/eea/templateapi = 'false'">
             <xsl:call-template name="eea-header"/>
           </xsl:when>
           <xsl:otherwise>
@@ -120,7 +119,7 @@
 
 
         <xsl:choose>
-          <xsl:when test="$requestParameters/noeeaapi">
+          <xsl:when test="$requestParameters/noeeaapi or $env/system/eea/templateapi = 'false'">
             <xsl:call-template name="eea-footer"/>
           </xsl:when>
           <xsl:otherwise>
