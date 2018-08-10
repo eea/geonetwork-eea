@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE document [ 
+<!DOCTYPE document [
 <!ENTITY nbsp    "&#160;" >
 <!ENTITY iexcl   "&#161;" >
 <!ENTITY cent    "&#162;" >
@@ -257,10 +257,10 @@
   xmlns:exslt="http://exslt.org/common"
   xmlns:java="java:org.fao.geonet.api.eealayoutapi.EEALayoutManager"
   exclude-result-prefixes="#all">
-  
+
   <xsl:param name="java" />
 
-  <xsl:template name="eea-head">
+  <xsl:template name="eea-head-api">
     <!-- EEA HEAD START -->
     <xsl:variable name="head">
       <xsl:copy-of select="java:getHEAD()" />
@@ -270,7 +270,7 @@
     <!-- EEA HEAD END -->
   </xsl:template>
 
-  <xsl:template name="eea-footer">
+  <xsl:template name="eea-footer-api">
     <!-- EEA FOOTER START -->
     <xsl:variable name="footer">
       <xsl:copy-of select="java:getFOOTER()" />
@@ -280,7 +280,7 @@
     <!-- EEA FOOTER END -->
   </xsl:template>
 
-  <xsl:template name="eea-header">
+  <xsl:template name="eea-header-api">
     <!-- EEA HEADER START -->
     <xsl:variable name="header">
       <xsl:copy-of select="java:getHEADER()" />
