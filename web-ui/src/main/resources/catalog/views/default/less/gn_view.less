@@ -32,6 +32,32 @@
 
 }
 
+// header
+#cross-site-top {
+  // hide sidepanels
+  #tip-externalsites-networks, #js-siteaction-panels {
+    display: none;
+  }
+  a:visited, a:link, a {
+    color: #fff !important;
+  }
+}
+
+// change GN layout
+.gn-top-bar {
+  margin-top: 167px;
+}
+[ng-app ="gn_editor"] {
+  body {
+    .gn-top-bar {
+      margin-top: 0;
+    }
+  }
+}
+.gn-editor-board, [data-ng-controller="GnAdminController"] {
+  background-color: #fff !important;
+}
+
 /* Override Bootstrap style */
 
 .btn-default {

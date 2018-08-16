@@ -38,6 +38,7 @@
   <xsl:include href="skin/default/skin.xsl"/>
 
   <xsl:include href="eea-layout.xsl"/>
+  <xsl:include href="eea-layout-api.xsl"/>
 
   <xsl:template match="/">
     <html ng-app="{$angularModule}" lang="{$lang}" id="ng-app">
@@ -53,8 +54,16 @@
         <meta name="description" content=""/>
         <meta name="keywords" content=""/>
 
+        <xsl:choose>
+          <xsl:when test="$requestParameters/noeeaapi or $env/system/eea/templateapi = 'false'">
+            <xsl:call-template name="eea-head"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:call-template name="eea-head-api"/>
+            <xsl:call-template name="eea-script-api"/>
 
-        <xsl:call-template name="eea-head"/>
+          </xsl:otherwise>
+        </xsl:choose>
 
         <!--<link rel="icon" sizes="16x16 32x32 48x48" type="image/png" href="../../images/logos/favicon.png"/>-->
         <link href="rss.search?sortBy=changeDate" rel="alternate" type="application/rss+xml"
@@ -72,7 +81,14 @@
       -->
       <body data-ng-controller="GnCatController">
 
-        <xsl:call-template name="eea-header"/>
+        <xsl:choose>
+          <xsl:when test="$requestParameters/noeeaapi or $env/system/eea/templateapi = 'false'">
+            <xsl:call-template name="eea-header"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:call-template name="eea-header-api"/>
+          </xsl:otherwise>
+        </xsl:choose>
 
         <div data-gn-alert-manager=""></div>
 
@@ -104,7 +120,14 @@
         </xsl:choose>
 
 
-        <xsl:call-template name="eea-footer"/>
+        <xsl:choose>
+          <xsl:when test="$requestParameters/noeeaapi or $env/system/eea/templateapi = 'false'">
+            <xsl:call-template name="eea-footer"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:call-template name="eea-footer-api"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </body>
     </html>
   </xsl:template>
