@@ -36,12 +36,19 @@ Stylesheet used to update metadata adding a reference to a parent record.
   <xsl:variable name="crsMap">
     <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:4258">EPSG:4258</crs>
     <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:4258">ETRS 89 (EPSG:4258)</crs>
+    <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:4258">ETRS89 (EPSG:4258)</crs>
     <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:3035">ETRS 89 / LAEA Europe (EPSG:3035)</crs>
+    <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:3035">ETRS89 / LAEA Europe (EPSG:3035)</crs>
     <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:4326">WGS 1984</crs>
+    <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:4326">WGS1984</crs>
     <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:4326">WGS 84 (EPSG:4326)</crs>
+    <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:4326">WGS84 (EPSG:4326)</crs>
     <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:4326">WGS 84 (EPSG:4326)::EPSG</crs>
+    <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:4326">WGS84 (EPSG:4326)::EPSG</crs>
     <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:32628">WGS 84 / UTM zone 28N (EPSG:32628)</crs>
+    <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:32628">WGS84 / UTM zone 28N (EPSG:32628)</crs>
     <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:32740">WGS 84 / UTM zone 40S (EPSG:32740)</crs>
+    <crs code="urn:ogc:def:crs:EPSG:7.1:EPSG:32740">WGS84 / UTM zone 40S (EPSG:32740)</crs>
   </xsl:variable>
 
   <xsl:template match="gmd:RS_Identifier[gmd:code/gco:CharacterString = $crsMap/crs/text()]">
