@@ -204,7 +204,7 @@
       <div class="col-sm-2"></div>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          Select additional catalogue labels for your metadata. The default label is set to datasets as the EEA metadata catalogue so far only includes dataset or a dataset series metadata. Should the dataset be free, full and open for re-use, please also select the label geossdatacore so this dataset can be discovered by the <a href="http://www.geoportal.org/" target="_blank">GEOSS</a>.
+          Select additional catalogue labels for your metadata. Should the dataset be free, full and open for re-use, please select the label geodatacore so this dataset can be discovered by the <a href="http://www.geoportal.org/" target="_blank">GEOSS</a>.
         </div>
       </div>
     </div>
