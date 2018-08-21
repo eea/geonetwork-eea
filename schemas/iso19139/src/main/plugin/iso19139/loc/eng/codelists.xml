@@ -381,6 +381,15 @@
       <label>revision of</label>
       <description></description>
     </entry>
+    <!-- Added from ISO19115-1-->
+    <entry>
+      <code>series</code>
+      <label>Series</label>
+      <description>Associated through a common heritage such as produced to a
+        common product specification
+      </description>
+    </entry>
+
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
   </codelist>
   <!-- ==================================================== -->

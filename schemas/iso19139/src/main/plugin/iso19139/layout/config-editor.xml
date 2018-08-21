@@ -419,7 +419,8 @@
   <views>
     <view name="eea" upAndDownControlHidden="true">
       <sidePanel>
-        <directive data-gn-onlinesrc-list=""/>
+        <directive data-gn-onlinesrc-list=""
+                   types="onlinesrc|dataset|service|source|sibling|associated|fcats"/>
         <text ref="eea-associatedResource-help"/>
 
         <directive data-gn-validation-report=""/>
