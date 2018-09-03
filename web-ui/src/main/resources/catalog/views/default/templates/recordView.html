@@ -108,7 +108,10 @@
              data-ng-bind-html="(mdView.current.record.abstract || mdView.current.record.defaultAbstract) | linky | newlines"/>
 
         <!-- Display the first metadata status (apply to ISO19139 record) -->
-        <div data-ng-if="mdView.current.record.status_text.length > 0 && (mdView.current.record.status[0] == 'obsolete' || mdView.current.record.status[0] == 'historicalArchive')"
+        <div data-ng-if="mdView.current.record.status_text.length > 0 &&
+                        (mdView.current.record.status.indexOf('obsolete') !== -1 ||
+                         mdView.current.record.status.indexOf('superseded') !== -1 ||
+                         mdView.current.record.status.indexOf('historicalArchive') !== -1)"
              title="{{mdView.current.record.status_text[0]}}"
              class="gn-status gn-status-mdview gn-status-{{mdView.current.record.status[0]}}">
           {{mdView.current.record.status_text[0]}}
