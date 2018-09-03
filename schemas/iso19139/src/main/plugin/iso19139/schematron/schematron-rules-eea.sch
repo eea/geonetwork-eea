@@ -2,6 +2,11 @@
 <sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+    <!--
+    Guideline
+    https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines
+    -->
+
     <sch:title xmlns="http://www.w3.org/2001/XMLSchema">Schematron validation / EEA
         recommendations</sch:title>
     <sch:ns prefix="gml" uri="http://www.opengis.net/gml"/>
@@ -11,7 +16,69 @@
     <sch:ns prefix="geonet" uri="http://www.fao.org/geonetwork"/>
     <sch:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
 
-    <!-- The Coordinate Reference System shall be referred to with its EPSG  -->
+    <!-- MD_Metadata/fileIdentifier. Is mandatory for EEA.
+    This element is populated when a record is created and
+    can not be removed in GeoNetwork and as such is mandatory by default.
+    -->
+
+    <!-- MD_Metadata/language. Is mandatory for EEA (ISO and INSPIRE).
+    Check is done for ISO https://github.com/eea/geonetwork-eea/blob/eea-3.4.3/schemas/iso19139/src/main/plugin/iso19139/schematron/schematron-rules-iso.sch#L538
+    and for INSPIRE (one of EU language) https://github.com/eea/geonetwork-eea/blob/eea-3.4.3/schemas/iso19139/src/main/plugin/iso19139/schematron/schematron-rules-inspire.disabled.sch#L675
+    -->
+
+    <!-- MD_Metadata/characterSet. Is mandatory for EEA.
+    https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadatacharacterSet
+
+    No validation rule defined for that because the template
+    define a default value and the EEA editor does not allow
+    to remove it. TODO?
+    -->
+
+    <!-- MD_Metadata/parentIdentifier. Is conditional for EEA.
+    https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataparentIdentifier
+
+    Wiki to be updated to reflect the change of using the aggregationInfo
+    instead of parentIdentifier (see https://taskman.eionet.europa.eu/issues/96303).
+    No validation rule to implement as the creation of the link can only be
+    defined by the metadata author.
+    -->
+
+    <!-- MD_Metadata/hierarchyLevel. Is mandatory for EEA.
+    https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadatahierarchyLevel
+
+    No validation rule defined for that because the template
+    define a default value and the EEA editor does not allow
+    to remove it. TODO?
+    -->
+
+    <!-- MD_Metadata/contact. Is mandatory for EEA (and INSPIRE).
+    https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_Metadatacontact
+
+
+    Check is done for INSPIRE https://github.com/eea/geonetwork-eea/blob/eea-3.4.3/schemas/iso19139/src/main/plugin/iso19139/schematron/schematron-rules-inspire.disabled.sch#L691-L698
+    -->
+
+    <!-- MD_Metadata/dateStamp. Is mandatory for EEA.
+    This element is populated when a record is updated and
+    can not be removed in GeoNetwork and as such is mandatory by default.
+    -->
+
+    <!-- MD_Metadata/metadataStandardName. Is mandatory for EEA.
+         MD_Metadata/metadataStandardVersion. Is mandatory for EEA.
+
+    No validation rule defined for that because the template
+    define a default value and the EEA editor does not allow
+    to remove it. TODO?
+    -->
+
+    <!-- MD_Metadata/referenceSystemInfo/*/referenceSystemIdentifier. Is mandatory for EEA.
+    https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadatareferenceSystemInforeferenceSystemIdentifier
+
+    The Coordinate Reference System shall be referred to with its EPSG.
+
+    Current rule is a non empty check only.
+    We could add a rule to check that code is starting with urn:ogc:def:crs:EPSG:7.1: to be more strict TODO?
+    -->
     <sch:pattern>
         <sch:title>$loc/strings/EEASRS.alert</sch:title>
         <sch:rule context="//gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']">
@@ -19,6 +86,7 @@
                 value="gmd:referenceSystemInfo/*/gmd:referenceSystemIdentifier/*/
                                 gmd:code/gco:CharacterString"/>
 
+            <!-- Not empty check. -->
             <sch:assert test="normalize-space($srs) != ''"
                 >$loc/strings/EEASRS.alert</sch:assert>
             <sch:report test="normalize-space($srs) != ''"><sch:value-of
@@ -27,12 +95,19 @@
         </sch:rule>
     </sch:pattern>
 
+
     <sch:pattern>
         <sch:title>$loc/strings/EEATITLE</sch:title>
         <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='MD_DataIdentification']">
 
 
-            <!-- The title should be self-explanatory -->
+
+          <!-- MD_Metadata/identificationInfo/*/citation/*/title. Is mandatory for EEA.
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfocitationtitle
+
+               The title should be self-explanatory.
+               Check non empty title.
+            -->
             <sch:let name="title"
                 value="gmd:citation/*/gmd:title/gco:CharacterString"/>
 
@@ -43,18 +118,40 @@
                     select="normalize-space($title)"/>"</sch:report>
 
 
+          <!-- MD_Metadata/identificationInfo/*/citation/*/date (creation)
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfocitationdate-creation
 
-            <!-- Conditional: only for datasets published on the EEA website ( http://www.eea.europa.eu/data-and-maps/data)
+               Not empty check is done.
+                -->
+          <sch:let name="creationDate"
+                   value="gmd:citation/*/gmd:date/
+                *[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date/gco:Date"/>
+
+          <sch:assert test="normalize-space($creationDate[1]) != ''"
+          ><sch:value-of
+            select="$loc/strings/EEACREATIONDATE.alert"/></sch:assert>
+          <sch:report test="normalize-space($creationDate[1]) != ''"><sch:value-of
+            select="$loc/strings/EEACREATIONDATE.report"/> "<sch:value-of
+            select="normalize-space($creationDate[1])"/>"</sch:report>
+
+
+            <!-- MD_Metadata/identificationInfo/*/citation/*/date (publication)¶
+                 https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfocitationdate-publication
+
+                 Conditional: only for datasets published on the EEA website
+                 (http://www.eea.europa.eu/data-and-maps/data)
+
+                 Current rule checks for not empty date and with a link to //www.eea.europa.eu/data-and-maps/data
              -->
             <sch:let name="publicationDate"
                 value="gmd:citation/*/gmd:date/
                 *[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:Date"/>
             <sch:let name="availableOnWebSite"
                 value="count(../../gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*/gmd:linkage
-                /gmd:URL[starts-with(., 'http://www.eea.europa.eu/data-and-maps/data')]) > 0"/>
+                /gmd:URL[contains(., '://www.eea.europa.eu/data-and-maps/data')]) > 0"/>
             <sch:let name="url"
                 value="../../gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*/gmd:linkage
-                /gmd:URL[starts-with(., 'http://www.eea.europa.eu/data-and-maps/data')]"/>
+                /gmd:URL[contains(., '://www.eea.europa.eu/data-and-maps/data')]"/>
 
             <sch:assert test="($availableOnWebSite and normalize-space($publicationDate) != '') or not($availableOnWebSite)"
                 ><sch:value-of
@@ -63,26 +160,26 @@
                 select="$loc/strings/EEAPUBDATE.report"/> "<sch:value-of
                     select="normalize-space($publicationDate)"/>"</sch:report>
 
-            <!-- Mandatory creation date -->
-            <sch:let name="creationDate"
-                value="gmd:citation/*/gmd:date/
-                *[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date/gco:Date"/>
 
-            <sch:assert test="normalize-space($creationDate[1]) != ''"
-                ><sch:value-of
-                    select="$loc/strings/EEACREATIONDATE.alert"/></sch:assert>
-            <sch:report test="normalize-space($creationDate[1]) != ''"><sch:value-of
-                select="$loc/strings/EEACREATIONDATE.report"/> "<sch:value-of
-                    select="normalize-space($creationDate[1])"/>"</sch:report>
+            <!-- MD_Metadata/identificationInfo/*/citation/*/edition
+                 https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfocitationedition
 
+                 Conditional: only for datasets with a revision number (directory name ending in _revXX)
 
-            <!-- Conditional: only for datasets with a revision number (directory name ending in _revXX) -->
+                 Current rule checks that when an edition is provided, a link to a file or folder
+                 containing the _rev{editionNumber} is present.
+
+                 The version and revision numbers of the dataset should be consistent with this element,
+                  separated by a point (VersionNumber.RevisionNumber). Example in the wiki is maybe wrong? TODO?
+                                      <gco:CharacterString>15-0</gco:CharacterString>
+                 -->
             <sch:let name="edition"
                 value="gmd:citation/*/gmd:edition/gco:CharacterString"/>
             <sch:let name="editionInDataLink"
                 value="count(../../gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*
-                [(gmd:protocol/gco:CharacterString = 'EEA:FILEPATH' or gmd:protocol/gco:CharacterString = 'EEA:FOLDERPATH')
-                and contains(gmd:linkage/gmd:URL, concat('_rev', $edition))]) > 0"/>
+                              [(gmd:protocol/gco:CharacterString = 'EEA:FILEPATH' or
+                                gmd:protocol/gco:CharacterString = 'EEA:FOLDERPATH')
+                               and contains(gmd:linkage/gmd:URL, concat('_rev', $edition))]) > 0"/>
 
             <sch:assert test="$editionInDataLink and normalize-space($edition) != ''"
                 ><sch:value-of
@@ -93,7 +190,14 @@
                     select="normalize-space($edition)"/>"</sch:report>
 
 
-            <!-- Mandatory identifier-->
+            <!-- MD_Metadata/identificationInfo/*/citation/*/identifier. Is mandatory for EEA.
+                 https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfocitationidentifier
+
+                 Current rule checks non empty.
+
+                 Should we add more checks related to unicity and
+                 https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions ? TODO?
+                 -->
             <sch:let name="identifier"
                 value="gmd:citation/*/gmd:identifier/
                 */gmd:code/gco:CharacterString"/>
@@ -106,7 +210,11 @@
                     select="normalize-space($identifier)"/>"</sch:report>
 
 
-            <!-- Mandatory abstract-->
+            <!-- MD_Metadata/identificationInfo/*/abstract. Is mandatory for EEA
+                 https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfoabstract
+
+                 Current rule checks non empty.
+            -->
             <sch:let name="abstract"
                 value="gmd:abstract/gco:CharacterString"/>
 
@@ -117,8 +225,17 @@
                 select="$loc/strings/EEAABSTRACT.report"/></sch:report>
 
 
+            <!-- MD_Metadata/identificationInfo/*/status. Conditional.
 
-            <!-- Mandatory point of contact -->
+                 TODO? We could at least check that if one value is provided it is one of the four allowed.
+            -->
+
+
+            <!-- MD_Metadata/identificationInfo/*/pointOfContact (point of contact). Mandatory for EEA.
+                 https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfopointOfContact-point-of-contact
+
+                 Current rule check one contact is defined. INSPIRE rules check for organisation name and email is defined.
+            -->
             <sch:let name="aPointOfContact"
                 value="count(gmd:pointOfContact[*/gmd:role/gmd:CI_RoleCode/@codeListValue='pointOfContact']) > 0"/>
 
@@ -130,7 +247,11 @@
 
 
 
-            <!-- Mandatory custodian required for EEA dataset - FIXME - only for EEA datasets ? -->
+            <!-- MD_Metadata/identificationInfo/*/pointOfContact (custodian)
+                 https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfopointOfContact-custodian
+
+                 Mandatory custodian required for EEA dataset - TODO? - only for EEA datasets - how to define
+            -->
             <sch:let name="aCustodian"
                 value="count(gmd:pointOfContact[*/gmd:role/gmd:CI_RoleCode/@codeListValue='custodian']) > 0"/>
 
@@ -141,7 +262,12 @@
                 select="$loc/strings/EEACUSTODIAN.report"/></sch:report>
 
 
-            <!-- Resource maintenance -->
+            <!-- MD_Metadata/identificationInfo/*/resourceMaintenance.
+                 https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInforesourceMaintenance
+
+              Conditional: required for all datasets which have versions
+              (i.e. regularly or irregularly updated)
+            -->
             <sch:let name="resourceMaintenance"
                 value="gmd:resourceMaintenance/*/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue"/>
             <sch:let name="hasEdition"
@@ -154,20 +280,24 @@
                 select="$loc/strings/EEA_UP_FREQ.report"/> <sch:value-of select="$resourceMaintenance/string()"/></sch:report>
 
 
+          <!-- MD_Metadata/identificationInfo/*/graphicOverview (Dataset thumbnail). Is mandatory for EEA.
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfographicOverview-Dataset-thumbnail
 
-            <!-- One keyword from GEMET -->
-            <sch:let name="atLeastOneKeywordFromGEMET"
-                value="count(gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/gmd:CI_Citation/gmd:identifier/*/gmd:code/*:Anchor/text(), 'external.theme.gemet')]
-                /gmd:keyword[gco:CharacterString!=''])"/>
+               TODO? As it is required only when editied by SDI team, it should not be part of default checks ?
+          -->
 
-            <sch:assert test="$atLeastOneKeywordFromGEMET > 0"
-                ><sch:value-of
-                    select="$loc/strings/EEA_KEYWORD_GEMET.alert"/></sch:assert>
-            <sch:report test="$atLeastOneKeywordFromGEMET > 0"><sch:value-of select="$atLeastOneKeywordFromGEMET"/> <sch:value-of
-                select="$loc/strings/EEA_KEYWORD_GEMET.report"/> </sch:report>
+          <!-- MD_Metadata/identificationInfo/*/descriptiveKeywords (INSPIRE themes)
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfodescriptiveKeywords-INSPIRE-themes
 
+               Done in INSPIRE checks.
 
-            <!-- EEA keyword list
+               To be updated for Anchor usage in TODO TGv2
+               -->
+
+          <!-- MD_Metadata/identificationInfo/*/descriptiveKeywords (EEA keywords list)
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfodescriptiveKeywords-EEA-keywords-list
+               Check was disblaed in the past. Re-enable it ? TODO?
+
             <sch:let name="atLeastOneKeywordFromEEA"
                 value="count(gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'EEA keyword list')]
                 /gmd:keyword[gco:CharacterString!=''])"/>
@@ -179,7 +309,11 @@
                 select="$loc/strings/EEA_KEYWORD_EEA.report"/> </sch:report>
             -->
 
-            <!-- EEA category - no check ? FIXME
+
+            <!-- MD_Metadata/identificationInfo/*/descriptiveKeywords (EEA data categories)
+                 https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfodescriptiveKeywords-EEA-data-categories
+                 Check was disblaed in the past. Re-enable it ? TODO?
+
             <sch:let name="atLeastOneCategoryFromEEA"
                 value="count(gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'EEA keyword list')]
                 /gmd:keyword[gco:CharacterString!=''])"/>
@@ -192,62 +326,150 @@
             -->
 
 
-            <!-- Resource constraint -->
+          <!-- MD_Metadata/identificationInfo/*/descriptiveKeywords (GEMET concepts). Is mandatory for EEA.
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfodescriptiveKeywords-GEMET-concepts
 
-            <sch:let name="resourceConstraints"
-                value="gmd:resourceConstraints/*/gmd:useLimitation/gco:CharacterString[.!='']"/>
+               There should be at least 3-4 GEMET concepts per dataset.
 
-            <sch:assert test="$resourceConstraints"
-                ><sch:value-of
-                    select="$loc/strings/EEA_RESCONSTRAINT.alert"/></sch:assert>
-            <sch:report test="$resourceConstraints"><sch:value-of
-                select="$loc/strings/EEA_RESCONSTRAINT.report"/> <sch:value-of select="$resourceConstraints"/></sch:report>
+               Current check is at least one. TODO? more than 3
+          -->
+          <sch:let name="atLeastOneKeywordFromGEMET"
+                   value="count(gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/gmd:CI_Citation/gmd:identifier/*/gmd:code/*:Anchor/text(), 'external.theme.gemet')]
+                /gmd:keyword[gco:CharacterString!=''])"/>
 
-
-
-            <!-- Spatial representation type -->
-            <sch:let name="spatialRepresentationType"
-                value="gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode/@codeListValue[.!='']"/>
-
-            <sch:assert test="$spatialRepresentationType"
-                ><sch:value-of
-                    select="$loc/strings/EEA_SPATIAL_TYPE.alert"/></sch:assert>
-            <sch:report test="$spatialRepresentationType"><sch:value-of
-                select="$loc/strings/EEA_SPATIAL_TYPE.report"/> <sch:value-of select="$spatialRepresentationType/string()"/> </sch:report>
+          <sch:assert test="$atLeastOneKeywordFromGEMET > 0"
+          ><sch:value-of
+            select="$loc/strings/EEA_KEYWORD_GEMET.alert"/></sch:assert>
+          <sch:report test="$atLeastOneKeywordFromGEMET > 0"><sch:value-of select="$atLeastOneKeywordFromGEMET"/> <sch:value-of
+            select="$loc/strings/EEA_KEYWORD_GEMET.report"/> </sch:report>
 
 
-            <!-- Spatial resolution -->
-            <sch:let name="spatialResolution"
-                value="normalize-space(gmd:spatialResolution)"/>
+          <!-- MD_Metadata/identificationInfo/*/descriptiveKeywords (Temporal resolution of the dataset)
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfodescriptiveKeywords-Temporal-resolution-of-the-dataset
 
-            <sch:assert test="$spatialResolution!=''"
-                ><sch:value-of
-                    select="$loc/strings/EEA_SPATIAL_RESOLUTION.alert"/></sch:assert>
-            <sch:report test="$spatialResolution!=''"><sch:value-of
-                select="$loc/strings/EEA_SPATIAL_RESOLUTION.report"/> <sch:value-of select="$spatialResolution"/> </sch:report>
+               Conditional: only for those datasets which belong to a time series
+
+               TODO? How to know dataset is part of a time series ?
+          -->
 
 
-            <!-- Language is checked in INSPIRE -->
+          <!-- MD_Metadata/identificationInfo/*/resourceConstraints/*/useLimitation and */accessConstraints¶
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInforesourceConstraintsuseLimitation-and-accessConstraints
+
+               Current rule checks non empty.
+           -->
+
+          <sch:let name="resourceConstraints"
+              value="gmd:resourceConstraints/*/gmd:useLimitation/gco:CharacterString[.!='']"/>
+
+          <sch:assert test="$resourceConstraints"
+              ><sch:value-of
+                  select="$loc/strings/EEA_RESCONSTRAINT.alert"/></sch:assert>
+          <sch:report test="$resourceConstraints"><sch:value-of
+              select="$loc/strings/EEA_RESCONSTRAINT.report"/> <sch:value-of select="$resourceConstraints"/></sch:report>
+
+          <!-- MD_Metadata/identificationInfo/*/aggregationInfo (revision of an existing resource)¶
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfoaggregationInfo-revision-of-an-existing-resource
+          -->
 
 
-            <!-- Topic category is checked in INSPIRE and ISO and XSD -->
+
+          <!-- MD_Metadata/identificationInfo/*/spatialRepresentationType. Is mandatory for EEA
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfospatialRepresentationType
+
+          -->
+          <sch:let name="spatialRepresentationType"
+                   value="gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode/@codeListValue[.!='']"/>
+
+          <sch:assert test="$spatialRepresentationType"
+              ><sch:value-of
+                  select="$loc/strings/EEA_SPATIAL_TYPE.alert"/></sch:assert>
+          <sch:report test="$spatialRepresentationType"><sch:value-of
+              select="$loc/strings/EEA_SPATIAL_TYPE.report"/> <sch:value-of select="$spatialRepresentationType/string()"/> </sch:report>
 
 
-            <!-- Bouding box is checked in ISO -->
+          <!-- MD_Metadata/identificationInfo/*/spatialResolution. Is mandatory for EEA.
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfospatialResolution
+
+               Current rule checks non empty.
+          -->
+          <sch:let name="spatialResolution"
+                   value="normalize-space(gmd:spatialResolution)"/>
+
+          <sch:assert test="$spatialResolution!=''"
+              ><sch:value-of
+                  select="$loc/strings/EEA_SPATIAL_RESOLUTION.alert"/></sch:assert>
+          <sch:report test="$spatialResolution!=''"><sch:value-of
+              select="$loc/strings/EEA_SPATIAL_RESOLUTION.report"/> <sch:value-of select="$spatialResolution"/> </sch:report>
 
 
-            <!-- Temporal element -->
-            <sch:let name="temporalElement"
-                value="normalize-space(gmd:extent/gmd:EX_Extent/gmd:temporalElement)"/>
+          <!-- MD_Metadata/identificationInfo/*/language
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfolanguage
 
-            <sch:assert test="$temporalElement!=''"
-                ><sch:value-of
-                    select="$loc/strings/EEA_TEMPORAL.alert"/></sch:assert>
-            <sch:report test="$temporalElement!=''"><sch:value-of
-                select="$loc/strings/EEA_TEMPORAL.report"/></sch:report>
+               Language is checked in INSPIRE -->
 
 
-            <!-- Distribution format is checked by ISO -->
+          <!-- MD_Metadata/identificationInfo/*/topicCategory
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfotopicCategory
+
+               Topic category is checked in INSPIRE and ISO and XSD -->
+
+
+          <!-- MD_Metadata/identificationInfo/*/extent (spatial)
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfoextent-spatial
+
+               Bouding box is checked in ISO -->
+
+
+          <!-- MD_Metadata/identificationInfo/*/extent (temporal)
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfoextent-temporal
+
+               Temporal element -->
+          <sch:let name="temporalElement"
+              value="normalize-space(gmd:extent/gmd:EX_Extent/gmd:temporalElement)"/>
+
+          <sch:assert test="$temporalElement!=''"
+              ><sch:value-of
+                  select="$loc/strings/EEA_TEMPORAL.alert"/></sch:assert>
+          <sch:report test="$temporalElement!=''"><sch:value-of
+              select="$loc/strings/EEA_TEMPORAL.report"/></sch:report>
+
+
+          <!-- MD_Metadata/identificationInfo/*/supplementalInformation. Is optional.
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfosupplementalInformation
+          -->
+
+          <!-- MD_Metadata/distributionInfo/*/distributionFormat
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadatadistributionInfodistributionFormat
+
+               Distribution format is checked by ISO.
+
+               No check on wiki values TODO?
+               -->
+
+          <!-- MD_Metadata/distributionInfo/*/transferOptions. Is mandatory for EEA.
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadatadistributionInfotransferOptions
+
+
+          -->
+
+
+          <!-- MD_Metadata/dataQualityInfo/*/lineage
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadatadataQualityInfolineage
+
+               Check done in ISO.
+          -->
+
+          <!-- MD_Metadata/dataQualityInfo/*/lineage/*/source. Is optional.
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadatadataQualityInfolineagesource
+          -->
+
+
+          <!-- MD_Metadata/dataQualityInfo/*/DQ_ConformanceResult (INSPIRE IR conformity statement).
+               https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadatadataQualityInfoDQ_ConformanceResult-INSPIRE-IR-conformity-statement
+
+               Not checked in current INSPIRE v1.3 schematron. TODO? TGv2
+          -->
 
         </sch:rule>
     </sch:pattern>
