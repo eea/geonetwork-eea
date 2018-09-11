@@ -1,57 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <strings>
+    <EEAmetadata.title>Metadata</EEAmetadata.title>
+
+    <EEAfileIdentifier.report>Record identifier is: </EEAfileIdentifier.report>
+
+    <EEAmdLanguage.report>Record language is: </EEAmdLanguage.report>
+
+    <EEAmdCharacterSet.report>Record character set is: </EEAmdCharacterSet.report>
+
+    <EEAhierarchyLevel.report>Record hierarchy level is: </EEAhierarchyLevel.report>
+
+    <EEAdateStamp.report>Record last update date is: </EEAdateStamp.report>
+
+    <EEAstandardName.report>Record standard name is: </EEAstandardName.report>
+
+    <EEAStatus.report>Resource status is: </EEAStatus.report>
+
+    <EEAStatus.alert>Resource status is not defined.</EEAStatus.alert>
+
+    <EEAPublicationDateMustBeEqualOrAfterCreationDate.alert>Publication date MUST be equal or after creation date.</EEAPublicationDateMustBeEqualOrAfterCreationDate.alert>
+
+    <EEAPublicationDateIsEqualOrAfterCreationDate.alert>Publication date is equal or after creation date.</EEAPublicationDateIsEqualOrAfterCreationDate.alert>
+
+    <EEAparentIdentifier.report>If record is part of serie, use the parent identifier
+      to link between a dataset metadata and the metadata of a dataset of
+      which the former is a subset (e.g. datasets within a series, public versions
+      which are subsets of internal versions without restricted data).</EEAparentIdentifier.report>
+
+    <EEAsource.report>If record is derived from another,
+      the source element allows the logical link between a dataset metadata and the metadata
+      of the corresponding source dataset(s).</EEAsource.report>
+
     <EEASRS>Coordinate reference system.</EEASRS>
     <EEASRS.alert>
         <div>The Coordinate Reference System shall be referred to with its EPSG code </div>
     </EEASRS.alert>
     <EEASRS.report>Coordinate Reference System found: </EEASRS.report>
-    
-    <EEATITLE>Dataset citation</EEATITLE>
+
+    <EEATITLE>Citation</EEATITLE>
     <EEATITLE.alert>Metadata title not found.</EEATITLE.alert>
     <EEATITLE.report>Metadata title is </EEATITLE.report>
-    
+
     <EEAPUBDATE.alert>Publication date is not defined for a dataset published on EEA website at URL: </EEAPUBDATE.alert>
     <EEAPUBDATE.report>Publication date of the dataset on EEA website is </EEAPUBDATE.report>
-    
+
     <EEACREATIONDATE.alert>Creation date is not defined.</EEACREATIONDATE.alert>
     <EEACREATIONDATE.report>Creation date is </EEACREATIONDATE.report>
-    
+
     <EEAEDITION.alert>Revision number in data directory does not match dataset edition.</EEAEDITION.alert>
     <EEAEDITION.report>Dataset edition (also found in directory name) is </EEAEDITION.report>
-    
+
     <EEAID.alert>The dataset identifier is missing.</EEAID.alert>
     <EEAID.report>The dataser identifier is </EEAID.report>
-    
+
+    <EEA_TEMPORAL_RESOLUTION.report>The temporal resolution is </EEA_TEMPORAL_RESOLUTION.report>
+
     <EEAABSTRACT.alert>The abstract is missing.</EEAABSTRACT.alert>
     <EEAABSTRACT.report>The dataset is described by an abstract.</EEAABSTRACT.report>
-    
+
     <EEAPOC.alert>The responsible party acting as point of contact is not described.</EEAPOC.alert>
     <EEAPOC.report>The dataset point of contact is described.</EEAPOC.report>
-    
-    <EEACUSTODIAN.alert>The responsible party acting as custodian is not described.</EEACUSTODIAN.alert>
+
+    <EEACUSTODIAN.alert>The responsible party acting as custodian is not described and is required for EEA datasets.</EEACUSTODIAN.alert>
     <EEACUSTODIAN.report>The dataset custodian is described.</EEACUSTODIAN.report>
-    
+
     <EEA_UP_FREQ.alert>Update frequency is required for a dataset with a revision number.</EEA_UP_FREQ.alert>
     <EEA_UP_FREQ.report>Dataset (with an edition number) update frequency is </EEA_UP_FREQ.report>
-    
-    <EEA_KEYWORD_GEMET.alert>There shall be one keyword from GEMET.</EEA_KEYWORD_GEMET.alert>
+
+    <EEA_KEYWORD_GEMET.alert>There shall be more than one keyword from GEMET (3 or 4 is even better).</EEA_KEYWORD_GEMET.alert>
     <EEA_KEYWORD_GEMET.report> GEMET concept(s) found.</EEA_KEYWORD_GEMET.report>
-    
+
+    <EEA_KEYWORD_Regions.alert>There shall be more than one keyword describing the spatial coverage.</EEA_KEYWORD_Regions.alert>
+    <EEA_KEYWORD_Regions.report> spatial concept(s) found.</EEA_KEYWORD_Regions.report>
+
     <EEA_KEYWORD_EEA.alert>There shall be one keyword from EEA keywords</EEA_KEYWORD_EEA.alert>
     <EEA_KEYWORD_EEA.report> EEA keyword(s) found.</EEA_KEYWORD_EEA.report>
-    
+    <EEA_KEYWORD_EEA.report0>No EEA keyword defined.</EEA_KEYWORD_EEA.report0>
+
     <EEA_CATEGORY.alert>There shall be one EEA category.</EEA_CATEGORY.alert>
     <EEA_CATEGORY.report> EEA category found.</EEA_CATEGORY.report>
-    
+    <EEA_CATEGORY.report0>No EEA category defined.</EEA_CATEGORY.report0>
+
     <EEA_RESCONSTRAINT.alert>No resource constraint found.</EEA_RESCONSTRAINT.alert>
     <EEA_RESCONSTRAINT.report>Resource constraint is </EEA_RESCONSTRAINT.report>
-    
+
     <EEA_SPATIAL_TYPE.alert>No spatial representation type found.</EEA_SPATIAL_TYPE.alert>
     <EEA_SPATIAL_TYPE.report>The dataset spatial representation type is </EEA_SPATIAL_TYPE.report>
-    
+
     <EEA_SPATIAL_RESOLUTION.alert>No spatial resolution found.</EEA_SPATIAL_RESOLUTION.alert>
     <EEA_SPATIAL_RESOLUTION.report>The dataset spatial resolution is </EEA_SPATIAL_RESOLUTION.report>
-    
+
     <EEA_TEMPORAL.alert>The time period covered by the content of the dataset is not described.</EEA_TEMPORAL.alert>
     <EEA_TEMPORAL.report>The time period covered by the content of the dataset is described.</EEA_TEMPORAL.report>
 </strings>
