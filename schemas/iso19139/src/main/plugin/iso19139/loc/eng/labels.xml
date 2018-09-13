@@ -1156,6 +1156,7 @@
    If the dataset has a revision number (such as the Corine Land Cover changes 1990-2000 version 13),
    this revision number shall be written in this metadata element.
    ]]></help>
+    <condition>required</condition>
   </element>
   <element name="gmd:editionDate" id="364.0">
 		<label>Edition date</label>

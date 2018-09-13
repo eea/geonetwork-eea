@@ -56,7 +56,7 @@
     <div class="row">
       <div class="col-sm-2"/>
       <div class="col-sm-10">
-        <div class="alert alert-info">The title should be self-explanatory and should not contain acronyms unless they are widely known. In any case, should an acronym be used in the title, it shall be made explicit in the abstract. For datasets with versions please <a href="https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfocitationtitle" target="_blank">follow this convention</a></div>
+        <div class="alert alert-info">The title should be self-explanatory and should not contain acronyms unless they are widely known. In any case, should an acronym be used in the title, it shall be made explicit in the abstract. For datasets with versions please <a href="https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions#2-Dataset-Title-convention" target="_blank">follow this convention</a></div>
       </div>
     </div>
     <hr/>
@@ -85,7 +85,7 @@
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          If the dataset has a revision number, this number shall be written in this metadata element.
+          The version and revision numbers of the dataset should be encoded in this element, separated by a point (VersionNumber.RevisionNumber)
         </div>
       </div>
     </div>
@@ -252,7 +252,7 @@
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          Frequency with which modifications and deletions are made to the data after it is first produced. This dataset is required for all datasets with a revision number. This element takes a value out of the codelist of ISO19115 element MD_MaintenanceFrequencyCode). In case no frequency from the list is satisfactory, switch to the <a href="#/metadata/{{gnCurrentEdit.id}}?tab=identificationInfo">full view</a> and use the element PeriodDuration as indicated in the EEA metadata guidelines.
+          Frequency with which modifications and deletions are made to the data after it is first produced. This element takes a value out of the codelist of ISO19115 element MD_MaintenanceFrequencyCode). In case no frequency from the list is satisfactory, switch to the <a href="#/metadata/{{gnCurrentEdit.id}}?tab=identificationInfo">full view</a> and use the element PeriodDuration as indicated in the EEA metadata guidelines.
         </div>
       </div>
     </div>
