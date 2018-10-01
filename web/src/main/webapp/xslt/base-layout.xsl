@@ -128,10 +128,11 @@
             <xsl:call-template name="eea-footer-api"/>
           </xsl:otherwise>
         </xsl:choose>
+
+        <xsl:call-template name="eea-matomo"/>
       </body>
     </html>
   </xsl:template>
-
 
 
 

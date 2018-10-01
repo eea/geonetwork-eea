@@ -128,6 +128,8 @@
           $('.nav-tabs-advanced a:first').tab('show');
         </script>
         <xsl:call-template name="css-load"/>
+
+        <xsl:call-template name="eea-matomo"/>
       </body>
     </html>
   </xsl:template>
