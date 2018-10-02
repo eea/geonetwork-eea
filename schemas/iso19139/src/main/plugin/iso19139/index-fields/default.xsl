@@ -488,7 +488,8 @@
       non obsolete records -->
       <xsl:if test="$flagNonObseleteRecords">
         <xsl:variable name="isNotObsolete"
-                      select="count(gmd:status[gmd:MD_ProgressCode/@codeListValue = 'obsolete']) = 0"/>
+                      select="count(gmd:status[gmd:MD_ProgressCode/@codeListValue = 'obsolete' or
+                                               gmd:MD_ProgressCode/@codeListValue = 'superseded']) = 0"/>
         <xsl:if test="$isNotObsolete">
           <Field name="cl_status" string="notobsolete" store="true" index="true"/>
         </xsl:if>
