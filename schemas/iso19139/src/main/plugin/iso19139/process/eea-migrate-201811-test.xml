@@ -181,6 +181,10 @@
           <gmd:edition>
             <gco:CharacterString>1.2</gco:CharacterString>
           </gmd:edition>
+          <!-- FIXME : remove invalid edition date -->
+          <gmd:editionDate>
+            <gco:Date/>
+          </gmd:editionDate>
           <gmd:identifier>
             <gmd:RS_Identifier>
               <gmd:code>
@@ -213,6 +217,13 @@
           Territorial sea: The territorial waters, or territorial sea as defined by the 1982 United Nations Convention on the Law of the Sea, extend up to a limit not exceeding 12 nautical miles (22.2 km), measured from the baseline. The normal baseline is the low-water line along the coast.
           Territorial waters [Operational definition. Not in WFD.]: Reporting unit. The zone between the limit of the coastal water bodies and the limit of the territorial sea, geometrically subdivided in Thiessen polygons according to the adjacent coastal sub-unit (or using any alternative delineation provided by the national competent authorities), and assigned to an adjacent sub-unit for the purpose of reporting the chemical status of the territorial waters under the Water Framework Directive.</gco:CharacterString>
       </gmd:abstract>
+      
+      <!-- FIXME remove period -->
+      <gmd:userDefinedMaintenanceFrequency>
+        <gts:TM_PeriodDuration xmlns:gts="http://www.isotc211.org/2005/gts">PNaNYNaNMNaNDTNaNHNaNMNaNS</gts:TM_PeriodDuration>
+      </gmd:userDefinedMaintenanceFrequency>
+      
+      
       <gmd:pointOfContact>
         <gmd:CI_ResponsibleParty>
           <gmd:organisationName>

@@ -312,6 +312,37 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
     <xsl:message>Record <xsl:value-of select="$uuid"/> [CLEANING] Removing an empty contact.</xsl:message>
   </xsl:template>
 
+  <!--
+  Some EEA records have self closing gmd:temporalElement
+  eg.
+  <gmd:contact/>
+  -->
+  <xsl:template match="gmd:temporalElement[count(*) = 0]">
+    <xsl:message>Record <xsl:value-of select="$uuid"/> [CLEANING] Removing an empty temporalElement.</xsl:message>
+  </xsl:template>
+
+
+  <!--
+  Some EEA records have self closing gmd:spatialResolution
+  eg.
+  <gmd:spatialResolution/>
+  -->
+  <xsl:template match="gmd:spatialResolution[count(*) = 0]">
+    <xsl:message>Record <xsl:value-of select="$uuid"/> [CLEANING] Removing an empty spatialResolution.</xsl:message>
+  </xsl:template>
+
+
+  <!--
+  Some EEA records contains invalid period
+  eg. bbf5a08d-c41a-4f0a-9d04-e4a379460288
+
+  <gmd:userDefinedMaintenanceFrequency>
+    <gts:TM_PeriodDuration xmlns:gts="http://www.isotc211.org/2005/gts">PNaNYNaNMNaNDTNaNHNaNMNaNS</gts:TM_PeriodDuration>
+  </gmd:userDefinedMaintenanceFrequency
+  -->
+  <xsl:template match="gmd:userDefinedMaintenanceFrequency[* = 'PNaNYNaNMNaNDTNaNHNaNMNaNS']">
+    <xsl:message>Record <xsl:value-of select="$uuid"/> [CLEANING] Removing an empty period duration.</xsl:message>
+  </xsl:template>
 
   <!--
   Some EEA records have self closing distributionFormats
@@ -574,6 +605,13 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
     <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] Date time encoded in a date field.</xsl:message>
     <gco:DateTime><xsl:value-of select="."/></gco:DateTime>
   </xsl:template>
+  <!--
+  Some EEA records have empty edition date
+  eg. d86223b0-8672-4abc-816b-1a2e2d0b5aa5
+         -->
+  <xsl:template match="gmd:editionDate[gco:Date = '']">
+    <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] Remove empty edition date.</xsl:message>
+  </xsl:template>
 
 
 
@@ -635,6 +673,13 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
 
 
   <!--
+  Requires Registry fix:
+
+  http://inspire.ec.europa.eu/theme/pd/pd.en.xml Population distribution - demography
+  The correct syntax looks to be "—" eg. https://www.eionet.europa.eu/gemet/en/inspire-theme/pd
+
+  -->
+  <!--
   Requires manual check:
 
   Identification
@@ -646,9 +691,11 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   service capabilities document; A link to the service WSDL document (SOAP Binding);
   A link to a web page with further instructions A link to a client application that
   directly accesses the service
-
   eg. 84e3a274-beff-40c1-bb40-c97afb8473d6
 
+  Responsible organisation
+  Organisation name and email not found for responsible organisation.
+  eg. 4925d389-a76e-41a5-afcc-59c7f86ad04f
 
 
   Constraints related to access and use
