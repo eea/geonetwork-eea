@@ -2,34 +2,11 @@
 <strings>
     <EEAmetadata.title>Metadata</EEAmetadata.title>
 
-    <EEAfileIdentifier.report>Record identifier is: </EEAfileIdentifier.report>
-
-    <EEAmdLanguage.report>Record language is: </EEAmdLanguage.report>
-
-    <EEAmdCharacterSet.report>Record character set is: </EEAmdCharacterSet.report>
-
     <EEAhierarchyLevel.report>Record hierarchy level is: </EEAhierarchyLevel.report>
-
-    <EEAdateStamp.report>Record last update date is: </EEAdateStamp.report>
-
-    <EEAstandardName.report>Record standard name is: </EEAstandardName.report>
-
-    <EEAStatus.report>Resource status is: </EEAStatus.report>
-
-    <EEAStatus.alert>Resource status is not defined.</EEAStatus.alert>
 
     <EEAPublicationDateMustBeEqualOrAfterCreationDate.alert>Publication date MUST be equal or after creation date.</EEAPublicationDateMustBeEqualOrAfterCreationDate.alert>
 
     <EEAPublicationDateIsEqualOrAfterCreationDate.alert>Publication date is equal or after creation date.</EEAPublicationDateIsEqualOrAfterCreationDate.alert>
-
-    <EEAparentIdentifier.report>If record is part of serie, use the parent identifier
-      to link between a dataset metadata and the metadata of a dataset of
-      which the former is a subset (e.g. datasets within a series, public versions
-      which are subsets of internal versions without restricted data).</EEAparentIdentifier.report>
-
-    <EEAsource.report>If record is derived from another,
-      the source element allows the logical link between a dataset metadata and the metadata
-      of the corresponding source dataset(s).</EEAsource.report>
 
     <EEASRS>Coordinate reference system.</EEASRS>
     <EEASRS.alert>
@@ -46,9 +23,10 @@
 
     <EEACREATIONDATE.alert>Creation date is not defined.</EEACREATIONDATE.alert>
     <EEACREATIONDATE.report>Creation date is </EEACREATIONDATE.report>
+    <EEAPUBLICATIONDATE.report>Publication date is not defined. The publication date shall be entered at least for datasets published in the EEA website.</EEAPUBLICATIONDATE.report>
 
-    <EEAEDITION.alert>Revision number in data directory does not match dataset edition.</EEAEDITION.alert>
-    <EEAEDITION.report>Dataset edition (also found in directory name) is </EEAEDITION.report>
+    <EEAEDITION.alert>Revision number is empty.</EEAEDITION.alert>
+    <EEAEDITION.report>Dataset edition is </EEAEDITION.report>
 
     <EEAID.alert>The dataset identifier is missing.</EEAID.alert>
     <EEAID.report>The dataser identifier is </EEAID.report>
@@ -61,7 +39,7 @@
     <EEAPOC.alert>The responsible party acting as point of contact is not described.</EEAPOC.alert>
     <EEAPOC.report>The dataset point of contact is described.</EEAPOC.report>
 
-    <EEACUSTODIAN.alert>The responsible party acting as custodian is not described and is required for EEA datasets.</EEACUSTODIAN.alert>
+    <EEACUSTODIAN.alert>The responsible party acting as custodian is not described and is required for datasets owned by the EEA.</EEACUSTODIAN.alert>
     <EEACUSTODIAN.report>The dataset custodian is described.</EEACUSTODIAN.report>
 
     <EEA_UP_FREQ.alert>Update frequency is required for a dataset with a revision number.</EEA_UP_FREQ.alert>
@@ -75,11 +53,7 @@
 
     <EEA_KEYWORD_EEA.alert>There shall be one keyword from EEA keywords</EEA_KEYWORD_EEA.alert>
     <EEA_KEYWORD_EEA.report> EEA keyword(s) found.</EEA_KEYWORD_EEA.report>
-    <EEA_KEYWORD_EEA.report0>No EEA keyword defined.</EEA_KEYWORD_EEA.report0>
-
-    <EEA_CATEGORY.alert>There shall be one EEA category.</EEA_CATEGORY.alert>
-    <EEA_CATEGORY.report> EEA category found.</EEA_CATEGORY.report>
-    <EEA_CATEGORY.report0>No EEA category defined.</EEA_CATEGORY.report0>
+    <EEA_KEYWORD_EEA.error>No keyword from the EEA list has been set.</EEA_KEYWORD_EEA.error>
 
     <EEA_RESCONSTRAINT.alert>No resource constraint found.</EEA_RESCONSTRAINT.alert>
     <EEA_RESCONSTRAINT.report>Resource constraint is </EEA_RESCONSTRAINT.report>
@@ -87,7 +61,7 @@
     <EEA_SPATIAL_TYPE.alert>No spatial representation type found.</EEA_SPATIAL_TYPE.alert>
     <EEA_SPATIAL_TYPE.report>The dataset spatial representation type is </EEA_SPATIAL_TYPE.report>
 
-    <EEA_SPATIAL_RESOLUTION.alert>No spatial resolution found.</EEA_SPATIAL_RESOLUTION.alert>
+    <EEA_SPATIAL_RESOLUTION.alert>A temporal resolution value shall be encoded for time series datasets.</EEA_SPATIAL_RESOLUTION.alert>
     <EEA_SPATIAL_RESOLUTION.report>The dataset spatial resolution is </EEA_SPATIAL_RESOLUTION.report>
 
     <EEA_TEMPORAL.alert>The time period covered by the content of the dataset is not described.</EEA_TEMPORAL.alert>

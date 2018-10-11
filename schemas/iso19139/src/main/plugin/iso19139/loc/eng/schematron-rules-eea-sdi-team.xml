@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <strings>
-    <EEACitation>Citation</EEACitation>
-    <EEAGraphicOverview.report>An overview is provided</EEAGraphicOverview.report>
-    <EEAGraphicOverview.alert>Graphic overview is not set.</EEAGraphicOverview.alert>
+  <EEAmetadata.title>Metadata</EEAmetadata.title>
+
+  <EEAfileIdentifier.report>Record identifier is: </EEAfileIdentifier.report>
+  <EEAfileIdentifier.error>Missing record identifier.</EEAfileIdentifier.error>
+
+  <EEAmdLanguage.report>Record language is: </EEAmdLanguage.report>
+  <EEAmdLanguage.error>Missing metadata language.</EEAmdLanguage.error>
+
+  <EEAmdCharacterSet.report>Record character set is: </EEAmdCharacterSet.report>
+  <EEAmdCharacterSet.error>Missing metadata identifier.</EEAmdCharacterSet.error>
+
+
+  <EEAparentIdentifier.report>Parent identifier element should be added whenever the related series or parent resource has a metadata record in the SDI.</EEAparentIdentifier.report>
+
+  <EEAdateStamp.report>Record last update date is: </EEAdateStamp.report>
+  <EEAdateStamp.error>Missing date stamp.</EEAdateStamp.error>
+
+  <EEAstandardName.report>Record standard name is: </EEAstandardName.report>
+  <EEAstandardName.error>Missing standard name.</EEAstandardName.error>
+
+  <EEACitation>Citation</EEACitation>
+
+  <EEAEDITION.alert>Revision number in data directory does not match dataset edition.</EEAEDITION.alert>
+  <EEAEDITION.report>Dataset edition (also found in directory name) is </EEAEDITION.report>
+
+  <EEAStatus.report>Resource status is: </EEAStatus.report>
+  <EEAStatus.alert>Resource status is not defined. This value shall be filled in for obsolete, archived or superseded datasets, as well as for datasets from completed projects</EEAStatus.alert>
+
+  <EEA_CATEGORY.alert>There shall be one EEA category.</EEA_CATEGORY.alert>
+  <EEA_CATEGORY.report> EEA category found.</EEA_CATEGORY.report>
+  <EEA_CATEGORY.error>No EEA data category has been set.</EEA_CATEGORY.error>
+
+  <EEAGraphicOverview.report>An overview is provided</EEAGraphicOverview.report>
+  <EEAGraphicOverview.alert>Graphic overview is not set. This value shall be filled in with the URL of the thumbnail.</EEAGraphicOverview.alert>
+
+  <EEAQuality>Quality</EEAQuality>
+
+  <EEAsource.report>If record is derived from another,
+    the source element allows the logical link between a dataset metadata and the metadata
+    of the corresponding source dataset(s).</EEAsource.report>
+
 </strings>
