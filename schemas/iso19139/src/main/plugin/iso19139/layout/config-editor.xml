@@ -565,9 +565,8 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:4326</gco:CharacterString>
+                          <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:4326">EPSG:4326</gmx:Anchor>
                         </gmd:code>
-                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -579,9 +578,8 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:4258</gco:CharacterString>
+                          <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:4258">EPSG:4258</gmx:Anchor>
                         </gmd:code>
-                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -593,9 +591,8 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:3035</gco:CharacterString>
+                          <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:3035">EPSG:3035</gmx:Anchor>
                         </gmd:code>
-                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -607,9 +604,8 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32628</gco:CharacterString>
+                          <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32628">EPSG:32628</gmx:Anchor>
                         </gmd:code>
-                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -621,9 +617,8 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32629</gco:CharacterString>
+                          <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32629">EPSG:32629</gmx:Anchor>
                         </gmd:code>
-                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -635,9 +630,8 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32630</gco:CharacterString>
+                          <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32630">EPSG:32630</gmx:Anchor>
                         </gmd:code>
-                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -649,9 +643,8 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32631</gco:CharacterString>
+                          <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32631">EPSG:32631</gmx:Anchor>
                         </gmd:code>
-                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -663,9 +656,8 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32632</gco:CharacterString>
+                          <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32632">EPSG:32632</gmx:Anchor>
                         </gmd:code>
-                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -677,9 +669,8 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32633</gco:CharacterString>
+                          <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32633">EPSG:32633</gmx:Anchor>
                         </gmd:code>
-                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -691,9 +682,8 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32634</gco:CharacterString>
+                          <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32634">EPSG:32634</gmx:Anchor>
                         </gmd:code>
-                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -705,9 +695,8 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32635</gco:CharacterString>
+                          <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32635">EPSG:32635</gmx:Anchor>
                         </gmd:code>
-                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -719,9 +708,8 @@
                     <gmd:referenceSystemIdentifier>
                       <gmd:RS_Identifier>
                         <gmd:code>
-                          <gco:CharacterString>urn:ogc:def:crs:EPSG:7.1:EPSG:32740</gco:CharacterString>
+                          <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32740">EPSG:32740</gmx:Anchor>
                         </gmd:code>
-                        <gmd:codeSpace><gco:CharacterString>OGP Surveying &amp; Positioning Committee</gco:CharacterString></gmd:codeSpace>
                       </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                   </gmd:MD_ReferenceSystem>
@@ -3297,7 +3285,7 @@
                                         xlink:title='{{description}}'>{{code}}
                             </gmx:Anchor>
                           </gmd:code>
-                        </gmd:RS_Identifier>
+</gmd:RS_Identifier>
                       </gmd:referenceSystemIdentifier>
                     </gmd:MD_ReferenceSystem>
                   </gmd:referenceSystemInfo>
