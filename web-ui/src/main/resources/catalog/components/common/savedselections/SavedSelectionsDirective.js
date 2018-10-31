@@ -28,8 +28,8 @@
       []);
 
   module.factory('gnSavedSelectionConfig', [
-    '$location', 'Metadata', 'gnMap', 'gnSearchSettings',
-    function($location, Metadata, gnMap, gnSearchSettings) {
+    '$location', 'Metadata', 'gnMap', 'gnSearchSettings', 'gnExternalViewer',
+    function($location, Metadata, gnMap, gnSearchSettings, gnExternalViewer) {
       var viewerMap = gnSearchSettings.viewerMap;
 
       var searchRecordsInSelection = function(uuid, records) {

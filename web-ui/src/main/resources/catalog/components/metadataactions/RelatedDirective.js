@@ -198,7 +198,7 @@
                 return angular.isFunction(fn);
               };
 
-              scope.isLayerProtocol = gnRelatedService.isLayerProtocol;
+              scope.isLayerProtocol = gnRelatedResources.isLayerProtocol;
 
               scope.config = gnRelatedResources;
 

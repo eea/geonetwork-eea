@@ -817,7 +817,7 @@ eg. only 2 INSPIRE themes.
 .. code-block:: xml
 
       <thesaurusList>
-        <thesaurus key="external.theme.inspire-theme"
+        <thesaurus key="external.theme.httpinspireeceuropaeutheme-theme"
                    maxtags="2"
                    fieldset="false"
                    transformations=""/>
@@ -889,7 +889,11 @@ to be able:
 Adding a section to a tab
 -------------------------
 
-A section is a group of fields.
+A section is a group of fields. If a name attribute is provided,
+then it will create an HTML fieldset which is collapsible.
+If no name attribute is provided, then it just render the inner elements.
+For example, if you need a tab without a root fieldset, juste create 
+the mandatory section with no name and then the inner elements.
 
 
         ]]></xs:documentation>
@@ -1525,7 +1529,7 @@ with the metadata identifier.
       </xs:attribute>
       <xs:attribute name="class" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Optional CSS class to be added to the parent div element. Eg. gn-required to add a *.</xs:documentation>
+          <xs:documentation>Optional CSS class to add to the parent div element. eg. gn-required to show a *.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
       <xs:attribute name="btnLabel" type="xs:string">

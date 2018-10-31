@@ -100,7 +100,7 @@
                   // return error
                   return $q.reject(config);
                 }
-              } 
+              }
 
               //If we have no error status, the request didn't even make it to the server
               //Then, use proxy
@@ -142,11 +142,11 @@
 
                 return defer.promise;
               } else {
-                return response;
+                //return the original error
+                return $q.reject(response);
               }
             }
-          };
-
+          }
         }
       ]);
     }

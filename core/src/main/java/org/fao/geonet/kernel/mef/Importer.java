@@ -23,11 +23,24 @@
 
 package org.fao.geonet.kernel.mef;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.Maps;
+import static org.fao.geonet.domain.Localized.translationXmlToLangMap;
 
-import jeeves.server.ServiceConfig;
-import jeeves.server.context.ServiceContext;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.FileTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Nonnull;
 
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.GeonetContext;
@@ -36,6 +49,7 @@ import org.fao.geonet.Util;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.Group;
+import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.domain.ISODate;
 import org.fao.geonet.domain.Metadata;
 import org.fao.geonet.domain.MetadataCategory;
@@ -69,24 +83,11 @@ import org.jdom.Element;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.StringUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.FileTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
+import com.google.common.base.Optional;
+import com.google.common.collect.Maps;
 
-import javax.annotation.Nonnull;
-
-import static org.fao.geonet.domain.Localized.translationXmlToLangMap;
+import jeeves.server.ServiceConfig;
+import jeeves.server.context.ServiceContext;
 
 public class Importer {
     @Deprecated
@@ -518,7 +519,7 @@ public class Importer {
         return metadataIdMap;
     }
 
-    public static void addCategoriesToMetadata(Metadata metadata, Element finalCategs, ServiceContext context) {
+    public static void addCategoriesToMetadata(AbstractMetadata metadata, Element finalCategs, ServiceContext context) {
         if (finalCategs != null) {
             final MetadataCategoryRepository categoryRepository = context.getBean(MetadataCategoryRepository.class);
             for (Object cat : finalCategs.getChildren()) {
@@ -541,7 +542,7 @@ public class Importer {
         }
     }
 
-    public static String importRecord(String uuid,
+    public static void importRecord(String uuid,
                                     MEFLib.UuidAction uuidAction, List<Element> md, String schema, int index,
                                     String source, String sourceName, Map<String, String> sourceTranslations, ServiceContext context,
                                     List<String> id, String createDate, String changeDate,
@@ -612,8 +613,6 @@ public class Importer {
         dm.activateWorkflowIfConfigured(context, metadataId, groupId);
 
         id.add(index, metadataId);
-
-        return uuid;
 
     }
 

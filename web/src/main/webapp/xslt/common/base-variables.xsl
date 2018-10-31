@@ -49,6 +49,7 @@
   <!-- Used by SearchApi loading translation from JSON locale files. -->
   <xsl:variable name="t" select="/root/translations"/>
   <xsl:variable name="lang" select="/root/gui/language"/>
+  <xsl:variable name="lang2chars" select="/root/gui/lang2chars"/>
   <xsl:variable name="requestParameters" select="/root/request"/>
 
   <!-- XSL using this variable should be refactored to not rely on the
@@ -103,11 +104,9 @@
                 select="util:getSettingValue('nodeUrl')"/>
 
   <!-- URL for webapp root -->
-  <xsl:variable name="baseURL" select="substring-before($siteURL,'/srv/')"/>
+  <xsl:variable name="baseURL" select="/root/gui/baseUrl"/>
   <!-- Full URL with protocol, host and port -->
-  <xsl:variable name="fullURL" select="concat($env/system/server/protocol, '://',
-    $env/system/server/host, ':',
-    $env/system/server/port)"/>
+  <xsl:variable name="fullURL" select="/root/gui/serverUrl"/>
   <!-- Full URL for services -->
   <xsl:variable name="fullURLForService" select="concat($fullURL, /root/gui/locService)"/>
   <xsl:variable name="fullURLForWebapp" select="concat($fullURL, /root/gui/url)"/>
@@ -123,6 +122,11 @@
   <xsl:variable name="is3DModeAllowed"
                 select="if ($service = 'catalog.search' and
                             (util:getJsonSettingValue('ui/config', 'mods.map.is3DModeAllowed') = 'true' or /root/request/with3d))
+                        then true()
+                        else false()"/>
+
+  <xsl:variable name="isSocialbarEnabled"
+                select="if (util:getJsonSettingValue('ui/config', 'mods.recordview.isSocialbarEnabled') = 'true')
                         then true()
                         else false()"/>
 

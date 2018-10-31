@@ -419,9 +419,17 @@
                   var key = g.groupId + '-' + g.userId;
                   if (!uniqueUserGroups[key]) {
                     uniqueUserGroups[key] = g;
+                    uniqueUserGroups[key].groupNameTranslated = g.groupName === 'allAdmins' ?
+                        $translate.instant(g.groupName) :
+                        $translate.instant('group-' + g.groupId);
                   }
                 });
                 scope.userGroups = uniqueUserGroups;
+                if(scope.userGroups && Object.keys(scope.userGroups).length>0) {
+                  scope.userGroupDefined = true;
+                } else {
+                  scope.userGroupDefined = false;
+                }
               });
 
           scope.save = function() {

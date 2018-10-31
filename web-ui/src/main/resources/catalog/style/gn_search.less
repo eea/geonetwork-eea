@@ -95,7 +95,7 @@
     }
   }
   .gn-facet-count, .list-group-item > span.fa {
-    color: @gray-light;
+    color: @gray-darker;
   }
   .gn-facet-toggle {
     cursor: pointer;
@@ -129,9 +129,12 @@
 
 /*HOME*/
 .search-over {
-  color: #aaa;
+  color: #838383;
   text-align: center;
   margin-top: 5px;
+  strong {
+    color: #606060;
+  }
 }
 .gn-form-any {
   input.input-lg {
@@ -473,9 +476,6 @@ span.gn-facet-label:first-letter {
         display: inline-block;
         float: none;
         margin-right: 0px;
-        .gn-img-thumbnail {
-
-        }
       }
     }
   }
@@ -483,26 +483,8 @@ span.gn-facet-label:first-letter {
 
 .gn-img-thumbnail-caption {
   text-align: center;
-  font-size: 90%;
   font-style: italic;
   color: @text-muted;
-}
-
-.gn-md-edit-btn {
-  .btn();
-  .btn-primary();
-}
-.gn-md-delete-btn {
-  .btn();
-  .btn-danger();
-}
-
-/* Add space between button when pulled right */
-.gn-md-edit-btn.pull-right,
-.gn-md-delete-btn.pull-right,
-.gn-md-actions-btn.pull-right.btn-group,
-.gn-md-actions-btn.pull-right {
-  margin-right: 5px;
 }
 
 [data-ng-search-form],
@@ -634,7 +616,7 @@ button.active [role=tooltip] {
 }
 
 [gn-share] {
-
+  .clearfix();
   @media (min-width: @screen-md) {
     min-width: 600px;
   }
@@ -643,12 +625,6 @@ button.active [role=tooltip] {
     max-width: 400px;
   }
   .gn-share-grid {
-    table {
-      width: auto;
-    }
-    thead, tbody {
-      display: block;
-    }
     tbody {
       max-height: 400px;
       overflow-y: auto;
@@ -732,4 +708,15 @@ button.active [role=tooltip] {
       font-size: 12px;
     }
   }
+}
+
+.gn-baselayer-switcher-menu {
+  > li {
+    cursor: pointer !important;
+  }
+}
+
+.gn-baselayer-switcher-content {
+  overflow-y:auto;
+  max-height: 350px;
 }

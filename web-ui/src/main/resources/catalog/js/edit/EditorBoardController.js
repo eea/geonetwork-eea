@@ -126,9 +126,17 @@
 
   module.controller('GnEditorBoardController', [
     '$scope',
+    '$rootScope',
     '$location',
     'gnSearchSettings',
-    function($scope, $location, gnSearchSettings) {
+    function($scope, $rootScope, $location, gnSearchSettings) {
+
+      // Refresh list when privileges are updated
+      $scope.$on('PrivilegesUpdated', function(event, data) {
+        if(data && data===true) {
+          $rootScope.$broadcast('search');
+        }
+      });
 
       gnSearchSettings.resultViewTpls = [{
         tplUrl: '../../catalog/components/search/resultsview/' +
@@ -186,6 +194,12 @@
           description: $translate.instant('hotkeyImportRecord'),
           callback: function(event) {
             $location.path('/import');
+          }
+        }).add({
+          combo: 'r',
+          description: $translate.instant('hotkeyAccessManager'),
+          callback: function(event) {
+            $location.path('/accessManager');
           }
         }).add({
           combo: 'h',

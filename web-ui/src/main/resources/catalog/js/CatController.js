@@ -24,16 +24,11 @@
 (function() {
   goog.provide('gn_cat_controller');
 
-
-
-
-
-
-
   goog.require('gn_admin_menu');
   goog.require('gn_saved_selections');
   goog.require('gn_search_manager');
   goog.require('gn_session_service');
+  goog.require('gn_external_viewer');
 
 
   // On the editor catalog, search are restricted on this catalog
@@ -49,7 +44,8 @@
 
   var module = angular.module('gn_cat_controller',
       ['gn_search_manager', 'gn_session_service',
-        'gn_admin_menu', 'gn_saved_selections']);
+        'gn_admin_menu', 'gn_saved_selections',
+        'gn_external_viewer']);
 
 
   module.constant('gnSearchSettings', {});
@@ -58,15 +54,19 @@
     var defaultConfig = {
       'langDetector': {
         'fromHtmlTag': false,
-        'regexp': '^\/.+\/.+\/([a-z]{3})\/',
+        'regexp': '^(?:\/.+)?/.+\/([a-z]{2,3})\/.+',
         'default': 'eng'
       },
       'nodeDetector': {
-        'regexp': '^\/.+\/.+\/([a-z]{3})\/',
+        'regexp': '^(?:\/.+)?\/(.+)\/[a-z]{2,3}\/.+',
         'default': 'srv'
       },
+      'serviceDetector': {
+        'regexp': '^(?:\/.+)?\/.+\/[a-z]{2,3}\/(.+)',
+        'default': 'catalog.search'
+      },
       'baseURLDetector': {
-        'regexp': '^\(/[a-zA-Z0-9_\-]+)\/[a-zA-Z0-9_\-]+\/[a-z]{3}\/',
+        'regexp': '^((?:\/.+)?)+\/.+\/[a-z]{2,3}\/.+',
         'default': '/geonetwork'
       },
       'mods': {
@@ -76,16 +76,17 @@
             'eng': 'en',
             'dut': 'nl',
             'fre': 'fr',
-            'ger': 'ge',
+            'ger': 'de',
             'kor': 'ko',
             'spa': 'es',
-            'cze': 'cz',
+            'cze': 'cs',
             'cat': 'ca',
             'fin': 'fi',
             'ice': 'is',
             'ita' : 'it',
             'rus': 'ru',
-            'chi': 'zh'
+            'chi': 'zh',
+            'slo': 'sk'
           }
         },
         'home': {
@@ -100,6 +101,7 @@
             'hitsPerPage': 20
           },
           'facetsSummaryType': 'details',
+          'defaultSearchString': '',
           'facetTabField': '',
           'facetConfig': [
             // {
@@ -162,6 +164,13 @@
         'map': {
           'enabled': true,
           'appUrl': '../../srv/{{lang}}/catalog.search#/map',
+          'externalViewer': {
+            'enabled': false,
+            'baseUrl': 'http://www.example.com/viewer',
+            'urlTemplate': 'http://www.example.com/viewer?url=${service.url}&type=${service.type}&layer=${service.name}',
+            'openNewWindow': false,
+            'valuesSeparator': ','
+          },
           'is3DModeAllowed': true,
           'isSaveMapInCatalogAllowed': true,
           'isExportMapAsImageEnabled': false,
@@ -178,10 +187,16 @@
             'code': 'EPSG:3857',
             'label': 'Google mercator (EPSG:3857)'
           }],
+          'switcherProjectionList': [{
+            'code': 'EPSG:3857',
+            'label': 'Google mercator (EPSG:3857)'
+          }],
           'disabledTools': {
             'processes': false,
             'addLayers': false,
+            'projectionSwitcher': false,
             'layers': false,
+            'legend': false,
             'filter': false,
             'contexts': false,
             'print': false,
@@ -210,6 +225,10 @@
         'geocoder': {
             'enabled': true,
             'appUrl': 'https://secure.geonames.org/searchJSON'
+        },
+        'recordview': {
+          'enabled': true,
+          'isSocialbarEnabled': true
         },
         'editor': {
           'enabled': true,
@@ -273,7 +292,7 @@
         gnViewerSettings.bingKey = this.gnCfg.mods.map.bingKey;
         gnViewerSettings.defaultContext =
           gnViewerSettings.mapConfig['map-viewer'].context;
-        gnViewerSettings.geocoder = this.gnCfg.mods.geocoder.appUrl;
+        gnViewerSettings.geocoder = this.gnCfg.mods.geocoder.appUrl || defaultConfig.mods.geocoder.appUrl;
       },
       getDefaultConfig: function() {
         return angular.copy(defaultConfig);
@@ -286,6 +305,20 @@
         copy.mods.header.languages = {};
         copy.mods.search.grid.related = [];
         return copy;
+      },
+      getProxyUrl: function () {
+        return this.proxyUrl;
+      },
+      // Removes the proxy path and decodes the layer url,
+      // so the layer can be printed with MapFish.
+      // Otherwise Mapfish rejects it, due to relative url.
+      getNonProxifiedUrl: function (url) {
+        if (url.indexOf(this.proxyUrl) > -1) {
+          return decodeURIComponent(
+            url.replace(this.proxyUrl, ''));
+        } else {
+          return url;
+        }
       }
     };
   }());
@@ -346,7 +379,7 @@
     },
     isValidIso2Lang: function(lang) {
       for (p in this.langs) {
-        if (this.langs[p] == lang) {
+        if (this.langs[p] === lang) {
           return true;
         }
       }
@@ -357,7 +390,7 @@
     },
     getIso3Lang: function(iso2lang) {
       for (p in this.langs) {
-        if (this.langs[p] == iso2lang) {
+        if (this.langs[p] === iso2lang) {
           return p;
         }
       }
@@ -379,12 +412,12 @@
     'gnSearchManagerService', 'gnConfigService', 'gnConfig',
     'gnGlobalSettings', '$location', 'gnUtilityService',
     'gnSessionService', 'gnLangs', 'gnAdminMenu',
-    'gnViewerSettings', 'gnSearchSettings', '$cookies',
+    'gnViewerSettings', 'gnSearchSettings', '$cookies', 'gnExternalViewer',
     function($scope, $http, $q, $rootScope, $translate,
              gnSearchManagerService, gnConfigService, gnConfig,
              gnGlobalSettings, $location, gnUtilityService,
              gnSessionService, gnLangs, gnAdminMenu,
-             gnViewerSettings, gnSearchSettings, $cookies) {
+             gnViewerSettings, gnSearchSettings, $cookies, gnExternalViewer) {
       $scope.version = '0.0.1';
 
 
@@ -396,13 +429,6 @@
             ($scope.socialMediaLink.indexOf('/metadata/') != -1);
       });
       $scope.getPermalink = gnUtilityService.getPermalink;
-
-      try {
-        var tokens = location.href.split('/');
-        $scope.service = tokens[6].split('?')[0];
-      } catch (e) {
-        // console.log("Failed to extract current service from URL.");
-      }
 
       // If gnLangs current already set by config, do not use URL
       $scope.langs = gnGlobalSettings.gnCfg.mods.header.languages;
@@ -419,6 +445,17 @@
         return detector.default || 'srv';
       }
 
+
+      function detectService(detector) {
+        if (detector.regexp) {
+          var res = new RegExp(detector.regexp).exec(location.pathname);
+          if (angular.isArray(res)) {
+            return res[1];
+          }
+        }
+        return detector.default;
+      }
+
       function detectBaseURL(detector) {
         if (detector.regexp) {
           var res = new RegExp(detector.regexp).exec(location.pathname);
@@ -429,6 +466,7 @@
         return detector.default || 'geonetwork';
       }
       $scope.nodeId = detectNode(gnGlobalSettings.gnCfg.nodeDetector);
+      $scope.service = detectService(gnGlobalSettings.gnCfg.serviceDetector);
       gnGlobalSettings.nodeId = $scope.nodeId;
       gnConfig.env = gnConfig.env || {};
       gnConfig.env.node = $scope.nodeId;
@@ -439,7 +477,7 @@
         'fre': 'Français', 'ger': 'Deutsch', 'kor': '한국의',
         'spa': 'Español', 'cat': 'Català', 'cze': 'Czech',
         'ita': 'Italiano', 'fin': 'Suomeksi', 'ice': 'Íslenska',
-        'rus': 'русский', 'chi': '中文'};
+        'rus': 'русский', 'chi': '中文', 'slo': 'Slovenčina'};
       $scope.url = '';
       $scope.gnUrl = gnGlobalSettings.gnUrl;
       $scope.gnCfg = gnGlobalSettings.gnCfg;
@@ -448,6 +486,8 @@
       $scope.isMapViewerEnabled = gnGlobalSettings.isMapViewerEnabled;
       $scope.isDebug = window.location.search.indexOf('debug') !== -1;
       $scope.shibbolethEnabled = gnGlobalSettings.shibbolethEnabled;
+      $scope.isExternalViewerEnabled = gnExternalViewer.isEnabled();
+      $scope.externalViewerUrl = gnExternalViewer.getBaseUrl();
 
 
       $scope.layout = {
@@ -678,6 +718,17 @@
       $scope.session = gnSessionService.getSession();
 
       $scope.loadCatalogInfo();
+
+
+      $scope.healthCheck = {};
+      function healthCheckStatus(data) {
+        angular.forEach(data, function(o) {
+          $scope.healthCheck[o.name] = (o.status === 'OK');
+        });
+      };
+      $http.get('../../warninghealthcheck')
+        .success(healthCheckStatus)
+        .error(healthCheckStatus);
     }]);
 
 })();
