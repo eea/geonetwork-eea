@@ -47,7 +47,7 @@
    the CRS shall be described in the metadata. Contact Paul Hasenohr for further details.]]>
     </help>
     <condition>mandatory</condition>
-    <helper>
+    <!--<helper>
       <option value="urn:ogc:def:crs:EPSG:7.1:3035"
               title="Lambert Azimuthal Equal Area 52N 10E projection based on ETRS89 datum">Lambert Azimuthal
         Equal Area (EPSG 3035)</option>
@@ -55,7 +55,7 @@
               title="ETRS89">ETRS89 (EPSG 4258)</option>
       <option value="urn:ogc:def:crs:EPSG:7.1:4326"
               title="WGS 84">WGS 84 (EPSG 4326)</option>
-    </helper>
+    </helper>-->
   </element>
 	<element name="code">
 		<label>System code</label>
