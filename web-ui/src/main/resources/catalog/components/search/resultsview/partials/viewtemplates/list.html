@@ -51,14 +51,14 @@
             </a>
           </div>
 
-          <h1 data-ng-click="openRecord($index, md, searchResults.records)"
+          <h2 data-ng-click="openRecord($index, md, searchResults.records)"
           >
             <!-- Icon for types -->
             <a data-ng-href="#/metadata/{{md.getUuid()}}"
                title="{{md.title || md.defaultTitle}}">
               <i class="fa gn-icon-{{md.type[0]}}" title="{{md.type[0] | translate}}"/>
               {{md.title || md.defaultTitle}}</a>
-          </h1>
+          </h2>
         </div>
 
         <div class="gn-md-abstract">
