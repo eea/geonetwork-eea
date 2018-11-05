@@ -507,7 +507,7 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>schema-iso19115-3</artifactId>
-      <version>${project.version}</version>
+      <version>${gn.schemas.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -924,7 +924,6 @@
       </activation>
       <properties>
         <env>dev</env>
-<<<<<<< HEAD
         <geonetwork.data.dir>${geonetwork.webapp.dir}/WEB-INF/data</geonetwork.data.dir>
         <geonetwork.config.security>config-security</geonetwork.config.security>
         <geonetwork.webapp.name>geonetwork</geonetwork.webapp.name>
@@ -1001,9 +1000,7 @@
         <geonetwork.data.dir>file://\${catalogue.data.dir}</geonetwork.data.dir>
         <security.config.file>config-security-noldap.xml</security.config.file>
         <war.excludes>WEB-INF/web*.xml</war.excludes>
-=======
         <wro.debug>true</wro.debug>
->>>>>>> upstream/master
       </properties>
     </profile>
     <profile>
