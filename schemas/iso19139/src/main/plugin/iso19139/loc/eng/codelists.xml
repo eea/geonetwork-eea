@@ -1461,7 +1461,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry hideInEditMode="true">
       <code>notobsolete</code>
-      <label>Not obsolete</label>
+      <label>Not obsolete / superseded</label>
       <description></description>
     </entry>
   </codelist>
