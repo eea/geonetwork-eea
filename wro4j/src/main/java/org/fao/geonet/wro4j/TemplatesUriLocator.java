@@ -90,6 +90,8 @@ public class TemplatesUriLocator implements UriLocator {
             sTemplate = sTemplate.replaceAll(">\\s*<", "><");
             sTemplate = sTemplate.replaceAll("\\s\\s+", " ");
             sTemplate = sTemplate.replaceAll("\n", "");
+            // The backslash (\) is an escape character in Javascript
+            sTemplate = sTemplate.replace("\\", "\\\\");
             sTemplate = sTemplate.replace("'", "\\'");
 
             javascript.append(
