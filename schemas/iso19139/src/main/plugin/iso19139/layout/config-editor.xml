@@ -450,9 +450,12 @@
 
   <!-- View configuration -->
   <views>
-    <view name="eea" upAndDownControlHidden="true">
+    <view name="eea" upAndDownControlHidden="true" class="gn-indent-colored gn-label-above-input">
       <sidePanel>
-        <directive data-gn-onlinesrc-list=""/>
+        <directive data-gn-overview-manager=""/>
+        <directive data-gn-onlinesrc-list=""
+                   data-types="onlinesrc|parent|dataset|service|source|sibling|associated|fcats"/>
+
         <text ref="eea-associatedResource-help"/>
 
         <directive data-gn-validation-report=""/>
