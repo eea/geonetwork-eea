@@ -137,6 +137,58 @@
       };
     }]);
 
+  module.directive('gnUserPicker', ['$http',
+    function($http) {
+      return {
+        restrict: 'A',
+        scope: {
+          user: '=gnUserPicker'
+        },
+        link: function(scope, element, attrs) {
+          element.attr('placeholder', '...');
+          // TODO: Add by profile and by group
+          $http.get('../api/users',
+            {}, {
+              cache: true
+            }).then(function(r) {
+            // var data = data;
+            var source = new Bloodhound({
+              datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+              local: r.data,
+              identify: function(obj) { return obj.username; },
+              limit: 30
+            });
+
+            function sourceWithDefaults(q, sync) {
+              if (q === '') {
+                sync(source.all());
+              } else {
+                source.search(q, sync);
+              }
+            }
+
+            source.initialize();
+            $(element).typeahead({
+              minLength: 0,
+              highlight: true
+            }, {
+              displayKey: 'username',
+              templates: {
+                suggestion: function(datum) {
+                  return '<p>' + datum.name + ' ' + datum.surname +
+                         ' (' + datum.profile + ')</p>';
+                }
+              },
+              source: sourceWithDefaults
+            }).on('typeahead:selected', function(event, datum) {
+              scope.user = datum;
+            });
+          });
+        }
+      };
+    }]);
+
   module.directive('gnBatchReport', [
     function() {
       return {
@@ -261,17 +313,28 @@
                           datumTokenizer:
                               Bloodhound.tokenizers.obj.whitespace('name'),
                           queryTokenizer: Bloodhound.tokenizers.whitespace,
-                          local: data,
-                          limit: 30
+                          local: data
                         });
                         source.initialize();
+
+                        function allOrSearchFn(q, sync) {
+                          if (q === '') {
+                            sync(source.all());
+                            // This is the only change needed to get 'ALL'
+                            // items as the defaults
+                          } else {
+                            source.search(q, sync);
+                          }
+                        }
+
                         $(element).typeahead({
                           minLength: 0,
                           highlight: true
                         }, {
                           name: 'countries',
                           displayKey: 'name',
-                          source: source.ttAdapter()
+                          limit: 100,
+                          source: allOrSearchFn
                         }).on('typeahead:selected', function(event, datum) {
                           if (angular.isFunction(scope.onRegionSelect)) {
                             scope.onRegionSelect(datum);
@@ -999,6 +1062,9 @@
         replace: false,
         compile: function compile(tElement, tAttrs) {
           var cacheId = tAttrs.cache ? tAttrs.cache + '.paginator' : '';
+          var getItemsFunctionName = tAttrs.getItemsFunctionName ? tAttrs.getItemsFunctionName: 'pageItems';
+          var firstPageFunctionName = tAttrs.firstPageFunctionName ? tAttrs.firstPageFunctionName: 'firstPage';
+
           return {
             pre: function preLink(scope) {
               scope.pageSizeList = [10, 20, 50, 100];
@@ -1053,12 +1119,12 @@
 
               // ---- Functions available in parent scope -----
 
-              scope.$parent.firstPage = function() {
+              scope.$parent[firstPageFunctionName] = function() {
                 scope.firstPage();
               };
               // Function that returns the reduced items list,
               // to use in ng-repeat
-              scope.$parent.pageItems = function() {
+              scope.$parent[getItemsFunctionName] = function() {
                 if (angular.isArray(scope.items())) {
                   var start = scope.paginator.currentPage *
                       scope.paginator.pageSize;

@@ -69,7 +69,7 @@
 
 
     <xsl:if test="$isRecaptchaEnabled and $service = 'new.account'">
-      <script src='https://www.google.com/recaptcha/api.js'></script>
+      <script src="https://www.google.com/recaptcha/api.js"></script>
     </xsl:if>
 
     <xsl:choose>
@@ -158,6 +158,7 @@
           src="{$uiResourcesPath}lib/bootstrap.ext/datepicker/bootstrap-datepicker.fr.js?v={$buildNumber}"></script>
         <script src="{$uiResourcesPath}lib/bootstrap-table/dist/bootstrap-table.js?v={$buildNumber}"></script>
         <script src="{$uiResourcesPath}lib/bootstrap-table/src/extensions/export/bootstrap-table-export.js?v={$buildNumber}"></script>
+        <script src="{$uiResourcesPath}lib/bootstrap-table/dist/bootstrap-table-locale-all.min.js"></script>
         <!--</xsl:if>-->
 
         <script src="{$uiResourcesPath}lib/underscore/underscore-min.js?v={$buildNumber}"></script>
@@ -220,7 +221,7 @@
     </xsl:if>
 
     <!-- XML highlighter JS dependency. -->
-    <xsl:if test="$angularApp = 'gn_editor'">
+    <xsl:if test="$angularApp = 'gn_editor' or $angularApp = 'gn_admin'">
       <script type="text/javascript" src="{$uiResourcesPath}lib/ace/ace.js?v={$buildNumber}"></script>
       <script type="text/javascript" src="{$uiResourcesPath}lib/angular.ext/ui-ace.js?v={$buildNumber}"></script>
     </xsl:if>

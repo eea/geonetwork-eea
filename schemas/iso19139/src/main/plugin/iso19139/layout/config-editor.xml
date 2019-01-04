@@ -338,6 +338,8 @@
       <name>gmd:domainValue</name>
       <name>gmd:minimumValue</name>
       <name>gmd:maximumValue</name>
+      <name>gmd:dimensionSize</name>
+      <name>gmd:numberOfDimensions</name>
       <name>gmd:densityUnits</name>
       <name>gmd:descriptor</name>
       <name>gmd:denominator</name>
@@ -3720,10 +3722,25 @@
 
     </view>
 
-    <!--<view name="default" displayIfServiceInfo="count(session[profile = 'Administrator']) = 1">-->
+
+    <!--
+    Customize the editor layout by adding a class attribute
+    <view name="default" class="gn-indent-bluescale gn-label-above-input">-->
     <view name="default">
       <sidePanel>
+        <!-- General online source manager
         <directive data-gn-onlinesrc-list=""/>
+        -->
+
+        <!-- Simple overview manager + online source manger for other types
+        Limit the max number of overviews with data-number-of-overviews="3" attribute.
+        In the full view, editor can access and manage the file store and
+        thumbnail name and description not supported by the overview manager.
+        -->
+        <directive data-gn-overview-manager=""/>
+        <directive data-gn-onlinesrc-list=""
+                   data-types="onlinesrc|parent|dataset|service|source|sibling|associated|fcats"/>
+
         <directive gn-geo-publisher=""
                    data-ng-if="gnCurrentEdit.geoPublisherConfig"
                    data-config="{{gnCurrentEdit.geoPublisherConfig}}"

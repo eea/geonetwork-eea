@@ -29,6 +29,7 @@
   goog.require('gn_search_manager');
   goog.require('gn_session_service');
   goog.require('gn_external_viewer');
+  goog.require('gn_history');
 
 
   // On the editor catalog, search are restricted on this catalog
@@ -45,7 +46,7 @@
   var module = angular.module('gn_cat_controller',
       ['gn_search_manager', 'gn_session_service',
         'gn_admin_menu', 'gn_saved_selections',
-        'gn_external_viewer']);
+        'gn_external_viewer', 'gn_history']);
 
 
   module.constant('gnSearchSettings', {});
@@ -87,7 +88,9 @@
             'rus': 'ru',
             'chi': 'zh',
             'slo': 'sk'
-          }
+          },
+          'isLogoInHeader': true,
+          'logoInHeaderPosition': 'left'
         },
         'home': {
           'enabled': true,
@@ -236,7 +239,8 @@
           'isUserRecordsOnly': false,
           'isFilterTagsDisplayed': false,
           'createPageTpl':
-              '../../catalog/templates/editor/new-metadata-horizontal.html'
+              '../../catalog/templates/editor/new-metadata-horizontal.html',
+          'editorIndentType': ''
         },
         'admin': {
           'enabled': true,
