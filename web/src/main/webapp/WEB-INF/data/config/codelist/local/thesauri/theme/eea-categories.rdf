@@ -14,7 +14,8 @@
         <foaf:name>EEA</foaf:name>
       </foaf:Organization>
     </dc:creator>
-    <dcterms:modified>2011-05-11 07:57:15</dcterms:modified>
+    <dcterms:issued>2010-07-06</dcterms:issued>
+    <dcterms:modified>2010-07-06</dcterms:modified>
   </skos:ConceptScheme>
 
   <skos:Concept rdf:about='https://www.eea.europa.eu/categories/1'>
