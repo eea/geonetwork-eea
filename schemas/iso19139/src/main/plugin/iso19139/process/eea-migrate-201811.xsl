@@ -154,7 +154,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
    * Missing or wrong Originating Controlled Vocabulary URI - URI needs to be 'http://www.eionet.europa.eu/gemet/inspire_themes'
    -->
   <xsl:template match="gmd:thesaurusName/*/gmd:title/gco:CharacterString[. = 'GEMET - INSPIRE themes, version 1.0']">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] Theme / Adding Anchor for INSPIRE thesaurus title.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[FIX]; Theme / Adding Anchor for INSPIRE thesaurus title.</xsl:message>
 
     <gmx:Anchor xlink:href="http://www.eionet.europa.eu/gemet/inspire_themes">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
   </xsl:template>
@@ -175,14 +175,14 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
                   select="$inspire-theme[skos:prefLabel = $theme]/@rdf:about"/>
     <xsl:choose>
       <xsl:when test="$url != ''">
-        <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] Theme / Using Anchor for '<xsl:value-of select="$theme"/>'.</xsl:message>
+        <xsl:message>Record <xsl:value-of select="$uuid"/> ;[FIX]; Theme / Using Anchor for '<xsl:value-of select="$theme"/>'.</xsl:message>
         <gmx:Anchor>
           <xsl:attribute name="xlink:href"><xsl:value-of select="$url"/></xsl:attribute>
           <xsl:value-of select="$theme"/>
         </gmx:Anchor>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:message>Record <xsl:value-of select="$uuid"/> [CHECK] Theme '<xsl:value-of select="$theme"/>' not found in INSPIRE thesaurus. Keeping it.</xsl:message>
+        <xsl:message>Record <xsl:value-of select="$uuid"/> ;[CHECK]; Theme '<xsl:value-of select="$theme"/>' not found in INSPIRE thesaurus. Keeping it.</xsl:message>
         <xsl:copy-of select="."/>
       </xsl:otherwise>
     </xsl:choose>
@@ -208,13 +208,13 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
     <gmd:RS_Identifier>
       <xsl:choose>
         <xsl:when test="$newCrs != ''">
-          <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] CRS / Using Anchor for '<xsl:value-of select="$code"/>'.</xsl:message>
+          <xsl:message>Record <xsl:value-of select="$uuid"/> ;[FIX]; CRS / Using Anchor for '<xsl:value-of select="$code"/>'.</xsl:message>
           <gmd:code>
             <gmx:Anchor xlink:href="{$newCrs/@code}"><xsl:value-of select="$newCrs/@label"/></gmx:Anchor>
           </gmd:code>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:message>Record <xsl:value-of select="$uuid"/> [CHECK] CRS '<xsl:value-of select="$code"/>' not found CRS table. Keeping it.</xsl:message>
+          <xsl:message>Record <xsl:value-of select="$uuid"/> ;[CHECK]; CRS '<xsl:value-of select="$code"/>' not found CRS table. Keeping it.</xsl:message>
           <xsl:apply-templates select="gmd:code|gmd:codeSpace"/>
         </xsl:otherwise>
       </xsl:choose>
@@ -235,7 +235,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
 
     <xsl:choose>
       <xsl:when test="count(preceding-sibling::*[name() = 'gmd:language']) = 0">
-        <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] Adding a default resource language preceding characterSet and the topic category '<xsl:value-of select="*/text()"/>'.</xsl:message>
+        <xsl:message>Record <xsl:value-of select="$uuid"/> ;[FIX]; Adding a default resource language preceding characterSet and the topic category '<xsl:value-of select="*/text()"/>'.</xsl:message>
 
         <gmd:language>
           <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{$defaultLanguage}"/>
@@ -247,7 +247,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
     </xsl:choose>
     <xsl:choose>
       <xsl:when test="count(preceding-sibling::*[name() = 'gmd:characterSet']) = 0">
-        <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] Adding a default UTF8 character set before the topic category '<xsl:value-of select="*/text()"/>'.</xsl:message>
+        <xsl:message>Record <xsl:value-of select="$uuid"/> ;[FIX]; Adding a default UTF8 character set before the topic category '<xsl:value-of select="*/text()"/>'.</xsl:message>
         <gmd:characterSet>
           <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"
                                    codeListValue="{$defaultCharacterSet}"/>
@@ -280,7 +280,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
    The metadata record does not fulfill this requirement.
   -->
   <xsl:template match="gmd:CI_ResponsibleParty[normalize-space(gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*) = '']">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [MANUAL FIX] CI_ResponsibleParty '<xsl:value-of select="gmd:organisationName/*"/>' do not have email address.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[MANUAL FIX]; CI_ResponsibleParty '<xsl:value-of select="gmd:organisationName/*"/>' do not have email address.</xsl:message>
   </xsl:template>
 
 
@@ -300,7 +300,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   This metadata record does not contain such a value.
   -->
   <xsl:template match="gmd:report[count(*) = 0]|gmd:report[gmd:DQ_DomainConsistency/count(*) = 0]">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [CLEANING] Removing an empty DQ report.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[CLEANING]; Removing an empty DQ report.</xsl:message>
   </xsl:template>
 
   <!--
@@ -309,7 +309,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   <gmd:contact/>
   -->
   <xsl:template match="gmd:contact[count(*) = 0]">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [CLEANING] Removing an empty contact.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[CLEANING]; Removing an empty contact.</xsl:message>
   </xsl:template>
 
   <!--
@@ -318,7 +318,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   <gmd:contact/>
   -->
   <xsl:template match="gmd:temporalElement[count(*) = 0]">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [CLEANING] Removing an empty temporalElement.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[CLEANING]; Removing an empty temporalElement.</xsl:message>
   </xsl:template>
 
 
@@ -328,7 +328,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   <gmd:spatialResolution/>
   -->
   <xsl:template match="gmd:spatialResolution[count(*) = 0]">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [CLEANING] Removing an empty spatialResolution.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[CLEANING]; Removing an empty spatialResolution.</xsl:message>
   </xsl:template>
 
 
@@ -341,7 +341,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   </gmd:userDefinedMaintenanceFrequency
   -->
   <xsl:template match="gmd:userDefinedMaintenanceFrequency[* = 'PNaNYNaNMNaNDTNaNHNaNMNaNS']">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [CLEANING] Removing an empty period duration.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[CLEANING]; Removing an empty period duration.</xsl:message>
   </xsl:template>
 
   <!--
@@ -358,7 +358,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   version and specification of the encoding, but this record does not have the 'version' property.
   -->
   <xsl:template match="gmd:distributionFormat[count(*) = 0]">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [CLEANING] Removing an empty distributionFormat.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[CLEANING]; Removing an empty distributionFormat.</xsl:message>
   </xsl:template>
 
 
@@ -370,11 +370,11 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   Removing them.
 
   Validator error report:
-  * [ISOFTDS19139:2005-TableA1] - HierarchyLevelName must be documented if hierarchyLevel does not contain "dataset"
+  * [ISOFTDS19139:2005-TableA1]; - HierarchyLevelName must be documented if hierarchyLevel does not contain "dataset"
     hierarchyLevelName must be documented if hierarchyLevel does not contain 'dataset'
   -->
   <xsl:template match="gmd:hierarchyLevel[*/@codeListValue != 'dataset' and count(../hierarchyLevelName) = 0]">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] Missing hierarchy level name.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[FIX]; Missing hierarchy level name.</xsl:message>
     <xsl:copy-of select="."/>
     <gmd:hierarchyLevelName>
       <gco:CharacterString><xsl:value-of select="*/@codeListValue"/></gco:CharacterString>
@@ -389,12 +389,12 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   Removing them.
 
   Validator error report:
-  [ISOFTDS19139:2005-TableA1-Row13] - Description required if no sourceExtent
+  [ISOFTDS19139:2005-TableA1-Row13]; - Description required if no sourceExtent
   'description' is mandatory if 'sourceExtent' is not documented.
   Suggestions: Add a description or/and a source extent.
   -->
   <xsl:template match="gmd:LI_Source[count(*) = 0]">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [CLEANING] Removing an empty LI_Source.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[CLEANING]; Removing an empty LI_Source.</xsl:message>
   </xsl:template>
 
   <!--
@@ -407,7 +407,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   Removing them.
   -->
   <xsl:template match="gmd:otherCitationDetails[gmx:Anchor = '']">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [CLEANING] Removing an empty LI_Source.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[CLEANING]; Removing an empty otherCitationDetails.</xsl:message>
   </xsl:template>
 
 
@@ -421,7 +421,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   information item [children]. (Element: gco:CharacterString with parent element: gmd:abstract)
   -->
   <xsl:template match="br">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [CLEANING] Removing an HTML tag '<xsl:value-of select="name(.)"/>'.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[CLEANING]; Removing an HTML tag '<xsl:value-of select="name(.)"/>'.</xsl:message>
   </xsl:template>
 
   <!--
@@ -475,7 +475,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
 
 
   <xsl:template match="gmd:pass[gco:Boolean = '']">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [CLEANING] Not evaluated use nilReason unknown.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[CLEANING]; Not evaluated use nilReason unknown.</xsl:message>
     <gmd:pass gco:nilReason="unknown"/>
   </xsl:template>
 
@@ -501,13 +501,13 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   -->
 
   <xsl:template match="gmd:thesaurusName/*[gmd:title/* = 'EEA categories']/gmd:date/*/gmd:date/gco:Date[. = '']">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] EEA categories / Set thesaurus date value.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[FIX]; EEA categories / Set thesaurus date value.</xsl:message>
 
     <gco:Date>2010-07-06</gco:Date>
   </xsl:template>
 
   <xsl:template match="gmd:thesaurusName/*[gmd:title/* = 'EEA keyword list']/gmd:date/*/gmd:date/gco:Date[. = '']">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] EEA keyword list / Set thesaurus date value.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[FIX]; EEA keyword list / Set thesaurus date value.</xsl:message>
 
     <gco:Date>2002-03-01</gco:Date>
   </xsl:template>
@@ -527,7 +527,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
          </gmd:distributionFormat>
          -->
   <xsl:template match="gmd:distributionFormat/*[not(gmd:version)]">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] Missing format version.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[FIX]; Missing format version.</xsl:message>
 
     <xsl:copy>
       <xsl:apply-templates select="gmd:name"/>
@@ -546,7 +546,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
 
          -->
   <xsl:template match="gmd:distributionFormat[count(gmd:MD_Format) > 1]">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] Split format in same distribution format.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[FIX]; Split format in same distribution format.</xsl:message>
 
     <xsl:for-each select="gmd:MD_Format">
       <gmd:distributionFormat>
@@ -585,7 +585,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
 
          -->
   <xsl:template match="gmd:spatialResolution[gmd:spatialResolution]">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] Move spatial resolution to identification info.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[FIX]; Move spatial resolution to identification info.</xsl:message>
 
     <xsl:copy-of select="gmd:spatialResolution"/>
     <xsl:copy>
@@ -602,7 +602,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
  The value '2011-05-31T12:00:00' of element 'gco:Date' is not valid. (Element: gco:Date with parent element: gmd:date)
          -->
   <xsl:template match="gco:Date[contains(., 'T')]">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] Date time encoded in a date field.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[FIX]; Date time encoded in a date field.</xsl:message>
     <gco:DateTime><xsl:value-of select="."/></gco:DateTime>
   </xsl:template>
   <!--
@@ -610,7 +610,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   eg. d86223b0-8672-4abc-816b-1a2e2d0b5aa5
          -->
   <xsl:template match="gmd:editionDate[gco:Date = '']">
-    <xsl:message>Record <xsl:value-of select="$uuid"/> [FIX] Remove empty edition date.</xsl:message>
+    <xsl:message>Record <xsl:value-of select="$uuid"/> ;[FIX]; Remove empty edition date.</xsl:message>
   </xsl:template>
 
 
