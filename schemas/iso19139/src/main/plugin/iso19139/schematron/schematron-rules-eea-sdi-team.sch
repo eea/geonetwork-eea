@@ -127,7 +127,7 @@
 
   <sch:pattern>
     <sch:title>$loc/strings/EEACitation</sch:title>
-      <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='MD_DataIdentification']/gmd:graphicOverview">
+      <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='MD_DataIdentification']">
 
 
       <!-- MD_Metadata/identificationInfo/*/citation/*/edition
@@ -198,7 +198,7 @@
            https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfographicOverview-Dataset-thumbnail
       -->
       <sch:let name="graphicOverview"
-               value="*/gmd:fileName/gco:CharacterString"/>
+               value="gmd:graphicOverview/*/gmd:fileName/gco:CharacterString"/>
 
       <sch:assert test="normalize-space($graphicOverview) != ''"
       >$loc/strings/EEAGraphicOverview.alert

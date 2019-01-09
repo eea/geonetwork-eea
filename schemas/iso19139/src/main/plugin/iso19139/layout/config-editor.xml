@@ -451,6 +451,15 @@
   <!-- View configuration -->
   <views>
     <view name="eea" upAndDownControlHidden="true" class="gn-indent-colored gn-label-above-input">
+      <thesaurusList>
+        <thesaurus key="external.theme.httpinspireeceuropaeutheme-theme"
+                   fieldset="false"
+                   transformations="to-iso19139-keyword-with-anchor"/>
+        <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory"
+                   fieldset="false"
+                   transformations="to-iso19139-keyword-with-anchor"/>
+      </thesaurusList>
+
       <sidePanel>
         <directive data-gn-overview-manager=""/>
         <directive data-gn-onlinesrc-list=""
