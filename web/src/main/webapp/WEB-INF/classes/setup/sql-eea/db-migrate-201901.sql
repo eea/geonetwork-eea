@@ -67,6 +67,8 @@ UPDATE Schematron SET filename = 'schematron-rules-inspire-strict.xsl' WHERE fil
 UPDATE Schematron SET filename = 'schematron-rules-inspire-sds.xsl' WHERE filename = 'schematron-rules-inspire-sds.xsl';
 UPDATE Schematron SET filename = 'schematron-rules-inspire.xsl' WHERE filename = 'schematron-rules-inspire.disabled.xsl';
 
+UPDATE metadata SET data = replace(data, '>GEMET - Themes, version 2.4<', '>GEMET<') WHERE  data LIKE '%>GEMET - Themes, version 2.4<%';
+UPDATE metadata SET data = replace(data, '>GEMET - Themes, version 3.0<', '>GEMET<') WHERE  data LIKE '%>GEMET - Themes, version 2.4<%';
 
 
 UPDATE Settings SET value='3.6.0' WHERE name='system/platform/version';
