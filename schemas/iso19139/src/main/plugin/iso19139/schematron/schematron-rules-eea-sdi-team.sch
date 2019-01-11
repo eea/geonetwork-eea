@@ -141,7 +141,6 @@
          The version and revision numbers of the dataset should be consistent with this element,
           separated by a point (VersionNumber.RevisionNumber). Example in the wiki is maybe wrong? TODO?
                               <gco:CharacterString>15-0</gco:CharacterString>
-         -->
       <sch:let name="edition"
                value="gmd:citation/*/gmd:edition/gco:CharacterString"/>
       <sch:let name="editionInDataLink"
@@ -156,6 +155,7 @@
       <sch:report test="normalize-space($edition) != ''"><sch:value-of
         select="$loc/strings/EEAEDITION.report"/> "<sch:value-of
         select="normalize-space($edition)"/>"</sch:report>
+         -->
 
 
       <!-- MD_Metadata/identificationInfo/*/status. Conditional.
