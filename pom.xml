@@ -1214,7 +1214,6 @@
     <module>services</module>
     <module>wro4j</module>
     <module>web</module>
-    <module>e2e-tests</module>
     <module>inspire-atom</module>
     <module>doi</module>
     <module>es</module>
