@@ -407,7 +407,7 @@
                    .then(function (calculatedFilters) {
                      scope.currentFilters = calculatedFilters;
                    });
-               }, 100);
+               }, 1000);
              }, true);
 
              scope.removeFilter = function(filter) {
