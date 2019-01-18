@@ -1279,6 +1279,7 @@
     <db.password>www-data</db.password>
     <db.pool.maxActive>10</db.pool.maxActive>
 
+    <ldap.mapping.defaultProfile>Editor</ldap.mapping.defaultProfile>
 
     <!-- Default catalog language when accessing the home page
     ie. http://localhost:8080/geonetwork. -->

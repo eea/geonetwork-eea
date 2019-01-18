@@ -973,6 +973,7 @@
         <geonetwork.data.dir>file://\${internal-catalogue.data.dir}</geonetwork.data.dir>
         <security.config.file>config-security-noldap.xml</security.config.file>
         <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
+        <ldap.mapping.defaultProfile>Guest</ldap.mapping.defaultProfile>
       </properties>
     </profile>
     <profile>
@@ -1010,6 +1011,7 @@
         <security.config.file>config-security-noldap.xml</security.config.file>
         <war.excludes>WEB-INF/web*.xml</war.excludes>
         <wro.debug>true</wro.debug>
+        <ldap.mapping.defaultProfile>Guest</ldap.mapping.defaultProfile>
       </properties>
     </profile>
     <profile>
