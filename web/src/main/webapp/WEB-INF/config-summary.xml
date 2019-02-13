@@ -166,6 +166,7 @@
           translator="db:org.fao.geonet.repository.MetadataCategoryRepository:findOneByName"/>
     <item facet="mdStatus" max="10" sortBy="value"
           translator="db:org.fao.geonet.repository.StatusValueRepository:findOne:int"/>
+    <item facet="status" translator="codelist:gmd:MD_ProgressCode"/>
     <item facet="sourceCatalog" translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
     <item facet="isValid" max="3" sortBy="value" translator="apploc:validStatus-"/>
     <item facet="groupOwner" max="199" sortBy="value"
