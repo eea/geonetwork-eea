@@ -212,7 +212,7 @@
 
         // Load user data
         // List of selections does not change often. Cache them.
-        $http.get('../api/userselections', {cache: true}).then(function(r) {
+        $http.get('../api/userselections?r=' + Math.floor(Math.random() * 10000)).then(function(r) {
           if (user != undefined) {
             selections.list = selections.list.concat(r.data);
           }
@@ -224,7 +224,7 @@
               if (user != undefined) {
                 getUserSelections.push(
                     $http.get('../api/userselections/' +
-                    sel.id + '/' + user).then(
+                    sel.id + '/' + user + '?r=' + Math.floor(Math.random() * 10000)).then(
                     function(response) {
                       sel.records = response.data;
                       allRecords = allRecords.concat(response.data);
@@ -383,21 +383,39 @@
    * Panel to manage user saved selection content
    */
   module.directive('gnSavedSelectionsPanel', [
-    '$translate', 'gnLangs', 'gnSavedSelectionConfig',
-    function($translate, gnLangs, gnSavedSelectionConfig) {
+    '$translate', 'gnLangs', 'gnSavedSelectionConfig', '$timeout',
+    function($translate, gnLangs, gnSavedSelectionConfig, $timeout) {
       function link(scope, element, attrs, controller) {
         scope.lang = gnLangs.current;
         scope.selections = null;
         scope.actions = gnSavedSelectionConfig.actions;
 
-        scope.$watch('user', function(n, o) {
-          if (n !== o || scope.selections === null) {
-            scope.selections = null;
-            controller.getSelections(scope.user).then(function(selections) {
-              scope.selections = selections;
-            });
-          }
-        });
+        // var isIE = false || !!document.documentMode;
+        // if (isIE) {
+        //   console.log("init for IE");
+        //
+        //   $timeout(function ()  {
+        //     if (scope.selections === null) {
+        //       scope.selections = null;
+        //       console.log("init for");
+        //       console.log(scope.user);
+        //       console.log(scope.user.username);
+        //       controller.getSelections(scope.user).then(function(selections) {
+        //         scope.selections = selections;
+        //         console.log(scope.selections);
+        //       });
+        //     }
+        //   }, 5000);
+        // } else {
+          scope.$watchCollection('user', function(n, o) {
+            if (n !== o || scope.selections === null) {
+              scope.selections = null;
+              controller.getSelections(scope.user).then(function(selections) {
+                scope.selections = selections;
+              });
+            }
+          });
+        // }
 
         scope.remove = function(selection, uuid) {
           controller.remove(selection, scope.user, uuid);
