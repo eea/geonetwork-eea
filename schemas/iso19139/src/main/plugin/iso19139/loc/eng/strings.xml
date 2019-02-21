@@ -367,7 +367,7 @@
 
   <eea-contact>
     <div class="alert alert-info">
-      <i class="fa fa-question-circle"></i>&#160; For more details about how to create EEA metadata please read the <a href="https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines" target="_blank">EEA Metadata Guidelines</a>. Elements with a <label style="color: #a94442;font-size: 1em;">*</label> are mandatory with respect to the EEA metadata guidelines.
+      <i class="fa fa-question-circle"></i>&#160; For more details about how to create EEA metadata please read the <a href="https://taskman.eionet.europa.eu/projects/public-docs/wiki/SDI_editor_guidance" target="_blank">EEA Metadata Guidelines</a>. Elements with a <label style="color: #a94442;font-size: 1em;">*</label> are mandatory with respect to the EEA metadata guidelines.
     </div>
     <div class="alert alert-info">
       If you have any questions, please contact <a href="mailto:sdi@eea.europa.eu">sdi [at] eea.europa.eu</a>.
