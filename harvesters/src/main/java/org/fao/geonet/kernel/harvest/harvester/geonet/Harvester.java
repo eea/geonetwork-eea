@@ -134,7 +134,8 @@ class Harvester implements IHarvester<HarvestResult> {
                     pre29Login(req);
                 } else if (!"true".equals(response.getChild("me").getAttributeValue("authenticated"))) {
                     log.warning("Authentication failed for user: " + params.getUsername());
-                    throw new UserNotFoundEx(params.getUsername());
+                    // TODO: Handle XSRF token here
+                    //throw new UserNotFoundEx(params.getUsername());
                 }
             } catch (Exception e) {
                 pre29Login(req);
