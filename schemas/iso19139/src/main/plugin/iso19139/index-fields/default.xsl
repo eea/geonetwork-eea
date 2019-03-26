@@ -550,6 +550,34 @@
       </xsl:for-each>
 
 
+
+      <!-- Not obsolete -->
+      <xsl:variable name="isNotObsolete"
+                    select="count(gmd:status[gmd:MD_ProgressCode/@codeListValue = 'obsolete' or
+                                             gmd:MD_ProgressCode/@codeListValue = 'superseded']) = 0"/>
+
+      <!-- - Legal constraints set to "no limitations" -->
+      <xsl:variable name="noUseLimitation"
+                    select="count(gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[* = 'no limitations']) > 0"/>
+
+      <!-- - Resource constraint contains inside the following text chain:
+      "EEA standard re-use policy: unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged (http://www.eea.europa.eu/legal/copyright). Copyright holder: European Environment Agency (EEA)."
+      or (the old way):
+      "Unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged. The EEA re-use policy follows Directive 2003/98/EC of the European Parliament and the Council on the re-use of public sector information throughout the European Union and Commission Decision 2006/291/EC, Euratom on the re-use of Commission information. The EEA accepts no responsibility or liability whatsoever for the re-use of content accessible on its website. Any inquiries about re-use of content on the EEA website should be addressed to Ove Caspersen, EEA, Kongens Nytorv 6, DK-1050 Copenhagen K, Tel +45 33 36 71 00, Fax +45 33 36 71 99, e-mail copyrights at eea.europa.eu"  -->
+      <xsl:variable name="hasEeaResourceConstraints"
+                    select="count(gmd:resourceConstraints/*/gmd:useLimitation[
+                              contains(*, 'EEA standard re-use policy: unless otherwise indicated')
+                              or contains(*, 'Unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge')]) > 0"/>
+
+      <xsl:variable name="forEEAReview"
+                    select="$hasEeaResourceConstraints and $noUseLimitation and $isNotObsolete"/>
+      <xsl:message>=<xsl:value-of select="$forEEAReview"/> </xsl:message>
+
+      <Field name="forEEAReview"
+             string="{$forEEAReview}" store="true" index="true"/>
+
+
+
       <xsl:for-each select="gmd:resourceConstraints/*">
         <xsl:variable name="fieldPrefix" select="local-name()"/>
 
