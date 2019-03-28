@@ -571,7 +571,6 @@
 
       <xsl:variable name="forEEAReview"
                     select="$hasEeaResourceConstraints and $noUseLimitation and $isNotObsolete"/>
-      <xsl:message>=<xsl:value-of select="$forEEAReview"/> </xsl:message>
 
       <Field name="forEEAReview"
              string="{$forEEAReview}" store="true" index="true"/>
