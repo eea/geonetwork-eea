@@ -1607,6 +1607,7 @@
       <option value='MIF'>MapInfo File</option>
       <option value='Postgis'>Postgresql/Postgis database</option>
       <option value='Spatialite'>SQLite/SpatiaLite database</option>
+      <option value='Geopackage'>Geopackage</option>
 		</helper>
 	</element>
 	<element name="gmd:name" context="gmd:MD_ExtendedElementInformation"
