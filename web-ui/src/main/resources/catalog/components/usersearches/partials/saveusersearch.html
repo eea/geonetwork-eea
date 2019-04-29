@@ -14,14 +14,14 @@
       </div>
     </div>
 
-    <div class="panel panel-default"
+    <div class=""
          data-ng-show="canSetFeatureTypeInSearch()">
       <div class="panel-heading">
         <input type="checkbox" id="featured" data-ng-checked="isFeaturedSearch()"
                data-ng-click="toggleFeaturedType()"/>
         <label for="featured" data-translate="">userSearchFeatured</label>
         <i class="fa fa-star fa-fw"></i>
-      </div>
+      </div class="panel-heading">
       <div class="panel-body"
            data-ng-show="canSetFeatureTypeInSearch() && isFeaturedSearch()">
         <div class="form-group">
