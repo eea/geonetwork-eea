@@ -118,6 +118,12 @@ div[gn-transfer-ownership] * .list-group {
     top: 52px;
     left: 20px;
     right: 20px;
+    @media (max-width: @screen-xs-max) {
+      left: 0;
+      right: 0;
+      border-left: 0;
+      border-right: 0;
+    }
   }
   .gn-editor-board {
     padding-top: 32px;
@@ -553,13 +559,10 @@ input[type=file] {
 
 /* alerts */
 .gn-alerts {
-  position: absolute;
-  top: 1em;
-  left: 50%;
-  width: 300px;
-  margin-left: -150px;
-  text-align: center;
-  z-index: 1000;
+  position:fixed;
+  z-index:9999;
+  top:5px;
+  left:5px;
 }
 
 .gn-recordtype-n:before { content: @fa-var-file-text }
@@ -851,12 +854,14 @@ input.ng-invalid {
   .gn-user-info {
     display: inline-block;
     vertical-align: middle;
+    padding-left: 3px;
     margin: -6px 0px;
     line-height: 1em;
     .gn-user-role {
       text-transform: uppercase;
       opacity: 0.7;
       font-size: 0.8em;
+      color: @gray-darker;
     }
   }
 }

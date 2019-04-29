@@ -70,6 +70,10 @@ public enum SchematronCriteriaType {
         }
     }),
 
+    /**
+     * A criteria where the user highest profile value must match one of the profile ids values.
+     * Multiple ids can be comma separated.
+     */
     USER_MAIN_PROFILE(new SchematronCriteriaEvaluator() {
         @Override
         public boolean accepts(ApplicationContext applicationContext, String value, int metadataId, Element metadata,

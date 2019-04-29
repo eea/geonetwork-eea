@@ -267,7 +267,8 @@
                     }
                   }
                 }
-                scope.$emit('resetSearch', scope.searchObj.params);
+                var preserveGeometrySearch = true;
+                scope.$emit('resetSearch', scope.searchObj.params, preserveGeometrySearch);
                 e.preventDefault();
               };
             }

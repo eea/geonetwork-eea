@@ -609,7 +609,8 @@
       };
 
       var createOrModifyGroup = function() {
-        if ($scope.groupSelected.defaultCategory === '') {
+        if (($scope.groupSelected.defaultCategory) &&
+            ($scope.groupSelected.defaultCategory.id == null)) {
           $scope.groupSelected.defaultCategory = null;
         }
         $http.put('../api/groups' + (
@@ -654,7 +655,7 @@
 
       $scope.deleteGroup = function(formId) {
         $http.delete('../api/groups/' +
-                $scope.groupSelected.id)
+                $scope.groupSelected.id + '?force=true')
             .success(function(data) {
               $scope.unselectGroup();
               loadGroups();
@@ -703,8 +704,12 @@
         $scope.groupUpdated = true;
       };
 
-      loadGroups();
-      loadUsers();
+      $scope.$watch('user', function(n, o) {
+        if (n && n.profile) {
+          loadGroups();
+          loadUsers();
+        }
+      });
     }]);
 
   module.filter('loggedUserIsUseradminOrMore', function() {

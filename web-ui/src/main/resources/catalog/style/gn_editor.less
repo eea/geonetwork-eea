@@ -4,113 +4,124 @@
 @import (less) "../lib/style/datetimepicker.css";
 @import (less) "../lib/jquery.ext/jquery.fileupload-ui.css";
 @import "gn.less";
-
-
 @import "../lib/style/bootstrap/less/glyphicons.less";
 
 //url is wrong on original file
 // Import the fonts
 @font-face {
-font-family: 'Glyphicons Halflings';
-src: ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.eot')";
-src: ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.eot?#iefix') format('embedded-opentype')",
-~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.woff') format('woff')",
-~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.ttf') format('truetype')",
-~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.svg#@{icon-font-svg-id}') format('svg')";
+  font-family: 'Glyphicons Halflings';
+  src: ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.eot')";
+  src: ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.eot?#iefix') format('embedded-opentype')",
+  ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.woff') format('woff')",
+  ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.ttf') format('truetype')",
+  ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.svg#@{icon-font-svg-id}') format('svg')";
 }
 
 body {
 }
 
 #header-holder {
-display: none;
+  display: none;
 }
 
 .gn-line-height {
-line-height: 1.8 !important;
+  line-height: 1.8 !important;
 }
 
 input[type=text], input[type=number], select {
-.form-control;
+  .form-control;
 }
 
 
 .gn-drawmap-panel {
-table  {
-.form-group {
-width: 150px;
-}
-.btn-group {
-margin-left: 15px;
-}
-}
-.form-group {
-margin-left: 0px;
-margin-right: 0px;
-}
-.col-left, .col-right {
-width: 25%;
-}
-.col-middle {
-width: 50%;
-}
-table {
-width:100%
-}
-.map {
-height: 300px;
-width: 100%;
-}
+  table {
+    .form-group {
+      width: 150px;
+    }
+
+    .btn-group {
+      margin-left: 15px;
+    }
+  }
+
+  .form-group {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .col-left, .col-right {
+    width: 25%;
+  }
+
+  .col-middle {
+    width: 50%;
+  }
+
+  table {
+    width: 100%
+  }
+
+  .map {
+    height: 300px;
+    width: 100%;
+  }
 
   .gn-proj-select {
     width: 250px;
     vertical-align: top;
   }
+
   [data-gn-region-picker], [gn-region-picker] {
     .fa {
       position: absolute;
       top: 11px;
       z-index: 20;
       right: 10px;
+
       &.fa-spinner {
         right: 25px;
       }
+
       &.fa-times-circle {
         cursor: pointer;
       }
     }
   }
+
   input[type=number] {
     margin-top: 15px;
     margin-bottom: 15px;
     text-align: center;
   }
+
   .dropdown-menu {
     font-size: 13px;
     text-align: left;
   }
 }
+
 .gn-geopublisher-panel {
-.map {
-height: 300px;
-width: 100%;
+  .map {
+    height: 300px;
+    width: 100%;
+  }
 }
-}
+
 .gn-thumbnail-maker-panel {
-.map {
-height: 300px;
-width: 100%;
-}
+  .map {
+    height: 300px;
+    width: 100%;
+  }
 }
 
 [data-gn-metadata-category-updater] .dropdown-menu > .disabled > a:hover,
 [data-gn-metadata-group-updater] .dropdown-menu > .disabled > a:hover {
-cursor: pointer !important;
+  cursor: pointer !important;
 }
 
 .gn-editor-container {
-padding: 20px 5px;
-min-height: 85vh;
+  padding: 20px 5px;
+  min-height: 85vh;
 }
 
 
@@ -119,6 +130,7 @@ min-height: 85vh;
     margin-top: 50px;
   }
 }
+
 @media only screen and (max-width: 490px) {
   .gn-editor-container {
     margin-top: 100px;
@@ -127,430 +139,500 @@ min-height: 85vh;
 
 
 #gn-directory-container {
-.gn-facet-dropdown {
-min-width: 300px;
-padding: 0px 10px;
-.badge {
-background-color: #777777;
-}
-}
+  .gn-facet-dropdown {
+    min-width: 300px;
+    padding: 0px 10px;
 
-.panel-heading {
-display: flex;
-flex-direction: row;
-align-items: center;
+    .badge {
+      background-color: #777777;
+    }
+  }
 
-& > .nav.nav-pills {
-a {
-padding: 6px;
-line-height: 1em;
-}
-}
+  .panel-heading {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-input.filter-text {
-width: 20%;
-min-width: 16em;
-height: 2em;
-}
-}
+    & > .nav.nav-pills {
+      a {
+        padding: 6px;
+        line-height: 1em;
+      }
+    }
 
-.search-options-header.row {
-margin-left: -15px;
-margin-right: -15px;
-}
+    input.filter-text {
+      width: 20%;
+      min-width: 16em;
+      height: 2em;
+    }
+  }
 
-.directory-entries-list {
-margin: 0.7em 0em;
-padding: 0px;
+  .search-options-header.row {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
 
-& > li {
-@padding: 6px;
+  .directory-entries-list {
+    margin: 0.7em 0em;
+    padding: 0px;
 
-& > *:not(:last-child) {
-margin-bottom: @padding;
-}
+    & > li {
+      @padding: 6px;
 
-& > * > *:not(:last-child) {
-margin-right: @padding;
-}
+      & > *:not(:last-child) {
+        margin-bottom: @padding;
+      }
 
-.entry-info {
-display: flex;
-flex-direction: row;
-small {
-  max-height: 2.5em;
-  overflow: hidden;
-}
-}
-}
-}
+      & > * > *:not(:last-child) {
+        margin-right: @padding;
+      }
 
-.entry-editor {
-.panel-heading {
-position: relative;
-display: flex;
-flex-direction: row;
-align-items: center;
-.entry-editor-controls {
-flex-shrink: 0;
-margin: -7px -12px -7px 6px;
-}
-.entry-editor-title {
-min-width: 0px;
-overflow: hidden;
-white-space: nowrap;
-text-overflow: ellipsis;
-}
-}
-.panel-body {
-position: relative;
-}
-}
+      .entry-info {
+        display: flex;
+        flex-direction: row;
 
-div[data-gn-toggle] {
-top: 1em;
-right: 1em;
-}
+        small {
+          max-height: 2.5em;
+          overflow: hidden;
+        }
+      }
+    }
+  }
 
-[gn-modal] {
-max-width: none;
-max-height: none;
+  .entry-editor {
+    .panel-heading {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
 
-@media (min-width: 992px) {
-.modal-dialog {
-width: 650px;
-}
-}
-}
+      .entry-editor-controls {
+        flex-shrink: 0;
+        margin: -7px -12px -7px 6px;
+      }
 
-.dropdown-menu {
-max-width: 40em;
-}
+      .entry-editor-title {
+        min-width: 0px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .panel-body {
+      position: relative;
+    }
+  }
+
+  div[data-gn-toggle] {
+    top: 1em;
+    right: 1em;
+  }
+
+  [gn-modal] {
+    max-width: none;
+    max-height: none;
+
+    @media (min-width: 992px) {
+      .modal-dialog {
+        width: 650px;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    max-width: 40em;
+  }
 }
 
 .gn-editor-board {
-.table.gn-results-editor td {
-padding: 6px 3px;
-.btn-group {
-margin-top: 3px;
-.btn-single {
-border-radius: 4px;
-}
-}
-.col-lg-8, .col-md-8, .col-lg-4, .col-md-4 {
-padding-left: 0;
-padding-right: 0;
-}
-@media (min-width: @screen-md-min) {
-.btn-group {
-float: right;
-}
-}
-}
+  .table.gn-results-editor td {
+    padding: 6px 3px;
+
+    .btn-group {
+      margin-top: 3px;
+
+      .btn-single {
+        border-radius: 4px;
+      }
+    }
+
+    .col-lg-8, .col-md-8, .col-lg-4, .col-md-4 {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    @media (min-width: @screen-md-min) {
+      .btn-group {
+        float: right;
+      }
+    }
+  }
 }
 
 form.gn-editor {
-/* Move each sub fieldset to the left */
-@editor-fieldset-padding-left: 5px;
+  /* Move each sub fieldset to the left */
+  @editor-fieldset-padding-left: 5px;
 
-/**
-* Make space on the following element of a well
-*/
-div.well + fieldset, div.well + div {
-padding-top: 10px;
-}
+  /**
+  * Make space on the following element of a well
+  */
 
-div.well {
-margin-bottom: 0px;
-}
+  div.well + fieldset, div.well + div {
+    padding-top: 10px;
+  }
 
-div[data-gn-toggle] {
-position: absolute;
-right: 3px;
-top: 2px;
-button {
-padding: 5px;
-background-color: @brand-primary;
-color: white;
--webkit-border-radius: 15px;
-border-width: 0px;
-i {
-padding-left: 3px;
-padding-top: 4px;
-}
-}
-}
+  div.well {
+    margin-bottom: 0px;
+  }
 
-/**
-* Add bottom line
-*/
-fieldset > div.form-group.gn-field,
-fieldset > div.row.gn-field {
-//    border-top: 1px solid #EEE;
-//    padding-left:  (@grid-gutter-width / 2);
-padding-top: 5px;
-}
-fieldset > div.form-group.gn-extra-field,
-fieldset > div.row.gn-extra-field{
-border-top: none;
-}
-/**
-* Hide label in field which are not
-* first and do not break line to not
-* loose space.
-*/
-div.gn-extra-field > label {
-visibility: hidden;
-white-space: nowrap;
-}
+  div[data-gn-toggle] {
+    position: absolute;
+    right: 3px;
+    top: 2px;
 
-.gn-associated-resource-btn {
-.button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
-}
+    button {
+      padding: 5px;
+      background-color: @brand-primary;
+      color: white;
+      -webkit-border-radius: 15px;
+      border-width: 0px;
 
-fieldset fieldset {
-padding-left: @editor-fieldset-padding-left;
-}
+      i {
+        padding-left: 3px;
+        padding-top: 4px;
+      }
+    }
+  }
 
-.form-group {
-margin-bottom: 0px;
-}
-div.well {
-.form-group {
-margin-bottom: 10px;
-&:last-child {
-margin-bottom: 0;
-}
-}
-.btn + .form-group {
-margin-top: 10px;
-}
-}
+  /**
+  * Add bottom line
+  */
 
-legend {
-margin-bottom: 10px;
-}
+  fieldset > div.form-group.gn-field,
+  fieldset > div.row.gn-field {
+    //    border-top: 1px solid #EEE;
+    //    padding-left:  (@grid-gutter-width / 2);
+    padding-top: 5px;
+  }
 
-.gn-textarea-xml {
-font-family: courier;
-font-size: 12px;
-min-height: 700px;
-}
+  fieldset > div.form-group.gn-extra-field,
+  fieldset > div.row.gn-extra-field {
+    border-top: none;
+  }
 
-.gn-debug {
-display: none;
-}
+  /**
+  * Hide label in field which are not
+  * first and do not break line to not
+  * loose space.
+  */
 
-.control-label {
-color: #6a6a6a;
-font-weight: 200;
-padding-top: 0px;
-line-height: 22px;
+  div.gn-extra-field > label {
+    visibility: hidden;
+    white-space: nowrap;
+  }
 
-}
+  .gn-associated-resource-btn {
+    .button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
+  }
 
-.gn-required > label {
-//   color: #333333;
-}
+  fieldset fieldset {
+    padding-left: @editor-fieldset-padding-left;
+  }
 
-.gn-move {
-//    .pull-right();
-}
+  .form-group {
+    margin-bottom: 0px;
+  }
 
-legend > div.gn-move {
-position: absolute;
-}
+  div.well {
+    .form-group {
+      margin-bottom: 10px;
 
-/* text danger takes priority above colors
-*/
-.text-danger label,
-.text-danger legend {
-.text-danger();
-}
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
 
-.gn-has-xlink {
-label, fieldset > legend {
-//    opacity: .7;
-}
-}
+    .btn + .form-group {
+      margin-top: 10px;
+    }
+  }
 
-/* Date picker is composed of a date and
-* a time input. Align them on the same
-* line instead of 100% width in input group.
-*/
-.gn-date-picker {
-> input[type=date] {
-width: 60%;
-}
-> input[type=time] {
-width: 40%;
-}
-> input[type=date].gn-notime {
-width: 100%;
-}
-> input[type=time].hidden {
-width: 0%;
-}
-.gn-indeterminate-position {
-display: table-cell;
-> select {
-border-bottom-right-radius: 0px;
-border-top-right-radius: 0px;
-}
-}
-&.gn-time-with-ind-position {
-> select.gn-indeterminate-position {
-width: 20%;
-}
-> input[type=date] {
-width: 40%;
-}
-> input[type=time] {
-width: 40%;
-}
-}
-}
+  legend {
+    margin-bottom: 10px;
+  }
 
-/* Reset margin in helper for documentation
-* to properly align radios
-*/
-.helper .help-block {
-margin-top: 0px;
-margin-bottom: 0px;
-}
+  .gn-textarea-xml {
+    font-family: courier;
+    font-size: 12px;
+    min-height: 700px;
+  }
+
+  .gn-debug {
+    display: none;
+  }
+
+  .control-label {
+    color: #6a6a6a;
+    font-weight: 200;
+    padding-top: 0px;
+    line-height: 22px;
+
+  }
+
+  .gn-required > label {
+    //   color: #333333;
+  }
+
+  .gn-move {
+    //    .pull-right();
+  }
+
+  legend > div.gn-move {
+    position: absolute;
+  }
+
+  /* text danger takes priority above colors
+  */
+
+  .text-danger label,
+  .text-danger legend {
+    .text-danger();
+  }
+
+  .gn-has-xlink {
+    label, fieldset > legend {
+      //    opacity: .7;
+    }
+  }
+
+  /* Date picker is composed of a date and
+  * a time input. Align them on the same
+  * line instead of 100% width in input group.
+  */
+
+  .gn-date-picker {
+    > input[type=date] {
+      width: 60%;
+    }
+
+    > input[type=time] {
+      width: 40%;
+    }
+
+    > input[type=date].gn-notime {
+      width: 100%;
+    }
+
+    > input[type=time].hidden {
+      width: 0%;
+    }
+
+    .gn-indeterminate-position {
+      display: table-cell;
+
+      > select {
+        border-bottom-right-radius: 0px;
+        border-top-right-radius: 0px;
+      }
+    }
+
+    &.gn-time-with-ind-position {
+      > select.gn-indeterminate-position {
+        width: 20%;
+      }
+
+      > input[type=date] {
+        width: 40%;
+      }
+
+      > input[type=time] {
+        width: 40%;
+      }
+    }
+  }
+
+  /* Reset margin in helper for documentation
+  * to properly align radios
+  */
+
+  .helper .help-block {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
 
 
-/* Avoid white on white when i:hover
-*/
-.btn:hover {
-color: #000;
-}
+  /* Avoid white on white when i:hover
+  */
 
-/**
-* Keyword selector directive
-*/
-*[data-gn-keyword-selector] {
-margin-bottom: 10px;
-}
+  .btn:hover {
+    color: #000;
+  }
 
-.bootstrap-tagsinput {
-min-height: 34px;
-.tag {
-white-space: pre-wrap;
-word-break: break-word;
-display: inline-flex;
-margin-top: 2px;
-}
+  /**
+  * Keyword selector directive
+  */
 
-.twitter-typeahead {
-margin-top: 4px;
-}
-.tt-input {
-border: none;
-box-shadow: none;
-background-color: #FFFFFF !important;
-}
-}
-.gn-maxtags .bootstrap-tagsinput {
-.twitter-typeahead, .twitter-typeahead > input {
-display: none !important;
-}
-}
+  *[data-gn-keyword-selector] {
+    margin-bottom: 10px;
+  }
 
-/* Avoid to apply img logo css to fieldset in editor */
-fieldset.gn-logo {
-max-height: inherit;
-}
-fieldset {
-padding: 5px;
-border: 1px solid #ebebeb;
-border-radius: 3px;
-margin-top: 10px;
-}
-.gn-field {
-border-radius: 3px;
-margin: 0px;
-padding-top: 4px;
-padding-bottom: 4px;
-}
-.field-bg {
-background-color: #f7f7f7;
-}
-.gn-move {
-border: none;
-}
-i.btn.fa-times.text-danger {
-visibility: hidden;
-padding: 5px;
-}
-.show {
-visibility: visible;
-}
-.gn-value .col-xs-8 {
-padding-left: 0px;
-}
-.gn-value .col-xs-4 {
-padding-right: 0px;
-}
+  .bootstrap-tagsinput {
+    min-height: 34px;
 
-.gn-eea-coverage > fieldset > legend:after,
-.gn-eea-classification > fieldset > legend:after,
-.gn-eea-contacts > fieldset > legend:after,
-.gn-eea-technical-details > div > label:after,
-.gn-eea-resourceConstraints > div.gn-otherConstraints > label:after,
-.gn-eea-technical-details > fieldset > legend.referenceSystemInfo:after,
-label.gn-required:after, .gn-required > label:after,
-label.gn-mandatory:after, .gn-mandatory > label:after {
-content: "*";
-font-size: 35px;
-margin: 7px 0 0 7px;
-position: absolute;
-color: #a94442;
-font-weight: normal;
-}
-.form-horizontal .form-group {
-margin-left: 0px;
-margin-right: 0px;
-}
+    .tag {
+      white-space: pre-wrap;
+      word-break: break-word;
+      display: inline-flex;
+      margin-top: 2px;
+    }
+
+    .twitter-typeahead {
+      margin-top: 4px;
+    }
+
+    .tt-input {
+      border: none;
+      box-shadow: none;
+      background-color: #FFFFFF !important;
+    }
+  }
+
+  .gn-maxtags .bootstrap-tagsinput {
+    .twitter-typeahead, .twitter-typeahead > input {
+      display: none !important;
+    }
+  }
+
+  /* Avoid to apply img logo css to fieldset in editor */
+
+  fieldset.gn-logo {
+    max-height: inherit;
+  }
+
+  fieldset {
+    padding: 5px;
+    border: 1px solid #ebebeb;
+    border-radius: 3px;
+    margin-top: 10px;
+  }
+
+  .gn-field {
+    border-radius: 3px;
+    margin: 0px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .field-bg {
+    background-color: #f7f7f7;
+  }
+
+  .gn-move {
+    border: none;
+  }
+
+  i.btn.fa-times.text-danger {
+    visibility: hidden;
+    padding: 5px;
+  }
+
+  .show {
+    visibility: visible;
+  }
+
+  .gn-value .col-xs-8 {
+    padding-left: 0px;
+  }
+
+  .gn-value .col-xs-4 {
+    padding-right: 0px;
+  }
+
+  .gn-required > div.th-inner:after,
+  label.gn-required:after, .gn-required > label:after,
+  label.gn-mandatory:after, .gn-mandatory > label:after {
+    content: "*";
+    font-size: 2.5em;
+    margin: 7px 0 0 7px;
+    position: absolute;
+    color: #a94442;
+    font-weight: normal;
+  }
+
+  .gn-required > div.th-inner:after {
+    font-size: 2em;
+    margin: -7px 0 0 7px;
+  }
+
+
+  .form-horizontal .form-group {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 
   /* Multilingual badge positionning when
   having suggestion or not */
+
   [data-gn-multilingual-field] {
     span.label {
       position: absolute;
       right: 15px;
       line-height: 12px;
     }
+
     .twitter-typeahead span.label {
       right: 2px;
       top: 2px;
     }
   }
+
+  .gn-eea-coverage > fieldset > legend:after,
+  .gn-eea-classification > fieldset > legend:after,
+  .gn-eea-contacts > fieldset > legend:after,
+  .gn-eea-technical-details > div > label:after,
+  .gn-eea-resourceConstraints > div.gn-otherConstraints > label:after,
+  .gn-eea-technical-details > fieldset > legend.referenceSystemInfo:after,
+  label.gn-required:after, .gn-required > label:after,
+  label.gn-mandatory:after, .gn-mandatory > label:after {
+    content: "*";
+    font-size: 2.5em;
+    margin: 7px 0 0 7px;
+    position: absolute;
+    color: #a94442;
+    font-weight: normal;
+  }
+
+  .form-horizontal .form-group {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 }
 
 .gn-autocomplete-list {
-position: absolute;
-margin-top: 35px;
-width: inherit;
-z-index: 999;
-max-height: 25em;
-overflow: auto;
-background-color: white;
+  position: absolute;
+  margin-top: 35px;
+  width: inherit;
+  z-index: 999;
+  max-height: 25em;
+  overflow: auto;
+  background-color: white;
 
-.tt-suggestion {
-&:hover {
-background-color: lightgrey;
-}
-}
+  .tt-suggestion {
+    &:hover {
+      background-color: lightgrey;
+    }
+  }
 }
 
 form.gn-tab-inspire {
-.control-label {
-color: inherit;
-}
-.well {
-display: none;
-}
+  .control-label {
+    color: inherit;
+  }
+
+  .well {
+    display: none;
+  }
 }
 
 /* Onlinesrc styles */
@@ -558,6 +640,7 @@ display: none;
   h2 {
     font-size: 16px;
   }
+
   .list-group-item {
     padding-left: 10px;
     padding-right: 5px;
@@ -565,55 +648,68 @@ display: none;
     .row > div {
       padding-left: 1px;
       padding-right: 1px;
+
       .onlinesrc-remove {
         padding: 1px;
       }
     }
   }
 }
+
 .gn-validation-report {
   h2 {
     font-size: 16px;
     margin: 0 0 10px 0;
   }
+
   .row > div {
     padding-left: 1px;
     padding-right: 1px;
   }
+
   .panel {
     border: 0;
     margin-top: 15px;
     margin-bottom: 15px;
     box-shadow: none;
+
     [data-gn-slide-toggle]:before {
       margin-left: 0px;
     }
+
     .panel-heading {
       background: none;
       padding: 0;
       border: 0;
     }
+
     .panel-body {
       padding: 0;
     }
   }
+
   .list-group {
     margin-bottom: 10px;
+
     .list-group-item {
       border-left: 4px solid @brand-success;
       padding-bottom: 5px;
+
       .text-bold {
         font-weight: 500;
       }
+
       p {
         margin-top: 10px;
         overflow: auto;
         padding-bottom: 2px;
       }
+
       &.text-danger {
         border-left: 4px solid @brand-danger;
         color: @gray-darker;
       }
+
       &.text-info {
         border-left: 4px solid @brand-info;
         color: @gray-darker;
@@ -621,120 +717,136 @@ display: none;
     }
   }
 }
-.onlinesrc-container, [gn-directory-entry-list-selector] {
-.list-group {
-max-height:50%;
-overflow: auto;
-}
-.list-group.fixed {
-padding: 5px;
-min-height: 100px;
-/* Avoid the content of the div
-to be higher than view port
-as the modal does not have overflow. */
-max-height: 50vh;
-}
 
-.gn-record {
-&.active {
-background-color: #428bca;
-}
-}
+.onlinesrc-container, [gn-directory-entry-list-selector] {
+  .list-group {
+    max-height: 50%;
+    overflow: auto;
+  }
+
+  .list-group.fixed {
+    padding: 5px;
+    min-height: 100px;
+    /* Avoid the content of the div
+    to be higher than view port
+    as the modal does not have overflow. */
+    max-height: 50vh;
+  }
+
+  .gn-record {
+    &.active {
+      background-color: #428bca;
+    }
+  }
 
 }
 
 table.gn-data-store {
-td {
-word-break: break-all;
-.btn {
-padding: 1px 1px;
-}
-}
+  td {
+    word-break: break-all;
+
+    .btn {
+      padding: 1px 1px;
+    }
+  }
 }
 
 #gn-new-metadata-container {
-/*
-* Increase default panel heading size in order
-* to preserve heading alignement if title is on
-* one or two lines.
-*/
-.panel-default > .panel-heading {
-min-height: 60px;
+  /*
+  * Increase default panel heading size in order
+  * to preserve heading alignement if title is on
+  * one or two lines.
+  */
+
+  .panel-default > .panel-heading {
+    min-height: 60px;
+  }
+
+  /*
+  * Center icons and text for selecting type of
+  * record.
+  */
+
+  .gn-record-type > a.list-group-item {
+    text-align: center;
+  }
 }
-/*
-* Center icons and text for selecting type of
-* record.
-*/
-.gn-record-type > a.list-group-item {
-text-align: center;
-}
-}
+
 /* verical layout for the add metadata page */
 #gn-new-metadata-container.new-metadata-vertical {
-.gn-record-type > a.list-group-item {
-text-align: left;
-}
+  .gn-record-type > a.list-group-item {
+    text-align: left;
+  }
 }
 
 .gn-schematron-title {
-word-wrap: break-word;
+  word-wrap: break-word;
 }
+
 .navbar-collapse {
-padding-right: 0px;
+  padding-right: 0px;
 }
 
 .open > .dropdown-menu {
-max-height: 25em;
-overflow-y: auto;
+  max-height: 25em;
+  overflow-y: auto;
 }
 
 .schematron-result-list-label-info .text-info {
-color: @label-primary-bg;
+  color: @label-primary-bg;
 }
 
 .gn-batch-editor {
-.gn-resultview li.list-group-item {
-margin-bottom: 0px;
-padding: 4px;
-}
-li.gn-batch-editor-info {
-margin-top: 11px;
-}
-[data-ng-search-form] .gn-top-search .gn-form-any {
-max-width: 80vw;
-}
+  .gn-resultview li.list-group-item {
+    margin-bottom: 0px;
+    padding: 4px;
+  }
+
+  li.gn-batch-editor-info {
+    margin-top: 11px;
+  }
+
+  [data-ng-search-form] .gn-top-search .gn-form-any {
+    max-width: 80vw;
+  }
 }
 
 form.gn-tab-xml {
-div[data-gn-toggle] {
-display:none;
-}
+  div[data-gn-toggle] {
+    display: none;
+  }
 }
 
 .gn-table {
   /* Compact gn-fields displayed in table mode.
   Label and remove control are hidden. */
+
   :not(.gn-table-label) div.gn-field {
     padding: 0px !important;
+
     label,
     .col-sm-1.gn-control {
       display: none;
     }
+
     .col-sm-9 {
       width: 100%;
     }
   }
+
   .gn-table-label {
     div.gn-field {
       label,
       .col-sm-1.gn-control {
         display: block;
       }
+
       .col-sm-9 {
         width: 75%;
       }
     }
   }
+
   .nopadding-in-table {
     padding-left: 0;
     padding-right: 0;
@@ -744,39 +856,43 @@ display:none;
 // search filter boxes
 // search terms
 .searchterm {
-margin: 0 5px 5px 0;
-max-width: 100%;
-span {
-max-width: 98%;
-overflow: hidden;
-text-overflow: ellipsis;
-float: left;
-}
-i {
-margin-top: -15px;
-margin-left: 5px;
-}
+  margin: 0 5px 5px 0;
+  max-width: 100%;
+
+  span {
+    max-width: 98%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float: left;
+  }
+
+  i {
+    margin-top: -15px;
+    margin-left: 5px;
+  }
 }
 
 .skos-btn-icons {
-text-decoration: none !important;
-color: @gray;
-&:hover {
-color: @brand-success;
-}
+  text-decoration: none !important;
+  color: @gray;
+
+  &:hover {
+    color: @brand-success;
+  }
 }
 
 #xmleditor {
-position: absolute;
-top: 0;
-right: 0;
-bottom: 0;
-left: 0;
-min-height: 800px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  min-height: 800px;
 }
+
 #gn-directory-container #xmleditor {
-top: 0px;
-position: relative;
+  top: 0px;
+  position: relative;
 }
 
 div[data-gn-add-onlinesrc] .panel {
@@ -796,6 +912,7 @@ div[data-gn-add-onlinesrc] .panel {
     top: 31px !important;
     left: 8px !important;
   }
+
   .tt-hint {
     color: transparent;
   }
@@ -803,7 +920,7 @@ div[data-gn-add-onlinesrc] .panel {
 
 [gn-directory-entry-list-selector] {
   .gn-form-any {
-    margin-bottom:30px;
+    margin-bottom: 30px;
   }
 
   .gn-record {
@@ -811,13 +928,16 @@ div[data-gn-add-onlinesrc] .panel {
     border: none;
     margin: 8px;
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.4);
+
     &.active {
       background-color: #5384e6;
     }
+
     &:hover {
       cursor: pointer;
       box-shadow: 0px 2px 3px rgba(66, 139, 202, 0.4);
     }
+
     strong {
       font-weight: normal;
     }
@@ -835,7 +955,7 @@ div[data-gn-add-onlinesrc] .panel {
 
 [data-gn-directory-entry-selector] {
   .gn-autocomplete-list {
-    top:0 !important;
+    top: 0 !important;
     width: 100%;
   }
 }
@@ -856,6 +976,7 @@ gn-directory-associated-md {
     & > * {
       flex-shrink: 0;
     }
+
     input.filter-text {
       flex-shrink: 1;
       margin-right: 12px;
@@ -867,10 +988,13 @@ gn-directory-associated-md {
     display: flex;
     flex-direction: row;
     align-items: center;
+
     & > *:not(:last-child) {
       margin-right: 8px;
     }
+
     padding-top: 6px;
+
     &:not(:last-child) {
       border-bottom: 1px solid @list-group-border;
       padding-bottom: 6px;
@@ -881,6 +1005,7 @@ gn-directory-associated-md {
 // md type widget (used only in editor for now)
 gn-md-type-widget {
   display: inline-block;
+
   & > div {
     border-radius: 1000px;
     width: 24px;
@@ -898,12 +1023,15 @@ gn-md-type-widget {
     &.valid-status-1 {
       background-color: @gray-light;
     }
+
     &.valid-status0 {
       background-color: @btn-danger-bg;
     }
+
     &.valid-status1 {
       background-color: @btn-success-bg;
     }
+
     &.md-type-t {
       background-color: @btn-primary-bg;
     }
@@ -919,6 +1047,7 @@ gn-md-type-widget {
     }
   }
 }
+
 .gn-editor-board {
   .table.gn-results-editor td {
     gn-md-type-widget {
@@ -928,10 +1057,11 @@ gn-md-type-widget {
 }
 
 .gn-fixed-scroll {
-  position:fixed;
+  position: fixed;
   top: 70px;
   margin-right: 15px;
   z-index: 10;
+
   .gn-btn-fix {
     color: #333;
     background-color: #e6e6e6;
@@ -942,7 +1072,6 @@ gn-md-type-widget {
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   }
 }
-
 
 
 gn-bounding-polygon {
@@ -961,17 +1090,21 @@ gn-bounding-polygon {
 [ngeo-popover-content] li {
   display: block;
 }
+
 .gn-tab-eea-default {
   blockquote {
     width: 100%;
   }
+
   > fieldset > legend {
     border-bottom: groove thick #9d9d9d;
 
   }
+
   hr {
     border-color: #9e8e8e;
   }
+
   .gn-eea-classification .descriptiveKeywords [data-gn-field-highlight-remove],
   [data-gn-keyword-selector] .col-sm-1 {
     display: none;

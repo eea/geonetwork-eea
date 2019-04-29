@@ -157,6 +157,7 @@
         <script
           src="{$uiResourcesPath}lib/bootstrap.ext/datepicker/bootstrap-datepicker.fr.js?v={$buildNumber}"></script>
         <script src="{$uiResourcesPath}lib/bootstrap-table/dist/bootstrap-table.js?v={$buildNumber}"></script>
+        <script src="{$uiResourcesPath}lib/bootstrap-table/src/extensions/angular/bootstrap-table-angular.js?v={$buildNumber}"></script>
         <script src="{$uiResourcesPath}lib/bootstrap-table/src/extensions/export/bootstrap-table-export.js?v={$buildNumber}"></script>
         <script src="{$uiResourcesPath}lib/bootstrap-table/dist/bootstrap-table-locale-all.min.js"></script>
         <!--</xsl:if>-->
@@ -164,6 +165,8 @@
         <script src="{$uiResourcesPath}lib/underscore/underscore-min.js?v={$buildNumber}"></script>
         <script src="{$uiResourcesPath}lib/recaptcha/angular-recaptcha.min.js?v={$buildNumber}"></script>
         <script src="{$uiResourcesPath}lib/geohash.js?v={$buildNumber}"></script>
+
+        <script src="{$uiResourcesPath}lib/xml2json/xml2json.min.js?v={$buildNumber}"></script>
       </xsl:when>
       <xsl:otherwise>
       </xsl:otherwise>
@@ -194,7 +197,7 @@
     </xsl:choose>
 
     <xsl:variable name="appConfig"
-                  select="util:getSettingValue('ui/config')"/>
+                  select="util:getUiConfiguration(/root/request/ui)"/>
 
     <xsl:if test="$angularApp = 'gn_search'">
       <script src="{$uiResourcesPath}lib/d3_timeseries/d3.min.js?v={$buildNumber}"></script>
