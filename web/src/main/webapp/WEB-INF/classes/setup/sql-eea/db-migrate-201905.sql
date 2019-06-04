@@ -12,6 +12,10 @@ DELETE FROM metadatanotifications WHERE metadataid in (SELECT id FROM metadata W
 DELETE FROM metadatastatus WHERE metadataid in (SELECT id FROM metadata WHERE schemaid in ('iso19115-3'));
 DELETE FROM validation WHERE metadataid in (SELECT id FROM metadata WHERE schemaid in ('iso19115-3'));
 DELETE FROM metadata WHERE schemaid in ('iso19115-3');
+
+DELETE FROM schematrondes WHERE iddes in (SELECT id FROM schematron WHERE schemaname in ('iso19115-3'));
+DELETE FROM schematroncriteria WHERE group_schematronid in (SELECT id FROM schematron WHERE schemaname in ('iso19115-3'));
+DELETE FROM schematroncriteriagroup WHERE schematronid in (SELECT id FROM schematron WHERE schemaname in ('iso19115-3'));
 DELETE FROM schematron WHERE schemaname in ('iso19115-3');
 
 
