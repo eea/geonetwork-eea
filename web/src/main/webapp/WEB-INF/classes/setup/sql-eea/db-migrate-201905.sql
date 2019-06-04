@@ -12,7 +12,7 @@ DELETE FROM metadatanotifications WHERE metadataid in (SELECT id FROM metadata W
 DELETE FROM metadatastatus WHERE metadataid in (SELECT id FROM metadata WHERE schemaid in ('iso19115-3'));
 DELETE FROM validation WHERE metadataid in (SELECT id FROM metadata WHERE schemaid in ('iso19115-3'));
 DELETE FROM metadata WHERE schemaid in ('iso19115-3');
-
+DELETE FROM schematron WHERE schemaname in ('iso19115-3');
 
 
 UPDATE Settings SET value='3.7.0' WHERE name='system/platform/version';
