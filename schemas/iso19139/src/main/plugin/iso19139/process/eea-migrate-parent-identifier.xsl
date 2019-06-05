@@ -109,13 +109,13 @@ Stylesheet used to update metadata adding a reference to a parent record.
           </gmd:aggregateDataSetIdentifier>
           <gmd:associationType>
             <gmd:DS_AssociationTypeCode
-              codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#DS_AssociationTypeCode"
+              codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#DS_AssociationTypeCode"
               codeListValue="{$associationType}"/>
           </gmd:associationType>
           <xsl:if test="$initiativeType != ''">
             <gmd:initiativeType>
               <gmd:DS_InitiativeTypeCode
-                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#DS_InitiativeTypeCode"
+                codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#DS_InitiativeTypeCode"
                 codeListValue="{$initiativeType}"/>
             </gmd:initiativeType>
           </xsl:if>

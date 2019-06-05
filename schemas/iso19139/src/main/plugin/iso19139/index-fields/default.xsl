@@ -536,7 +536,7 @@
 
         <xsl:for-each select="gmd:distance/gco:Distance">
           <!-- Units may be encoded as
-          http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/uom/ML_gmxUom.xml#m
+          https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/uom/ML_gmxUom.xml#m
           in such case retrieve the unit acronym only. -->
           <xsl:variable name="unit"
                         select="if (contains(@uom, '#')) then substring-after(@uom, '#') else @uom"/>

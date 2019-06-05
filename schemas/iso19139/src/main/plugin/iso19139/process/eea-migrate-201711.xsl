@@ -91,7 +91,7 @@ Stylesheet used to update metadata adding a reference to a parent record.
                         <gco:Date>2010-12-08</gco:Date>
                       </gmd:date>
                       <gmd:dateType>
-                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                        <gmd:CI_DateTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
                                              codeListValue="publication"/>
                       </gmd:dateType>
                     </gmd:CI_Date>

@@ -11,11 +11,11 @@
   </gmd:language>
   <gmd:characterSet>
     <gmd:MD_CharacterSetCode codeListValue="utf8"
-                             codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"/>
+                             codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"/>
   </gmd:characterSet>
   <gmd:hierarchyLevel>
     <gmd:MD_ScopeCode
-      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+      codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"
       codeListValue="service"/>
   </gmd:hierarchyLevel>
   <gmd:contact>
@@ -74,7 +74,7 @@
       </gmd:contactInfo>
       <gmd:role>
         <gmd:CI_RoleCode
-          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+          codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
           codeListValue="pointOfContact"/>
       </gmd:role>
     </gmd:CI_ResponsibleParty>
@@ -109,7 +109,7 @@
               </gmd:date>
               <gmd:dateType>
                 <gmd:CI_DateTypeCode
-                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                  codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
                   codeListValue="revision"/>
               </gmd:dateType>
             </gmd:CI_Date>
@@ -123,7 +123,7 @@
       </gmd:abstract>
       <gmd:status>
         <gmd:MD_ProgressCode codeListValue="completed"
-                             codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ProgressCode"/>
+                             codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ProgressCode"/>
       </gmd:status>
       <gmd:pointOfContact>
         <gmd:CI_ResponsibleParty>
@@ -178,7 +178,7 @@
           </gmd:contactInfo>
           <gmd:role>
             <gmd:CI_RoleCode codeListValue="pointOfContact"
-                             codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"/>
+                             codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"/>
           </gmd:role>
         </gmd:CI_ResponsibleParty>
       </gmd:pointOfContact>
@@ -218,7 +218,7 @@
                   </gmd:date>
                   <gmd:dateType>
                     <gmd:CI_DateTypeCode
-                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                      codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
                       codeListValue="publication"/>
                   </gmd:dateType>
                 </gmd:CI_Date>
@@ -241,7 +241,7 @@
         <gmd:MD_LegalConstraints>
           <gmd:accessConstraints>
             <gmd:MD_RestrictionCode
-              codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
+              codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
               codeListValue="otherRestrictions"/>
           </gmd:accessConstraints>
           <gmd:otherConstraints>
@@ -333,7 +333,7 @@
         <gmd:DQ_Scope>
           <gmd:level>
             <gmd:MD_ScopeCode
-              codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+              codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"
               codeListValue="service"/>
           </gmd:level>
         </gmd:DQ_Scope>
@@ -357,7 +357,7 @@
                       </gmd:date>
                       <gmd:dateType>
                         <gmd:CI_DateTypeCode
-                          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                          codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
                           codeListValue="publication"/>
                       </gmd:dateType>
                     </gmd:CI_Date>
@@ -467,7 +467,7 @@
                       </gmd:date>
                       <gmd:dateType>
                         <gmd:CI_DateTypeCode
-                          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                          codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
                           codeListValue="publication"/>
                       </gmd:dateType>
                     </gmd:CI_Date>

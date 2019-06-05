@@ -713,7 +713,7 @@
         </xsl:for-each>
         <gmd:type>
           <gmd:MD_KeywordTypeCode
-            codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+            codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
             codeListValue="theme"/>
         </gmd:type>
         <gmd:thesaurusName>
@@ -728,7 +728,7 @@
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode
-                    codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                    codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
                     codeListValue="publication"/>
                 </gmd:dateType>
               </gmd:CI_Date>
@@ -757,14 +757,14 @@
               ">
             <gmd:accessConstraints>
               <gmd:MD_RestrictionCode
-                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
+                codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
                 codeListValue="{.}"/>
             </gmd:accessConstraints>
           </xsl:when>
           <xsl:when test="lower-case(.) = 'none'">
             <gmd:accessConstraints>
               <gmd:MD_RestrictionCode
-                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
+                codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
                 codeListValue="otherRestrictions"/>
             </gmd:accessConstraints>
             <gmd:otherConstraints>
@@ -774,7 +774,7 @@
           <xsl:otherwise>
             <gmd:accessConstraints>
               <gmd:MD_RestrictionCode
-                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
+                codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
                 codeListValue="otherRestrictions"/>
             </gmd:accessConstraints>
             <gmd:otherConstraints>
@@ -883,7 +883,7 @@
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode
-                        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                        codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
                         codeListValue="revision"/>
                     </gmd:dateType>
                   </gmd:CI_Date>

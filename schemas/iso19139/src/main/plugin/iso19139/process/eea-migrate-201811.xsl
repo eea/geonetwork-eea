@@ -249,7 +249,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
       <xsl:when test="count(preceding-sibling::*[name() = 'gmd:characterSet']) = 0">
         <xsl:message>Record <xsl:value-of select="$uuid"/> ;[FIX]; Adding a default UTF8 character set before the topic category '<xsl:value-of select="*/text()"/>'.</xsl:message>
         <gmd:characterSet>
-          <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"
+          <gmd:MD_CharacterSetCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"
                                    codeListValue="{$defaultCharacterSet}"/>
         </gmd:characterSet>
       </xsl:when>

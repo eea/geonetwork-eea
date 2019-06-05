@@ -49,6 +49,6 @@
         </gmd:CI_Contact>
     </gmd:contactInfo>
     <gmd:role>
-        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="processor"/>
+        <gmd:CI_RoleCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="processor"/>
     </gmd:role>
 </gmd:CI_ResponsibleParty>
