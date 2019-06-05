@@ -56,7 +56,7 @@
                                 gmd:code/*, ',')"/>
         <sch:let name="countSrs"
                  value="count(gmd:referenceSystemInfo/*/gmd:referenceSystemIdentifier/*/
-                                gmd:code/gmx:Anchor[starts-with(@xlink:href, 'http://www.opengis.net/def/crs/EPSG/0/EPSG:')])"/>
+                                gmd:code/gmx:Anchor[starts-with(@xlink:href, 'http://www.opengis.net/def/crs/EPSG/0/')])"/>
 
         <!-- Not empty check. -->
         <sch:assert test="$countSrs > 0"
