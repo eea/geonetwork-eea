@@ -194,6 +194,14 @@
     </xsl:copy>
   </xsl:template>
 
+  <!-- INSPIRE / TG2 / Require nilReason attribute to be innaplicable or unknown when version is empty. -->
+  <xsl:template match="gmd:distributionInfo/*/gmd:distributionFormat/*/gmd:version[gco:CharacterString = '']"
+                priority="10">
+    <gmd:version gco:nilReason="unknown">
+      <gco:CharacterString/>
+    </gmd:version>
+  </xsl:template>
+
   <!-- ================================================================= -->
 
   <xsl:template

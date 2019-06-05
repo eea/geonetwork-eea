@@ -22,6 +22,7 @@ DELETE FROM schematron WHERE schemaname in ('iso19115-3');
 
 UPDATE metadata SET data = replace(data, 'http://standards.iso.org/ittf', 'https://standards.iso.org/ittf') WHERE  data LIKE '%http://standards.iso.org/ittf%';
 UPDATE metadata SET data = replace(data, '/EPSG/0/EPSG:', '/EPSG/0/') WHERE  data LIKE '%/EPSG/0/EPSG:%';
+UPDATE metadata SET data = replace(data, '<gmd:version gco:nilReason="missing">', '<gmd:version gco:nilReason="unknown">') WHERE  data LIKE '%<gmd:version gco:nilReason="missing">%';
 
 
 UPDATE Settings SET value='3.7.0' WHERE name='system/platform/version';
