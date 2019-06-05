@@ -192,10 +192,10 @@
           this.map = {
             'WMS' : {
               iconClass: 'fa-globe',
-              // label: 'addToMap',
-              // action: addWMSToMap
-              label: 'openPage',
-              action: openLink
+              label: 'addToMap',
+              action: addWMSToMap
+              // label: 'openPage',
+              // action: openLink
             },
             'WMSSERVICE' : {
               iconClass: 'fa-globe',
