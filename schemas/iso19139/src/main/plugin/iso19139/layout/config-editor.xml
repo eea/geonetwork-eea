@@ -1068,7 +1068,8 @@
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints"
                  use="data-gn-keyword-picker">
             <directiveAttributes data-thesaurus-key="external.theme.httpinspireeceuropaeumetadatacodelistLimitationsOnPublicAccess-LimitationsOnPublicAccess"
-                                 data-display-definition="true"/>
+                                 data-display-definition="true"
+                                 data-thesaurus-concept-id-attribute="xlinkCOLONhref"/>
           </field>
           <text ref="eea-otherConstraints-help"/>
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation"/>
