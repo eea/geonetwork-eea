@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:ConceptScheme xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess">
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/" xml:lang="en">Limitations on public access</dc:title>
+    <dcterms:issued xmlns:dcterms="http://purl.org/dc/terms/">2019-06-05T11:00:50</dcterms:issued>
+    <dcterms:modified xmlns:dcterms="http://purl.org/dc/terms/">2019-06-05T11:00:50</dcterms:modified>
+  </skos:ConceptScheme>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a">
+    <skos:prefLabel xml:lang="en">public access limited according to Article 13(1)(a) of the INSPIRE Directive</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Public access to spatial data sets and services would adversely affect the confidentiality of the proceedings of public authorities, where such confidentiality is provided for by law.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b">
+    <skos:prefLabel xml:lang="en">public access limited according to Article 13(1)(b) of the INSPIRE Directive</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Public access to spatial data sets and services would adversely affect international relations, public security or national defence.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1c">
+    <skos:prefLabel xml:lang="en">public access limited according to Article 13(1)(c) of the INSPIRE Directive</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Public access to spatial data sets and services would adversely affect the course of justice, the ability of any person to receive a fair trial or the ability of a public authority to conduct an enquiry of a criminal or disciplinary nature.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1d">
+    <skos:prefLabel xml:lang="en">public access limited according to Article 13(1)(d) of the INSPIRE Directive</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Public access to spatial data sets and services would adversely affect the confidentiality of commercial or industrial information, where such confidentiality is provided for by national or Community law to protect a legitimate economic interest, including the public interest in maintaining statistical confidentiality and tax secrecy.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1e">
+    <skos:prefLabel xml:lang="en">public access limited according to Article 13(1)(e) of the INSPIRE Directive</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Public access to spatial data sets and services would adversely affect intellectual property rights.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1f">
+    <skos:prefLabel xml:lang="en">public access limited according to Article 13(1)(f) of the INSPIRE Directive</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Public access to spatial data sets and services would adversely affect the confidentiality of personal data and/or files relating to a natural person where that person has not consented to the disclosure of the information to the public, where such confidentiality is provided for by national or Community law.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1g">
+    <skos:prefLabel xml:lang="en">public access limited according to Article 13(1)(g) of the INSPIRE Directive</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Public access to spatial data sets and services would adversely affect the interests or protection of any person who supplied the information requested on a voluntary basis without being under, or capable of being put under, a legal obligation to do so, unless that person has consented to the release of the information concerned.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1h">
+    <skos:prefLabel xml:lang="en">public access limited according to Article 13(1)(h) of the INSPIRE Directive</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Public access to spatial data sets and services would adversely affect the protection of the environment to which such information relates, such as the location of rare species.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">
+    <skos:prefLabel xml:lang="en">no limitations to public access</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">There are no limitations on public access to spatial data sets and services.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess" />
+  </skos:Concept>
+</rdf:RDF>
+
