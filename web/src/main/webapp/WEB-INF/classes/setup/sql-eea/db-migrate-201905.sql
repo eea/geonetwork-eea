@@ -19,5 +19,10 @@ DELETE FROM schematroncriteriagroup WHERE schematronid in (SELECT id FROM schema
 DELETE FROM schematron WHERE schemaname in ('iso19115-3');
 
 
+
+UPDATE metadata SET data = replace(data, 'http://standards.iso.org/ittf', 'https://standards.iso.org/ittf') WHERE  data LIKE '%http://standards.iso.org/ittf%';
+UPDATE metadata SET data = replace(data, '/EPSG/0/EPSG:', '/EPSG/0/') WHERE  data LIKE '%/EPSG/0/EPSG:%';
+
+
 UPDATE Settings SET value='3.7.0' WHERE name='system/platform/version';
 UPDATE Settings SET value='SNAPSHOT' WHERE name='system/platform/subVersion';
