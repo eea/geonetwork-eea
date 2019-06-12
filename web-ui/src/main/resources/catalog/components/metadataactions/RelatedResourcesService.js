@@ -185,7 +185,6 @@
 
           var addToEEAMap = function(link, uuid) {
             var url = 'https://sdi.eea.europa.eu/eea/databrowser/?uuid=';
-            console.log(link);
             return window.open(url + uuid, '_blank');
           };
 
@@ -298,7 +297,7 @@
             },
             'EEAMAP' : {
               iconClass: 'fa-globe',
-              label: 'addToMap',
+              label: 'addToEEAMap',
               action: addToEEAMap
             },
             'LINKDOWNLOAD-ZIP' : {
@@ -381,6 +380,8 @@
                 return 'EEAFILE';
               } else if (protocolOrType.match(/EEA:FILEPATH/i)) {
                 return 'EEAFILE';
+              } else if (protocolOrType.match(/EEA:DBPG/i)) {
+                return 'DB';
               } else if (protocolOrType.match(/link/i)) {
                 return 'LINK';
               } else if (!protocolOrType.match(/EEA:FOLDERPATH/i) &&

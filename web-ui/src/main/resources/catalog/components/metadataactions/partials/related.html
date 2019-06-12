@@ -80,14 +80,11 @@
                      onClick="this.setSelectionRange(0, this.value.length)"
                      value="ftps://sdi.eea.europa.eu/data{{r.url.eng.substr(0, (r.url.eng.lastIndexOf('/')))}}"/>
             </div>
+
           </div>
-
-
-
           <div data-ng-switch-when="WMS">
             <p class="text-muted">
-              <span data-ng-show="r.title && isLayerProtocol(r.protocol)"
-                    data-translate=""
+              <span data-translate=""
                     data-translate-values="{url:'{{r.url | gnLocalized: lang}}', layer:'{{r.title | gnLocalized: lang}}'}">
                 wmsLinkDetails</span>
             </p>
@@ -243,13 +240,25 @@
         </button>
 
 
+        <!-- Check layer is available in EEA GeoServer node or not -->
+        <button type="button"
+                data-ng-if="r.protocol && r.protocol.contains && r.protocol.contains('EEA')"
+                class="btn btn-default btn-sm btn-block text-wrap"
+                data-ng-init="checkGeoServerAvailability(r)"
+                title="{{isAvailableInEEAGeoServer[r.id] === false ? ('layerNotAvailableInEEAViewService' | translate) : ''}}"
+                data-ng-disabled="isAvailableInEEAGeoServer[r.id] === false"
+                data-ng-click="config.doAction('WMS', isAvailableInEEAGeoServer[r.id], md)">
+          <span class="visible-lg-*" data-translate="">addToMap</span>
+        </button>
+        <!-- Old p.mapper button -->
         <button type="button"
                 class="btn btn-default btn-sm btn-block"
-                data-ng-if="r.protocol.contains('EEA:FILEPATH') && !r.url.eng.contains('.mdb') && !r.url.eng.contains('.sqlite') && !r.url.eng.contains('.gdp')"
+                data-ng-if="r.protocol && r.protocol.contains && r.protocol.contains('EEA:FILEPATH') && !r.url.eng.contains('.mdb') && !r.url.eng.contains('.sqlite') && !r.url.eng.contains('.gdp')"
                 data-ng-click="config.doAction('EEAMAP', r, uuid)">
           <span class="visible-lg-*">
             {{(config.getLabel('EEAMAP', type)) | translate}}
           </span>
+        </button>
       </div>
 
     </div>
