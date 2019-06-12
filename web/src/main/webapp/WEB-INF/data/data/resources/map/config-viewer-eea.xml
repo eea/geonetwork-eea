@@ -1,0 +1,32 @@
+<ows-context:OWSContext xmlns:ows-context="http://www.opengis.net/ows-context"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ows="http://www.opengis.net/ows"
+                        version="0.3.1" id="ows-context-ex-1-v3">
+  <ows-context:General>
+    <ows:BoundingBox crs="EPSG:3857">
+      <ows:LowerCorner>-4364633.967048479 1788597.8727828506</ows:LowerCorner>
+      <ows:UpperCorner>7356525.698313588 11963895.078105513</ows:UpperCorner>
+    </ows:BoundingBox>
+  </ows-context:General>
+  <ows-context:ResourceList>
+    <ows-context:Layer name="3,2,1,7,12,13,4,5,6,8,9,10" group="Background layers" hidden="false" opacity="1">
+      <ows-context:Server service="urn:ogc:serviceType:WMS" version="1.3.0">
+        <ows-context:OnlineResource
+          xlink:href="https://land.discomap.eea.europa.eu/arcgis/services/Background/Background_Cashed_WGS84/MapServer/WmsServer"/>
+      </ows-context:Server>
+      <ows:Title>EEA discomap background</ows:Title>
+    </ows-context:Layer>
+    <ows-context:Layer name="{type=osm}" group="Background layers" hidden="true" opacity="1">
+      <ows:Title>OpenStreetMap
+      </ows:Title>
+    </ows-context:Layer>
+    <ows-context:Layer name="{type=stamen,name=watercolor}" group="Background layers" hidden="true" opacity="1">
+      <ows:Title>Stamen Watercolor</ows:Title>
+    </ows-context:Layer>
+    <ows-context:Layer name="{type=stamen,name=toner}" group="Background layers" hidden="true" opacity="1">
+      <ows:Title>Stamen Toner</ows:Title>
+    </ows-context:Layer>
+    <ows-context:Layer name="{type=stamen,name=terrain}" group="Background layers" hidden="true" opacity="1">
+      <ows:Title>Stamen Terrain</ows:Title>
+    </ows-context:Layer>
+  </ows-context:ResourceList>
+</ows-context:OWSContext>
