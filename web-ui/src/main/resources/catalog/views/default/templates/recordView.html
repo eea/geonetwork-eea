@@ -188,7 +188,9 @@
               </button>
             </td>
           </tr>
-          <tr data-ng-repeat="(thesaurus, keywords) in mdView.current.record.keywordGroup">
+          <tr data-ng-repeat="(thesaurus, keywords) in mdView.current.record.keywordGroup"
+              data-ng-hide="mdView.current.record['geonet:info'].download == 'false' &&
+              (thesaurus == 'EEA keyword list' || thesaurus == 'EEA categories')">
             <th>{{thesaurus | translate}}</th>
             <td>
               <ul>

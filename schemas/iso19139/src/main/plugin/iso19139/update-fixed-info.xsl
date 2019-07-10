@@ -34,7 +34,7 @@
                 version="2.0" exclude-result-prefixes="#all">
 
   <xsl:include href="../iso19139/convert/functions.xsl"/>
-  <xsl:include href="update-fixed-info-keywords.xsl"/>
+<!--  <xsl:include href="update-fixed-info-keywords.xsl"/>-->
   <xsl:include href="layout/utility-fn.xsl"/>
 
 
@@ -70,6 +70,30 @@
   <xsl:variable name="nonMultilingualFields"
                 select="$editorConfig/editor/multilingualFields/exclude"/>
 
+
+  <xsl:variable name="publicEmails"
+                select="'info@eea.europa.eu,sdi@eea.europa.eu'"/>
+
+  <!-- Flag element with nilReason = withheld automatically
+  * All EEA protocols
+  * Keywords from EEA categories and EEA keyword list
+  * All contact with an email not from the list above
+
+  Those elements will be visible to user only when the download privileges
+  is set.-->
+
+  <xsl:template match="
+                  gmd:onLine[starts-with(*/gmd:protocol/gco:CharacterString, 'EEA')]|
+                  gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/* = 'EEA categories']|
+                  gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/* = 'EEA keyword list']|
+                  *[gmd:CI_ResponsibleParty and not(contains($publicEmails, */gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()))]"
+                priority="99">
+    <xsl:copy>
+      <xsl:attribute name="gco:nilReason">withheld</xsl:attribute>
+      <xsl:apply-templates select="@*[name() != 'gco:nilReason']"/>
+      <xsl:apply-templates select="*"/>
+    </xsl:copy>
+  </xsl:template>
 
 
   <xsl:template match="/root">
@@ -465,6 +489,8 @@
       </xsl:attribute>
     </xsl:copy>
   </xsl:template>
+
+
   <!-- ================================================================= -->
   <!-- online resources: download -->
   <!-- ================================================================= -->
