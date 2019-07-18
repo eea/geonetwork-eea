@@ -588,4 +588,88 @@
   <trueValue>Yes</trueValue>
   <falseValue>No</falseValue>
   <nilValue>Undefined</nilValue>
+
+  <eea-data-and-maps>Data and maps</eea-data-and-maps>
+  <eea-dm-default>Default</eea-dm-default>
+  <eea-dm-categorization>Categorization</eea-dm-categorization>
+  <eea-dm-title>Title</eea-dm-title>
+  <eea-dm-description>Description</eea-dm-description>
+  <eea-dm-management-plan>EEA Management plan code</eea-dm-management-plan>
+  <eea-dm-last-upload>Last upload</eea-dm-last-upload>
+  <eea-dm-publication>Publication</eea-dm-publication>
+  <eea-dm-last-upload-help>
+    <div class="alert alert-info">
+    Date when the data resource was last uploaded in EEA data service.
+    </div>
+  </eea-dm-last-upload-help>
+  <eea-dm-owner>Owner</eea-dm-owner>
+  <eea-dm-owner-help>
+    <div class="alert alert-info">
+      The technical producer or processor of the resource.
+    </div>
+  </eea-dm-owner-help>
+  <eea-dm-processor>Processor</eea-dm-processor>
+  <eea-dm-processor-help>
+    <div class="alert alert-info">
+    The technical producer or processor of the resource.
+    </div>
+  </eea-dm-processor-help>
+  <eea-dm-scale>Scale of the dataset</eea-dm-scale>
+  <eea-dm-scale-add>Add scale</eea-dm-scale-add>
+  <eea-dm-scale-help>
+    <div class="alert alert-info">
+    Gives a rough value of accuracy for the GIS dataset. Example: 1000 for 1:1000.
+    </div>
+  </eea-dm-scale-help>
+
+  <eea-dm-projection>Projection</eea-dm-projection>
+  <eea-dm-geoaccuracy>Geographic accuracy</eea-dm-geoaccuracy>
+  <eea-dm-geoaccuracy-add>Add geographic accuracy</eea-dm-geoaccuracy-add>
+  <eea-dm-geoaccuracy-help>
+    <div class="alert alert-info">
+    It is applicable to GIS datasets. It indicates the geographic accuracy of location, ground distance as a value in meters.
+    </div>
+  </eea-dm-geoaccuracy-help>
+  <eea-dm-contact>Contact person(s) for EEA</eea-dm-contact>
+  <eea-dm-contact-help>
+    <div class="alert alert-info">
+      <strong>Owner</strong>: The technical producer or processor of the resource.<br/>
+      <strong>Processor</strong>: The technical producer or processor of the resource.<br/>
+      <strong>Point of contact</strong>: Outside person to be contacted by EEA if questions regarding the data resource arise at a later date, responsible project manager at EEA.<br/>
+    </div>
+  </eea-dm-contact-help>
+  <eea-dm-disclaimer>Disclaimer</eea-dm-disclaimer>
+  <eea-dm-disclaimer-help>
+    <div class="alert alert-info">
+    Disclaimer description.
+    </div>
+  </eea-dm-disclaimer-help>
+  <eea-dm-lineage>Source &amp; methodology</eea-dm-lineage>
+  <eea-dm-lineage-help>
+    <div class="alert alert-info">
+    Description of how the resource was compiled: used tools, applied procedures, additional information to understand the data, further references to used methodologies.
+    </div>
+  </eea-dm-lineage-help>
+  <eea-dm-source-add>Add a source</eea-dm-source-add>
+  <eea-dm-source-help>
+    <div class="alert alert-info">
+    A reference to a resource from which the present resource is derived. Details such exact body or department, date of delivery, original database, table or GIS layer, scientific literature ...
+    </div>
+  </eea-dm-source-help>
+  <eea-dm-additionalinfo>Additional information</eea-dm-additionalinfo>
+  <eea-dm-additionalinfo-help>
+    <div class="alert alert-info">
+    Other relevant information
+    </div>
+  </eea-dm-additionalinfo-help>
+  <eea-dm-tags>Tags</eea-dm-tags>
+  <eea-dm-tags-help>
+    <div class="alert alert-info">
+    Tags are commonly used for ad-hoc organization of content.
+    </div>
+  </eea-dm-tags-help>
+  <eea-dm-geographic-coverage>Geographic coverage</eea-dm-geographic-coverage>
+  <eea-dm-dates>Dates</eea-dm-dates>
+  <eea-dm-creators>Creators</eea-dm-creators>
+  <eea-dm-settings>Settings</eea-dm-settings>
 </strings>
