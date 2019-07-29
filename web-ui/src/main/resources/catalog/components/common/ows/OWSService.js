@@ -219,16 +219,28 @@
           }
         };
 
-        var mergeParams = function(url, Params) {
+        var mergeParams = function(url, Params, excludedParams) {
           //merge URL parameters with indicated ones
           var parts = url.split('?');
+          var combinedParams = {};
           var urlParams = angular.isDefined(parts[1]) ?
               gnUrlUtils.parseKeyValue(parts[1]) : {};
-          for (var p in Params) {
-            urlParams[p] = Params[p];
+
+          for (var p in urlParams) {
+            if (!angular.isArray(excludedParams) ||
+              (excludedParams.findIndex &&
+               excludedParams.findIndex(function(item) {
+                  return p.toLowerCase() === item.toLowerCase();}) === -1)) {
+              combinedParams[p] = urlParams[p];
+            }
           }
-          return gnUrlUtils.append(parts[0], gnUrlUtils.toKeyValue(urlParams));
+          for (var p in Params) {
+            combinedParams[p] = Params[p];
+          }
+
+          return gnUrlUtils.append(parts[0], gnUrlUtils.toKeyValue(combinedParams));
         };
+
         var mergeDefaultParams = function(url, defaultParams) {
           //merge URL parameters with default ones
           var parts = url.split('?');
@@ -246,6 +258,7 @@
           return gnUrlUtils.append(parts[0],
               gnUrlUtils.toKeyValue(defaultParams));
         };
+
         return {
           mergeDefaultParams: mergeDefaultParams,
           mergeParams: mergeParams,
@@ -430,6 +443,7 @@
             return extent;
           },
 
+          
           getLayerInfoFromCap: function(layerName, capObj, uuid) {
             var needles = [];
             var layers = capObj.layers || capObj.Layer;
@@ -449,7 +463,7 @@
                 if (capObj.Request) {
                   layers[i].capRequest = capObj.Request;
                 }
-
+                
                 //check layername
                 var lId = layers[i].Identifier;
                 var capName = layers[i].Name ||

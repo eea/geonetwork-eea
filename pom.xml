@@ -119,6 +119,11 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.1.2</version>
+        </plugin>
+        <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>jslint-maven-plugin</artifactId>
           <version>1.0.1</version>
@@ -126,12 +131,12 @@
         <plugin>
           <groupId>org.bsc.maven</groupId>
           <artifactId>maven-processor-plugin</artifactId>
-          <version>2.2.3</version>
+          <version>3.3.3</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>2.6</version>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -146,12 +151,17 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
-          <version>2.3</version>
+          <version>3.2.3</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
-          <version>1.2</version>
+          <version>1.6.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -216,13 +226,36 @@
           <artifactId>maven-eclipse-plugin</artifactId>
           <version>2.9</version>
         </plugin>
+        <plugin>
+          <groupId>com.googlecode.maven-download-plugin</groupId>
+          <artifactId>download-maven-plugin</artifactId>
+          <version>1.4.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.8</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0-M3</version>
+        </plugin>
+
       </plugins>
     </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.5.1</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
@@ -237,7 +270,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
         <configuration>
           <encoding>UTF-8</encoding>
         </configuration>
@@ -246,7 +278,6 @@
       <!-- artifact assembly -->
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.5.4</version>
         <configuration>
           <descriptors>
             <descriptor>release/zip-war.xml</descriptor>
@@ -260,7 +291,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.18.1</version>
         <configuration>
           <argLine>-Dfile.encoding=UTF-8 -Xmx512M</argLine>
           <!--<rerunFailingTestsCount>5</rerunFailingTestsCount>-->
@@ -387,6 +417,12 @@
         <version>2.3</version>
       </dependency>
 
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>fop-pdf-images</artifactId>
+        <version>2.3</version>
+      </dependency>
+
       <!-- Jetty stuff -->
       <dependency>
         <groupId>org.eclipse.jetty</groupId>
@@ -427,9 +463,9 @@
         <version>1.6</version>
       </dependency>
       <dependency>
-        <groupId>commons-dbcp</groupId>
-        <artifactId>commons-dbcp</artifactId>
-        <version>1.4</version>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-dbcp2</artifactId>
+        <version>2.6.0</version>
       </dependency>
       <dependency>
         <groupId>commons-pool</groupId>
@@ -757,7 +793,7 @@
       <dependency>
         <groupId>joda-time</groupId>
         <artifactId>joda-time</artifactId>
-        <version>1.5.2</version>
+        <version>2.2</version>
       </dependency>
       <dependency>
         <groupId>jaxen</groupId>
@@ -1098,6 +1134,12 @@
         <artifactId>commons-csv</artifactId>
         <version>1.2</version>
       </dependency>
+
+      <dependency>
+        <groupId>org.apache.pdfbox</groupId>
+        <artifactId>pdfbox</artifactId>
+        <version>2.0.7</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -1223,6 +1265,7 @@
     <module>oaipmh</module>
     <module>events</module>
     <module>core</module>
+    <module>listeners</module>
     <module>schemas</module>
     <module>csw-server</module>
     <module>harvesters</module>
@@ -1294,7 +1337,9 @@
     <db.name>gn</db.name>
     <db.username>www-data</db.username>
     <db.password>www-data</db.password>
-    <db.pool.maxActive>10</db.pool.maxActive>
+    <db.pool.maxActive>30</db.pool.maxActive>
+    <db.pool.maxIdle>10</db.pool.maxIdle>
+    <db.pool.initialSize>10</db.pool.initialSize>
 
     <ldap.mapping.defaultProfile>Editor</ldap.mapping.defaultProfile>
 
@@ -1315,8 +1360,10 @@
     <jetty.port>8080</jetty.port>
     <jetty.stop.port>8090</jetty.stop.port>
 
-    <es.version>6.4.2</es.version>
-    <es.version.sha512>23c610a8cd33d4229e8b79b0dc5e1f106e5f186d45c83e9994bb15708d2ce4e763fcb7c9be0f652ebdf12905be7f4ced14e1d8e18f6240dfe5ccb4a064239f86</es.version.sha512>
+    <es.version>7.2.0</es.version>
+    <es.version.sha512>9f11386334c9344cb92206c367652ca36cb2161e0a301b1b011c5c168c7c9670e6f59f29521232f1c18388e47e80db0a16fb1daa049c263470cf2f059f3d8a8e</es.version.sha512>
+    <es.platform>linux-x86_64</es.platform>
+    <es.installer.extension>tar.gz</es.installer.extension>
     <es.port></es.port>
     <es.host></es.host>
     <es.url></es.url>
@@ -1336,7 +1383,9 @@
     <es.username></es.username>
     <es.password></es.password>
 
-    <kb.version.sha512>b3b422c3bd157e363f528a27f5243f2ee13eba3e3bb22e1a7a9f24ea33f75b864643e297047379dfbef040a0eaa05ed6d998dd2cfe798b9d058f5b3d346f4d1d</kb.version.sha512>
+    <kb.version.sha512>78368be3c55ef09cfed6903cc6556edb1a77f9e548614535b261d13c3190052ee9571cbb686470662f5563c564f1256e3a31ca233a26e8b734f3df44ab5a97f0</kb.version.sha512>
+    <kb.platform>linux-x86_64</kb.platform>
+    <kb.installer.extension>tar.gz</kb.installer.extension>
     <kb.port></kb.port>
     <kb.url></kb.url>
 

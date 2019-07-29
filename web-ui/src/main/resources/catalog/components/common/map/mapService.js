@@ -440,13 +440,19 @@
                 geometry = new ol.geom.MultiPolygon(null);
                 for (var j = 0; j < extent.length; j++) {
                   // TODO: Point will not be supported in multi geometry
-                  var projectedExtent = ol.extent.getIntersection(
-                      ol.proj.transformExtent(extent[j], 'EPSG:4326', proj),
-                      projExtent
-                      );
-                  var coords = this.getPolygonFromExtent(projectedExtent);
+                  var projectedExtent = ol.proj.transformExtent(extent[j], 'EPSG:4326', proj);
+                  if (!ol.extent.intersects(projectedExtent, projExtent)) {
+                    continue;
+                  }
+                  var coords = this.getPolygonFromExtent(
+                    ol.extent.getIntersection(projectedExtent, projExtent)
+                  );
                   geometry.appendPolygon(new ol.geom.Polygon(coords));
                 }
+              }
+              // no valid bbox was found: clear geometry
+              if (!geometry.getPolygons().length) {
+                geometry = null;
               }
               feat.setGeometry(geometry);
             }
@@ -1665,6 +1671,11 @@
                   OperationsMetadata: capabilities.operationsMetadata
               };
 
+              //OpenLayers expects an array of style objects having isDefault property
+              angular.forEach(cap.Contents.Layer,function(l){
+                if (!angular.isArray(l.Style)){ l.Style=[{Identifier:l.Style,isDefault:true}] };
+              });
+
               var options = ol.source.WMTS.optionsFromCapabilities(cap, {
                 layer: getCapLayer.Identifier,
                 matrixSet: map.getView().getProjection().getCode(),
@@ -1937,6 +1948,7 @@
               return gnSearchManagerService.gnSearch({
                 uuid: layer.get('metadataUuid'),
                 fast: 'index',
+                _draft: 'n or e',
                 _content_type: 'json'
               }).then(function(data) {
                 if (data.metadata.length == 1) {

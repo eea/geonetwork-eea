@@ -135,14 +135,20 @@
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>fop</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>fop-pdf-images</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>org.apache.jcs</groupId>
       <artifactId>jcs</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>commons-dbcp</groupId>
-      <artifactId>commons-dbcp</artifactId>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-dbcp2</artifactId>
     </dependency>
     <dependency>
       <groupId>commons-pool</groupId>
@@ -459,7 +465,7 @@
     <dependency>
       <groupId>edu.ucar</groupId>
       <artifactId>netcdf</artifactId>
-      <version>4.0.patch</version>
+      <version>4.3.23</version>
     </dependency>
 
     <!-- language detection -->
@@ -513,7 +519,6 @@
     <plugins>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>2.5</version>
         <executions>
           <execution>
             <id>test-jar</id>
@@ -526,7 +531,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>2.5</version>
         <executions>
           <execution>
             <id>copy-filter-resource</id>

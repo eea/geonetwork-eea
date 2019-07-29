@@ -672,4 +672,11 @@
   <eea-dm-dates>Dates</eea-dm-dates>
   <eea-dm-creators>Creators</eea-dm-creators>
   <eea-dm-settings>Settings</eea-dm-settings>
+  <logo>logo</logo>
+  <overview>overview</overview>
+  <thumbnail>thumbnail</thumbnail>
+  <north>north</north>
+  <east>east</east>
+  <south>south</south>
+  <west>west</west>
 </strings>
