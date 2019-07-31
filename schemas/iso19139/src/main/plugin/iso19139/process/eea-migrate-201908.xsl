@@ -206,6 +206,46 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
     </xsl:copy>
   </xsl:template>
 
+
+  <xsl:template match="gmd:MD_Metadata/gmd:contact[*/gmd:organisationName/* = 'European Environment Agency']">
+    <gmd:contact>
+      <gmd:CI_ResponsibleParty>
+        <gmd:organisationName>
+          <gco:CharacterString>European Environment Agency</gco:CharacterString>
+        </gmd:organisationName>
+        <gmd:contactInfo>
+          <gmd:CI_Contact>
+            <gmd:address>
+              <gmd:CI_Address>
+                <gmd:deliveryPoint>
+                  <gco:CharacterString>Kongens Nytorv 6</gco:CharacterString>
+                </gmd:deliveryPoint>
+                <gmd:city>
+                  <gco:CharacterString>Copenhagen</gco:CharacterString>
+                </gmd:city>
+                <gmd:administrativeArea>
+                  <gco:CharacterString>K</gco:CharacterString>
+                </gmd:administrativeArea>
+                <gmd:postalCode>
+                  <gco:CharacterString>1050</gco:CharacterString>
+                </gmd:postalCode>
+                <gmd:country>
+                  <gco:CharacterString>Denmark</gco:CharacterString>
+                </gmd:country>
+                <gmd:electronicMailAddress>
+                  <gco:CharacterString>sdi@eea.europa.eu</gco:CharacterString>
+                </gmd:electronicMailAddress>
+              </gmd:CI_Address>
+            </gmd:address>
+          </gmd:CI_Contact>
+        </gmd:contactInfo>
+        <gmd:role>
+          <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                           codeListValue="pointOfContact"/>
+        </gmd:role>
+      </gmd:CI_ResponsibleParty>
+    </gmd:contact>
+  </xsl:template>
   <!-- Do a copy of every nodes and attributes -->
   <xsl:template match="@*|node()|comment()">
     <xsl:copy>
