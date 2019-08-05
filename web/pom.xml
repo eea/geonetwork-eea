@@ -735,6 +735,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
+              <escapeString>\</escapeString>
               <includeEmptyDirs>true</includeEmptyDirs>
               <overwrite>true</overwrite>
               <outputDirectory>${build.webapp.resources}</outputDirectory>
@@ -950,23 +951,6 @@
       </properties>
     </profile>
     <profile>
-      <id>env-map-catalogue</id>
-      <activation>
-        <property>
-          <name>env</name>
-          <value>prod</value>
-        </property>
-      </activation>
-      <properties>
-        <env>prod</env>
-        <application.name>map-catalogue</application.name>
-        <geonetwork.data.dir>file://\${map-catalogue.data.dir}</geonetwork.data.dir>
-        <geonetwork.log>/var/local/gn_data/logs/map-catalogue.log</geonetwork.log>
-        <security.config.file>config-security-noldap.xml</security.config.file>
-        <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
-      </properties>
-    </profile>
-    <profile>
       <id>env-internal-catalogue</id>
       <activation>
         <property>
@@ -980,6 +964,7 @@
         <application.name>internal-catalogue</application.name>
         <geonetwork.log>/var/local/gn_data/logs/internal-catalogue.log</geonetwork.log>
         <geonetwork.data.dir>file://\${internal-catalogue.data.dir}</geonetwork.data.dir>
+        <!-- If merging internal and editor / this should enable ldap auth. -->
         <security.config.file>config-security-noldap.xml</security.config.file>
         <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
         <ldap.mapping.defaultProfile>Guest</ldap.mapping.defaultProfile>
