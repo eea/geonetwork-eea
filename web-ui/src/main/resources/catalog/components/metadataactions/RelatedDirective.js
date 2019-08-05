@@ -146,7 +146,8 @@
               // It may not if it is a not supported format.
               scope.isAvailableInEEAGeoServer = {};
               scope.checkGeoServerAvailability = function(r) {
-                var geoserverNode = 'https://sdi.eea.europa.eu/geoserver/ows';
+                var geoserverNode = gnGlobalSettings.gnCfg.mods.global.eeaGeoServer ||
+                  'https://sdi.eea.europa.eu/geoserver/ows';
                 // var geoserverNode = 'http://localhost:8081/geoserver/ows';
                 var geoserverWorkspace = 'sdi';
 

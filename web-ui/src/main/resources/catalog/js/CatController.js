@@ -79,7 +79,8 @@ goog.require('gn_alert');
       },
       'mods': {
         'global': {
-          'humanizeDates': true
+          'humanizeDates': true,
+          'eeaGeoServer': 'https://sdi.eea.europa.eu/geoserver/ows'
         },
         'header': {
           'enabled': true,
