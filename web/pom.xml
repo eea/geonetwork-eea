@@ -735,7 +735,6 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <escapeString>\</escapeString>
               <includeEmptyDirs>true</includeEmptyDirs>
               <overwrite>true</overwrite>
               <outputDirectory>${build.webapp.resources}</outputDirectory>
@@ -963,7 +962,7 @@
         <geonetwork.config.security>config-securityinternal-catalogue</geonetwork.config.security>
         <application.name>internal-catalogue</application.name>
         <geonetwork.log>/var/local/gn_data/logs/internal-catalogue.log</geonetwork.log>
-        <geonetwork.data.dir>file://\${internal-catalogue.data.dir}</geonetwork.data.dir>
+        <geonetwork.data.dir>file://${internal-catalogue.data.dir}</geonetwork.data.dir>
         <!-- If merging internal and editor / this should enable ldap auth. -->
         <security.config.file>config-security-noldap.xml</security.config.file>
         <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
@@ -983,7 +982,7 @@
         <geonetwork.config.security>config-securityeditor-catalogue</geonetwork.config.security>
         <application.name>editor-catalogue</application.name>
         <geonetwork.log>/var/local/gn_data/logs/editor-catalogue.log</geonetwork.log>
-        <geonetwork.data.dir>file://\${editor-catalogue.data.dir}</geonetwork.data.dir>
+        <geonetwork.data.dir>file://${editor-catalogue.data.dir}</geonetwork.data.dir>
         <security.config.file>config-security.xml</security.config.file>
         <war.excludes>WEB-INF/web*.xml</war.excludes>
       </properties>
@@ -1001,7 +1000,7 @@
         <geonetwork.config.security>config-securitycatalogue</geonetwork.config.security>
         <application.name>catalogue</application.name>
         <geonetwork.log>/var/local/gn_data/logs/catalogue.log</geonetwork.log>
-        <geonetwork.data.dir>file://\${catalogue.data.dir}</geonetwork.data.dir>
+        <geonetwork.data.dir>file://${catalogue.data.dir}</geonetwork.data.dir>
         <security.config.file>config-security-noldap.xml</security.config.file>
         <war.excludes>WEB-INF/web*.xml</war.excludes>
         <wro.debug>true</wro.debug>
