@@ -11,7 +11,7 @@
       data-ng-show="user.canEditRecord(mdView.current.record)">
       {{'seeDraft' | translate}}
     </a>
-    
+
     <!-- If approved exists, show a link -->
     <a data-ng-if="mdView.current.record.draft == 'y'"
       class="see-draft see-draft-approved"
@@ -21,7 +21,7 @@
       {{'seeNoDraft' | translate}}
     </a>
   </div>
-  
+
   <div class="container">
     <div class="alert alert-warning"
         data-ng-hide="!mdView.loadDetailsFinished || mdView.current.record"
@@ -38,7 +38,7 @@
         data-ng-show="mdView.current.record">
 
       <div class="btn-toolbar" role="toolbar">
-        
+
         <div class="btn-group" role="group">
           <button class="btn btn-default"
                   data-ng-click="closeRecord(mdView.current.record)">
@@ -99,7 +99,7 @@
 
         <div class="gn-md-actions-btn pull-right"
             data-gn-md-actions-menu="mdView.current.record"/>
-        
+
         <div class="btn-group pull-right" role="group">
           <a class="btn btn-default"
             data-ng-show="user.canEditRecord(mdView.current.record) && (user.isReviewerOrMore() || mdView.current.record.mdStatus != 4 || !isMdWorkflowEnable)"
@@ -315,6 +315,10 @@
                 </ul>
               </td>
             </tr>
+            <tr data-ng-if="mdView.current.record.versionIdentifier">
+              <th data-translate="">versionIdentifier</th>
+              <td>{{mdView.current.record.versionIdentifier}}</td>
+            </tr>
             </tbody>
           </table>
 
@@ -323,9 +327,50 @@
 
           <h2 data-translate="">technicalInformation</h2>
 
+          <div data-ng-if="mdView.current.record.featureTypes"
+            data-ng-repeat="featureType in mdView.current.record.featureTypes">
 
-          <div data-ng-if="mdView.current.record.attributeTable"
-              data-gn-attribute-table-renderer="mdView.current.record.attributeTable">
+            <h3><span data-translate="">featureType</span>&nbsp;'{{featureType.typeName}}'</h3>
+
+            <table class="table table-striped" >
+              <tbody>
+              <tr data-ng-if="featureType.typeName">
+                <th data-translate="">featureTypeName</th>
+                <td>{{featureType.typeName}}</td>
+              </tr>
+              <tr data-ng-if="featureType.definition">
+                <th data-translate="">featureDefinition</th>
+                <td>{{featureType.definition}}</td>
+              </tr>
+              <tr data-ng-if="featureType.code">
+                <th data-translate="">featureCode</th>
+                <td>{{featureType.code}}</td>
+              </tr>
+              <tr data-ng-if="featureType.isAbstract">
+                <th data-translate="">featureIsAbstract</th>
+                <td>{{featureType.isAbstract}}</td>
+              </tr>
+              <tr data-ng-if="featureType.aliases">
+                <th data-translate="">featureAliases</th>
+                <td>{{featureType.aliases}}</td>
+              </tr>
+              <tr data-ng-if="featureType.attributeTable">
+                <th data-translate="">featureAttributeTable</th>
+                <td></td>
+              </tr>
+              <tr data-ng-if="featureType.attributeTable">
+                <td colspan="2" class="gn-noborder-top gn-nopadding-top gn-nopadding-bottom"/>
+              </tr>
+              <tr data-ng-if="featureType.attributeTable">
+                <td colspan="2" class="gn-noborder-top gn-table-attribute">
+                  <div data-ng-if="featureType.attributeTable"
+                       data-gn-attribute-table-renderer="featureType.attributeTable">
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+
           </div>
 
 
@@ -414,7 +459,7 @@
 
           <table class="table table-striped">
             <tbody>
-            <tr data-ng-if="mdView.current.record.getAllContacts()">
+            <tr data-ng-if="mdView.current.record.getAllContacts().metadata && mdView.current.record.getAllContacts().metadata.length > 0">
               <th data-translate="">contact</th>
               <td>
                 <div data-gn-metadata-contacts="mdView.current.record.getAllContacts().metadata" data-gn-mode="org-role" />
