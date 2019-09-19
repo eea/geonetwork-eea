@@ -1484,6 +1484,7 @@
         In the full view, editor can access and manage the file store and
         thumbnail name and description not supported by the overview manager.
         -->
+        <directive data-gn-validation-report=""/>
         <directive data-gn-overview-manager=""/>
         <directive data-gn-onlinesrc-list=""
                    data-types="onlinesrc|parent|dataset|service|source|sibling|associated|fcats"/>
@@ -1492,7 +1493,7 @@
                    data-ng-if="gnCurrentEdit.geoPublisherConfig"
                    data-config="{{gnCurrentEdit.geoPublisherConfig}}"
                    data-lang="lang"/>
-        <directive data-gn-validation-report=""/>
+
         <directive data-gn-suggestion-list=""/>
         <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
       </sidePanel>
@@ -1567,12 +1568,12 @@
     </view>
     <view name="advanced">
       <sidePanel>
+        <directive data-gn-validation-report=""/>
         <directive data-gn-onlinesrc-list=""/>
         <directive gn-geo-publisher=""
                    data-ng-if="gnCurrentEdit.geoPublisherConfig"
                    data-config="{{gnCurrentEdit.geoPublisherConfig}}"
                    data-lang="lang"/>
-        <directive data-gn-validation-report=""/>
         <directive data-gn-suggestion-list=""/>
         <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
       </sidePanel>
@@ -1643,12 +1644,12 @@
     </view>
     <view name="xml">
       <sidePanel>
+        <directive data-gn-validation-report=""/>
         <directive data-gn-onlinesrc-list=""/>
         <directive gn-geo-publisher=""
                    data-ng-if="gnCurrentEdit.geoPublisherConfig"
                    data-config="{{gnCurrentEdit.geoPublisherConfig}}"
                    data-lang="lang"/>
-        <directive data-gn-validation-report=""/>
         <directive data-gn-suggestion-list=""/>
         <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
       </sidePanel>
