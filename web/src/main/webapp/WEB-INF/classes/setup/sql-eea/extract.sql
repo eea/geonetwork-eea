@@ -44,6 +44,28 @@ WHERE data LIKE '%%'
 
 
 
+WITH ns AS (
+select ARRAY[ARRAY['xlink', 'http://www.w3.org/1999/xlink'],
+       ARRAY['gmd', 'http://www.isotc211.org/2005/gmd'],
+       ARRAY['gco', 'http://www.isotc211.org/2005/gco']] AS n
+)
+
+SELECT
+    uuid,
+    array_to_string(theasurus, '') as theasurus,
+    translate(regexp_split_to_table(keyword::TEXT, E','), '{,},"', '') AS keyword
+
+FROM (SELECT uuid,
+       xpath('//gmd:useLimitation/gco:CharacterString[1]/text()', node, n) as useLimitation
+FROM (
+SELECT uuid, unnest(xpath('//gmd:useLimitation',  XMLPARSE(DOCUMENT data), n))  AS node
+FROM metadata, ns
+WHERE data LIKE '%%'
+  ) sub, ns) a
+
+
+
+
 
 SELECT
     uuid,
