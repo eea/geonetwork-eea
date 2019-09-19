@@ -1,3 +1,4 @@
+UPDATE metadata SET data = replace(data, 'European Environmental Agency', 'European Environment Agency') WHERE data LIKE '%Europen%';
 UPDATE metadata SET data = replace(data, 'Europen', 'European') WHERE data LIKE '%Europen%';
 
 -- Update GML namespace for moving from ISO19139:2005 to ISO19139:2007
