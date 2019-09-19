@@ -40,7 +40,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import springfox.documentation.annotations.ApiIgnore;
 
-@RequestMapping(value = { "/api", "/api/" + API.VERSION_0_1 })
+@RequestMapping(value = { "/{portal}/api", "/{portal}api/" + API.VERSION_0_1 })
 @Api(value = "eealayoutupdate", tags = "eealayoutupdate", description = "EEA Layout Update API")
 @Controller("eealayoutupdate")
 public class EEALayoutUpdateAPI {
