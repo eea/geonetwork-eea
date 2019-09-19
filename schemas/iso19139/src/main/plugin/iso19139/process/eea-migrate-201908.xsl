@@ -200,7 +200,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   </xsl:template>
 
   <!-- Add the 2 inspire decimals ... -->
-  <xsl:template match="gmd:EX_GeographicBoundingBox/*/gco:Decimal[matches(., '^([0-9]+|[0-9]+.[0-9]{1})$')]">
+  <xsl:template match="gmd:EX_GeographicBoundingBox/*/gco:Decimal[matches(., '^(-?[0-9]+|[0-9]+.[0-9]{1})$')]">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
       <xsl:value-of select="format-number(., '#0.00')"/>
