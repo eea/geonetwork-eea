@@ -246,7 +246,7 @@
 
         <!-- Check layer is available in EEA GeoServer node or not -->
         <button type="button"
-                data-ng-if="r.protocol && r.protocol.contains && r.protocol.contains('EEA')"
+                data-ng-if="eeaGeoServer != '' && r.protocol && r.protocol.contains && r.protocol.contains('EEA')"
                 class="btn btn-default btn-sm btn-block text-wrap"
                 data-ng-init="checkGeoServerAvailability(r)"
                 title="{{isAvailableInEEAGeoServer[r.id] === false ? ('layerNotAvailableInEEAViewService' | translate) : ''}}"
@@ -254,7 +254,7 @@
                 data-ng-click="config.doAction('WMS', isAvailableInEEAGeoServer[r.id], md)">
           <span class="visible-lg-*" data-translate="">addToMap</span>
         </button>
-        <!-- Old p.mapper button -->
+        <!-- Old p.mapper button
         <button type="button"
                 class="btn btn-default btn-sm btn-block"
                 data-ng-if="r.protocol && r.protocol.contains && r.protocol.contains('EEA:FILEPATH') && !r.url.eng.contains('.mdb') && !r.url.eng.contains('.sqlite') && !r.url.eng.contains('.gdp')"
@@ -262,7 +262,7 @@
           <span class="visible-lg-*">
             {{(config.getLabel('EEAMAP', type)) | translate}}
           </span>
-        </button>
+        </button> -->
       </div>
 
     </div>
