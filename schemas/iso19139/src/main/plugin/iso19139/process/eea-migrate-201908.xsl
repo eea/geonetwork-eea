@@ -193,7 +193,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   </xsl:template>
 
 
-  <xsl:template match="gmd:resourceConstraints/*/gmd:otherConstraints[gco:CharacterString = 'no conditions apply']">
+  <xsl:template match="gmd:resourceConstraints/*/gmd:otherConstraints[gco:CharacterString = 'no conditions apply' or gco:CharacterString = 'No conditions apply']">
     <gmd:otherConstraints>
       <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply">No conditions apply to access and use</gmx:Anchor>
     </gmd:otherConstraints>
