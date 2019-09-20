@@ -17,6 +17,7 @@
       {{('ui-' + m + '-help') | translate}} </p>
 
     <div class="col-sm-12 form-group"
+         data-ng-if="mCfg.enabled === undefined || mCfg.enabled === true"
          data-ng-repeat="(key, value) in mCfg"
          data-ng-switch="key">
 
@@ -482,7 +483,7 @@
           <div ng-include="'../../catalog/components/admin/uiconfig/partials/projectionSwitcher.html'">
         </div>
       </div>
-      
+
       <!-- numbers -->
       <div data-ng-switch-when="paginationInfo">
         <label class="control-label">{{('ui-' + key) | translate}}</label>
@@ -694,7 +695,7 @@
       </div>
       <div data-ng-switch-when="logoInHeaderPosition">
           <label class="control-label">{{('ui-' + key) | translate}}</label>
-  
+
           <div class="checkbox">
             <label>
               <input type="radio" data-ng-model="mCfg[key]"
@@ -719,7 +720,7 @@
               <span data-translate="">right</span>
             </label>
           </div>
-  
+
           <p class="help-block"
              data-ng-show="(('ui-' + key + '-help') | translate) != ('ui-' + key + '-help')">
             {{('ui-' + key + '-help') | translate}} </p>
