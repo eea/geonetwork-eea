@@ -437,8 +437,10 @@
               var date = null;
               if (originalDate.match("[Zz]$") !== null) {
                 date = moment(originalDate, 'YYYY-MM-DDtHH-mm-SSSZ').utcOffset('+01:00');
-              } else {
+              } else if (originalDate.indexOf('T') != -1) {
                 date = moment(originalDate).utcOffset('+01:00');
+              } else {
+                date = moment(originalDate);
               }
               if (date.isValid()) {
                 var fromNow = date.fromNow();
