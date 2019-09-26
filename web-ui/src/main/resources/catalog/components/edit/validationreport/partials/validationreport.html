@@ -34,6 +34,7 @@
     <div class="gn-validation-report gn-margin-top" data-ng-show="ruleTypes.length !== 0">
       <div class="panel panel-default"
            data-ng-repeat="type in ruleTypes"
+           data-ng-hide="type.id === 'xsd' && !$parent.$parent.user.isAdmin()"
            data-ng-class="'schematron-result-list-' + labelImportanceClass(type)">
         <div data-gn-slide-toggle="" class="panel-heading clearfix">
           <div class="col-md-9">
