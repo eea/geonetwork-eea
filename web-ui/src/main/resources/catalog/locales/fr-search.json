@@ -492,6 +492,7 @@
     "userSearchFeaturedDisplayInHomePage": "Page d'accueil",
     "userSearchUpdated": "Recherche utilisateur sauvegardée",
     "userSearchUpdatedError": "Erreur lors de la sauvegarde de la recherche",
+    "nextCloudLink": "Web download",
     "seeDraft": "Cette fiche a une version brouillon en cours de rédaction. Cliquer ici pour la voir.",
     "seeNoDraft": "Cette fiche a une version approuvée. Cliquer ici pour la voir."
 }

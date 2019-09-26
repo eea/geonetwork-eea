@@ -53,6 +53,13 @@
 
           <div class="text-muted"
                data-ng-switch-when="EEAFILE">
+            <div data-ng-show="eeaNextCloudServer != ''">
+              <a class="btn btn-default btn-block"
+                 data-ng-href="{{eeaNextCloudServer + md.getUuid()}}"
+                 data-translate="">
+                nextCloudLink
+              </a>
+            </div>
             <label data-translate="">webdavLink</label>
             <div class="input-group">
               <input class="form-control"
