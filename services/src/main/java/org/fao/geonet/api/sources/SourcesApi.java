@@ -23,13 +23,17 @@
 
 package org.fao.geonet.api.sources;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import jeeves.server.context.ServiceContext;
 import org.apache.commons.io.FilenameUtils;
 import org.fao.geonet.api.API;
 import org.fao.geonet.api.ApiParams;
 import org.fao.geonet.api.ApiUtils;
 import org.fao.geonet.api.exception.ResourceNotFoundException;
-import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.GeonetEntity;
 import org.fao.geonet.domain.Language;
 import org.fao.geonet.domain.Source;
@@ -39,7 +43,6 @@ import org.fao.geonet.repository.LanguageRepository;
 import org.fao.geonet.repository.SortUtils;
 import org.fao.geonet.repository.SourceRepository;
 import org.fao.geonet.resources.Resources;
-import org.fao.geonet.utils.Log;
 import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,12 +52,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -62,11 +68,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import jeeves.server.context.ServiceContext;
-import springfox.documentation.annotations.ApiIgnore;
 
 @RequestMapping(value = {
     "/{portal}/api/sources",
@@ -97,8 +98,20 @@ public class SourcesApi {
         @ApiResponse(code = 200, message = "List of source catalogues.")
     })
     @ResponseBody
-    public List<Source> getSources() throws Exception {
-        return sourceRepository.findAll(SortUtils.createSort(Source_.name));
+    public List<Source> getSources(
+        @ApiParam(
+            value = "Group owner of the source (only applies to subportal)."
+        )
+        @RequestParam(
+            value = "group",
+            required = false)
+        Integer group
+    ) throws Exception {
+        if (group != null) {
+            return sourceRepository.findByGroupOwner(group);
+        } else {
+            return sourceRepository.findAll(SortUtils.createSort(Source_.name));
+        }
     }
 
     @ApiOperation(
@@ -287,6 +300,7 @@ public class SourcesApi {
             entity.setUuid(source.getUuid());
             entity.setType(source.getType());
             entity.setFilter(source.getFilter());
+            entity.setGroupOwner(source.getGroupOwner());
             entity.setUiConfig(source.getUiConfig());
             entity.setLogo(source.getLogo());
             Map<String, String> labelTranslations = source.getLabelTranslations();
