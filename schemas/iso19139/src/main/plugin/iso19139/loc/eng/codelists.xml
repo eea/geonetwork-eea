@@ -1467,7 +1467,7 @@
   </codelist>
   <!-- ==================================================== -->
   <codelist name="gmd:MD_RestrictionCode">
-    <entry>
+    <entry hideInEditMode="true">
       <code>copyright</code>
       <label>Copyright</label>
       <description>Exclusive right to the publication, production, or sale of the rights to a
@@ -1477,7 +1477,7 @@
       </description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <entry hideInEditMode="true">
       <code>patent</code>
       <label>Patent</label>
       <description>Government has granted exclusive right to make, sell, use or license an
@@ -1485,13 +1485,13 @@
       </description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <entry hideInEditMode="true">
       <code>patentPending</code>
       <label>Pending patent</label>
       <description>Produced or sold information awaiting a patent</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <entry hideInEditMode="true">
       <code>trademark</code>
       <label>Trademark</label>
       <description>A name, symbol, or other device identifying a product, officially registered
@@ -1499,13 +1499,13 @@
       </description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <entry hideInEditMode="true">
       <code>license</code>
       <label>License</label>
       <description>Formal permission to do something</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <entry hideInEditMode="true">
       <code>intellectualPropertyRights</code>
       <label>Intellectual property rights</label>
       <description>Rights to financial benefit from and control of distribution of non-tangible
@@ -1513,7 +1513,7 @@
       </description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <entry hideInEditMode="true">
       <code>restricted</code>
       <label>Restricted</label>
       <description>Withheld from general circulation or disclosure</description>
