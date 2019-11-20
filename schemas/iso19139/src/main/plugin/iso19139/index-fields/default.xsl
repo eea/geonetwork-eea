@@ -179,13 +179,27 @@
                 gmd:identificationInfo/srv:SV_ServiceIdentification">
 
       <xsl:for-each select="gmd:citation/gmd:CI_Citation">
-        <xsl:for-each select="gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString|gmd:identifier/gmd:MD_Identifier/gmd:code/gmx:Anchor">
+        <xsl:variable name="resourceIdentifiers"
+                      select="gmd:identifier/*/gmd:code/gco:CharacterString|gmd:identifier/*/gmd:code/gmx:Anchor"/>
+        <xsl:for-each select="$resourceIdentifiers">
           <Field name="identifier" string="{string(.)}" store="true" index="true"/>
+          <xsl:choose>
+            <xsl:when test="matches(normalize-space(.), '.*_r[0-9]{2}$')">
+              <Field name="identifierType" string="newEEACodificationRule" store="true" index="true"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <Field name="identifierType" string="oldEEACodificationRule" store="true" index="true"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:for-each>
+        <xsl:if test="count($resourceIdentifiers) = 0">
+          <Field name="identifierType" string="missing" store="true" index="true"/>
+        </xsl:if>
+        <xsl:if test="count($resourceIdentifiers) = 2 and count($resourceIdentifiers[matches(normalize-space(.), '.*_r[0-9]{2}$')]) = 1">
+          <Field name="identifierType" string="bothCodificationSet" store="true" index="true"/>
+        </xsl:if>
 
-        <xsl:for-each select="gmd:identifier/gmd:RS_Identifier/gmd:code/gco:CharacterString|gmd:identifier/gmd:RS_Identifier/gmd:code/gmx:Anchor">
-          <Field name="identifier" string="{string(.)}" store="true" index="true"/>
-        </xsl:for-each>
+
 
         <xsl:for-each select="gmd:identifier/gmd:RS_Identifier/gmd:codeSpace/gco:CharacterString">
         <!-- For local atom feed services -->
