@@ -467,8 +467,10 @@
         <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory"
                    fieldset="false"
                    transformations="to-iso19139-keyword-with-anchor"/>
+        <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope"
+                   fieldset="false"
+                   transformations="to-iso19139-keyword-with-anchor"/>
       </thesaurusList>
-
       <sidePanel>
         <directive data-gn-overview-manager=""/>
         <directive data-gn-onlinesrc-list=""
@@ -516,6 +518,9 @@
           <field name="eea-keyword-gemet"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'GEMET']"/>
           <text ref="eea-gemet-help"/>
+
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Spatial scope']"/>
           <field name="eea-keyword-spatial"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Continents, countries, sea regions of the world.']"/>
           <text ref="eea-country-help"/>
