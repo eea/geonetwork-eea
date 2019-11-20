@@ -47,6 +47,10 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
   <xsl:variable name="uuid"
                 select="//gmd:fileIdentifier/gco:CharacterString"/>
 
+  <xsl:variable name="hasSpatialScope"
+                select="count(//gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Spatial scope']) > 0"/>
+
+
   <xsl:template match="gmd:thesaurusName/*[gmd:title/* = 'EEA keyword list']/gmd:date/*/gmd:dateType/*/@codeListValue">
     <xsl:attribute name="codeListValue">publication</xsl:attribute>
   </xsl:template>
@@ -118,6 +122,101 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
     <crs code="http://www.opengis.net/def/crs/EPSG/0/32740" label="EPSG:32740">urn:ogc:def:crs:EPSG:7.1:32740</crs>
     <crs code="http://www.opengis.net/def/crs/EPSG/0/32740" label="EPSG:32740">urn:ogc:def:crs:EPSG:32740</crs>
   </xsl:variable>
+
+
+
+  <xsl:variable name="isEuOrEEA"
+                select="count(//gmd:descriptiveKeywords/*[gmd:thesaurusName/*/gmd:title/*/text() = 'Continents, countries, sea regions of the world.']/gmd:keyword[starts-with(*/text(), 'EU')
+                                            or starts-with(*/text(), 'EEA')
+                                            or starts-with(*/text(), 'EFTA')]) > 0"/>
+
+  <xsl:variable name="isUrbanAtlas"
+                select="count(//gmd:identificationInfo/*/gmd:citation/*/gmd:title[starts-with(*/text(), 'Urban Atlas - ')]) > 0"/>
+
+  <xsl:variable name="isEUGrid"
+                select="count(//gmd:identificationInfo/*/gmd:citation/*/gmd:title[starts-with(*/text(), 'EEA reference grid for Europe')]) > 0"/>
+
+  <xsl:variable name="isNationalGrid"
+                select="count(//gmd:identificationInfo/*/gmd:citation/*/gmd:title[starts-with(*/text(), 'EEA reference grid for')]) > 0"/>
+
+  <xsl:variable name="isGlobal"
+                select="count(//gmd:identificationInfo/*/gmd:citation/*/gmd:title[
+                          contains(*/text(), '(GAUL)')
+                          or contains(*/text(), 'Natural Earth')
+                          or contains(*/text(), 'EGM EuroGlobalMap')
+                          or contains(*/text(), 'Global Soil Organic Carbon')
+                          or contains(*/text(), 'Offshore wind farms')
+                          or contains(*/text(), 'LandScan Global Population Database')
+                          or contains(*/text(), 'Natural Earth cultural and physical data')
+                          or contains(*/text(), 'GISCO - Administrative units')
+                          or contains(*/text(), 'GISCO - Coastlines and sea regions 2010')
+                          or contains(*/text(), 'GISCO - Exclusive Economic Zones (EEZ)')]) > 0"/>
+
+
+  <xsl:template match="gmd:descriptiveKeywords[
+                            not($hasSpatialScope)
+                            and following-sibling::*[1]/name(.) != 'gmd:descriptiveKeywords']">
+    <xsl:copy>
+      <xsl:apply-templates select="*"/>
+    </xsl:copy>
+
+    <gmd:descriptiveKeywords>
+      <gmd:MD_Keywords>
+        <gmd:keyword>
+          <xsl:choose>
+            <xsl:when test="$isGlobal">
+              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/global">Global</gmx:Anchor>
+            </xsl:when>
+            <xsl:when test="$isEuOrEEA or $isEUGrid">
+              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/european">European</gmx:Anchor>
+            </xsl:when>
+            <xsl:when test="$isNationalGrid">
+              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national">National</gmx:Anchor>
+            </xsl:when>
+            <xsl:when test="$isUrbanAtlas">
+              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/local">Local</gmx:Anchor>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:attribute name="gco:nilReason" select="'missing'"/>
+              <gmx:Anchor/>
+            </xsl:otherwise>
+          </xsl:choose>
+
+          <!--<gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional">Regional</gmx:Anchor>-->
+        </gmd:keyword>
+        <gmd:type>
+          <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                  codeListValue="theme"/>
+        </gmd:type>
+        <gmd:thesaurusName>
+          <gmd:CI_Citation>
+            <gmd:title>
+              <gco:CharacterString>Spatial scope</gco:CharacterString>
+            </gmd:title>
+            <gmd:date>
+              <gmd:CI_Date>
+                <gmd:date>
+                  <gco:Date>2019-11-20</gco:Date>
+                </gmd:date>
+                <gmd:dateType>
+                  <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                       codeListValue="publication"/>
+                </gmd:dateType>
+              </gmd:CI_Date>
+            </gmd:date>
+            <gmd:identifier>
+              <gmd:MD_Identifier>
+                <gmd:code>
+                  <gmx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/eng/thesaurus.download?ref=external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope">geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope</gmx:Anchor>
+                </gmd:code>
+              </gmd:MD_Identifier>
+            </gmd:identifier>
+          </gmd:CI_Citation>
+        </gmd:thesaurusName>
+      </gmd:MD_Keywords>
+    </gmd:descriptiveKeywords>
+  </xsl:template>
+
 
   <!-- Coordinate reference system
 
@@ -247,6 +346,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
   </xsl:template>
+
   <!-- Do a copy of every nodes and attributes -->
   <xsl:template match="@*|node()|comment()">
     <xsl:copy>
