@@ -191,7 +191,7 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
         <gmd:thesaurusName>
           <gmd:CI_Citation>
             <gmd:title>
-              <gco:CharacterString>Spatial scope</gco:CharacterString>
+              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope#">Spatial scope</gmx:Anchor>
             </gmd:title>
             <gmd:date>
               <gmd:CI_Date>
