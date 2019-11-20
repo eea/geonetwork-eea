@@ -282,7 +282,9 @@
     </div>
   </eea-contact-help>
 
-  <eea-resourceConstraints>Resource Constraints</eea-resourceConstraints>
+  <eea-resourceConstraints>Resource constraints</eea-resourceConstraints>
+  <eea-accessConstraints>Access constraints</eea-accessConstraints>
+  <eea-useConstraints>Use constraints</eea-useConstraints>
   <eea-resourceConstraints-help>
     <div class="row">
       <div class="col-sm-2"/>
