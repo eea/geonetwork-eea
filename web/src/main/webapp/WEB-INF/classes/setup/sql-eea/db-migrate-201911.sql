@@ -17,3 +17,7 @@ INSERT INTO operationallowed (groupid, metadataid, operationid)
 
 
 UPDATE metadata SET data = replace(data, 'ISO 19115:2003/19139', 'ISO 19115/19139') WHERE data LIKE '%ISO 19115:2003/19139%';
+
+UPDATE metadata SET data = replace(data, 'http://sdi.eea.europa.eu/internal-catalogue', 'https://sdi.eea.europa.eu/catalogue') WHERE data LIKE '%http://sdi.eea.europa.eu/internal-catalogue%';
+
+UPDATE metadata SET data = replace(data, '/internal-catalogue', '/catalogue') WHERE data LIKE '%/internal-catalogue%';
