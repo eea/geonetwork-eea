@@ -521,6 +521,9 @@
 
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Spatial scope']"/>
+
+          <text ref="eea-spatialscope-help"/>
+
           <field name="eea-keyword-spatial"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Continents, countries, sea regions of the world.']"/>
           <text ref="eea-country-help"/>

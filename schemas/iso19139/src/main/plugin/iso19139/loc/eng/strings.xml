@@ -164,6 +164,18 @@
     </div>
     <hr/>
   </eea-gemet-help>
+
+  <eea-spatialscope-help>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          This keyword is used to describe the administrative level that the dataset intends to cover and a value should be taken from code list <a href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope">Spatial Scope in the INSPIRE registry</a>. Typically this value will be "European"
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-spatialscope-help>
   <eea-country-help>
     <div class="row">
       <div class="col-sm-2"></div>
