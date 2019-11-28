@@ -2,7 +2,7 @@
    which has to be applied for all apps
    (ie. admin, search, login, editor). */
 
-/* Override EEA plone style interacting with bootstrap */
+/* Override EEA plone style interacting with bootstrap
 .container, .container-fluid,
 .gn-editor-board, .gn-editor-container, .gn-search-page {
   .panel {
@@ -44,9 +44,9 @@
 }
 
 // change GN layout
-.gn-top-bar {
-  margin-top: 167px;
-}
+// EEA.gn-top-bar {
+//  margin-top: 167px;
+//}
 [ng-app ="gn_editor"] {
   body {
     .gn-top-bar {
@@ -54,10 +54,16 @@
     }
   }
 }
+
 .gn-editor-board, [data-ng-controller="GnAdminController"] {
   background-color: #fff !important;
   margin-top: 90px;
   min-height: 200px;
+}
+*/
+
+.gn-editor-board {
+  margin-top: 80px;
 }
 
 /* Override Bootstrap style */

@@ -85,8 +85,10 @@
           <xsl:when test="$requestParameters/noeeaapi or $env/system/eea/templateapi = 'false'">
             <xsl:call-template name="eea-header"/>
           </xsl:when>
-          <xsl:otherwise>
+          <xsl:when test="$requestParameters/eeaapi or $env/system/eea/templateapi = 'false'">
             <xsl:call-template name="eea-header-api"/>
+          </xsl:when>
+          <xsl:otherwise>
           </xsl:otherwise>
         </xsl:choose>
 
@@ -125,8 +127,10 @@
           <xsl:when test="$requestParameters/noeeaapi or $env/system/eea/templateapi = 'false'">
             <xsl:call-template name="eea-footer"/>
           </xsl:when>
+          <xsl:when test="$requestParameters/eeaapi or $env/system/eea/templateapi = 'false'">
+            <xsl:call-template name="eea-footer"/>
+          </xsl:when>
           <xsl:otherwise>
-            <xsl:call-template name="eea-footer-api"/>
           </xsl:otherwise>
         </xsl:choose>
 

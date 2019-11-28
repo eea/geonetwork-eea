@@ -47,6 +47,9 @@ UPDATE metadata SET groupowner = 2 WHERE groupowner = 1069862;
 
 -- User searches may have to be reassigned to groups manually?
 
+--------------------------------------------------------
+-- For the main catalogue only
+--------------------------------------------------------
 -- Removing existing Maps group
 DELETE FROM operationallowed WHERE groupid = 1069710;
 DELETE FROM usergroups WHERE groupid = 1069710;
@@ -117,6 +120,32 @@ INSERT INTO operationallowed (groupid, metadataid, operationid)
 DROP TABLE privateRecords;
 
 
+
+
+--------------------------------------------------------
+-- For the editor catalogue
+--------------------------------------------------------
+
+DELETE FROM usergroups;
+INSERT INTO usergroups (userid, groupid, profile) SELECT id, 3, 3 FROM users WHERE profile != 0;
+
+UPDATE metadata SET groupowner = 3;
+
+DELETE FROM operationallowed WHERE groupid = 1425619;
+DELETE FROM usergroups WHERE groupid = 1425619;
+DELETE FROM group_category WHERE group_id = 1425619;
+DELETE FROM usersearch_group WHERE group_id = 1425619;
+DELETE FROM groupsdes WHERE iddes = 1425619;
+DELETE FROM groups WHERE id = 1425619;
+
+DELETE FROM operationallowed WHERE groupid = 1069710;
+DELETE FROM usergroups WHERE groupid = 1069710;
+DELETE FROM group_category WHERE group_id = 1069710;
+DELETE FROM usersearch_group WHERE group_id = 1069710;
+DELETE FROM groupsdes WHERE iddes = 1069710;
+DELETE FROM groups WHERE id = 1069710;
+
+
 -- Those records are published in the SDI_INTERNAL group
 -- This means that only admin can see them.
 -- INSERT INTO operationallowed (groupid, metadataid, operationid)
@@ -127,3 +156,6 @@ DROP TABLE privateRecords;
 --
 -- INSERT INTO operationallowed (groupid, metadataid, operationid)
 --   SELECT 2, id, 5 FROM metadata WHERE isTemplate = 'n' AND id NOT IN (SELECT metadataid FROM operationallowed WHERE groupid = 1 AND operationid = 0);
+
+UPDATE Settings SET value='3.8.3' WHERE name='system/platform/version';
+UPDATE Settings SET value='SNAPSHOT' WHERE name='system/platform/subVersion';
