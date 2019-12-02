@@ -87,13 +87,11 @@
 	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 	<skos:prefLabel xml:lang="en">Biennial</skos:prefLabel>
 	<skos:scopeNote xml:lang="en">Every two years</skos:scopeNote>
-	<ns3:BoundedBy rdf:nodeID="node1dr30vun6x1"/>
 </rdf:Description>
   
 <rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#0948f76e-b976-4346-be0a-9d583baf0b1b">
 	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 	<skos:prefLabel xml:lang="en">Triennial</skos:prefLabel>
 	<skos:scopeNote xml:lang="en">Every three years</skos:scopeNote>
-	<ns3:BoundedBy rdf:nodeID="node1dr310fgkx1"/>
 </rdf:Description>
 </rdf:RDF>
