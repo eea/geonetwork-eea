@@ -1582,6 +1582,7 @@
       <option value='AAIGrid'>Arc/Info ASCII Grid</option>
       <option value='AIG'>Arc/Info Binary Grid (.adf)</option>
       <option value='XYZ'>ASCII Gridded XYZ</option>
+      <option value='BIL'>Band Interleaved by Line (BIL) Image Encoding</option>
       <option value='CEOS'>CEOS format (used by some satellite image providers)</option>
       <option value='DIMAP'>DIMAP format (used by some satellite image providers)</option>
       <option value='ENVI'>ENVI .hdr Labelled Raster</option>
