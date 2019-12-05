@@ -27,10 +27,10 @@
   var module = angular.module('gn_category_directive', []);
 
   /**
-     * Provide a list of categories if at least one
-     * exist in the catalog
-     *
-     */
+   * Provide a list of categories if at least one
+   * exist in the catalog
+   *
+   */
   module.directive('gnCategory', ['$http', '$translate',
     function($http, $translate) {
 
@@ -44,18 +44,18 @@
           label: '@label'
         },
         templateUrl: '../../catalog/components/category/partials/' +
-            'category.html',
+          'category.html',
         link: function(scope, element, attrs) {
           $http.get('../api/tags', {cache: true}).
-              success(function(data) {
-                scope.categories = data;
-              });
+          success(function(data) {
+            scope.categories = data;
+          });
 
           scope.sortByLabel = function(c) {
             return c.label[scope.lang];
           };
         }
-        
+
       };
     }]);
 
@@ -68,58 +68,57 @@
         replace: true,
         transclude: true,
         templateUrl: '../../catalog/components/category/partials/' +
-            'batchcategory.html',
+          'batchcategory.html',
         link: function(scope, element, attrs) {
           scope.report = null;
-          scope.lang = gnLangs.current;
 
           $http.get('../api/tags', {cache: true}).
-              success(function(data) {
-                scope.categories = data;
-              });
+          success(function(data) {
+            scope.categories = data;
+          });
 
           scope.save = function(replace) {
             scope.report = null;
             var defer = $q.defer();
             var params = [];
             var url = '../api/records/tags?' +
-                        '&bucket=' +
-                (attrs.selectionBucket || 'metadata') + '&' +
-                        (replace ? 'clear=true&id=' : 'id=');
+              '&bucket=' +
+              (attrs.selectionBucket || 'metadata') + '&' +
+              (replace ? 'clear=true&id=' : 'id=');
             angular.forEach(scope.categories, function(c) {
               if (c.checked === true) {
                 params.push(c.id);
               }
             });
             $http.put(url + params.join('&id='))
-                .success(function(data) {
-                  scope.processReport = data;
+              .success(function(data) {
+                scope.processReport = data;
 
-                  gnUtilityService.openModal({
-                    title: $translate.instant('categoriesUpdated'),
-                    content: '<div gn-batch-report="processReport"></div>',
-                    className: 'gn-category-popup',
-                    onCloseCallback: function() {
-                      scope.processReport = null;
-                    }
-                  }, scope, 'CategoryUpdated');
+                gnUtilityService.openModal({
+                  title: $translate.instant('categoriesUpdated'),
+                  content: '<div gn-batch-report="processReport"></div>',
+                  className: 'gn-category-popup',
+                  onCloseCallback: function() {
+                    scope.processReport = null;
+                  }
+                }, scope, 'CategoryUpdated');
 
-                  scope.report = data;
-                  defer.resolve(data);
-                }).error(function(data) {
-                  scope.processReport = data;
+                scope.report = data;
+                defer.resolve(data);
+              }).error(function(data) {
+              scope.processReport = data;
 
-                  gnUtilityService.openModal({
-                    title: $translate.instant('categoriesUpdated'),
-                    content: '<div gn-batch-report="processReport"></div>',
-                    className: 'gn-category-popup',
-                    onCloseCallback: function() {
-                      scope.processReport = null;
-                    }
-                  }, scope, 'CategoryUpdated');
+              gnUtilityService.openModal({
+                title: $translate.instant('categoriesUpdated'),
+                content: '<div gn-batch-report="processReport"></div>',
+                className: 'gn-category-popup',
+                onCloseCallback: function() {
+                  scope.processReport = null;
+                }
+              }, scope, 'CategoryUpdated');
 
-                  defer.reject(data);
-                });
+              defer.reject(data);
+            });
             return defer.promise;
           };
         }
