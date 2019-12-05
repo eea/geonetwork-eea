@@ -86,7 +86,7 @@ class MEF2Exporter {
                                 boolean removeXlinkAttribute, boolean skipError, boolean addSchemaLocation) throws Exception {
     	return doExport(context, uuids, format, skipUUID, stylePath, resolveXlink, removeXlinkAttribute, skipError, addSchemaLocation, false);
     }
-    
+
     /**
      * Create a MEF2 file in ZIP format.
      *
@@ -137,17 +137,17 @@ class MEF2Exporter {
                 try {
                     IndexSearcher searcher = new IndexSearcher(indexReaderAndTaxonomy.indexReader);
                     BooleanQuery query = new BooleanQuery();
-                    
+
                     AbstractMetadata md = context.getBean(IMetadataUtils.class).findOneByUuid(uuid);
-                    
+
                     //Here we just care if we need the approved version explicitly.
                     //IMetadataUtils already filtered draft for non editors.
-                    
+
                     if(approved) {
                     	md = context.getBean(MetadataRepository.class).findOneByUuid(uuid);
                     }
                     String id = String.valueOf(md.getId());
-                    
+
                     query.add(new BooleanClause(new TermQuery(new Term(LuceneIndexField.ID, id)), BooleanClause.Occur.MUST));
                     query.add(new BooleanClause(new TermQuery(new Term(LOCALE, contextLang)), BooleanClause.Occur.SHOULD));
                     TopDocs topDocs = searcher.search(query, NoFilterFilter.instance(), 5);
@@ -209,36 +209,7 @@ class MEF2Exporter {
                                 )))
                         ))
                     )));
-                    csvBuilder.append('"').append(cleanForCsv(mdSchema)).append("\";\"").
-                    append(cleanUUID).append("\";\"").
-                    append(cleanForCsv(id)).append("\";\"").
-                    append(mdType.toString()).append("\";\"").
-                    append(cleanForCsv(isHarvested)).append("\";\"").
-                    append(cleanForCsv(mdTitle)).append("\";\"").
-                    append(cleanForCsv(mdAbstract)).append("\"\n");
 
-                    body.addContent(new Element("div").setAttribute("class", "entry").addContent(Arrays.asList(
-                        new Element("h4").setAttribute("class", "title").addContent(
-                            new Element("a").setAttribute("href", uuid).setText(cleanXml(mdTitle))),
-                        new Element("p").setAttribute("class", "abstract").setText(cleanXml(mdAbstract)),
-                        new Element("table").setAttribute("class", "table").addContent(Arrays.asList(
-                            new Element("thead").addContent(
-                                new Element("tr").addContent(Arrays.asList(
-                                    new Element("th").setText("ID"),
-                                    new Element("th").setText("UUID"),
-                                    new Element("th").setText("Type"),
-                                    new Element("th").setText("isHarvested")
-                                ))),
-                            new Element("tbody").addContent(
-                                new Element("tr").addContent(Arrays.asList(
-                                    new Element("td").setAttribute("class", "id").setText(id),
-                                    new Element("td").setAttribute("class", "uuid").setText(xmlContentEscaper().escape
-                                        (uuid)),
-                                    new Element("td").setAttribute("class", "type").setText(mdType.toString()),
-                                    new Element("td").setAttribute("class", "isHarvested").setText(isHarvested)
-                                )))
-                        ))
-                    )));
                     createMetadataFolder(context, md, zipFs, skipUUID, stylePath,
                     format, resolveXlink, removeXlinkAttribute, addSchemaLocation);                } catch (Throwable t) {
                     if (skipError) {
