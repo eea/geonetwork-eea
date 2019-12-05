@@ -1096,6 +1096,7 @@
     <xsl:variable name="roleTranslation"
                   select="util:getCodelistTranslation('gmd:CI_RoleCode', string($role), string($isoLangId))"/>
     <xsl:variable name="logo" select=".//gmx:FileName/@src"/>
+    <xsl:variable name="website" select=".//gmd:onlineResource/*/gmd:linkage/gmd:URL"/>
     <xsl:variable name="email"
                   select="gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/gco:CharacterString"/>
     <xsl:variable name="phone"
@@ -1109,7 +1110,8 @@
                                         gmd:administrativeArea|gmd:country)/gco:CharacterString/text(), ', ')"/>
 
     <Field name="{$fieldPrefix}"
-           string="{concat($roleTranslation, '|', $type,'|',
+           string="{concat($roleTranslation, '|',
+                             $type,'|',
                              $orgName, '|',
                              $logo, '|',
                              string-join($email, ','), '|',
@@ -1118,7 +1120,8 @@
                              $address, '|',
                              string-join($phone, ','), '|',
                              $uuid, '|',
-                             $position)}"
+                             $position, '|',
+                             $website)}"
            store="true" index="false"/>
 
     <xsl:for-each select="$email">
