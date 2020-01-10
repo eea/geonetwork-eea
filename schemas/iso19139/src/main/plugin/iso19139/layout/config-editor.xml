@@ -1118,6 +1118,10 @@
         </section>
 
       </tab>
+
+      <flatModeExceptions>
+        <for name="gmd:keyword"/>
+      </flatModeExceptions>
     </view>
 
 
@@ -1495,6 +1499,10 @@
       <tab id="eea-dm-settings" mode="flat">
         <section/>
       </tab>
+
+      <flatModeExceptions>
+        <for name="gmd:keyword"/>
+      </flatModeExceptions>
     </view>
 
 
