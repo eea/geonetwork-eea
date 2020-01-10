@@ -233,8 +233,8 @@
                            scope.relations.associated = {};
                          }
                        });
-                    
-                       if (angular.isDefined(scope.container) 
+
+                       if (angular.isDefined(scope.container)
                            && scope.relations == null) {
                          $(scope.container).hide();
                        }
