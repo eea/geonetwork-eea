@@ -55,8 +55,17 @@
     <EEA_KEYWORD_EEA.report> EEA keyword(s) found.</EEA_KEYWORD_EEA.report>
     <EEA_KEYWORD_EEA.error>No keyword from the EEA list has been set.</EEA_KEYWORD_EEA.error>
 
+    <EEA_KEYWORD_SPATIALSCOPE.alert>There shall be one keyword defining the spatial scope</EEA_KEYWORD_SPATIALSCOPE.alert>
+    <EEA_KEYWORD_SPATIALSCOPE.report> Spatial scope keyword(s) found.</EEA_KEYWORD_SPATIALSCOPE.report>
+
     <EEA_RESCONSTRAINT.alert>No resource constraint found.</EEA_RESCONSTRAINT.alert>
     <EEA_RESCONSTRAINT.report>Resource constraint is </EEA_RESCONSTRAINT.report>
+
+    <EEA_RESACONSTRAINT.alert>No resource access constraint found.</EEA_RESACONSTRAINT.alert>
+    <EEA_RESACONSTRAINT.report>Resource access constraint is </EEA_RESACONSTRAINT.report>
+
+    <EEA_RESUCONSTRAINT.alert>No resource use constraint found.</EEA_RESUCONSTRAINT.alert>
+    <EEA_RESUCONSTRAINT.report>Resource use constraint is </EEA_RESUCONSTRAINT.report>
 
     <EEA_SPATIAL_TYPE.alert>No spatial representation type found.</EEA_SPATIAL_TYPE.alert>
     <EEA_SPATIAL_TYPE.report>The dataset spatial representation type is </EEA_SPATIAL_TYPE.report>

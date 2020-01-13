@@ -293,6 +293,15 @@
                                     select="$loc/strings/EEA_KEYWORD_EEA.report"/> </sch:report>
 
 
+          <sch:let name="atLeastOneSpatialScope"
+                   value="count(gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/gmd:CI_Citation/gmd:title/(gmd:CharacterString|gmx:Anchor), 'Spatial scope')]
+                /gmd:keyword[* != ''])"/>
+
+          <sch:assert test="$atLeastOneSpatialScope != 0"><sch:value-of
+            select="$loc/strings/EEA_KEYWORD_SPATIALSCOPE.error"/> </sch:assert>
+          <sch:report test="$atLeastOneSpatialScope != 0"><sch:value-of
+            select="$loc/strings/EEA_KEYWORD_SPATIALSCOPE.report"/> </sch:report>
+
 
           <!-- MD_Metadata/identificationInfo/*/descriptiveKeywords (GEMET concepts). Is mandatory for EEA.
                https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfodescriptiveKeywords-GEMET-concepts
@@ -347,15 +356,23 @@
                Current rule checks non empty.
            -->
 
-          <sch:let name="resourceConstraints"
-              value="gmd:resourceConstraints/*/gmd:useLimitation/gco:CharacterString[.!='']"/>
+          <sch:let name="resourceAConstraints"
+              value="gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints/*[.!='']"/>
 
-          <sch:assert test="$resourceConstraints"
+          <sch:assert test="$resourceAConstraints"
               ><sch:value-of
-                  select="$loc/strings/EEA_RESCONSTRAINT.alert"/></sch:assert>
-          <sch:report test="$resourceConstraints"><sch:value-of
-              select="$loc/strings/EEA_RESCONSTRAINT.report"/> <sch:value-of select="$resourceConstraints"/></sch:report>
+                  select="$loc/strings/EEA_RESACONSTRAINT.alert"/></sch:assert>
+          <sch:report test="$resourceAConstraints"><sch:value-of
+              select="$loc/strings/EEA_RESACONSTRAINT.report"/> <sch:value-of select="$resourceAConstraints"/></sch:report>
 
+          <sch:let name="resourceUConstraints"
+                   value="gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints/*[.!='']"/>
+
+          <sch:assert test="$resourceUConstraints"
+          ><sch:value-of
+            select="$loc/strings/EEA_RESUCONSTRAINT.alert"/></sch:assert>
+          <sch:report test="$resourceUConstraints"><sch:value-of
+            select="$loc/strings/EEA_RESUCONSTRAINT.report"/> <sch:value-of select="$resourceUConstraints"/></sch:report>
           <!-- MD_Metadata/identificationInfo/*/aggregationInfo (revision of an existing resource)¶
                https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfoaggregationInfo-revision-of-an-existing-resource
           -->
