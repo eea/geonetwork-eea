@@ -963,6 +963,7 @@
         <security.config.file>config-security-noldap.xml</security.config.file>
         <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
         <ldap.mapping.defaultProfile>RegisteredUser</ldap.mapping.defaultProfile>
+        <ldap.mapping.defaultGroup>SDI_GUEST</ldap.mapping.defaultGroup>
       </properties>
     </profile>
     <profile>
@@ -981,6 +982,8 @@
         <geonetwork.data.dir>file://${editor-catalogue.data.dir}</geonetwork.data.dir>
         <security.config.file>config-security.xml</security.config.file>
         <war.excludes>WEB-INF/web*.xml</war.excludes>
+        <ldap.mapping.defaultProfile>Editor</ldap.mapping.defaultProfile>
+        <ldap.mapping.defaultGroup>eea_users</ldap.mapping.defaultGroup>
       </properties>
     </profile>
     <profile>

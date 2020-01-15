@@ -1366,6 +1366,7 @@
     <db.pool.initialSize>10</db.pool.initialSize>
 
     <ldap.mapping.defaultProfile>Editor</ldap.mapping.defaultProfile>
+    <ldap.mapping.defaultGroup>eea_users</ldap.mapping.defaultGroup>
 
     <!-- Default catalog language when accessing the home page
     ie. http://localhost:8080/geonetwork. -->
