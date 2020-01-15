@@ -165,14 +165,14 @@
 
           var openLink = function(record, link) {
             var url = $filter('gnLocalized')(record.url) || record.url;
-            if (url && 
-                angular.isString(url) && 
+            if (url &&
+                angular.isString(url) &&
                 url.match("^(http|ftp|sftp|\\\\|//)")) {
               return window.open(url, '_blank');
             } else if (url && url.indexOf('www.') == 0) {
               return window.open('http://' + url, '_blank');
-            } else if (record.title && 
-                       angular.isString(record.title) && 
+            } else if (record.title &&
+                       angular.isString(record.title) &&
                        record.title.match("^(http|ftp|sftp|\\\\|//)")) {
               return window.location.assign(record.title);
             } else {
@@ -234,11 +234,6 @@
               iconClass: 'fa-globe',
               label: 'fileLink',
               action: null
-            },
-            'ESRI:REST' : {
-              iconClass: 'fa-globe',
-              label: 'openPage',
-              action: openLink
             },
             'MAP' : {
               iconClass: 'fa-map',
