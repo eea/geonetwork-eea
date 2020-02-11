@@ -301,6 +301,14 @@
   <!-- =========================================================== -->
   <dependencyManagement>
     <dependencies>
+
+      <!-- https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api -->
+      <dependency>
+        <groupId>javax.annotation</groupId>
+        <artifactId>javax.annotation-api</artifactId>
+        <version>1.3.2</version>
+      </dependency>
+
       <!-- rewrite url servletfilter -->
       <dependency>
         <groupId>org.tuckey</groupId>
@@ -1165,7 +1173,7 @@
     <repository>
       <id>maven2</id>
       <name>Repository maven2</name>
-      <url>http://repo.maven.apache.org/maven2</url>
+      <url>https://repo.maven.apache.org/maven2</url>
     </repository>
 
     <!-- seasar repo, has jsonic - used by langdetect -->
