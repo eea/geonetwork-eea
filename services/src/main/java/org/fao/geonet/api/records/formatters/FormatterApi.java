@@ -96,6 +96,7 @@ import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.repository.OperationAllowedRepository;
 import org.fao.geonet.repository.specification.OperationAllowedSpecs;
+import org.fao.geonet.api.records.extent.MapRenderer;
 import org.fao.geonet.util.XslUtil;
 import org.fao.geonet.utils.GeonetHttpRequestFactory;
 import org.fao.geonet.utils.IO;
@@ -282,14 +283,10 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
             language = LanguageUtils.locale2gnCode(iso3lang);
         }
 
-        final ServiceContext context = createServiceContext(
-            language,
-            formatType,
-            request.getNativeRequest(HttpServletRequest.class));
         AbstractMetadata metadata = ApiUtils.canViewRecord(metadataUuid, servletRequest);
 
         if(approved) {
-        	metadata = context.getBean(MetadataRepository.class).findOneByUuid(metadataUuid);
+        	metadata = ApplicationContextHolder.get().getBean(MetadataRepository.class).findOneByUuid(metadataUuid);
         }
 
 
@@ -302,6 +299,12 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
         ISODate changeDate = metadata.getDataInfo().getChangeDate();
 
         Validator validator;
+
+        final ServiceContext context = createServiceContext(
+            language,
+            formatType,
+            request.getNativeRequest(HttpServletRequest.class));
+
         if (changeDate != null) {
             final long changeDateAsTime = changeDate.toDate().getTime();
             long roundedChangeDate = changeDateAsTime / 1000 * 1000;
@@ -335,7 +338,9 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
             if (!skipPopularityBool) {
                 context.getBean(DataManager.class).increasePopularity(context, String.valueOf(metadata.getId()));
             }
-            writeOutResponse(context, metadataUuid, locale.getISO3Language(), request.getNativeResponse(HttpServletResponse.class), formatType, bytes);
+            writeOutResponse(context, metadataUuid,
+                LanguageUtils.locale2gnCode(locale.getISO3Language()),
+                request.getNativeResponse(HttpServletResponse.class), formatType, bytes);
         }
     }
 
@@ -568,8 +573,9 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
             XslUtil.setNoScript();
             ITextRenderer renderer = new ITextRenderer();
             String siteUrl = context.getBean(SettingManager.class).getSiteURL(lang);
-            renderer.getSharedContext().setReplacedElementFactory(new ImageReplacedElementFactory(siteUrl, renderer.getSharedContext()
-                .getReplacedElementFactory()));
+            MapRenderer mapRenderer = new MapRenderer(context);
+            renderer.getSharedContext().setReplacedElementFactory(new ImageReplacedElementFactory(siteUrl.replace("/" + lang + "/", "/eng/"), renderer.getSharedContext()
+                .getReplacedElementFactory(), mapRenderer));
             renderer.getSharedContext().setDotsPerPixel(13);
             renderer.setDocumentFromString(htmlContent, siteUrl);
             renderer.layout();
