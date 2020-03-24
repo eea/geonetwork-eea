@@ -36,7 +36,8 @@
                        mainType.indexOf('LINK') === 0 ||
                        mainType.indexOf('DEFAULT') === 0 ||
                        r.protocol === 'OGC:WFS') &&
-                       r.locDescription.length > 0">
+                       r.locDescription.length > 0  &&
+                      mainType !== 'LINK'">
           {{::r.locDescription | striptags | characters:150}}
         </p>
         <div data-ng-switch on="mainType">
