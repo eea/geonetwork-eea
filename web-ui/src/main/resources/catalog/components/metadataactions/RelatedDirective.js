@@ -106,8 +106,8 @@
         'gnRelatedResources',
         'gnExternalViewer',
         function(gnRelatedService, gnGlobalSettings,
-                 gnSearchSettings, gnRelatedResources,
-                 gnExternalViewer) {
+                 gnOwsCapabilities, gnSearchSettings,
+                 gnRelatedResources, gnExternalViewer) {
           return {
             restrict: 'A',
             templateUrl: function(elem, attrs) {
