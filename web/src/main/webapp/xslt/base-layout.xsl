@@ -79,7 +79,7 @@
       loading site information, check user login state
       and a facet search to get main site information.
       -->
-      <body data-ng-controller="GnCatController">
+      <body data-ng-controller="GnCatController" data-ng-class="[isHeaderFixed ? 'gn-header-fixed' : 'gn-header-relative', isLogoInHeader ? 'gn-logo-in-header' : 'gn-logo-in-navbar']">
 
         <xsl:choose>
           <xsl:when test="$requestParameters/noeeaapi or $env/system/eea/templateapi = 'false'">
