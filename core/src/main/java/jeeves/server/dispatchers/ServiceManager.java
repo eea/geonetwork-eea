@@ -846,6 +846,7 @@ public class ServiceManager {
                                     timerContext.stop();
                                 }
 
+
                                 if (outPage.getContentType() != null
                                     && outPage.getContentType().startsWith("text/plain")) {
                                     req.beginStream(outPage.getContentType(), -1, "attachment;", cache);
