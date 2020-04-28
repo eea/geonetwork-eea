@@ -657,7 +657,8 @@ public class ServiceManager {
             final NodeInfo nodeInfo = context.getBean(NodeInfo.class);
             if (outPage.isFile()) {
                 // PDF Output
-                if (outPage.getContentType().equals("application/pdf") && !outPage.getStyleSheet().equals("")) {
+                if (outPage.getContentType().equals("application/pdf")
+                    && !outPage.getStyleSheet().equals("")) {
 
                     //--- build the xml data for the XSL/FO translation
                     Path styleSheet = IO.toPath(outPage.getStyleSheet());
@@ -844,7 +845,13 @@ public class ServiceManager {
                                 } finally {
                                     timerContext.stop();
                                 }
-                                req.beginStream(outPage.getContentType(), cache);
+
+                                if (outPage.getContentType() != null
+                                    && outPage.getContentType().startsWith("text/plain")) {
+                                    req.beginStream(outPage.getContentType(), -1, "attachment;", cache);
+                                } else {
+                                    req.beginStream(outPage.getContentType(), cache);
+                                }
                                 req.getOutputStream().write(baos.toByteArray());
                                 req.endStream();
                             }
