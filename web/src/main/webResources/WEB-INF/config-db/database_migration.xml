@@ -22,8 +22,33 @@
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
 
-<beans default-lazy-init="true"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       default-lazy-init="true"
        xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+	">
+  <bean id="database-migration-bean" class="org.fao.geonet.DatabaseMigration">
+    <property name="migration" ref="migrationMap"/>
+    <property name="initAfter" value="javax.sql.DataSource"/>
+  </bean>
+  <bean id="database-data-migration-bean" class="org.fao.geonet.DatabaseMigration">
+    <property name="migration" ref="dataMigrationMap"/>
+    <property name="initAfter" value="org.springframework.orm.jpa.JpaTransactionManager"/>
+  </bean>
+
+  <util:map id="migrationMap"
+            map-class="java.util.LinkedHashMap"
+            key-type="java.lang.String"
+            value-type="java.util.List">
+  </util:map>
+
+
+  <util:map id="dataMigrationMap"
+            map-class="java.util.LinkedHashMap"
+            key-type="java.lang.String"
+            value-type="java.util.List">
+  </util:map>
 </beans>
