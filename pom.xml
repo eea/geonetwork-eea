@@ -1488,7 +1488,7 @@
     <geotools.version>23.0</geotools.version>
     <pg.version>42.2.5</pg.version>
 
-    <lucene.version>4.9.0</lucene.version>
+    <lucene.version>8.5.1</lucene.version>
 
     <spring.version>4.3.0.RELEASE</spring.version>
     <spring.security.version>3.2.0.RELEASE</spring.security.version>
