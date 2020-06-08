@@ -58,23 +58,75 @@
             if (element.get(0).tagName === hyperlinkTagName) {
               var url = '#/' +
                 (scope.md.draft == 'y' ? 'metadraf' : 'metadata') +
-                '/' + scope.md.getUuid() +
+                '/' + scope.md.uuid +
                 (scope.formatter === undefined || scope.formatter == '' ?
                   '' :
                   formatter);
               element.attr('href', url);
             } else {
               element.on('click', function(e) {
-                gnMdView.setLocationUuid(scope.md.getUuid(), formatter);
+                gnMdView.setLocationUuid(scope.md.uuid, formatter);
               });
             }
-
-            gnMdViewObj.records = scope.records;
+            if (scope.records && scope.records.length) {
+              gnMdViewObj.records = scope.records;
+            } else {
+              gnMdViewObj.records = [];
+            }
           });
         }
       };
     }]
   );
+
+
+  /**
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-mlt-query.html
+   */
+  module.directive('gnMoreLikeThis', [
+    '$http', 'gnGlobalSettings', function($http, gnGlobalSettings) {
+      return {
+        scope: {
+          md: '=gnMoreLikeThis'
+        },
+        templateUrl: function(elem, attrs) {
+          return attrs.template ||
+            '../../catalog/components/search/mdview/partials/' +
+            'morelikethis.html';
+        },
+        link: function(scope, element, attrs, controller) {
+          scope.similarDocuments = [];
+          var moreLikeThisQuery = {};
+          angular.copy(gnGlobalSettings.gnCfg.mods.search.moreLikeThisConfig, moreLikeThisQuery);
+          var query = {
+            "query": {
+              "bool": {
+                "must": [
+                  moreLikeThisQuery,
+                  {"terms": {"isTemplate": ["n"]}}, // TODO: We may want to use it for subtemplate
+                  {"terms": {"draft": ["n", "e"]}}
+                ]}
+            }
+          };
+
+          function loadMore() {
+            if (scope.md == null) {
+              return;
+            }
+            query.query.bool.must[0].more_like_this.like = scope.md.resourceTitleObject.default;
+            $http.post('../api/search/records/_search', query).then(function (r) {
+              scope.similarDocuments = r.data.hits;
+            })
+          }
+          scope.$watch('md', function() {
+            scope.similarDocuments = [];
+            loadMore();
+          });
+
+        }
+      };
+    }]);
+
 
   module.directive('gnMetadataDisplay', [
     'gnMdView', 'gnSearchSettings', function(gnMdView, gnSearchSettings) {
@@ -141,7 +193,7 @@
 
 
           scope.rateForRecord = function() {
-            return $http.put('../api/records/' + scope.md['geonet:info'].uuid +
+            return $http.put('../api/records/' + scope.md.uuid +
                              '/rate', scope.rate).success(function(data) {
               scope.rate = data;
             });
@@ -206,9 +258,9 @@
                 return _.groupBy(resources,
                   function(contact) {
                     if (contact.email) {
-                      return contact.org + '#' + contact.email;
+                      return contact.organisation + '#' + contact.email;
                     } else {
-                      return contact.org + '#' + contact.name;
+                      return contact.organisation + '#' + contact.individual;
                     }
                   });
               };
@@ -259,9 +311,9 @@
                 scope.mdContactsByOrgRole = _.groupBy(scope.mdContacts,
                   function(contact) {
                     if (contact.website !== '') {
-                     scope.orgWebsite[contact.org] = contact.website;
+                     scope.orgWebsite[contact.organisation] = contact.website;
                     }
-                    return contact.org;
+                    return contact.organisation;
                   });
 
                 for (var key in scope.mdContactsByOrgRole) {

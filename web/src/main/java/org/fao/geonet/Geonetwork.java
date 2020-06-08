@@ -23,17 +23,19 @@
 
 package org.fao.geonet;
 
-import org.locationtech.jts.geom.MultiPolygon;
 import jeeves.config.springutil.ServerBeanPropertyUpdater;
 import jeeves.constants.Jeeves;
 import jeeves.interfaces.ApplicationHandler;
-import jeeves.server.JeevesEngine;
 import jeeves.server.JeevesProxyInfo;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.sources.http.ServletPathFinder;
 import jeeves.xlink.Processor;
 import org.apache.commons.lang.StringUtils;
+import org.fao.geonet.api.records.formatters.FormatType;
+import org.fao.geonet.api.records.formatters.FormatterApi;
+import org.fao.geonet.api.records.formatters.FormatterWidth;
+import org.fao.geonet.api.site.LogUtils;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.entitylistener.AbstractEntityListenerManager;
@@ -45,45 +47,28 @@ import org.fao.geonet.kernel.*;
 import org.fao.geonet.kernel.csw.CswHarvesterResponseExecutionService;
 import org.fao.geonet.kernel.harvest.HarvestManager;
 import org.fao.geonet.kernel.oaipmh.OaiPmhDispatcher;
-import org.fao.geonet.kernel.search.LuceneConfig;
-import org.fao.geonet.kernel.search.SearchManager;
-import org.fao.geonet.kernel.search.spatial.SpatialIndexWriter;
+import org.fao.geonet.kernel.search.EsSearchManager;
 import org.fao.geonet.kernel.setting.SettingInfo;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.kernel.thumbnail.ThumbnailMaker;
-import org.fao.geonet.languages.LanguageDetector;
 import org.fao.geonet.lib.DbLib;
-import org.fao.geonet.notifier.MetadataNotifierControl;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.repository.SettingRepository;
 import org.fao.geonet.repository.SourceRepository;
 import org.fao.geonet.resources.Resources;
-import org.fao.geonet.api.site.LogUtils;
-import org.fao.geonet.api.records.formatters.FormatterApi;
-import org.fao.geonet.api.records.formatters.FormatType;
-import org.fao.geonet.api.records.formatters.FormatterWidth;
 import org.fao.geonet.util.ThreadUtils;
 import org.fao.geonet.utils.IO;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.ProxyInfo;
 import org.fao.geonet.utils.XmlResolver;
 import org.fao.geonet.wro4j.GeonetWro4jFilter;
-import org.geotools.data.DataStore;
-import org.geotools.data.shapefile.ShapefileDataStore;
-import org.geotools.feature.AttributeTypeBuilder;
-import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
-import org.geotools.referencing.CRS;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.jdom.Element;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.quartz.SchedulerException;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.mock.web.MockFilterChain;
@@ -95,7 +80,6 @@ import org.springframework.web.context.request.ServletWebRequest;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 import java.io.File;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -105,32 +89,21 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+
 /**
  * This is the main class, it handles http connections and inits the system.
  */
 public class Geonetwork implements ApplicationHandler {
     private Logger logger;
     private Path appPath;
-    private SearchManager searchMan;
-    private MetadataNotifierControl metadataNotifierControl;
+    private EsSearchManager searchMan;
     private ConfigurableApplicationContext _applicationContext;
     private OaiPmhDispatcher oaipmhDis;
-
-    //---------------------------------------------------------------------------
-    //---
-    //--- GetContextName
-    //---
-    //---------------------------------------------------------------------------
 
     public String getContextName() {
         return Geonet.CONTEXT_NAME;
     }
 
-    //---------------------------------------------------------------------------
-    //---
-    //--- Start
-    //---
-    //---------------------------------------------------------------------------
 
     /**
      * Inits the engine, loading all needed data.
@@ -179,8 +152,6 @@ public class Geonetwork implements ApplicationHandler {
         // Get config handler properties
         String systemDataDir = handlerConfig.getMandatoryValue(Geonet.Config.SYSTEM_DATA_DIR);
         String thesauriDir = handlerConfig.getMandatoryValue(Geonet.Config.CODELIST_DIR);
-        String luceneDir = handlerConfig.getMandatoryValue(Geonet.Config.LUCENE_DIR);
-        String luceneConfigXmlFile = handlerConfig.getMandatoryValue(Geonet.Config.LUCENE_CONFIG);
 
         logger.info("Data directory: " + systemDataDir);
 
@@ -248,38 +219,10 @@ public class Geonetwork implements ApplicationHandler {
 
         //------------------------------------------------------------------------
         //--- initialize search and editing
-
         logger.info("  - Search...");
 
-
-        LuceneConfig lc = _applicationContext.getBean(LuceneConfig.class);
-        lc.configure(luceneConfigXmlFile);
-        logger.info("  - Lucene configuration is:");
-        logger.info(lc.toString());
-
-        try {
-            _applicationContext.getBean(DataStore.class);
-        } catch (NoSuchBeanDefinitionException e) {
-            DataStore dataStore = createShapefileDatastore(luceneDir);
-            _applicationContext.getBeanFactory().registerSingleton("dataStore", dataStore);
-            //--- no datastore for spatial indexing means that we can't continue
-            if (dataStore == null) {
-                throw new IllegalArgumentException("GeoTools datastore creation failed - check logs for more info/exceptions");
-            }
-        }
-
-        String maxWritesInTransactionStr = handlerConfig.getMandatoryValue(Geonet.Config.MAX_WRITES_IN_TRANSACTION);
-        int maxWritesInTransaction = SpatialIndexWriter.MAX_WRITES_IN_TRANSACTION;
-        try {
-            maxWritesInTransaction = Integer.parseInt(maxWritesInTransactionStr);
-        } catch (NumberFormatException nfe) {
-            logger.error("Invalid config parameter: maximum number of writes to spatial index in a transaction (maxWritesInTransaction)"
-                + ", Using " + maxWritesInTransaction + " instead.");
-        }
-
         SettingInfo settingInfo = context.getBean(SettingInfo.class);
-        searchMan = _applicationContext.getBean(SearchManager.class);
-        searchMan.init(maxWritesInTransaction);
+        searchMan = _applicationContext.getBean(EsSearchManager.class);
 
 
         // if the validator exists the proxyCallbackURL needs to have the external host and
@@ -306,21 +249,9 @@ public class Geonetwork implements ApplicationHandler {
             svnManager.init();
         }
 
-        /**
-         * Initialize language detector
-         */
-        LanguageDetector.init(appPath.resolve(_applicationContext.getBean(Geonet.Config.LANGUAGE_PROFILES_DIR, String.class)));
-
-        //------------------------------------------------------------------------
-        //--- Initialize thesaurus
-
         logger.info("  - Thesaurus...");
 
         _applicationContext.getBean(ThesaurusManager.class).init(false, context, thesauriDir);
-
-
-        //------------------------------------------------------------------------
-        //--- initialize catalogue services for the web
 
         logger.info("  - Open Archive Initiative (OAI-PMH) server...");
 
@@ -357,13 +288,6 @@ public class Geonetwork implements ApplicationHandler {
         // This can happen if the application has been updated with a new version preserving the database and
         // images/logos folder is not copied from old application
         createSiteLogo(settingMan.getSiteId(), context, context.getAppPath());
-
-
-        // Notify unregistered metadata at startup. Needed, for example, when the user enables the notifier config
-        // to notify the existing metadata in database
-        // TODO: Fix DataManager.getUnregisteredMetadata and uncomment next lines
-        metadataNotifierControl = new MetadataNotifierControl(context);
-        metadataNotifierControl.runOnce();
 
         //--- load proxy information from settings into Jeeves for observers such
         //--- as jeeves.utils.XmlResolver to use
@@ -491,9 +415,6 @@ public class Geonetwork implements ApplicationHandler {
                 String siteUuid = UUID.randomUUID().toString();
                 context.getBean(SettingManager.class).setSiteUuid(siteUuid);
 
-                // Reload services which may be defined in
-                // database creation scripts in Services table.
-                context.getBean(JeevesEngine.class).loadConfigDB(context.getApplicationContext(), -1);
             } catch (Throwable t) {
                 Log.error(Geonet.DB, "Error occurred while trying to execute SQL", t);
                 throw new RuntimeException(t);
@@ -595,12 +516,6 @@ public class Geonetwork implements ApplicationHandler {
     }
 
 
-    //---------------------------------------------------------------------------
-    //---
-    //--- Stop
-    //---
-    //---------------------------------------------------------------------------
-
     public void stop() {
         logger.info("Stopping geonetwork...");
         AbstractEntityListenerManager.setSystemRunning(false);
@@ -610,63 +525,11 @@ public class Geonetwork implements ApplicationHandler {
 
         InspireAtomHarvesterScheduler.shutdown();
 
-        logger.info("  - MetadataNotifier ...");
-        try {
-            metadataNotifierControl.shutDown();
-        } catch (Exception e) {
-            logger.error("Raised exception while stopping metadatanotifier");
-            logger.error("  Exception : " + e);
-            logger.error("  Message   : " + e.getMessage());
-            logger.error("  Stack     : " + Util.getStackTrace(e));
-        }
-
-
         logger.info("  - Harvest Manager...");
         _applicationContext.getBean(HarvestManager.class).shutdown();
 
         // Beans registered using SingletonBeanRegistry#registerSingleton don't have their
         // @PreDestroy called. So do it manually.
         oaipmhDis.shutdown();
-    }
-
-    //---------------------------------------------------------------------------
-
-    private DataStore createShapefileDatastore(String indexDir) throws Exception {
-
-        File file = new File(indexDir + "/" + SpatialIndexWriter._SPATIAL_INDEX_TYPENAME + ".shp");
-        if (!file.getParentFile().mkdirs() && !file.getParentFile().exists()) {
-            throw new RuntimeException("Unable to create the spatial index (shapefile) directory: " + file.getParentFile());
-        }
-        if (!file.exists()) {
-            logger.info("Creating shapefile " + file.getAbsolutePath());
-        } else {
-            logger.info("Using shapefile " + file.getAbsolutePath());
-        }
-        ShapefileDataStore ids = new ShapefileDataStore(file.toURI().toURL());
-        // It looks like we're facing this issue
-        // https://osgeo-org.atlassian.net/browse/GEOT-5830
-        // And spatial search does not return any results.
-        ids.setFidIndexed(false);
-        ids.setNamespaceURI("http://geonetwork.org");
-        ids.setMemoryMapped(false);
-        ids.setCharset(Charset.forName(Constants.ENCODING));
-        ids.setIndexCreationEnabled(false);
-        CoordinateReferenceSystem crs = CRS.decode("EPSG:4326");
-
-        if (crs != null) {
-            ids.forceSchemaCRS(crs);
-        }
-
-        if (!file.exists()) {
-            SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
-            AttributeDescriptor geomDescriptor = new AttributeTypeBuilder().crs(DefaultGeographicCRS.WGS84).binding(MultiPolygon.class).buildDescriptor("the_geom");
-            builder.setName(SpatialIndexWriter._SPATIAL_INDEX_TYPENAME);
-            builder.add(geomDescriptor);
-            builder.add(SpatialIndexWriter._IDS_ATTRIBUTE_NAME, String.class);
-            ids.createSchema(builder.buildFeatureType());
-        }
-
-        logger.info("NOTE: Using shapefile for spatial index, this can be slow for larger catalogs");
-        return ids;
     }
 }

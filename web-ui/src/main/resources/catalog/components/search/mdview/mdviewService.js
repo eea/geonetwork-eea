@@ -60,28 +60,19 @@
       initFromConfig();
 
       this.feedMd = function(index, md, records) {
-        gnMdViewObj.loadDetailsFinished = true;
-        gnMdViewObj.records = records || gnMdViewObj.records;
-
-        if (records) {
-          for (var i = 0; i < records.length; i++) {
-            if (records[i] == md) {
-              gnMdViewObj.current.index  = i;
+        // Set the index for previous/next record
+        if (gnMdViewObj.records) {
+          for (var i = 0; i < gnMdViewObj.records.length; i++) {
+            if (gnMdViewObj.records[i].id == md.id) {
+              gnMdViewObj.current.index = i;
               break;
             }
           }
-        } else {
-          gnMdViewObj.current.index = index;
-        }
-
-        if (angular.isUndefined(md)) {
-          md = gnMdViewObj.records[gnMdViewObj.current.index];
         }
 
         // Set the route only if not same as before
         formatter = gnSearchLocation.getFormatter();
         gnMdViewObj.usingFormatter = formatter !== undefined;
-        this.setLocationUuid(md.getUuid(), formatter);
 
         gnUtilityService.scrollTo();
 
@@ -89,8 +80,7 @@
           links: md.getLinksByType('LINK'),
           downloads: md.getLinksByType('DOWNLOAD'),
           layers: md.getLinksByType('OGC', 'kml', 'ESRI:REST'),
-          contacts: md.getContacts(),
-          overviews: md.getThumbnails() ? md.getThumbnails().list : undefined
+          overviews: md.overview
         });
 
         gnMdViewObj.current.record = md;
@@ -99,8 +89,10 @@
         gnMdViewObj.previousRecords.push(md);
 
         if (!gnMdViewObj.usingFormatter) {
-          $http.post('../api/records/' + md.getUuid() + '/popularity');
+          $http.post('../api/records/' + md.uuid + '/popularity');
         }
+        this.setLocationUuid(md.uuid, formatter);
+        gnMdViewObj.recordsLoaded = true;
       };
 
       /**
@@ -116,7 +108,7 @@
       var currentMdScope;
       this.setCurrentMdScope = function(scope, index, records) {
         currentMdScope = scope;
-        gnMdViewObj.records = records;
+        // gnMdViewObj.records = records;
         // gnMdViewObj.current.index = index;
       };
       this.getCurrentMdScope = function() {
@@ -148,10 +140,11 @@
         var that = this;
         var loadMdView = function(event, newUrl, oldUrl) {
           gnMdViewObj.loadDetailsFinished = false;
+          gnMdViewObj.recordsLoaded = false;
           var uuid = gnSearchLocation.getUuid();
           if (uuid) {
             if (!gnMdViewObj.current.record ||
-                gnMdViewObj.current.record.getUuid() !== uuid ||
+                gnMdViewObj.current.record.uuid !== uuid ||
                 newUrl !== oldUrl) {
 
               //Check if we want the draft version
@@ -159,54 +152,64 @@
               var foundMd = false;
 
               // Check if the md is in current search
-              if (angular.isArray(gnMdViewObj.records)
-                        && !getDraft) {
-                for (var i = 0; i < gnMdViewObj.records.length; i++) {
-                  var md = gnMdViewObj.records[i];
-                  if (md.getUuid() === uuid) {
-                    foundMd = true;
-                    that.feedMd(i, md, gnMdViewObj.records);
-                  }
-                }
-              } 
+              // With ES, we always reload the document
+              // because includes are limited in the main search response.
+              // if (angular.isArray(gnMdViewObj.records)
+              //           && !getDraft) {
+              //   for (var i = 0; i < gnMdViewObj.records.length; i++) {
+              //     var md = gnMdViewObj.records[i];
+              //     if (md.uuid === uuid) {
+              //       foundMd = true;
+              //       that.feedMd(i, md, gnMdViewObj.records);
+              //     }
+              //   }
+              // }
 
               if (!foundMd){
                   // get a new search to pick the md
                   gnMdViewObj.current.record = null;
-                  gnSearchManagerService.gnSearch({
-                    uuid: uuid,
-                    _isTemplate: 'y or n',
-                    _draft: 'y or n or e',
-                    fast: 'index',
-                    _content_type: 'json'
-                  }).then(function(data) {
-                    if (data.metadata.length > 0) {
+                  $http.post('../api/search/records/_search', {"query": {
+                    "bool" : {
+                      "must": [
+                        {"multi_match": {
+                            "query": uuid,
+                            "fields": ['id', 'uuid']}},
+                        {"terms": {"isTemplate": ["n", "y"]}},
+                        {"terms": {"draft": ["n", "y", "e"]}}
+                        ]
+                    }
+                  }}, {cache: true}).then(function(r) {
+                    if (r.data.hits.total.value > 0) {
                       //If trying to show a draft that is not a draft, correct url:
-                      if(data.metadata.length == 1 && 
+                      if(r.data.hits.total.value == 1 &&
                           window.location.hash.indexOf("/metadraf/") > 0) {
-                        window.location.hash = 
+                        window.location.hash =
                           window.location.hash.replace("/metadraf/", "/metadata/");
                         //Now the location change event handles this
                         return;
                       }
-                      
+
                       //If returned more than one, maybe we are looking for the draft
                       var i = 0;
-                      data.metadata.forEach(function (md, index) {
+                      r.data.hits.hits.forEach(function (md, index) {
                         if(getDraft
-                            && md.draft == 'y') {
+                            && md._source.draft == 'y') {
                           //This will only happen if the draft exists
                           //and the user can see it
                           i = index;
                         }
                       });
-                      
-                      data.metadata[i] = new Metadata(data.metadata[i]);
-                      
+
+                      var metadata = [];
+                      metadata.push(new Metadata(r.data.hits.hits[i]));
+                      data = {metadata: metadata};
                       //Keep the search results (gnMdViewObj.records)
+                      // that.feedMd(0, undefined, data.metadata);
                       //and the trace of where in the search result we are
-                      that.feedMd(gnMdViewObj.current.index, 
-                          data.metadata[i], gnMdViewObj.records);
+                      // TODOES: Review
+                      that.feedMd(gnMdViewObj.current.index,
+                          data.metadata[0], gnMdViewObj.records);
+                      gnMdViewObj.loadDetailsFinished = true;
                     } else {
                       gnMdViewObj.loadDetailsFinished = true;
                     }
@@ -214,7 +217,6 @@
                     gnMdViewObj.loadDetailsFinished = true;
                   });
               }
-              
             } else {
               gnMdViewObj.loadDetailsFinished = true;
             }
@@ -224,24 +226,12 @@
             gnMdViewObj.current.record = null;
           }
         };
-        
-        loadMdView(); 
+
+        loadMdView();
         // To manage uuid on page loading
         $rootScope.$on('$locationChangeSuccess', loadMdView);
       };
 
-      this.initFormatter = function(selector) {
-        var $this = this;
-        var loadFormatter = function() {
-          var uuid = gnSearchLocation.getUuid();
-          if (uuid) {
-            gnMdFormatter.load(uuid,
-                selector, $this.getCurrentMdScope());
-          }
-        };
-        // loadFormatter();
-        $rootScope.$on('$locationChangeSuccess', loadFormatter);
-      };
 
       /**
        * Open a metadata just from info in the layer. If the metadata comes
@@ -296,7 +286,7 @@
 
         return promiseMd.then(function(md) {
           if (angular.isString(fUrl)) {
-            url = fUrl.replace('{{uuid}}', md.getUuid());
+            url = fUrl.replace('{{uuid}}', md.uuid);
           }
           else if (angular.isFunction(fUrl)) {
             url = fUrl(md);

@@ -23,31 +23,6 @@
 
 package org.fao.geonet.api.records.formatters;
 
-import static com.google.common.io.Files.getNameWithoutExtension;
-import static org.fao.geonet.api.ApiParams.API_PARAM_RECORD_UUID;
-import static org.fao.geonet.api.records.formatters.FormatterConstants.SCHEMA_PLUGIN_FORMATTER_DIR;
-import static org.springframework.data.jpa.domain.Specifications.where;
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.WeakHashMap;
-import java.util.concurrent.Callable;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -89,7 +64,7 @@ import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.XmlSerializer;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
-import org.fao.geonet.kernel.search.SearchManager;
+import org.fao.geonet.kernel.search.EsSearchManager;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.languages.IsoLanguagesMapper;
 import org.fao.geonet.lib.Lib;
@@ -128,6 +103,30 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.WeakHashMap;
+import java.util.concurrent.Callable;
+
+import static com.google.common.io.Files.getNameWithoutExtension;
+import static org.fao.geonet.api.ApiParams.API_PARAM_RECORD_UUID;
+import static org.fao.geonet.api.records.formatters.FormatterConstants.SCHEMA_PLUGIN_FORMATTER_DIR;
+import static org.springframework.data.jpa.domain.Specifications.where;
 
 /**
  * Allows a user to display a metadata with a particular formatters
@@ -277,6 +276,7 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
         if (formatType == null) {
             formatType = FormatType.xml;
         }
+
 
         String language = LanguageUtils.locale2gnCode(locale.getISO3Language());
         if (StringUtils.isNotEmpty(iso3lang)) {
@@ -470,7 +470,7 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
         Key key = new Key(Integer.parseInt(resolvedId), lang, formatType, xslid, hideWithheld, width);
         final boolean skipPopularityBool = new ParamValue(skipPopularity).toBool();
 
-        ISODate changeDate = context.getBean(SearchManager.class).getDocChangeDate(resolvedId);
+        ISODate changeDate = context.getBean(EsSearchManager.class).getDocChangeDate(resolvedId);
 
         Validator validator;
         if (changeDate != null) {

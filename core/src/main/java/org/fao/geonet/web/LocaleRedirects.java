@@ -126,7 +126,7 @@ public class LocaleRedirects {
         if (checkPortalExist(portal, !accept.startsWith(ACCEPT_VALUE))) {
             return redirectURL(createServiceUrl(request, _homeRedirectUrl, lang, portal));
         } else {
-            if (sourceRepository.findByType(SourceType.portal).size() == 0) {
+            if (sourceRepository.findByType(SourceType.portal, null).size() == 0) {
                 return redirectURL(createServiceUrl(request, _homeRedirectUrl, lang, NodeInfo.DEFAULT_NODE));
             }
             // Redirect to list of portal page if more than one or the default if only one
@@ -160,7 +160,7 @@ public class LocaleRedirects {
         if (checkPortalExist(portal, !accept.startsWith(ACCEPT_VALUE))) {
             return redirectURL(createServiceUrl(request, _homeRedirectUrl, lang, portal));
         } else {
-            if (sourceRepository.findByType(SourceType.subportal).size() == 0) {
+            if (sourceRepository.findByType(SourceType.subportal, null).size() == 0) {
                 return redirectURL(createServiceUrl(request, _homeRedirectUrl, lang, NodeInfo.DEFAULT_NODE));
             }
             // Redirect to list of portal page if more than one or the default if only one
@@ -184,7 +184,7 @@ public class LocaleRedirects {
         if (one == null) {
             List<String> portalList = new ArrayList<>();
             portalList.add(NodeInfo.DEFAULT_NODE);
-            sourceRepository.findByType(SourceType.subportal).forEach(e -> {
+            sourceRepository.findByType(SourceType.subportal, null).forEach(e -> {
                 portalList.add(e.getUuid());
             });
             if (throwException) {

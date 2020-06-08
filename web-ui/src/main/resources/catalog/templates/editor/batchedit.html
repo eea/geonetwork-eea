@@ -53,10 +53,11 @@
                     <input type="text"
                            class="form-control"
                            id="gn-any-field"
+                           autocomplete="off"
                            data-ng-model="searchObj.params.any"
                            data-ng-model-options="modelOptions"
                            placeholder="{{'anyPlaceHolder' | translate}}"
-                           data-typeahead="address for address in getAnySuggestions($viewValue)"
+                           data-typeahead="address for address in getAnySuggestions($viewValue, searchObj)"
                            data-typeahead-loading="anyLoading" class="form-control"
                            data-typeahead-min-length="1">
 
@@ -77,6 +78,7 @@
                       </button>
 
                       <button type="button"
+                              data-ng-disabled="searchResults.selectedCount < 1"
                               data-ng-class="{'disabled': searchResults.selectedCount < 1}"
                               data-ng-click="searchSelection(defaultSearchObj.params);"
                               title="{{'resetSearchToDisplayAll' | translate}}"
@@ -112,19 +114,7 @@
 
             <div class="row">
               <div class="col-md-3 gn-search-facet">
-
-                <div data-search-filter-tags
-                     data-dimensions="searchResults.dimension"
-                     data-use-location-parameters="false"
-                     ng-if="isFilterTagsDisplayed && searchResults.dimension"></div>
-
-                <!-- Hierachical facet mode -->
-                <div data-ng-show="searchResults.records.length > 0"
-                     data-gn-facet-dimension-list="searchResults.dimension"
-                     data-params="searchObj.params"
-                     data-facet-type="facetsSummaryType"
-                     data-current-facets="currentFacets">
-                </div>
+                <div data-es-facets="searchResults.facets"/>
               </div>
               <div class="col-md-9">
             <span class="loading fa fa-spinner fa-spin"
@@ -241,7 +231,7 @@
                                data-ng-if="field.use === 'data-gn-metadata-picker'"
                                data-ng-disabled="field.isDeleted"
                                data-gn-metadata-picker=""
-                               data-display-field="defaultTitle"
+                               data-display-field="resourceTitle"
                                data-value-field="uuid"
                                data-ng-blur="putChange(field, $event)"/>
                         <input type="text"
@@ -392,7 +382,7 @@
               </ul>
             </div>
             <div class="col-sm-6"
-                 data-ng-hide="selectedRecords.metadata.length > 0">
+                 data-ng-hide="selectedRecords.total.value > 0">
               <p class="alert alert-warning"
                  data-ng-show="selectedRecordsCount == 0"
                  data-translate="">selectRecordsToEdit</p>
@@ -402,11 +392,11 @@
                  data-translate-values="{count: selectedRecordsCount}">tooManyRecordInSelForSearch</p>
             </div>
             <div class="col-sm-6"
-                 data-ng-show="selectedRecords.metadata.length > 0">
+                 data-ng-show="selectedRecords.total.value > 0">
               <h4 data-translate="">aboutToUpdateTheFollowing</h4>
               <ul>
-                <li data-ng-repeat="record in selectedRecords.metadata">
-                  <a data-ng-href="catalog.search#/metadata/{{record['geonet:info'].uuid}}">{{record.title || record.defaultTitle}}</a>
+                <li data-ng-repeat="record in selectedRecords.hits">
+                  <a data-ng-href="catalog.search#/metadata/{{record._id}}">{{record._source.resourceTitleObject.default}}</a>
                 </li>
               </ul>
             </div>
@@ -417,6 +407,7 @@
               <label for="updateDateStamp" data-translate="">updateDateStamp</label>
             </div>
           </div>
+
           <div class="row gn-margin-bottom">
             <div class="col-md-12">
               <button class="btn btn-primary"

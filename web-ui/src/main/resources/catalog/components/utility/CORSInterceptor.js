@@ -142,7 +142,6 @@
 
                 return defer.promise;
               } else {
-                //return the original error
                 return $q.reject(response);
               }
             }

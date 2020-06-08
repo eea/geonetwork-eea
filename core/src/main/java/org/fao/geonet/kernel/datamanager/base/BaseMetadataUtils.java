@@ -23,19 +23,9 @@
 
 package org.fao.geonet.kernel.datamanager.base;
 
-import static org.fao.geonet.repository.specification.MetadataSpecs.hasMetadataUuid;
-
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.PostConstruct;
-
+import com.google.common.base.Optional;
+import jeeves.server.UserSession;
+import jeeves.server.context.ServiceContext;
 import org.apache.commons.lang.NotImplementedException;
 import org.fao.geonet.NodeInfo;
 import org.fao.geonet.constants.Edit;
@@ -50,7 +40,6 @@ import org.fao.geonet.domain.MetadataRatingByIpId;
 import org.fao.geonet.domain.MetadataSourceInfo;
 import org.fao.geonet.domain.MetadataType;
 import org.fao.geonet.domain.Pair;
-import org.fao.geonet.domain.ReservedOperation;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.XmlSerializer;
@@ -58,12 +47,11 @@ import org.fao.geonet.kernel.datamanager.IMetadataIndexer;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataSchemaUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
-import org.fao.geonet.kernel.schema.MetadataSchema;
+import org.fao.geonet.kernel.search.EsSearchManager;
 import org.fao.geonet.kernel.search.index.IndexingList;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.lib.Lib;
-import org.fao.geonet.notifier.MetadataNotifierManager;
 import org.fao.geonet.repository.MetadataRatingByIpRepository;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.repository.SimpleMetadata;
@@ -81,17 +69,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.google.common.base.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.PostConstruct;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import jeeves.server.UserSession;
-import jeeves.server.context.ServiceContext;
+import static org.fao.geonet.repository.specification.MetadataSpecs.hasMetadataUuid;
 
 public class BaseMetadataUtils implements IMetadataUtils {
     @Autowired
     private MetadataRepository metadataRepository;
-
-    @Autowired
-    private MetadataNotifierManager metadataNotifierManager;
 
     // FIXME Remove when get rid of Jeeves
     private ServiceContext servContext;
@@ -109,6 +101,9 @@ public class BaseMetadataUtils implements IMetadataUtils {
 
     @Autowired
     private IndexingList indexingList;
+
+    @Autowired
+    private EsSearchManager searchManager;
 
     @Autowired
     private GeonetworkDataDirectory dataDirectory;
@@ -136,24 +131,6 @@ public class BaseMetadataUtils implements IMetadataUtils {
     @PostConstruct
     public void init() {
         this.metadataIndexer.setMetadataUtils(this);
-    }
-
-    /**
-     * @param md
-     * @param metadataId
-     * @throws Exception
-     */
-    @Override
-    public void notifyMetadataChange(Element md, String metadataId) throws Exception {
-        final AbstractMetadata metadata = findOne(metadataId);
-        if (metadata != null && metadata.getDataInfo().getType() == MetadataType.METADATA) {
-            MetadataSchema mds = schemaManager.getSchema(metadata.getDataInfo().getSchemaId());
-            Pair<String, Element> editXpathFilter = mds.getOperationFilter(ReservedOperation.editing);
-            XmlSerializer.removeFilteredElement(md, editXpathFilter, mds.getNamespaces());
-
-            String uuid = getMetadataUuid(metadataId);
-            metadataNotifierManager.updateMetadata(md, metadataId, uuid, getServiceContext());
-        }
     }
 
     /**
@@ -410,7 +387,7 @@ public class BaseMetadataUtils implements IMetadataUtils {
     @Override
     public void setTemplate(final int id, final MetadataType type, final String title) throws Exception {
         setTemplateExt(id, type);
-        metadataIndexer.indexMetadata(Integer.toString(id), true, null);
+        metadataIndexer.indexMetadata(Integer.toString(id), true);
     }
 
     @Override
@@ -427,7 +404,7 @@ public class BaseMetadataUtils implements IMetadataUtils {
     @Override
     public void setHarvested(int id, String harvestUuid) throws Exception {
         setHarvestedExt(id, harvestUuid);
-        metadataIndexer.indexMetadata(Integer.toString(id), true, null);
+        metadataIndexer.indexMetadata(Integer.toString(id), true);
     }
 
     /**
@@ -493,13 +470,16 @@ public class BaseMetadataUtils implements IMetadataUtils {
     public void increasePopularity(ServiceContext srvContext, String id) throws Exception {
         // READONLYMODE
         if (!srvContext.getBean(NodeInfo.class).isReadOnly()) {
-            // Update the popularity in database
             int iId = Integer.parseInt(id);
             metadataRepository.incrementPopularity(iId);
-
-            // And register the metadata to be indexed in the near future
-            final IndexingList list = srvContext.getBean(IndexingList.class);
-            list.add(iId);
+            final Metadata metadata = metadataRepository.findOne(iId);
+            searchManager.updateFieldAsynch(
+                metadata.getUuid(),
+                Geonet.IndexFieldNames.POPULARITY,
+                metadata.getDataInfo().getPopularity());
+//            // And register the metadata to be indexed in the near future
+//            final IndexingList list = srvContext.getBean(IndexingList.class);
+//            list.add(iId);
         } else {
             if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
                 Log.debug(Geonet.DATA_MANAGER,
@@ -601,104 +581,6 @@ public class BaseMetadataUtils implements IMetadataUtils {
         return el;
     }
 
-    /**
-     * @param metadataId
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public Element getThumbnails(ServiceContext context, String metadataId) throws Exception {
-        Element md = getXmlSerializer().select(context, metadataId);
-
-        if (md == null)
-            return null;
-
-        md.detach();
-
-        String schema = metadataSchemaUtils.getMetadataSchema(metadataId);
-
-        // --- do an XSL transformation
-        Path styleSheet = metadataSchemaUtils.getSchemaDir(schema).resolve(Geonet.File.EXTRACT_THUMBNAILS);
-
-        Element result = Xml.transform(md, styleSheet);
-        result.addContent(new Element("id").setText(metadataId));
-
-        return result;
-    }
-
-    /**
-     * @param context
-     * @param id
-     * @param small
-     * @param file
-     * @throws Exception
-     */
-    @Override
-    public void setThumbnail(ServiceContext context, String id, boolean small, String file, boolean indexAfterChange)
-        throws Exception {
-        int pos = file.lastIndexOf('.');
-        String ext = (pos == -1) ? "???" : file.substring(pos + 1);
-
-        Element env = new Element("env");
-        env.addContent(new Element("file").setText(file));
-        env.addContent(new Element("ext").setText(ext));
-
-        String host = getSettingManager().getValue(Settings.SYSTEM_SERVER_HOST);
-        String port = getSettingManager().getValue(Settings.SYSTEM_SERVER_PORT);
-        String baseUrl = context.getBaseUrl();
-
-        env.addContent(new Element("host").setText(host));
-        env.addContent(new Element("port").setText(port));
-        env.addContent(new Element("baseUrl").setText(baseUrl));
-        // TODO: Remove host, port, baseUrl and simplify the
-        // URL created in the XSLT. Keeping it for the time
-        // as many profiles depend on it.
-        env.addContent(new Element("url").setText(getSettingManager().getSiteURL(context)));
-
-        manageThumbnail(context, id, small, env, Geonet.File.SET_THUMBNAIL, indexAfterChange);
-    }
-
-    /**
-     * @param context
-     * @param id
-     * @param small
-     * @throws Exception
-     */
-    @Override
-    public void unsetThumbnail(ServiceContext context, String id, boolean small, boolean indexAfterChange)
-        throws Exception {
-        Element env = new Element("env");
-
-        manageThumbnail(context, id, small, env, Geonet.File.UNSET_THUMBNAIL, indexAfterChange);
-    }
-
-    /**
-     * @param context
-     * @param id
-     * @param small
-     * @param env
-     * @param styleSheet
-     * @param indexAfterChange
-     * @throws Exception
-     */
-    private void manageThumbnail(ServiceContext context, String id, boolean small, Element env, String styleSheet,
-                                 boolean indexAfterChange) throws Exception {
-        boolean forEditing = false, withValidationErrors = false, keepXlinkAttributes = true;
-        Element md = context.getBean(IMetadataManager.class).getMetadata(context, id, forEditing, false, withValidationErrors,
-            keepXlinkAttributes);
-
-        if (md == null)
-            return;
-
-        md.detach();
-
-        String schema = metadataSchemaUtils.getMetadataSchema(id);
-
-        // --- setup environment
-        String type = small ? "thumbnail" : "large_thumbnail";
-        env.addContent(new Element("type").setText(type));
-        transformMd(context, id, md, env, schema, styleSheet, indexAfterChange);
-    }
 
     /**
      * @param context
@@ -738,11 +620,7 @@ public class BaseMetadataUtils implements IMetadataUtils {
         getXmlSerializer().update(metadataId, md, changeDate, true, uuid, context);
 
         if (indexAfterChange) {
-            // Notifies the metadata change to metatada notifier service
-            notifyMetadataChange(md, metadataId);
-
-            // --- update search criteria
-            metadataIndexer.indexMetadata(metadataId, true, null);
+            metadataIndexer.indexMetadata(metadataId, true);
         }
     }
 

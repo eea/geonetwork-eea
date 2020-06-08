@@ -96,12 +96,12 @@
   <xsl:function name="gn-fn-render:getMetadataTitle">
     <xsl:param name="uuid" as="xs:string"/>
     <xsl:param name="language" as="xs:string"/>
-
+    <!-- TODOES: Fallback to default language -->
     <xsl:variable name="metadataTitle"
                   select="util:getIndexField(
                   $language,
                   $uuid,
-                  'title',
+                  'resourceTitle',
                   $language)"/>
     <xsl:choose>
       <xsl:when test="$metadataTitle=''">
@@ -109,7 +109,7 @@
                       select="util:getIndexField(
                       $language,
                       $uuid,
-                      '_defaultTitle',
+                      'resourceTitle',
                       $language)"/>
         <xsl:choose>
           <xsl:when test="$metadataDefaultTitle=''">

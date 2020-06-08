@@ -73,6 +73,7 @@ import org.fao.geonet.events.history.RecordOwnerChangeEvent;
 import org.fao.geonet.events.history.RecordPrivilegesChangeEvent;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.datamanager.IMetadataIndexer;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataStatus;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
@@ -136,6 +137,9 @@ public class MetadataSharingApi {
 
     @Autowired
     DataManager dataManager;
+
+    @Autowired
+    IMetadataIndexer metadataIndexer;
 
     @Autowired
     AccessManager accessManager;
@@ -304,9 +308,8 @@ public class MetadataSharingApi {
         }
 
         List<GroupOperations> privileges = sharing.getPrivileges();
-        setOperations(sharing, dataManager, context, appContext, metadata, operationMap, privileges,
-            ApiUtils.getUserSession(session).getUserIdAsInt(), null, request);
-        dataManager.indexMetadata(String.valueOf(metadata.getId()), true, null);
+        setOperations(sharing, dataManager, context, appContext, metadata, operationMap, privileges, ApiUtils.getUserSession(session).getUserIdAsInt(), null, request);
+        metadataIndexer.indexMetadataPrivileges(metadata.getUuid(), metadata.getId());
     }
 
     @ApiOperation(
@@ -630,7 +633,7 @@ public class MetadataSharingApi {
 
         metadata.getSourceInfo().setGroupOwner(groupIdentifier);
         metadataManager.save(metadata);
-        dataManager.indexMetadata(String.valueOf(metadata.getId()), true, null);
+        dataManager.indexMetadata(String.valueOf(metadata.getId()), true);
 
         new RecordGroupOwnerChangeEvent(metadata.getId(), ApiUtils.getUserSession(request.getSession()).getUserIdAsInt(), ObjectJSONUtils.convertObjectInJsonObject(oldGroup, RecordGroupOwnerChangeEvent.FIELD),ObjectJSONUtils.convertObjectInJsonObject(group, RecordGroupOwnerChangeEvent.FIELD)).publish(appContext);
     }
@@ -839,7 +842,7 @@ public class MetadataSharingApi {
                 report, dataManager, accessManager, metadataRepository,
                 serviceContext, listOfUpdatedRecords, metadataUuid, session, approved);
             dataManager.flush();
-            dataManager.indexMetadata(String.valueOf(metadata.getId()), true, null);
+            dataManager.indexMetadata(String.valueOf(metadata.getId()), true);
 
         } catch (Exception exception) {
             report.addError(exception);
@@ -972,7 +975,7 @@ public class MetadataSharingApi {
 
             if (!hasValidation) {
                 validator.doValidate(metadata, context.getLanguage());
-                dm.indexMetadata(metadata.getId() + "", true, null);
+                dm.indexMetadata(metadata.getId() + "", true);
             }
 
             boolean isInvalid =
@@ -1037,7 +1040,7 @@ public class MetadataSharingApi {
         List<GroupOperations> privileges = sharing.getPrivileges();
         setOperations(sharing, dataManager, context, appContext, metadata, operationMap, privileges,
             ApiUtils.getUserSession(session).getUserIdAsInt(), null, request);
-        dataManager.indexMetadata(String.valueOf(metadata.getId()), true, null);
+        dataManager.indexMetadata(String.valueOf(metadata.getId()), true);
     }
 
 

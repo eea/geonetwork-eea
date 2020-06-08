@@ -336,17 +336,21 @@ public class AccessManager {
 
         //--- check if the user is an administrator
         final Profile profile = us.getProfile();
-        if (profile == Profile.Administrator)
+        if (profile == Profile.Administrator) {
             return true;
+        }
 
         //--- check if the user is the metadata owner
         //
-        if (us.getUserIdAsInt() == sourceInfo.getOwner())
+        if (sourceInfo.getOwner() != null
+            && us.getUserIdAsInt() == sourceInfo.getOwner()) {
             return true;
+        }
 
         //--- check if the user is a reviewer or useradmin
-        if (profile != Profile.Reviewer && profile != Profile.UserAdmin)
+        if (profile != Profile.Reviewer && profile != Profile.UserAdmin) {
             return false;
+        }
 
         //--- if there is no group owner then the reviewer cannot review and the useradmin cannot administer
         final Integer groupOwner = sourceInfo.getGroupOwner();

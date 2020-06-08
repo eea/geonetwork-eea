@@ -182,20 +182,70 @@ public class MetadataEditingApi {
             MediaType.ALL_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE })
     @PreAuthorize("hasRole('Editor')")
     @ResponseStatus(HttpStatus.OK)
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "The editor form."),
-            @ApiResponse(code = 403, message = ApiParams.API_RESPONSE_NOT_ALLOWED_CAN_EDIT) })
-    public void saveEdits(@ApiParam(value = API_PARAM_RECORD_UUID, required = true) @PathVariable String metadataUuid,
-            @ApiParam(value = "Tab") @RequestParam(defaultValue = "simple") String tab,
-            @RequestParam(defaultValue = "false") boolean withAttributes,
-            @RequestParam(defaultValue = "false") boolean withValidationErrors,
-            @RequestParam(defaultValue = "false") boolean minor,
-            @ApiParam(value = "Submit for review directly after save.") @RequestParam(defaultValue = StatusValue.Status.DRAFT) String status,
-            @ApiParam(value = "Save current edits.") @RequestParam(defaultValue = "false") boolean commit,
-            @ApiParam(value = "Save and terminate session.") @RequestParam(defaultValue = "false") boolean terminate,
-            @ApiParam(value = "Record as XML. TODO: rename xml") @RequestParam(defaultValue = "") String data,
-            @ApiIgnore @ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams,
-            HttpServletRequest request, HttpServletResponse response,
-            @ApiIgnore @ApiParam(hidden = true) HttpSession httpSession) throws Exception {
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "The editor form."),
+        @ApiResponse(code = 403, message = ApiParams.API_RESPONSE_NOT_ALLOWED_CAN_EDIT)
+    })
+    @ResponseBody
+    public void saveEdits(
+        @ApiParam(value = API_PARAM_RECORD_UUID,
+            required = true)
+        @PathVariable
+            String metadataUuid,
+        @ApiParam(
+            value = "Tab"
+        )
+            @RequestParam(
+                defaultValue = "simple"
+            )
+            String tab,
+        @RequestParam(
+            defaultValue = "false"
+        )
+            boolean withAttributes,
+        @RequestParam(
+            defaultValue = "false"
+        )
+            boolean withValidationErrors,
+        @RequestParam(
+            defaultValue = "false"
+        )
+            boolean minor,
+        @ApiParam(
+            value = "Submit for review directly after save.")
+        @RequestParam(defaultValue = StatusValue.Status.DRAFT)
+            String status,
+        @ApiParam(
+            value = "Save current edits."
+        )
+        @RequestParam(
+            defaultValue = "false"
+        )
+            boolean commit,
+        @ApiParam(
+            value = "Save and terminate session."
+        )
+        @RequestParam(
+            defaultValue = "false"
+        )
+            boolean terminate,
+        @ApiParam(
+            value = "Record as XML. TODO: rename xml"
+        )
+        @RequestParam(
+            defaultValue = ""
+        )
+            String data,
+        @ApiIgnore
+        @ApiParam(hidden = true)
+        @RequestParam
+            Map<String,String> allRequestParams,
+        HttpServletRequest request,
+        HttpServletResponse response,
+        @ApiIgnore
+        @ApiParam(hidden = true)
+            HttpSession httpSession
+        ) throws Exception {
 
         Log.trace(Geonet.DATA_MANAGER, "Saving metadata editing with UUID " + metadataUuid);
         AbstractMetadata metadata = ApiUtils.canEditRecord(metadataUuid, request);
@@ -238,12 +288,14 @@ public class MetadataEditingApi {
             }
         }
 
+
         if (Log.isTraceEnabled(Geonet.DATA_MANAGER)) {
             Log.trace(Geonet.DATA_MANAGER, " > Setting type of record " + MetadataType.lookup(isTemplate));
         }
         int iLocalId = Integer.parseInt(id);
         Log.trace(Geonet.DATA_MANAGER, " > Id is " + iLocalId);
         dataMan.setTemplateExt(iLocalId, MetadataType.lookup(isTemplate));
+
 
         // --- use StatusActionsFactory and StatusActions class to possibly
         // --- change status as a result of this edit (use onEdit method)
@@ -373,7 +425,7 @@ public class MetadataEditingApi {
 
             if (reindex) {
                 Log.trace(Geonet.DATA_MANAGER, " > Reindexing record");
-                dataMan.indexMetadata(id, true, null);
+                dataMan.indexMetadata(id, true);
             }
 
             ajaxEditUtils.removeMetadataEmbedded(session, id);

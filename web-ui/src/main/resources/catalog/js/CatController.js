@@ -120,6 +120,29 @@ goog.require('gn_alert');
         'home': {
           'enabled': true,
           'appUrl': '../../{{node}}/{{lang}}/catalog.search#/home',
+          'showSocialBarInFooter': true,
+          'fluidLayout': true,
+          'facetConfig': {
+            'codelist_hierarchyLevel_text': {
+              'terms': {
+                'field': 'codelist_hierarchyLevel_text',
+                'size': 10
+              }
+            },
+            'topic': {
+              'terms': {
+                'field': 'topic_text',
+                'size': 20
+              }
+            },
+            'inspireThemeUri': {
+              'terms': {
+                'field': 'inspireThemeUri',
+                'size': 34
+                // "order" : { "_key" : "asc" }
+              }
+            }
+          },
           'fluidLayout': true
         },
         'search': {
@@ -129,39 +152,199 @@ goog.require('gn_alert');
           'paginationInfo': {
             'hitsPerPage': 20
           },
-          'facetsSummaryType': 'details',
-          'defaultSearchString': '',
-          'facetTabField': '',
-          'facetConfig': [
+          // Score query may depend on where we are in the app?
+          'scoreConfig': {
+            // Score experiments:
+            // a)Score down old records
             // {
-            // key: 'createDateYear',
-            // labels: {
-            //   eng: 'Published',
-            //   fre: 'Publication'
-            // }}
-          ],
+            //   "gauss": {
+            //     "dateStamp": {
+            //       "scale":  "200d"
+            //     }
+            //   }
+            // }
+            // b)Promote grids!
+            // "boost": "5",
+            // "functions": [
+            //   {
+            //     "filter": { "match": { "codelist_spatialRepresentationType": "vector" } },
+            //     "random_score": {},
+            //     "weight": 23
+            //   },
+            //   {
+            //     "filter": { "match": { "codelist_spatialRepresentationType": "grid" } },
+            //     "weight": 42
+            //   }
+            // ],
+            // "max_boost": 42,
+            // "score_mode": "max",
+            // "boost_mode": "multiply",
+            // "min_score" : 42
+            "script_score" : {
+              "script" : {
+                "source": "_score"
+                // "source": "Math.log(2 + doc['rating'].value)"
+              }
+            }
+          },
+          'autocompleteConfig': {
+            'query': {
+              'bool': {
+                'must': [{
+                  'multi_match': {
+                    "query": "",
+                    "type": "bool_prefix",
+                    "fields": [
+                      "anytext",
+                      "anytext._2gram",
+                      "anytext._3gram"
+                    ]
+                  }
+                }]
+              }
+            },
+            '_source': ['resourceTitleObject']
+            // Fuzzy autocomplete
+            // {
+            //   query: {
+            //     // match_phrase_prefix: match
+            //     "multi_match" : {
+            //       "query" : query,
+            //         // "type":       "phrase_prefix",
+            //         "fields" : [ field + "^3", "tag" ]
+            //     }
+            //   },
+            //   _source: [field]
+            // }
+          },
+          'moreLikeThisConfig': {
+            "more_like_this" : {
+              "fields" : ["resourceTitleObject.default", "resourceAbstractObject.default", "tag.raw"],
+              "like" : null,
+              "min_term_freq" : 1,
+              "max_query_terms" : 12
+            }
+          },
+          // TODOES
+          'facetTabField': '',
+          'facetConfig': {
+            'codelist_hierarchyLevel_text': {
+              'terms': {
+                'field': 'codelist_hierarchyLevel_text'
+              },
+              'aggs': {
+                'format': {
+                  'terms': {
+                    'field': 'format'
+                  }
+                }
+              }
+            },
+            'availableInServices': {
+              'filters': {
+                //"other_bucket_key": "others",
+                // But does not support to click on it
+                'filters': {
+                  'availableInViewService': {
+                    'query_string': {
+                      'query': '+linkProtocol:/OGC:WMS.*/'
+                    }
+                  },
+                  'availableInDownloadService': {
+                    'query_string': {
+                      'query': '+linkProtocol:/OGC:WFS.*/'
+                    }
+                  }
+                }
+              }
+            },
+            'thesaurus_geonetworkthesaurusexternalthemegemet_tree': {
+              'terms': {
+                'field': 'thesaurus_geonetworkthesaurusexternalthemegemet_tree',
+                'size': 100,
+                "order" : { "_key" : "asc" },
+                "include": "[^/]+/?[^/]+"
+                // Limit to 2 levels
+              }
+            },
+            'tag': {
+              'terms': {
+                'field': 'tag',
+                'size': 10
+              }
+            },
+            'thesaurus_geonetworkthesaurusexternalplaceregions_tree': {
+              'terms': {
+                'field': 'thesaurus_geonetworkthesaurusexternalplaceregions_tree',
+                'size': 100,
+                "order" : { "_key" : "asc" }
+                //"include": "EEA.*"
+              }
+            },
+            'codelist_spatialRepresentationType': {
+              'terms': {
+                'field': 'codelist_spatialRepresentationType',
+                'size': 10
+              }
+            },
+            'resolutionScaleDenominator': {
+              'terms': {
+                'field': 'resolutionScaleDenominator',
+                'size': 10,
+                'order': {'_key': "asc"}
+              }
+            },
+            'codelist_maintenanceAndUpdateFrequency_text': {
+              'terms': {
+                'field': 'codelist_maintenanceAndUpdateFrequency_text',
+                'size': 10
+              }
+            },
+            'codelist_status_text': {
+              'terms': {
+                'field': 'codelist_status_text',
+                'size': 10
+              }
+            },
+            'creationYearForResource': {
+              'terms': {
+                'field': 'creationYearForResource',
+                'size': 10,
+                'order': {'_key': "desc"}
+              }
+            },
+            'OrgForResource': {
+              'terms': {
+                'field': 'OrgForResource',
+                'size': 15
+              }
+            },
+            "dateStamp" : {
+              "auto_date_histogram" : {
+                "field" : "dateStamp",
+                "buckets": 50
+              }
+            }
+          },
           'filters': {},
           'sortbyValues': [{
             'sortBy': 'relevance',
             'sortOrder': ''
           }, {
-            'sortBy': 'changeDate',
-            'sortOrder': ''
+            'sortBy': 'dateStamp',
+            'sortOrder': 'desc'
           }, {
-            'sortBy': 'title',
-            'sortOrder': 'reverse'
+            'sortBy': 'createDate',
+            'sortOrder': 'desc'
+          }, {
+            'sortBy': 'resourceTitleObject.default.keyword',
+            'sortOrder': ''
           }, {
             'sortBy': 'rating',
-            'sortOrder': ''
+            'sortOrder': 'desc'
           }, {
             'sortBy': 'popularity',
-            'sortOrder': ''
-          }, {
-            'sortBy': 'denominatorDesc',
-            'sortOrder': ''
-          }, {
-            'sortBy': 'denominatorAsc',
-            'sortOrder': 'reverse'
+            'sortOrder': 'desc'
           }],
           'sortBy': 'relevance',
           'resultViewTpls': [{
@@ -216,7 +399,7 @@ goog.require('gn_alert');
             'displayFeaturedSearchesPanel': false
           },
           'savedSelection': {
-            'enabled': true
+            'enabled': false
           }
         },
         'map': {
@@ -299,7 +482,81 @@ goog.require('gn_alert');
           'fluidEditorLayout': true,
           'createPageTpl':
               '../../catalog/templates/editor/new-metadata-horizontal.html',
-          'editorIndentType': ''
+          'editorIndentType': '',
+          'facetConfig': {
+            'resourceType': {
+              'terms': {
+                'field': 'resourceType',
+                'size': 20
+              }
+            },
+            'codelist_status_text': {
+              'terms': {
+                'field': 'codelist_status_text',
+                'size': 15
+              }
+            },
+            'sourceCatalogue': {
+              'terms': {
+                'field': 'sourceCatalogue',
+                'size': 15
+              }
+            },
+            'isValid': {
+              'terms': {
+                'field': 'isValid',
+                'size': 10
+              }
+            },
+            'isValidInspire': {
+              'terms': {
+                'field': 'isValidInspire',
+                'size': 10
+              }
+            },
+            'groupOwner': {
+              'terms': {
+                'field': 'groupOwner',
+                'size': 10
+              }
+            },
+            'recordOwner': {
+              'terms': {
+                'field': 'recordOwner',
+                'size': 10
+              }
+            },
+            'groupPublished': {
+              'terms': {
+                'field': 'groupPublished',
+                'size': 10
+              }
+            },
+            'schema': {
+              'terms': {
+                'field': 'schema.keyword',
+                'size': 10
+              }
+            },
+            'isHarvested': {
+              'terms': {
+                'field': 'isHarvested',
+                'size': 2
+              }
+            },
+            'isTemplate': {
+              'terms': {
+                'field': 'isTemplate',
+                'size': 5
+              }
+            },
+            'isPublishedToAll': {
+              'terms': {
+                'field': 'isPublishedToAll',
+                'size': 2
+              }
+            }
+          }
         },
         'admin': {
           'enabled': true,
@@ -352,6 +609,9 @@ goog.require('gn_alert');
               }
             }
           }, config).mods.header.languages;
+
+          this.gnCfg.mods.search.scoreConfig = config.mods.search.scoreConfig;
+          this.gnCfg.mods.search.facetConfig = config.mods.search.facetConfig;
         }
 
         this.gnUrl = gnUrl || '../';
@@ -374,6 +634,8 @@ goog.require('gn_alert');
         var copy = angular.copy(defaultConfig);
         copy.mods.header.languages = {};
         copy.mods.search.grid.related = [];
+        copy.mods.search.facetConfig = {};
+        copy.mods.search.scoreConfig = {};
         copy.mods.map["map-editor"].layers = [];
         return copy;
       },
@@ -598,7 +860,7 @@ goog.require('gn_alert');
       });
       //If no csrf, ask for one:
       if (!$rootScope.csrf) {
-        $http.post('info?type=me');
+        $http.get('../api/me');
       }
       //Comment the upper lines if you want to remove csrf support
 
@@ -685,6 +947,7 @@ goog.require('gn_alert');
               error(function(data, status, headers, config) {
                 $rootScope.$broadcast('StatusUpdated',
                    {
+                     id: 'catalogueStatus',
                      title: $translate.instant('somethingWrong'),
                      msg: $translate.instant('msgNoCatalogInfo'),
                      type: 'danger'});
@@ -701,27 +964,22 @@ goog.require('gn_alert');
           isConnected: function() {
             return !this.isAnonymous();
           },
+          // The md provide the information about
+          // if the current user can edit records or not
+          // based on record operation allowed. See edit property.
           canEditRecord: function(md) {
             if (!md || this.isAnonymous()) {
               return false;
             }
 
-            // The md provide the information about
-            // if the current user can edit records or not.
-            var editable = angular.isDefined(md) &&
-                angular.isDefined(md['geonet:info']) &&
-                angular.isDefined(md['geonet:info'].edit) &&
-                md['geonet:info'].edit == 'true';
-
-
             // A second filter is for harvested record
             // if the catalogue admin defined that those
             // records could be harvested.
-            if (md.isHarvested === 'y') {
+            if (md.isHarvested == true) {
               return gnConfig['system.harvester.enableEditing'] === true &&
-                  editable;
+                md.edit;
             }
-            return editable;
+            return md.edit;
           }
         };
         // Build is<ProfileName> and is<ProfileName>OrMore functions
@@ -780,20 +1038,32 @@ goog.require('gn_alert');
 
         // Retrieve main search information
         var searchInfo = userLogin.then(function(value) {
-          var url = 'qi?_content_type=json&summaryOnly=true';
+          // Check index status.
+          $http.get('../api/site/index/status').then(function(r) {
+            gnConfig['indexStatus'] = r.data;
 
-          if (location.pathname.indexOf(editorCatalogPath) === 0) {
-            url += '&_source=' + editorCatalogId;
-          }
-
-          angular.forEach(gnGlobalSettings.gnCfg.mods.search.filters,
-              function(v, k) {
-                url += '&' + k + '=' + v;
+            if (r.data.state.id.match(/^(green|yellow)$/) == null) {
+              $rootScope.$broadcast('StatusUpdated', {
+                id: 'indexStatus',
+                title: r.data.state.title,
+                error: {
+                  message: r.data.message
+                },
+                // type: r.data.state.icon,
+                type: 'danger'
               });
-          return gnSearchManagerService.search(url).
-              then(function(data) {
-                $scope.searchInfo = data;
+            } else {
+              return $http.post('../api/search/records/_search',
+                {size: 0,
+                    track_total_hits: true,
+                    query: {query_string: {query: "+isTemplate:n"}},
+                    aggs: gnGlobalSettings.gnCfg.mods.home.facetConfig}).
+              then(function(r) {
+                $scope.searchInfo = r.data;
+                $scope.browse = $scope.searchInfo.aggregations.inspireThemeUri ? 'inspire' : 'topics';
               });
+            }
+          });
         });
       };
       $scope.userAdminMenu = gnAdminMenu.UserAdmin;
@@ -820,10 +1090,18 @@ goog.require('gn_alert');
 
 
       $scope.healthCheck = {};
+      // Flag to show the health index error panel
+      // By default hidden, only to be displayed if the
+      // health check for the index returns an error.
+      $scope.showHealthIndexError = false;
+
       function healthCheckStatus(data) {
         angular.forEach(data, function(o) {
           $scope.healthCheck[o.name] = (o.status === 'OK');
         });
+
+        $scope.showHealthIndexError = (!$scope.healthCheck) ||
+          ($scope.healthCheck && $scope.healthCheck.IndexHealthCheck == false);
       };
       $http.get('../../warninghealthcheck')
         .success(healthCheckStatus)

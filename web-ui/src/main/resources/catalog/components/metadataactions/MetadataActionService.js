@@ -103,7 +103,7 @@
       this.metadataPrint = function(params, bucket) {
         var url;
         if (angular.isObject(params) && params.sortBy) {
-          url = gnHttp.getService('mdGetPDFSelection');
+          url = '../api/records/pdf';
           url += '?sortBy=' + params.sortBy;
           if (params.sortOrder) {
             url += '&sortOrder=' + params.sortOrder;
@@ -142,9 +142,9 @@
        */
       this.metadataMEF = function(uuid, bucket, approved) {
 
-        var url = gnHttp.getService('mdGetMEF') + '?version=2';
+        var url = '../api/records/zip?';
         url += angular.isDefined(uuid) ?
-            '&uuid=' + uuid : '&format=full';
+            '&uuids=' + uuid : '';
         url += angular.isDefined(bucket) ?
             '&bucket=' + bucket : '';
         url += angular.isDefined(approved) ?
@@ -154,7 +154,7 @@
       };
 
       this.exportCSV = function(bucket) {
-        window.open(gnHttp.getService('csv') +
+        window.open('../api/records/csv' +
             '?bucket=' + bucket, windowName, windowOption);
       };
       this.validateMdLinks = function(bucket) {
@@ -182,8 +182,7 @@
 
         $rootScope.$broadcast('operationOnSelectionStart');
         if (md) {
-          return gnMetadataManager.validate(md.getId()).then(function() {
-            $rootScope.$broadcast('operationOnSelectionStop');
+          return gnMetadataManager.validate(md.id).then(function() {
             $rootScope.$broadcast('search');
           });
         } else {
@@ -211,7 +210,7 @@
       this.deleteMd = function(md, bucket) {
         $rootScope.$broadcast('operationOnSelectionStart');
         if (md) {
-          return gnMetadataManager.remove(md.getId()).then(function() {
+          return gnMetadataManager.remove(md.id).then(function() {
             $rootScope.$broadcast('mdSelectNone');
             $rootScope.$broadcast('operationOnSelectionStop');
             // TODO: Here we may introduce a delay to not display the deleted
@@ -234,8 +233,8 @@
       this.openPrivilegesPanel = function(md, scope) {
         gnUtilityService.openModal({
           title: $translate.instant('privileges') + ' - ' +
-              (md.title || md.defaultTitle),
-          content: '<div gn-share="' + md.getId() + '"></div>',
+              md.resourceTitle,
+          content: '<div gn-share="' + md.id + '"></div>',
           className: 'gn-privileges-popup'
         }, scope, 'PrivilegesUpdated');
       };
@@ -252,7 +251,7 @@
       };
 
       this.startWorkflow = function(md, scope) {
-        return $http.put('../api/records/' + md.getId() +
+        return $http.put('../api/records/' + md.id +
             '/status', {status: 1, changeMessage: 'Enable workflow'}).then(
             function(response) {
               gnMetadataManager.updateMdObj(md);
@@ -294,7 +293,7 @@
       };
 
       this.openTransferOwnership = function(md, bucket, scope) {
-        var uuid = md ? md.getUuid() : '';
+        var uuid = md ? md.uuid : '';
         var ownerId = md ? md.getOwnerId() : '';
         var groupOwner = md ? md.getGroupOwner() : '';
         gnUtilityService.openModal({
@@ -310,7 +309,7 @@
        * @param {string} md
        */
       this.duplicate = function(md) {
-        duplicateMetadata(md.getId(), false);
+        duplicateMetadata(md.id, false);
       };
 
       /**
@@ -318,7 +317,7 @@
        * @param {string} md
        */
       this.createChild = function(md) {
-        duplicateMetadata(md.getId(), true);
+        duplicateMetadata(md.id, true);
       };
 
       /**
@@ -349,7 +348,7 @@
         var onOrOff = flag === 'on';
 
         return gnShareService.publish(
-            angular.isDefined(md) ? md.getId() : undefined,
+            angular.isDefined(md) ? md.id : undefined,
             angular.isDefined(md) ? undefined : bucket,
             onOrOff, $rootScope.user)
             .then(
@@ -440,8 +439,8 @@
        */
       this.getPermalink = function(md) {
         var url = $location.absUrl().split('#')[0] + '#/metadata/' +
-            md.getUuid();
-        gnUtilityService.getPermalink(md.title || md.defaultTitle, url);
+            md.uuid;
+        gnUtilityService.getPermalink(md.resourceTitle, url);
       };
 
       /**

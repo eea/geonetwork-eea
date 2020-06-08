@@ -23,46 +23,33 @@
 
 package org.fao.geonet.api.regions.metadata;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.MultiPolygon;
-import org.locationtech.jts.geom.Polygon;
+import com.google.common.base.Optional;
+import jeeves.server.context.ServiceContext;
+import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.GeonetContext;
+import org.fao.geonet.api.regions.MetadataRegion;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.ISODate;
+import org.fao.geonet.domain.Metadata;
 import org.fao.geonet.domain.ReservedOperation;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataSchemaUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.region.Region;
 import org.fao.geonet.kernel.region.Request;
-import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.search.spatial.ErrorHandler;
-import org.fao.geonet.kernel.search.spatial.SpatialIndexWriter;
 import org.fao.geonet.lib.Lib;
-import org.fao.geonet.services.Utils;
-import org.fao.geonet.api.regions.MetadataRegion;
+import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
-import org.geotools.geometry.jts.JTS;
-import org.geotools.referencing.CRS;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.xsd.Parser;
 import org.jdom.Element;
 import org.jdom.filter.Filter;
+import org.locationtech.jts.geom.*;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.Lists;
-import org.locationtech.jts.geom.Envelope;
-import org.locationtech.jts.geom.GeometryFactory;
+import java.nio.file.Path;
+import java.util.*;
 
-import jeeves.server.context.ServiceContext;
 
 /**
  * TODO: A polygon may be exclusion and in such case should be substracted from the overall extent?
@@ -73,8 +60,6 @@ public class MetadataRegionSearchRequest extends Request {
     private static final FindByNodeName EXTENT_FINDER = new FindByNodeName("EX_BoundingPolygon", "EX_GeographicBoundingBox", "polygon");
     private final Parser[] parsers;
     ServiceContext context;
-    private List<? extends MetadataRegionFinder> regionFinders = Lists.newArrayList(
-        new FindRegionByXPath(), new FindRegionByGmlId(), new FindRegionByEditRef());
     private String id;
     private String label;
     private GeometryFactory factory;
@@ -112,47 +97,12 @@ public class MetadataRegionSearchRequest extends Request {
         } else if (id != null) {
             String[] parts = id.split(":", 3);
             String mdId = parts[1];
-            String id;
-            if (parts.length > 2) {
-                id = parts[2];
-                loadOnly(regions, Id.create(mdId), id);
-            } else {
-                loadSpatialExtent(regions, Id.create(mdId));
-            }
+            loadSpatialExtent(regions, Id.create(mdId));
             if (regions.size() > 1) {
                 regions = Collections.singletonList(regions.get(0));
             }
         }
         return regions;
-    }
-
-    private void loadOnly(List<Region> regions, Id mdId, String id) throws Exception {
-        MetadataRegionFinder regionFinder = null;
-        for (MetadataRegionFinder next : regionFinders) {
-            if (next.accepts(id)) {
-                regionFinder = next;
-                break;
-            }
-        }
-
-        if (regionFinder != null) {
-            Element metadata = findMetadata(mdId, regionFinder.needsEditData());
-            if (metadata != null) {
-                regionFinder.findRegion(this, regions, mdId, id, metadata);
-            }
-        }
-    }
-
-    boolean findContainingGmdEl(List<Region> regions, Id mdId, Element el) throws Exception {
-        Element parent = el;
-        while (parent != null) {
-            if (EXTENT_FINDER.matches(parent)) {
-                regions.add(parseRegion(mdId, parent));
-                return true;
-            }
-            parent = parent.getParentElement();
-        }
-        return false;
     }
 
     private void loadAll(List<Region> regions, Id id) throws Exception {
@@ -173,7 +123,7 @@ public class MetadataRegionSearchRequest extends Request {
         Element metadata = findMetadata(id, false);
         if (metadata != null) {
             Path schemaDir = getSchemaDir(id);
-            MultiPolygon geom = SpatialIndexWriter.getSpatialExtent(schemaDir, metadata, parsers,
+            MultiPolygon geom = GeomUtils.getSpatialExtent(schemaDir, metadata, parsers,
                 new SpatialExtentErrorHandler());
             MetadataRegion region = new MetadataRegion(id, null, geom);
             regions.add(region);
@@ -210,10 +160,10 @@ public class MetadataRegionSearchRequest extends Request {
         Geometry geometry = null;
         if ("polygon".equals(extentObj.getName())) {
             String gml = Xml.getString(extentObj);
-            geometry = SpatialIndexWriter.parseGml(parsers[0], gml);
+            geometry = GeomUtils.parseGml(parsers[0], gml);
         } else if ("EX_BoundingPolygon".equals(extentObj.getName())) {
             String gml = Xml.getString(extentObj.getChild("polygon", Geonet.Namespaces.GMD));
-            geometry = SpatialIndexWriter.parseGml(parsers[0], gml);
+            geometry = GeomUtils.parseGml(parsers[0], gml);
         } else if ("EX_GeographicBoundingBox".equals(extentObj.getName())) {
             double minx = Double.parseDouble(extentObj.getChild("westBoundLongitude", Geonet.Namespaces.GMD).getChildText("Decimal", Geonet.Namespaces.GCO));
             double maxx = Double.parseDouble(extentObj.getChild("eastBoundLongitude", Geonet.Namespaces.GMD).getChildText("Decimal", Geonet.Namespaces.GCO));
@@ -235,7 +185,7 @@ public class MetadataRegionSearchRequest extends Request {
 
     private Element findMetadata(Id id, boolean includeEditData) throws Exception {
         final DataManager dataManager = context.getBean(DataManager.class);
-        String mdId = id.getMdId(context.getBean(SearchManager.class), dataManager);
+        String mdId = id.getMdId();
         try {
             if (context.getBean(IMetadataUtils.class).exists(Integer.parseInt(mdId))) {
                 Lib.resource.checkPrivilege(context, mdId, ReservedOperation.view);
@@ -252,7 +202,7 @@ public class MetadataRegionSearchRequest extends Request {
 
     private Path getSchemaDir(Id id) throws Exception {
         final DataManager dataManager = context.getBean(DataManager.class);
-        String mdId = id.getMdId(context.getBean(SearchManager.class), dataManager);
+        String mdId = id.getMdId();
         String schemaId = dataManager.getMetadataSchema(mdId);
         final IMetadataSchemaUtils schemaUtils = context.getBean(IMetadataSchemaUtils.class);
         return schemaUtils.getSchemaDir(schemaId);
@@ -268,13 +218,12 @@ public class MetadataRegionSearchRequest extends Request {
     public Optional<Long> getLastModified() throws Exception {
         if (id.startsWith(MetadataRegionSearchRequest.PREFIX)) {
             String[] idParts = id.substring(MetadataRegionSearchRequest.PREFIX.length()).split(":");
-
-            SearchManager searchManager = this.context.getBean(SearchManager.class);
-            DataManager dataManager = this.context.getBean(DataManager.class);
-            final String mdId = MetadataRegionSearchRequest.Id.create(idParts[0]).getMdId(searchManager, dataManager);
+            final String mdId = MetadataRegionSearchRequest.Id.create(idParts[0]).getMdId();
 
             if (mdId != null) {
-                final ISODate docChangeDate = searchManager.getDocChangeDate(mdId);
+                Metadata metadata = ApplicationContextHolder.get().getBean(MetadataRepository.class).findOne(mdId);
+
+                final ISODate docChangeDate = metadata.getDataInfo().getChangeDate();
                 if (docChangeDate != null) {
                     return Optional.of(docChangeDate.toDate().getTime());
                 }
@@ -294,19 +243,13 @@ public class MetadataRegionSearchRequest extends Request {
         }
 
         static Id create(String id) {
-            if (id.toLowerCase().startsWith(MdId.PREFIX)) {
-                return new MdId(id);
-            } else if (id.toLowerCase().startsWith(Uuid.PREFIX)) {
-                return new Uuid(id);
-            } else {
-                return new FileId(id);
-            }
+            return new MdId(id);
         }
 
         /**
          * Convert ID to the id for looking up the metadata in the database
          */
-        public abstract String getMdId(SearchManager searchManager, DataManager dataManager) throws Exception;
+        public abstract String getMdId() throws Exception;
 
         /**
          * Strip the identifier from the id and return the id
@@ -318,30 +261,6 @@ public class MetadataRegionSearchRequest extends Request {
         }
     }
 
-    @Deprecated
-    public static class FileId extends Id {
-
-        private static final String PREFIX = "@fileId";
-
-        public FileId(String id) {
-            super(PREFIX, id);
-        }
-
-        @Override
-        public String getMdId(SearchManager searchManager, DataManager dataManager) throws Exception {
-            String mdId = Utils.lookupMetadataIdFromFileId(id, searchManager);
-
-            if (mdId == null) {
-                mdId = dataManager.getMetadataId(id);
-            }
-            return mdId;
-        }
-
-        @Override
-        public String getId() {
-            return id;
-        }
-    }
 
     public static class MdId extends Id {
 
@@ -352,34 +271,13 @@ public class MetadataRegionSearchRequest extends Request {
         }
 
         @Override
-        public String getMdId(SearchManager searchManager, DataManager dataManager) {
+        public String getMdId() {
             return id;
         }
 
         @Override
         public String getId() {
             return id;
-        }
-
-    }
-
-    @Deprecated
-    public static class Uuid extends Id {
-
-        private static final String PREFIX = "@uuid";
-
-        public Uuid(String id) {
-            super(PREFIX, id.substring(PREFIX.length()));
-        }
-
-        @Override
-        public String getMdId(SearchManager searchManager, DataManager dataManager) throws Exception {
-            return dataManager.getMetadataId(id);
-        }
-
-        @Override
-        public String getId() {
-            return null;
         }
 
     }
@@ -404,7 +302,5 @@ public class MetadataRegionSearchRequest extends Request {
             }
             return false;
         }
-
     }
-
 }

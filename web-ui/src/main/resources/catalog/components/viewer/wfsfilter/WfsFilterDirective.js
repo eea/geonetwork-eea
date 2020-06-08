@@ -193,12 +193,11 @@
                 scope.wfsUrl || scope.layer.get('url').replace(/wms/i, 'wfs'))
             });
 
-            uuid = scope.md && scope.md.getUuid();
+            uuid = scope.md && scope.md.uuid;
             // FIXME ? This comes from Sextant probably and
             // does not work here when current layer change
             // the previous featureTypeName is still used.
             // ftName = scope.featureTypeName ||             ftName = scope.featureTypeName ||
-;
             ftName = scope.layer.getSource().getParams().LAYERS;
             scope.featureTypeName = ftName;
 

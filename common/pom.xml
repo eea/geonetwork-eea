@@ -31,16 +31,16 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>3.11.0-SNAPSHOT</version>
+    <version>4.0.0-alpha.2</version>
   </parent>
 
 
   <!-- =========================================================== -->
   <!-- Module Description -->
   <!-- =========================================================== -->
-  <artifactId>common</artifactId>
+  <artifactId>gn-common</artifactId>
   <packaging>jar</packaging>
-  <name>common utils</name>
+  <name>GeoNetwork common utils</name>
   <description>
     Utility classes used by many or all geonetwork modules.
   </description>

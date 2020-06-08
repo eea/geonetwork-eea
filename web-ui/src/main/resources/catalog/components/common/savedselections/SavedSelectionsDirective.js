@@ -51,7 +51,7 @@
             label: 'searchSelectedRecord',
             fn: searchRecordsInSelection,
             icon: 'fa-search'
-          }
+          // },
           // 'MapLayerlist': {
           //   label: 'addToMap',
           //   filterFn: function(record) {
@@ -64,6 +64,19 @@
           //
           //       var md = new Metadata(record);
           //       angular.forEach(md.getLinksByType('OGC:WMS'), function(link) {
+          //         if (gnExternalViewer.isEnabled()) {
+          //           gnExternalViewer.viewService({
+          //             id: md.id,
+          //             uuid: md.uuid
+          //           }, {
+          //             url: link.url,
+          //             type: 'wms',
+          //             name: link.name,
+          //             title: link.title
+          //           })
+          //           return;
+          //         }
+          //
           //         if (gnMap.isLayerInMap(viewerMap,
           //             link.name, link.url)) {
           //           return;
@@ -79,7 +92,7 @@
           //     }
           //   },
           //   icon: 'fa-globe'
-          // }
+          }
         },
         // Add user session selection types
         // * MapLayerList is a local selection used to add
@@ -165,7 +178,7 @@
               var foundRecords = [];
               angular.forEach(r.metadata, function(md) {
                 if (md) {
-                  var uuid = md['geonet:info'].uuid;
+                  var uuid = md.uuid;
                   selections.records[uuid] = md;
                   foundRecords.push(uuid);
                 }
@@ -462,7 +475,7 @@
          function link(scope, element, attrs, controller) {
            scope.selectionsWithRecord = [];
            scope.selections = {};
-           scope.uuid = scope.record['geonet:info'].uuid;
+           scope.uuid = scope.record.uuid;
            scope.isSavedSelectionEnabled =
              gnGlobalSettings.gnCfg.mods.search.savedSelection.enabled;
 

@@ -28,7 +28,7 @@ import jeeves.server.context.ServiceContext;
 import org.fao.geonet.Util;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.User;
-import org.fao.geonet.kernel.search.SearchManager;
+import org.fao.geonet.kernel.search.EsSearchManager;
 import org.fao.geonet.utils.Log;
 import org.springframework.transaction.TransactionStatus;
 
@@ -49,7 +49,7 @@ public final class IndexMetadataTask implements Runnable {
     private final List<?> _metadataIds;
     private final TransactionStatus _transactionStatus;
     private final Set<IndexMetadataTask> _batchIndex;
-    private final SearchManager searchManager;
+    private final EsSearchManager searchManager;
     private final AtomicInteger indexed;
     private User _user;
 
@@ -67,7 +67,7 @@ public final class IndexMetadataTask implements Runnable {
         this._context = context;
         this._metadataIds = metadataIds;
         this._batchIndex = batchIndex;
-        this.searchManager = context.getBean(SearchManager.class);
+        this.searchManager = context.getBean(EsSearchManager.class);
 
         batchIndex.add(this);
 
@@ -111,7 +111,7 @@ public final class IndexMetadataTask implements Runnable {
                 }
 
                 try {
-                    dataManager.indexMetadata(metadataId.toString(), false, null);
+                    dataManager.indexMetadata(metadataId.toString(), false);
                 } catch (Exception e) {
                     Log.error(Geonet.INDEX_ENGINE, "Error indexing metadata '" + metadataId + "': " + e.getMessage()
                         + "\n" + Util.getStackTrace(e));

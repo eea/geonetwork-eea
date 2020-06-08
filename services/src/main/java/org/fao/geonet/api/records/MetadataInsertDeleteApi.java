@@ -51,7 +51,6 @@ import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.domain.ISODate;
 import org.fao.geonet.domain.Metadata;
 import org.fao.geonet.domain.MetadataCategory;
-import org.fao.geonet.domain.MetadataResource;
 import org.fao.geonet.domain.MetadataResourceVisibility;
 import org.fao.geonet.domain.MetadataType;
 import org.fao.geonet.domain.Pair;
@@ -67,16 +66,14 @@ import org.fao.geonet.exceptions.XSDValidationErrorEx;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
-import org.fao.geonet.kernel.Schema;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.mef.Importer;
 import org.fao.geonet.kernel.mef.MEFLib;
-import org.fao.geonet.kernel.search.SearchManager;
+import org.fao.geonet.kernel.search.EsSearchManager;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
-import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataDraftRepository;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.repository.Updater;
@@ -126,11 +123,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
-import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
-import static org.fao.geonet.api.ApiParams.API_PARAM_RECORD_UUID;
-import static org.fao.geonet.api.ApiParams.API_PARAM_RECORD_UUIDS_OR_SELECTION;
+import static org.fao.geonet.api.ApiParams.*;
 import static org.springframework.data.jpa.domain.Specifications.where;
+
 
 @RequestMapping(value = { "/{portal}/api/records", "/{portal}/api/" + API.VERSION_0_1 + "/records" })
 @Api(value = API_CLASS_RECORD_TAG, tags = API_CLASS_RECORD_TAG, description = API_CLASS_RECORD_OPS)
@@ -154,9 +149,6 @@ public class MetadataInsertDeleteApi {
     private DataManager dataManager;
 
     @Autowired
-    private SearchManager searchManager;
-
-    @Autowired
     private AccessManager accessMan;
 
     @Autowired
@@ -164,6 +156,9 @@ public class MetadataInsertDeleteApi {
 
     @Autowired
     MetadataDraftRepository metadataDraftRepository;
+
+    @Autowired
+    EsSearchManager searchManager;
 
     @Autowired
     private SettingManager settingManager;
@@ -197,9 +192,6 @@ public class MetadataInsertDeleteApi {
             HttpServletRequest request) throws Exception {
         AbstractMetadata metadata = ApiUtils.canEditRecord(metadataUuid, request);
         ServiceContext context = ApiUtils.createServiceContext(request);
-        ApplicationContext appContext = ApplicationContextHolder.get();
-        IMetadataManager metadataManager = appContext.getBean(IMetadataManager.class);
-        SearchManager searchManager = appContext.getBean(SearchManager.class);
         Store store = context.getBean("resourceStore", Store.class);
 
         if (metadata.getDataInfo().getType() != MetadataType.SUB_TEMPLATE
@@ -210,7 +202,7 @@ public class MetadataInsertDeleteApi {
         store.delResources(context, metadata.getUuid(), true);
         metadataManager.deleteMetadata(context, metadata.getId() + "");
 
-        searchManager.forceIndexChanges();
+        dataManager.forceIndexChanges();
     }
 
     @ApiOperation(value = "Delete one or more records", notes = "User MUST be able to edit the record to delete it. "
@@ -232,10 +224,6 @@ public class MetadataInsertDeleteApi {
             @ApiParam(value = API_PARAM_BACKUP_FIRST, required = false) @RequestParam(required = false, defaultValue = "true") boolean withBackup,
             @ApiIgnore HttpSession session, HttpServletRequest request) throws Exception {
         ServiceContext context = ApiUtils.createServiceContext(request);
-        ApplicationContext appContext = ApplicationContextHolder.get();
-        IMetadataManager metadataManager = appContext.getBean(IMetadataManager.class);
-        AccessManager accessMan = appContext.getBean(AccessManager.class);
-        SearchManager searchManager = appContext.getBean(SearchManager.class);
         Store store = context.getBean("resourceStore", Store.class);
 
         Set<String> records = ApiUtils.getUuidsParameterOrSelection(uuids, bucket, ApiUtils.getUserSession(session));
@@ -263,7 +251,7 @@ public class MetadataInsertDeleteApi {
             }
         }
 
-        searchManager.forceIndexChanges();
+        dataManager.forceIndexChanges();
 
         report.close();
         return report;
@@ -884,7 +872,7 @@ public class MetadataInsertDeleteApi {
             });
         }
 
-        dataManager.indexMetadata(id.get(0), true, null);
+        dataManager.indexMetadata(id.get(0), true);
         return Pair.read(Integer.valueOf(id.get(0)), uuid);
     }
 }

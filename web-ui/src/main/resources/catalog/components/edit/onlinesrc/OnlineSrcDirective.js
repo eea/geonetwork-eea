@@ -355,7 +355,7 @@
                 scope.searchObj = {
                   internal: true,
                   params: {
-                    sortBy: 'title'
+                    sortBy: 'resourceTitleObject.default.keyword'
                   }
                 };
 
@@ -1142,7 +1142,9 @@
                 pre: function preLink(scope) {
                   scope.searchObj = {
                     internal: true,
-                    params: {}
+                    params: {
+                      isTemplate: 'n'
+                    }
                   };
                   scope.modelOptions =
                       angular.copy(gnGlobalSettings.modelOptions);
@@ -1161,13 +1163,15 @@
                     // parameters of the online resource form
                     scope.srcParams = {selectedLayers: []};
 
-                    var searchParams = {};
+                    var searchParams = {
+                      isTemplate: 'n'
+                    };
                     if (scope.mode === 'service') {
                       searchParams.type = scope.mode;
                     } else {
                       // Any records which are not services
                       // ie. dataset, series, ...
-                      searchParams['without-type'] = 'service';
+                      searchParams['-type'] = 'service';
                     }
                     scope.$broadcast('resetSearch', searchParams);
                     scope.layers = [];
@@ -1264,14 +1268,14 @@
                     if (!angular.isUndefined(scope.stateObj.selectRecords) &&
                         scope.stateObj.selectRecords.length > 0) {
                       var md = new Metadata(scope.stateObj.selectRecords[0]);
-                      scope.currentMdTitle = md.title || md.defaultTitle;
+                      scope.currentMdTitle = md.resourceTitle;
                       if (scope.mode === 'service') {
                         var links = [];
                         scope.layers = [];
                         scope.srcParams.selectedLayers = [];
 
                         links = links.concat(md.getLinksByType('ogc', 'atom'));
-                        scope.srcParams.uuidSrv = md.getUuid();
+                        scope.srcParams.uuidSrv = md.uuid;
                         scope.srcParams.identifier =
                           (gnCurrentEdit.metadata.identifier && gnCurrentEdit.metadata.identifier[0]) ?
                             gnCurrentEdit.metadata.identifier[0] : '';
@@ -1291,12 +1295,12 @@
                           scope.srcParams.desc = scope.currentMdTitle;
                           scope.srcParams.protocol = "WWW:LINK-1.0-http--link";
                           scope.onlineSrcLink = gnConfigService.getServiceURL() +
-                            "api/records/" + md.getUuid();
+                            "api/records/" + md.uuid;
                           scope.srcParams.url = scope.onlineSrcLink;
                           scope.addOnlineSrcInDataset = false;
                         }
                       } else {
-                        scope.srcParams.uuidDS = md.getUuid();
+                        scope.srcParams.uuidDS = md.uuid;
                         scope.srcParams.name = gnCurrentEdit.mdTitle;
                         scope.srcParams.desc = gnCurrentEdit.mdTitle;
                         scope.srcParams.protocol = "WWW:LINK-1.0-http--link";
@@ -1390,7 +1394,8 @@
                     var searchParams = {};
                     if (scope.mode === 'fcats') {
                       searchParams = {
-                        _schema: 'iso19110'
+                        schema: 'iso19110',
+                        isTemplate: 'n'
                       };
                       scope.btn = {
                         label: $translate.instant('linkToFeatureCatalog')
@@ -1398,7 +1403,7 @@
                     }
                     else if (scope.mode === 'parent') {
                       searchParams = {
-                        hitsPerPage: 10
+                        isTemplate: 'n'
                       };
                       scope.btn = {
                         label: $translate.instant('linkToParent')
@@ -1406,7 +1411,7 @@
                     }
                     else if (scope.mode === 'source') {
                       searchParams = {
-                        hitsPerPage: 10
+                        isTemplate: 'n'
                       };
                       scope.btn = {
                         label: $translate.instant('linkToSource')
@@ -1455,11 +1460,11 @@
                     any: '',
                     defaultParams: {
                       any: '',
+                      isTemplate: 'n',
                       from: 1,
                       to: 50,
-                      sortBy: 'title',
-                      sortOrder: 'reverse'
-                      // resultType: 'hits'
+                      sortBy: 'resourceTitleObject.default.keyword',
+                      sortOrder: ''
                     }
                   };
                   scope.searchObj.params = angular.extend({},
@@ -1602,7 +1607,7 @@
                     var uuids = [];
                     for (i = 0; i < scope.selection.length; ++i) {
                       var obj = scope.selection[i];
-                      uuids.push(obj.md['geonet:info'].uuid + '#' +
+                      uuids.push(obj.md.uuid + '#' +
                           obj.associationType + '#' +
                           obj.initiativeType);
                     }

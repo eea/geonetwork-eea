@@ -25,17 +25,17 @@ package org.fao.geonet.api.reports;
 
 import com.google.common.collect.ImmutableSet;
 import jeeves.server.context.ServiceContext;
+import org.apache.commons.lang.NotImplementedException;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.ReservedGroup;
 import org.fao.geonet.kernel.AccessManager;
-import org.fao.geonet.kernel.search.LuceneSearcher;
-import org.fao.geonet.utils.Log;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 
 
 /**
@@ -145,6 +145,10 @@ public final class ReportUtils {
     /**
      * Retrieves a metadata value from the Lucene index.
      *
+     * Duplicated with XslUtil - to refactor.
+     *
+     * TODO / TODOES
+     *
      * @param context Service context.
      * @param metadataId Metadata identifier.
      * @param fieldName Lucene field name.
@@ -156,19 +160,21 @@ public final class ReportUtils {
             final String fieldName) {
         String value = "";
 
-        try {
-            value = LuceneSearcher.getMetadataFromIndexById(
-                    context.getLanguage(),
-                    metadataId + "",
-                    fieldName);
+        throw new NotImplementedException("Not implemented in ES");
+//        try {
+//
+//            value = LuceneSearcher.getMetadataFromIndexById(
+//                    context.getLanguage(),
+//                    metadataId + "",
+//                    fieldName);
+//
+//            if (value == null) {
+//                value = "";
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
 
-            if (value == null) {
-                value = "";
-            }
-        } catch (Exception ex) {
-            Log.error(Geonet.GEONETWORK, ex.getMessage(), ex);
-        }
-
-        return value;
+//        return value;
     }
 }

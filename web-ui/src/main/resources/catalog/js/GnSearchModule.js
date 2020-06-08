@@ -34,6 +34,7 @@
   goog.require('gn_resultsview');
   goog.require('gn_search_controller');
   goog.require('gn_viewer');
+  goog.require('gn_es');
 
   var module = angular.module('gn_search', [
     'gn_module',
@@ -45,6 +46,7 @@
     'gn_mdview',
     'gn_mdactions',
     'ui.bootstrap.buttons',
+    'gn_es',
     'ui.bootstrap.tabs'
   ]);
 
@@ -52,7 +54,7 @@
   module.config(['$LOCALES', function($LOCALES) {
     $LOCALES.push('search');
     $LOCALES.push('/../api/0.1/tools/i18n/db?' +
-        'type=MetadataCategory&type=Operation&type=Group&type=StatusValue');
+        'type=MetadataCategory&type=Operation&type=Group&type=StatusValue&type=Source');
     $LOCALES.push('/../api/0.1/standards/iso19139/' +
         'codelists/gmd%3AMD_TopicCategoryCode');
     $LOCALES.push('/../api/0.1/standards/iso19139/' +

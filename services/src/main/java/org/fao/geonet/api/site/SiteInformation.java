@@ -23,35 +23,26 @@
 
 package org.fao.geonet.api.site;
 
-import java.io.File;
-import java.io.FileInputStream;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jeeves.server.ServiceConfig;
+import jeeves.server.context.ServiceContext;
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.fao.geonet.GeonetContext;
+import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.kernel.GeonetworkDataDirectory;
+import org.fao.geonet.utils.Log;
+import org.fao.geonet.utils.TransformerFactoryFactory;
+
+import javax.sql.DataSource;
+import javax.xml.transform.TransformerFactory;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-
-import javax.sql.DataSource;
-import javax.xml.transform.TransformerFactory;
-
-import org.apache.commons.dbcp2.BasicDataSource;
-import org.fao.geonet.GeonetContext;
-import org.fao.geonet.api.ApiUtils;
-import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.kernel.GeonetworkDataDirectory;
-import org.fao.geonet.kernel.search.LuceneConfig;
-import org.fao.geonet.utils.Log;
-import org.fao.geonet.utils.TransformerFactoryFactory;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import jeeves.server.ServiceConfig;
-import jeeves.server.context.ServiceContext;
 
 /**
  * Created by francois on 04/06/16.
@@ -168,18 +159,11 @@ public class SiteInformation {
     }
 
     /**
-     * Compute information about Lucene index.
+     * Compute information about index.
      */
     private void loadIndexInfo(ServiceContext context) throws IOException {
         final GeonetworkDataDirectory dataDirectory = context.getBean(GeonetworkDataDirectory.class);
-        Path luceneDir = dataDirectory.getLuceneDir();
-        indexProperties.put("index.path", luceneDir.toAbsolutePath().normalize().toString());
-        if (Files.exists(luceneDir)) {
-            long size = ApiUtils.sizeOfDirectory(luceneDir);
-            indexProperties.put("index.size", "" + size); // lucene + Shapefile
-            // if exist
-        }
-        indexProperties.put("index.lucene.config", context.getBean(LuceneConfig.class).toString());
+        // TODOES - give information about the index status ?
     }
 
     /**

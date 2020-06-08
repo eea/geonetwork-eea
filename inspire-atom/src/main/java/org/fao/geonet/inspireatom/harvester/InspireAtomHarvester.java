@@ -23,11 +23,7 @@
 package org.fao.geonet.inspireatom.harvester;
 
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import jeeves.server.context.ServiceContext;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.Logger;
@@ -39,7 +35,7 @@ import org.fao.geonet.domain.MetadataType;
 import org.fao.geonet.inspireatom.util.InspireAtomUtil;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
-import org.fao.geonet.kernel.search.SearchManager;
+import org.fao.geonet.kernel.search.EsSearchManager;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.repository.InspireAtomFeedRepository;
@@ -51,7 +47,11 @@ import org.jdom.Element;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 
-import jeeves.server.context.ServiceContext;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * Class to harvest the Atom documents referenced in the iso19139 in the catalog.
@@ -82,7 +82,7 @@ public class InspireAtomHarvester {
      * document is retrieved and stored in the metadata table.
      */
     public final Element harvest() {
-        SearchManager searchManager = gc.getBean(SearchManager.class);
+        EsSearchManager searchManager = gc.getBean(EsSearchManager.class);
         SettingManager sm = gc.getBean(SettingManager.class);
         DataManager dataMan = gc.getBean(DataManager.class);
 
@@ -285,7 +285,8 @@ public class InspireAtomHarvester {
 
         final InspireAtomFeedRepository repository = gc.getBean(InspireAtomFeedRepository.class);
 
-        List<AbstractMetadata> iso19139Metadata = InspireAtomUtil.searchMetadataByType(ServiceContext.get(), gc.getBean(SearchManager.class), "dataset");
+        List<AbstractMetadata> iso19139Metadata = InspireAtomUtil.searchMetadataByType(ServiceContext.get(), gc.getBean(EsSearchManager.class), "dataset");
+
         //List<Metadata> iso19139Metadata = metadataRepository.findAll(Specifications.where(MetadataSpecs.isType(MetadataType.METADATA)).and(MetadataSpecs.isIso19139Schema()));
 
         Map<String, String> metadataWithAtomFeeds =
@@ -361,7 +362,7 @@ public class InspireAtomHarvester {
 
             try {
                 metadataUuid = InspireAtomUtil.retrieveDatasetUuidFromIdentifier(context,
-                    gc.getBean(SearchManager.class), atomDatasetId);
+                    gc.getBean(EsSearchManager.class), atomDatasetId);
 
                 String atomDatasetNs = entry.getValue();
                 logger.debug("Dataset, id=" + atomDatasetId + ", namespace=" + atomDatasetNs);

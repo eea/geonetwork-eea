@@ -19,34 +19,16 @@
              ng-if="isFilterTagsDisplayedInSearch && searchResults.dimension">
         </div>
 
-        <!-- Hierachical facet mode -->
         <div class="panel panel-default"
-            data-ng-show="searchResults.records.length > 0">
-          <div class="panel-heading" data-gn-slide-toggle="">
-            <i class="fa fa-search"/>&nbsp;
-            <span data-translate="">filter</span>
-          </div>
-          <div class="panel-body">
-            <div data-gn-facet-dimension-list="searchResults.dimension"
-                data-params="searchObj.params"
-                data-facet-type="facetsSummaryType"
-                data-facet-list="facetConfig"
-                data-current-facets="currentFacets">
-            </div>
+           data-ng-show="searchResults.records.length > 0">
+        <div class="panel-body">
+          <div data-es-facets="searchResults.facets"/>
           </div>
         </div>
       </div>
 
-      <div class="col-md-9 container-fluid">
+    <div class="col-md-9 container-fluid">
       <div class="row gn-row-tools">
-        <div class="col-xs-12 col-md-9"
-            data-gn-facet-dimension-list="searchResults.dimension"
-            data-params="searchObj.params"
-            data-facet-type="facetsSummaryType"
-            data-facet-list="facetConfig"
-            data-current-facets="currentFacets"
-            data-tab-field="facetTabField"></div>
-
         <div class="col-xs-12 col-sm-6 col-sm-push-3 text-center"
           data-ng-show="searchResults.records.length > 0">
           <div class=""

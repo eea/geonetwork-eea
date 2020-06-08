@@ -37,6 +37,7 @@ import org.fao.geonet.api.exception.ResourceNotFoundException;
 import org.fao.geonet.domain.GeonetEntity;
 import org.fao.geonet.domain.Language;
 import org.fao.geonet.domain.Source;
+import org.fao.geonet.domain.SourceType;
 import org.fao.geonet.domain.Source_;
 import org.fao.geonet.guiapi.search.XsltResponseWriter;
 import org.fao.geonet.repository.LanguageRepository;
@@ -135,7 +136,7 @@ public class SourcesApi {
         sources.stream().map(GeonetEntity::asXml).forEach(sourcesList::addContent);
         response.setContentType(MediaType.TEXT_HTML_VALUE);
         response.getWriter().write(
-            new XsltResponseWriter()
+            new XsltResponseWriter(null)
                 .withJson("catalog/locales/en-core.json")
                 .withJson("catalog/locales/en-search.json")
                 .withXml(sourcesList)
@@ -144,6 +145,19 @@ public class SourcesApi {
                 .asHtml());
     }
 
+
+    @ApiOperation(
+        value = "Get all sources by type",
+        notes = "Sources are the local catalogue, subportal, external catalogue (when importing MEF files) or harvesters.",
+        nickname = "getSourcesByType")
+    @RequestMapping(
+        value = "/{type}",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        method = RequestMethod.GET)
+    @ResponseBody
+    public List<Source> getSourcesByType(@PathVariable SourceType type) throws Exception {
+        return sourceRepository.findByType(type, SortUtils.createSort(Source_.name));
+    }
 
     @ApiOperation(
         value = "Add a source",

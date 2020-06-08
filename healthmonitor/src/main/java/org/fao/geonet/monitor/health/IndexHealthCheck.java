@@ -24,14 +24,14 @@
 package org.fao.geonet.monitor.health;
 
 import com.yammer.metrics.core.HealthCheck;
-import io.searchbox.core.Search;
-import io.searchbox.core.SearchResult;
 import jeeves.monitor.HealthCheckFactory;
 import jeeves.server.context.ServiceContext;
-import org.fao.geonet.GeonetContext;
-import org.fao.geonet.constants.Geonet;
+import org.elasticsearch.action.search.SearchResponse;
+import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.kernel.search.EsSearchManager;
-import org.springframework.beans.factory.BeanCreationException;
+import org.fao.geonet.kernel.setting.SettingInfo;
+import org.openrdf.sesame.sail.query.In;
+import org.springframework.context.ApplicationContext;
 
 /**
  * Checks to ensure that the Elasticsearch index is up and running.
@@ -40,38 +40,27 @@ public class IndexHealthCheck implements HealthCheckFactory {
     public HealthCheck create(final ServiceContext context) {
         return new HealthCheck(this.getClass().getSimpleName()) {
             @Override
-            protected Result check() throws Exception {
-                GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
-
+            protected Result check() {
                 try {
-                    EsSearchManager searchMan = gc.getBean(EsSearchManager.class);
+                    ApplicationContext applicationContext = ApplicationContextHolder.get();
+                    EsSearchManager searchMan = applicationContext.getBean(EsSearchManager.class);
+                    int from = 0;
+                    SettingInfo si = applicationContext.getBean(SettingInfo.class);
+                    int size = Integer.parseInt(si.getSelectionMaxRecords());
 
-                    try {
-                        Search search = new Search.Builder("")
-                            .addIndex(searchMan.getIndex())
-                            .addType(searchMan.getIndexType())
-                            .build();
-                        final SearchResult result = searchMan.getClient().getClient().execute(search);
-
-                        if (result.isSucceeded()) {
-                            return Result.healthy(String.format(
-                                "%s records indexed in remote index currently.",
-                                result.getHits(Object.class).size()
-                            ));
-                        } else {
-                            return Result.unhealthy(
-                                "Index storing records is not available currently. " +
-                                    "This component is only required if you use WFS features indexing " +
-                                    "and dashboards.");
-                        }
-                    } catch (Throwable e) {
-                        return Result.unhealthy(e);
+                    final SearchResponse result = searchMan.query("*", null, from, size);
+                    if (result.status().getStatus() == 200) {
+                        return Result.healthy(String.format(
+                            "%s records indexed in remote index currently.",
+                            result.getHits().getTotalHits().value
+                        ));
+                    } else {
+                        return Result.unhealthy(
+                            "Index storing records is not available currently. " +
+                                "This component is required. Check your installation.");
                     }
-
-                } catch (BeanCreationException e) {
-                    return Result.unhealthy("Remote index module is not installed in your catalogue " +
-                        "installation. Add 'es' to the spring.profiles.active in WEB-INF/web.xml to " +
-                        "activate it.");
+                } catch (Throwable e) {
+                    return Result.unhealthy(e);
                 }
             }
         };

@@ -504,7 +504,7 @@
     "mdStatusTitle-12": "Approuver directement la fiche",
     "mdStatusTitle-33": "Retirer la fiche",
     "mdStatusTitle-14": "Soumettre pour révision",
-    "mdStatusTitle-411": "Rejeté la fiche",
+    "mdStatusTitle-411": "Rejeter la fiche",
     "mdStatusButton-1": "Modifier en brouillon",
     "mdStatusButton-2": "Approuver",
     "mdStatusButton-3": "Retirer",
@@ -519,5 +519,6 @@
     "warnPublishDraft": "Lors de la publication d'une fiche ayant un statut brouillon, le statut passera à approuvé. Voulez-vous continuer ?",
     "cancelWorkingCopy": "Annuler la copie de travail",
     "deleteWorkingCopyRecordConfirm": "Voulez-vous vraiment supprimer la copie de travail ?",
-    "workingCopy": "Brouillon"
+    "workingCopy": "Brouillon",
+    "metadataValidated": "Metadata validated."
 }

@@ -197,11 +197,11 @@
       };
 
       $scope.indexMessages = function(md) {
-        if (angular.isArray(md.idxMsg)) {
-          return md.idxMsg;
+        if (angular.isArray(md.indexingErrorMsg)) {
+          return md.indexingErrorMsg;
         }
 
-        return [md.idxMsg];
+        return [md.indexingErrorMsg];
       };
       $scope.indexMessageTitle = function(errorMsg) {
         if (errorMsg === undefined) {
@@ -259,10 +259,12 @@
             $scope.rawIndexMessageDetail(errorMsg));
       };
       $scope.searchObj = {
+        configId: 'recordsWithErrors',
         params: {
-          _indexingError: 1,
-          _isTemplate: 'y or n',
-          sortBy: 'changeDate'
+          indexingError: 1,
+          isTemplate: ['y', 'n'],
+          sortBy: 'changeDate',
+          sortOrder: 'desc'
         }
       };
     }]);

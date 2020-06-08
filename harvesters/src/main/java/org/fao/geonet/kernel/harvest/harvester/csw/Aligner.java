@@ -57,10 +57,7 @@ import org.fao.geonet.kernel.harvest.harvester.HarvesterUtil;
 import org.fao.geonet.kernel.harvest.harvester.RecordInfo;
 import org.fao.geonet.kernel.harvest.harvester.UUIDMapper;
 import org.fao.geonet.kernel.schema.MetadataSchema;
-import org.fao.geonet.kernel.search.LuceneSearcher;
-import org.fao.geonet.kernel.search.index.LuceneIndexLanguageTracker;
 import org.fao.geonet.kernel.setting.SettingManager;
-import org.fao.geonet.repository.OperationAllowedRepository;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.jdom.Namespace;
@@ -73,7 +70,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -85,6 +81,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static org.fao.geonet.kernel.setting.Settings.SYSTEM_CSW_TRANSACTION_XPATH_UPDATE_CREATE_NEW_ELEMENTS;
 import static org.fao.geonet.utils.AbstractHttpRequest.Method.GET;
 import static org.fao.geonet.utils.AbstractHttpRequest.Method.POST;
+
+
 
 
 public class Aligner extends BaseAligner<CswParams> {
@@ -236,8 +234,6 @@ public class Aligner extends BaseAligner<CswParams> {
                     }
                 }
 
-                context.getBean(LuceneIndexLanguageTracker.class).commit();
-
                 result.totalMetadata++;
             } catch (Throwable t) {
                 errors.add(new HarvestError(this.context, t));
@@ -385,13 +381,13 @@ public class Aligner extends BaseAligner<CswParams> {
 
         addCategories(metadata, params.getCategories(), localCateg, context, null, false);
 
-        metadata = metadataManager.insertMetadata(context, metadata, md, true, false, false, UpdateDatestamp.NO, false, false);
+        metadata = metadataManager.insertMetadata(context, metadata, md, false, false, UpdateDatestamp.NO, false, false);
 
         String id = String.valueOf(metadata.getId());
 
         addPrivileges(id, params.getPrivileges(), localGroups, context);
 
-        metadataIndexer.indexMetadata(id, true, null);
+        metadataIndexer.indexMetadata(id, true);
         result.addedMetadata++;
     }
 
@@ -407,7 +403,7 @@ public class Aligner extends BaseAligner<CswParams> {
             } else {
                 log.debug("  - Updating local metadata for uuid:" + ri.uuid);
                 if (updatingLocalMetadata(ri, id, force)) {
-                    metadataIndexer.indexMetadata(id, true, null);
+                    metadataIndexer.indexMetadata(id, true);
                     result.updatedMetadata++;
                 }
             }
@@ -525,9 +521,7 @@ public class Aligner extends BaseAligner<CswParams> {
      * When harvesting, some users would like to have the capability to exclude "duplicate"
      * description of the same dataset.
      * <p>
-     * The check is made searching the identifier field in the index using {@link
-     * org.fao.geonet.kernel.search.LuceneSearcher#getAllMetadataFromIndexFor(String, String,
-     * String, java.util.Set, boolean)}
+     * The check is made searching the identifier field in the index.
      *
      * @param uuid     the metadata unique identifier
      * @param response the XML document to check
@@ -558,8 +552,10 @@ public class Aligner extends BaseAligner<CswParams> {
                         String identifier = identifierNode.getTextTrim();
                         log.debug("    - Searching for duplicates for resource identifier: " + identifier);
 
-                        Map<String, Map<String, String>> values = LuceneSearcher.getAllMetadataFromIndexFor(defaultLanguage, resourceIdentifierLuceneIndexField,
-                            identifier, Collections.singleton("_uuid"), true);
+                        // TODOES
+                        Map<String, Map<String, String>> values = new HashMap<>();
+//                        Map<String, Map<String, String>> values = LuceneSearcher.getAllMetadataFromIndexFor(defaultLanguage, resourceIdentifierLuceneIndexField,
+//                            identifier, Collections.singleton("_uuid"), true);
                         log.debug("    - Number of resources with same identifier: " + values.size());
                         for (Map<String, String> recordFieldValues : values.values()) {
                             String indexRecordUuid = recordFieldValues.get("_uuid");

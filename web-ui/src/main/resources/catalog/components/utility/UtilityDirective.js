@@ -537,16 +537,15 @@
            restrict: 'A',
            link: function(scope, element, attrs) {
              element.attr('placeholder', '...');
-             var displayField = attrs['displayField'] || 'defaultTitle';
+             var displayField = attrs['displayField'] || 'resourceTitle';
              var valueField = attrs['valueField'] || displayField;
              var params = angular.fromJson(element.attr('params') || '{}');
 
              var url = gnUrlUtils.append('q?_content_type=json',
               gnUrlUtils.toKeyValue(angular.extend({
-               _isTemplate: 'n',
+               isTemplate: 'n',
                any: '*QUERY*',
-               sortBy: 'title',
-               fast: 'index'
+               sortBy: 'resourceTitleObject.default.keyword'
              }, params)
               )
              );
@@ -572,7 +571,7 @@
                name: 'metadata',
                displayKey: function(data) {
                  if (valueField === 'uuid') {
-                   return data['geonet:info'].uuid;
+                   return data.uuid;
                  } else {
                    return data[valueField];
                  }
@@ -646,13 +645,12 @@
 
              var url = gnUrlUtils.append('q@json',
               gnUrlUtils.toKeyValue({
-                _isTemplate: 's',
+                isTemplate: 's',
                 any: '*QUERY*',
-                _root: 'gmd:CI_ResponsibleParty',
-                sortBy: 'title',
-                sortOrder: 'reverse',
-                resultType: 'subtemplates',
-                fast: 'index'
+                root: 'gmd:CI_ResponsibleParty',
+                sortBy: 'resourceTitleObject.default.keyword',
+                sortOrder: '',
+                resultType: 'subtemplates'
               })
              );
              var parseResponse = function(data) {
@@ -800,7 +798,7 @@
               element.addClass('disabled');
               icon.addClass('hidden');
               spinner = element.
-                  prepend('<i class="fa fa-spinner fa-spin"></i>');
+                  prepend('<i class="fa fa-fw fa-spinner fa-spin"></i>');
             };
             var done = function() {
               running = false;
@@ -1391,6 +1389,13 @@
       }
     }
   });
+  module.filter('geojsonToWkt', function() {
+    return function(val) {
+      var wkt_format = new ol.format.WKT();
+      var geojson_format = new ol.format.GeoJSON();
+      return wkt_format.writeGeometry(geojson_format.readGeometry(val));
+    }
+  });
   module.filter('encodeURIComponent', function() {
     return window.encodeURIComponent;
   });
@@ -1436,8 +1441,8 @@
         element.bind('click', function() {
           var imgOrMd = scope.$eval(attr['gnImgModal']);
           var img = undefined;
-          if(imgOrMd.getThumbnails) {
-            var imgs = imgOrMd.getThumbnails();
+          if(imgOrMd.overview) {
+            var imgs = imgOrMd.overview;
             var url = $(element).attr('src');
             for (var i = 0; i < imgs.list.length; i++) {
               if (imgs.list[i].url === url) {
@@ -1560,7 +1565,50 @@
       }
     };
   }]);
+  /**
+   * @ngdoc directive
+   * @name gn_utility.directive:gnTextField
+   *
+   * @description
+   *  Render a multilingual field as an object having:
+   *  {
+   *   langfre: "Français", -> The default language is the first property
+   *   langeng: "English",
+   *   ...
+   *   (optional) link: "http://" -> Anchor xlink:href attribute
+   *  }
+   *
+   */
+  module.directive('gnTextField', ['$compile', 'gnLangs',
+    function($compile, gnLangs) {
+      return {
+        restrict: 'A',
+        scope: {
+          md: '=gnTextField',
+          key: '@gnTextFieldKey'
+        },
+        template: '<p data-ng-repeat="v in values"' +
+          '           data-ng-init="text = v.default;">' +
+          '<a data-ng-show="::v.link" ' +
+          '   data-ng-href="{{::v.link}}" ' +
+          '   data-ng-bind-html="::text | newlines"</a>' +
+          '<span data-ng-hide="::v.link" ' +
+          '      data-ng-bind-html="::text | linky | newlines"></span>' +
+          '</p>',
+        link: function(scope, element, attrs) {
+          scope.values = scope.md[scope.key + 'Object'] || scope.md[scope.key];
+          // TODO: Multilingual field value based on UI language
+        }
+      };
+    }
+  ]);
 
+  module.filter('gnTextField', ['gnLangs',
+    function(gnLangs) {
+      return function(value) {
+        return angular.isDefined(value) ? value.default : ''; // TODO Return value based on UI language
+      }}
+  ]);
   /**
    * @ngdoc directive
    * @name gn_utility.directive:gnLynky

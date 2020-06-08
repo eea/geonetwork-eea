@@ -23,21 +23,14 @@
 
 package org.fao.geonet.api.records;
 
-import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
-import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
-import static org.fao.geonet.api.ApiParams.API_PARAM_RECORD_UUID;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.sun.istack.NotNull;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import jeeves.server.context.ServiceContext;
+import jeeves.services.ReadWriteController;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.api.API;
@@ -68,7 +61,6 @@ import org.fao.geonet.kernel.datamanager.IMetadataIndexer;
 import org.fao.geonet.kernel.datamanager.IMetadataStatus;
 import org.fao.geonet.kernel.metadata.StatusActions;
 import org.fao.geonet.kernel.metadata.StatusActionsFactory;
-import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.repository.MetadataStatusRepository;
@@ -91,15 +83,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.sun.istack.NotNull;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import jeeves.server.context.ServiceContext;
-import jeeves.services.ReadWriteController;
+import static org.fao.geonet.api.ApiParams.*;
+
 
 @RequestMapping(value = { "/{portal}/api/records", "/{portal}/api/" + API.VERSION_0_1 + "/records" })
 @Api(value = API_CLASS_RECORD_TAG, tags = API_CLASS_RECORD_TAG, description = API_CLASS_RECORD_OPS)
@@ -276,12 +271,19 @@ public class MetadataWorkflowApi {
         listOfStatusChange.add(metadataStatus);
         sa.onStatusChange(listOfStatusChange);
 
-        // --- reindex metadata
-        metadataIndexer.indexMetadata(String.valueOf(metadata.getId()), true, null);
+        //--- reindex metadata
+        metadataIndexer.indexMetadata(String.valueOf(metadata.getId()), true);
     }
 
-    @ApiOperation(value = "Close a record task", notes = "", nickname = "closeTask")
-    @RequestMapping(value = "/{metadataUuid}/status/{statusId:[0-9]+}.{userId:[0-9]+}.{changeDate}/close", method = RequestMethod.PUT)
+
+    @ApiOperation(
+        value = "Close a record task",
+        notes = "",
+        nickname = "closeTask")
+    @RequestMapping(
+        value = "/{metadataUuid}/status/{statusId:[0-9]+}.{userId:[0-9]+}.{changeDate}/close",
+        method = RequestMethod.PUT
+    )
     @PreAuthorize("hasRole('Editor')")
     @ApiResponses(value = { @ApiResponse(code = 204, message = "Task closed."),
             @ApiResponse(code = 404, message = "Status not found."),
@@ -355,16 +357,43 @@ public class MetadataWorkflowApi {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public List<MetadataStatusResponse> getStatusByType(
-            @ApiParam(value = "One or more types to retrieve (ie. worflow, event, task). Default is all.", required = false) @RequestParam(required = false) StatusValueType[] type,
-            @ApiParam(value = "All event details including XML changes. Responses are bigger. Default is false", required = false) @RequestParam(required = false) boolean details,
-            @ApiParam(value = "One or more event author. Default is all.", required = false) @RequestParam(required = false) Integer[] author,
-            @ApiParam(value = "One or more event owners. Default is all.", required = false) @RequestParam(required = false) Integer[] owner,
-            @ApiParam(value = "One or more record identifier. Default is all.", required = false) @RequestParam(required = false) Integer[] record,
-            @ApiParam(value = "Start date", required = false) @RequestParam(required = false) String dateFrom,
-            @ApiParam(value = "End date", required = false) @RequestParam(required = false) String dateTo,
-            @ApiParam(value = "From page", required = false) @RequestParam(required = false, defaultValue = "0") Integer from,
-            @ApiParam(value = "Number of records to return", required = false) @RequestParam(required = false, defaultValue = "100") Integer size,
-            HttpServletRequest request) throws Exception {
+        @ApiParam(value = "One or more types to retrieve (ie. worflow, event, task). Default is all.",
+            required = false)
+        @RequestParam(required = false)
+            StatusValueType[] type,
+        @ApiParam(value = "All event details including XML changes. Responses are bigger. Default is false",
+            required = false)
+        @RequestParam(required = false)
+            boolean details,
+        @ApiParam(value = "One or more event author. Default is all.",
+            required = false)
+        @RequestParam(required = false)
+            Integer[] author,
+        @ApiParam(value = "One or more event owners. Default is all.",
+            required = false)
+        @RequestParam(required = false)
+            Integer[] owner,
+        @ApiParam(value = "One or more record identifier. Default is all.",
+            required = false)
+        @RequestParam(required = false)
+            Integer[] record,
+        @ApiParam(value = "Start date",
+            required = false)
+        @RequestParam(required = false)
+            String dateFrom,
+        @ApiParam(value = "End date",
+            required = false)
+        @RequestParam(required = false)
+            String dateTo,
+        @ApiParam(value = "From page",
+            required = false)
+        @RequestParam(required = false, defaultValue = "0")
+            Integer from,
+        @ApiParam(value = "Number of records to return",
+            required = false)
+        @RequestParam(required = false, defaultValue = "100")
+            Integer size,
+        HttpServletRequest request) throws Exception {
         ServiceContext context = ApiUtils.createServiceContext(request);
 
         Sort sortByStatusChangeDate = SortUtils.createSort(Sort.Direction.DESC, MetadataStatus_.id,
@@ -373,12 +402,15 @@ public class MetadataWorkflowApi {
 
         List<MetadataStatus> metadataStatuses;
         if ((type != null && type.length > 0) || (author != null && author.length > 0)
-                || (owner != null && owner.length > 0) || (record != null && record.length > 0)) {
+            || (owner != null && owner.length > 0) || (record != null && record.length > 0)) {
             metadataStatuses = metadataStatusRepository.searchStatus(
-                    type != null && type.length > 0 ? Arrays.asList(type) : null,
-                    author != null && author.length > 0 ? Arrays.asList(author) : null,
-                    owner != null && owner.length > 0 ? Arrays.asList(owner) : null,
-                    record != null && record.length > 0 ? Arrays.asList(record) : null, dateFrom, dateTo, pageRequest);
+                type != null && type.length > 0 ? Arrays.asList(type) : null,
+                author != null && author.length > 0 ? Arrays.asList(author) : null,
+                owner != null && owner.length > 0 ? Arrays.asList(owner) : null,
+                record != null && record.length > 0 ? Arrays.asList(record) : null,
+                dateFrom, dateTo,
+                pageRequest
+            );
         } else {
             metadataStatuses = metadataStatusRepository.findAll(pageRequest).getContent();
         }
@@ -416,9 +448,8 @@ public class MetadataWorkflowApi {
     }
 
     /**
-     * Build a list of status with additional information about users (author and
-     * owner of the status change).
-     *
+     * Build a list of status with additional information about users
+     * (author and owner of the status change).
      */
     @NotNull
     private List<MetadataStatusResponse> buildMetadataStatusResponses(List<MetadataStatus> listOfStatus,
@@ -466,8 +497,10 @@ public class MetadataWorkflowApi {
             if (title == null) {
                 try {
                     // Collect metadata titles. For now we use Lucene
-                    title = LuceneSearcher.getMetadataFromIndexById(language, s.getId().getMetadataId() + "", "title");
-                    titles.put(s.getId().getMetadataId(), title);
+                    // TODOES
+//                    title = LuceneSearcher.getMetadataFromIndexById(language,
+//                        s.getId().getMetadataId() + "", "title");
+//                    titles.put(s.getId().getMetadataId(), title);
                 } catch (Exception e1) {
                 }
             }
@@ -481,41 +514,39 @@ public class MetadataWorkflowApi {
 
     private String extractCurrentStatus(MetadataStatus s) {
         switch (Integer.toString(s.getStatusValue().getId())) {
-        case StatusValue.Events.ATTACHMENTADDED:
-            return s.getCurrentState();
-        case StatusValue.Events.RECORDOWNERCHANGE:
-            return ObjectJSONUtils.extractFieldFromJSONString(s.getCurrentState(), "owner", "name");
-        case StatusValue.Events.RECORDGROUPOWNERCHANGE:
-            return ObjectJSONUtils.extractFieldFromJSONString(s.getCurrentState(), "owner", "name");
-        case StatusValue.Events.RECORDPROCESSINGCHANGE:
-            return ObjectJSONUtils.extractFieldFromJSONString(s.getCurrentState(), "process");
-        case StatusValue.Events.RECORDCATEGORYCHANGE:
-            List<String> categories = ObjectJSONUtils.extractListOfFieldFromJSONString(s.getCurrentState(), "category",
-                    "name");
-            StringBuffer categoriesAsString = new StringBuffer("[ ");
-            for (String categoryName : categories) {
-                categoriesAsString.append(categoryName + " ");
-            }
-            categoriesAsString.append("]");
-            return categoriesAsString.toString();
-        case StatusValue.Events.RECORDVALIDATIONTRIGGERED:
-            return s.getCurrentState().equals("1") ? "OK" : "KO";
-        default:
-            return "";
+            case StatusValue.Events.ATTACHMENTADDED:
+                return s.getCurrentState();
+            case StatusValue.Events.RECORDOWNERCHANGE:
+                return ObjectJSONUtils.extractFieldFromJSONString(s.getCurrentState(), "owner", "name");
+            case StatusValue.Events.RECORDGROUPOWNERCHANGE:
+                return ObjectJSONUtils.extractFieldFromJSONString(s.getCurrentState(), "owner", "name");
+            case StatusValue.Events.RECORDPROCESSINGCHANGE:
+                return ObjectJSONUtils.extractFieldFromJSONString(s.getCurrentState(), "process");
+            case StatusValue.Events.RECORDCATEGORYCHANGE:
+                List<String> categories = ObjectJSONUtils.extractListOfFieldFromJSONString(s.getCurrentState(), "category", "name");
+                StringBuffer categoriesAsString = new StringBuffer("[ ");
+                for (String categoryName : categories) {
+                    categoriesAsString.append(categoryName + " ");
+                }
+                categoriesAsString.append("]");
+                return categoriesAsString.toString();
+            case StatusValue.Events.RECORDVALIDATIONTRIGGERED:
+                return s.getCurrentState().equals("1") ? "OK" : "KO";
+            default:
+                return "";
         }
     }
 
     private String extractPreviousStatus(MetadataStatus s) {
         switch (Integer.toString(s.getStatusValue().getId())) {
-        case StatusValue.Events.ATTACHMENTDELETED:
-            return s.getPreviousState();
-        case StatusValue.Events.RECORDOWNERCHANGE:
-            return ObjectJSONUtils.extractFieldFromJSONString(s.getPreviousState(), "owner", "name");
-        case StatusValue.Events.RECORDGROUPOWNERCHANGE:
-            return ObjectJSONUtils.extractFieldFromJSONString(s.getPreviousState(), "owner", "name");
-        default:
-            return "";
+            case StatusValue.Events.ATTACHMENTDELETED:
+                return s.getPreviousState();
+            case StatusValue.Events.RECORDOWNERCHANGE:
+                return ObjectJSONUtils.extractFieldFromJSONString(s.getPreviousState(), "owner", "name");
+            case StatusValue.Events.RECORDGROUPOWNERCHANGE:
+                return ObjectJSONUtils.extractFieldFromJSONString(s.getPreviousState(), "owner", "name");
+            default:
+                return "";
         }
     }
-
 }

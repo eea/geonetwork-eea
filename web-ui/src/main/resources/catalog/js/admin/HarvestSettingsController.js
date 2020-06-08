@@ -50,8 +50,8 @@
       $scope.searchObj = {
         internal: true,
         params: {
-          template: 'y or s or n',
-          sortBy: 'title'
+          isTemplate: ['y', 'n', 's', 't'],
+          sortBy: 'resourceTitleObject.default.keyword'
         }};
 
       $scope.harvesterTypes = {};
@@ -344,7 +344,7 @@
 
           // Retrieve records in that harvester
           angular.extend($scope.searchObj.params, {
-            siteId: $scope.harvesterSelected.site.uuid
+            sourceCatalogue: $scope.harvesterSelected.site.uuid
           });
           $scope.$broadcast('resetSearch', $scope.searchObj.params);
         });
@@ -523,7 +523,7 @@
           // from the GetCapabilities only
           $scope.ogcwxsTemplates = [{
             getTitle:function (){return ''},
-            'geonet:info': {'uuid': ''}}];
+            'uuid': ''}];
           for (var i = 0; i < data.metadata.length; i++) {
             $scope.ogcwxsTemplates.push(new Metadata(data.metadata[i]));
           }
@@ -539,7 +539,7 @@
           // from the GetCapabilities only
           $scope.ogcwxsDatasetTemplates = [{
             getTitle:function (){return ''},
-            'geonet:info': {'uuid': ''}}];
+            'uuid': ''}];
           for (var i = 0; i < data.metadata.length; i++) {
             $scope.ogcwxsDatasetTemplates.push(new Metadata(data.metadata[i]));
           }

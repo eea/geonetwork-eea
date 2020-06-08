@@ -223,16 +223,27 @@
          * @description
          * Get the metadata js object from catalog. Trigger a search and
          * return a promise.
-         * @param {string} uuid of the metadata
-         * @param {string} isTemplate optional isTemplate value (s, t...)
-         * @return {HttpPromise} of the $http get
+         * @param {string} uuid or id of the metadata
+         * @param {array} isTemplate optional isTemplate value (y, n, s, t...)
+         * @return {HttpPromise} of the $http post
          */
         getMdObjByUuid: function(uuid, isTemplate) {
-          return $http.get('qi?_uuid=' + uuid + '' +
-              '&fast=index&_content_type=json&buildSummary=false' +
-              (isTemplate !== undefined ? '&isTemplate=' + isTemplate : '')).
-              then(function(resp) {
-                return new Metadata(resp.data.metadata);
+          return $http.post('../api/search/records/_search', {"query": {
+              "bool" : {
+                "must": [
+                  {"multi_match": {
+                      "query": uuid,
+                      "fields": ['id', 'uuid']}},
+                  {"terms": {"isTemplate": isTemplate !== undefined ? isTemplate : ['n']}},
+                  {"terms": {"draft": ["n", "y", "e"]}}
+                ]
+              }
+            }}).then(function(r) {
+              if (r.data.hits.total.value > 0) {
+                return new Metadata(r.data.hits.hits[0]);
+              } else {
+                console.warn("Record with UUID/ID " + uuid + " not found.")
+              }
               });
         },
 
@@ -245,16 +256,11 @@
          * Get the metadata js object from catalog. Trigger a search and
          * return a promise.
          * @param {string} id of the metadata
-         * @param {string} isTemplate optional isTemplate value (s, t...)
-         * @return {HttpPromise} of the $http get
+         * @param {array} isTemplate optional isTemplate value (y, n, s, t...)
+         * @return {HttpPromise} of the $http post
          */
         getMdObjById: function(id, isTemplate) {
-          return $http.get('q?_id=' + id + '' +
-              '&fast=index&_content_type=json&buildSummary=false' +
-              (isTemplate !== undefined ? '&_isTemplate=' + isTemplate : '')).
-              then(function(resp) {
-                return new Metadata(resp.data.metadata);
-              });
+          return this.getMdObjByUuid(id, isTemplate);
         },
 
         /**
@@ -269,7 +275,7 @@
          * @return {HttpPromise} of the $http get
          */
         updateMdObj: function(md) {
-          return this.getMdObjByUuid(md.getUuid()).then(
+          return this.getMdObjByUuid(md.uuid).then(
               function(md_) {
                 angular.extend(md, md_);
                 return md;
@@ -291,11 +297,7 @@
    */
 
   module.value('gnHttpServices', {
-    mdGetPDFSelection: 'pdf.selection.search', // TODO: CHANGE
-    mdGetRDF: 'rdf.metadata.get',
-    mdGetMEF: 'mef.export', // Deprecated service
     mdGetXML19139: 'xml_iso19139',
-    csv: 'csv.search',
 
     publish: 'md.publish',
     unpublish: 'md.unpublish',
@@ -313,7 +315,6 @@
     removeThumbnail: 'md.thumbnail.remove?_content_type=json&',
     removeOnlinesrc: 'resource.del.and.detach', // TODO: CHANGE
     suggest: 'suggest',
-    facetConfig: 'search/facet/config',
     selectionLayers: 'selection.layers',
 
     featureindexproxy: '../../index/features',
@@ -549,26 +550,82 @@
    * json output of the search service. It also provides some functions
    * on the metadata.
    */
-  module.factory('Metadata', function() {
+  module.factory('Metadata', ['gnLangs', function(gnLangs) {
+    var langSuffix = "_lang";
+
     function Metadata(k) {
-      $.extend(true, this, k);
-      var listOfArrayFields = ['topicCat', 'category', 'keyword',
-        'securityConstraints', 'resourceConstraints', 'legalConstraints',
-        'denominator', 'resolution', 'geoDesc', 'geoBox', 'inspirethemewithac',
-        'status', 'status_text', 'crs', 'identifier', 'responsibleParty',
-        'mdLanguage', 'datasetLang', 'type', 'link', 'crsDetails',
-        'creationDate', 'publicationDate', 'revisionDate', 'spatialRepresentationType_text'];
-      var listOfJsonFields = ['keywordGroup', 'crsDetails'];
-      // See below; probably not necessary
+      // Move _source properties to the root.
+      var source = k._source;
+      delete k._source;
+      $.extend(true, this, k, source);
+
+
+      // TODOES Check if we can define in ES which fields
+      // to always return as an array.
+      var listOfArrayFields = ['topic', 'cat', 'keyword', 'resourceCredit',
+        'resolutionScaleDenominator', 'resolutionDistance', 'extentDescription', 'geom',
+        'inspireTheme', 'inspireTheme_syn', 'inspireAnnex',
+        'status', 'status_text', 'coordinateSystem', 'identifier', 'responsibleParty',
+        'mdLanguage', 'resourceLanguage', 'resourceIdentifier',
+        'MD_LegalConstraintsOtherConstraints', 'MD_LegalConstraintsUseLimitation',
+        'MD_SecurityConstraintsUseLimitation', 'overview',
+        'MD_ConstraintsUseLimitation', 'resourceType',
+        'type', 'link', 'crsDetails', 'format', 'otherLanguage',
+        'creationDateForResource', 'publicationDateForResource', 'revisionDateForResource',
+        'contact', 'contactForResource'];
+
+
+
+      // Multilingual mode: one field per language
+      // Populate translation for all multilingual fields.
+      // // Multilingual fields are composed of one field without _lang suffix
+      // // and one field for each translation.
+      // // Set the default field value to the UI language if exist.
+      var listOfTranslatedField = {};
       var record = this;
+      // $.each(this, function(key, value) {
+      //   var fieldName = key.split(langSuffix)[0];
+      //   if (key.indexOf(langSuffix) !== -1 &&
+      //     angular.isUndefined(listOfTranslatedField[fieldName])) {
+      //     record[fieldName] = record.translate(fieldName);
+      //     listOfTranslatedField[fieldName] = true;
+      //   }
+      // });
+      // Multilingual mode: object
+      $.each(this, function(key, value) {
+        var fieldName = key;
+        if (key.endsWith('Object')) {
+          record[fieldName.slice(0, -6)] = record.translate(fieldName);
+        }
+      });
+
+
+      // See below; probably not necessary
       this.linksCache = [];
+
+      // Codelist as array
+      $.each(this, function(key, value) {
+        // All codelist are an array
+        if (key.indexOf('codelist_') === 0 && !angular.isArray(record[key])) {
+          record[key] = [record[key]];
+        }
+      });
+
+      // Convert all fields declared as array
+      // as an array even if only one value.
       $.each(listOfArrayFields, function(idx) {
         var field = listOfArrayFields[idx];
-        if (angular.isDefined(record[field]) &&
+        if ((angular.isDefined(record[field])) &&
             !angular.isArray(record[field])) {
           record[field] = [record[field]];
         }
       });
+
+
+
+      // TODOES This should be defined as object in ES
+      var listOfJsonFields = ['crsDetails'];
+
       // Note: this step does not seem to be necessary; TODO: remove or refactor
       $.each(listOfJsonFields, function(idx) {
         var fieldName = listOfJsonFields[idx];
@@ -598,50 +655,44 @@
         }
       }.bind(this));
 
+      this.getAllContacts();
       // Create a structure that reflects the transferOption/onlinesrc tree
-      var links = [];
-      angular.forEach(this.link, function(link) {
-        var linkInfo = formatLink(link);
-        var idx = linkInfo.group - 1;
-        if (!links[idx]) {
-          links[idx] = [linkInfo];
-        }
-        else if (angular.isArray(links[idx])) {
-          links[idx].push(linkInfo);
-        }
-      });
-      this.linksTree = links;
+      // var links = [];
+      // angular.forEach(this.link, function(link) {
+      //   var linkInfo = formatLink(link);
+      //   var idx = linkInfo.group - 1;
+      //   if (!links[idx]) {
+      //     links[idx] = [linkInfo];
+      //   }
+      //   else if (angular.isArray(links[idx])) {
+      //     links[idx].push(linkInfo);
+      //   }
+      // });
+      // this.linksTree = links;
     };
 
-    function formatLink(sLink) {
-      var linkInfos = sLink.split('|');
-      return {
-        name: linkInfos[0],
-        title: linkInfos[0],
-        url: linkInfos[2],
-        desc: linkInfos[1],
-        protocol: linkInfos[3],
-        contentType: linkInfos[4],
-        group: linkInfos[5] ? parseInt(linkInfos[5]) : undefined,
-        applicationProfile: linkInfos[6]
-      };
-    }
-    function parseLink(sLink) {
-
-    };
 
     Metadata.prototype = {
-      getUuid: function() {
-        return this['geonet:info'].uuid;
+      translate: function(fieldName) {
+        // var translation = this[fieldName + '_lang' + gnLangs.current];
+        var translation = this[fieldName]['lang' + gnLangs.current];
+
+        if (translation) {
+          return translation;
+        } else if (this[fieldName].default) {
+          return this[fieldName].default;
+        } else {
+          console.warn(fieldName + ' is not defined in this record.');
+        }
       },
-      getId: function() {
-        return this['geonet:info'].id;
-      },
-      getTitle: function() {
-        return this.title || this.defaultTitle;
-      },
+      // getUuid: function() {
+      //   return this.uuid || this._source.uuid;
+      // },
+      // getId: function() {
+      //   return this.id;
+      // },
       isPublished: function() {
-        return this['geonet:info'].isPublishedToAll === 'true';
+        return this.isPublishedToAll === 'true';
       },
       isValid: function() {
         return this.valid === '1';
@@ -650,19 +701,19 @@
         return (this.valid > -1);
       },
       isOwned: function() {
-        return this['geonet:info'].owner === 'true';
+        return this.owner === 'true';
       },
       getOwnerId: function() {
-        return this['geonet:info'].ownerId;
+        return this.ownerId;
       },
       getGroupOwner: function() {
-        return this['geonet:info'].owner;
+        return this.owner;
       },
       getSchema: function() {
-        return this['geonet:info'].schema;
+        return this.schema;
       },
       publish: function() {
-        this['geonet:info'].isPublishedToAll = this.isPublished() ?
+        this.isPublishedToAll = this.isPublished() ?
             'false' : 'true';
       },
 
@@ -705,57 +756,28 @@
           return this.linksCache[key];
         }
         angular.forEach(this.link, function(link) {
-          var linkInfo = formatLink(link);
           if (types.length > 0) {
             types.forEach(function(type) {
               if (type.substr(0, 1) == '#') {
-                if (linkInfo.protocol == type.substr(1, type.length - 1) &&
-                    (!groupId || groupId == linkInfo.group)) {
-                  ret.push(linkInfo);
+                if (link.protocol == type.substr(1, type.length - 1) &&
+                    (!groupId || groupId == link.group)) {
+                  ret.push(link);
                 }
               }
               else {
-                if (linkInfo.protocol.toLowerCase().indexOf(
+                if (link.protocol.toLowerCase().indexOf(
                     type.toLowerCase()) >= 0 &&
-                    (!groupId || groupId == linkInfo.group)) {
-                  ret.push(linkInfo);
+                    (!groupId || groupId == link.group)) {
+                  ret.push(link);
                 }
               }
             });
           } else {
-            ret.push(linkInfo);
+            ret.push(link);
           }
         });
         this.linksCache[key] = ret;
         return ret;
-      },
-      getThumbnails: function() {
-        var images = {list: []};
-        if (angular.isArray(this.image)) {
-          for (var i = 0; i < this.image.length; i++) {
-            var s = this.image[i].split('|');
-            var insertFn = 'push';
-            if (s[0] === 'thumbnail') {
-              images.small = s[1];
-              var insertFn = 'unshift';
-            } else if (s[0] === 'overview') {
-              images.big = s[1];
-            }
-
-            //Is it a draft?
-            if( s[1].indexOf("/api/records/") >= 0
-                &&  s[1].indexOf("/api/records/")<  s[1].indexOf("/attachments/")) {
-              s[1] += "?approved=" + (this.draft != 'y');
-            }
-
-
-            images.list[insertFn]({url: s[1], label: s[2]});
-          }
-        } else if (angular.isDefined(this.image)){
-          var s = this.image.split('|');
-          images.list.push({url: s[1], label: s[2]});
-        }
-        return images;
       },
       /**
        * Return an object containing metadata contacts
@@ -764,67 +786,14 @@
        * @return {{metadata: Array, resource: Array}}
        */
       getAllContacts: function() {
-        if (angular.isUndefined(this.allContacts) &&
-            angular.isDefined(this.responsibleParty)) {
-          this.allContacts = {metadata: [], resource: []};
-          for (var i = 0; i < this.responsibleParty.length; i++) {
-            var s = this.responsibleParty[i].split('|');
-            var contact = {
-              role: s[0] || '',
-              org: s[2] || '',
-              logo: s[3] || '',
-              email: s[4] || '',
-              name: s[5] || '',
-              position: s[6] || '',
-              address: s[7] || '',
-              phone: s[8] || '',
-              website: s[11] || ''
-            };
-            if (s[1] === 'resource') {
-              this.allContacts.resource.push(contact);
-            } else if (s[1] === 'metadata') {
-              this.allContacts.metadata.push(contact);
-            }
-          }
+        this.allContacts = {metadata:[], resource:[]};
+        if (this.contact && this.contact.length > 0){
+          this.allContacts.metadata = this.contact;
+        }
+        if (this.contactForResource && this.contactForResource.length > 0){
+          this.allContacts.resource = this.contactForResource;
         }
         return this.allContacts;
-      },
-      /**
-       * Deprecated. Use getAllContacts instead
-       */
-      getContacts: function() {
-        var ret = {};
-        if (angular.isArray(this.responsibleParty)) {
-          for (var i = 0; i < this.responsibleParty.length; i++) {
-            var s = this.responsibleParty[i].split('|');
-            if (s[1] === 'resource') {
-              ret.resource = s[2];
-            } else if (s[1] === 'metadata') {
-              ret.metadata = s[2];
-            }
-          }
-        }
-        return ret;
-      },
-      getBoxAsPolygon: function(i) {
-        // Polygon((4.6810%2045.9170,5.0670%2045.9170,5.0670%2045.5500,4.6810%2045.5500,4.6810%2045.9170))
-        var bboxes = [];
-        if (this.geoBox[i]) {
-          var coords = this.geoBox[i].split('|');
-          return 'Polygon((' +
-              coords[0] + ' ' +
-              coords[1] + ',' +
-              coords[2] + ' ' +
-              coords[1] + ',' +
-              coords[2] + ' ' +
-              coords[3] + ',' +
-              coords[0] + ' ' +
-              coords[3] + ',' +
-              coords[0] + ' ' +
-              coords[1] + '))';
-        } else {
-          return null;
-        }
       },
       getOwnername: function() {
         if (this.userinfo) {
@@ -860,7 +829,7 @@
       }
     };
     return Metadata;
-  });
+  }]);
 
 
 })();

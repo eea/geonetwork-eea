@@ -8,10 +8,11 @@
     <!--start top row-->
     <div class="row">
       <input data-gn-selection-md type="checkbox"
-             data-ng-model="md['geonet:info'].selected"
+             data-ng-model="md.selected"
              aria-label="{{'clickToSelect' | translate}}"
              data-ng-change="change()"/>
 
+      <span class="hidden">score:{{md._score}}</span>
       <!--Source catalog Logo-->
       <a data-ng-if="md.groupWebsite"
          href="{{md.groupWebsite}}"
@@ -64,41 +65,40 @@
            gn-metadata-open="md"
            gn-records="searchResults.records"
            gn-formatter="formatter.defaultUrl"
-           title="{{md.title || md.defaultTitle}}">
+           title="{{md.resourceTitle}}">
 
-          <i class="fa gn-icon-{{md.type[0]}}" title="{{md.type[0] | translate}}"/>
-          {{(md.title || md.defaultTitle) | characters:80}}</a>
+          <i class="fa gn-icon-{{md.resourceType[0]}}" title="{{md.resourceType[0] | translate}}"/>
+          {{(md.resourceTitle) | characters:80}}</a>
       </h3>
     </div>
 
     <!--start middle row-->
-    <div title="{{(md.abstract || md.defaultAbstract) | striptags}}"
+    <div title="{{(md.resourceAbstract) | striptags}}"
          gn-metadata-open="md"
          gn-records="searchResults.records"
          gn-formatter="formatter.defaultUrl">
       <!-- Thumbnail -->
       <div class="gn-md-thumbnail">
-        <div class="gn-md-no-thumbnail"
-             data-ng-if="!md.getThumbnails().list[0].url"></div>
+        <div class="gn-md-thumbnail"
+             data-ng-class="{'gn-md-no-thumbnail': !md.overview[0]}"></div>
         <img class="gn-img-thumbnail"
-             alt="{{md.title || md.defaultTitle}}"
-             data-ng-src="{{md.getThumbnails().list[0].url}}"
-             data-ng-if="md.getThumbnails().list[0].url"/>
-
+             alt="{{md.resourceTitle}}"
+             data-ng-src="{{md.overview[0].url}}?size=140"
+             data-ng-if="md.overview[0]"/>
       </div>
-      
+
 
       <div style="float:left; display:block; width: calc(100% - 162px)">
 
         <div class="text-justify gn-md-abstract ellipsis">
           <div>
-            <p>{{(md.abstract || md.defaultAbstract) | striptags}}</p>
+            <p>{{md.resourceAbstract  | striptags}}</p>
           </div>
         </div>
 
         <div class="row gn-md-details">
           <p ng-if="::!md.getAllContacts().resource">&nbsp;</p>
-          <p data-ng-repeat="c in ::md.getAllContacts().resource">
+          <p data-ng-repeat="c in ::md.getAllContacts().resource track by $index">
             <img data-ng-if="::c.logo"
                  data-ng-src="{{::c.logo}}"
                  class="gn-source-logo"
@@ -107,6 +107,13 @@
           </p>
         </div>
       </div>
+
+
+      <!--<div>
+        <span data-ng-repeat="h in md.inner_hits.others.hits.hits">
+          <i class="fa fa-fw {{h._source.docType === 'feature' ? 'fa-map-pin' : 'gn-icon-' + h._source.resourceType}}"></i> {{h._source.resourceTitle}},
+        </span>
+      </div>-->
 
     </div>
     <!--end middle row-->
@@ -117,10 +124,10 @@
       <div data-ng-if="md.status_text.length > 0"
            title="{{md.status_text[0]}}"
            class="gn-status gn-status-{{md.status[0]}}">{{md.status_text[0]}}
-      </div> 
+      </div>
       <div class="gn-toolbar">
         <gn-links-btn class="pull-right"></gn-links-btn>
-        <div gn-grid-related gn-grid-related-uuid="::md.getUuid()"
+        <div gn-grid-related gn-grid-related-uuid="::md.uuid"
              class="pull-right"
              template="../../catalog/views/default/templates/gridRelated.html"></div>
         <div data-ng-if="md.draft == 'e'"

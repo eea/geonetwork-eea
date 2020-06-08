@@ -112,8 +112,8 @@
             // if an external viewer is defined, use it here
             if (gnExternalViewer.isEnabled()) {
               gnExternalViewer.viewService({
-                id: md ? md.getId() : null,
-                uuid: md ? md.getUuid() : null
+                id: md ? md.id : null,
+                uuid: md ? md.uuid : null
               }, {
                 type: 'wfs',
                 url: url,
@@ -351,7 +351,7 @@
               action: openLink
             },
             'DEFAULT' : {
-              iconClass: 'fa-fw',
+              iconClass: 'fa-question-circle',
               label: 'openPage',
               action: openLink
             }
@@ -389,10 +389,9 @@
             resource.locTitle = $filter('gnLocalized')(resource.title);
             resource.locDescription = $filter('gnLocalized')(resource.description);
             resource.locUrl = $filter('gnLocalized')(resource.url);
-            var protocolOrType = resource.protocol + resource.serviceType;
+            var protocolOrType = resource.protocol + (resource.serviceType || '');
             // Cas for links
-            if (angular.isString(protocolOrType) &&
-                angular.isUndefined(resource['geonet:info'])) {
+            if (angular.isString(protocolOrType)) {
               if (protocolOrType.match(/wms/i)) {
                 if (this.isLayerProtocol(resource)) {
                   return 'WMS';

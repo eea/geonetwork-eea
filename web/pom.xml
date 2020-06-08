@@ -30,14 +30,14 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>3.11.0-SNAPSHOT</version>
+    <version>4.0.0-alpha.2</version>
   </parent>
 
 
   <!-- =========================================================== -->
   <!--     Module Description                                      -->
   <!-- =========================================================== -->
-  <artifactId>web-app</artifactId>
+  <artifactId>gn-web-app</artifactId>
   <packaging>war</packaging>
   <name>GeoNetwork Web module</name>
   <description>GeoNetwork web module description (TODO).</description>
@@ -189,30 +189,6 @@
       <artifactId>jts-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-analyzers-common</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-misc</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-queries</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-queryparser</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-facet</artifactId>
-    </dependency>
-    <dependency>
       <groupId>pcj</groupId>
       <artifactId>pcj</artifactId>
     </dependency>
@@ -231,14 +207,6 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-email</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>avalon-framework</groupId>
-      <artifactId>avalon-framework-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.avalon.framework</groupId>
-      <artifactId>avalon-framework-impl</artifactId>
     </dependency>
     <dependency>
       <groupId>commons-digester</groupId>
@@ -371,23 +339,23 @@
     <!-- Generated dependencies -->
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>cachingxslt</artifactId>
+      <artifactId>gn-cachingxslt</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>oaipmh</artifactId>
+      <artifactId>gn-oaipmh</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency> <!-- dummy API for ARC SDE stuff -->
       <groupId>${project.groupId}</groupId>
-      <artifactId>dummy-api</artifactId>
+      <artifactId>gn-dummy-api</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>core</artifactId>
+      <artifactId>gn-core</artifactId>
       <version>${project.version}</version>
       <exclusions>
         <exclusion>
@@ -399,36 +367,36 @@
 
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>services</artifactId>
+      <artifactId>gn-services</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>harvesters</artifactId>
+      <artifactId>gn-harvesters</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>health-monitor</artifactId>
+      <artifactId>gn-health-monitor</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>inspire-atom</artifactId>
+      <artifactId>gn-inspire-atom</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>doi</artifactId>
+      <artifactId>gn-doi</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>listeners</artifactId>
+      <artifactId>gn-listeners</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -489,17 +457,6 @@
       <groupId>com.yammer.metrics</groupId>
       <artifactId>metrics-log4j</artifactId>
     </dependency>
-
-    <!-- language detection -->
-    <dependency>
-      <groupId>com.cybozu.labs</groupId>
-      <artifactId>langdetect</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>net.arnx.jsonic</groupId>
-      <artifactId>jsonic</artifactId>
-    </dependency>
-    <!-- end language detection -->
     <dependency>
       <groupId>opendap</groupId>
       <artifactId>opendap</artifactId>
@@ -513,34 +470,34 @@
 	</dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>web-ui</artifactId>
+      <artifactId>gn-web-ui</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>domain</artifactId>
+      <artifactId>gn-domain</artifactId>
       <version>${project.version}</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>core</artifactId>
+      <artifactId>gn-core</artifactId>
       <version>${project.version}</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>services</artifactId>
+      <artifactId>gn-services</artifactId>
       <version>${project.version}</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>wro4j</artifactId>
+      <artifactId>gn-wro4j</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -555,34 +512,29 @@
     having a custom Bean to be loaded. -->
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>schema-iso19139</artifactId>
+      <artifactId>gn-schema-iso19139</artifactId>
       <version>${gn.schemas.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>schema-csw-record</artifactId>
+      <artifactId>gn-schema-iso19110</artifactId>
       <version>${gn.schemas.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>schema-iso19110</artifactId>
-      <version>${gn.schemas.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>schema-dublin-core</artifactId>
+      <artifactId>gn-schema-dublin-core</artifactId>
       <version>${gn.schemas.version}</version>
     </dependency>
 
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>schema-iso19115-3.2018</artifactId>
+      <artifactId>gn-schema-iso19115-3.2018</artifactId>
       <version>${gn.schemas.version}</version>
     </dependency>
 
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>wfsfeature-harvester</artifactId>
+      <artifactId>gn-wfsfeature-harvester</artifactId>
       <version>${project.version}</version>
       <exclusions>
         <exclusion>
@@ -825,6 +777,26 @@
               </resources>
             </configuration>
           </execution>
+          <execution>
+            <id>copy-index-schema-to-source</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <escapeString>\</escapeString>
+              <includeEmptyDirs>false</includeEmptyDirs>
+              <outputDirectory>${basedir}/src/main/webapp/WEB-INF/data/config/index</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${basedir}/src/main/webResources/WEB-INF/data/config/index</directory>
+                  <filtering>true</filtering>
+                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/index</targetPath>
+                </resource>
+              </resources>
+              <overwrite>true</overwrite>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
 
@@ -1047,31 +1019,10 @@
       </properties>
     </profile>
     <profile>
-      <id>es</id>
-      <properties>
-        <es.spring.profile>es</es.spring.profile>
-
-        <es.port>9200</es.port>
-        <es.host>localhost</es.host>
-        <es.url>http://${es.host}:${es.port}</es.url>
-        <es.index.features>gn-features</es.index.features>
-        <es.index.features.type>features</es.index.features.type>
-        <es.index.records>gn-records</es.index.records>
-        <es.index.records_public></es.index.records_public>
-        <es.index.records.type>records</es.index.records.type>
-        <es.index.searchlogs>gn-searchlogs</es.index.searchlogs>
-        <es.index.searchlogs.type>searchlogs</es.index.searchlogs.type>
-
-        <kb.port>5601</kb.port>
-        <kb.url>http://localhost:${kb.port}</kb.url>
-      </properties>
-    </profile>
-
-    <profile>
       <id>slave</id>
       <dependencies>
         <dependency>
-          <groupId>org.geonetwork-opensource</groupId>
+          <groupId>${project.groupId}</groupId>
           <artifactId>slave</artifactId>
           <version>${project.version}</version>
         </dependency>
@@ -1089,10 +1040,6 @@
     <geonetwork.webapp.css.dir>${geonetwork.webapp.dir}</geonetwork.webapp.css.dir>
     <minify.verbose>false</minify.verbose>
     <build.webapp.resources>${project.build.directory}/webapp</build.webapp.resources>
-    <web.xml.main.config.overrides>/WEB-INF/config-overrides-${env}.xml
-    </web.xml.main.config.overrides>
-    <web.xml.widget.config.overrides></web.xml.widget.config.overrides>
-    <system.specific.overrides></system.specific.overrides>
     <rootProjectDir>${basedir}/..</rootProjectDir>
     <wro4jOutput>${project.build.directory}/wro4j-output/</wro4jOutput>
   </properties>

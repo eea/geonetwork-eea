@@ -47,7 +47,7 @@
       <select id="gn-harvest-settings-ogc-advanced-template-list"
               class="form-control"
               data-ng-model="harvesterSelected.options.serviceTemplateUuid"
-              data-ng-options="t['geonet:info'].uuid as t.getTitle() for t in ogcwxsTemplates">
+              data-ng-options="t.uuid as t.getTitle() for t in ogcwxsTemplates">
       </select>
       <p class="help-block" data-translate="">ogcwxs-serviceTemplateUuidHelp</p>
     </div>

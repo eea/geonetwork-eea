@@ -76,16 +76,19 @@
         hitsperpageValues: gnSearchSettings.hitsperpageValues,
         selectionBucket: 'e101',
         filters: gnSearchSettings.filters,
+        configId: 'editor',
         params: {
-          sortBy: 'changeDate',
-          _isTemplate: 'y or n',
+          sortBy: 'dateStamp',
+          sortOrder: 'desc',
+          isTemplate: ['y', 'n'],
           resultType: $scope.facetsSummaryType,
           from: 1,
           to: 20
         },
         defaultParams: {
-          sortBy: 'changeDate',
-          _isTemplate: 'y or n',
+          sortBy: 'dateStamp',
+          sortOrder: 'desc',
+          isTemplate: ['y', 'n'],
           resultType: $scope.facetsSummaryType,
           from: 1,
           to: 20
@@ -105,11 +108,11 @@
       });
 
       var setOwner = function() {
-        $scope.searchObj.params['_owner'] = $scope.user.id;
+        $scope.searchObj.params['owner'] = $scope.user.id;
       };
 
       var unsetOwner = function() {
-        delete $scope.searchObj.params['_owner'];
+        delete $scope.searchObj.params['owner'];
       };
 
       $scope.$watch('user.id', function(newId, o) {
@@ -133,7 +136,7 @@
             then(function(data) {
               $rootScope.$broadcast('StatusUpdated', {
                 title: $translate.instant('metadataRemoved',
-                    {title: md.title || md.defaultTitle}),
+                    {title: md.resourceTitle}),
                 timeout: 2
               });
               deferred.resolve(data);
@@ -195,17 +198,9 @@
           gnSearchSettings.resultViewTpls[0].tplUrl;
 
       $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType = 'manager';
+      $scope.facetConfig = gnGlobalSettings.gnCfg.mods.editor.facetConfig;
 
-      gnSearchSettings.sortbyValues = [{
-        sortBy: 'relevance',
-        sortOrder: ''
-      }, {
-        sortBy: 'changeDate',
-        sortOrder: ''
-      }, {
-        sortBy: 'title',
-        sortOrder: 'reverse'
-      }];
+      gnSearchSettings.sortbyValues = gnSearchSettings.sortbyValues;
 
       gnSearchSettings.hitsperpageValues = [20, 50, 100];
 

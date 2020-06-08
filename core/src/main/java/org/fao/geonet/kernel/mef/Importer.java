@@ -474,8 +474,7 @@ public class Importer {
                     }
                 });
 
-
-                dm.indexMetadata(metadataIdMap.get(index), true, null);
+                dm.indexMetadata(metadataIdMap.get(index), true);
             }
 
             // --------------------------------------------------------------------

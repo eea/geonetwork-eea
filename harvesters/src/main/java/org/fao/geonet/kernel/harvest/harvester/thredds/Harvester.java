@@ -579,13 +579,13 @@ class Harvester extends BaseAligner<ThreddsParams> implements IHarvester<Harvest
         	addCategories(metadata, params.getCategories(), localCateg, context, null, false);
 				}
 
-        metadata = (Metadata) mdManager.insertMetadata(context, metadata, md, true, false, false, UpdateDatestamp.NO, false, false);
+        metadata = (Metadata) mdManager.insertMetadata(context, metadata, md, false, false, UpdateDatestamp.NO, false, false);
 
         String id = String.valueOf(metadata.getId());
 
         addPrivileges(id, params.getPrivileges(), localGroups, context);
 
-        mdIndexer.indexMetadata(id, true, null);
+        mdIndexer.indexMetadata(id, true);
 
         mdManager.flush();
     }

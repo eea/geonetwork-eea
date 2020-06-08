@@ -705,11 +705,7 @@ public class AjaxEditUtils extends EditUtils {
         String changeDate = null;
         xmlSerializer.update(id, md, changeDate, false, null, context);
 
-        // Notifies the metadata change to metatada notifier service
-        dataManager.notifyMetadataChange(md, id);
-
-        //--- update search criteria
-        dataManager.indexMetadata(id, true, null);
+        dataManager.indexMetadata(id, true);
 
         return true;
     }
@@ -754,11 +750,7 @@ public class AjaxEditUtils extends EditUtils {
         String changeDate = null;
         xmlSerializer.update(id, md, changeDate, false, null, context);
 
-        // Notifies the metadata change to metatada notifier service
-        dataManager.notifyMetadataChange(md, id);
-
-        //--- update search criteria
-        dataManager.indexMetadata(id, true, null);
+        dataManager.indexMetadata(id, true);
 
         return true;
     }

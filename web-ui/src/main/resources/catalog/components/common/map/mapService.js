@@ -388,34 +388,6 @@
           /**
            * @ngdoc method
            * @methodOf gn_map.service:gnMap
-           * @name gnMap#getBboxFromMd
-           *
-           * @description
-           * Get the extent of the md.
-           * It is stored in the object md.geoBox as an array of String
-           * '150|-12|160|12'.
-           * Returns it as an array of array of floats.
-           *
-           * @param {Object} md to extract bbox from
-           */
-          getBboxFromMd: function(md) {
-            if (angular.isUndefined(md.geoBox)) return;
-            var bboxes = [];
-            angular.forEach(md.geoBox, function(bbox) {
-              var c = bbox.split('|');
-              if (angular.isArray(c) && c.length == 4) {
-                bboxes.push([parseFloat(c[0]),
-                      parseFloat(c[1]),
-                      parseFloat(c[2]),
-                      parseFloat(c[3])]);
-              }
-            });
-            return bboxes;
-          },
-
-          /**
-           * @ngdoc method
-           * @methodOf gn_map.service:gnMap
            * @name gnMap#getBboxFeatureFromMd
            *
            * @description
@@ -427,35 +399,47 @@
            */
           getBboxFeatureFromMd: function(md, proj) {
             var feat = new ol.Feature();
-            var extent = this.getBboxFromMd(md);
+            var wkts = md.geom;
             var projExtent = proj.getExtent();
-            if (extent) {
+            if (wkts && wkts.length) {
+
               var geometry;
-              // If is composed of one geometry of type point
-              if (extent.length === 1 &&
-                  extent[0][0] === extent[0][2] &&
-                  extent[0][1] === extent[0][3]) {
-                geometry = new ol.geom.Point([extent[0][0], extent[0][1]]);
-              } else {
-                // Build multipolygon from the set of bboxes
-                geometry = new ol.geom.MultiPolygon([]);
-                for (var j = 0; j < extent.length; j++) {
-                  // TODO: Point will not be supported in multi geometry
-                  var projectedExtent = ol.proj.transformExtent(extent[j], 'EPSG:4326', proj);
-                  if (!ol.extent.intersects(projectedExtent, projExtent)) {
-                    continue;
-                  }
-                  var coords = this.getPolygonFromExtent(
-                    ol.extent.getIntersection(projectedExtent, projExtent)
-                  );
-                  geometry.appendPolygon(new ol.geom.Polygon(coords));
-                }
-              }
-              // no valid bbox was found: clear geometry
-              if (!geometry.getPolygons().length) {
-                geometry = null;
-              }
-              feat.setGeometry(geometry);
+              var geoms = [];
+              var format = new ol.format.GeoJSON();
+              wkts.forEach(function(wkt) {
+                var geom = format.readGeometry(wkt, {
+                  featureProjection: proj,
+                  dataProjection: 'EPSG:4326'
+                })
+                geoms.push(geom);
+              })
+              var geometryCollection = new ol.geom.GeometryCollection(geoms);
+              feat.setGeometry(geometryCollection);
+              // // If is composed of one geometry of type point
+              // if (extent.length === 1 &&
+              //     extent[0][0] === extent[0][2] &&
+              //     extent[0][1] === extent[0][3]) {
+              //   geometry = new ol.geom.Point([extent[0][0], extent[0][1]]);
+              // } else {
+              //   // Build multipolygon from the set of bboxes
+              //   geometry = new ol.geom.MultiPolygon([]);
+              //   for (var j = 0; j < extent.length; j++) {
+              //     // TODO: Point will not be supported in multi geometry
+              //     var projectedExtent = ol.proj.transformExtent(extent[j], 'EPSG:4326', proj);
+              //     if (!ol.extent.intersects(projectedExtent, projExtent)) {
+              //       continue;
+              //     }
+              //     var coords = this.getPolygonFromExtent(
+              //       ol.extent.getIntersection(projectedExtent, projExtent)
+              //     );
+              //     geometry.appendPolygon(new ol.geom.Polygon(coords));
+              //   }
+              // }
+              // // no valid bbox was found: clear geometry
+              // if (!geometry.getPolygons().length) {
+              //   geometry = null;
+              // }
+              // feat.setGeometry(geometry);
             }
             return feat;
           },
@@ -1335,7 +1319,7 @@
               gnWmsQueue.add(url, name, style ? style.Name : '');
               gnOwsCapabilities.getWMSCapabilities(url).then(function(capObj) {
                 var capL = gnOwsCapabilities.getLayerInfoFromCap(
-                    name, capObj, md && md.getUuid && md.getUuid()),
+                    name, capObj, md && md.uuid),
                     olL;
 
                 if (!capL) {
@@ -1554,7 +1538,7 @@
               gnOwsCapabilities.getWMTSCapabilities(url).then(function(capObj) {
 
                 var capL = gnOwsCapabilities.getLayerInfoFromCap(
-                    name, capObj, md && md.getUuid());
+                    name, capObj, md && md.uuid);
                 if (!capL) {
                   gnWmsQueue.removeFromQueue(url, name, map);
                   // If layer not found in the GetCapabilities
@@ -1640,7 +1624,7 @@
             gnWmsQueue.add(url, name, map);
             gnWfsService.getCapabilities(url).then(function(capObj) {
               var capL = gnOwsCapabilities.
-                  getLayerInfoFromWfsCap(name, capObj, md.getUuid()),
+                  getLayerInfoFromWfsCap(name, capObj, md.uuid),
                   olL;
               if (!capL) {
                 gnWmsQueue.removeFromQueue(url, name, map);
@@ -1983,7 +1967,7 @@
               return gnSearchManagerService.gnSearch({
                 uuid: layer.get('metadataUuid'),
                 fast: 'index',
-                _draft: 'n or e',
+                draft: 'n or e',
                 _content_type: 'json'
               }).then(function(data) {
                 if (data.metadata.length == 1) {

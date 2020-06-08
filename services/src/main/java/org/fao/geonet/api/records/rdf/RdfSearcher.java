@@ -23,14 +23,12 @@
 
 package org.fao.geonet.api.records.rdf;
 
-import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
-
+import org.apache.commons.lang.NotImplementedException;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.kernel.search.EsSearchManager;
 import org.fao.geonet.kernel.search.MetaSearcher;
-import org.fao.geonet.kernel.search.SearchManager;
-import org.fao.geonet.kernel.search.SearcherType;
 import org.fao.geonet.services.util.SearchDefaults;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
@@ -61,20 +59,23 @@ public class RdfSearcher {
 
     public List search(ServiceContext context) throws Exception {
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
-        SearchManager searchMan = gc.getBean(SearchManager.class);
-        searcher = searchMan.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
-
-        ServiceConfig config = new ServiceConfig();
-
-      
-        searcher.search(context, searchRequest, config);
-        
-        numberMatched = searcher.getSize();
-        _versionToken = searcher.getVersionToken(); 
-        
-        searchRequest.addContent(new Element(Geonet.SearchResult.BUILD_SUMMARY).setText("false"));
-                  
-        return searcher.present(context, searchRequest, config).getChildren();
+        EsSearchManager searchMan = gc.getBean(EsSearchManager.class);
+        throw new NotImplementedException("Not implemented in ES");
+//
+//        SearchManager searchMan = gc.getBean(SearchManager.class);
+//        searcher = searchMan.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
+//
+//        ServiceConfig config = new ServiceConfig();
+//
+//
+//        searcher.search(context, searchRequest, config);
+//
+//        numberMatched = searcher.getSize();
+//        _versionToken = searcher.getVersionToken();
+//
+//        searchRequest.addContent(new Element(Geonet.SearchResult.BUILD_SUMMARY).setText("false"));
+//
+//        return searcher.present(context, searchRequest, config).getChildren();
     }
 
     public void close() {

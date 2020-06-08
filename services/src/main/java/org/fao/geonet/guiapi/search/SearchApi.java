@@ -23,30 +23,29 @@
 
 package org.fao.geonet.guiapi.search;
 
-import io.swagger.annotations.*;
-import jeeves.server.ServiceConfig;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import jeeves.server.context.ServiceContext;
+import org.apache.commons.lang.NotImplementedException;
 import org.fao.geonet.ApplicationContextHolder;
-import org.fao.geonet.api.API;
 import org.fao.geonet.api.ApiUtils;
-import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.kernel.search.LuceneSearcher;
-import org.fao.geonet.kernel.search.SearchManager;
-import org.fao.geonet.kernel.search.SearcherType;
-import org.fao.geonet.services.util.SearchDefaults;
-import org.fao.geonet.utils.Log;
+import org.fao.geonet.kernel.search.EsSearchManager;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import java.util.Map;
 
 @RequestMapping(value = {
     "/{portal}/search"
@@ -109,7 +108,7 @@ public class SearchApi {
             response.getWriter().write(Xml.getJSON(results));
         } else {
             response.getWriter().write(
-                new XsltResponseWriter()
+                new XsltResponseWriter(null)
                     .withJson("catalog/locales/en-core.json")
                     .withJson("catalog/locales/en-search.json")
                     .withXml(results)
@@ -131,29 +130,31 @@ public class SearchApi {
 
     private Element query(Map<String, String> queryFields, HttpServletRequest request){
         ApplicationContext applicationContext = ApplicationContextHolder.get();
-        SearchManager searchMan = applicationContext.getBean(SearchManager.class);
+        EsSearchManager searchMan = applicationContext.getBean(EsSearchManager.class);
         ServiceContext context = ApiUtils.createServiceContext(request);
-        Element params = new Element("params");
-        queryFields.forEach((k, v) -> params.addContent(new Element(k).setText(v)));
 
-        Element elData = SearchDefaults.getDefaultSearch(context, params);
-
-        LuceneSearcher searcher = null;
-        Element model = new Element("search");
-        model.addContent(params);
-        try {
-            searcher = (LuceneSearcher) searchMan.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
-
-            ServiceConfig config =  new ServiceConfig();
-            searcher.search(context, elData, config);
-            model.addContent(searcher.getSummary());
-            if (queryFields.get("summaryOnly") == null) {
-                model.addContent(searcher.present(context, params, config));
-            }
-        } catch (Exception e) {
-            Log.error(API.LOG_MODULE_NAME, "SeachApi - query: " + e.getMessage(), e);
-
-        }
-        return model;
+        // TODOES this is the proxy
+        throw new NotImplementedException("Not implemented in ES");
+//        Element params = new Element("params");
+//        queryFields.forEach((k, v) -> params.addContent(new Element(k).setText(v)));
+//
+//        Element elData = SearchDefaults.getDefaultSearch(context, params);
+//
+//        LuceneSearcher searcher = null;
+//        Element model = new Element("search");
+//        model.addContent(params);
+//        try {
+//            searcher = (LuceneSearcher) searchMan.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
+//
+//            ServiceConfig config =  new ServiceConfig();
+//            searcher.search(context, elData, config);
+//            model.addContent(searcher.getSummary());
+//            if (queryFields.get("summaryOnly") == null) {
+//                model.addContent(searcher.present(context, params, config));
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return model;
     }
 }

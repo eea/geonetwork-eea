@@ -1015,9 +1015,7 @@
     });
 
     if (any) {
-      any.split(' ').forEach(function(v) {
-        fieldsQ.push('+*' + v + '*');
-      });
+      fieldsQ.push(v);
     }
     if (this.initialParams.filter) {
       fieldsQ.push(this.initialParams.filter);
