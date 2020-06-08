@@ -395,8 +395,8 @@ goog.require('gn_alert');
           },
           'isFilterTagsDisplayedInSearch': false,
           'usersearches': {
-            'enabled': false,
-            'displayFeaturedSearchesPanel': false
+            'enabled': true,
+            'displayFeaturedSearchesPanel': true
           },
           'savedSelection': {
             'enabled': false
