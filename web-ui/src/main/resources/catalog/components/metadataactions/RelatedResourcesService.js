@@ -351,7 +351,7 @@
               action: openLink
             },
             'DEFAULT' : {
-              iconClass: 'fa-fw',
+              iconClass: 'fa-question-circle',
               label: 'openPage',
               action: openLink
             }
