@@ -48,7 +48,8 @@
           <div class="gn-md-thumbnail">
             <a href="{$nodeUrl}">
               <img class="gn-portal-main-logo"
-                   src="../../images/logos/{$env//system/site/siteId}.png"/>
+                   src="https://sdi.eea.europa.eu/img/EEA-logo-EN-compact-white.png"/>
+<!--                   src="../../images/logos/{$env//system/site/siteId}.png"/>-->
             </a>
           </div>
 
@@ -57,7 +58,7 @@
               <xsl:value-of select="/root/gui/systemConfig/system/site/name"/>
             </h1>
             <h2>
-              <xsl:value-of select="/root/gui/systemConfig/system/site/organization"/>
+<!--              <xsl:value-of select="/root/gui/systemConfig/system/site/organization"/>-->
             </h2>
           </a>
         </div>
