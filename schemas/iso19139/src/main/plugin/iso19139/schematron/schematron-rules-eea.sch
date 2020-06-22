@@ -294,11 +294,11 @@
 
 
           <sch:let name="atLeastOneSpatialScope"
-                   value="count(gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/gmd:CI_Citation/gmd:title/(gmd:CharacterString|gmx:Anchor), 'Spatial scope')]
+                   value="count(gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/gmd:CI_Citation/gmd:title/(gco:CharacterString|gmx:Anchor), 'Spatial scope')]
                 /gmd:keyword[* != ''])"/>
 
           <sch:assert test="$atLeastOneSpatialScope != 0"><sch:value-of
-            select="$loc/strings/EEA_KEYWORD_SPATIALSCOPE.error"/> </sch:assert>
+            select="$loc/strings/EEA_KEYWORD_SPATIALSCOPE.alert"/> </sch:assert>
           <sch:report test="$atLeastOneSpatialScope != 0"><sch:value-of
             select="$loc/strings/EEA_KEYWORD_SPATIALSCOPE.report"/> </sch:report>
 
