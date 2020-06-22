@@ -84,3 +84,4 @@ chromedriver
 node_modules
 package-lock.json
 .project
+.DS_Store
