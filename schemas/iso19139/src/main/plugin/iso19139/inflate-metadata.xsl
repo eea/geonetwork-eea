@@ -12,13 +12,13 @@
 
   <!-- Add gco:Boolean to gmd:pass with nilReason to work nicely in the editor,
       update-fixed-info.xsl should removed if empty to avoid xsd errors  -->
-  <xsl:template match="gmd:pass[@gco:nilReason and not(gco:Boolean)]">
+  <!--<xsl:template match="gmd:pass[@gco:nilReason and not(gco:Boolean)]">
     <xsl:copy>
       <xsl:copy-of select="@*" />
 
       <gco:Boolean></gco:Boolean>
     </xsl:copy>
-  </xsl:template>
+  </xsl:template>-->
 
 
   <!-- Do a copy of every nodes and attributes -->
