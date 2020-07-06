@@ -55,9 +55,11 @@
 
           <a href="{$nodeUrl}">
             <h1>
-              <xsl:value-of select="/root/gui/systemConfig/system/site/name"/>
+              SDI - geospatial data catalogue
+<!--              <xsl:value-of select="/root/gui/systemConfig/system/site/name"/>-->
             </h1>
             <h2>
+              SDI Thematic catalogues
 <!--              <xsl:value-of select="/root/gui/systemConfig/system/site/organization"/>-->
             </h2>
           </a>
@@ -103,6 +105,10 @@
         </xsl:for-each>
       </ul>
       <br/>
+    </div>
+    <div class="row">
+      <a class="btn btn-link"
+         href="https://sdi.eea.europa.eu/">SDI home page</a>
     </div>
   </xsl:template>
 </xsl:stylesheet>
