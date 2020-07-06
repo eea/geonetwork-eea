@@ -351,7 +351,7 @@
               action: openLink
             },
             'DEFAULT' : {
-              iconClass: 'fa-question-circle',
+              iconClass: 'fa-fw',
               label: 'openPage',
               action: openLink
             }
@@ -412,6 +412,7 @@
               } else if (protocolOrType.match(/link/i)) {
                 return 'LINK';
               } else if (!protocolOrType.match(/EEA:FOLDERPATH/i) &&
+                 resource.url.contains &&
                  !resource.url.contains('.sqlite') &&
                  !resource.url.contains('.mdb') &&
                  !resource.url.contains('.gdp')) {

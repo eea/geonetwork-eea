@@ -105,6 +105,33 @@
   <xsl:variable name="publicEmails"
                 select="'info@eea.europa.eu,sdi@eea.europa.eu'"/>
 
+  <xsl:variable name="hasNextCloudLink"
+                select="count(//gmd:onLine/*[starts-with(gmd:linkage/*/text(), 'https://sdi.eea.europa.eu/data')]) > 0"/>
+
+  <xsl:template match="//gmd:onLine[(*/gmd:protocol/*/text() = 'EEA:FILEPATH' or
+                                     */gmd:protocol/*/text() = 'EEA:FOLDERPATH')
+                                     and starts-with(*/gmd:linkage/gmd:URL, 'https://sdi.eea.europa.eu/webdav')]"
+                priority="199">
+
+    <xsl:copy-of select="."/>
+    <xsl:if test="not($hasNextCloudLink)">
+      <gmd:onLine gco:nilReason="withheld">
+        <gmd:CI_OnlineResource>
+          <gmd:linkage>
+            <gmd:URL>https://sdi.eea.europa.eu/data/<xsl:value-of select="/root/env/uuid"/></gmd:URL>
+          </gmd:linkage>
+          <gmd:protocol>
+            <gco:CharacterString>WWW:URL</gco:CharacterString>
+          </gmd:protocol>
+          <gmd:name>
+            <gco:CharacterString>Direct download (Eionet authentication)</gco:CharacterString>
+          </gmd:name>
+        </gmd:CI_OnlineResource>
+      </gmd:onLine>
+    </xsl:if>
+  </xsl:template>
+
+
   <!-- Flag element with nilReason = withheld automatically
   * All EEA protocols
   * Keywords from EEA categories and EEA keyword list
