@@ -611,7 +611,6 @@ public class BaseMetadataManager implements IMetadataManager {
         String mdImportSetting = settingManager.getValue(Settings.METADATA_IMPORT_RESTRICT);
         if (mdImportSetting != null && !mdImportSetting.equals("")) {
             if (!newMetadata.getHarvestInfo().isHarvested()
-                && newMetadata.getDataInfo().getType() == MetadataType.METADATA
                 && !Arrays.asList(mdImportSetting.split(",")).contains(schema)) {
                 throw new IllegalArgumentException(
                     schema + " is not permitted in the database as a non-harvested metadata.  "
@@ -1012,6 +1011,9 @@ public class BaseMetadataManager implements IMetadataManager {
 
             // add original metadata to result
             Element result = new Element("root");
+            // Remove the 'geonet' namespace to avoid adding it to the
+            // processed elements in updated-fixed-info
+            md.removeNamespaceDeclaration(Geonet.Namespaces.GEONET);
             result.addContent(md);
             // add 'environment' to result
             env.addContent(new Element("siteURL").setText(settingManager.getSiteURL(context)));

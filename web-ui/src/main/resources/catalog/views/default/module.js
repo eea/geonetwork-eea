@@ -238,7 +238,7 @@
       $scope.toggleListType = function(type) {
         $scope.type = type;
       };
-      
+
       $scope.infoTabs = {
         lastRecords: {
           title: 'lastRecords',
@@ -278,7 +278,7 @@
             uuid: md ? md.getUuid() : null,
             type:
               link.protocol.indexOf('WMTS') > -1 ? 'wmts' :
-              (link.protocol == 'ESRI:REST' ? 'esrirest' : 'wms'),
+                ((link.protocol == 'ESRI:REST') || (link.protocol.startsWith('ESRI REST')) ? 'esrirest' : 'wms'),
             url: $filter('gnLocalized')(link.url) || link.url
           };
 
