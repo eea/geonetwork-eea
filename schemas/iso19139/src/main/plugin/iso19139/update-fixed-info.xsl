@@ -113,7 +113,11 @@
                                      and starts-with(*/gmd:linkage/gmd:URL, 'https://sdi.eea.europa.eu/webdav')]"
                 priority="199">
 
-    <xsl:if test="not($hasNextCloudLink)">
+    <xsl:variable name="isFirstEEAResource"
+                  select="count(preceding-sibling::gmd:onLine[
+                                     */gmd:protocol/*/text() = 'EEA:FILEPATH' or
+                                     */gmd:protocol/*/text() = 'EEA:FOLDERPATH']) = 0"/>
+    <xsl:if test="not($hasNextCloudLink) and $isFirstEEAResource">
       <gmd:onLine gco:nilReason="withheld">
         <gmd:CI_OnlineResource>
           <gmd:linkage>
