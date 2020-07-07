@@ -113,7 +113,6 @@
                                      and starts-with(*/gmd:linkage/gmd:URL, 'https://sdi.eea.europa.eu/webdav')]"
                 priority="199">
 
-    <xsl:copy-of select="."/>
     <xsl:if test="not($hasNextCloudLink)">
       <gmd:onLine gco:nilReason="withheld">
         <gmd:CI_OnlineResource>
@@ -129,6 +128,8 @@
         </gmd:CI_OnlineResource>
       </gmd:onLine>
     </xsl:if>
+
+    <xsl:copy-of select="."/>
   </xsl:template>
 
 
