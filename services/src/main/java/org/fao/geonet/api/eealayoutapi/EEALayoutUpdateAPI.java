@@ -25,6 +25,8 @@ package org.fao.geonet.api.eealayoutapi;
 
 import javax.servlet.http.HttpServletResponse;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.fao.geonet.api.API;
 import org.fao.geonet.utils.Log;
 import org.springframework.http.HttpStatus;
@@ -36,21 +38,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import springfox.documentation.annotations.ApiIgnore;
-
-@RequestMapping(value = { "/{portal}/api", "/{portal}/api/" + API.VERSION_0_1 })
-@Api(value = "eealayoutupdate", tags = "eealayoutupdate", description = "EEA Layout Update API")
+@RequestMapping(value = {"/{portal}/api",})
+@Tag(
+    name = "eealayoutupdate",
+    description = "EEA Layout Update API")
 @Controller("eealayoutupdate")
 public class EEALayoutUpdateAPI {
 
-    @ApiOperation(value = "Refresh EEA Template from API", nickname = "refreshtemplate")
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Refresh EEA Template from API",
+        description = "refreshtemplate")
     @RequestMapping(value = "/eealayoutupdate/refreshtemplate", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public void refreshTemplate(@ApiIgnore
-    final HttpServletResponse response) {
+    public void refreshTemplate(
+        @Parameter(hidden = true) final HttpServletResponse response) {
         try {
             EEALayoutManager.forceContentReload();
         } catch (Exception e) {
@@ -59,43 +61,51 @@ public class EEALayoutUpdateAPI {
         }
     }
 
-    @ApiOperation(value = "Get EEA <head> content", nickname = "getHead")
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Get EEA <head> content"
+    )
     @RequestMapping(value = "/eealayoutupdate/head", produces = MediaType.APPLICATION_XHTML_XML_VALUE, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @PreAuthorize("hasRole('Administrator')")
     @ResponseBody
-    public String getHead(@ApiIgnore
-    final HttpServletResponse response) {
+    public String getHead(
+        @Parameter(hidden = true) final HttpServletResponse response) {
         return EEALayoutManager.getHEAD();
     }
 
-    @ApiOperation(value = "Get EEA embedded scripts", nickname = "getScript")
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Get EEA embedded scripts"
+    )
     @RequestMapping(value = "/eealayoutupdate/script", produces = MediaType.APPLICATION_XHTML_XML_VALUE, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public String getScript(@ApiIgnore
-    final HttpServletResponse response) {
+    public String getScript(
+        @Parameter(hidden = true) final HttpServletResponse response) {
 
         return EEALayoutManager.getSCRIPTS();
     }
 
-    @ApiOperation(value = "Get EEA footer html", nickname = "getFooter")
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Get EEA footer html"
+    )
     @RequestMapping(value = "/eealayoutupdate/footer", produces = MediaType.APPLICATION_XHTML_XML_VALUE, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @PreAuthorize("hasRole('Administrator')")
     @ResponseBody
-    public String getFooter(@ApiIgnore
-    final HttpServletResponse response) {
+    public String getFooter(
+        @Parameter(hidden = true) final HttpServletResponse response) {
         return EEALayoutManager.getFOOTER();
     }
 
-    @ApiOperation(value = "Get EEA header html content", nickname = "getHeader")
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Get EEA header html content"
+    )
     @RequestMapping(value = "/eealayoutupdate/header", produces = MediaType.APPLICATION_XHTML_XML_VALUE, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @PreAuthorize("hasRole('Administrator')")
     @ResponseBody
-    public String getHeader(@ApiIgnore
-    final HttpServletResponse response) {
+    public String getHeader(
+        @Parameter(hidden = true) final HttpServletResponse response) {
         return EEALayoutManager.getHEADER();
     }
 }

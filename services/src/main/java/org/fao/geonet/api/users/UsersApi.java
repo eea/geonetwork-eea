@@ -23,14 +23,11 @@
 
 package org.fao.geonet.api.users;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.Authorization;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jeeves.server.UserSession;
-import jeeves.server.context.ServiceContext;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
@@ -42,45 +39,33 @@ import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.exceptions.UserNotFoundEx;
 import org.fao.geonet.kernel.DataManager;
-import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
-import org.fao.geonet.repository.GroupRepository;
-import org.fao.geonet.repository.MetadataRepository;
-import org.fao.geonet.repository.SortUtils;
-import org.fao.geonet.repository.UserGroupRepository;
-import org.fao.geonet.repository.UserRepository;
-import org.fao.geonet.repository.UserSavedSelectionRepository;
+import org.fao.geonet.repository.*;
 import org.fao.geonet.repository.specification.MetadataSpecs;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.repository.specification.UserSpecs;
 import org.fao.geonet.util.PasswordUtil;
-import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specifications;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
 import static org.fao.geonet.repository.specification.UserGroupSpecs.hasProfile;
 import static org.fao.geonet.repository.specification.UserGroupSpecs.hasUserId;
-import static org.springframework.data.jpa.domain.Specifications.where;
+import static org.springframework.data.jpa.domain.Specification.where;
 
 @RequestMapping(value = {
-    "/{portal}/api/users",
-    "/{portal}/api/" + API.VERSION_0_1 +
-        "/users"
+    "/{portal}/api/users"
 })
-@Api(value = "users",
-    tags = "users",
+@Tag(name = "users",
     description = "User operations")
 @Controller("users")
 public class UsersApi {
@@ -101,10 +86,9 @@ public class UsersApi {
     DataManager dataManager;
 
 
-    @ApiOperation(
-        value = "Get users",
-        notes = "",
-        nickname = "getUsers")
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Get users",
+        description = "")
     @RequestMapping(
         produces = MediaType.APPLICATION_JSON_VALUE,
         method = RequestMethod.GET)
@@ -112,7 +96,7 @@ public class UsersApi {
     @PreAuthorize("isAuthenticated()")
     @ResponseBody
     public List<User> getUsers(
-        @ApiIgnore
+        @Parameter(hidden = true)
             HttpSession httpSession
     ) throws Exception {
         UserSession session = ApiUtils.getUserSession(httpSession);
@@ -143,10 +127,9 @@ public class UsersApi {
     }
 
 
-    @ApiOperation(
-        value = "Get user",
-        notes = "",
-        nickname = "getUser")
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Get user",
+        description = "")
     @RequestMapping(
         value = "/{userIdentifier}",
         produces = MediaType.APPLICATION_JSON_VALUE,
@@ -155,12 +138,12 @@ public class UsersApi {
     @PreAuthorize("isAuthenticated()")
     @ResponseBody
     public User getUser(
-        @ApiParam(
-            value = "User identifier."
+        @Parameter(
+            description = "User identifier."
         )
         @PathVariable
             Integer userIdentifier,
-        @ApiIgnore
+        @Parameter(hidden = true)
             HttpSession httpSession
 
     ) throws Exception {
@@ -170,9 +153,9 @@ public class UsersApi {
 
         if (myProfile.equals(Profile.Administrator) || myProfile.equals(Profile.UserAdmin) ||
             myUserId.equals(Integer.toString(userIdentifier))) {
-            User user = userRepository.findOne(userIdentifier);
+            Optional<User> user = userRepository.findById(userIdentifier);
 
-            if (user == null) {
+            if (!user.isPresent()) {
                 throw new UserNotFoundEx(Integer.toString(userIdentifier));
             }
 
@@ -187,32 +170,31 @@ public class UsersApi {
                 }
             }
 
-            return user;
+            return user.get();
         } else {
             throw new IllegalArgumentException("You don't have rights to do this");
         }
 
     }
 
-    @ApiOperation(
-        value = "Delete a user",
-        notes = "Deletes a catalog user by identifier.",
-        nickname = "deleteUser")
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Delete a user",
+        description = "Deletes a catalog user by identifier.")
     @RequestMapping(value = "/{userIdentifier}",
         produces = MediaType.APPLICATION_JSON_VALUE,
         method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.OK)
-    @PreAuthorize("hasRole('UserAdmin') or hasRole('Administrator')")
+    @PreAuthorize("hasAuthority('UserAdmin') or hasRole('Administrator')")
     @ResponseBody
     public ResponseEntity<String> deleteUser(
-        @ApiParam(
-            value = "User identifier."
+        @Parameter(
+            description = "User identifier."
         )
         @PathVariable
             Integer userIdentifier,
-        @ApiIgnore
+        @Parameter(hidden = true)
             ServletRequest request,
-        @ApiIgnore
+        @Parameter(hidden = true)
             HttpSession httpSession
     ) throws Exception {
         UserSession session = ApiUtils.getUserSession(httpSession);
@@ -244,7 +226,7 @@ public class UsersApi {
         // this is the case
         if (dataManager.isUserMetadataOwner(userIdentifier)) {
             IMetadataUtils metadataRepository = ApplicationContextHolder.get().getBean(IMetadataUtils.class);
-            final long numUserRecords =  metadataRepository.count(MetadataSpecs.isOwnedByUser(userIdentifier));
+            final long numUserRecords = metadataRepository.count(MetadataSpecs.isOwnedByUser(userIdentifier));
             throw new IllegalArgumentException(
                 String.format(
                     "Cannot delete a user that is also metadata owner of %d record(s) (can be records, templates, subtemplates). Change owner of those records or remove them first.",
@@ -262,7 +244,7 @@ public class UsersApi {
         userSavedSelectionRepository.deleteAllByUser(userIdentifier);
 
         try {
-            userRepository.delete(userIdentifier);
+            userRepository.deleteById(userIdentifier);
         } catch (org.springframework.dao.EmptyResultDataAccessException ex) {
             throw new UserNotFoundEx(Integer.toString(userIdentifier));
         }
@@ -270,32 +252,32 @@ public class UsersApi {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(
-        value = "Check if a user property already exist",
-        notes = "",
-        authorizations = {
-            @Authorization(value = "basicAuth")
-        },
-        nickname = "checkUserPropertyExist")
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Check if a user property already exist",
+        description = ""
+        //       authorizations = {
+        //           @Authorization(value = "basicAuth")
+        //      })
+    )
     @RequestMapping(
         value = "/properties/{property}",
         method = RequestMethod.GET
     )
     @ResponseStatus(value = HttpStatus.OK)
-    @PreAuthorize("hasRole('UserAdmin')")
+    @PreAuthorize("hasAuthority('UserAdmin')")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Property does not exist."),
-        @ApiResponse(code = 404, message = "A property with that value already exist."),
-        @ApiResponse(code = 403, message = ApiParams.API_RESPONSE_NOT_ALLOWED_ONLY_USER_ADMIN)
+        @ApiResponse(responseCode = "200", description = "Property does not exist."),
+        @ApiResponse(responseCode = "404", description = "A property with that value already exist."),
+        @ApiResponse(responseCode = "403", description = ApiParams.API_RESPONSE_NOT_ALLOWED_ONLY_USER_ADMIN)
     })
     public ResponseEntity<HttpStatus> checkUserPropertyExist(
-        @ApiParam(
-            value = "The user property to check"
+        @Parameter(
+            description = "The user property to check"
         )
         @PathVariable
             String property,
-        @ApiParam(
-            value = "The value to search"
+        @Parameter(
+            description = "The value to search"
         )
         @RequestParam
             String exist) {
@@ -314,25 +296,24 @@ public class UsersApi {
     }
 
 
-    @ApiOperation(
-        value = "Creates a user",
-        notes = "Creates a catalog user.",
-        nickname = "createUser")
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Creates a user",
+        description = "Creates a catalog user.")
     @RequestMapping(
         produces = MediaType.APPLICATION_JSON_VALUE,
         method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.OK)
-    @PreAuthorize("hasRole('UserAdmin') or hasRole('Administrator')")
+    @PreAuthorize("hasAuthority('UserAdmin') or hasRole('Administrator')")
     @ResponseBody
     public ResponseEntity<String> createUser(
-        @ApiParam(
+        @Parameter(
             name = "user"
         )
         @RequestBody
             UserDto userDto,
-        @ApiIgnore
+        @Parameter(hidden = true)
             ServletRequest request,
-        @ApiIgnore
+        @Parameter(hidden = true)
             HttpSession httpSession
     ) throws Exception {
         Profile profile = Profile.findProfileIgnoreCase(userDto.getProfile());
@@ -383,10 +364,9 @@ public class UsersApi {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(
-        value = "Update a user",
-        notes = "Updates a catalog user.",
-        nickname = "updateUser")
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Update a user",
+        description = "Updates a catalog user.")
     @RequestMapping(value = "/{userIdentifier}",
         produces = MediaType.APPLICATION_JSON_VALUE,
         method = RequestMethod.PUT)
@@ -394,19 +374,19 @@ public class UsersApi {
     @PreAuthorize("isAuthenticated()")
     @ResponseBody
     public ResponseEntity<String> updateUser(
-        @ApiParam(
-            value = "User identifier."
+        @Parameter(
+            description = "User identifier."
         )
         @PathVariable
             Integer userIdentifier,
-        @ApiParam(
+        @Parameter(
             name = "user"
         )
         @RequestBody
             UserDto userDto,
-        @ApiIgnore
+        @Parameter(hidden = true)
             ServletRequest request,
-        @ApiIgnore
+        @Parameter(hidden = true)
             HttpSession httpSession
     ) throws Exception {
 
@@ -426,7 +406,7 @@ public class UsersApi {
 
         // TODO: CheckAccessRights
 
-        User user = userRepository.findOne(userIdentifier);
+        User user = userRepository.findById(userIdentifier).get();
         if (user == null) {
             throw new IllegalArgumentException("No user found with id: "
                 + userDto.getId());
@@ -460,11 +440,11 @@ public class UsersApi {
         //If it is a useradmin updating,
         //maybe we don't know all the groups the user is part of
         if (!myProfile.equals(Profile.Administrator)) {
-            List<Integer> myUserAdminGroups = userGroupRepository.findGroupIds(Specifications.where(
+            List<Integer> myUserAdminGroups = userGroupRepository.findGroupIds(Specification.where(
                 hasProfile(myProfile)).and(hasUserId(Integer.parseInt(myUserId))));
 
             List<UserGroup> usergroups =
-                userGroupRepository.findAll(Specifications.where(
+                userGroupRepository.findAll(Specification.where(
                     hasUserId(Integer.parseInt(userDto.getId()))));
 
             //keep unknown groups as is
@@ -484,10 +464,9 @@ public class UsersApi {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(
-        value = "Resets user password",
-        notes = "Resets the user password.",
-        nickname = "resetUserPassword")
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Resets user password",
+        description = "Resets the user password.")
     @RequestMapping(value = "/{userIdentifier}/actions/forget-password",
         produces = MediaType.APPLICATION_JSON_VALUE,
         method = RequestMethod.POST)
@@ -495,22 +474,22 @@ public class UsersApi {
     @PreAuthorize("isAuthenticated()")
     @ResponseBody
     public ResponseEntity<String> resetUserPassword(
-        @ApiParam(
-            value = "User identifier."
+        @Parameter(
+            description = "User identifier."
         )
         @PathVariable
             Integer userIdentifier,
-        @ApiParam(
-            value = "Password to change."
+        @Parameter(
+            description = "Password to change."
         )
         @RequestParam(value = Params.PASSWORD) String password,
-        @ApiParam(
-            value = "Password to change (repeat)."
+        @Parameter(
+            description = "Password to change (repeat)."
         )
         @RequestParam(value = Params.PASSWORD + "2") String password2,
-        @ApiIgnore
+        @Parameter(hidden = true)
             ServletRequest request,
-        @ApiIgnore
+        @Parameter(hidden = true)
             HttpSession httpSession
     ) throws Exception {
 
@@ -526,24 +505,23 @@ public class UsersApi {
             throw new IllegalArgumentException("You don't have rights to do this");
         }
 
-        User user = userRepository.findOne(userIdentifier);
-        if (user == null) {
+        Optional<User> user = userRepository.findById(userIdentifier);
+        if (!user.isPresent()) {
             throw new UserNotFoundEx(Integer.toString(userIdentifier));
         }
 
         String passwordHash = PasswordUtil.encoder(ApplicationContextHolder.get()).encode(
             password);
-        user.getSecurity().setPassword(passwordHash);
-        user.getSecurity().getSecurityNotifications().remove(UserSecurityNotification.UPDATE_HASH_REQUIRED);
-        userRepository.save(user);
+        user.get().getSecurity().setPassword(passwordHash);
+        user.get().getSecurity().getSecurityNotifications().remove(UserSecurityNotification.UPDATE_HASH_REQUIRED);
+        userRepository.save(user.get());
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(
-        value = "Retrieve user groups",
-        notes = "Retrieve the user groups.",
-        nickname = "retrieveUserGroups")
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Retrieve user groups",
+        description = "Retrieve the user groups.")
     @RequestMapping(value = "/{userIdentifier}/groups",
         produces = MediaType.APPLICATION_JSON_VALUE,
         method = RequestMethod.GET
@@ -552,14 +530,14 @@ public class UsersApi {
     @PreAuthorize("isAuthenticated()")
     @ResponseBody
     public List<UserGroup> retrieveUserGroups(
-        @ApiParam(
-            value = "User identifier."
+        @Parameter(
+            description = "User identifier."
         )
         @PathVariable
             Integer userIdentifier,
-        @ApiIgnore
+        @Parameter(hidden = true)
             ServletRequest request,
-        @ApiIgnore
+        @Parameter(hidden = true)
             HttpSession httpSession
     ) throws Exception {
         UserSession session = ApiUtils.getUserSession(httpSession);
@@ -568,7 +546,7 @@ public class UsersApi {
 
         if (myProfile == Profile.Administrator || myProfile == Profile.UserAdmin || myUserId.equals(Integer.toString(userIdentifier))) {
             // -- get the profile of the user id supplied
-            User user = userRepository.findOne(userIdentifier);
+            User user = userRepository.findById(userIdentifier).get();
             if (user == null) {
                 throw new IllegalArgumentException("user " + userIdentifier + " doesn't exist");
             }
@@ -622,7 +600,7 @@ public class UsersApi {
     }
 
     private List<Integer> getGroupIds(int userId) {
-        return  userGroupRepository.findGroupIds(hasUserId(userId));
+        return userGroupRepository.findGroupIds(hasUserId(userId));
     }
 
     private void setUserGroups(final User user, List<GroupElem> userGroups)
@@ -635,9 +613,7 @@ public class UsersApi {
         Set<String> listOfAddedProfiles = new HashSet<String>();
         for (UserGroup ug : all) {
             String key = ug.getProfile().name() + ug.getGroup().getId();
-            if (!listOfAddedProfiles.contains(key)) {
-                listOfAddedProfiles.add(key);
-            }
+            listOfAddedProfiles.add(key);
         }
 
         // We start removing all old usergroup objects. We will remove the
@@ -652,7 +628,7 @@ public class UsersApi {
         // updated.
         for (GroupElem element : userGroups) {
             Integer groupId = element.getId();
-            Group group = groupRepository.findOne(groupId);
+            Group group = groupRepository.findById(groupId).get();
             String profile = element.getProfile();
             // The user has a new group and profile
 
@@ -697,10 +673,10 @@ public class UsersApi {
         }
 
         // Remove deprecated usergroups (if any)
-        userGroupRepository.delete(toRemove);
+        userGroupRepository.deleteAll(toRemove);
 
         // Add only new usergroups (if any)
-        userGroupRepository.save(toAdd);
+        userGroupRepository.saveAll(toAdd);
 
     }
 
@@ -778,7 +754,7 @@ public class UsersApi {
         // Check at least 1 administrator is enabled
         if (StringUtils.isNotEmpty(userDto.getId()) && (!userDto.isEnabled())) {
             List<User> adminEnabledList = userRepository.findAll(
-                Specifications.where(UserSpecs.hasProfile(Profile.Administrator)).and(UserSpecs.hasEnabled(true)));
+                Specification.where(UserSpecs.hasProfile(Profile.Administrator)).and(UserSpecs.hasEnabled(true)));
             if (adminEnabledList.size() == 1) {
                 User adminUser = adminEnabledList.get(0);
                 if (adminUser.getId() == Integer.parseInt(userDto.getId())) {
@@ -793,8 +769,8 @@ public class UsersApi {
 
 class GroupElem {
 
-    private String profile;
-    private Integer id;
+    private final String profile;
+    private final Integer id;
 
     public GroupElem(String profile, Integer id) {
         this.id = id;

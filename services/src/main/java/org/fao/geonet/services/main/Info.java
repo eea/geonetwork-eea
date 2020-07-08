@@ -32,14 +32,7 @@ import jeeves.server.context.ServiceContext;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.SystemInfo;
 import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.domain.Group_;
-import org.fao.geonet.domain.Profile;
-import org.fao.geonet.domain.ReservedGroup;
-import org.fao.geonet.domain.Setting;
-import org.fao.geonet.domain.Source;
-import org.fao.geonet.domain.Source_;
-import org.fao.geonet.domain.UserGroup;
-import org.fao.geonet.domain.User_;
+import org.fao.geonet.domain.*;
 import org.fao.geonet.exceptions.BadParameterEx;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.SchemaManager;
@@ -47,17 +40,7 @@ import org.fao.geonet.kernel.region.RegionsDAO;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.lib.Lib;
-import org.fao.geonet.repository.GroupRepository;
-import org.fao.geonet.repository.IsoLanguageRepository;
-import org.fao.geonet.repository.LanguageRepository;
-import org.fao.geonet.repository.MetadataCategoryRepository;
-import org.fao.geonet.repository.OperationRepository;
-import org.fao.geonet.repository.SettingRepository;
-import org.fao.geonet.repository.SortUtils;
-import org.fao.geonet.repository.SourceRepository;
-import org.fao.geonet.repository.StatusValueRepository;
-import org.fao.geonet.repository.UserGroupRepository;
-import org.fao.geonet.repository.UserRepository;
+import org.fao.geonet.repository.*;
 import org.fao.geonet.repository.specification.GroupSpecs;
 import org.fao.geonet.repository.specification.SettingSpec;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
@@ -65,25 +48,17 @@ import org.fao.geonet.repository.specification.UserSpecs;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specifications;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
 import java.nio.file.Path;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.google.common.xml.XmlEscapers.xmlContentEscaper;
 
 @Deprecated
 public class Info implements Service {
-    private static final String READ_ONLY = "readonly";
-    private static final String INDEX = "index";
-    private static final String SCHEMAS = "schemas";
     public static final String SYSTEMINFO = "systeminfo";
     public static final String STATUS = "status";
     public static final String AUTH = "auth";
@@ -104,6 +79,9 @@ public class Info implements Service {
     public static final String INSPIRE = "inspire";
     public static final String CONFIG = "config";
     public static final String SITE = "site";
+    private static final String READ_ONLY = "readonly";
+    private static final String INDEX = "index";
+    private static final String SCHEMAS = "schemas";
     private static final String STAGING_PROFILE = "stagingProfile";
 
     private Path xslPath;
@@ -380,7 +358,7 @@ public class Info implements Service {
 
         UserSession session = context.getUserSession();
         if (all || !session.isAuthenticated()) {
-            return groupRepository.findAllAsXml(Specifications.not(GroupSpecs.isReserved()), sort);
+            return groupRepository.findAllAsXml(Specification.not(GroupSpecs.isReserved()), sort);
         }
 
         Element result;
@@ -390,10 +368,10 @@ public class Info implements Service {
             if (includingSystemGroups) {
                 result = groupRepository.findAllAsXml(null, sort);
             } else {
-                return groupRepository.findAllAsXml(Specifications.not(GroupSpecs.isReserved()), sort);
+                return groupRepository.findAllAsXml(Specification.not(GroupSpecs.isReserved()), sort);
             }
         } else {
-            Specifications<UserGroup> spec = Specifications.where(UserGroupSpecs.hasUserId(session.getUserIdAsInt()));
+            Specification<UserGroup> spec = Specification.where(UserGroupSpecs.hasUserId(session.getUserIdAsInt()));
             // you're no Administrator
             // retrieve your groups
             if (profile != null) {
@@ -447,7 +425,7 @@ public class Info implements Service {
     }
 
     private Element buildTemplateRecord(String id, String title, String schema) {
-        return buildRecord(id, title, Collections.<String, String>emptyMap(), schema, null);
+        return buildRecord(id, title, Collections.emptyMap(), schema, null);
     }
 
 
@@ -508,7 +486,6 @@ public class Info implements Service {
         if (us.getProfile() != Profile.UserAdmin) {
             @SuppressWarnings("unchecked")
             List<Element> identifiedUsers = userRepository.findAllAsXml(UserSpecs.hasUserId(userId)).getChildren();
-            ;
             return identifiedUsers;
         }
 
