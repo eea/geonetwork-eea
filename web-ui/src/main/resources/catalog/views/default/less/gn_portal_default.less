@@ -19,9 +19,14 @@
     }
     .gn-background {
       margin-top: 20px;
-      padding: 2em 0 4em;
+      padding: 10em 0 4em;
+      height: 500px;
+      background-image: url(https://sdi.eea.europa.eu/img/download.webp);
+      flex-wrap: wrap;
+      flex-flow: column;
       h1 {
-        font-weight: 400;
+        font-size: 3rem;
+        font-weight: 700;
         margin-top: 30px;
       }
       h1, h2 {
@@ -31,6 +36,7 @@
     // blocks
     .gn-info-list {
       li {
+        height: 320px;
         text-align: center;
         .gn-md-thumbnail {
           border: none;
@@ -47,11 +53,15 @@
           }
           h1 {
             font-size: 24px;
-            font-weight: 400;
-            overflow: hidden;
+            font-weight: 700;
+            color: #007bff;
+            /*overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
+            white-space: nowrap;*/
             margin: 10px 0;
+          }
+          h1:hover {
+            color: #0056b3;
           }
           p {
             display: block;

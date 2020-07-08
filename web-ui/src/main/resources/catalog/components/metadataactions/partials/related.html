@@ -21,8 +21,12 @@
         </strong>
         <strong data-ng-if="(mainType !== 'WMS') && (mainType !== 'WMSSERVICE') && (mainType !== 'WMTS') &&
                             (mainType !== 'WMTSSERVICE') && (mainType !== 'WFS') && (mainType !== 'WCS')">
+          <img style="width: 28px;"
+               data-ng-if="r.title.eng.contains('Eionet')"
+               src="../../images/harvesting//logo_eionet.png"/>
           <i class="fa"
-             data-ng-class="config.getClassIcon(mainType)"/>&nbsp;
+             data-ng-if="!r.title.eng.contains('Eionet')"
+             data-ng-class="config.getClassIcon(mainType)">&nbsp;</i>&nbsp;
         </strong>
       </div>
       <div data-ng-class="mainType === 'MDFCATS' ? 'col-xs-11' : 'col-xs-8 col-sm-8'">
@@ -44,22 +48,22 @@
 
           <div class="text-muted"
                data-ng-switch-when="EEAFILE">
-            <div data-ng-show="eeaNextCloudServer != ''">
+            <!--<div data-ng-show="eeaNextCloudServer != ''">
               <a class="btn btn-default btn-block"
                  data-ng-href="{{eeaNextCloudServer + md.getUuid()}}"
                  data-translate="">
                 nextCloudLink
               </a>
-            </div>
+            </div>-->
             <label data-translate="">webdavLink</label>
             <div class="input-group">
               <input class="form-control"
                      type="text"
                      onClick="this.setSelectionRange(0, this.value.length)"
-                     value="https://sdi.eea.europa.eu/webdav{{r.url.eng.substr(0, r.url.eng.lastIndexOf('/'))}}"/>
+                     value="{{r.url.eng.substr(0, r.url.eng.lastIndexOf('/'))}}"/>
               <span class="input-group-btn">
                 <a class="btn btn-default" type="button"
-                   data-ng-href="https://sdi.eea.europa.eu/webdav{{r.url.eng.substr(0, r.url.eng.lastIndexOf('/'))}}"
+                   data-ng-href="{{r.url.eng.substr(0, r.url.eng.lastIndexOf('/'))}}"
                    data-translate="">openLink</a>
               </span>
             </div>
@@ -76,7 +80,7 @@
               <input class="form-control"
                      type="text"
                      onClick="this.setSelectionRange(0, this.value.length)"
-                     value="ftps://sdi.eea.europa.eu/data{{r.url.eng.substr(0, (r.url.eng.lastIndexOf('/')))}}"/>
+                     value="{{r.url.eng.substr(0, (r.url.eng.lastIndexOf('/'))).replace('ftps://sdi.eea.europa.eu/data', 'https://sdi.eea.europa.eu/webdav')}}"/>
             </div>
 
           </div>

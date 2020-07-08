@@ -1148,6 +1148,7 @@
 
       <flatModeExceptions>
         <for name="gmd:keyword"/>
+        <for name="gmd:pointOfContact"/>
       </flatModeExceptions>
     </view>
 

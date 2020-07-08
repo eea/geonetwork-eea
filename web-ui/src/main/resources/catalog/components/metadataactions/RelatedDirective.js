@@ -193,7 +193,8 @@
             link: function(scope, element, attrs, controller) {
               var promise;
               scope.formatCifsLink = function(url) {
-                return url.replace(/\//g, '\\');
+                return url.replace('https://sdi.eea.europa.eu/webdav', '')
+                          .replace(/\//g, '\\');
               };
               var elem = element[0];
               scope.lang = scope.lang || scope.$parent.lang;
