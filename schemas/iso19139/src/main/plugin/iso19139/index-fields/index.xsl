@@ -599,11 +599,13 @@
                 "link": "<xsl:value-of select="gn-fn-index:json-escape(@xlink:href)"/>",
                 "keywords": [
               <xsl:for-each select="gmd:keyword/(*[normalize-space() != '']|
-                                    */@xlink:href[normalize-space() != '']|
                                     gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[normalize-space() != ''])">
                 <!-- TODOES: Index translations -->
-                {"value": "<xsl:value-of select="gn-fn-index:json-escape(.)"/>",
-                "link": "<xsl:value-of select="gn-fn-index:json-escape(@xlink:href)"/>"}
+                {"value": "<xsl:value-of select="gn-fn-index:json-escape(.)"/>"
+                <xsl:if test="@xlink:href">,
+                  "link": "<xsl:value-of select="gn-fn-index:json-escape(@xlink:href)"/>"
+                </xsl:if>
+                }
                 <xsl:if test="position() != last()">,</xsl:if>
               </xsl:for-each>
               ]}
@@ -774,10 +776,22 @@
             <xsl:if test="gn-fn-index:is-isoDate($start)">
               <resourceTemporalDateRange type="object">{
                 "gte": "<xsl:value-of select="normalize-space($start)"/>"
-                <xsl:if test="gn-fn-index:is-isoDate($end) and not($end/@indeterminatePosition = 'now')">
+                <xsl:if test="$start &lt; $end and not($end/@indeterminatePosition = 'now')">
                   ,"lte": "<xsl:value-of select="normalize-space($end)"/>"
                 </xsl:if>
                 }</resourceTemporalDateRange>
+              <resourceTemporalExtentDateRange type="object">{
+                "gte": "<xsl:value-of select="normalize-space($start)"/>"
+                <xsl:if test="$start &lt; $end and not($end/@indeterminatePosition = 'now')">
+                  ,"lte": "<xsl:value-of select="normalize-space($end)"/>"
+                </xsl:if>
+                }</resourceTemporalExtentDateRange>
+              <xsl:if test="$start &gt; $end">
+                <indexingErrorMsg>Warning / Field resourceTemporalDateRange /
+                  Lower range bound '<xsl:value-of select="."/>' can not be
+                  greater than upper bound '<xsl:value-of select="$end"/>'.
+                  Date range not indexed.</indexingErrorMsg>
+              </xsl:if>
             </xsl:if>
           </xsl:for-each>
         </xsl:for-each>
