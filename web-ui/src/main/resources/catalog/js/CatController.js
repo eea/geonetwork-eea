@@ -317,6 +317,7 @@ goog.require('gn_alert');
             'OrgForResource': {
               'terms': {
                 'field': 'OrgForResource',
+                'include': '.*',
                 'size': 15
               }
             },
@@ -439,7 +440,7 @@ goog.require('gn_alert');
             'layers': ['OGC', 'ESRI:REST'],
             'maps': ['ows']
           },
-          'isFilterTagsDisplayedInSearch': false,
+          'isFilterTagsDisplayedInSearch': true,
           'usersearches': {
             'enabled': true,
             'displayFeaturedSearchesPanel': true
