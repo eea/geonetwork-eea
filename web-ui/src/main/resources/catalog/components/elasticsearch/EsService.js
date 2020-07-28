@@ -41,7 +41,7 @@
       // https://lucene.apache.org/core/3_4_0/queryparsersyntax.html#Escaping%20Special%20Characters
       function escapeSpecialCharacters(luceneQueryString) {
         return luceneQueryString.replace(
-          /(\+|-|&&|\|\||!|\{|\}|\[|\]\^|\~|\*|\?|:|\\{1}|\"|\(|\))/g,
+          /(\+|-|&&|\|\||!|\{|\}|\[|\]\^|\~|\*|\?|:|\\{1}|\(|\))/g,
           '\\$1');
       };
 
@@ -58,7 +58,6 @@
        * @param p
        */
       this.buildQueryClauses = function(queryHook, p, luceneQueryString) {
-
         var excludeFields = ['_content_type', 'fast', 'from', 'to', 'bucket',
           'sortBy', 'sortOrder', 'resultType', 'facet.q', 'any', 'geometry', 'query_string',
           'creationDateFrom', 'creationDateTo', 'dateFrom', 'dateTo', 'geom', 'relation',
@@ -66,9 +65,23 @@
         if(p.any || luceneQueryString) {
           var queryStringParams = [];
           if (p.any) {
+            p.any = p.any.toString();
             var queryExpression = p.any.match(/^q\((.*)\)$/);
             if (queryExpression == null) {
-              queryStringParams.push(escapeSpecialCharacters(p.any));
+              // var queryBase = '${any} resourceTitleObject.default:(${any})^2',
+              var queryBase = gnGlobalSettings.gnCfg.mods.search.queryBase,
+                  defaultQuery = '${any}';
+              if (queryBase.indexOf(defaultQuery) === -1) {
+                console.warn('Check your configuration. Query base \'' +
+                  queryBase + '\' MUST contains a \'${any}\' token ' +
+                  'to be replaced by the search text. ' +
+                  'See mods.search.queryBase property. ' +
+                  'Using default value \'${any}\'.');
+                queryBase = defaultQuery;
+              }
+              var q = queryBase.replace(/\$\{any\}/g,
+                                        escapeSpecialCharacters(p.any));
+              queryStringParams.push(q);
             } else {
               queryStringParams.push(queryExpression[1]);
             }
@@ -376,7 +389,11 @@
         return mapping[name] || name;
       }
 
-      this.getMoreTermsParams = function(query, facetPath, newSize, facetConfig) {
+      this.getTermsParamsWithNewSizeOrFilter = function(query, facetPath,
+                                         newSize,
+                                         include,
+                                         exclude,
+                                         facetConfig) {
         var params = {
           query: query || {bool: {must: []}},
           size: 0
@@ -384,11 +401,30 @@
         var aggregations = params;
         for (var i = 0; i < facetPath.length; i++) {
           if ((i + 1) % 2 === 0) continue;
-          var key = facetPath[i];
+          var key = facetPath[i],
+              isFilter = angular.isDefined(include) || angular.isDefined(exclude);
           aggregations.aggregations = {};
-          aggregations.aggregations[key] = facetConfig[key];
+          // Work on a copy of facetConfig to not alter main search
+          // aggregations.aggregations[key] = facetConfig[key];
+          aggregations.aggregations[key] = isFilter ?
+            angular.copy(facetConfig[key], {}) :
+            facetConfig[key];
           if (aggregations.aggregations[key].terms) {
-            aggregations.aggregations[key].terms.size = newSize;
+            if (Number.isInteger(newSize)) {
+              aggregations.aggregations[key].terms.size = newSize;
+            }
+            if (angular.isDefined(include)){
+              var isARegex = include.match(/^\/.*\/$/) != null;
+              aggregations.aggregations[key].terms.include =
+                isARegex ?
+                  include.substr(1, include.length - 2) :
+                  '.*' + include + '.*';
+              // Note that ES filter on terms can not be case insensitive
+              // See https://discuss.elastic.co/t/terms-aggregation-with-include-filter/50976/10
+            }
+            if (angular.isDefined(exclude)){
+              aggregations.aggregations[key].terms.exclude = exclude;
+            }
           } else {
             console.warn(
               'Loading more results of a none terms directive is not supported',
@@ -398,6 +434,5 @@
         }
         return params;
       };
-
   }]);
 })();

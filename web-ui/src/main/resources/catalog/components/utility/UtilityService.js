@@ -547,7 +547,8 @@
     };
   }]);
 
-  module.service('gnTreeFromSlash', [function() {
+  module.service('gnFacetTree', [function() {
+    var separator = '^';
     var findChild = function(node, name) {
       var n;
       if (node.nodes) {
@@ -597,7 +598,7 @@
       };
       list.forEach(function(e) {
         var name = e.key;
-        var g = name.split('/');
+        var g = name.split(separator);
         createNode(tree, g, 0, e);
       });
       return tree;

@@ -28,8 +28,8 @@
 
   var DEFAULT_SIZE = 10;
 
-  module.service('gnESFacet', ['gnGlobalSettings', 'gnTreeFromSlash',
-    function(gnGlobalSettings, gnTreeFromSlash) {
+  module.service('gnESFacet', ['gnGlobalSettings', 'gnFacetTree',
+    function(gnGlobalSettings, gnFacetTree) {
 
     var defaultSource = {
       includes: [
@@ -98,7 +98,8 @@
             'valid',
             'isHarvested',
             'dateStamp',
-            'documentStandard'
+            'documentStandard',
+            '*inspire*'
           ]
         },
         track_total_hits: true
@@ -150,6 +151,7 @@
         type;
       angular.forEach(aggs, function(facet) {
         delete facet.userHasRole;
+        delete facet.collapsed;
       });
       esParams.aggregations = aggs;
     };
@@ -183,11 +185,19 @@
         var respAgg = respAggs[fieldId];
         var reqAgg = reqAggs[fieldId];
 
+        function facetHasProperty(configId, fieldId, propertyKey) {
+          return configId && this.configs[configId].facets
+            && this.configs[configId].facets[fieldId]
+            && this.configs[configId].facets[fieldId][propertyKey];
+        }
         var facetModel = {
           key: fieldId,
           userHasRole: configId && this.configs[configId].facets
             && this.configs[configId].facets[fieldId]
             && this.configs[configId].facets[fieldId].userHasRole,
+          collapsed: configId && this.configs[configId].facets
+            && this.configs[configId].facets[fieldId]
+            && this.configs[configId].facets[fieldId].collapsed,
           items: [],
           path: (path || []).concat([fieldId])
         };
@@ -196,12 +206,15 @@
 
           if(fieldId.endsWith('_tree')) {
             facetModel.type = 'tree';
-            var tree = gnTreeFromSlash.getTree(respAgg.buckets);
+            var tree = gnFacetTree.getTree(respAgg.buckets);
             facetModel.items = tree.items;
           } else {
             facetModel.type = 'terms';
             facetModel.size = reqAgg.terms.size;
             facetModel.more = respAgg.sum_other_doc_count > 0;
+            facetModel.includeFilter = reqAgg.terms.include !== undefined;
+            facetModel.excludeFilter = reqAgg.terms.exclude !== undefined;
+            var esFacet = this;
             respAgg.buckets.forEach(function (bucket) {
               if (bucket.key) {
                 var itemPath = facetModel.path.concat([bucket.key + '']);
@@ -219,7 +232,7 @@
                   for (var indexKey in reqAgg.aggs) {
                     nestAggs[indexKey] = bucket[indexKey]
                   }
-                  facet.aggs = createFacetModel(reqAgg.aggs, nestAggs, true, itemPath)
+                  facet.aggs = esFacet.createFacetModel(reqAgg.aggs, nestAggs, true, itemPath)
                 }
                 facetModel.items.push(facet);
               }

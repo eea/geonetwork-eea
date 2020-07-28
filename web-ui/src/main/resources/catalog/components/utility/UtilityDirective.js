@@ -454,6 +454,7 @@
       return {
         restrict: 'A',
         link: function(scope, element, attrs) {
+          scope.prefix = attrs['prefix'] || '';
           element.attr('placeholder', '...');
           element.on('focus', function() {
             $http.get('../api/isolanguages', {}, {
@@ -464,6 +465,7 @@
               angular.forEach(data, function(lang) {
                 var defaultName = lang.label['eng'];
                 lang.name = lang.label[scope.lang] || defaultName;
+                lang.code = scope.prefix + lang.code;
                 lang.tokens = [lang.name, lang.code, defaultName];
               });
               var source = new Bloodhound({
