@@ -32,7 +32,7 @@
   <EEA_CATEGORY.report> EEA category found.</EEA_CATEGORY.report>
   <EEA_CATEGORY.error>No EEA data category has been set.</EEA_CATEGORY.error>
 
-  <EEAGraphicOverview.report>An overview is provided</EEAGraphicOverview.report>
+  <EEAGraphicOverview.report>At least one overview is provided</EEAGraphicOverview.report>
   <EEAGraphicOverview.alert>Graphic overview is not set. This value shall be filled in with the URL of the thumbnail.</EEAGraphicOverview.alert>
 
   <EEAQuality>Quality</EEAQuality>

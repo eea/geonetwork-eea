@@ -196,16 +196,16 @@
            https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfographicOverview-Dataset-thumbnail
       -->
       <sch:let name="graphicOverview"
-               value="gmd:graphicOverview/*/gmd:fileName/gco:CharacterString"/>
+               value="gmd:graphicOverview/*/gmd:fileName/gco:CharacterString[. != '']"/>
 
-      <sch:assert test="normalize-space($graphicOverview) != ''"
+      <sch:assert test="count($graphicOverview) &gt; 0"
       >$loc/strings/EEAGraphicOverview.alert
       </sch:assert>
-      <sch:report test="normalize-space($graphicOverview) != ''">
+      <sch:report test="count($graphicOverview) &gt; 0">
         <sch:value-of
           select="$loc/strings/EEAGraphicOverview.report"/>
         "<sch:value-of
-        select="normalize-space($graphicOverview)"/>"
+        select="normalize-space($graphicOverview[1])"/>"
       </sch:report>
 
       </sch:rule>
