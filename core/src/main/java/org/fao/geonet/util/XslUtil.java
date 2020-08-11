@@ -1016,7 +1016,6 @@ public final class XslUtil {
         return status == -1 ? false : status / 100 == 2;
     }
 
-
     /**
      * Utility method to retrieve the thesaurus dir from xsl processes.
      * <p>

@@ -197,7 +197,8 @@
             </p>
           </div>
 
-          <div data-ng-switch-when="MDFCATS">
+          <div data-ng-switch-when="MDFCATS"
+               data-ng-if="r.featureType">
             <p data-translate="">technicalInformation</p>
             <div data-gn-attribute-table-renderer="r.featureType.attributeTable.element">
             </div>
@@ -205,7 +206,8 @@
 
           <div data-ng-switch-default>
             <p class="text-muted"
-               data-ng-if="mainType.indexOf('MD') == 0 && r.id">
+               data-ng-if="mainType.indexOf('MD') == 0 && r.id
+                    && r.description && (r.description | gnLocalized: lang).length > 0">
               <span class="gn-related-description">
                 {{ (r.description | gnLocalized: lang | striptags | words:35)}} <a href="#/metadata/{{r.id}}">{{'more' |
                 translate}}...</a>
@@ -227,10 +229,14 @@
         <button type="button"
                 class="btn btn-default btn-sm btn-block text-wrap"
                 data-ng-if="mainType !== 'EEAFILE'"
+                data-ng-attr-title="{{r.origin === 'remote' ? (r.url | gnLocalized: lang) : ''}}"
                 data-ng-show="hasAction(mainType)"
                 data-ng-click="config.doAction(mainType, r, md)">
-
           <span class="visible-lg-*">
+            <i class="fa"
+               title="{{r.origin === 'remote' ? ('remoteRecord' | translate) : ''}}"
+               data-ng-class="{'fa-external-link': r.origin === 'remote'}"></i>
+
             {{::(config.getLabel(mainType, type)) | translate}}
           </span>
           <br/>

@@ -35,7 +35,7 @@
   <context:property-placeholder location="${app.properties}"
                                 order="1"
                                 file-encoding="UTF-8"
-                                ignore-unresolvable="true" />
+                                ignore-unresolvable="true"/>
 
   <import resource="config-spring-env.xml"/>
   <import resource="config-security/config-security.xml"/>
@@ -43,6 +43,7 @@
 
   <import resource="config-db/initial_data.xml"/>
   <import resource="config-print/config-spring-print.xml"/>
+  <import resource="config-etf-validator.xml"/>
 
   <!-- For database configuration look in the config-node configuration files (config-node/srv.xml) -->
 
