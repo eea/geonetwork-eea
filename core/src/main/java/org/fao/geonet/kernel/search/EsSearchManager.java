@@ -186,8 +186,10 @@ public class EsSearchManager implements ISearchManager {
             }
         } catch (Exception e) {
             LOGGER.error("Indexing stylesheet contains errors: {} \n  Marking the metadata as _indexingError=1 in index", e.getMessage());
-            doc.addContent(new Element(IndexFields.INDEXING_ERROR_FIELD).setText("1"));
+            doc.addContent(new Element(IndexFields.INDEXING_ERROR_FIELD).setText("true"));
             doc.addContent(new Element(IndexFields.INDEXING_ERROR_MSG).setText("GNIDX-XSL||" + e.getMessage()));
+            doc.addContent(new Element(IndexFields.DRAFT).setText("n"));
+
             StringBuilder sb = new StringBuilder();
             allText(metadata, sb);
             doc.addContent(new Element("_text_").setText(sb.toString()));
@@ -402,9 +404,7 @@ public class EsSearchManager implements ISearchManager {
                 try {
                     final BulkResponse bulkItemResponses = client.bulkRequest(defaultIndex, listOfDocumentsToIndex);
                     int responseStatus = bulkItemResponses.status().getStatus();
-                    if ((responseStatus == 201) || (responseStatus == 200)) {
-                        // TODOES: inform about time ellapsed ?
-                    } else {
+                    if (bulkItemResponses.hasFailures()) {
                         Map<String, String> listErrorOfDocumentsToIndex = new HashMap<>(bulkItemResponses.getItems().length);
                         List<String> errorDocumentIds = new ArrayList<>();
                         // Add information in index that some items were not properly indexed
@@ -419,11 +419,12 @@ public class EsSearchManager implements ISearchManager {
                                 String failureDoc = listOfDocumentsToIndex.get(e.getId());
                                 try {
                                     JsonNode node = mapper.readTree(failureDoc);
-                                    resourceTitle = node.get(IndexFields.RESOURCE_TITLE).asText();
+                                    resourceTitle = node.get("resourceTitleObject").get("default").asText();
                                 } catch (Exception ignoredException) {
                                 }
                                 docWithErrorInfo.put(IndexFields.RESOURCE_TITLE, resourceTitle);
-                                docWithErrorInfo.put(IndexFields.INDEXING_ERROR_FIELD, e.getFailure().isAborted());
+                                docWithErrorInfo.put(IndexFields.DRAFT, "n");
+                                docWithErrorInfo.put(IndexFields.INDEXING_ERROR_FIELD, true);
                                 docWithErrorInfo.put(IndexFields.INDEXING_ERROR_MSG, e.getFailureMessage());
                                 // TODO: Report the JSON which was causing the error ?
 
@@ -526,10 +527,6 @@ public class EsSearchManager implements ISearchManager {
     public ObjectNode documentToJson(Element xml) {
         ObjectNode doc = new ObjectMapper().createObjectNode();
         ObjectMapper mapper = new ObjectMapper();
-
-        List<Element> records = xml.getChildren();
-        Map<String, ObjectNode> listOfXcb = new HashMap<>();
-
 
         List<String> elementNames = new ArrayList();
         List<Element> fields = xml.getChildren();
