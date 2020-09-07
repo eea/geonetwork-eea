@@ -105,7 +105,8 @@
             url: langUrl,
             headers: {
               'Accept-Language': options.key
-            }
+            },
+            cache: true
           }).success(function(data) {
             deferredInst.resolve(data);
           }).error(function() {

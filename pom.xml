@@ -269,19 +269,7 @@
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
-
-      <!-- artifact assembly -->
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptors>
-            <descriptor>release/zip-war.xml</descriptor>
-            <descriptor>release/bin.xml</descriptor>
-          </descriptors>
-          <finalName>geonetwork-${project.version}</finalName>
-          <outputDirectory>${project.build.directory}/release</outputDirectory>
-        </configuration>
-      </plugin>
+   
       <!-- run integration tests after unit tests -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -1411,7 +1399,7 @@
     <jetty.port>8080</jetty.port>
     <jetty.stop.port>8090</jetty.stop.port>
 
-    <es.version>7.8.0</es.version>
+    <es.version>7.9.0</es.version>
     <es.platform>linux-x86_64</es.platform>
     <es.installer.extension>tar.gz</es.installer.extension>
     <es.protocol>http</es.protocol>
