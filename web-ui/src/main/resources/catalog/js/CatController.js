@@ -512,7 +512,7 @@ goog.require('gn_alert');
           'enabled': true,
           'appUrl': '../../{{node}}/{{lang}}/catalog.edit',
           'isUserRecordsOnly': false,
-          'minUserProfileToCreateTemplate': '',
+          'minUserProfileToCreateTemplate': 'Administrator',
           'isFilterTagsDisplayed': false,
           'fluidEditorLayout': true,
           'createPageTpl':
