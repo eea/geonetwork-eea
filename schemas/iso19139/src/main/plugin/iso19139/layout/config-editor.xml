@@ -565,6 +565,8 @@
             <text ref="eea-keywords-help"/>
           </section>
 
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'INSPIRE priority data set']"/>
           <!--<section name="eea-category">
             <directive data-gn-metadata-category-updater="mdCategories"
                        data-metadata-uuid="gnCurrentEdit.uuid"
