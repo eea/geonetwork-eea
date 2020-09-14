@@ -40,6 +40,48 @@ SELECT setval('user_search_id_seq', (SELECT max(id) + 1 FROM usersearch));
 
 
 
+-- Update datashare path
+
+WITH ns AS ( select ARRAY[
+                        ARRAY['xlink', 'http://www.w3.org/1999/xlink'],
+                        ARRAY['gmd', 'http://www.isotc211.org/2005/gmd'],
+                        ARRAY['gco', 'http://www.isotc211.org/2005/gco']] AS n)
+
+UPDATE metadata SET data = replace(data, 'https://sdi.eea.europa.eu/data/', 'https://sdi.eea.europa.eu/data/public/') WHERE uuid IN (
+    SELECT uuid FROM (
+                         SELECT uuid,
+                                isharvested,
+                                unnest(xpath(
+                                        'count(//gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*[contains(text(), "_p_")])',
+                                        XMLPARSE(DOCUMENT data), n))::text AS c
+                         FROM metadata,
+                              ns
+                         WHERE data LIKE '%https://sdi.eea.europa.eu/data/%'
+                           AND isHarvested = 'n'
+                     ) AS subquery WHERE c = '1'
+);
+
+
+WITH ns AS ( select ARRAY[
+                        ARRAY['xlink', 'http://www.w3.org/1999/xlink'],
+                        ARRAY['gmd', 'http://www.isotc211.org/2005/gmd'],
+                        ARRAY['gco', 'http://www.isotc211.org/2005/gco']] AS n)
+
+UPDATE metadata SET data = replace(data, 'https://sdi.eea.europa.eu/data/', 'https://sdi.eea.europa.eu/data/restricted/') WHERE uuid IN (
+    SELECT uuid FROM (
+                         SELECT uuid,
+                                isharvested,
+                                unnest(xpath(
+                                        'count(//gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*[contains(text(), "_p_")])',
+                                        XMLPARSE(DOCUMENT data), n))::text AS c
+                         FROM metadata,
+                              ns
+                         WHERE data LIKE '%https://sdi.eea.europa.eu/data/%'
+                           AND isHarvested = 'n'
+                     ) AS subquery WHERE c = '0'
+);
+
+
 
 UPDATE Settings SET value='4.0.0' WHERE name='system/platform/version';
 UPDATE Settings SET value='SNAPSHOT' WHERE name='system/platform/subVersion';

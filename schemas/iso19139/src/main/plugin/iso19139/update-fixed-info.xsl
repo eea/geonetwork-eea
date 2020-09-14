@@ -118,10 +118,22 @@
                                      */gmd:protocol/*/text() = 'EEA:FILEPATH' or
                                      */gmd:protocol/*/text() = 'EEA:FOLDERPATH']) = 0"/>
     <xsl:if test="not($hasNextCloudLink) and $isFirstEEAResource">
+
+      <!--
+      Dataset identifier
+      See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions#1-Dataset-Identifier-convention
+       eg. climate-adapt_r_4258_60_arcmin_projected-sea-level-rise_p_2081-2100_v01_r00
+       -->
+      <xsl:variable name="datasetIdentifier"
+                    select="/root/gmd:MD_Metadata/gmd:identificationInfo/*/
+                              gmd:citation/*/gmd:identifier/*/gmd:code/*/text()"/>
+      <xsl:variable name="isPublic"
+                    select="contains($datasetIdentifier, '_p_')"/>
+
       <gmd:onLine gco:nilReason="withheld">
         <gmd:CI_OnlineResource>
           <gmd:linkage>
-            <gmd:URL>https://sdi.eea.europa.eu/data/<xsl:value-of select="/root/env/uuid"/></gmd:URL>
+            <gmd:URL>https://sdi.eea.europa.eu/data/<xsl:value-of select="if($isPublic) then 'public/' else 'restricted/'"/><xsl:value-of select="/root/env/uuid"/></gmd:URL>
           </gmd:linkage>
           <gmd:protocol>
             <gco:CharacterString>WWW:URL</gco:CharacterString>
