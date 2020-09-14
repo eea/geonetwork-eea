@@ -112,7 +112,8 @@ goog.require('gn_alert');
             'inspireThemeUri': {
               'terms': {
                 'field': 'inspireThemeUri',
-                'size': 34
+                'size': 34,
+                'include': 'http://.*'
                 // "order" : { "_key" : "asc" }
               }
             },
@@ -271,13 +272,6 @@ goog.require('gn_alert');
                 "order" : { "_key" : "asc" },
                 "include": "[^/]+/?[^/]+/?[^/]+"
                 // Limit to 3 levels
-              }
-            },
-            'topic_text': {
-              'collapsed': true,
-              'terms': {
-                'field': 'topic_text',
-                'size': 20
               }
             },
             'inspireTheme': {
