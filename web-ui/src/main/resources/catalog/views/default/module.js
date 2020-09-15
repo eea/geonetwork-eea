@@ -99,9 +99,11 @@
       $scope.searchObj = {
         permalink: false,
         internal: true,
-        filters: {
-          'type': 'interactiveMap'
-        },
+        filters: [{
+          "query_string": {
+            "query": "+resourceType:\"map/interactive\""
+          }
+        }],
         params: {
           isTemplate: 'n',
           sortBy: 'changeDate',
