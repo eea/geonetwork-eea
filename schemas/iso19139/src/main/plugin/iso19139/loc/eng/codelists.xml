@@ -77,6 +77,12 @@
         by another resource
       </description>
     </entry>
+    <entry>
+      <code>nextUpdate</code>
+      <label>Next Update</label>
+      <description>Date identifies when the resource will be next updated
+      </description>
+    </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
   </codelist>
   <!-- ==================================================== -->
