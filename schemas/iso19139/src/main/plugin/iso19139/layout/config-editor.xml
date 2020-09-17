@@ -1150,6 +1150,7 @@
 
       <flatModeExceptions>
         <for name="gmd:keyword"/>
+        <for name="gmd:date"/>
         <for name="gmd:pointOfContact"/>
       </flatModeExceptions>
     </view>
