@@ -21,26 +21,13 @@
   ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <parent>
-    <artifactId>geonetwork</artifactId>
-    <groupId>org.geonetwork-opensource</groupId>
-    <version>4.0.0-alpha.3</version>
-  </parent>
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>gn-docs</artifactId>
-  <name>Documentation module</name>
-  <packaging>pom</packaging>
-  <licenses>
-    <license>
-      <name>General Public License (GPL)</name>
-      <url>http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt</url>
-    </license>
-  </licenses>
-  <modules>
-    <!--<module>schema-doc</module>-->
-    <module>manuals</module>
-  </modules>
-</project>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                version="2.0"
+                exclude-result-prefixes="#all">
+  <!-- No multilingual support in Dublin core -->
+  <xsl:template name="get-dublin-core-other-languages-as-json"/>
+  <!-- Get the list of other languages -->
+  <xsl:template name="get-dublin-core-other-languages"/>
+  <xsl:template name="get-dublin-core-online-source-config"/>
+  <xsl:template name="get-dublin-core-extents-as-json">[]</xsl:template>
+</xsl:stylesheet>

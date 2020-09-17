@@ -29,7 +29,7 @@
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>geonetwork</artifactId>
   <packaging>pom</packaging>
-  <version>4.0.0-alpha.2</version>
+  <version>4.0.0-alpha.3</version>
   <name>GeoNetwork opensource</name>
   <description>GeoNetwork opensource is a standards based, Free and
     Open Source catalog application to manage spatially referenced
@@ -269,7 +269,7 @@
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
-   
+
       <!-- run integration tests after unit tests -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -1416,6 +1416,7 @@
     <!-- Define the default analyzer for full text search. -->
     <es.index.analyzer.default>standard</es.index.analyzer.default>
 <!--    <es.default.analyzer>french_light</es.default.analyzer>-->
+    <es.index.mapping.total_fields.limit>4000</es.index.mapping.total_fields.limit>
 
     <es.username></es.username>
     <es.password></es.password>
