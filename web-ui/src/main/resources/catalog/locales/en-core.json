@@ -450,6 +450,7 @@
     "legendTool": "Legend",
     "mInteractionTool": "Measures",
     "graticuleTool": "Display graticules",
+    "mousePositionTool": "Mouse position",
     "syncAllLayersTool": "Synchronize search and main map",
     "drawVectorTool": "Annotate map",
     "collapseAllFacetLabel": "Collapse",

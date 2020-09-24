@@ -478,6 +478,7 @@ goog.require('gn_alert');
             'print': false,
             'mInteraction': false,
             'graticule': false,
+            'mousePosition': true,
             'syncAllLayers': false,
             'drawVector': false
           },
