@@ -265,16 +265,26 @@ goog.require('gn_alert');
                 }
               }
             },
+            'thesaurus_geonetworkthesaurusexternalthemeeeatopics': {
+              'terms': {
+                'field': 'thesaurus_geonetworkthesaurusexternalthemeeeatopics',
+                'size': 15,
+                'exclude': 'http.*',
+                "order" : { "_key" : "asc" }
+              }
+            },
             'thesaurus_geonetworkthesaurusexternalthemegemet_tree': {
+              'collapsed': true,
               'terms': {
                 'field': 'thesaurus_geonetworkthesaurusexternalthemegemet_tree',
-                'size': 100,
+                'size': 500,
                 "order" : { "_key" : "asc" },
-                "include": "[^/]+/?[^/]+/?[^/]+"
+                "include": "[^\^]+^?[^\^]+"
                 // Limit to 3 levels
               }
             },
             'inspireTheme': {
+              'collapsed': true,
               'terms': {
                 'field': 'inspireTheme',
                 'size': 20
@@ -289,6 +299,7 @@ goog.require('gn_alert');
               }
             },
             'tag': {
+              'collapsed': true,
               'terms': {
                 'field': 'tag',
                 'include': '.*',

@@ -498,6 +498,9 @@
         <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope"
                    fieldset="false"
                    transformations="to-iso19139-keyword-with-anchor"/>
+        <thesaurus key="external.theme.eea-topics"
+                   fieldset="false"
+                   transformations="to-iso19139-keyword-with-anchor"/>
       </thesaurusList>
       <sidePanel>
         <directive data-gn-overview-manager=""/>
@@ -559,6 +562,8 @@
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA categories']"/>
           <text ref="eea-categories-help"/>
 
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA topics']"/>
+
           <section name="eea-keyword-list">
             <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA keyword list']/*/gmd:keyword"
                    or="keyword"
@@ -568,6 +573,7 @@
 
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'INSPIRE priority data set']"/>
+
           <!--<section name="eea-category">
             <directive data-gn-metadata-category-updater="mdCategories"
                        data-metadata-uuid="gnCurrentEdit.uuid"

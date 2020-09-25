@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:dcterms="http://purl.org/dc/terms/"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+  <skos:ConceptScheme rdf:about="https://www.eea.europa.eu/themes">
+    <dc:title>EEA topics</dc:title>
+    <dc:description>
+    </dc:description>
+    <dc:creator>
+      <foaf:Organization>
+        <foaf:name>EEA</foaf:name>
+      </foaf:Organization>
+    </dc:creator>
+    <dcterms:issued>2020-09-24</dcterms:issued>
+    <dcterms:modified>2020-09-24</dcterms:modified>
+  </skos:ConceptScheme>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/air'>
+    <skos:prefLabel xml:lang='en'>Air pollution</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/climate-change-adaptation'>
+    <skos:prefLabel xml:lang='en'>Climate change adaptation</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/climate'>
+    <skos:prefLabel xml:lang='en'>Climate change mitigation</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/biodiversity'>
+    <skos:prefLabel xml:lang='en'>Biodiversity — Ecosystems</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/landuse'>
+    <skos:prefLabel xml:lang='en'>Land use</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/soil'>
+    <skos:prefLabel xml:lang='en'>Soil</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/water'>
+    <skos:prefLabel xml:lang='en'>Water and marine environment</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/human'>
+    <skos:prefLabel xml:lang='en'>Environment and health</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/policy'>
+    <skos:prefLabel xml:lang='en'>Policy instruments</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/waste'>
+    <skos:prefLabel xml:lang='en'>Resource efficiency and waste</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/sustainability-transitions'>
+    <skos:prefLabel xml:lang='en'>Sustainability transitions</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/agriculture'>
+    <skos:prefLabel xml:lang='en'>Agriculture</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/energy'>
+    <skos:prefLabel xml:lang='en'>Energy</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/industry'>
+    <skos:prefLabel xml:lang='en'>Industry</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/transport'>
+    <skos:prefLabel xml:lang='en'>Transport</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+</rdf:RDF>
+
