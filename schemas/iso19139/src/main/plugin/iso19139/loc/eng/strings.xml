@@ -71,6 +71,15 @@
     </div>
     <hr/>
   </eea-date-help>
+  <eea-topics-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">Choose at least <a href="https://www.eea.europa.eu/themes">one EEA topics</a>. If the dataset is published in the EEA website, the EEA topic(s) selected should be the same.</div>
+      </div>
+    </div>
+    <hr/>
+  </eea-topics-help>
   <eea-conformity-help>
     <div class="row">
       <div class="col-sm-2"/>

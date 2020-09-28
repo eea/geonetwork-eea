@@ -558,11 +558,13 @@
           <field name="eea-keyword-spatial"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Continents, countries, sea regions of the world.']"/>
           <text ref="eea-country-help"/>
+
           <field name="eea-keyword-cat"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA categories']"/>
           <text ref="eea-categories-help"/>
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA topics']"/>
+          <text ref="eea-topics-help"/>
 
           <section name="eea-keyword-list">
             <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA keyword list']/*/gmd:keyword"
