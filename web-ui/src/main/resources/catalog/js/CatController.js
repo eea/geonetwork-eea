@@ -280,7 +280,7 @@ goog.require('gn_alert');
                 'size': 500,
                 "order" : { "_key" : "asc" },
                 "include": "[^\^]+^?[^\^]+"
-                // Limit to 3 levels
+                // Limit to 2 levels
               }
             },
             'inspireTheme': {
