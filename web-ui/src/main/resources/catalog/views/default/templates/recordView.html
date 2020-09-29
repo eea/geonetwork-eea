@@ -201,15 +201,9 @@
                 <th data-translate="">listOfCategories</th>
                 <td>
                   <button data-ng-repeat="cat in mdView.current.record.cat"
-<<<<<<< HEAD
-                      data-ng-click="filterBy('cat', cat)"
-                      class="btn btn-sm btn-default"
-                      title="{{'clickToFilterOn' | translate}} {{('cat-' + cat) | translate}}">
-=======
                           data-ng-click="filterBy('cat', cat)"
                           class="btn btn-sm btn-default"
                           title="{{'clickToFilterOn' | translate}} {{('cat-' + cat) | translate}}">
->>>>>>> origin/4.0.x
                     <span class="fa gn-icon-{{cat}} resource-color"></span>&nbsp;
                     {{('cat-' + cat) | translate}}
                   </button>
@@ -382,11 +376,7 @@
 
           <table class="table table-striped">
             <tbody>
-<<<<<<< HEAD
             <tr data-ng-if="mdView.current.record.codelist_maintenanceAndUpdateFrequency_text.length > 0">
-=======
-            <tr data-ng-if="mdView.current.record.maintenanceAndUpdateFrequency_text">
->>>>>>> origin/master
               <th data-translate="">updateFrequency</th>
               <td>
                 <p data-ng-repeat="c in mdView.current.record.codelist_maintenanceAndUpdateFrequency_text">
