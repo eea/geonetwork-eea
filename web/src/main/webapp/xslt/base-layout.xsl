@@ -54,7 +54,7 @@
         <meta name="description" content=""/>
         <meta name="keywords" content=""/>
 
-        <xsl:choose>
+       <!-- <xsl:choose>
           <xsl:when test="$requestParameters/noeeaapi or $env/system/eea/templateapi = 'false'">
             <xsl:call-template name="eea-head"/>
           </xsl:when>
@@ -63,7 +63,7 @@
             <xsl:call-template name="eea-script-api"/>
 
           </xsl:otherwise>
-        </xsl:choose>
+        </xsl:choose>-->
 
         <!--<link rel="icon" sizes="16x16 32x32 48x48" type="image/png" href="../../images/logos/favicon.png"/>-->
         <link href="rss.search?sortBy=changeDate" rel="alternate" type="application/rss+xml"

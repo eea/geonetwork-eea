@@ -15,7 +15,7 @@
 	<xsl:template match="/">
 		<html>
 			<head>
-				<xsl:call-template name="eea-head"/>
+<!--				<xsl:call-template name="eea-head"/>-->
 
 
 				<link href="../../srv/en/rss.latest?georss=gml" rel="alternate"
