@@ -80,6 +80,7 @@ goog.require('gn_alert');
       'mods': {
         'global': {
           'humanizeDates': true,
+          'dateFormat': 'YYYY-MM-DD',
           'eeaGeoServer': 'https://sdi.eea.europa.eu/geoserver/ows',
           'eeaNextCloudServer': 'https://galliwasp.eea.europa.eu/data/'
         },
