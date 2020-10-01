@@ -21,18 +21,12 @@
   ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
-
-<!--
-Stylesheet used to update metadata to improve INSPIRE validation regarding use and access constraints.
-
-Restore a backup
-UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= b.uuid);
--->
 <xsl:stylesheet xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:srv="http://www.isotc211.org/2005/srv"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlns:sparql="http://www.w3.org/2005/sparql-results#"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
                 xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -47,30 +41,33 @@ UPDATE metadata a SET data = (SELECT data FROM metadata20181010 b WHERE a.uuid= 
                 select="//gmd:fileIdentifier/gco:CharacterString"/>
 
   <xsl:variable name="dataAndMapUrl"
-                select="//gmd:URL[starts-with(., 'https://www.eea.europa.eu/data-and-maps')]"/>
+                select="//gmd:URL[starts-with(., 'https://www.eea.europa.eu/data-and-maps') or starts-with(., 'http://www.eea.europa.eu/data-and-maps')]"/>
 
 
   <xsl:template match="gmd:descriptiveKeywords[
                             count($dataAndMapUrl) > 0
                             and preceding-sibling::*[1]/name(.) != 'gmd:descriptiveKeywords']">
+    <xsl:variable name="page"
+                  select="encode-for-uri(replace($dataAndMapUrl, 'https:', 'http:'))"/>
+
+    <xsl:variable name="url"
+                  select="concat('https://semantic.eea.europa.eu/sparql?selectedBookmarkName=&amp;query=PREFIX+portal_types%3A+%3Chttp%3A%2F%2Fwww.eea.europa.eu%2Fportal_types%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0A%0D%0ASELECT+DISTINCT+*%0D%0AWHERE+%7B%0D%0A+GRAPH+%3C', $page, '%2F%40%40rdf%3E+%7B%0D%0A+++%3Fsource+portal_types%3Atopic+%3Ftopic+.%0D%0A+%7D%0D%0A+++%3Ftopic+rdfs%3Alabel+%3FtopicLabel+.%0D%0A%7D&amp;format=application%2Fsparql-results%2Bxml&amp;nrOfHits=20&amp;execute=Execute', '')"/>
     <xsl:variable name="dataAndMapPage"
-                  select="document(concat('https://semantic.eea.europa.eu/factsheet.action?uri=',$dataAndMapUrl))"/>
+                  select="document($url)"/>
 
-    <xsl:message>=<xsl:copy-of select="$dataAndMapPage"/></xsl:message>
-    <xsl:message>=<xsl:copy-of select="$dataAndMapPage//div[@id = 'themes-tags']//a[@class = 'link-category']"/></xsl:message>
+    <xsl:variable name="results"
+                  select="$dataAndMapPage/sparql:sparql/sparql:results/sparql:result"/>
 
-    <xsl:if test="false()">
+    <xsl:if test="count($results) > 0">
       <gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
-          <gmd:keyword>
-            <gmx:Anchor xlink:href="https://www.eea.europa.eu/themes/human">Environment and health</gmx:Anchor>
-          </gmd:keyword>
-          <gmd:keyword>
-            <gmx:Anchor xlink:href="https://www.eea.europa.eu/themes/landuse">Land use</gmx:Anchor>
-          </gmd:keyword>
-          <gmd:keyword>
-            <gmx:Anchor xlink:href="https://www.eea.europa.eu/themes/waste">Resource efficiency and waste</gmx:Anchor>
-          </gmd:keyword>
+          <xsl:for-each select="$results">
+            <gmd:keyword>
+              <gmx:Anchor xlink:href="{sparql:binding[@name = 'topic']/sparql:uri}">
+                <xsl:value-of select="sparql:binding[@name = 'topicLabel']/sparql:literal"/>
+              </gmx:Anchor>
+            </gmd:keyword>
+          </xsl:for-each>
           <gmd:type>
             <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
                                     codeListValue="theme"/>
