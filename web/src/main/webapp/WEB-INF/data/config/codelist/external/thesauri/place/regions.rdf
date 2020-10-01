@@ -4543,6 +4543,21 @@
   </skos:Concept>
 
 
+  <skos:Concept rdf:about="http://www.naturalearthdata.com/ne_admin#EU/RUEU">
+    <skos:prefLabel xml:lang="en">Russian Federation (European part)</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Russian Federation (European part)</skos:prefLabel>
+    <skos:altLabel/>
+    <gml:BoundedBy>
+      <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+        <gml:lowerCorner>18.250753 39.610333</gml:lowerCorner>
+        <gml:upperCorner>97.151609 82.685708</gml:upperCorner>
+      </gml:Envelope>
+    </gml:BoundedBy>
+    <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent/Europe"/>
+    <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#CountryGroup"/>
+    <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/RUS"/>
+  </skos:Concept>
+
 
 
 
