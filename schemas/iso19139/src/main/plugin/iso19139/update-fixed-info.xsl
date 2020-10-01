@@ -118,6 +118,19 @@
                                      */gmd:protocol/*/text() = 'EEA:FILEPATH' or
                                      */gmd:protocol/*/text() = 'EEA:FOLDERPATH']) = 0"/>
     <xsl:if test="not($hasNextCloudLink) and $isFirstEEAResource">
+      <!--
+Dataset identifier
+See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions#1-Dataset-Identifier-convention
+ eg. climate-adapt_r_4258_60_arcmin_projected-sea-level-rise_p_2081-2100_v01_r00
+ -->
+      <xsl:variable name="datasetIdentifier"
+                    select="/root/gmd:MD_Metadata/gmd:identificationInfo/*/
+                              gmd:citation/*/gmd:identifier/*/gmd:code/*/text()"/>
+      <xsl:variable name="isPublic"
+                    select="contains($datasetIdentifier, '_p_')"/>
+      <xsl:variable name="linkLabel"
+                    select="if ($isPublic) then 'Direct download' else 'Direct download (Eionet authentication)'"/>
+
       <gmd:onLine gco:nilReason="withheld">
         <gmd:CI_OnlineResource>
           <gmd:linkage>
@@ -127,7 +140,7 @@
             <gco:CharacterString>WWW:URL</gco:CharacterString>
           </gmd:protocol>
           <gmd:name>
-            <gco:CharacterString>Direct download (Eionet authentication)</gco:CharacterString>
+            <gco:CharacterString><xsl:value-of select="$linkLabel"/></gco:CharacterString>
           </gmd:name>
         </gmd:CI_OnlineResource>
       </gmd:onLine>
