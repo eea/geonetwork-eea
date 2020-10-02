@@ -41,17 +41,21 @@
                 select="//gmd:fileIdentifier/gco:CharacterString"/>
 
   <xsl:variable name="dataAndMapUrl"
-                select="//gmd:URL[starts-with(., 'https://www.eea.europa.eu/data-and-maps') or starts-with(., 'http://www.eea.europa.eu/data-and-maps')]"/>
-
+                select="replace(//gmd:URL[starts-with(., 'https://www.eea.europa.eu/data-and-maps') or starts-with(., 'http://www.eea.europa.eu/data-and-maps')], 'https:', 'http:')"/>
 
   <xsl:template match="gmd:descriptiveKeywords[
                             count($dataAndMapUrl) > 0
                             and preceding-sibling::*[1]/name(.) != 'gmd:descriptiveKeywords']">
     <xsl:variable name="page"
-                  select="encode-for-uri(replace($dataAndMapUrl, 'https:', 'http:'))"/>
+                  select="encode-for-uri($dataAndMapUrl)"/>
+
+    <xsl:variable name="uuid"
+                  select="if(contains($dataAndMapUrl, 'http://www.eea.europa.eu/data-and-maps/data/ds_resolveuid/'))
+                          then replace($dataAndMapUrl, 'http://www.eea.europa.eu/data-and-maps/data/ds_resolveuid/', '') else ''"/>
 
     <xsl:variable name="url"
-                  select="concat('https://semantic.eea.europa.eu/sparql?selectedBookmarkName=&amp;query=PREFIX+portal_types%3A+%3Chttp%3A%2F%2Fwww.eea.europa.eu%2Fportal_types%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0A%0D%0ASELECT+DISTINCT+*%0D%0AWHERE+%7B%0D%0A+GRAPH+%3C', $page, '%2F%40%40rdf%3E+%7B%0D%0A+++%3Fsource+portal_types%3Atopic+%3Ftopic+.%0D%0A+%7D%0D%0A+++%3Ftopic+rdfs%3Alabel+%3FtopicLabel+.%0D%0A%7D&amp;format=application%2Fsparql-results%2Bxml&amp;nrOfHits=20&amp;execute=Execute', '')"/>
+                  select="concat('https://semantic.eea.europa.eu/sparql?selectedBookmarkName=&amp;query=PREFIX+portal_types%3A+%3Chttp%3A%2F%2Fwww.eea.europa.eu%2Fportal_types%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0APREFIX+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%0D%0A%3Fsource+%0D%0A%3Ftopic%0D%0A%3FtopicLabel+%0D%0AWHERE+%7B%0D%0A+GRAPH+%3Fg1+%7B%0D%0A+++%3Fsource+portal_types%3Atopic+%3Ftopic+.%0D%0A+++%3Fsource+dcterms%3Aidentifier+%3Fidentifier+.%0D%0A+%7D%0D%0A+++%3Ftopic+rdfs%3Alabel+%3FtopicLabel+.%0D%0A+++FILTER%28%3Fg1+%3D+%3C', $page, '%2F%40%40rdf%3E+or+%3Fidentifier+%3D+%27', $uuid, '%27%29+.%0D%0A%7D&amp;format=application%2Fsparql-results%2Bxml&amp;nrOfHits=20&amp;execute=Execute')"/>
+
     <xsl:variable name="dataAndMapPage"
                   select="document($url)"/>
 
