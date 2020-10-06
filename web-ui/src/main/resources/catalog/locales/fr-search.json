@@ -506,7 +506,6 @@
     "userSearchFeaturedDisplayInHomePage": "Page d'accueil",
     "userSearchUpdated": "Recherche utilisateur sauvegardée",
     "userSearchUpdatedError": "Erreur lors de la sauvegarde de la recherche",
-    "nextCloudLink": "Web download",
     "seeDraft": "Cette fiche a une version brouillon en cours de rédaction. Cliquer ici pour la voir.",
     "seeNoDraft": "Cette fiche a une version approuvée. Cliquer ici pour la voir.",
     "moreFacet": "{{count}} plus",
@@ -525,5 +524,6 @@
     "geometryFilter": "Emprise",
     "GUFname": "Nom",
     "GUFemail": "Email",
-    "GUForganization": "Organisation"
+    "GUForganization": "Organisation",
+    "printUnsupportedLayerTypes": "The following layer types are present but cannot be printed"
 }
