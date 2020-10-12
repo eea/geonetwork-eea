@@ -71,6 +71,7 @@
     </div>
     <hr/>
   </eea-date-help>
+  <eea-add-topics>Add EEA topic</eea-add-topics>
   <eea-topics-help>
     <div class="row">
       <div class="col-sm-2"/>
