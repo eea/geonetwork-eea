@@ -97,7 +97,7 @@
                 -->
           <sch:let name="creationDate"
                    value="gmd:citation/*/gmd:date/
-                *[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date/gco:Date"/>
+                *[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date/gco:*/text()"/>
 
           <sch:assert test="normalize-space($creationDate[1]) != ''"
           ><sch:value-of
@@ -117,7 +117,7 @@
              -->
             <sch:let name="publicationDate"
                 value="gmd:citation/*/gmd:date/
-                *[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:Date"/>
+                *[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:*/text()"/>
             <sch:let name="availableOnWebSite"
                 value="count(../../gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*/gmd:linkage
                 /gmd:URL[contains(., '://www.eea.europa.eu/data-and-maps/data')]) > 0"/>
