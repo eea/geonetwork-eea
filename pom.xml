@@ -1414,7 +1414,8 @@
     <es.index.searchlogs.type>searchlogs</es.index.searchlogs.type>
 
     <!-- Define the default analyzer for full text search. -->
-    <es.index.analyzer.default>standard</es.index.analyzer.default>
+    <es.index.analyzer.default>english</es.index.analyzer.default>
+<!--    <es.index.analyzer.default>standard</es.index.analyzer.default>-->
 <!--    <es.default.analyzer>french_light</es.default.analyzer>-->
     <es.index.mapping.total_fields.limit>4000</es.index.mapping.total_fields.limit>
 
