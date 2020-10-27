@@ -65,7 +65,7 @@
         }
       };
       if (location.pathname.indexOf(editorCatalogPath) === 0) {
-        $scope.searchObj.params._source = editorCatalogId;
+        $scope.searchObj.params.sourceCatalogue = editorCatalogId;
       }
     }]);
 
@@ -86,7 +86,7 @@
         }
       };
       if (location.pathname.indexOf(editorCatalogPath) === 0) {
-        $scope.searchObj.params._source = editorCatalogId;
+        $scope.searchObj.params.sourceCatalogue = editorCatalogId;
       }
     }]);
 
@@ -422,8 +422,8 @@
       });
 
       if (location.pathname.indexOf(editorCatalogPath) === 0) {
-        $scope.searchObj.params._source = editorCatalogId;
-        $scope.searchObj.defaultParams._source = editorCatalogId;
+        $scope.searchObj.params.sourceCatalogue = editorCatalogId;
+        $scope.searchObj.defaultParams.sourceCatalogue = editorCatalogId;
       }
 
     }]);

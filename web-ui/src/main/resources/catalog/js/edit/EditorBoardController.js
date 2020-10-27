@@ -98,7 +98,7 @@
 
       // EEA / If on editor catalogue, only display editor node records by default.
       if (location.pathname.indexOf(editorCatalogPath) === 0) {
-        $scope.searchObj.params._source = editorCatalogId;
+        $scope.searchObj.params.sourceCatalogue = editorCatalogId;
       }
 
       $scope.$watch('onlyMyRecord.is', function(n, o) {
