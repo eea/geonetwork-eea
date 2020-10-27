@@ -191,6 +191,10 @@ goog.require('gn_alert');
                 "filter": { "match": { "codelist_status": "obsolete" } },
                 "weight": 0.3
               },
+              {
+                "filter": { "match": { "codelist_status": "superseded" } },
+                "weight": 0.3
+              },
               // {
               //   "filter": { "match": { "codelist_resourceScope": "service" } },
               //   "weight": 0.8
@@ -305,6 +309,14 @@ goog.require('gn_alert');
               'terms': {
                 'field': 'tag',
                 'include': '.*',
+                'size': 10
+              }
+            },
+            'cat': {
+              'userHasRole': 'isAdministratorOrMore',
+              'collapsed': true,
+              'terms': {
+                'field': 'cat.keyword',
                 'size': 10
               }
             },
