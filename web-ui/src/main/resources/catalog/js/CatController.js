@@ -118,10 +118,12 @@ goog.require('gn_alert');
                 // "order" : { "_key" : "asc" }
               }
             },
-            'topic_text': {
+            'thesaurus_geonetworkthesaurusexternalthemeeeatopics': {
               'terms': {
-                'field': 'topic_text',
-                'size': 20
+                'field': 'thesaurus_geonetworkthesaurusexternalthemeeeatopics',
+                'size': 15,
+                'exclude': 'http.*',
+                "order" : { "_key" : "asc" }
               }
             },
             'codelist_hierarchyLevel_text': {
