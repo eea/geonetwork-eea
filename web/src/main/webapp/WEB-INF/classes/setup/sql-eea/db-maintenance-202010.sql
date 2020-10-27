@@ -11,3 +11,8 @@ UPDATE usersearch SET url = 'any=q(-codelist_status:obsolete%20%2Bcat:biodiversi
 UPDATE usersearch SET url = 'any=q(-codelist_status:obsolete%20%2Bcat:reference)' WHERE url = '_cat=reference&facet.q=status%2Fnotobsolete&resultType=details&sortBy=relevance';
 UPDATE usersearch SET url = 'any=q(+thesaurus_geonetworkthesaurusexternalthemehttpinspireeceuropaeumetadatacodelistPriorityDatasetPriorityDataset:*)' WHERE url = 'any=*PriorityDataset*&resultType=details&sortBy=relevance';
 UPDATE usersearch SET url = 'any=q(-codelist_status:obsolete%20%2Bcat:reference)&sortBy=dateStamp&sortOrder=desc' WHERE url = '_cat=reference&facet.q=status%2Fnotobsolete&resultType=details&sortBy=changeDate';
+
+
+
+
+ALTER TABLE usersearch ALTER COLUMN url TYPE text;
