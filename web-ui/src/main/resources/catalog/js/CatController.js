@@ -307,6 +307,7 @@ goog.require('gn_alert');
               }
             },
             'tag': {
+              'userHasRole': 'isAdministratorOrMore',
               'collapsed': true,
               'terms': {
                 'field': 'tag',
