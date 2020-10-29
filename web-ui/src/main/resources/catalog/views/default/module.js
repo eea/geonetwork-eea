@@ -79,7 +79,7 @@
         filters: gnSearchSettings.filters,
         params: {
           isTemplate: 'n',
-          sortBy: 'changeDate',
+          sortBy: 'createDate',
           sortOrder: 'desc',
           from: 1,
           to: 12
