@@ -901,6 +901,9 @@
           <serviceType>
             <xsl:value-of select="text()"/>
           </serviceType>
+          <format>
+            <xsl:value-of select="text()"/>
+          </format>
           <xsl:if test="$inspireEnable = 'true'">
             <xsl:variable name="inspireServiceType" as="xs:string"
                           select="index:analyzeField(
@@ -1151,6 +1154,7 @@
                         select="gmd:aggregateDataSetIdentifier/*/gmd:code/*/@xlink:href"/>
           <xsl:variable name="associationType"
                         select="gmd:associationType/*/@codeListValue"/>
+
           <xsl:if test="$associationType = $parentAssociatedResourceType">
             <parentUuid><xsl:value-of select="$code"/></parentUuid>
             <xsl:copy-of select="gn-fn-index:build-record-link($code, $xlink, gmd:aggregateDataSetIdentifier/*/gmd:code/*/@xlink:title, 'parent')"/>
@@ -1165,6 +1169,7 @@
             </properties>
           </xsl:variable>
           <xsl:copy-of select="gn-fn-index:build-record-link($code, $xlink, gmd:aggregateDataSetIdentifier/*/gmd:code/*/@xlink:title, 'siblings', $properties)"/>
+          <agg_associated><xsl:value-of select="$code"/></agg_associated>
         </xsl:if>
       </xsl:for-each>
 
