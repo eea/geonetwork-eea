@@ -126,9 +126,9 @@ goog.require('gn_alert');
                 "order" : { "_key" : "asc" }
               }
             },
-            'codelist_hierarchyLevel_text': {
+            'cl_hierarchyLevel_text': {
               'terms': {
-                'field': 'codelist_hierarchyLevel_text',
+                'field': 'cl_hierarchyLevel_text',
                 'size': 10
               }
             }
@@ -162,12 +162,12 @@ goog.require('gn_alert');
             // "boost": "5",
             // "functions": [
             //   {
-            //     "filter": { "match": { "codelist_spatialRepresentationType": "vector" } },
+            //     "filter": { "match": { "cl_spatialRepresentationType": "vector" } },
             //     "random_score": {},
             //     "weight": 23
             //   },
             //   {
-            //     "filter": { "match": { "codelist_spatialRepresentationType": "grid" } },
+            //     "filter": { "match": { "cl_spatialRepresentationType": "grid" } },
             //     "weight": 42
             //   }
             // ],
@@ -190,7 +190,7 @@ goog.require('gn_alert');
               },
               // Boost down obsolete records
               {
-                "filter": { "match": { "codelist_status": "obsolete" } },
+                "filter": { "match": { "cl_status": "obsolete" } },
                 "weight": 0.3
               },
               {
@@ -198,7 +198,7 @@ goog.require('gn_alert');
                 "weight": 0.3
               },
               // {
-              //   "filter": { "match": { "codelist_resourceScope": "service" } },
+              //   "filter": { "match": { "cl_resourceScope": "service" } },
               //   "weight": 0.8
               // },
               // Start boosting down records more than 3 months old
@@ -261,9 +261,9 @@ goog.require('gn_alert');
           // TODOES
           'facetTabField': '',
           'facetConfig': {
-            'codelist_hierarchyLevel_text': {
+            'cl_hierarchyLevel_text': {
               'terms': {
-                'field': 'codelist_hierarchyLevel_text'
+                'field': 'cl_hierarchyLevel_text'
               },
               'aggs': {
                 'format': {
@@ -273,7 +273,7 @@ goog.require('gn_alert');
                 }
               }
             },
-            'thesaurus_geonetworkthesaurusexternalthemeeeatopics': {
+            'th_eeatopics': {
               'terms': {
                 'field': 'thesaurus_geonetworkthesaurusexternalthemeeeatopics',
                 'size': 15,
@@ -281,7 +281,7 @@ goog.require('gn_alert');
                 "order" : { "_key" : "asc" }
               }
             },
-            'thesaurus_geonetworkthesaurusexternalthemegemet_tree': {
+            'th_gemet_tree': {
               'collapsed': true,
               'terms': {
                 'field': 'thesaurus_geonetworkthesaurusexternalthemegemet_tree',
@@ -298,10 +298,10 @@ goog.require('gn_alert');
                 'size': 20
               }
             },
-            'thesaurus_geonetworkthesaurusexternalthemehttpinspireeceuropaeumetadatacodelistPriorityDatasetPriorityDataset_tree': {
+            'th_httpinspireeceuropaeumetadatacodelistPriorityDatasetPriorityDataset_tree': {
               'collapsed': true,
               'terms': {
-                'field': 'thesaurus_geonetworkthesaurusexternalthemehttpinspireeceuropaeumetadatacodelistPriorityDatasetPriorityDataset_tree',
+                'field': 'th_httpinspireeceuropaeumetadatacodelistPriorityDatasetPriorityDataset_tree',
                 'size': 100,
                 "order" : { "_key" : "asc" }
               }
@@ -338,21 +338,21 @@ goog.require('gn_alert');
                 'order': {'_key': "desc"}
               }
             },
-            'codelist_spatialRepresentationType': {
+            'cl_spatialRepresentationType': {
               'terms': {
-                'field': 'codelist_spatialRepresentationType',
+                'field': 'cl_spatialRepresentationType',
                 'size': 10
               }
             },
-            'codelist_maintenanceAndUpdateFrequency_text': {
+            'cl_maintenanceAndUpdateFrequency_text': {
               'terms': {
-                'field': 'codelist_maintenanceAndUpdateFrequency_text',
+                'field': 'cl_maintenanceAndUpdateFrequency_text',
                 'size': 10
               }
             },
-            'codelist_status_text': {
+            'cl_status_text': {
               'terms': {
-                'field': 'codelist_status_text',
+                'field': 'cl_status_text',
                 'size': 10
               }
             },
@@ -555,9 +555,9 @@ goog.require('gn_alert');
                 'size': 20
               }
             },
-            'codelist_status_text': {
+            'cl_status_text': {
               'terms': {
-                'field': 'codelist_status_text',
+                'field': 'cl_status_text',
                 'size': 15
               }
             },
@@ -1050,7 +1050,7 @@ goog.require('gn_alert');
             // A second filter is for harvested record
             // if the catalogue admin defined that those
             // records could be harvested.
-            if (md.isHarvested == true) {
+            if (JSON.parse(md.isHarvested) == true) {
               return gnConfig['system.harvester.enableEditing'] === true &&
                 md.edit;
             }

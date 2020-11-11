@@ -28,7 +28,7 @@
   <parent>
     <artifactId>geonetwork</artifactId>
     <groupId>org.geonetwork-opensource</groupId>
-    <version>4.0.0-alpha.3</version>
+    <version>4.0.2-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -36,6 +36,7 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>camelPeriodicProducer</module>
     <module>wfsfeature-harvester</module>
   </modules>
   <dependencies>

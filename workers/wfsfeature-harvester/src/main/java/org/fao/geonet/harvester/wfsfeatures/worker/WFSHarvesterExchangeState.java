@@ -32,28 +32,32 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by fgravin on 11/5/15.
  */
-public class WFSHarvesterExchangeState {
-    Logger logger = Logger.getLogger(WFSHarvesterRouteBuilder.LOGGER_NAME);
-
+public class WFSHarvesterExchangeState implements Serializable {
     private WFSHarvesterParameter parameters;
+    private transient Logger logger = Logger.getLogger(WFSHarvesterRouteBuilder.LOGGER_NAME);
+    private transient Map<String, String> fields = new LinkedHashMap<String, String>();
+    private transient WFSDataStore wfsDatastore = null;
+    private String resolvedTypeName = null;
 
     public WFSHarvesterParameter getParameters() {
         return parameters;
     }
 
+    public WFSHarvesterExchangeState(WFSHarvesterParameter parameters) {
+        this.parameters = parameters;
+        checkTaskParameters();
+    }
     public void setParameters(WFSHarvesterParameter parameters) {
         this.parameters = parameters;
     }
 
-    private Map<String, String> fields = new LinkedHashMap<String, String>();
 
     public void setFields(Map<String, String> fields) {
         this.fields = fields;
@@ -63,8 +67,6 @@ public class WFSHarvesterExchangeState {
         return fields;
     }
 
-    private WFSDataStore wfsDatastore = null;
-
     public void setWfsDatastore(WFSDataStore wfsDatastore) {
         this.wfsDatastore = wfsDatastore;
     }
@@ -73,10 +75,10 @@ public class WFSHarvesterExchangeState {
         return wfsDatastore;
     }
 
-    WFSHarvesterExchangeState(WFSHarvesterParameter parameters) {
-        this.parameters = parameters;
-        checkTaskParameters();
+    public String getResolvedTypeName() {
+        return resolvedTypeName;
     }
+
 
     private void checkTaskParameters() {
         logger.info("Checking parameters ...");
@@ -98,7 +100,16 @@ public class WFSHarvesterExchangeState {
      * all schema infos (attributes names and types).
      */
     public void initDataStore() throws Exception {
-        WFSDataStoreFactory factory = new WFSDataStoreFactory();
+        // Used to manage QGIS-Server based WFS
+        WFSDataStoreFactory factory = null;
+        if ("investigator".equals(parameters.getStrategy())) {
+            factory = new WFSDataStoreWithStrategyInvestigator();
+            ((WFSDataStoreWithStrategyInvestigator) factory).init(
+                parameters.getUrl(), parameters.getTypeName());
+        } else {
+            factory = new WFSDataStoreFactory();
+        }
+
         Map m = new HashMap();
 
         try {
@@ -115,6 +126,10 @@ public class WFSHarvesterExchangeState {
             m.put(WFSDataStoreFactory.USEDEFAULTSRS.key, true);
             m.put(WFSDataStoreFactory.OUTPUTFORMAT.key, "GML3"); // seems to be mandatory with wfs 1.1.0 sources
             m.put(WFSDataStoreFactory.LENIENT.key, true);
+            if(!"investigator".equals(parameters.getStrategy())
+                && StringUtils.isNotEmpty(parameters.getStrategy())) {
+                m.put(WFSDataStoreFactory.WFS_STRATEGY.key, parameters.getStrategy());
+            }
 
             if (parameters.getMaxFeatures() != -1) {
                 m.put(WFSDataStoreFactory.MAXFEATURES.key, parameters.getMaxFeatures());
@@ -125,7 +140,35 @@ public class WFSHarvesterExchangeState {
             logger.info(String.format(
                     "Reading feature type '%s' schema structure.",
                     parameters.getTypeName()));
-            SimpleFeatureType sft = wfsDatastore.getSchema(parameters.getTypeName());
+            SimpleFeatureType sft = null;
+            try {
+                sft = wfsDatastore.getSchema(parameters.getTypeName());
+                resolvedTypeName = parameters.getTypeName();
+            } catch (IOException e) {
+                String[] typeNames = wfsDatastore.getTypeNames();
+                String typeNamesList = Arrays.stream(typeNames).collect(Collectors.joining(", "));
+                logger.info(String.format(
+                    "Type '%s' not found in data store. Available types are %s. Trying to found a match ignoring namespace.",
+                    parameters.getTypeName(),
+                    typeNamesList
+                   ));
+                Optional<String> typeFound = Arrays.stream(typeNames)
+                    .filter(t -> t.endsWith(parameters.getTypeName())).findFirst();
+                if (typeFound.isPresent()) {
+                    resolvedTypeName = typeFound.get();
+                    logger.info(String.format(
+                        "Found a type '%s'.",
+                        resolvedTypeName
+                    ));
+                    sft = wfsDatastore.getSchema(resolvedTypeName);
+                } else {
+                    throw new NoSuchElementException(String.format(
+                        "No type found for '%s' (with or without namespace match).",
+                        parameters.getTypeName()
+                    ));
+                }
+            }
+
             List<AttributeDescriptor> attributesDesc = sft.getAttributeDescriptors();
 
             for (AttributeDescriptor desc : attributesDesc) {

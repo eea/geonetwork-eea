@@ -150,6 +150,12 @@
 
           //result.contents.Layer = result.contents.layers;
           result.Contents.operationsMetadata = result.OperationsMetadata;
+
+          var capUrlMatch = data.match(/<ServiceMetadataURL xlink:href="(.+)"/);
+          if (capUrlMatch) {
+            result.Contents.serviceMetadataURL = capUrlMatch[1];
+          }
+
           return result.Contents;
         };
 
@@ -446,8 +452,7 @@
             for (var j = 0; j < layerList.length; j ++) {
               var name = layerList[j];
               //non namespaced lowercase name
-              nameNoNamespace = name.split(':')[
-                  name.split(':').length - 1].toLowerCase();
+              nameNoNamespace = this.getNameWithoutNamespace(name).toLowerCase();
 
               capabilityLayers:
               for (var i = 0; i < layers.length; i++) {
@@ -463,8 +468,7 @@
                     capNameNoNamespace;
                 //non namespaced lowercase capabilities name
                 if (capName) {
-                  capNameNoNamespace = capName.split(':')[
-                      capName.split(':').length - 1].toLowerCase();
+                  capNameNoNamespace = this.getNameWithoutNamespace(capName).toLowerCase();
                 }
 
                 //either names match or non namespaced names
@@ -572,6 +576,17 @@
             else {
               return;
             }
+          },
+
+          /**
+           * If the name contains a namespace, like: ms:myLayer, will
+           * return the part after the first `:` character: 'myLayer'
+           * @param {string} name
+           * @return {string} name without namespace
+           */
+          getNameWithoutNamespace: function(name) {
+            var parts = name.split(':', 2);
+            return parts[parts.length - 1];
           }
         };
       }];
