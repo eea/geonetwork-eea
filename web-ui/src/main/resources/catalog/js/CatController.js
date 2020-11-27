@@ -118,17 +118,17 @@ goog.require('gn_alert');
                 // "order" : { "_key" : "asc" }
               }
             },
-            'thesaurus_geonetworkthesaurusexternalthemeeeatopics': {
+            'th_eea-topics.default': {
               'terms': {
-                'field': 'thesaurus_geonetworkthesaurusexternalthemeeeatopics',
+                'field': 'th_eea-topics.default',
                 'size': 15,
                 'exclude': 'http.*',
                 "order" : { "_key" : "asc" }
               }
             },
-            'cl_hierarchyLevel_text': {
+            'cl_hierarchyLevel.key': {
               'terms': {
-                'field': 'cl_hierarchyLevel_text',
+                'field': 'cl_hierarchyLevel.key',
                 'size': 10
               }
             }
@@ -162,12 +162,12 @@ goog.require('gn_alert');
             // "boost": "5",
             // "functions": [
             //   {
-            //     "filter": { "match": { "cl_spatialRepresentationType": "vector" } },
+            //     "filter": { "match": { "cl_spatialRepresentationType.key": "vector" } },
             //     "random_score": {},
             //     "weight": 23
             //   },
             //   {
-            //     "filter": { "match": { "cl_spatialRepresentationType": "grid" } },
+            //     "filter": { "match": { "cl_spatialRepresentationType.key": "grid" } },
             //     "weight": 42
             //   }
             // ],
@@ -190,7 +190,7 @@ goog.require('gn_alert');
               },
               // Boost down obsolete records
               {
-                "filter": { "match": { "cl_status": "obsolete" } },
+                "filter": { "match": { "cl_status.key": "obsolete" } },
                 "weight": 0.3
               },
               {
@@ -261,9 +261,9 @@ goog.require('gn_alert');
           // TODOES
           'facetTabField': '',
           'facetConfig': {
-            'cl_hierarchyLevel_text': {
+            'cl_hierarchyLevel.key': {
               'terms': {
-                'field': 'cl_hierarchyLevel_text'
+                'field': 'cl_hierarchyLevel.key'
               },
               'aggs': {
                 'format': {
@@ -306,11 +306,11 @@ goog.require('gn_alert');
                 "order" : { "_key" : "asc" }
               }
             },
-            'tag': {
+            'tag.default': {
               'userHasRole': 'isAdministratorOrMore',
               'collapsed': true,
               'terms': {
-                'field': 'tag',
+                'field': 'tag.default',
                 'include': '.*',
                 'size': 10
               }
@@ -330,29 +330,38 @@ goog.require('gn_alert');
                 'size': 15
               }
             },
-            'creationYearForResource': {
+            // "serviceType": {
+            //   'collapsed': true,
+            //   "terms": {
+            //     "field": "serviceType",
+            //     "size": 10
+            //   }
+            // },
+            "creationYearForResource": {
+              'collapsed': true,
+              "histogram": {
+                "field": "creationYearForResource",
+                "interval": 5,
+                "keyed" : true,
+                'min_doc_count': 1
+              }
+            },
+            'cl_spatialRepresentationType.default': {
+              'terms': {
+                'field': 'cl_spatialRepresentationType.default',
+                'size': 10
+              }
+            },
+            'cl_maintenanceAndUpdateFrequency.default': {
               'collapsed': true,
               'terms': {
-                'field': 'creationYearForResource',
-                'size': 10,
-                'order': {'_key': "desc"}
-              }
-            },
-            'cl_spatialRepresentationType': {
-              'terms': {
-                'field': 'cl_spatialRepresentationType',
+                'field': 'cl_maintenanceAndUpdateFrequency.default',
                 'size': 10
               }
             },
-            'cl_maintenanceAndUpdateFrequency_text': {
+            'cl_status.default': {
               'terms': {
-                'field': 'cl_maintenanceAndUpdateFrequency_text',
-                'size': 10
-              }
-            },
-            'cl_status_text': {
-              'terms': {
-                'field': 'cl_status_text',
+                'field': 'cl_status.default',
                 'size': 10
               }
             },
@@ -555,9 +564,9 @@ goog.require('gn_alert');
                 'size': 20
               }
             },
-            'cl_status_text': {
+            'cl_status.key': {
               'terms': {
-                'field': 'cl_status_text',
+                'field': 'cl_status.key',
                 'size': 15
               }
             },
@@ -1182,17 +1191,23 @@ goog.require('gn_alert');
       // health check for the index returns an error.
       $scope.showHealthIndexError = false;
 
-      function healthCheckStatus(data) {
+      function healthCheckStatus(r) {
+        var data = r.data, isCritical = r.config.url.indexOf('critical') !== -1;
         angular.forEach(data, function(o) {
           $scope.healthCheck[o.name] = (o.status === 'OK');
         });
 
-        $scope.showHealthIndexError = (!$scope.healthCheck) ||
-          ($scope.healthCheck && $scope.healthCheck.IndexHealthCheck == false);
+        if(isCritical) {
+          $scope.showHealthIndexError =
+            (!$scope.healthCheck) ||
+            ($scope.healthCheck
+              && $scope.healthCheck.IndexHealthCheck == false);
+        }
       };
+      $http.get('../../criticalhealthcheck')
+        .then(healthCheckStatus, healthCheckStatus);
       $http.get('../../warninghealthcheck')
-        .success(healthCheckStatus)
-        .error(healthCheckStatus);
+        .then(healthCheckStatus, healthCheckStatus);
     }]);
 
 })();

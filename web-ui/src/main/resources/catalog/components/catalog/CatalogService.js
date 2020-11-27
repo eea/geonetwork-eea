@@ -550,7 +550,8 @@
    * json output of the search service. It also provides some functions
    * on the metadata.
    */
-  module.factory('Metadata', ['gnLangs', function(gnLangs) {
+  module.factory('Metadata', ['gnLangs', '$translate',
+    function(gnLangs, $translate) {
     function Metadata(k) {
       // Move _source properties to the root.
       var source = k._source;
@@ -566,11 +567,13 @@
         record.geom = [record.geom];
       }
 
-      // Multilingual mode: object
+      // Multilingual fields
       $.each(this, function(key, value) {
         var fieldName = key;
-        if (key.endsWith('Object')) {
-          record[fieldName.slice(0, -6)] = record.translate(fieldName);
+        // Object fields and codelist are storing translations.
+        // Create a field with the UI translation or fallback to default.
+        if (key.endsWith('Object') || key.indexOf('cl_') === 0) {
+          record.translate(fieldName);
         }
       });
 
@@ -582,26 +585,40 @@
 
 
     Metadata.prototype = {
+      // For codelist, default property is replaced
+      // For Object, a new field is created without the Object suffix.
       translate: function(fieldName) {
-        var fieldValues = this[fieldName];
+        var fieldValues = this[fieldName],
+          isCodelist = fieldName.indexOf('cl_') === 0;
+
+        // In object lang prop, in translations, default prop.
+        function getCodelistTranslation(o) {
+          if (o['lang' + gnLangs.current]) {
+            return o['lang' + gnLangs.current];
+          } else if ($translate.instant(o.key) != o.key) {
+            return $translate.instant(o.key);
+          }
+          return o.default;
+        }
 
         if (angular.isArray(fieldValues)) {
           var translatedValues = [];
-          angular.forEach(fieldValues, function(v, i) {
-            translation = fieldValues[i]['lang' + gnLangs.current]
-            if (translation) {
-              translatedValues.push(translation);
-            } else if (fieldValues[i].default) {
-              translatedValues.push(fieldValues[i].default);
+          angular.forEach(fieldValues, function(o) {
+            if (isCodelist) {
+              o.default = getCodelistTranslation(o);
+            } else {
+              translatedValues.push(o['lang' + gnLangs.current] || o.default);
             }
           });
-          return translatedValues;
+          if (!isCodelist) {
+            this[fieldName.slice(0, -6)] = translatedValues;
+          }
         } else if (angular.isObject(fieldValues)) {
-          translation = fieldValues['lang' + gnLangs.current]
-          if (translation) {
-            return translation;
-          } else if (this[fieldName].default) {
-            return this[fieldName].default;
+          if(isCodelist) {
+            o.default = getCodelistTranslation(fieldValues)
+          } else {
+            this[fieldName.slice(0, -6)] =
+              fieldValues['lang' + gnLangs.current] || fieldValues.default;
           }
         } else {
           console.warn(fieldName + ' is not defined in this record.');
@@ -675,15 +692,16 @@
           groupId = types[0];
           types.splice(0, 1);
         }
-        if (this.linksCache[key] && !groupId) {
+        if (this.linksCache[key] && groupId === undefined) {
           return this.linksCache[key];
         }
         angular.forEach(this.link, function(link) {
           if (types.length > 0) {
             types.forEach(function(type) {
               if (type.substr(0, 1) == '#') {
-                if (link.protocol == type.substr(1, type.length - 1) &&
-                    (!groupId || groupId == link.group)) {
+                var protocolMatch = link.protocol == type.substr(1, type.length - 1);
+                if ((protocolMatch && groupId === undefined) ||
+                    (protocolMatch && groupId != undefined && groupId == link.group)) {
                   ret.push(link);
                 }
               }
