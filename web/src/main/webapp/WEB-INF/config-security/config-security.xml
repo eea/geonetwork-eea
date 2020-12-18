@@ -33,6 +33,7 @@
   <import resource="config-security-core.xml"/>
   <import resource="config-security-mapping.xml"/>
   <import resource="config-security-ldap.xml"/>
+  <!--<import resource="config-security-keycloak.xml"/> -->
   <!--<import resource="config-security-ldap-recursive.xml"/>-->
   <!-- <import resource="config-security-ecas.xml"/> -->
   <!--<import resource="config-security-cas.xml"/>-->

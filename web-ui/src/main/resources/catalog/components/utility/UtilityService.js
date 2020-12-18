@@ -515,7 +515,8 @@
         function isDateGmlFormat(date) {
           return date.match('[Zz]$') !== null;
         }
-        var settingAllowToUseFromNow = gnGlobalSettings.gnCfg.mods.global.humanizeDates;
+        var settingAllowToUseFromNow = gnGlobalSettings.gnCfg.mods.global.humanizeDates,
+            timezone = gnGlobalSettings.gnCfg.mods.global.timezone;
         var parsedDate = null;
         if (isDateGmlFormat(date)) {
           parsedDate = moment(date, 'YYYY-MM-DDtHH-mm-SSSZ').utcOffset('+01:00');
@@ -525,6 +526,10 @@
           parsedDate = moment(date);
         }
         if (parsedDate.isValid()) {
+          if (!! timezone) {
+            parsedDate = parsedDate.tz(
+              timezone === 'Browser' ? moment.tz.guess() : timezone);
+          }
           var fromNow = parsedDate.fromNow();
           if (settingAllowToUseFromNow && contextAllowToUseFromNow) {
             return {value: fromNow, title: format ? parsedDate.format(format) : parsedDate.toString()};
