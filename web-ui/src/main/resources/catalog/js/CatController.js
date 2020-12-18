@@ -196,7 +196,7 @@ goog.require('gn_alert');
                 "weight": 0.3
               },
               {
-                "filter": { "match": { "codelist_status": "superseded" } },
+                "filter": { "match": { "cl_status.key": "superseded" } },
                 "weight": 0.3
               },
               // {
