@@ -284,45 +284,56 @@ goog.require('gn_alert');
               }
             },
             'th_gemet_tree': {
-              'collapsed': true,
               'terms': {
                 'field': 'thesaurus_geonetworkthesaurusexternalthemegemet_tree',
                 'size': 500,
                 "order" : { "_key" : "asc" },
                 "include": "[^\^]+^?[^\^]+"
                 // Limit to 2 levels
+              },
+              'meta': {
+                'collapsed': true
               }
             },
             'inspireTheme': {
-              'collapsed': true,
               'terms': {
                 'field': 'inspireTheme',
                 'size': 20
+              },
+              'meta': {
+                'collapsed': true
               }
             },
             'th_httpinspireeceuropaeumetadatacodelistPriorityDatasetPriorityDataset_tree': {
-              'collapsed': true,
               'terms': {
                 'field': 'th_httpinspireeceuropaeumetadatacodelistPriorityDatasetPriorityDataset_tree',
                 'size': 100,
                 "order" : { "_key" : "asc" }
+              },
+              'meta': {
+                'collapsed': true
               }
             },
             'tag.default': {
-              'userHasRole': 'isAdministratorOrMore',
-              'collapsed': true,
               'terms': {
                 'field': 'tag.default',
                 'include': '.*',
                 'size': 10
+              },
+              'meta': {
+                'userHasRole': 'isAdministratorOrMore',
+                'collapsed': true,
+                'caseInsensitiveInclude': true
               }
             },
             'cat': {
-              'userHasRole': 'isAdministratorOrMore',
-              'collapsed': true,
               'terms': {
                 'field': 'cat.keyword',
                 'size': 10
+              },
+              'meta': {
+                'userHasRole': 'isAdministratorOrMore',
+                'collapsed': true
               }
             },
             'OrgForResource': {
@@ -330,6 +341,9 @@ goog.require('gn_alert');
                 'field': 'OrgForResource',
                 'include': '.*',
                 'size': 15
+              },
+              'meta': {
+                'caseInsensitiveInclude': true
               }
             },
             // "serviceType": {
@@ -340,12 +354,14 @@ goog.require('gn_alert');
             //   }
             // },
             "creationYearForResource": {
-              'collapsed': true,
               "histogram": {
                 "field": "creationYearForResource",
                 "interval": 5,
                 "keyed" : true,
                 'min_doc_count': 1
+              },
+              'meta': {
+                'collapsed': true
               }
             },
             'cl_spatialRepresentationType.default': {
@@ -355,10 +371,12 @@ goog.require('gn_alert');
               }
             },
             'cl_maintenanceAndUpdateFrequency.default': {
-              'collapsed': true,
               'terms': {
                 'field': 'cl_maintenanceAndUpdateFrequency.default',
                 'size': 10
+              },
+              'meta': {
+                'collapsed': true
               }
             },
             'cl_status.default': {
@@ -375,21 +393,25 @@ goog.require('gn_alert');
             //   }
             // },
             "resolutionScaleDenominator": {
-              'collapsed': true,
               "histogram": {
                 "field": "resolutionScaleDenominator",
                 "interval": 100000,
                 "keyed" : true,
                 "min_doc_count": 1
+              },
+              'meta': {
+                'collapsed': true
               }
             },
             'thesaurus_geonetworkthesaurusexternalplaceregions_tree': {
-              'collapsed': true,
               'terms': {
                 'field': 'thesaurus_geonetworkthesaurusexternalplaceregions_tree',
                 'size': 400,
                 "order" : { "_key" : "asc" },
                 "include": "Europe.*|EEA.*|EU.*"
+              },
+              'meta': {
+                'collapsed': true
               }
             }
           },
