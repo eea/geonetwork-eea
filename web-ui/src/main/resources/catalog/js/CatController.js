@@ -347,7 +347,6 @@ goog.require('gn_alert');
               }
             },
             // "serviceType": {
-            //   'collapsed': true,
             //   "terms": {
             //     "field": "serviceType",
             //     "size": 10
