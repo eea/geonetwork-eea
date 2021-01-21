@@ -226,6 +226,7 @@
             scope.lang = scope.$parent.lang;
             scope.readonly = false;
             scope.numberOfOverviews = parseInt(attrs['numberOfOverviews']) || Infinity;
+            scope.onlinesrcService = gnOnlinesrc;
 
             // Load thumbnail list.
             var loadRelations = function() {
@@ -1074,7 +1075,7 @@
                           });
                     }
                   } else if (url.indexOf('http') === 0) {
-                    return $http.get(url).then(function(response) {
+                    return $http.get(scope.onlinesrcService.getApprovedUrl(url)).then(function(response) {
                       scope.isUrlOk = response.status === 200;
                     },
                     function(response) {
@@ -1693,10 +1694,20 @@
                     scope.selection = [];
                   });
 
+                  // Clear the search params and input
+                  scope.clearSearch = function() {
+                    $('#siblingdd input').val('');
+                    scope.$broadcast('resetSearch');
+                  };
+
                   // Append * for like search
                   scope.updateParams = function() {
-                    scope.searchObj.params.any =
-                        '*' + scope.searchObj.any + '*';
+                    if (scope.searchObj.any == '') {
+                      scope.$broadcast('resetSearch');
+                    } else {
+                      scope.searchObj.params.any =
+                      '*' + scope.searchObj.any + '*';
+                    }
                   };
 
                   // Based on initiative type and association type
