@@ -145,7 +145,7 @@
                 select="if ($service = 'catalog.search' and
                             (util:getUiConfigurationJsonProperty(/root/request/ui, 'mods.search.isVegaEnabled') = 'true' or /root/request/isVegaEnabled))
                         then true()
-                        else false()"/>
+                        else true()"/>
 
   <xsl:variable name="isSocialbarEnabled"
                 select="if (util:getUiConfigurationJsonProperty(/root/request/ui, 'mods.recordview.isSocialbarEnabled') = 'true')
