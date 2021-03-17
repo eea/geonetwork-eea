@@ -43,34 +43,35 @@
       </span>
       <meta itemprop="url" content="{$nodeUrl}search"></meta>
 
+
       <div class="container-fluid gn-background">
         <div style="text-align:center;">
-          <div class="gn-md-thumbnail">
+          <div class="">
             <a href="{$nodeUrl}">
               <img class="gn-portal-main-logo"
                    src="https://sdi.eea.europa.eu/img/EEA-logo-EN-compact-white.png"/>
-<!--                   src="../../images/logos/{$env//system/site/siteId}.png"/>-->
+              <!--                   src="../../images/logos/{$env//system/site/siteId}.png"/>-->
             </a>
           </div>
 
           <a href="{$nodeUrl}">
             <h1>
               SDI - geospatial data catalogue
-<!--              <xsl:value-of select="/root/gui/systemConfig/system/site/name"/>-->
+              <!--              <xsl:value-of select="/root/gui/systemConfig/system/site/name"/>-->
             </h1>
             <h2>
               SDI Thematic catalogues
-<!--              <xsl:value-of select="/root/gui/systemConfig/system/site/organization"/>-->
+              <!--              <xsl:value-of select="/root/gui/systemConfig/system/site/organization"/>-->
             </h2>
           </a>
         </div>
       </div>
     </div>
     <div class="container gn-info-list-blocks">
-      <ul class="row list-group gn-info-list">
+      <ul class="row gn-info-list" style="margin: 10px;">
         <xsl:for-each select=".//sources/record[type = 'subportal']">
           <xsl:sort select="label/*[name() = $lang]"/>
-          <li class="list-group-item panel panel-default gn-card">
+          <li style="list-style: none; width: 25%; float: left;">
             <xsl:variable name="portalInfo"
                           select="if (label/*[name() = $lang] != '')
                                               then label/*[name() = $lang]
@@ -83,39 +84,30 @@
                           select="if (contains($portalInfo, $infoSeparator))
                                   then substring-after($portalInfo, $infoSeparator)
                                   else ''"/>
-            <div class="panel-heading gn-card-heading">
-              <div class="gn-md-title">
-                <a href="../../{uuid}"
-                   title="{$portalInfo}">
+            <a href="../../{uuid}"
+               title="{$portalInfo}">
+              <section class="resultcard clearfix hasThumbnail">
+                <div class="gn-md-thumbnail">
+                  <div class="gn-img-thumbnail"
+                       style="min-height: 140px; background-image: url(../../images/harvesting/{if (logo != '') then logo else 'blank.png'})">
+                  </div>
+                </div>
+                <div class="title">
                   <h1>
                     <xsl:value-of select="$portalTitle"/>
                   </h1>
-                </a>
-              </div>
-            </div>
-            <div class="panel-body gn-card-body">
-              <div class="gn-md-contents">
-                <div class="gn-md-thumbnail">
-                  <div class="gn-img-thumbnail"
-                       style="background-image: url(../../images/harvesting/{if (logo != '') then logo else 'blank.png'})">
-                  </div>
+                  <p>
+                    <xsl:value-of select="$portalDescription"/>
+                  </p>
                 </div>
-                <div class="gn-md-details">
-                  <div class="gn-md-abstract">
-                    <p>
-                      <xsl:value-of select="$portalDescription"/>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <!-- /.gn-md-contents -->
-            </div>
-            <!-- /.gn-card-body -->
+              </section>
+            </a>
           </li>
         </xsl:for-each>
       </ul>
       <br/>
     </div>
+
     <div class="row">
       <a class="btn btn-link"
          href="https://sdi.eea.europa.eu/">SDI home page</a>
