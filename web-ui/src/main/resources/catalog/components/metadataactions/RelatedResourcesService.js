@@ -325,6 +325,11 @@
               label: 'addToEEAMap',
               action: addToEEAMap
             },
+            'EEADISCODATA' : {
+              iconClass: 'fa-database',
+              label: 'discodata',
+              action: openLink
+            },
             'LINKDOWNLOAD-ZIP' : {
               iconClass: 'fa-file-zip-o',
               label: 'download',
@@ -396,7 +401,11 @@
             resource.locDescription = $filter('gnLocalized')(resource.description);
             resource.locUrl = $filter('gnLocalized')(resource.url);
             var protocolOrType = resource.protocol + (resource.serviceType || '');
-            // Cas for links
+
+            if (resource.locUrl.indexOf('discodata.eea') !== -1) {
+              return 'EEADISCODATA';
+            }
+
             if (angular.isString(protocolOrType)) {
               if (protocolOrType.match(/wms/i)) {
                 if (this.isLayerProtocol(resource)) {
