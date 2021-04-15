@@ -755,8 +755,8 @@
           });
       });
   }]);
-  
-  
+
+
 
   module.service('gnTreeFromSlash', [function() {
     var findChild = function(node, name) {
@@ -810,5 +810,11 @@
       });
       return tree;
     };
+  }]);
+
+  module.filter('sanitizeHtmlFilter', ['$filter', '$sanitize', function($filter, $sanitize) {
+    return function(input) {
+      return $sanitize(input);
+    }
   }]);
 })();
