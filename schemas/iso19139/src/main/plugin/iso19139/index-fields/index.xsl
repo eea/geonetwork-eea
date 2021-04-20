@@ -497,6 +497,26 @@
           </tag>
         </xsl:if>
 
+        <xsl:variable name="identification"
+                      select="."/>
+
+        <xsl:for-each select="('IDP_topics', 'IDP_DPSIR', 'IDP_shortname')">
+          <xsl:variable name="idpKeywords"
+                        select="$identification//gmd:keyword[starts-with(*/normalize-space(), current())]"/>
+
+          <xsl:if test="count($idpKeywords) > 0">
+            <xsl:variable name="type"
+                          select="current()"/>
+            <xsl:element name="{lower-case($type)}">
+              <xsl:attribute name="type" select="'object'"/>
+              [<xsl:for-each select="$idpKeywords">
+              "<xsl:value-of select="gn-fn-index:json-escape(replace(replace(gco:CharacterString, concat($type, '_'), ''), '_', ' '))"/>"
+              <xsl:if test="position() != last()">,</xsl:if>
+            </xsl:for-each>]
+            </xsl:element>
+          </xsl:if>
+        </xsl:for-each>
+
         <xsl:variable name="isOpenData">
           <xsl:for-each select="$keywords/(
                                 gco:CharacterString|
