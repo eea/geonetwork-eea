@@ -509,7 +509,10 @@
 
   <!-- View configuration -->
   <views>
-    <view name="eea" upAndDownControlHidden="true" class="gn-indent-colored gn-label-above-input">
+    <view name="eea"
+          upAndDownControlHidden="true"
+          hideTimeInCalendar="true"
+          class="gn-indent-colored gn-label-above-input">
       <thesaurusList>
         <thesaurus key="external.theme.httpinspireeceuropaeutheme-theme"
                    fieldset="false"
@@ -1616,7 +1619,8 @@
     <!--
     Customize the editor layout by adding a class attribute
     <view name="default" class="gn-indent-bluescale gn-label-above-input">-->
-    <view name="default">
+    <view name="default"
+          hideTimeInCalendar="true">
       <sidePanel>
         <!-- General online source manager
         <directive data-gn-onlinesrc-list=""/>
