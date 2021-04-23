@@ -12,7 +12,7 @@
     <ows-context:Layer name="{type=arcgis,name=0,1,2,3,4}" group="Background layers" hidden="false" opacity="1">
       <ows-context:Server service="urn:ogc:serviceType:WMS">
         <ows-context:OnlineResource
-          xlink:href="https://bio.discomap.eea.europa.eu/arcgis/rest/services/Internal/Basemap_EEA38_WM/MapServer"/>
+          xlink:href="https://bio.discomap.eea.europa.eu/arcgis/rest/services/Internal/Basemap_EEA38_World_WM/MapServer"/>
       </ows-context:Server>
       <ows:Title>EEA basemap / EEA38</ows:Title>
     </ows-context:Layer>
