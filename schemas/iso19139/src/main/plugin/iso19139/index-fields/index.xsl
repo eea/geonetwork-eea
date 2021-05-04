@@ -502,7 +502,7 @@
 
         <xsl:for-each select="('IDP_topics', 'IDP_DPSIR', 'IDP_shortname')">
           <xsl:variable name="idpKeywords"
-                        select="$identification//gmd:keyword[starts-with(*/normalize-space(), current())]"/>
+                        select="$identification//gmd:keyword[starts-with(*/gco:CharacterString/normalize-space(), current())]"/>
 
           <xsl:if test="count($idpKeywords) > 0">
             <xsl:variable name="type"
