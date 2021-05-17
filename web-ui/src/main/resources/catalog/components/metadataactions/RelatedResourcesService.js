@@ -404,6 +404,8 @@
 
             if (resource.locUrl.indexOf('discodata.eea') !== -1) {
               return 'EEADISCODATA';
+            } else if (resource.locUrl.indexOf('sdi.eea.europa.eu/data') !== -1) {
+              return 'LINKDOWNLOAD';
             }
 
             if (angular.isString(protocolOrType)) {
