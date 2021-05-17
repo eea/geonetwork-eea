@@ -416,10 +416,47 @@
       <xsl:element name="{$thesaurusField}">
         <xsl:attribute name="type" select="'object'"/>
         [<xsl:for-each select="$keywords">
-        <xsl:value-of select="gn-fn-index:add-multilingual-field('keyword', ., $allLanguages)/text()"/>
+        <xsl:variable name="uri"
+                      select="util:getKeywordUri((*/text())[1], $thesaurusId, $mainLanguage)"/>
+
+        <xsl:variable name="k">
+          <xsl:choose>
+            <xsl:when test="$uri != ''">
+              <!-- Add an anchor -->
+              <xsl:copy>
+                <gmx:Anchor xlink:href="{$uri}"></gmx:Anchor>
+                <xsl:copy-of select="*"/>
+              </xsl:copy>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:copy-of select="."/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+
+        <xsl:value-of select="gn-fn-index:add-multilingual-field('keyword', $k, $allLanguages)/text()"/>
         <xsl:if test="position() != last()">,</xsl:if>
       </xsl:for-each>]
       </xsl:element>
+
+
+      <!-- If keyword is related to a thesaurus available
+      in current catalogue, checked the keyword exists in the thesaurus.
+      If not, report an error in indexingErrorMsg field.
+
+      This case may trigger editor warning message when a keyword is not
+       found in the thesaurus. Try to anticipate this and advertise those
+       records in the admin.
+
+       TODO: Thesaurus id must be defined by a check in thesaurus manager based on multilingual titles.-->
+      <xsl:for-each select="$keywords">
+        <xsl:if test="$thesaurusId != ''
+                and util:getKeywordUri((*/text())[1], $thesaurusId, $mainLanguage) = ''">
+          <indexingErrorMsg>Warning / Keyword <xsl:value-of select="(*/text())[1]"/> not found in <xsl:value-of select="$thesaurusId"/>.</indexingErrorMsg>
+          <indexingError>true</indexingError>
+        </xsl:if>
+      </xsl:for-each>
+
 
       <xsl:variable name="thesaurusTree" as="node()">
         <values>
@@ -436,7 +473,6 @@
                 </xsl:if>
               </xsl:if>
             </xsl:variable>
-
             <xsl:for-each select="$nodes">
               <xsl:variable name="keywordTree" as="node()*">
                 <xsl:call-template name="get-keyword-tree-values">
@@ -460,6 +496,7 @@
           </xsl:for-each>
         </values>
       </xsl:variable>
+
 
       <xsl:if test="count($thesaurusTree/*) > 0">
         <xsl:element name="{$thesaurusField}_tree">

@@ -240,6 +240,8 @@
              scope.isInitialized = false;
              scope.elementRefBackup = scope.elementRef;
              scope.invalidKeywordMatch = false;
+             scope.invalidKeywords = [];
+             scope.foundKeywords = [];
              scope.selected = [];
              scope.initialKeywords = [];
              if (scope.keywords) {
@@ -270,7 +272,7 @@
              //examples;
              //hnap:{"eng":"#eng","fre":"#fra"}
              //iso19139:{"eng":"#EN","fre":"#FR","ger":"#DE","chi":"#ZH","ara":"#AR","spa":"#ES","rus":"#RU"}
-             scope.langConversion=JSON.parse(scope.lang); //dictionary, as above
+             scope.langConversion = JSON.parse(scope.lang); //dictionary, as above
 
              // ["eng","fre"]   OR ["eng","fre","ger","chi","ara","spa", "rus"]
              scope.baseLangs = _.keys(scope.langConversion);
@@ -297,7 +299,20 @@
                scope.selected = [];
                scope.elementRef = scope.elementRefBackup;
                scope.invalidKeywordMatch = false;
+               scope.invalidKeywords = [];
+               scope.foundKeywords = [];
                checkState();
+             };
+             scope.resetInvalidKeywords = function() {
+               for (i = 0; i < scope.invalidKeywords.length; i++) {
+                 var index = scope.initialKeywords.indexOf(scope.invalidKeywords[i]);
+                 if (index !== -1) {
+                   scope.initialKeywords.splice(index, 1);
+                 }
+               }
+               scope.isInitialized = false;
+               scope.resetKeywords();
+               init();
              };
 
 
@@ -328,8 +343,13 @@
                    .then(function(listOfKeywords) {
                      counter++;
 
-                     listOfKeywords[0] &&
-                     scope.selected.push(listOfKeywords[0]);
+                     if (listOfKeywords[0]) {
+                       scope.selected.push(listOfKeywords[0]);
+                       scope.foundKeywords.push(keyword);
+                     } else {
+                       scope.invalidKeywords.push(keyword);
+                     }
+
                      // Init done when all keywords are selected
                      if (counter === scope.initialKeywords.length) {
                        scope.isInitialized = true;
