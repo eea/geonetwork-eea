@@ -278,7 +278,7 @@
       Exclude all thesaurus already used in the metadata:
       -->
       <directiveAttributes data-transformation="to-iso19139-keyword"
-                           data-include="xpath::string-join(gmd:MD_Metadata/gmd:identificationInfo
+                           data-include="xpath::string-join(*
                                           //gmd:thesaurusName/*/gmd:identifier/*/
                                             gmd:code/gmx:Anchor/
                                               concat('-', substring-after(text()[. != ''], 'geonetwork.thesaurus.')), ',')"/>
