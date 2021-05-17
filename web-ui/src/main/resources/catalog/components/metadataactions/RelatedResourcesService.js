@@ -310,6 +310,11 @@
               label: 'openRecord',
               action: openMd
             },
+            'LINKDOWNLOAD-EEA' : {
+              iconClass: 'fa-download',
+              label: 'download',
+              action: openLink
+            },
             'LINKDOWNLOAD' : {
               iconClass: 'fa-download',
               label: 'download',
@@ -405,7 +410,7 @@
             if (resource.locUrl.indexOf('discodata.eea') !== -1) {
               return 'EEADISCODATA';
             } else if (resource.locUrl.indexOf('sdi.eea.europa.eu/data') !== -1) {
-              return 'LINKDOWNLOAD';
+              return 'LINKDOWNLOAD-EEA';
             }
 
             if (angular.isString(protocolOrType)) {
