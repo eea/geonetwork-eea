@@ -456,7 +456,7 @@
           <indexingError>true</indexingError>
         </xsl:if>
       </xsl:for-each>
-
+      
 
       <xsl:variable name="thesaurusTree" as="node()">
         <values>
