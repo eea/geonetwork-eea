@@ -1054,6 +1054,14 @@
           </format>
         </xsl:for-each>
 
+        <!-- Indexing distributor contact -->
+        <xsl:for-each select="gmd:distributor/*[gmd:distributorContact]">
+          <xsl:apply-templates mode="index-contact"
+                               select="gmd:distributorContact">
+            <xsl:with-param name="fieldSuffix" select="'ForDistribution'"/>
+          </xsl:apply-templates>
+        </xsl:for-each>
+
         <xsl:for-each select="gmd:transferOptions/*/
                                 gmd:onLine/*[gmd:linkage/gmd:URL != '']">
 

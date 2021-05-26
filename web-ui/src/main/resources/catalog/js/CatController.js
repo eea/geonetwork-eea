@@ -307,9 +307,9 @@ goog.require('gn_alert');
                 'collapsed': true
               }
             },
-            'th_httpinspireeceuropaeumetadatacodelistPriorityDatasetPriorityDataset_tree': {
+            'th_httpinspireeceuropaeumetadatacodelistPriorityDataset-PriorityDataset_tree': {
               'terms': {
-                'field': 'th_httpinspireeceuropaeumetadatacodelistPriorityDatasetPriorityDataset_tree',
+                'field': 'th_httpinspireeceuropaeumetadatacodelistPriorityDataset-PriorityDataset_tree',
                 'size': 100,
                 "order" : { "_key" : "asc" }
               },
