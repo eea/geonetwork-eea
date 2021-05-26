@@ -9,14 +9,14 @@
     </ows:BoundingBox>
   </ows-context:General>
   <ows-context:ResourceList>
-   <ows-context:Layer name="{type=arcgis,name=0,1,2,3,4}" group="Background layers" hidden="false" opacity="1">
+    <ows-context:Layer name="{type=arcgis,name=0,1,2,3,4}" group="Background layers" hidden="false" opacity="1">
       <ows-context:Server service="urn:ogc:serviceType:WMS">
         <ows-context:OnlineResource
           xlink:href="https://bio.discomap.eea.europa.eu/arcgis/rest/services/Internal/Basemap_EEA38_World_WM/MapServer"/>
       </ows-context:Server>
       <ows:Title>EEA basemap / EEA38</ows:Title>
     </ows-context:Layer>
-    <ows-context:Layer name="1,3,0,2,5,4" group="Background layers" hidden="true" opacity="1">
+    <ows-context:Layer name="2,5,4,1,3,0" group="Background layers" hidden="true" opacity="1">
       <ows-context:Server service="urn:ogc:serviceType:WMS" version="1.3.0">
         <ows-context:OnlineResource
           xlink:href="https://bio.discomap.eea.europa.eu/arcgis/services/Internal/Basemap_EU_27_WM_Cached/MapServer/WmsServer"/>
