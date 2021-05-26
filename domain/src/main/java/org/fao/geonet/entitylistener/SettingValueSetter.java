@@ -59,7 +59,12 @@ public class SettingValueSetter implements GeonetworkEntityListener<Setting> {
 
         } else if ((type == PersistentEventType.PostLoad) ||  (type == PersistentEventType.PostUpdate)) {
             if (entity.isEncrypted() && StringUtils.isNotEmpty(entity.getStoredValue())) {
-                entity.setValue(this.encryptor.decrypt(entity.getStoredValue()));
+                try {
+                    entity.setValue(this.encryptor.decrypt(entity.getStoredValue()));
+                } catch (Exception e) {
+                    // Failed to decrypt value
+                    e.printStackTrace();
+                }
             } else {
                 entity.setValue(entity.getStoredValue());
             }
