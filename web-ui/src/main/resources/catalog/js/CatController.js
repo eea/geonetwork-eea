@@ -409,6 +409,9 @@ goog.require('gn_alert');
               "terms": {
                 "field": "resolutionDistance",
                 "include": ".* (m|km)"
+              },
+              'meta': {
+                'collapsed': true
               }
             },
             'thesaurus_geonetworkthesaurusexternalplaceregions_tree': {
