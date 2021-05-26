@@ -405,6 +405,12 @@ goog.require('gn_alert');
                 'collapsed': true
               }
             },
+            "resolutionDistance": {
+              "terms": {
+                "field": "resolutionDistance",
+                "include": ".* (m|km)"
+              }
+            },
             'thesaurus_geonetworkthesaurusexternalplaceregions_tree': {
               'terms': {
                 'field': 'thesaurus_geonetworkthesaurusexternalplaceregions_tree',
