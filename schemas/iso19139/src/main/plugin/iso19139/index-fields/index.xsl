@@ -336,11 +336,35 @@
           </xsl:if>
 
           <xsl:for-each select="gmd:identifier/*">
+            <xsl:variable name="code"
+                          select="gmd:code/(gco:CharacterString|gmx:Anchor)"/>
             <resourceIdentifier type="object">{
-              "code": "<xsl:value-of select="gmd:code/(gco:CharacterString|gmx:Anchor)"/>",
+              "code": "<xsl:value-of select="$code"/>",
               "codeSpace": "<xsl:value-of select="gmd:codeSpace/(gco:CharacterString|gmx:Anchor)"/>",
               "link": "<xsl:value-of select="gmd:code/gmx:Anchor/@xlink:href"/>"
               }</resourceIdentifier>
+
+            <xsl:variable name="resourceIdentifierPattern"
+                          select="'([A-Za-z0-9\-]+)_?'"/>
+            <xsl:if test="$code != ''">
+              <xsl:variable name="levels">
+                <xsl:analyze-string select="$code/text()"
+                                    regex="{$resourceIdentifierPattern}">
+                  <xsl:matching-substring>
+                    <level><xsl:value-of select="regex-group(1)" /></level>
+                  </xsl:matching-substring>
+                </xsl:analyze-string>
+              </xsl:variable>
+
+              <xsl:if test="count($levels/*) > 0">
+                <resourceIdentifier_tree>
+                  <xsl:value-of select="string-join($levels/*/text(), '/')"/>
+                </resourceIdentifier_tree>
+                <shortResourceIdentifier_tree>
+                  <xsl:value-of select="string-join($levels/*[position() = (1, 6, 8, 9)]/text(), '/')"/>
+                </shortResourceIdentifier_tree>
+              </xsl:if>
+            </xsl:if>
           </xsl:for-each>
 
           <xsl:for-each select="gmd:edition/*">
