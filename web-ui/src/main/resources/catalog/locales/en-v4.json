@@ -75,6 +75,8 @@
   "facet-resolutionDistance": "Resolutions",
   "facet-cl_maintenanceAndUpdateFrequency": "Update frequencies",
   "facet-cl_status": "Status",
+  "facet-shortResourceIdentifier_tree": "Resource identifier",
+  "facet-resourceIdentifier_tree": "Resource identifier",
   "facet-tag": "Keywords",
   "facet-resourceTemporalDateRange": "Temporal extent",
   "facet-serviceType": "Service type",
