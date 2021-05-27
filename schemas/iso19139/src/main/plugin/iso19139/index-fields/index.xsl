@@ -357,12 +357,21 @@
               </xsl:variable>
 
               <xsl:if test="count($levels/*) > 0">
-                <resourceIdentifier_tree>
-                  <xsl:value-of select="string-join($levels/*/text(), '/')"/>
-                </resourceIdentifier_tree>
-                <shortResourceIdentifier_tree>
-                  <xsl:value-of select="string-join($levels/*[position() = (1, 6, 8, 9)]/text(), '/')"/>
-                </shortResourceIdentifier_tree>
+                <xsl:for-each select="$levels/*">
+                  <resourceIdentifier_tree>
+                    <xsl:value-of select="string-join((self::*|preceding-sibling::*)/text(), '/')"/>
+                  </resourceIdentifier_tree>
+                </xsl:for-each>
+
+                <xsl:variable name="mainLevels">
+                  <xsl:copy-of select="$levels/*[position() = (1, 6, 8, 9)]"/>
+                </xsl:variable>
+
+                <xsl:for-each select="$mainLevels/*">
+                  <shortResourceIdentifier_tree>
+                    <xsl:value-of select="string-join((self::*|preceding-sibling::*)/text(), '/')"/>
+                  </shortResourceIdentifier_tree>
+                </xsl:for-each>
               </xsl:if>
             </xsl:if>
           </xsl:for-each>
