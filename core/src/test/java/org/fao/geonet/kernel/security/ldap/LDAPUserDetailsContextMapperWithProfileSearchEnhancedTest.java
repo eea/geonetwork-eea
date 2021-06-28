@@ -99,6 +99,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {
     "classpath:org/fao/geonet/kernel/security/ldap/LDAPUserDetailsContextMapperWithProfileSearchEnhancedTest-context.xml"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+@Ignore
 public class LDAPUserDetailsContextMapperWithProfileSearchEnhancedTest extends AbstractLdapTestUnit {
 
     @Autowired
