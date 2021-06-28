@@ -42,6 +42,13 @@
         <span class="gn-status gn-status-mdview">{{c.key | translate}}</span>
       </div>
     </div>
+
+    <!-- EEA specific -->
+    <div data-ng-if="(('group-' + mdView.current.record.groupOwner) | translate).indexOf('SDI_EDITING') === 0"
+         class="gn-status-stamp">
+      <span class="gn-status gn-status-mdview gn-status-obsolete">Draft</span>
+    </div>
+
     <!-- status message as watermark -->
     <div data-ng-repeat="c in mdView.current.record.cl_status track by $index">
         <div data-ng-show="showStatusWatermarkFor.indexOf(c.key) !== -1"

@@ -30,6 +30,12 @@
     <!-- /.gn-card-heading -->
 
     <div class="panel-body gn-card-body">
+
+      <div data-ng-if="(('group-' + md.groupOwner) | translate).indexOf('SDI_EDITING') === 0"
+           class="gn-status-stamp">
+        <span class="gn-status gn-status-mdview gn-status-obsolete">Draft</span>
+      </div>
+
       <div title="{{(md.resourceAbstract) | striptags}}"
            class="gn-md-contents"
            gn-metadata-open="md"
