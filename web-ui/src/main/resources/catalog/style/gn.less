@@ -130,6 +130,9 @@ div[gn-save-user-search] .panel {
 [ng-app="gn_editor"] {
   .gn-top-bar {
     position: fixed;
+    @media (max-width: @screen-xs-max) {
+      position: relative;
+    }
     top: 0;
     left: 0;
     right: 0;
@@ -142,6 +145,8 @@ div[gn-save-user-search] .panel {
     left: 20px;
     right: 20px;
     @media (max-width: @screen-xs-max) {
+      position: relative;
+      top: 0;
       left: 0;
       right: 0;
       border-left: 0;
@@ -149,7 +154,14 @@ div[gn-save-user-search] .panel {
     }
   }
   .gn-editor-board {
-    padding-top: 32px;
+    padding-top: 120px;
+    @media (max-width: @screen-xs-max) {
+      padding-top: 0;
+      .container-fluid, .col-sm-12 {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
   }
   .gn-editor-container, .gn-batch-editor, #gn-directory-container,
   #gn-new-metadata-container, #gn-import-container {

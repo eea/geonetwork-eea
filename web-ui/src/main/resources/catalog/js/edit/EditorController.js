@@ -566,6 +566,12 @@
       $scope.closeOnly = closeEditor;
 
       $scope.cancel = function(refreshForm) {
+
+        var doCancel = confirm($translate.instant('confirmCancelEdit'));
+
+        if (!doCancel) {
+          return false;
+        }
         $scope.savedStatus = gnCurrentEdit.savedStatus;
         if ($location.search()['justcreated']) {
           // Remove newly created record
