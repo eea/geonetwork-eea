@@ -243,6 +243,9 @@
                data-ng-class="{'fa-external-link': r.origin === 'remote'}"></i>
 
             {{::(config.getLabel(mainType, type)) | translate}}
+
+            <i class="fa fa-fw fa-lock"
+               data-ng-if="r.title.eng.contains('Eionet authentication')"/>
           </span>
           <br/>
           <span class="visible-lg-*"
