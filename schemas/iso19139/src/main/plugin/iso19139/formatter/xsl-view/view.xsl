@@ -361,7 +361,7 @@
        gco:Angle|gmx:FileName|
        gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|
        gco:LocalName|gmd:PT_FreeText|
-       gco:Date|gco:DateTime|*[gts:TM_PeriodDuration != '']"
+       gco:Date|gco:DateTime|gts:TM_PeriodDuration != '']"
                 priority="50">
     <xsl:param name="fieldName" select="''" as="xs:string"/>
 
