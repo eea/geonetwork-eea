@@ -2141,7 +2141,7 @@
 		<description>Connection protocol to be used</description>
 		<helper sort="false">
       <!-- EEA Custom protocols -->
-      <option value="EEA:FILEPATH">File path (https://sdi.eea.europa.eu/webdav/ + the level below gis_sdi)</option>
+<!--      <option value="EEA:FILEPATH">File path (https://sdi.eea.europa.eu/webdav/ + the level below gis_sdi)</option>-->
       <option value="EEA:FOLDERPATH">Folder path (https://sdi.eea.europa.eu/webdav/ + the level below gis_sdi)</option>
       <option value="EEA:DBPG">PostGIS database table</option>
       <option value="ESRI:REST">ESRI Rest service</option>
