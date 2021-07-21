@@ -36,6 +36,17 @@
 
   <metadata-contact>Metadata contact</metadata-contact>
   <eea>EEA</eea>
+  <eea-add-overview>Add overview</eea-add-overview>
+  <eea-add-overview-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+        This record has no overview, you can add the default overview URL using the button above.
+        </div>
+      </div>
+    </div>
+  </eea-add-overview-help>
   <eea-add-inspire-conformity>Add INSPIRE conformity</eea-add-inspire-conformity>
   <eea-identification>Identification of resource</eea-identification>
   <eea-hr>

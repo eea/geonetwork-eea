@@ -149,6 +149,12 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
     <xsl:copy-of select="."/>
   </xsl:template>
 
+  <xsl:template match="gmd:graphicOverview/*/gmd:fileName/*[text() = 'https://sdi.eea.europa.eu/public/catalogue-graphic-overview/REPLACEBYUUID.png']">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:value-of select="replace(., 'REPLACEBYUUID', /root/env/uuid)"/>
+    </xsl:copy>
+  </xsl:template>
 
   <!-- Flag element with nilReason = withheld automatically
   * All EEA protocols
