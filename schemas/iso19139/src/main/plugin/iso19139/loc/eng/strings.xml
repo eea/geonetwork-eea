@@ -52,6 +52,10 @@
   <eea-hr>
     <hr/>
   </eea-hr>
+  <eea-dq-add>Add lineage</eea-dq-add>
+  <eea-constraints-add>Add access and use constraints</eea-constraints-add>
+  <eea-accessConstraints-add>Add access constraints</eea-accessConstraints-add>
+  <eea-useConstraints-add>Add use constraints</eea-useConstraints-add>
   <eea-lineage>
     <div class="row">
       <div class="col-sm-2"/>

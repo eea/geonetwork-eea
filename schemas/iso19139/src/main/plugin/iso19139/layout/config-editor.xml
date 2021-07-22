@@ -548,7 +548,8 @@
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/>
           <text ref="eea-identifier-help"/>
 
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:edition"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:edition"
+                 or="edition" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*"/>
           <text ref="eea-edition-help"/>
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:date"
@@ -1039,7 +1040,8 @@
 
         <section name="eea-additional">
 
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceMaintenance"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceMaintenance"
+                 or="resourceMaintenance" in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
           <text ref="eea-maintenance-help"/>
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:language"/>
@@ -1076,7 +1078,37 @@
 
 
         <section name="eea-dq">
-          <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:lineage"/>
+          <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:lineage"
+                 or="lineage" in="/gmd:MD_Metadata/gmd:dataQualityInfo/*"/>
+          <action type="add" btnLabel="eea-dq-add"
+                  class="gn-required"
+                  if="count(gmd:MD_Metadata/gmd:dataQualityInfo) = 0"
+                  or="dataQualityInfo"
+                  in="/gmd:MD_Metadata">
+            <template>
+              <snippet>
+                <gmd:dataQualityInfo>
+                  <gmd:DQ_DataQuality>
+                    <gmd:scope>
+                      <gmd:DQ_Scope>
+                        <gmd:level>
+                          <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+                                            codeListValue="dataset"/>
+                        </gmd:level>
+                      </gmd:DQ_Scope>
+                    </gmd:scope>
+                    <gmd:lineage>
+                      <gmd:LI_Lineage>
+                        <gmd:statement gco:nilReason="missing">
+                          <gco:CharacterString/>
+                        </gmd:statement>
+                      </gmd:LI_Lineage>
+                    </gmd:lineage>
+                  </gmd:DQ_DataQuality>
+                </gmd:dataQualityInfo>
+              </snippet>
+            </template>
+          </action>
           <text ref="eea-lineage"/>
 
           <!-- Conformity -->
@@ -1195,26 +1227,78 @@
             </template>
           </action>
 
-          <text ref="eea-conformity-help"/>
+          <text if="count(gmd:MD_Metadata/gmd:dataQualityInfo) > 0"
+                ref="eea-conformity-help"/>
         </section>
 
 
         <section name="eea-accessConstraints">
-          <field xpath="/*/gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:accessConstraints"/>
+          <action type="add" btnLabel="eea-accessConstraints-add"
+                  if="count(*/gmd:identificationInfo/*/gmd:resourceConstraints/*[gmd:accessConstraints]) = 0"
+                  or="resourceConstraints"
+                  in="/*/gmd:identificationInfo/*">
+            <template>
+              <snippet>
+                <gmd:resourceConstraints>
+                  <gmd:MD_LegalConstraints>
+                    <gmd:accessConstraints>
+                      <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                                              codeListValue="otherRestrictions"/>
+                    </gmd:accessConstraints>
+                    <gmd:otherConstraints>
+                      <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">no limitations to public access</gmx:Anchor>
+                    </gmd:otherConstraints>
+                  </gmd:MD_LegalConstraints>
+                </gmd:resourceConstraints>
+              </snippet>
+            </template>
+          </action>
+
+          <field xpath="/*/gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:accessConstraints"
+                 del="../.."/>
+
           <field xpath="/*/gmd:identificationInfo/*/gmd:resourceConstraints/*[gmd:accessConstraints]/gmd:otherConstraints"
+                 del="../.."
                  use="data-gn-keyword-picker">
             <directiveAttributes data-thesaurus-key="external.theme.httpinspireeceuropaeumetadatacodelistLimitationsOnPublicAccess-LimitationsOnPublicAccess"
                                  data-display-definition="true"
                                  data-thesaurus-concept-id-attribute="xlinkCOLONhref"/>
           </field>
+
+
           <text ref="eea-accessConstraints-help"/>
         </section>
 
 
         <section name="eea-useConstraints">
-          <field xpath="/*/gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useConstraints"/>
-          <field xpath="/*/gmd:identificationInfo/*/gmd:resourceConstraints/*[gmd:useConstraints]/gmd:otherConstraints"/>
+          <field xpath="/*/gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useConstraints"
+                 del="../.."/>
+          <field xpath="/*/gmd:identificationInfo/*/gmd:resourceConstraints/*[gmd:useConstraints]/gmd:otherConstraints"
+                 del="../.."/>
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation"/>
+
+
+          <action type="add" btnLabel="eea-useConstraints-add"
+                  if="count(*/gmd:identificationInfo/*/gmd:resourceConstraints/*[gmd:useConstraints]) = 0"
+                  or="resourceConstraints"
+                  in="/*/gmd:identificationInfo/*">
+            <template>
+              <snippet>
+                <gmd:resourceConstraints>
+                  <gmd:MD_LegalConstraints>
+                    <gmd:useConstraints>
+                      <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                                              codeListValue="otherRestrictions"/>
+                    </gmd:useConstraints>
+                    <gmd:otherConstraints>
+                      <gco:CharacterString>--To keep the following text if EEA data re-use policy applies, otherwise to remove the text and add the applicable policy-- EEA standard re-use policy: unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged (http://www.eea.europa.eu/legal/copyright). Copyright holder: European Environment Agency (EEA).</gco:CharacterString>
+                    </gmd:otherConstraints>
+                  </gmd:MD_LegalConstraints>
+                </gmd:resourceConstraints>
+              </snippet>
+            </template>
+          </action>
+
           <text ref="eea-resourceConstraints-help"/>
         </section>
 
@@ -1251,8 +1335,11 @@
 
       <flatModeExceptions>
         <for name="gmd:keyword"/>
+        <for name="gmd:edition"/>
         <for name="gmd:date"/>
         <for name="gmd:pointOfContact"/>
+        <for name="gmd:resourceMaintenance"/>
+        <for name="gmd:lineage"/>
       </flatModeExceptions>
     </view>
 
