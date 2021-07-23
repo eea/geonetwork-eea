@@ -12,6 +12,12 @@ UPDATE metadata
 
 UPDATE metadata
     SET data = REPLACE(data,
+                       'Kosovo,',
+                       'Kosovo (UNSCR 1244/99),')
+    WHERE data LIKE '%Kosovo,%';
+
+UPDATE metadata
+    SET data = REPLACE(data,
                        '>Kosovo under the UN Security Council Resolution 1244/99<',
                        '>Kosovo (UNSCR 1244/99)<')
     WHERE data LIKE '%>Kosovo under the UN Security Council Resolution 1244/99<%';
@@ -21,3 +27,4 @@ UPDATE metadata
                        'Kosovo under UNSC Resolution 1244/99',
                        'Kosovo (UNSCR 1244/99)')
     WHERE data LIKE '%Kosovo under UNSC Resolution 1244/99%';
+
