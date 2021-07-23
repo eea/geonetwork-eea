@@ -102,7 +102,7 @@
               data-ng-init="aggResponse = searchInfo.aggregations[homeFacet.key]"
               data-ng-repeat="facet in searchInfo.aggregations[homeFacet.key].buckets"
               class="col-xs-6 col-sm-4 col-md-3 col-lg-2 gn-topic">
-          <div class="panel panel-default">
+          <div class="panel panel-default gn-facet-{{homeFacet.key}}">
             <div class="panel-body">
               <a class="clearfix"
                 title="{{facet.key}}"
@@ -152,7 +152,7 @@
         <div data-ng-repeat="(key, facet) in searchInfo.aggregations[homeFacet.lastKey].buckets"
              data-ng-show="facet.key"
              class="col-xs-6 col-sm-4 col-md-3 col-lg-2 gn-topic">
-          <div class="panel panel-default">
+          <div class="panel panel-default gn-facet-{{homeFacet.lastKey}}">
             <div class="panel-body">
               <a title="{{facet.key}}"
                  class="clearfix"
