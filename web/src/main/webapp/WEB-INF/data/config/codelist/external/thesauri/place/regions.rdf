@@ -2210,8 +2210,8 @@
     <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent/Asia"/>
   </skos:Concept>
   <skos:Concept rdf:about="http://www.naturalearthdata.com/ne_admin#Country/KOS">
-    <skos:prefLabel xml:lang="en">Kosovo</skos:prefLabel>
-    <skos:prefLabel xml:lang="fr">Kosovo</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Kosovo (UNSCR 1244/99)</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Kosovo (UNSCR 1244/99)</skos:prefLabel>
     <skos:altLabel>KOS</skos:altLabel>
     <gml:BoundedBy>
       <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
