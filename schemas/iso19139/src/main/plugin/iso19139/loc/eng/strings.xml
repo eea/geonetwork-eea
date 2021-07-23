@@ -52,6 +52,7 @@
   <eea-hr>
     <hr/>
   </eea-hr>
+  <eea-add-eea-keywords>Add EEA keywords</eea-add-eea-keywords>
   <eea-dq-add>Add lineage</eea-dq-add>
   <eea-constraints-add>Add access and use constraints</eea-constraints-add>
   <eea-accessConstraints-add>Add access constraints</eea-accessConstraints-add>
@@ -233,7 +234,6 @@
         </div>
       </div>
     </div>
-    <hr/>
   </eea-keywords-help>
   <eea-category>Catalogue category</eea-category>
   <eea-catalogcategory-help>

@@ -616,7 +616,7 @@
           <action type="add"
                   btnLabel="eea-add-topics"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA topics']) = 0"
-                  or="extent"
+                  or="descriptiveKeywords"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*">
             <template>
               <snippet>
@@ -663,6 +663,42 @@
             <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA keyword list']/*/gmd:keyword"
                    or="keyword"
                    in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA keyword list']/*"/>
+
+            <action type="add"
+                    btnLabel="eea-add-eea-keywords"
+                    if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA keyword list']) = 0"
+                    or="descriptiveKeywords"
+                    in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+              <template>
+                <snippet>
+                  <gmd:descriptiveKeywords gco:nilReason="withheld">
+                    <gmd:MD_Keywords>
+                      <gmd:keyword gco:nilReason="missing">
+                        <gco:CharacterString/>
+                      </gmd:keyword>
+                      <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                          <gmd:title>
+                            <gco:CharacterString>EEA keyword list</gco:CharacterString>
+                          </gmd:title>
+                          <gmd:date>
+                            <gmd:CI_Date>
+                              <gmd:date>
+                                <gco:Date>2002-03-01</gco:Date>
+                              </gmd:date>
+                              <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                     codeListValue="publication"/>
+                              </gmd:dateType>
+                            </gmd:CI_Date>
+                          </gmd:date>
+                        </gmd:CI_Citation>
+                      </gmd:thesaurusName>
+                    </gmd:MD_Keywords>
+                  </gmd:descriptiveKeywords>
+                </snippet>
+              </template>
+            </action>
             <text ref="eea-keywords-help"/>
           </section>
 
