@@ -74,7 +74,7 @@
 
   <!-- Define the metadata to be loaded for this schema plugin-->
   <xsl:variable name="metadata"
-                select="/root/gmd:MD_Metadata"/>
+                select="/root/(gmd:MD_Metadata|*[@gco:isoType = 'gmd:MD_Metadata'])"/>
 
   <xsl:variable name="langId" select="gn-fn-iso19139:getLangId($metadata, $language)"/>
 
@@ -89,7 +89,7 @@
                 priority="2000"/>
 
   <!-- Specific schema rendering -->
-  <xsl:template mode="getMetadataTitle" match="gmd:MD_Metadata">
+  <xsl:template mode="getMetadataTitle" match="gmd:MD_Metadata|*[@gco:isoType = 'gmd:MD_Metadata']">
     <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:title">
       <xsl:call-template name="localised">
         <xsl:with-param name="langId" select="$langId"/>
@@ -97,7 +97,7 @@
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template mode="getMetadataAbstract" match="gmd:MD_Metadata">
+  <xsl:template mode="getMetadataAbstract" match="gmd:MD_Metadata|*[@gco:isoType = 'gmd:MD_Metadata']">
     <xsl:for-each select="gmd:identificationInfo/*/gmd:abstract">
 
       <xsl:variable name="txt">
@@ -112,7 +112,7 @@
   </xsl:template>
 
 
-  <xsl:template mode="getTags" match="gmd:MD_Metadata">
+  <xsl:template mode="getTags" match="gmd:MD_Metadata|*[@gco:isoType = 'gmd:MD_Metadata']">
     <xsl:param name="byThesaurus" select="false()"/>
 
     <section class="gn-md-side-social">
@@ -157,7 +157,7 @@
 
             <xsl:for-each select="current-group()">
               <xsl:sort select="."/>
-              <a href='#/search?query_string=%7B"tag":%7B"{.}":true%7D%7D'>
+              <a href='#/search?query_string=%7B"tag.\\*":%7B"{.}":true%7D%7D'>
                 <span class="badge"><xsl:copy-of select="."/></span>
               </a>
             </xsl:for-each>
@@ -169,7 +169,7 @@
         <xsl:otherwise>
           <xsl:for-each select="$tags/tag">
             <xsl:sort select="."/>
-              <a href='#/search?query_string=%7B"tag":%7B"{.}":true%7D%7D'>
+              <a href='#/search?query_string=%7B"tag.\\*":%7B"{.}":true%7D%7D'>
               <span class="badge"><xsl:copy-of select="."/></span>
             </a>
           </xsl:for-each>
@@ -179,7 +179,7 @@
     </section>
   </xsl:template>
 
-  <xsl:template mode="getMetadataHierarchyLevel" match="gmd:MD_Metadata">
+  <xsl:template mode="getMetadataHierarchyLevel" match="gmd:MD_Metadata|*[@gco:isoType = 'gmd:MD_Metadata']">
     <xsl:value-of select="gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue"/>
   </xsl:template>
 
@@ -187,7 +187,7 @@
     <xsl:value-of select="gmd:identificationInfo/*/gmd:graphicOverview[1]/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString"/>
   </xsl:template>
 
-  <xsl:template mode="getExtent" match="gmd:MD_Metadata">
+  <xsl:template mode="getExtent" match="gmd:MD_Metadata|*[@gco:isoType = 'gmd:MD_Metadata']">
     <section class="gn-md-side-extent">
       <h2>
         <i class="fa fa-fw fa-map-marker"><xsl:comment select="'image'"/></i>
@@ -209,7 +209,7 @@
     </section>
   </xsl:template>
 
-  <xsl:template mode="getOverviews" match="gmd:MD_Metadata">
+  <xsl:template mode="getOverviews" match="gmd:MD_Metadata|*[@gco:isoType = 'gmd:MD_Metadata']">
     <section class="gn-md-side-overview">
       <h2>
         <i class="fa fa-fw fa-image"><xsl:comment select="'image'"/></i>
@@ -236,7 +236,7 @@
     </section>
   </xsl:template>
 
-  <xsl:template mode="getMetadataHeader" match="gmd:MD_Metadata">
+  <xsl:template mode="getMetadataHeader" match="gmd:MD_Metadata|*[@gco:isoType = 'gmd:MD_Metadata']">
     <div class="gn-abstract">
       <xsl:for-each select="gmd:identificationInfo/*/gmd:abstract">
         <xsl:variable name="txt">
@@ -259,7 +259,7 @@
   </xsl:template>
 
 
-  <xsl:template mode="getMetadataCitation" match="gmd:MD_Metadata">
+  <xsl:template mode="getMetadataCitation" match="gmd:MD_Metadata|*[@gco:isoType = 'gmd:MD_Metadata']">
     <xsl:variable name="displayCitation"
                   select="true()"/>
     <xsl:variable name="doiUrl"

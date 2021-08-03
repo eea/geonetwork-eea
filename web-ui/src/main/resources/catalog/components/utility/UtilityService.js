@@ -386,6 +386,13 @@
               });
           };
 
+          var getObjectValueByPath = function(obj, path){
+            for (var i = 0, path = path.split('.'), len = path.length; i < len; i++){
+              obj = obj[path[i]];
+            };
+            return obj;
+          };
+
         return {
           scrollTo: scrollTo,
           isInView: isInView,
@@ -393,6 +400,7 @@
           parseBoolean: parseBoolean,
           traverse: traverse,
           formatObjectPropertyAsArray: formatObjectPropertyAsArray,
+          getObjectValueByPath: getObjectValueByPath,
           toCsv: toCsv,
           CSVToArray: CSVToArray,
           getInspireIcon: getInspireIcon,

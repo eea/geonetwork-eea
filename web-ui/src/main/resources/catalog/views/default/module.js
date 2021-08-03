@@ -143,13 +143,15 @@
     'gnGlobalSettings',
     'gnESClient',
     'gnESFacet',
+    'gnFacetSorter',
     'gnExternalViewer',
     function($scope, $location, $filter,
              suggestService, $http, $translate,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings, gnESClient, gnESFacet, gnExternalViewer) {
+             hotkeys, gnGlobalSettings, gnESClient,
+             gnESFacet, gnFacetSorter, gnExternalViewer) {
 
 
       var viewerMap = gnSearchSettings.viewerMap;
@@ -179,6 +181,8 @@
       $scope.fluidHeaderLayout = gnGlobalSettings.gnCfg.mods.header.fluidHeaderLayout;
       $scope.showGNName = gnGlobalSettings.gnCfg.mods.header.showGNName;
 
+      $scope.facetSorter = gnFacetSorter.sortByTranslation;
+
       $scope.toggleMap = function () {
         $(searchMap.getTargetElement()).toggle();
         $('button.gn-minimap-toggle > i').toggleClass('fa-angle-double-left fa-angle-double-right');
@@ -202,20 +206,6 @@
                 anyField.focus();
               }
             }
-          }).add({
-            combo: 'enter',
-            description: $translate.instant('hotkeySearchTheCatalog'),
-            allowIn: 'INPUT',
-            callback: function() {
-              $location.search('tab=search');
-            }
-            //}).add({
-            //  combo: 'r',
-            //  description: $translate.instant('hotkeyResetSearch'),
-            //  allowIn: 'INPUT',
-            //  callback: function () {
-            //    $scope.resetSearch();
-            //  }
           }).add({
             combo: 'm',
             description: $translate.instant('hotkeyMap'),
