@@ -87,6 +87,12 @@
     </div>
     <hr/>
   </eea-date-help>
+  <eea-add-identifier>Add dataset identifier</eea-add-identifier>
+  <eea-add-inspiretheme>Add INSPIRE theme</eea-add-inspiretheme>
+  <eea-add-gemet>Add GEMET keywords</eea-add-gemet>
+  <eea-add-spatial-scope>Add administration level</eea-add-spatial-scope>
+  <eea-add-keyword-spatial>Add spatial coverage keywords</eea-add-keyword-spatial>
+  <eea-add-categories>Add EEA categories</eea-add-categories>
   <eea-add-topics>Add EEA topic</eea-add-topics>
   <eea-topics-help>
     <div class="row">
