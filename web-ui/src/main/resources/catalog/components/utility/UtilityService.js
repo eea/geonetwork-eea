@@ -122,8 +122,6 @@
            replace(/=on$/, '=true') +
            (uc.length ? '&' + uc.join('&').replace(/%20/g, '+') : '');
         };
-
-
         /**
        * Parse boolean value in object
        */
@@ -434,7 +432,7 @@
 
   module.filter('unique', function() {
     return function (arr, field) {
-      return _.uniq(arr, function(a) { return a[field]; });
+      return _.uniqBy(arr, function(a) { return a[field]; });
     };
   });
 

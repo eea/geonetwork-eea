@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * Copyright (C) 2001-2021 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
  *
@@ -21,28 +21,17 @@
  * Rome - Italy. email: geonetwork@osgeo.org
  */
 
-package org.fao.geonet.api.records.formatters;
+package org.fao.geonet.kernel.csw.services.getrecords.es;
 
-import org.fao.geonet.csw.common.util.Xml;
-import org.fao.geonet.exceptions.BadParameterEx;
-import org.fao.geonet.services.AbstractServiceIntegrationTest;
-import org.jdom.Element;
-import org.junit.Test;
+import org.fao.geonet.kernel.csw.services.getrecords.IFieldMapper;
+import org.fao.geonet.kernel.csw.services.getrecords.IdentityFieldMapper;
+import org.springframework.context.annotation.Bean;
 
-import jeeves.server.context.ServiceContext;
+public class CswFilter2EsTestConfiguration {
 
-public class EditFileIntegrationTest extends AbstractServiceIntegrationTest {
-
-    @Test(expected = BadParameterEx.class)
-    public void testExecBadFnameParameter() throws Exception {
-        EditFile ef = new EditFile();
-        ServiceContext ctx = createServiceContext();
-
-        Element params = Xml.loadString(
-            "<request><id>test</id><_content_type>json</_content_type>"
-                + "<fname>myfile</fname></request>", false);
-
-        ef.exec(params, ctx);
+    @Bean
+    public IFieldMapper fieldMapper() {
+        return new IdentityFieldMapper();
     }
 
 }
