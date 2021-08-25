@@ -15,6 +15,7 @@
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:util="java:org.fao.geonet.util.XslUtil"
                 version="2.0"
                 exclude-result-prefixes="#all">
 
@@ -25,11 +26,6 @@
   <!--
   TODO
     <dcterms:description xml:lang="en">The Regulation (EU) No 2019/631 (and
-
-    <data:reportingObligations>665</data:reportingObligations>
-    <data:reportingObligations>141</data:reportingObligations>
-    eg. https://rod.eionet.europa.eu/obligations/665
-
 
     <data:dataOwner>http://ec.europa.eu/dgs/clima/mission/index_en.htm</data:dataOwner>
 
@@ -52,8 +48,6 @@
     <eea:fleschReadingEaseScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">23</eea:fleschReadingEaseScore>
     <eea:readingTime rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</eea:readingTime>
 
-    <data:eeaManagementPlan xml:lang="en">2019 1.3.7</data:eeaManagementPlan>
-
     <dcterms:creator>kjeldpet</dcterms:creator>
 
     <data:forcedisableautolinks xml:lang="en">False</data:forcedisableautolinks>
@@ -68,19 +62,13 @@
       CDATA support
 
   -->
-
   <xsl:template match="data:Data">
     <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
                      xmlns:gco="http://www.isotc211.org/2005/gco"
-                     xmlns:srv="http://www.isotc211.org/2005/srv"
                      xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                     xmlns:gts="http://www.isotc211.org/2005/gts"
-                     xmlns:gsr="http://www.isotc211.org/2005/gsr"
-                     xmlns:gmi="http://www.isotc211.org/2005/gmi"
                      xmlns:gml="http://www.opengis.net/gml"
                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                     xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <gmd:fileIdentifier>
         <!-- <data:id xml:lang="en">vans-16</data:id>-->
         <gco:CharacterString>eea-data-and-maps-data-<xsl:value-of select="data:id"/></gco:CharacterString>
@@ -134,7 +122,9 @@
         </gmd:CI_ResponsibleParty>
       </gmd:contact>
       <gmd:dateStamp>
-        <gco:DateTime>2019-07-31T18:18:18</gco:DateTime>
+        <gco:DateTime>
+          <xsl:value-of select="dcterms:modified"/>
+        </gco:DateTime>
       </gmd:dateStamp>
       <gmd:metadataStandardName>
         <gco:CharacterString>ISO 19115:2003/19139</gco:CharacterString>
@@ -154,13 +144,10 @@
                   <xsl:value-of select="dcterms:title"/>
                 </gco:CharacterString>
               </gmd:title>
-              <!-- TODO
-                <dcterms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-08-11T13:00:41+00:00</dcterms:modified>
-              -->
+
               <!--
                 <dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-08-11T12:52:32+00:00</dcterms:created>
-              TODO: Data or metadata?
-              -->
+
               <xsl:for-each select="dcterms:created">
                 <gmd:date>
                   <gmd:CI_Date>
@@ -175,10 +162,10 @@
                     </gmd:dateType>
                   </gmd:CI_Date>
                 </gmd:date>
-              </xsl:for-each>
+              </xsl:for-each> -->
               <!--
                 <dcterms:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-29T08:58:25+00:00</dcterms:issued>
-              -->
+
               <xsl:for-each select="data:issued">
                 <gmd:date>
                   <gmd:CI_Date>
@@ -193,7 +180,7 @@
                     </gmd:dateType>
                   </gmd:CI_Date>
                 </gmd:date>
-              </xsl:for-each>
+              </xsl:for-each> -->
               <!--
                 <data:lastUpload rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2019-06-19T22:00:00+00:00</data:lastUpload>
               -->
@@ -212,9 +199,10 @@
                   </gmd:CI_Date>
                 </gmd:date>
               </xsl:for-each>
-              <gmd:edition gco:nilReason="missing">
+
+              <!--<gmd:edition gco:nilReason="missing">
                 <gco:CharacterString/>
-              </gmd:edition>
+              </gmd:edition>-->
 
               <!--
                 <data:Data rdf:about="http://www.eea.europa.eu/data-and-maps/data/vans-16">
@@ -258,9 +246,9 @@
 
           <!--
            <data:contact xml:lang="en">
-           Inhouse contact: Cinzia Pastorello,
+            Inhouse contact: Cinzia Pastorello,
             cinzia.pastorello@eea.europa.eu&#13;
-           Operator: Peter Kjeld, peter.kjeld@eea.europa.eu</data:contact>
+            Operator: Peter Kjeld, peter.kjeld@eea.europa.eu</data:contact>
           -->
           <xsl:for-each select="data:contact">
             <gmd:pointOfContact>
@@ -284,8 +272,7 @@
             </gmd:pointOfContact>
           </xsl:for-each>
 
-<!--
-           TODO
+          <!--
            <schema:publisher>
             <schema:Organization rdf:about="http://www.eea.europa.eu#organization">
               <schema:logo rdf:resource="https://www.eea.europa.eu/logo-square.png#logo"/>
@@ -296,7 +283,21 @@
               <schema:sameAs>https://www.youtube.com/user/EEAvideos</schema:sameAs>
             </schema:Organization>
           </schema:publisher>-->
-
+          <xsl:for-each select="schema:publisher">
+            <gmd:pointOfContact>
+              <gmd:CI_ResponsibleParty>
+                <gmd:organisationName>
+                  <gco:CharacterString>
+                    <xsl:value-of select="schema:Organization/schema:name"/>
+                  </gco:CharacterString>
+                </gmd:organisationName>
+                <gmd:role>
+                  <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                                   codeListValue="publisher"/>
+                </gmd:role>
+              </gmd:CI_ResponsibleParty>
+            </gmd:pointOfContact>
+          </xsl:for-each>
 
           <gmd:resourceMaintenance>
             <gmd:MD_MaintenanceInformation>
@@ -324,15 +325,121 @@
             </gmd:graphicOverview>
           </xsl:for-each>
 
+<!--
+          <data:reportingObligations>665</data:reportingObligations>
+          <data:reportingObligations>141</data:reportingObligations>
+          eg. https://rod.eionet.europa.eu/obligations/665
+-->
+          <xsl:if test="count(data:reportingObligations[. != '']) > 0">
+            <gmd:descriptiveKeywords>
+              <gmd:MD_Keywords>
+                <xsl:for-each select="data:reportingObligations">
+                  <xsl:variable name="uri"
+                                select="concat('http://rod.eionet.europa.eu/obligations/', .)"/>
+                  <xsl:variable name="keyword"
+                                select="util:getKeywordValueByUri(
+                                $uri,
+                                'external.theme.rod-eionet-europa-eu',
+                                'eng')"/>
+                  <gmd:keyword>
+                    <gmx:Anchor xlink:href="{$uri}">
+                      <xsl:value-of select="$keyword"/>
+                    </gmx:Anchor>
+                  </gmd:keyword>
+                </xsl:for-each>
+                <gmd:type>
+                  <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                          codeListValue="theme"/>
+                </gmd:type>
+                <gmd:thesaurusName>
+                  <gmd:CI_Citation>
+                    <gmd:title>
+                      <gco:CharacterString>Reporting obligations</gco:CharacterString>
+                    </gmd:title>
+                    <gmd:date>
+                      <gmd:CI_Date>
+                        <gmd:date>
+                          <gco:Date>2021-08-25</gco:Date>
+                        </gmd:date>
+                        <gmd:dateType>
+                          <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                               codeListValue="publication"/>
+                        </gmd:dateType>
+                      </gmd:CI_Date>
+                    </gmd:date>
+                    <gmd:identifier>
+                      <gmd:MD_Identifier>
+                        <gmd:code>
+                          <gmx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.rod-eionet-europa-eu">geonetwork.thesaurus.external.theme.rod-eionet-europa-eu</gmx:Anchor>
+                        </gmd:code>
+                      </gmd:MD_Identifier>
+                    </gmd:identifier>
+                  </gmd:CI_Citation>
+                </gmd:thesaurusName>
+              </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+          </xsl:if>
+
+          <!--
+            <data:eeaManagementPlan xml:lang="en">2019 1.3.7</data:eeaManagementPlan>
+          -->
+          <xsl:if test="count(data:eeaManagementPlan[. != '']) > 0">
+            <gmd:descriptiveKeywords>
+              <gmd:MD_Keywords>
+                <xsl:for-each select="data:eeaManagementPlan">
+                  <gmd:keyword>
+                    <gco:CharacterString>
+                      <xsl:value-of select="."/>
+                    </gco:CharacterString>
+                  </gmd:keyword>
+                </xsl:for-each>
+                <gmd:type>
+                  <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                          codeListValue="theme"/>
+                </gmd:type>
+                <gmd:thesaurusName>
+                  <gmd:CI_Citation>
+                    <gmd:title>
+                      <gco:CharacterString>EEA Management Plan</gco:CharacterString>
+                    </gmd:title>
+                    <gmd:date>
+                      <gmd:CI_Date>
+                        <gmd:date>
+                          <gco:Date>2021-08-25</gco:Date>
+                        </gmd:date>
+                        <gmd:dateType>
+                          <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                               codeListValue="publication"/>
+                        </gmd:dateType>
+                      </gmd:CI_Date>
+                    </gmd:date>
+                    <gmd:identifier>
+                      <gmd:MD_Identifier>
+                        <gmd:code>
+                          <gmx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.eea-mp">geonetwork.thesaurus.external.theme.eea-mp</gmx:Anchor>
+                        </gmd:code>
+                      </gmd:MD_Identifier>
+                    </gmd:identifier>
+                  </gmd:CI_Citation>
+                </gmd:thesaurusName>
+              </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+          </xsl:if>
 
           <!-- <data:themes>transport</data:themes>-->
           <gmd:descriptiveKeywords>
             <gmd:MD_Keywords>
               <xsl:for-each select="data:themes">
                 <gmd:keyword>
+                  <xsl:variable name="uri"
+                                select="concat('https://www.eea.europa.eu/themes/', .)"/>
+                  <xsl:variable name="keyword"
+                                select="util:getKeywordValueByUri(
+                                $uri,
+                                'external.theme.eea-topics',
+                                'eng')"/>
                   <gmx:Anchor xlink:href="https://www.eea.europa.eu/themes/{.}">
-                    <!-- TODO translate ?-->
-                    <xsl:value-of select="."/>
+                    <xsl:value-of select="$keyword"/>
                   </gmx:Anchor>
                 </gmd:keyword>
               </xsl:for-each>
@@ -660,7 +767,26 @@ TODO
               </gmd:geographicElement>
 
               <!-- <data:temporalCoverage>2012</data:temporalCoverage> -->
-              <xsl:for-each select="data:temporalCoverage">
+              <xsl:variable name="start"
+                            select="min(data:temporalCoverage)"/>
+              <xsl:variable name="end"
+                            select="max(data:temporalCoverage)"/>
+              <gmd:temporalElement>
+                <gmd:EX_TemporalExtent>
+                  <gmd:extent>
+                    <gml:TimePeriod gml:id="d17964e856a1052958">
+                      <gml:beginPosition>
+                        <xsl:value-of select="$start"/>
+                      </gml:beginPosition>
+                      <gml:endPosition>
+                        <xsl:value-of select="$end"/>
+                      </gml:endPosition>
+                    </gml:TimePeriod>
+                  </gmd:extent>
+                </gmd:EX_TemporalExtent>
+              </gmd:temporalElement>
+             <!-- <xsl:for-each select="data:temporalCoverage">
+                <xsl:sort select="." order="descending"/>
                 <gmd:temporalElement>
                   <gmd:EX_TemporalExtent>
                     <gmd:extent>
@@ -675,7 +801,7 @@ TODO
                     </gmd:extent>
                   </gmd:EX_TemporalExtent>
                 </gmd:temporalElement>
-              </xsl:for-each>
+              </xsl:for-each>-->
             </gmd:EX_Extent>
           </gmd:extent>
 
@@ -685,7 +811,7 @@ TODO
           <xsl:for-each select="data:moreInfo">
             <gmd:supplementalInformation>
               <gco:CharacterString>
-                <xsl:value-of select="."/>
+                <xsl:value-of select="replace(.,'&lt;[^>]*>', '')"/>
               </gco:CharacterString>
             </gmd:supplementalInformation>
           </xsl:for-each>
@@ -709,10 +835,20 @@ TODO
                   <dcterms:hasPart rdf:resource="http://www.eea.europa.eu/data-and-maps/data/vans-16/monitoring-vans-co2-emissions_2013f"/>
                   <dcterms:hasPart rdf:resource="http://www.eea.europa.eu/data-and-maps/data/vans-16/monitoring-of-co2-emissions-vans-2016-final"/>
               -->
-              <xsl:for-each select="dcterms:hasPart">
-                <xsl:variable name="partDetails"
-                              select="document(concat(@rdf:resource, '/@@rdf'))"/>
-                <xsl:for-each select="$partDetails//datatable:DataTable/dcterms:hasPart">
+              <xsl:variable name="listOfHasPart">
+                <xsl:for-each select="dcterms:hasPart">
+                  <entry id="{@rdf:resource}">
+                    <xsl:copy-of select="document(concat(@rdf:resource, '/@@rdf'))"/>
+                  </entry>
+                </xsl:for-each>
+              </xsl:variable>
+
+              <xsl:for-each select="$listOfHasPart/entry">
+                <xsl:sort select="rdf:RDF/datatable:DataTable/dcterms:title"
+                          order="descending"/>
+                <xsl:variable name="entry"
+                              select="current()"/>
+                <xsl:for-each select="rdf:RDF/datatable:DataTable/dcterms:hasPart">
                   <gmd:onLine>
                     <gmd:CI_OnlineResource>
                       <gmd:linkage>
@@ -720,7 +856,7 @@ TODO
                       </gmd:linkage>
                       <gmd:name>
                         <gco:CharacterString>
-                          <xsl:value-of select="$partDetails//datatable:DataTable/dcterms:title"/>
+                          <xsl:value-of select="$entry/rdf:RDF/datatable:DataTable/dcterms:title"/>
                         </gco:CharacterString>
                       </gmd:name>
                       <gmd:protocol>
@@ -738,6 +874,7 @@ TODO
           </gmd:transferOptions>
         </gmd:MD_Distribution>
       </gmd:distributionInfo>
+
       <gmd:dataQualityInfo>
         <gmd:DQ_DataQuality>
           <gmd:scope>
