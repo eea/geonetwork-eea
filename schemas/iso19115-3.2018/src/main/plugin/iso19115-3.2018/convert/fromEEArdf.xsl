@@ -167,7 +167,7 @@
                         select="$columns//thead/tr/th[lower-case(.) = 'note']/count(preceding-sibling::th)"/>
           <xsl:variable name="cardinalityColumnPosition"
                         select="$columns//thead/tr/th[lower-case(.) = 'primary key']/count(preceding-sibling::th)"/>
-          
+
           <mdb:contentInfo>
             <mrc:MD_FeatureCatalogue>
               <mrc:featureCatalogue>
