@@ -11,6 +11,7 @@
                 xmlns:dcterms="http://purl.org/dc/terms/"
                 xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
                 xmlns:schema="http://schema.org/"
+                xmlns:saxon="http://saxon.sf.net/"
                 xmlns:gml="http://www.opengis.net/gml/3.2"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:cat="http://standards.iso.org/iso/19115/-3/cat/1.0"
@@ -41,6 +42,7 @@
                 xmlns:mai="http://standards.iso.org/iso/19115/-3/mai/1.0"
                 xmlns:mdq="http://standards.iso.org/iso/19157/-2/mdq/1.0"
                 xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
+                xmlns:gfc="http://standards.iso.org/iso/19110/gfc/1.1"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
                 version="2.0"
@@ -77,6 +79,12 @@
         <xsl:apply-templates select="gmd:metadataExtensionInfo" mode="from19139to19115-3.2018"/>
         <xsl:apply-templates select="gmd:identificationInfo" mode="from19139to19115-3.2018"/>
         <xsl:apply-templates select="gmd:contentInfo" mode="from19139to19115-3.2018"/>
+
+        <xsl:call-template name="buildFeatureCatalogue">
+          <xsl:with-param name="tableDefinitions"
+                          select="$iso19139/gmd:MD_Metadata//datatable:tableDefinition"/>
+        </xsl:call-template>
+
         <xsl:call-template name="onlineSourceDispatcher">
           <xsl:with-param name="type" select="'featureCatalogueCitation'"/>
         </xsl:call-template>
@@ -95,6 +103,131 @@
     </xsl:for-each>
   </xsl:template>
 
+  <xsl:template name="buildFeatureCatalogue">
+    <xsl:param name="tableDefinitions"/>
+
+    <!--
+    For one dataset, various feature catalogues with minor changes:
+    * new columns
+    * or mb > Mb
+    Define if one feature catalogue must be created for each cases?
+    How to link it with a distribution?
+
+    = ID,MS,VFN,MP,Mh,MAN,MMS,TAN,T,Va,Ve,Mk,Cn,Ct,Cr,r,M (kg),Mt (kg),Mb (kg),TPMLM (kg),Dam (kg),Mf (kg),Enedc (g/km),Ewltp (g/km),At1 (mm),At2 (mm),W (mm),Ft,Fm,Ec (cm3),Ep (KW),Z (Wh/km),IT,Ernedc (g/km),Erwltp (g/km),De,Vf,Zr
+  = ID,MS,VFN,MP,Mh,MAN,MMS,TAN,T,Va,Ve,Mk,Cn,Ct,Cr,r,M (kg),Mt (kg),Mb (kg),TPMLM (kg),Dam (kg),Mf (kg),Enedc (g/km),Ewltp (g/km),At1 (mm),At2 (mm),W (mm),Ft,Fm,Ec (cm3),Ep (KW),Z (Wh/km),IT,Ernedc (g/km),Erwltp (g/km),De,Vf
+  = ID,MS,VFN,MP,Mh,MAN,MMS,TAN,T,Va,Ve,Mk,Cn,Ct,Cr,r,M (kg),Mb (kg),TPMLM (kg),Dam (kg),Mf (kg),Enedc (g/km),Ewltp (g/km),At1 (mm),At2 (mm),W (mm),Ft,Fm,Ec (cm3),Ep (KW),Z (Wh/km),IT,Ernedc (g/km),Erwltp (g/km),De,Vf
+  = ID,MS,MP,Mh,MAN,MMS,TAN,T,Va,Ve,Mk,Cn,Ct,Cr,r,m (kg),mb (kg),TPMLM (kg),Dam (kg),mf (kg),e (g/km),w (mm),at1 (mm),at2 (mm),Ft,Fm,ec (cm3),ep (KW),z (Wh/km),IT,Er (g/km)
+  = ID,MS,MP,Mh,MAN,MMS,T,Va,Ve,Mk,Cn,Ct,Cr,r,m (kg),mb (kg),TPMLM (kg),Dam (kg),mf (kg),e (g/km),w (mm),at1 (mm),at2 (mm),Ft,Fm,ec (cm3),z (Wh/km),IT,Er (g/km),TAN,ep (KW)
+  = ID,MS,MP,Mh,MAN,MMS,T,Va,Ve,Mk,Cn,Ct,Cr,r,m (kg),mb (kg),TPMLM (kg),dam (kg),mf (kg),e (g/km),w (mm),at1 (mm),at2 (mm),Ft,Fm,ec (cm3),z (Wh/km),IT,Er (g/km),TAN,ep (KW)
+  = ID,MS,MP,Mh,MAN,MMS,T,Va,Ve,Mk,Cn,Ct,Cr,r,m (kg),TPMLM (kg),e (g/km),w (mm),at1 (mm),at2 (mm),Ft,Fm,ec (cm3),z (Wh/km),IT,Er (g/km),TAN,ep (KW)
+
+  = Emissions,Country_code,Country,Pollutant_name,Format_name,Sector_code,Parent_sector_code,Sector_name,Year,Unit,Notation
+  = Emissions,Country_code,Country,Pollutant_name,Format_name,Sector_code,Parent_sector_code,Sector_name,Year,Unit,Notation
+    -->
+    <!--<xsl:variable name="definitions">
+      <xsl:for-each select="$tableDefinitions[starts-with(., '&lt;table')]">
+        <xsl:variable name="table"
+                      select="replace(
+                        replace(., '\n|\r\n', ''),
+                        '(&lt;table.*table&gt;).*',
+                        '$1')"/>
+        <def>
+          <xsl:copy-of select="saxon:parse($table)"/>
+        </def>
+      </xsl:for-each>
+    </xsl:variable>
+
+    <xsl:for-each-group select="$definitions/def"
+                        group-by="string-join(.//tbody/tr/td[1], ',')">
+      <xsl:message>= <xsl:value-of select="current-grouping-key()"/> </xsl:message>
+    </xsl:for-each-group>-->
+
+    <xsl:for-each-group select="$tableDefinitions"
+                      group-by=".">
+      <xsl:choose>
+        <xsl:when test="position() = 1">
+          <xsl:variable name="columns"
+                        select="saxon:parse(.)"/>
+          <!--
+          <thead>^M
+            <tr><th>Field name</th><th>Field Definition</th><th>Data type</th><th>Primary key</th></tr>^M
+            </thead>^M
+            <tbody>^M
+            <tr>^M
+            <td>ID</td>^M
+            <td>ID</td>^M
+            <td>integer</td>^M
+            <td>Yes</td>^M
+            </tr>^M
+          -->
+
+          <xsl:variable name="typeColumnPosition"
+                        select="$columns//thead/tr/th[lower-case(.) = 'data type']/count(preceding-sibling::th)"/>
+          <xsl:variable name="noteColumnPosition"
+                        select="$columns//thead/tr/th[lower-case(.) = 'note']/count(preceding-sibling::th)"/>
+          <xsl:variable name="cardinalityColumnPosition"
+                        select="$columns//thead/tr/th[lower-case(.) = 'primary key']/count(preceding-sibling::th)"/>
+          
+          <mdb:contentInfo>
+            <mrc:MD_FeatureCatalogue>
+              <mrc:featureCatalogue>
+                <gfc:FC_FeatureCatalogue>
+                  <gfc:producer/>
+                  <gfc:featureType>
+                    <gfc:FC_FeatureType>
+                      <gfc:typeName>Table definition</gfc:typeName>
+                      <gfc:isAbstract>
+                        <gco:Boolean>false</gco:Boolean>
+                      </gfc:isAbstract>
+                      <xsl:for-each select="$columns//tbody/tr">
+                        <gfc:carrierOfCharacteristics>
+                          <gfc:FC_FeatureAttribute>
+                            <gfc:memberName>
+                              <xsl:value-of select="td[1]"/>
+                            </gfc:memberName>
+                            <gfc:definition>
+                              <gco:CharacterString>
+                                <xsl:value-of select="td[2]"/>
+                              </gco:CharacterString>
+                            </gfc:definition>
+                            <gfc:cardinality>
+                              <gco:CharacterString>
+                                <xsl:value-of select="if (td[$cardinalityColumnPosition + 1] = 'Yes') then '1..1' else '0..1'"/>
+                              </gco:CharacterString>
+                            </gfc:cardinality>
+                            <xsl:if test="$noteColumnPosition">
+                              <gfc:designation>
+                                <gco:CharacterString>
+                                  <xsl:value-of select="td[$noteColumnPosition + 1]"/>
+                                </gco:CharacterString>
+                              </gfc:designation>
+                            </xsl:if>
+                            <gfc:valueMeasurementUnit>
+                              <gco:UomIdentifier/>
+                            </gfc:valueMeasurementUnit>
+                            <gfc:valueType>
+                              <gco:TypeName>
+                                <gco:aName>
+                                  <gco:CharacterString>
+                                    <xsl:value-of select="td[$typeColumnPosition + 1]"/>
+                                  </gco:CharacterString>
+                                </gco:aName>
+                              </gco:TypeName>
+                            </gfc:valueType>
+                          </gfc:FC_FeatureAttribute>
+                        </gfc:carrierOfCharacteristics>
+                      </xsl:for-each>
+                    </gfc:FC_FeatureType>
+                  </gfc:featureType>
+                </gfc:FC_FeatureCatalogue>
+              </mrc:featureCatalogue>
+            </mrc:MD_FeatureCatalogue>
+          </mdb:contentInfo>
+        </xsl:when>
+      </xsl:choose>
+
+    </xsl:for-each-group>
+  </xsl:template>
 
 
 </xsl:stylesheet>

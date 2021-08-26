@@ -19,6 +19,9 @@
                 version="2.0"
                 exclude-result-prefixes="#all">
 
+  <xsl:variable name="withFeatureCatalogue"
+                select="false()"/>
+
   <xsl:template match="/">
     <xsl:apply-templates select="//data:Data"/>
   </xsl:template>
@@ -29,7 +32,13 @@
 
     <data:dataOwner>http://ec.europa.eu/dgs/clima/mission/index_en.htm</data:dataOwner>
 
+
     <data:units xml:lang="en"><![CDATA[<p>Gg (1000 Tonnes)</p>]]></data:units>
+    Could be mapped to in Feature Catalogue
+     <gfc:valueMeasurementUnit>
+        <gco:UomIdentifier/>
+     </gfc:valueMeasurementUnit>
+
 
     <dcterms:expires xml:lang="en">None</dcterms:expires>
 
@@ -866,6 +875,11 @@ TODO
                         <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
                                                    codeListValue="download"/>
                       </gmd:function>
+
+                      <xsl:if test="$withFeatureCatalogue">
+                        <xsl:copy-of select="$entry/rdf:RDF
+                            /datatable:DataTable/datatable:tableDefinition"/>
+                      </xsl:if>
                     </gmd:CI_OnlineResource>
                   </gmd:onLine>
                 </xsl:for-each>
