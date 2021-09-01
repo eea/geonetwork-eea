@@ -80,7 +80,7 @@ goog.require('gn_alert');
       'mods': {
         'global': {
           'humanizeDates': true,
-          'dateFormat': 'DD-MM-YYYY HH:mm',
+          'dateFormat': 'DD-MM-YYYY',
           // 'timezone': 'Australia/Hobart',
           'timezone': 'Europe/Copenhagen',
           'eeaGeoServer': 'https://sdi.eea.europa.eu/geoserver/ows',
@@ -159,7 +159,7 @@ goog.require('gn_alert');
           'searchOptions': {
             titleOnly: true,
             exactMatch: true,
-            language: true
+            language: false
           },
           // Language strategy can be:
           // * searchInUILanguage: search in UI languages
@@ -174,7 +174,7 @@ goog.require('gn_alert');
           // Limit language detection to some languages only.
           // If empty, the list of languages in catalogue records is used
           // and if none found, mods.header.languages is used.
-          'languageWhitelist': [],
+          'languageWhitelist': ['eng'],
           // Score query may depend on where we are in the app?
           'scoreConfig': {
             // Score experiments:
@@ -280,10 +280,17 @@ goog.require('gn_alert');
           },
           'moreLikeThisConfig': {
             "more_like_this" : {
-              "fields" : ["resourceTitleObject.default", "resourceAbstractObject.default", "tag.raw"],
+              "fields" : [
+                "resourceTitleObject.langeng"
+                // "resourceAbstractObject.default",
+                // "tag.raw"
+              ],
               "like" : null,
               "min_term_freq" : 1,
-              "max_query_terms" : 12
+              "min_word_length" : 3,
+              "max_query_terms" : 35,
+              "analyzer": "english",
+              "minimum_should_match": "70%"
             }
           },
           // TODOES
@@ -304,17 +311,17 @@ goog.require('gn_alert');
                 }
               }
             },
-            'th_eeatopics': {
+            'th_eea-topics.default': {
               'terms': {
-                'field': 'thesaurus_geonetworkthesaurusexternalthemeeeatopics',
+                'field': 'th_eea-topics.default',
                 'size': 15,
                 'exclude': 'http.*',
                 "order" : { "_key" : "asc" }
               }
             },
-            'th_gemet_tree': {
+            'th_gemet_tree.default': {
               'terms': {
-                'field': 'thesaurus_geonetworkthesaurusexternalthemegemet_tree',
+                'field': 'th_gemet_tree.default',
                 'size': 500,
                 "order" : { "_key" : "asc" },
                 "include": "[^\^]+^?[^\^]+"
@@ -333,9 +340,9 @@ goog.require('gn_alert');
                 'collapsed': true
               }
             },
-            'th_httpinspireeceuropaeumetadatacodelistPriorityDataset-PriorityDataset_tree': {
+            'th_httpinspireeceuropaeumetadatacodelistPriorityDataset-PriorityDataset_tree.default': {
               'terms': {
-                'field': 'th_httpinspireeceuropaeumetadatacodelistPriorityDataset-PriorityDataset_tree',
+                'field': 'th_httpinspireeceuropaeumetadatacodelistPriorityDataset-PriorityDataset_tree.default',
                 'size': 100,
                 "order" : { "_key" : "asc" }
               },
@@ -440,9 +447,9 @@ goog.require('gn_alert');
                 'collapsed': true
               }
             },
-            'thesaurus_geonetworkthesaurusexternalplaceregions_tree': {
+            'thesaurus_geonetworkthesaurusexternalplaceregions_tree.default': {
               'terms': {
-                'field': 'thesaurus_geonetworkthesaurusexternalplaceregions_tree',
+                'field': 'thesaurus_geonetworkthesaurusexternalplaceregions_tree.default',
                 'size': 400,
                 "order" : { "_key" : "asc" },
                 "include": "Europe.*|EEA.*|EU.*"
