@@ -345,7 +345,7 @@
                 <td>
                   <ul>
                     <li data-ng-repeat="i in mdView.current.record.resourceIdentifier">
-                      {{i.code}}
+                      <span data-ng-bind-html="i.code | linky"/>
                     </li>
                   </ul>
                 </td>
@@ -361,10 +361,10 @@
                 <th data-translate="">legalConstraints</th>
                 <td>
                   <p data-ng-repeat="i in mdView.current.record.MD_LegalConstraintsOtherConstraints">
-                    {{i}}
+                    <span data-ng-bind-html="i | linky | newlines"/>
                   </p>
                   <p data-ng-repeat="i in mdView.current.record.MD_LegalConstraintsUseLimitation">
-                    {{i}}
+                    <span data-ng-bind-html="i | linky | newlines"/>
                   </p>
                 </td>
               </tr>
@@ -373,7 +373,7 @@
                 <th data-translate="">securityConstraints</th>
                 <td>
                   <p data-ng-repeat="i in mdView.current.record.MD_SecurityConstraintsUseLimitation">
-                    {{i}}
+                    <span data-ng-bind-html="i | linky | newlines"/>
                   </p>
                 </td>
               </tr>
@@ -382,7 +382,7 @@
                 <th data-translate="">resourceConstraints</th>
                 <td>
                   <p data-ng-repeat="i in mdView.current.record.MD_ConstraintsUseLimitation">
-                    {{i}}
+                    <span data-ng-bind-html="i | linky | newlines"/>
                   </p>
                 </td>
               </tr>
