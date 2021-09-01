@@ -45,6 +45,7 @@
                 xmlns:gfc="http://standards.iso.org/iso/19110/gfc/1.1"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
+                xmlns:xmlutil="java:org.fao.geonet.utils.Xml"
                 version="2.0"
                 exclude-result-prefixes="#all">
 
@@ -146,83 +147,92 @@
                       group-by=".">
       <xsl:choose>
         <xsl:when test="position() = 1">
-          <xsl:variable name="columns"
-                        select="saxon:parse(.)"/>
-          <!--
-          <thead>^M
-            <tr><th>Field name</th><th>Field Definition</th><th>Data type</th><th>Primary key</th></tr>^M
-            </thead>^M
-            <tbody>^M
-            <tr>^M
-            <td>ID</td>^M
-            <td>ID</td>^M
-            <td>integer</td>^M
-            <td>Yes</td>^M
-            </tr>^M
-          -->
+          <xsl:variable name="isXMLLike"
+                        select="xmlutil:isXMLLike(.)"/>
+          <xsl:choose>
+            <xsl:when test="$isXMLLike">
+              <xsl:variable name="columns"
+                            select="saxon:parse(.)"/>
+              <!--
+              <thead>^M
+                <tr><th>Field name</th><th>Field Definition</th><th>Data type</th><th>Primary key</th></tr>^M
+                </thead>^M
+                <tbody>^M
+                <tr>^M
+                <td>ID</td>^M
+                <td>ID</td>^M
+                <td>integer</td>^M
+                <td>Yes</td>^M
+                </tr>^M
+              -->
 
-          <xsl:variable name="typeColumnPosition"
-                        select="$columns//thead/tr/th[lower-case(.) = 'data type']/count(preceding-sibling::th)"/>
-          <xsl:variable name="noteColumnPosition"
-                        select="$columns//thead/tr/th[lower-case(.) = 'note']/count(preceding-sibling::th)"/>
-          <xsl:variable name="cardinalityColumnPosition"
-                        select="$columns//thead/tr/th[lower-case(.) = 'primary key']/count(preceding-sibling::th)"/>
+              <xsl:variable name="typeColumnPosition"
+                            select="$columns//thead/tr/th[lower-case(.) = 'data type']/count(preceding-sibling::th)"/>
+              <xsl:variable name="noteColumnPosition"
+                            select="$columns//thead/tr/th[lower-case(.) = 'note']/count(preceding-sibling::th)"/>
+              <xsl:variable name="cardinalityColumnPosition"
+                            select="$columns//thead/tr/th[lower-case(.) = 'primary key']/count(preceding-sibling::th)"/>
 
-          <mdb:contentInfo>
-            <mrc:MD_FeatureCatalogue>
-              <mrc:featureCatalogue>
-                <gfc:FC_FeatureCatalogue>
-                  <gfc:producer/>
-                  <gfc:featureType>
-                    <gfc:FC_FeatureType>
-                      <gfc:typeName>Table definition</gfc:typeName>
-                      <gfc:isAbstract>
-                        <gco:Boolean>false</gco:Boolean>
-                      </gfc:isAbstract>
-                      <xsl:for-each select="$columns//tbody/tr">
-                        <gfc:carrierOfCharacteristics>
-                          <gfc:FC_FeatureAttribute>
-                            <gfc:memberName>
-                              <xsl:value-of select="td[1]"/>
-                            </gfc:memberName>
-                            <gfc:definition>
-                              <gco:CharacterString>
-                                <xsl:value-of select="td[2]"/>
-                              </gco:CharacterString>
-                            </gfc:definition>
-                            <gfc:cardinality>
-                              <gco:CharacterString>
-                                <xsl:value-of select="if (td[$cardinalityColumnPosition + 1] = 'Yes') then '1..1' else '0..1'"/>
-                              </gco:CharacterString>
-                            </gfc:cardinality>
-                            <xsl:if test="$noteColumnPosition">
-                              <gfc:designation>
-                                <gco:CharacterString>
-                                  <xsl:value-of select="td[$noteColumnPosition + 1]"/>
-                                </gco:CharacterString>
-                              </gfc:designation>
-                            </xsl:if>
-                            <gfc:valueMeasurementUnit>
-                              <gco:UomIdentifier/>
-                            </gfc:valueMeasurementUnit>
-                            <gfc:valueType>
-                              <gco:TypeName>
-                                <gco:aName>
+              <mdb:contentInfo>
+                <mrc:MD_FeatureCatalogue>
+                  <mrc:featureCatalogue>
+                    <gfc:FC_FeatureCatalogue>
+                      <gfc:producer/>
+                      <gfc:featureType>
+                        <gfc:FC_FeatureType>
+                          <gfc:typeName>Table definition</gfc:typeName>
+                          <gfc:isAbstract>
+                            <gco:Boolean>false</gco:Boolean>
+                          </gfc:isAbstract>
+                          <xsl:for-each select="$columns//tbody/tr">
+                            <gfc:carrierOfCharacteristics>
+                              <gfc:FC_FeatureAttribute>
+                                <gfc:memberName>
+                                  <xsl:value-of select="td[1]"/>
+                                </gfc:memberName>
+                                <gfc:definition>
                                   <gco:CharacterString>
-                                    <xsl:value-of select="td[$typeColumnPosition + 1]"/>
+                                    <xsl:value-of select="td[2]"/>
                                   </gco:CharacterString>
-                                </gco:aName>
-                              </gco:TypeName>
-                            </gfc:valueType>
-                          </gfc:FC_FeatureAttribute>
-                        </gfc:carrierOfCharacteristics>
-                      </xsl:for-each>
-                    </gfc:FC_FeatureType>
-                  </gfc:featureType>
-                </gfc:FC_FeatureCatalogue>
-              </mrc:featureCatalogue>
-            </mrc:MD_FeatureCatalogue>
-          </mdb:contentInfo>
+                                </gfc:definition>
+                                <gfc:cardinality>
+                                  <gco:CharacterString>
+                                    <xsl:value-of select="if (td[$cardinalityColumnPosition + 1] = 'Yes') then '1..1' else '0..1'"/>
+                                  </gco:CharacterString>
+                                </gfc:cardinality>
+                                <xsl:if test="$noteColumnPosition">
+                                  <gfc:designation>
+                                    <gco:CharacterString>
+                                      <xsl:value-of select="td[$noteColumnPosition + 1]"/>
+                                    </gco:CharacterString>
+                                  </gfc:designation>
+                                </xsl:if>
+                                <gfc:valueMeasurementUnit>
+                                  <gco:UomIdentifier/>
+                                </gfc:valueMeasurementUnit>
+                                <gfc:valueType>
+                                  <gco:TypeName>
+                                    <gco:aName>
+                                      <gco:CharacterString>
+                                        <xsl:value-of select="td[$typeColumnPosition + 1]"/>
+                                      </gco:CharacterString>
+                                    </gco:aName>
+                                  </gco:TypeName>
+                                </gfc:valueType>
+                              </gfc:FC_FeatureAttribute>
+                            </gfc:carrierOfCharacteristics>
+                          </xsl:for-each>
+                        </gfc:FC_FeatureType>
+                      </gfc:featureType>
+                    </gfc:FC_FeatureCatalogue>
+                  </mrc:featureCatalogue>
+                </mrc:MD_FeatureCatalogue>
+              </mdb:contentInfo>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:message>Not well formed feature catalogue: <xsl:copy-of select="."/></xsl:message>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:when>
       </xsl:choose>
 

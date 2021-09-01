@@ -232,7 +232,7 @@
 
           <gmd:abstract>
             <gco:CharacterString>
-              <xsl:value-of select="dcterms:abstract"/>
+              <xsl:value-of select="data:moreInfo"/>
             </gco:CharacterString>
           </gmd:abstract>
 
@@ -816,14 +816,14 @@ TODO
 
           <!--
           <data:moreInfo xml:lang="en"><![CDATA[<p>Since 2013 the EEA ha
-          -->
+
           <xsl:for-each select="data:moreInfo">
             <gmd:supplementalInformation>
               <gco:CharacterString>
                 <xsl:value-of select="replace(.,'&lt;[^>]*>', '')"/>
               </gco:CharacterString>
             </gmd:supplementalInformation>
-          </xsl:for-each>
+          </xsl:for-each>-->
         </gmd:MD_DataIdentification>
       </gmd:identificationInfo>
       <gmd:distributionInfo>

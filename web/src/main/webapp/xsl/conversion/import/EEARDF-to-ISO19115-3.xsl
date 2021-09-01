@@ -6,3 +6,4 @@
   <xsl:variable name="withFeatureCatalogue"
                 select="true()"/>
 </xsl:stylesheet>
+
