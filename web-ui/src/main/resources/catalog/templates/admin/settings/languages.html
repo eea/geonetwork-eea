@@ -114,7 +114,7 @@
                           data-translate="">translation.addFor</span>
                     <input type="text" class="form-control"
                            data-ng-model="newKey"
-                           placeholder="{{'translation.key'}}">
+                           placeholder="{{'translation.key' | translate}}">
                     <span class="input-group-btn">
                       <button class="btn btn-default"
                               data-ng-disabled="newKey === ''"
@@ -122,6 +122,43 @@
                         <i class="fa fa-fw fa-plus"></i>
                         <span data-translate="">translation.add</span>
                       </button>
+                       <button type="button"
+                               class="btn btn-default dropdown-toggle"
+                               data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                          <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                          <li class="dropdown-header"
+                              data-translate="">
+                            translation.key.suggested
+                          </li>
+                          <li class="divider"/>
+                          <li class="dropdown-header"
+                              data-translate="">
+                            translation.key.suggested.aggs
+                          </li>
+                          <li class=""
+                              data-ng-repeat="t in suggestedKeys.aggs">
+                            <a title="{{t.translation}}"
+                               data-ng-click="addTranslation(t.key)">
+                              {{t.key}}
+                              <span data-ng-show="t.translation">({{t.translation}})</span>
+                            </a>
+                          </li>
+                          <li class="dropdown-header"
+                              data-translate="">
+                            translation.key.suggested.sortBy
+                          </li>
+                          <li class=""
+                              data-ng-repeat="t in suggestedKeys.sortBy">
+                            <a title="{{t.translation}}"
+                               data-ng-click="addTranslation(t.key)">
+                              {{t.key}}
+                              <span data-ng-show="t.translation">({{t.translation}})</span>
+                            </a>
+                          </li>
+                        </ul>
                     </span>
                   </div>
                 </td>

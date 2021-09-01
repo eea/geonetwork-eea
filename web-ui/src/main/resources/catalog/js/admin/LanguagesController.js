@@ -31,7 +31,9 @@
 
   module.controller('GnLanguagesController', [
     '$scope', '$http', '$rootScope', '$translate',
-    function($scope, $http, $rootScope, $translate) {
+    'gnGlobalSettings',
+    function($scope, $http, $rootScope, $translate,
+             gnGlobalSettings) {
       $scope.dbLanguages = [];
       $scope.applicationLanguagesNotAlreadyAvailable = [];
 
@@ -85,6 +87,36 @@
 
       $scope.dbTranslations = [];
       $scope.newKey = '';
+      $scope.suggestedKeys = {
+        aggs: [],
+        sortBy: [],
+        other: []
+      };
+      function retrieveKeysToTranslateFromConfig() {
+        var listOfKeys = [];
+        function addAggs (value, key) {
+          addSuggestions(value, key.replace(/(.key|.default|.lang{3}[a-z])$/, ''),
+            'facet-', $scope.suggestedKeys.aggs);
+        }
+        function addSuggestions (value, key, prefix, bucket) {
+          var translationKey = prefix + key,
+            t =  $translate.instant(translationKey);
+          if(listOfKeys.indexOf(translationKey) === -1) {
+            bucket.push({
+              key: translationKey,
+              translation: t == translationKey ? undefined : t
+            });
+          }
+          listOfKeys.push(translationKey);
+        }
+        angular.forEach(gnGlobalSettings.gnCfg.mods.home.facetConfig, addAggs);
+        angular.forEach(gnGlobalSettings.gnCfg.mods.search.facetConfig, addAggs);
+        angular.forEach(gnGlobalSettings.gnCfg.mods.editor.facetConfig, addAggs);
+        gnGlobalSettings.gnCfg.mods.search.sortbyValues.map(function(i, s) {
+          addSuggestions(null, i.sortBy, 'sortBy-', $scope.suggestedKeys.sortBy)
+        });
+      }
+      retrieveKeysToTranslateFromConfig();
 
       function loadDbTranslations() {
         $http.get('../api/i18n/db/custom').then(function(r) {
