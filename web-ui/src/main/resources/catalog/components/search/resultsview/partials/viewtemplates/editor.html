@@ -42,6 +42,11 @@
                 </span>
               </div>
             </div>
+
+            <div data-ng-if="(('group-' + md.groupOwner) | translate).indexOf('SDI_DRAFT') === 0"
+                 class="gn-status-stamp gn-status-stamp-editor pull-right">
+              <span class="gn-status gn-status-mdview gn-status-obsolete">Draft</span>
+            </div>
           </div>
           <gn-draft-validation-widget data-ng-if="md.draft == 'e'" metadata="md"></gn-draft-validation-widget>
         </div>

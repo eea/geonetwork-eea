@@ -10,6 +10,11 @@
     </h1>
     <span data-ng-if="savedStatus">| </span>
     <span data-ng-class="saveError ? 'text-danger' : ''">{{savedStatus}}</span>
+
+    <div data-ng-if="(('group-' + groupOwner) | translate).indexOf('SDI_DRAFT') === 0"
+         class="gn-status-stamp pull-right">
+      <span class="gn-status gn-status-mdview gn-status-obsolete">Draft</span>
+    </div>
   </div>
 
     <!-- If using the category selector in the editor
