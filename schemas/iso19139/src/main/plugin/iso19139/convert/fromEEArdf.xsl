@@ -11,6 +11,7 @@
                 xmlns:dcterms="http://purl.org/dc/terms/"
                 xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
                 xmlns:schema="http://schema.org/"
+                xmlns:saxon="http://saxon.sf.net/"
                 xmlns:gml="http://www.opengis.net/gml/3.2"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
@@ -232,26 +233,35 @@
 
           <gmd:abstract>
             <gco:CharacterString>
-              <xsl:value-of select="data:moreInfo"/>
+              <xsl:value-of select="normalize-space(saxon:parse(data:moreInfo))"/>
             </gco:CharacterString>
           </gmd:abstract>
 
           <!-- <data:dataSource xml:lang="en"><![CDATA[<p><span>Directorate-General for Climate Action, 2016.</span><br style="margin: 0px; padding: 0px; " /><span>Data are submitted by Member States at: http://cdr.eionet.europa.eu/</span></p>]]></data:dataSource>-->
           <xsl:for-each select="data:dataSource">
             <gmd:credit>
-              <xsl:value-of select="normalize-space(.)"/>
+              <gco:CharacterString>
+                <xsl:value-of select="normalize-space(saxon:parse(.))"/>
+              </gco:CharacterString>
             </gmd:credit>
+          </xsl:for-each>
+          <xsl:for-each select="data:units">
+            <gmd:purpose>
+              <gco:CharacterString>
+                <xsl:value-of select="normalize-space(saxon:parse(.))"/>
+              </gco:CharacterString>
+            </gmd:purpose>
           </xsl:for-each>
 
 
-          <!-- TODO -->
+          <!-- TODO
           <xsl:variable name="status"
                         select="if(false()) then 'superseded' else 'completed'"/>
 
           <gmd:status>
             <gmd:MD_ProgressCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"
                                  codeListValue="{$status}"/>
-          </gmd:status>
+          </gmd:status> -->
 
           <!--
            <data:contact xml:lang="en">
@@ -608,7 +618,7 @@
                     </geo:SpatialThing>
                   </dcterms:spatial>
               -->
-              <xsl:for-each select="dcterms:spatial/geo:SpatialThing/rdfs:label">
+              <xsl:for-each select="dcterms:spatial/geo:SpatialThing[dcterms:type = 'independent political entity']/rdfs:label">
                 <xsl:sort select="."/>
                 <gmd:keyword gco:nilReason="missing">
                   <xsl:choose>
@@ -663,7 +673,9 @@
 <!--                <dcterms:rights xml:lang="en">EEA standard re-use policy: unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged (https://www.eea.europa.eu/legal/copyright). Copyright holder: Directorate-General for Climate Action (DG-CLIMA).</dcterms:rights>
 TODO
 -->
-                <gco:CharacterString>EEA standard re-use policy: unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged (http://www.eea.europa.eu/legal/copyright). Copyright holder: European Environment Agency (EEA).</gco:CharacterString>
+                <gco:CharacterString>
+                  <xsl:value-of select="dcterms:rights"/>
+                </gco:CharacterString>
               </gmd:useLimitation>
             </gmd:MD_Constraints>
           </gmd:resourceConstraints>

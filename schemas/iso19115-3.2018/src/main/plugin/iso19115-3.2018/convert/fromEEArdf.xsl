@@ -192,7 +192,11 @@
                                 </gfc:memberName>
                                 <gfc:definition>
                                   <gco:CharacterString>
-                                    <xsl:value-of select="td[2]"/>
+                                    <xsl:value-of select="td[2]"/>.
+                                    <xsl:if test="$noteColumnPosition and td[$noteColumnPosition + 1] != ''">
+                                      <xsl:text> Note: </xsl:text>
+                                      <xsl:value-of select="td[$noteColumnPosition + 1]"/>
+                                    </xsl:if>
                                   </gco:CharacterString>
                                 </gfc:definition>
                                 <gfc:cardinality>
@@ -200,13 +204,6 @@
                                     <xsl:value-of select="if (td[$cardinalityColumnPosition + 1] = 'Yes') then '1..1' else '0..1'"/>
                                   </gco:CharacterString>
                                 </gfc:cardinality>
-                                <xsl:if test="$noteColumnPosition">
-                                  <gfc:designation>
-                                    <gco:CharacterString>
-                                      <xsl:value-of select="td[$noteColumnPosition + 1]"/>
-                                    </gco:CharacterString>
-                                  </gfc:designation>
-                                </xsl:if>
                                 <gfc:valueMeasurementUnit>
                                   <gco:UomIdentifier/>
                                 </gfc:valueMeasurementUnit>
@@ -238,6 +235,9 @@
 
     </xsl:for-each-group>
   </xsl:template>
+
+  <xsl:template match="*[local-name() = 'tableDefinition']"
+                mode="from19139to19115-3.2018"/>
 
 
 </xsl:stylesheet>
