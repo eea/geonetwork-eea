@@ -394,6 +394,26 @@
             return obj;
           };
 
+          var checkConfigurationPropertyCondition = function (record, prop, cb) {
+            if (prop.if) {
+              for (var key in prop.if) {
+                if (prop.if.hasOwnProperty(key)) {
+                  var values = angular.isArray(prop.if[key])
+                    ? prop.if[key]
+                    : [prop.if[key]]
+
+                  var recordValue = this.getObjectValueByPath(record, key);
+                  if (values.includes(recordValue)) {
+                    cb();
+                  }
+                }
+              }
+            } else {
+              console.warn('A conditional config property MUST have a if property. ' +
+                'eg. {"if": {"documentStandard": "iso19115-3.2018"}, "url": "..."}')
+            }
+          };
+
         return {
           scrollTo: scrollTo,
           isInView: isInView,
@@ -402,6 +422,7 @@
           traverse: traverse,
           formatObjectPropertyAsArray: formatObjectPropertyAsArray,
           getObjectValueByPath: getObjectValueByPath,
+          checkConfigurationPropertyCondition: checkConfigurationPropertyCondition,
           toCsv: toCsv,
           CSVToArray: CSVToArray,
           getInspireIcon: getInspireIcon,
@@ -568,8 +589,8 @@
   }]);
 
   module.service('gnFacetTree', [
-    '$http', 'gnLangs', '$q', '$translate', '$timeout',
-    function($http, gnLangs, $q, $translate, $timeout) {
+    '$http', 'gnLangs', '$q', '$translate', '$timeout', 'gnUrlUtils',
+    function($http, gnLangs, $q, $translate, $timeout, gnUrlUtils) {
     var separator = '^';
     var translationsToLoad = [];
 
@@ -631,13 +652,14 @@
         var uris = [];
         angular.copy(keys, uris);
         translationsToLoad[fieldId] = {};
-        $http.get('../api/registries/vocabularies/keyword' +
-          '?thesaurus=' + fieldId.replace(/th_(.*)_tree.key/, '$1') +
-          '&id=' + encodeURIComponent(uris.join(',')) +
-          // Get Keyword in current UI language or fallback to any UI language
-          '&lang=' + gnLangs.getCurrent() + ',' + Object.keys(gnLangs.langs).join(','), {
+        $http.post('../api/registries/vocabularies/keyword', gnUrlUtils.toKeyValue({
+          thesaurus: fieldId.replace(/th_(.*)_tree.key/, '$1'),
+          id: encodeURIComponent(uris.join(',')),
+          lang: gnLangs.getCurrent() + ',' + Object.keys(gnLangs.langs).join(',')
+        }), {
           cache: true,
           headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json'
           }
         }).then(function(r) {
