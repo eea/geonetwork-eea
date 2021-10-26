@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:gmd="http://www.isotc211.org/2005/gmd"
-                xmlns:gco="http://www.isotc211.org/2005/gco"
-                xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                xmlns:gts="http://www.isotc211.org/2005/gts"
-                xmlns:gml="http://www.opengis.net/gml/3.2"
-                xmlns:gml320="http://www.opengis.net/gml"
+                xmlns:dc="http://purl.org/dc/elements/1.1/"
+                xmlns:dct="http://purl.org/dc/terms/"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:tr="java:org.fao.geonet.api.records.formatters.SchemaLocalizations"
                 xmlns:gn-fn-render="http://geonetwork-opensource.org/xsl/functions/render"
                 xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
-                xmlns:gn-fn-iso19139="http://geonetwork-opensource.org/xsl/functions/profiles/iso19139"
                 xmlns:xslUtils="java:org.fao.geonet.util.XslUtil"
                 xmlns:saxon="http://saxon.sf.net/"
                 version="2.0"
@@ -19,73 +13,48 @@
                 exclude-result-prefixes="#all">
 
   <xsl:import href="sharedFormatterDir/xslt/render-variables.xsl"/>
-  <xsl:include href="../../layout/utility-tpl-multilingual.xsl"/>
   <xsl:include href="../../layout/utility-fn.xsl"/>
   <xsl:include href="../../../iso19115-3.2018/formatter/citation/citation-common.xsl"/>
 
   <xsl:variable name="metadata"
-                select="/root/gmd:MD_Metadata"/>
+                select="/root/simpledc"/>
 
   <xsl:variable name="configuration"
                 select="/empty"/>
   <xsl:variable name="editorConfig"
                 select="/empty"/>
 
-  <xsl:variable name="langId"
-                select="gn-fn-iso19139:getLangId($metadata, $language)"/>
-
-  <xsl:variable name="allLanguages">
-    <xsl:call-template name="get-iso19139-other-languages"/>
-  </xsl:variable>
-
   <xsl:template match="/">
 
     <!-- Who is the creator of the data set?  This can be an individual, a group of individuals, or an organization. -->
-    <xsl:variable name="authorRoles"
-                  select="('custodian', 'author')"/>
     <xsl:variable name="authors"
-                  select="$metadata/gmd:identificationInfo/*/gmd:pointOfContact/
-                                *[gmd:role/*/@codeListValue = $authorRoles]"/>
+                  select="$metadata/dc:creator"/>
     <xsl:variable name="authorsNameAndOrgList">
       <xsl:for-each select="$authors">
         <author>
           <xsl:variable name="name"
-                        select="normalize-space(.//gmd:individualName[1])"/>
-
+                        select="normalize-space(.)"/>
           <xsl:value-of select="$name"/>
-          <xsl:if test="$name != ''">(</xsl:if>
-          <xsl:for-each select=".//gmd:organisationName">
-            <xsl:call-template name="localised">
-              <xsl:with-param name="langId" select="$langId"/>
-            </xsl:call-template>
-          </xsl:for-each>
-          <xsl:if test="$name">)</xsl:if>
         </author>
       </xsl:for-each>
     </xsl:variable>
 
     <!-- What name is the data set called? -->
     <xsl:variable name="title"
-                  select="$metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
+                  select="$metadata/dc:title"/>
 
     <xsl:variable name="translatedTitle">
       <xsl:for-each select="$title">
-        <xsl:call-template name="localised">
-          <xsl:with-param name="langId" select="$langId"/>
-        </xsl:call-template>
+        <xsl:value-of select="normalize-space(.)"/>
       </xsl:for-each>
     </xsl:variable>
 
     <!-- Is there a version or edition number associated with the data set? -->
-    <xsl:variable name="edition"
-                  select="'$metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:title/*/text()[. != '']'"/>
+
 
     <!-- What year was the data set published?  When was the data set posted online? -->
     <xsl:variable name="dates"
-                  select="$metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:date/*[
-                                  gmd:dateType/*/@codeListValue =
-                                    ('publication', 'revision')]/
-                                    gmd:date/gco:*[. != '']"/>
+                  select="$metadata/dct:modified[. != '']"/>
 
     <xsl:variable name="publicationDates">
       <xsl:perform-sort select="$dates">
@@ -97,26 +66,15 @@
                   select="$publicationDates[1]"/>
 
     <!-- What entity is responsible for producing and/or distributing the data set?  Also, is there a physical location associated with the publisher? -->
-    <xsl:variable name="publisherRoles"
-                  select="('publisher')"/>
     <xsl:variable name="publishers"
-                  select="$metadata/gmd:identificationInfo/*/gmd:pointOfContact/
-                                *[gmd:role/*/@codeListValue = $publisherRoles]"/>
+                  select="$metadata/dc:publisher"/>
 
     <xsl:variable name="publishersNameAndOrgList">
       <xsl:for-each select="$publishers">
         <author>
           <xsl:variable name="name"
-                        select="normalize-space(.//gmd:individualName[1])"/>
-
+                        select="normalize-space(.)"/>
           <xsl:value-of select="$name"/>
-          <xsl:if test="$name != ''">(</xsl:if>
-          <xsl:for-each select=".//gmd:organisationName">
-            <xsl:call-template name="localised">
-              <xsl:with-param name="langId" select="$langId"/>
-            </xsl:call-template>
-          </xsl:for-each>
-          <xsl:if test="$name">)</xsl:if>
         </author>
       </xsl:for-each>
     </xsl:variable>
@@ -124,16 +82,14 @@
 
     <!-- Electronic Retrieval Location -->
     <xsl:variable name="doiInResourceIdentifier"
-                  select="(//gmd:identificationInfo/*/gmd:citation/*/
-                              gmd:identifier/*/gmd:code[
-                                contains(*/text(), 'datacite.org/doi/')
-                                or contains(*/text(), 'doi.org')
-                                or contains(*/@xlink:href, 'doi.org')]/*/(@xlink:href|text()))[1]"/>
+                  select="(//dc:identifier[
+                                contains(text(), 'datacite.org/doi/')
+                                or contains(text(), 'doi.org')])[1]"/>
 
     <xsl:variable name="doiInOnline"
-                  select="//gmd:distributionInfo//gmd:onLine/*[
-                              matches(gmd:protocol/gco:CharacterString,
-                               $doiProtocolRegex)]/gmd:linkage/gmd:URL[. != '']"/>
+                  select="//(dc:relation|dct:references)[
+                                contains(text(), 'datacite.org/doi/')
+                                or contains(text(), 'doi.org')]"/>
 
     <xsl:variable name="doiUrl"
                   select="if ($doiInResourceIdentifier != '')
@@ -145,25 +101,19 @@
     <xsl:variable name="landingPageUrl"
                   select="concat($nodeUrl, 'api/records/', $metadataUuid)"/>
 
-
     <xsl:variable name="keywords"
-                  select="$metadata/gmd:identificationInfo/*//gmd:keyword"/>
+                  select="$metadata//dc:subject"/>
 
     <xsl:variable name="translatedKeywords">
       <xsl:for-each select="$keywords">
-        <keyword>
-          <xsl:call-template name="localised">
-            <xsl:with-param name="langId" select="$langId"/>
-          </xsl:call-template>
-        </keyword>
+        <keyword><xsl:value-of select="."/></keyword>
       </xsl:for-each>
     </xsl:variable>
-
 
     <xsl:variable name="citationInfo">
       <citation>
         <uuid><xsl:value-of
-          select="$metadata/gmd:fileIdentifier/gco:CharacterString[. != '']"/></uuid>
+          select="$metadata/dc:identifier[. != '']"/></uuid>
         <authorsNameAndOrgList><xsl:copy-of select="$authorsNameAndOrgList"/></authorsNameAndOrgList>
         <lastPublicationDate><xsl:value-of select="$lastPublicationDate"/></lastPublicationDate>
         <translatedTitle><xsl:value-of select="$translatedTitle"/></translatedTitle>
