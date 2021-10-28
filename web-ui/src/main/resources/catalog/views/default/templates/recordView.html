@@ -172,8 +172,6 @@
                 data-ng-if="user.isEditorOrMore() && md.mdStatus<50 && isMdWorkflowEnable">{{('mdStatus-' + md.mdStatus) | translate}}</span>
         </h1>
 
-
-
         <div class="gn-margin-bottom"
              data-ng-bind-html="(mdView.current.record.resourceAbstract) | linky | newlines"></div>
 
@@ -297,14 +295,16 @@
               <tr data-ng-repeat="(key, t) in mdView.current.record.allKeywords">
                 <th>{{(t.title || key) | translate}}</th>
                 <td>
-                  <ul>
-                    <li data-ng-repeat="k in t.keywords track by $index"
-                        data-ng-if="(k) && !sortKeywordsAlphabetically"
-                        class="tt-cursor">
+                  <div ng-if="key === 'th_regions'">
+                    <ul data-ng-init="keywordWithGroup = mdView.current.record.getKeywordsGroupedByUriBase('th_regions', '(.*\/C19|.*#[A-Za-z]*).*')">
+
+                      <li data-ng-repeat="k in (list = (keywordWithGroup | orderBy: ['-group','default']))"
+                          class="tt-cursor"
+                          style="{{list[$index + 1].group !== list[$index].group ? 'margin-bottom: 5px' : ''}}">
                         <span data-ng-hide="::!!k.link">{{::k.default | capitalize}}</span>
                         <a href=""
-                          data-ng-href="{{::k.link}}"
-                          data-ng-show="::!!k.link">
+                           data-ng-href="{{::k.link}}"
+                           data-ng-show="::!!k.link">
                           {{::k.default | capitalize}}</a>&nbsp;
                         <a href=""
                            title="{{'clickToFilterOn' | translate}} {{::k.default | capitalize}}"
@@ -312,24 +312,44 @@
                            data-ng-click="filterBy('tag.default', k.default)">
                           <i class="fa fa-search"/>
                         </a>
-                    </li>
+                      </li>
+                    </ul>
+                  </div>
+                  <div ng-if="key !== 'th_regions'">
+                    <ul>
+                      <li data-ng-repeat="k in t.keywords track by $index"
+                          data-ng-if="(k) && !sortKeywordsAlphabetically"
+                          class="tt-cursor">
+                        <span data-ng-hide="::!!k.link">{{::k.default | capitalize}}</span>
+                        <a href=""
+                           data-ng-href="{{::k.link}}"
+                           data-ng-show="::!!k.link">
+                          {{::k.default | capitalize}}</a>&nbsp;
+                        <a href=""
+                           title="{{'clickToFilterOn' | translate}} {{::k.default | capitalize}}"
+                           aria-label="{{'clickToFilterOn' | translate}} {{::k.default | capitalize}}"
+                           data-ng-click="filterBy('tag.default', k.default)">
+                          <i class="fa fa-search"/>
+                        </a>
+                      </li>
 
-                    <li data-ng-repeat="k in t.keywords | orderBy: 'default'"
-                        data-ng-if="(k) && sortKeywordsAlphabetically"
-                        class="tt-cursor">
-                      <span data-ng-hide="::!!k.link">{{::k.default | capitalize}}</span>
-                      <a href=""
-                         data-ng-href="{{::k.link}}"
-                         data-ng-show="::!!k.link">
-                        {{::k.default | capitalize}}</a>&nbsp;
-                      <a href=""
-                         title="{{'clickToFilterOn' | translate}} {{::k.default | capitalize}}"
-                         aria-label="{{'clickToFilterOn' | translate}} {{::k.default | capitalize}}"
-                         data-ng-click="filterBy('tag.default', k.default)">
-                        <i class="fa fa-search"/>
-                      </a>
-                    </li>
-                  </ul>
+                      <li data-ng-repeat="k in t.keywords | orderBy: 'default'"
+                          data-ng-if="(k) && sortKeywordsAlphabetically"
+                          class="tt-cursor">
+                        <span data-ng-hide="::!!k.link">{{::k.default | capitalize}}</span>
+                        <a href=""
+                           data-ng-href="{{::k.link}}"
+                           data-ng-show="::!!k.link">
+                          {{::k.default | capitalize}}</a>&nbsp;
+                        <a href=""
+                           title="{{'clickToFilterOn' | translate}} {{::k.default | capitalize}}"
+                           aria-label="{{'clickToFilterOn' | translate}} {{::k.default | capitalize}}"
+                           data-ng-click="filterBy('tag.default', k.default)">
+                          <i class="fa fa-search"/>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </td>
               </tr>
               <tr data-ng-if="mdView.current.record.resourceLanguage.length > 0">
@@ -773,6 +793,27 @@
 
           <div data-ng-show="isRecordHistoryEnabled && user.isEditorOrMore() && mdView.current.record.draft != 'y'"
               data-gn-record-history="mdView.current.record"></div>
+
+
+          <section class="gn-md-side-errors"
+                   data-ng-if="(mdView.current.record.isHarvested == 'false'
+                                || mdView.current.record.isHarvested == undefined)
+                                && mdView.current.record.indexingErrorMsg
+                                && user.isEditorOrMore()">
+            <h2>
+              <i class="fa fa-fw fa-cog"></i>
+              <span data-translate="">indexingErrorMessages</span>
+            </h2>
+            <div class="alert alert-danger">
+              <ul>
+                <li data-ng-repeat="e in mdView.current.record.indexingErrorMsg">
+                  <code>
+                    {{e}}
+                  </code>
+                </li>
+              </ul>
+            </div>
+          </section>
         </div>
       </div>
     </div>
