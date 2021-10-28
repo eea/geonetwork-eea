@@ -5,5 +5,8 @@ INSERT INTO Users (id, username, password, name, surname, profile, kind, organis
 INSERT INTO Address (id, address, city, country, state, zip) VALUES  (0, '', '', '', '', '');
 INSERT INTO UserAddress (userid, addressid) VALUES  (0, 0);
 
+DROP TABLE regionsdes;
+DROP TABLE regions;
+
 UPDATE Settings SET value='4.0.8' WHERE name='system/platform/version';
 UPDATE Settings SET value='0' WHERE name='system/platform/subVersion';
