@@ -1148,7 +1148,7 @@
         <security.config.file>config-security-noldap.xml</security.config.file>
         <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
         <ldap.mapping.defaultProfile>RegisteredUser</ldap.mapping.defaultProfile>
-        <ldap.mapping.defaultGroup>SDI_GUEST</ldap.mapping.defaultGroup>
+        <ldap.mapping.defaultGroup>SDI_EDITING_DEFAULT</ldap.mapping.defaultGroup>
       </properties>
     </profile>
     <profile>
