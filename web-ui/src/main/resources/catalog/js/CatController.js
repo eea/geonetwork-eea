@@ -598,6 +598,9 @@ goog.require('gn_alert');
           },
           'savedSelection': {
             'enabled': false
+          },
+          "addWMSLayersToMap": {
+            "urlLayerParam": ""
           }
         },
         'map': {
