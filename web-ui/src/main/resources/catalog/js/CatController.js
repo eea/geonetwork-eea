@@ -854,7 +854,7 @@ goog.require('gn_alert');
           blur: 0
         }
       },
-      stopKeyList: [
+      stopKeyList: [        
         'langDetector',
         'nodeDetector',
         'serviceDetector',
@@ -868,8 +868,11 @@ goog.require('gn_alert');
         'downloadFormatter',
         'related',
         'linkTypes',
+        'usersearches',
+        'savedSelection',
         'listOfServices',
         'showCitation',
+        'externalViewer',
         'map-viewer',
         'map-search',
         'map-editor',
@@ -877,6 +880,10 @@ goog.require('gn_alert');
         'switcherProjectionList',
         'cookieWarning',
         'facetConfig',
+        'searchOptions',
+        'graticuleOgcService',
+        'geocoder',
+        'disabledTools',
         'filters',
         'scoreConfig',
         'autocompleteConfig',
