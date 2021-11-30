@@ -11,7 +11,6 @@
                 xmlns:dcterms="http://purl.org/dc/terms/"
                 xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
                 xmlns:schema="http://schema.org/"
-                xmlns:saxon="http://saxon.sf.net/"
                 xmlns:gml="http://www.opengis.net/gml/3.2"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
@@ -233,22 +232,24 @@
 
           <gmd:abstract>
             <gco:CharacterString>
-              <xsl:value-of select="normalize-space(saxon:parse(data:moreInfo))"/>
+              <xsl:if test="data:moreInfo != ''">
+                <xsl:value-of select="util:html2text(data:moreInfo)"/>
+              </xsl:if>
             </gco:CharacterString>
           </gmd:abstract>
 
           <!-- <data:dataSource xml:lang="en"><![CDATA[<p><span>Directorate-General for Climate Action, 2016.</span><br style="margin: 0px; padding: 0px; " /><span>Data are submitted by Member States at: http://cdr.eionet.europa.eu/</span></p>]]></data:dataSource>-->
-          <xsl:for-each select="data:dataSource">
+          <xsl:for-each select="data:dataSource[. != '']">
             <gmd:credit>
               <gco:CharacterString>
-                <xsl:value-of select="normalize-space(saxon:parse(.))"/>
+                <xsl:value-of select="util:html2text(.)"/>
               </gco:CharacterString>
             </gmd:credit>
           </xsl:for-each>
-          <xsl:for-each select="data:units">
+          <xsl:for-each select="data:units[. != '']">
             <gmd:purpose>
               <gco:CharacterString>
-                <xsl:value-of select="normalize-space(saxon:parse(.))"/>
+                <xsl:value-of select="util:html2text(.)"/>
               </gco:CharacterString>
             </gmd:purpose>
           </xsl:for-each>
