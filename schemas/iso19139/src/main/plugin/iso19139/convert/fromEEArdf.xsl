@@ -359,7 +359,7 @@
               <rdfs:label>type_icon</rdfs:label>
             </schema:Image>
           </foaf:depiction>-->
-          <xsl:for-each select="foaf:depiction/schema:Image[rdfs:label != type_icon]">
+          <xsl:for-each select="foaf:depiction/schema:Image[rdfs:label != 'type_icon']">
             <gmd:graphicOverview>
               <gmd:MD_BrowseGraphic>
                 <gmd:fileName>
