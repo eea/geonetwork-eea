@@ -298,7 +298,7 @@ goog.require('gn_alert');
           // See https://github.com/geonetwork/core-geonetwork/pull/5349
           'isVegaEnabled': true,
           'facetConfig': {
-            'cl_hierarchyLevel.key': {
+            'resourceType': {
               'terms': {
                 'field': 'resourceType'
               },
