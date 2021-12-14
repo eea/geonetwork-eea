@@ -201,6 +201,24 @@
                     select="normalize-space($identifier)"/>"</sch:report>
 
 
+          <sch:let name="eeaFilePath"
+                   value="ancestor::gmd:MD_Metadata
+                            //gmd:onLine/*[gmd:protocol/gco:CharacterString = 'EEA:FILEPATH']"/>
+
+          <sch:let name="filePathCount"
+                  value="count($eeaFilePath)"/>
+          <sch:let name="filePathWithoutIdentifierCount"
+                  value="count($eeaFilePath/gmd:linkage/gmd:URL[contains(., concat('/', $identifier, '/'))])"/>
+
+          <sch:let name="identifierIsInAllFilePath"
+                   value="normalize-space($identifier) != ''
+                          and $filePathCount > 0
+                          and $filePathCount = $filePathWithoutIdentifierCount"/>
+          <sch:assert test="$identifierIsInAllFilePath"><sch:value-of
+            select="$loc/strings/EEA.identifierInFilePath.alert"/></sch:assert>
+          <sch:report test="$identifierIsInAllFilePath"><sch:value-of
+            select="$loc/strings/EEA.identifierInFilePath.report"/></sch:report>
+
             <!-- MD_Metadata/identificationInfo/*/abstract. Is mandatory for EEA
                  https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfoabstract
 
