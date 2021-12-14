@@ -300,7 +300,7 @@ goog.require('gn_alert');
           'facetConfig': {
             'cl_hierarchyLevel.key': {
               'terms': {
-                'field': 'cl_hierarchyLevel.key'
+                'field': 'resourceType'
               },
               'aggs': {
                 'format': {
@@ -854,7 +854,7 @@ goog.require('gn_alert');
           blur: 0
         }
       },
-      stopKeyList: [        
+      stopKeyList: [
         'langDetector',
         'nodeDetector',
         'serviceDetector',
