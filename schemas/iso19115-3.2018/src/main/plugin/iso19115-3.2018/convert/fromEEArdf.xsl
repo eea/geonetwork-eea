@@ -72,7 +72,7 @@
         <xsl:apply-templates select="gmd:parentIdentifier" mode="from19139to19115-3.2018"/>
         <xsl:apply-templates select="gmd:hierarchyLevel" mode="from19139to19115-3.2018"/>
         <xsl:apply-templates select="gmd:contact" mode="from19139to19115-3.2018"/>
-        <xsl:apply-templates select="gmd:dateStamp" mode="from19139to19115-3.2018"/>
+        <xsl:copy-of select="mdb:dateInfo"/>
         <xsl:apply-templates select="gmd:metadataStandardName" mode="from19139to19115-3.2018"/>
         <xsl:apply-templates select="gmd:locale" mode="from19139to19115-3.2018"/>
         <xsl:apply-templates select="gmd:spatialRepresentationInfo" mode="from19139to19115-3.2018"/>

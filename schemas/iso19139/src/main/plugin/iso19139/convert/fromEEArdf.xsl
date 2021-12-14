@@ -75,6 +75,9 @@
     <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
                      xmlns:gco="http://www.isotc211.org/2005/gco"
                      xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                     xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/2.0"
+                     xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/2.0"
+                     xmlns:gco2="http://standards.iso.org/iso/19115/-3/gco/1.0"
                      xmlns:gml="http://www.opengis.net/gml"
                      xmlns:xlink="http://www.w3.org/1999/xlink"
                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -130,11 +133,34 @@
           </gmd:role>
         </gmd:CI_ResponsibleParty>
       </gmd:contact>
-      <gmd:dateStamp>
-        <gco:DateTime>
-          <xsl:value-of select="dcterms:modified"/>
-        </gco:DateTime>
-      </gmd:dateStamp>
+
+      <xsl:if test="dcterms:modified[. != '']">
+        <mdb:dateInfo>
+          <cit:CI_Date>
+            <cit:date>
+              <gco2:DateTime><xsl:value-of select="dcterms:modified"/></gco2:DateTime>
+            </cit:date>
+            <cit:dateType>
+              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode"
+                                   codeListValue="revision"/>
+            </cit:dateType>
+          </cit:CI_Date>
+        </mdb:dateInfo>
+      </xsl:if>
+      <xsl:if test="dcterms:created[. != '']">
+        <mdb:dateInfo>
+          <cit:CI_Date>
+            <cit:date>
+              <gco2:DateTime><xsl:value-of select="dcterms:created"/></gco2:DateTime>
+            </cit:date>
+            <cit:dateType>
+              <cit:CI_DateTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode"
+                                   codeListValue="creation">creation</cit:CI_DateTypeCode>
+            </cit:dateType>
+          </cit:CI_Date>
+        </mdb:dateInfo>
+      </xsl:if>
+
       <gmd:metadataStandardName>
         <gco:CharacterString>ISO 19115:2003/19139</gco:CharacterString>
       </gmd:metadataStandardName>
@@ -232,8 +258,8 @@
 
           <gmd:abstract>
             <gco:CharacterString>
-              <xsl:if test="data:moreInfo != ''">
-                <xsl:value-of select="util:html2text(data:moreInfo)"/>
+              <xsl:if test="dcterms:description != ''">
+                <xsl:value-of select="util:html2text(dcterms:description)"/>
               </xsl:if>
             </gco:CharacterString>
           </gmd:abstract>
@@ -333,7 +359,7 @@
               <rdfs:label>type_icon</rdfs:label>
             </schema:Image>
           </foaf:depiction>-->
-          <xsl:for-each select="foaf:depiction/schema:Image">
+          <xsl:for-each select="foaf:depiction/schema:Image[rdfs:label != type_icon]">
             <gmd:graphicOverview>
               <gmd:MD_BrowseGraphic>
                 <gmd:fileName>
@@ -829,14 +855,14 @@ TODO
 
           <!--
           <data:moreInfo xml:lang="en"><![CDATA[<p>Since 2013 the EEA ha
-
-          <xsl:for-each select="data:moreInfo">
+          -->
+          <xsl:for-each select="data:moreInfo[. != '']">
             <gmd:supplementalInformation>
               <gco:CharacterString>
-                <xsl:value-of select="replace(.,'&lt;[^>]*>', '')"/>
+                <xsl:value-of select="util:html2text(.)"/>
               </gco:CharacterString>
             </gmd:supplementalInformation>
-          </xsl:for-each>-->
+          </xsl:for-each>
         </gmd:MD_DataIdentification>
       </gmd:identificationInfo>
       <gmd:distributionInfo>
@@ -914,8 +940,12 @@ TODO
           </gmd:scope>
           <gmd:lineage>
             <gmd:LI_Lineage>
-              <gmd:statement gco:nilReason="missing">
-                <gco:CharacterString/>
+              <gmd:statement>
+                <gco:CharacterString>
+                  <xsl:for-each select="data:geoAccuracy[. != '']">
+                    <xsl:value-of select="."/>
+                  </xsl:for-each>
+                </gco:CharacterString>
               </gmd:statement>
             </gmd:LI_Lineage>
           </gmd:lineage>
