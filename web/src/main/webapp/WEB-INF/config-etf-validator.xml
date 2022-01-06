@@ -45,7 +45,7 @@
         <value>Conformance Class 2: INSPIRE data sets and data set series interoperability metadata.</value>
       </array>
     </entry>
-    <entry key="TG version 2.0 - Data sets and series (for Monitoring)">
+    <!--<entry key="TG version 2.0 - Data sets and series (for Monitoring)">
       <array value-type="java.lang.String">
         <value>Common Requirements for ISO/TC 19139:2007 based INSPIRE metadata records.</value>
         <value>Conformance Class 1: INSPIRE data sets and data set series baseline metadata.</value>
@@ -56,15 +56,15 @@
     <entry key="TG version 2.0 - Network services">
       <array value-type="java.lang.String">
         <value>Common Requirements for ISO/TC 19139:2007 based INSPIRE metadata records.</value>
-        <!--<value>Conformance Class 1: INSPIRE data sets and data set series baseline metadata.</value>
-        <value>Conformance Class 2: INSPIRE data sets and data set series interoperability metadata.</value>-->
+        &lt;!&ndash;<value>Conformance Class 1: INSPIRE data sets and data set series baseline metadata.</value>
+        <value>Conformance Class 2: INSPIRE data sets and data set series interoperability metadata.</value>&ndash;&gt;
         <value>Conformance Class 3: INSPIRE Spatial Data Service baseline metadata.</value>
         <value>Conformance Class 4: INSPIRE Network Services metadata.</value>
-        <!--<value>Conformance Class 5: INSPIRE Invocable Spatial Data Services metadata.</value>
+        &lt;!&ndash;<value>Conformance Class 5: INSPIRE Invocable Spatial Data Services metadata.</value>
         <value>Conformance Class 6: INSPIRE Interoperable Spatial Data Services metadata.</value>
-        <value>Conformance Class 7: INSPIRE Harmonised Spatial Data Services metadata.</value>-->
+        <value>Conformance Class 7: INSPIRE Harmonised Spatial Data Services metadata.</value>&ndash;&gt;
       </array>
-    </entry>
+    </entry>-->
   </util:map>
 
 
