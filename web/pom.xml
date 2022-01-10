@@ -1142,7 +1142,7 @@
         <!-- If merging internal and editor / this should enable ldap auth. -->
         <security.config.file>config-security-noldap.xml</security.config.file>
         <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
-        <ldap.mapping.defaultProfile>RegisteredUser</ldap.mapping.defaultProfile>
+        <ldap.mapping.defaultProfile>Editor</ldap.mapping.defaultProfile>
         <ldap.mapping.defaultGroup>SDI_EDITING_DEFAULT</ldap.mapping.defaultGroup>
       </properties>
     </profile>
