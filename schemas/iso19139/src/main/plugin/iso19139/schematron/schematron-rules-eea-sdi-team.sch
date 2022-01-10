@@ -127,33 +127,55 @@
     <sch:title>$loc/strings/EEACitation</sch:title>
       <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='MD_DataIdentification']">
 
+        <sch:let name="identifier"
+                 value="gmd:citation/*/gmd:identifier/
+                */gmd:code/gco:CharacterString"/>
 
-      <!-- MD_Metadata/identificationInfo/*/citation/*/edition
-         https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfocitationedition
+        <sch:let name="eeaFilePath"
+                 value="ancestor::gmd:MD_Metadata
+                            //gmd:onLine/*[gmd:protocol/gco:CharacterString = 'EEA:FILEPATH']"/>
 
-         Conditional: only for datasets with a revision number (directory name ending in _revXX)
+        <sch:let name="filePathCount"
+                 value="count($eeaFilePath)"/>
+        <sch:let name="filePathWithoutIdentifierCount"
+                 value="count($eeaFilePath/gmd:linkage/gmd:URL[contains(., concat('/', $identifier, '/'))])"/>
 
-         Current rule checks that when an edition is provided, a link to a file or folder
-         containing the _rev{editionNumber} is present.
+        <sch:let name="identifierIsInAllFilePath"
+                 value="normalize-space($identifier) != ''
+                          and $filePathCount > 0
+                          and $filePathCount = $filePathWithoutIdentifierCount"/>
+        <sch:assert test="$identifierIsInAllFilePath"><sch:value-of
+          select="$loc/strings/EEA.identifierInFilePath.alert"/></sch:assert>
+        <sch:report test="$identifierIsInAllFilePath"><sch:value-of
+          select="$loc/strings/EEA.identifierInFilePath.report"/></sch:report>
 
-         The version and revision numbers of the dataset should be consistent with this element,
-          separated by a point (VersionNumber.RevisionNumber). Example in the wiki is maybe wrong? TODO?
-                              <gco:CharacterString>15-0</gco:CharacterString>
-      <sch:let name="edition"
-               value="gmd:citation/*/gmd:edition/gco:CharacterString"/>
-      <sch:let name="editionInDataLink"
-               value="count(../../gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*
-                        [(gmd:protocol/gco:CharacterString = 'EEA:FILEPATH' or
-                          gmd:protocol/gco:CharacterString = 'EEA:FOLDERPATH')
-                          and contains(gmd:linkage/gmd:URL, concat('_rev', $edition))]) > 0"/>
 
-      <sch:assert test="$editionInDataLink and normalize-space($edition) != ''"><sch:value-of
-        select="$loc/strings/EEAEDITION.alert"/>
-      </sch:assert>
-      <sch:report test="normalize-space($edition) != ''"><sch:value-of
-        select="$loc/strings/EEAEDITION.report"/> "<sch:value-of
-        select="normalize-space($edition)"/>"</sch:report>
-         -->
+        <!-- MD_Metadata/identificationInfo/*/citation/*/edition
+           https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfocitationedition
+
+           Conditional: only for datasets with a revision number (directory name ending in _revXX)
+
+           Current rule checks that when an edition is provided, a link to a file or folder
+           containing the _rev{editionNumber} is present.
+
+           The version and revision numbers of the dataset should be consistent with this element,
+            separated by a point (VersionNumber.RevisionNumber). Example in the wiki is maybe wrong? TODO?
+                                <gco:CharacterString>15-0</gco:CharacterString>
+        <sch:let name="edition"
+                 value="gmd:citation/*/gmd:edition/gco:CharacterString"/>
+        <sch:let name="editionInDataLink"
+                 value="count(../../gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*
+                          [(gmd:protocol/gco:CharacterString = 'EEA:FILEPATH' or
+                            gmd:protocol/gco:CharacterString = 'EEA:FOLDERPATH')
+                            and contains(gmd:linkage/gmd:URL, concat('_rev', $edition))]) > 0"/>
+
+        <sch:assert test="$editionInDataLink and normalize-space($edition) != ''"><sch:value-of
+          select="$loc/strings/EEAEDITION.alert"/>
+        </sch:assert>
+        <sch:report test="normalize-space($edition) != ''"><sch:value-of
+          select="$loc/strings/EEAEDITION.report"/> "<sch:value-of
+          select="normalize-space($edition)"/>"</sch:report>
+           -->
 
 
       <!-- MD_Metadata/identificationInfo/*/status. Conditional.

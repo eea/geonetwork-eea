@@ -41,4 +41,6 @@
     the source element allows the logical link between a dataset metadata and the metadata
     of the corresponding source dataset(s).</EEAsource.report>
 
+  <EEA.identifierInFilePath.alert>Resource identifier not found in all filepath. Check the link with the protocol EEA:FILEPATH.</EEA.identifierInFilePath.alert>
+  <EEA.identifierInFilePath.report>Resource identifier found in all filepath.</EEA.identifierInFilePath.report>
 </strings>

@@ -75,7 +75,4 @@
 
     <EEA_TEMPORAL.alert>The time period covered by the content of the dataset is not described.</EEA_TEMPORAL.alert>
     <EEA_TEMPORAL.report>The time period covered by the content of the dataset is described.</EEA_TEMPORAL.report>
-
-  <EEA.identifierInFilePath.alert>Resource identifier not found in all filepath. Check the link with the protocol EEA:FILEPATH.</EEA.identifierInFilePath.alert>
-  <EEA.identifierInFilePath.report>Resource identifier found in all filepath.</EEA.identifierInFilePath.report>
 </strings>
