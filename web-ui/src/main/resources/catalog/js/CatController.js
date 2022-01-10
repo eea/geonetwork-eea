@@ -754,9 +754,9 @@ goog.require('gn_alert');
                 'size': 10
               }
             },
-            'groupPublished': {
+            'groupPublishedId': {
               'terms': {
-                'field': 'groupPublished',
+                'field': 'groupPublishedId',
                 'size': 10
               }
             },
