@@ -111,7 +111,7 @@ goog.require('gn_alert');
           'enabled': true,
           'appUrl': '../../{{node}}/{{lang}}/catalog.search#/home',
           'showSocialBarInFooter': true,
-          'fluidLayout': true,
+          'showMaps': false,
           'facetConfig': {
             'th_httpinspireeceuropaeutheme-theme_tree.key': {
               'terms': {
