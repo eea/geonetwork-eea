@@ -1958,6 +1958,64 @@
     <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#EU/EEA39"/>
     <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#EU/EEA38_2020"/>
   </skos:Concept>
+
+    <skos:Concept rdf:about="http://www.naturalearthdata.com/ne_admin#Country/ENG">
+      <skos:prefLabel xml:lang="en">England</skos:prefLabel>
+      <skos:prefLabel xml:lang="fr">England</skos:prefLabel>
+      <skos:altLabel>ENG</skos:altLabel>
+      <gml:BoundedBy>
+        <gml:Enveloppe gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+          <gml:lowerCorner>-6.349 49.91</gml:lowerCorner>
+          <gml:upperCorner>1.771 55.805</gml:upperCorner>
+        </gml:Enveloppe>
+      </gml:BoundedBy>
+      <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Country"/>
+      <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent/Europe"/>
+      <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/GBR"/>
+    </skos:Concept>
+    <skos:Concept rdf:about="http://www.naturalearthdata.com/ne_admin#Country/NIR">
+      <skos:prefLabel xml:lang="en">Northern Ireland</skos:prefLabel>
+      <skos:prefLabel xml:lang="fr">Northern Ireland</skos:prefLabel>
+      <skos:altLabel>NIR</skos:altLabel>
+      <gml:BoundedBy>
+        <gml:Enveloppe gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+          <gml:lowerCorner>-8.174 54.035</gml:lowerCorner>
+          <gml:upperCorner>-5.431 55.311</gml:upperCorner>
+        </gml:Enveloppe>
+      </gml:BoundedBy>
+      <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Country"/>
+      <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent/Europe"/>
+      <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/GBR"/>
+    </skos:Concept>
+    <skos:Concept rdf:about="http://www.naturalearthdata.com/ne_admin#Country/SCT">
+      <skos:prefLabel xml:lang="en">Scotland</skos:prefLabel>
+      <skos:prefLabel xml:lang="fr">Scotland</skos:prefLabel>
+      <skos:altLabel>SCT</skos:altLabel>
+      <gml:BoundedBy>
+        <gml:Enveloppe gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+          <gml:lowerCorner>-13.691 54.633</gml:lowerCorner>
+          <gml:upperCorner>-0.755 60.848</gml:upperCorner>
+        </gml:Enveloppe>
+      </gml:BoundedBy>
+      <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Country"/>
+      <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent/Europe"/>
+      <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/GBR"/>
+    </skos:Concept>
+    <skos:Concept rdf:about="http://www.naturalearthdata.com/ne_admin#Country/WLS">
+      <skos:prefLabel xml:lang="en">Wales</skos:prefLabel>
+      <skos:prefLabel xml:lang="fr">Wales</skos:prefLabel>
+      <skos:altLabel>WLS</skos:altLabel>
+      <gml:BoundedBy>
+        <gml:Enveloppe gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+          <gml:lowerCorner>-5.311 51.384</gml:lowerCorner>
+          <gml:upperCorner>-2.647 53.427</gml:upperCorner>
+        </gml:Enveloppe>
+      </gml:BoundedBy>
+      <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Country"/>
+      <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Continent/Europe"/>
+      <skos:broader rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/GBR"/>
+    </skos:Concept>
+
   <skos:Concept rdf:about="http://www.naturalearthdata.com/ne_admin#Country/IRN">
     <skos:prefLabel xml:lang="en">Iran</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Iran</skos:prefLabel>
