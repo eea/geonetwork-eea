@@ -133,7 +133,7 @@
 
         <sch:let name="eeaFilePath"
                  value="ancestor::gmd:MD_Metadata
-                            //gmd:onLine/*[gmd:protocol/gco:CharacterString = 'EEA:FILEPATH']"/>
+                            //gmd:onLine/*[gmd:protocol/gco:CharacterString = ('EEA:FILEPATH', 'EEA:FOLDERPATH')]"/>
 
         <sch:let name="filePathCount"
                  value="count($eeaFilePath)"/>
