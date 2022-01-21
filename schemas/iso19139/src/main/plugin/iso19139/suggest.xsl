@@ -29,6 +29,7 @@
 
 
   <!-- Register here the list of process for the schema-->
+  <xsl:include href="process/collection-updater.xsl"/>
   <xsl:include href="process/keywords-comma-exploder.xsl"/>
   <xsl:include href="process/scale-denominator-formatter.xsl"/>
   <xsl:include href="process/add-extent-from-geokeywords.xsl"/>
@@ -46,6 +47,7 @@
 -->
 
   <xsl:variable name="processes">
+    <p>collection-updater</p>
     <p>keywords-comma-exploder</p>
     <p>scale-denominator-formatter</p>
     <p>add-extent-from-geokeywords</p>

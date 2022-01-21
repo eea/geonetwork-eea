@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * Copyright (C) 2001-2022 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
  *
@@ -166,7 +166,7 @@ public class XsltFormatter implements FormatterImpl {
         }
         Element transformed = Xml.transform(root, fparams.viewFile, requestParameters);
         return "textResponse".equals(transformed.getName()) ?
-            transformed.getTextNormalize() :
+            transformed.getText() :
             Xml.getString(transformed);
     }
 }
