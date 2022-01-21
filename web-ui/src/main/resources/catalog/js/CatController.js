@@ -703,17 +703,17 @@ goog.require('gn_alert');
           'locationThesaurus': ['th_regions', 'th_httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope'],
           'internalThesaurus': [],
           'collectionTableConfig': {
-            'labels': 'title,cl_status,format,Esri,view,download,file,atom',
-            'columns': 'resourceTitle,cl_status[0].key,format,link/ESRI:REST,link/OGC:WMS,link/OGC:WFS,link/WWW:DOWNLOAD,link/atom:feed'
+            'labels': 'title,cl_status,format,Download,Esri,View',
+            'columns': 'resourceTitle,cl_status[0].key,format,link/EEA:FILEPATH,link/ESRI:REST,link/OGC:WMS'
           },
           'distributionConfig': {
             // 'layout': 'tabset',
             'layout': '',
             'sections': [
               // {'types': 'services', 'title': 'Services', 'layout': 'card'},
-              {'types': 'onlines', 'filter': 'protocol:OGC:.*|ESRI:.*|atom.*', 'title': 'API'},
+              {'types': 'onlines', 'filter': '-protocol:OGC:.*|ESRI:.*|atom.*|.*DOWNLOAD.*|DB:.*|FILE:.*', 'title': 'links'},
               {'types': 'onlines', 'filter': 'protocol:.*DOWNLOAD.*|DB:.*|FILE:.*', 'title': 'download'},
-              {'types': 'onlines', 'filter': '-protocol:OGC:.*|ESRI:.*|atom.*|.*DOWNLOAD.*|DB:.*|FILE:.*', 'title': 'links'}]
+              {'types': 'onlines', 'filter': 'protocol:OGC:.*|ESRI:.*|atom.*', 'title': 'API'}]
           },
           'relatedFacetConfig':  {
             'creationYearForResource': {
