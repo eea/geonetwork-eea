@@ -5,6 +5,11 @@
     </div>
   </div>
   <div class="col-md-4 gn-md-side">
+    <div data-ng-if="(('group-' + mdView.current.record.groupOwner) | translate).indexOf('SDI_DRAFT') === 0"
+         class="gn-status-stamp">
+      <span class="gn-status gn-status-mdview gn-status-obsolete">Draft</span>
+    </div>
+
     <div class="gn-margin-top" ng-include="'../../catalog/views/default/templates/recordView/summary.html'"/>
 
     <div data-gn-data-preview="mdView.current.record">
