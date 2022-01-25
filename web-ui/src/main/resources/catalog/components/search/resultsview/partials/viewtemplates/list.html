@@ -32,6 +32,11 @@
     <div class="panel-body gn-card-body">
       <div class="row">
         <div class="col-lg-2 col-md-3 col-sm-3">
+          <div data-ng-if="(('group-' + md.groupOwner) | translate).indexOf('SDI_DRAFT') === 0"
+               class="gn-status-stamp">
+            <span class="gn-status gn-status-mdview gn-status-obsolete">Draft</span>
+          </div>
+
           <div class="gn-md-thumbnail">
             <div class="gn-md-no-thumbnail"
                   data-ng-if="!md.overview[0].url"></div>
