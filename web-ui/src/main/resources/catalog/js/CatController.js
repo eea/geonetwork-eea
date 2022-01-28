@@ -131,8 +131,8 @@ goog.require('gn_alert');
             },
             'resourceType': {
               'terms': {
-                'field': 'resourceType',
-                'size': 10
+                "field": "resourceType",
+                "include": "dataset|series|service|nonGeographicDataset"
               }
             }
           },
@@ -300,7 +300,8 @@ goog.require('gn_alert');
           'facetConfig': {
             'resourceType': {
               'terms': {
-                'field': 'resourceType'
+                "field": "resourceType",
+                "include": "dataset|series|service|nonGeographicDataset"
               },
               'aggs': {
                 'format': {
@@ -749,76 +750,114 @@ goog.require('gn_alert');
           'editorIndentType': '',
           'allowRemoteRecordLink': true,
           'facetConfig': {
-            'resourceType': {
-              'terms': {
-                'field': 'resourceType',
-                'size': 20
+            "draftOrFinalized": {
+              "filters": {
+                "filters": {
+                  "eeadraft": {
+                    "query_string": {
+                      "query": "+groupOwner:1069862"
+                    }
+                  },
+                  "final": {
+                    "query_string": {
+                      "query": "-groupOwner:1069862"
+                    }
+                  }
+                }
+              },
+              "meta": {
+                "collapsed": true,
+                "userHasRole": "isEditorOrMore"
               }
             },
-            'cl_status.key': {
-              'terms': {
-                'field': 'cl_status.key',
-                'size': 15
+            "resourceType": {
+              "terms": {
+                "field": "resourceType",
+                "include": "dataset|series|service|nonGeographicDataset"
               }
             },
-            'sourceCatalogue': {
-              'terms': {
-                'field': 'sourceCatalogue',
-                'size': 15
+            "cl_status.key": {
+              "terms": {
+                "field": "cl_status.key",
+                "size": 15
               }
             },
-            'valid': {
-              'terms': {
-                'field': 'valid',
-                'size': 10
+            "sourceCatalogue": {
+              "terms": {
+                "field": "sourceCatalogue",
+                "size": 15
               }
             },
-            'valid_inspire': {
-              'terms': {
-                'field': 'valid_inspire',
-                'size': 10
+            "valid": {
+              "terms": {
+                "field": "valid",
+                "size": 10
               }
             },
-            'groupOwner': {
-              'terms': {
-                'field': 'groupOwner',
-                'size': 10
+            "valid_inspire": {
+              "terms": {
+                "field": "valid_inspire",
+                "size": 10
               }
             },
-            'recordOwner': {
-              'terms': {
-                'field': 'recordOwner',
-                'size': 10
+            "groupOwner": {
+              "terms": {
+                "field": "groupOwner",
+                "size": 10
               }
             },
-            'groupPublishedId': {
-              'terms': {
-                'field': 'groupPublishedId',
-                'size': 10
+            "recordOwner": {
+              "terms": {
+                "field": "recordOwner",
+                "size": 10
               }
             },
-            'documentStandard': {
-              'terms': {
-                'field': 'documentStandard',
-                'size': 10
+            "groupPublished": {
+              "terms": {
+                "field": "groupPublished",
+                "size": 10
               }
             },
-            'isHarvested': {
-              'terms': {
-                'field': 'isHarvested',
-                'size': 2
+            "documentStandard": {
+              "terms": {
+                "field": "documentStandard",
+                "size": 10
               }
             },
-            'isTemplate': {
-              'terms': {
-                'field': 'isTemplate',
-                'size': 5
+            "isHarvested": {
+              "terms": {
+                "field": "isHarvested",
+                "size": 2
               }
             },
-            'isPublishedToAll': {
-              'terms': {
-                'field': 'isPublishedToAll',
-                'size': 2
+            "isTemplate": {
+              "terms": {
+                "field": "isTemplate",
+                "size": 5
+              }
+            },
+            "isPublishedToAll": {
+              "terms": {
+                "field": "isPublishedToAll",
+                "size": 2
+              }
+            },
+            "isValid": {
+              "terms": {
+                "field": "isValid",
+                "size": 10
+              }
+            },
+            "isValidInspire": {
+              "terms": {
+                "field": "isValidInspire",
+                "size": 10
+              }
+            },
+            "schema": {
+              "terms": {
+                "field": "schema.keyword",
+                "size": 10
               }
             }
           }
