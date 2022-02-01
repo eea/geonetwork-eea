@@ -712,11 +712,20 @@ goog.require('gn_alert');
             'layout': '',
             'sections': [
               // {'types': 'services', 'title': 'Services', 'layout': 'card'},
-              {'types': 'onlines', 'filter': '-protocol:OGC:.*|ESRI:.*|atom.*|.*DOWNLOAD.*|DB:.*|FILE:.*', 'title': 'links'},
+              {'types': 'onlines', 'filter': '-protocol:OGC:.*|ESRI:.*|atom.*|.*DOWNLOAD.*|DB:.*|FILE:.* AND -function:legend|featureCatalogue|dataQualityReport', 'title': 'links'},
               {'types': 'onlines', 'filter': 'protocol:.*DOWNLOAD.*|DB:.*|FILE:.*', 'title': 'download'},
-              {'types': 'onlines', 'filter': 'protocol:OGC:.*|ESRI:.*|atom.*', 'title': 'API'}]
+              {'types': 'onlines', 'filter': 'protocol:OGC:.*|ESRI:.*|atom.*', 'title': 'API'},
+              {'types': 'onlines', 'filter': 'function:legend', 'title': 'mapLegend'},
+              // {'types': 'onlines', 'filter': 'function:featureCatalogue', 'title': 'featureCatalog'},
+              {'types': 'onlines', 'filter': 'function:dataQualityReport', 'title': 'quality'}]
           },
           'relatedFacetConfig':  {
+            'cl_status': {
+              'terms': {
+                'field': 'cl_status.default',
+                "order" : { "_key" : "asc" }
+              }
+            },
             'creationYearForResource': {
               'terms': {
                 'field': 'creationYearForResource',
@@ -727,12 +736,6 @@ goog.require('gn_alert');
             'cl_spatialRepresentationType': {
               'terms': {
                 'field': 'cl_spatialRepresentationType.default',
-                "order" : { "_key" : "asc" }
-              }
-            },
-            'cl_status': {
-              'terms': {
-                'field': 'cl_status.default',
                 "order" : { "_key" : "asc" }
               }
             },
@@ -1421,11 +1424,22 @@ goog.require('gn_alert');
             // A second filter is for harvested record
             // if the catalogue admin defined that those
             // records could be harvested.
-            if (md.isHarvested && JSON.parse(md.isHarvested) == true) {
+            if (md.isHarvested
+                && JSON.parse(md.isHarvested) == true) {
               return gnConfig['system.harvester.enableEditing'] === true &&
                 md.edit;
             }
             return md.edit;
+          },
+          // Privileges management may be allowed for harvested records.
+          canManagePrivileges: function(md) {
+            if (md.isHarvested
+                && JSON.parse(md.isHarvested) == true
+                && gnConfig['system.harvester.enablePrivilegesManagement'] === true
+                && md.edit) {
+              return true;
+            }
+            return this.canEditRecord(md);
           }
         };
         // Build is<ProfileName> and is<ProfileName>OrMore functions

@@ -14,7 +14,7 @@
                        badge = config.getBadgeLabel(mainType, r);
                        icon = config.getClassIcon(mainType);"
          class="row list-group-item gn-related-item gn-related-{{type}} gn-relation-type-{{mainType}}"
-         data-ng-repeat="r in items track by $index"
+         data-ng-repeat="r in items | orderBy:getOrderBy"
          gn-popover="">
       <div class="gn-related-icon-col col-xs-2 col-sm-2 text-center">
         <strong>
@@ -65,6 +65,10 @@
           <a data-ng-href="{{::r.locUrl}}">
             {{::r.locTitle || r.locUrl}}
           </a>
+          <div class="pull-right"
+               gn-copy-to-clipboard-button=""
+               data-text="{{::r.locUrl}}"
+               data-tooltip="copyUrlToClipboard"></div>
         </h3>
         <!-- Display description if available -->
         <p data-ng-if="::r.locDescription.length > 0
@@ -211,13 +215,24 @@
       data-ng-init="mainType = config.getType(md, type);
                     badge = config.getBadgeLabel(mainType, md);
                     icon = config.getClassIcon(mainType);" >
-    <li data-ng-repeat="md in items | orderBy:'record.resourceTitle'">
-      <a href=""
+    <li data-ng-repeat="md in items | orderBy:getOrderBy">
+      <a data-ng-hide="md.record.remoteUrl"
+         href=""
          title="{{md.record.resourceTitle}}"
          gn-metadata-open="md.record"
          gn-formatter="formatter.defaultUrl">
         <i class="fa {{icon}}"/>
         {{md.record.resourceTitle}}
+      </a>
+      <a data-ng-show="md.record.remoteUrl"
+         data-ng-href="{{md.record.remoteUrl}}"
+         target="_blank"
+         title="{{md.record.resourceTitle}}">
+        <i class="fa {{icon}}"/>
+        {{md.record.resourceTitle}}
+        <i data-ng-if="md.origin === 'remote'"
+           class="fa fa-external-link"
+           title="{{'remoteRecord' | translate}}"></i>
       </a>
     </li>
   </ul>
@@ -229,7 +244,7 @@
       data-ng-init="mainType = config.getType(md, type);
                     badge = config.getBadgeLabel(mainType, md);
                     icon = config.getClassIcon(mainType);" >
-    <gn-metadata-card data-ng-repeat="md in items | orderBy:'record.resourceTitle'"
+    <gn-metadata-card data-ng-repeat="md in items | orderBy:getOrderBy"
                       data-ng-if="!size || $index < sizeConfig[type]"
                       md="md.record"
                       formatter-url="formatter.defaultUrl">
@@ -242,6 +257,9 @@
             }">
         <i class="fa {{icon}}"/>
         {{(config.getLabel(mainType, type)) | translate}}
+        <i data-ng-if="md.origin === 'remote'"
+           class="fa fa-external-link"
+           title="{{'remoteRecord' | translate}}"></i>
       </span>
     </gn-metadata-card>
     <button class="btn btn-link"

@@ -534,6 +534,7 @@ public class EsSearchManager implements ISearchManager {
             .add("contactForDistribution")
             .add("OrgForResource")
             .add("specificationConformance")
+            .add("measure")
             .add("resourceProviderOrgForResource")
             .add("resourceVerticalRange")
             .add("resourceTemporalDateRange")
@@ -624,24 +625,21 @@ public class EsSearchManager implements ISearchManager {
                 continue;
             }
 
-            if (!name.startsWith("conformTo_")) { // Skip some fields causing errors / TODO
-                if (isObject) {
-                    try {
-                        doc.set(propertyName,
-                            mapper.readTree(
-                                nodeElements.get(0).getTextNormalize()
-                            ));
-                    } catch (IOException e) {
-                        LOGGER.error("Parsing invalid JSON node {} for property {}. Error is: {}",
-                            new Object[]{nodeElements.get(0).getTextNormalize(), propertyName, e.getMessage()});
-                    }
-                } else {
-                    doc.put(propertyName,
-                        booleanFields.contains(propertyName) ?
-                            parseBoolean(nodeElements.get(0).getTextNormalize()) :
-                            nodeElements.get(0).getText());
+            if (isObject) {
+                try {
+                    doc.set(propertyName,
+                        mapper.readTree(
+                            nodeElements.get(0).getTextNormalize()
+                        ));
+                } catch (IOException e) {
+                    LOGGER.error("Parsing invalid JSON node {} for property {}. Error is: {}",
+                        new Object[]{nodeElements.get(0).getTextNormalize(), propertyName, e.getMessage()});
                 }
-
+            } else {
+                doc.put(propertyName,
+                    booleanFields.contains(propertyName) ?
+                        parseBoolean(nodeElements.get(0).getTextNormalize()) :
+                        nodeElements.get(0).getText());
             }
         }
         return doc;
