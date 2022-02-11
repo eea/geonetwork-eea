@@ -449,7 +449,10 @@
             resource.locTitle = $filter('gnLocalized')(resource.title);
             resource.locDescription = $filter('gnLocalized')(resource.description);
             resource.locUrl = $filter('gnLocalized')(resource.url);
-            var protocolOrType = resource.protocol + (resource.serviceType || '');
+            var protocolOrType = angular.isDefined(resource.protocol)
+              ? (resource.protocol
+                + (angular.isDefined(resource.serviceType) ? resource.serviceType : ''))
+              : '';
 
             if (resource.locUrl.indexOf('discodata.eea') !== -1) {
               return 'EEADISCODATA';
