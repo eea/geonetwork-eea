@@ -455,6 +455,444 @@
     </view>
 
 
+    <view name="eea-data-and-maps"
+          class="gn-indent-colored gn-label-above-input"
+          upAndDownControlHidden="true">
+      <thesaurusList>
+        <thesaurus key="external.theme.eea-mp"
+                   fieldset="false"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.rod-eionet-europa-eu"
+                   fieldset="false"
+                   transformations="to-iso19115-3.2018-keyword"/>
+        <thesaurus key="local.theme.eea-categories"
+                   fieldset="false"
+                   transformations="to-iso19115-3.2018-keyword"/>
+        <thesaurus key="external.place.regions"
+                   fieldset="false"
+                   transformations="to-iso19115-3.2018-keyword"/>
+        <thesaurus key="external.theme.gemet"
+                   fieldset="false"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.httpinspireeceuropaeutheme-theme"
+                   fieldset="false"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory"
+                   fieldset="false"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope"
+                   fieldset="false"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.eea-topics"
+                   fieldset="false"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+      </thesaurusList>
+
+      <sidePanel>
+        <directive data-gn-overview-manager=""/>
+        <directive data-gn-onlinesrc-list=""
+                   data-types="onlinesrc|source"/>
+
+        <text ref="eea-associatedResource-help"/>
+        <text ref="eea-contact"/>
+      </sidePanel>
+
+      <tab id="eea-dm-default" default="true" mode="flat">
+        <section>
+          <field name="eea-dm-title"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/cit:title"/>
+
+          <field name="eea-dm-description"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:abstract"/>
+
+          <field name="eea-dm-management-plan"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA Management Plan']"/>
+
+          <action type="add"
+                  btnLabel="eea-dm-add-management-plan"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA Management Plan']) = 0"
+                  or="descriptiveKeywords"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:descriptiveKeywords>
+                  <mri:MD_Keywords>
+                    <mri:type>
+                      <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </mri:type>
+                    <mri:thesaurusName>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gcx:Anchor xlink:href="http://rdfdata.eionet.europa.eu/amp/ontology/managementPlan">EEA Management Plan</gcx:Anchor>
+                        </cit:title>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              <gco:Date>2021-08-25</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <cit:identifier>
+                          <mcc:MD_Identifier>
+                            <mcc:code>
+                              <gcx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.eea-mp">geonetwork.thesaurus.external.theme.eea-mp</gcx:Anchor>
+                            </mcc:code>
+                          </mcc:MD_Identifier>
+                        </cit:identifier>
+                      </cit:CI_Citation>
+                    </mri:thesaurusName>
+                  </mri:MD_Keywords>
+                </mri:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+
+
+
+          <field name="eea-dm-scale"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:spatialResolution//mri:equivalentScale/*/mri:denominator"
+                 del="../../../.."/>
+          <action type="add" btnLabel="eea-dm-scale-add"
+                  or="spatialResolution"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:spatialResolution>
+                  <mri:MD_Resolution>
+                    <mri:equivalentScale>
+                      <mri:MD_RepresentativeFraction>
+                        <mri:denominator>
+                          <gco:Integer/>
+                        </mri:denominator>
+                      </mri:MD_RepresentativeFraction>
+                    </mri:equivalentScale>
+                  </mri:MD_Resolution>
+                </mri:spatialResolution>
+              </snippet>
+            </template>
+          </action>
+
+          <text ref="eea-dm-scale-help"/>
+
+
+          <field name="eea-dm-geoaccuracy"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:spatialResolution//mri:distance"
+                 del="../.."/>
+
+          <action type="add" btnLabel="eea-dm-geoaccuracy-add" or="spatialResolution"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:spatialResolution>
+                  <mri:MD_Resolution>
+                    <mri:distance>
+                      <gco:Distance uom="m"/>
+                    </mri:distance>
+                  </mri:MD_Resolution>
+                </mri:spatialResolution>
+              </snippet>
+            </template>
+          </action>
+
+          <text ref="eea-dm-geoaccuracy-help"/>
+
+
+
+          <field name="eea-dm-projection"
+                 xpath="/mdb:MD_Metadata/mdb:referenceSystemInfo/*/mrs:referenceSystemIdentifier"
+                 del="../.."/>
+          <!-- Add one of the CRS proposed using the dropdown -->
+          <action type="add"
+                  btnLabel="addCrs"
+                  name="referenceSystemInfo" or="referenceSystemInfo"
+                  in="/mdb:MD_Metadata">
+            <template>
+              <!-- TODO: Update list to use INSPIRE TG2 encoding -->
+              <snippet label="addCrs4326">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                          <mcc:code>
+                            <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:4326">EPSG:4326</gcx:Anchor>
+                          </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs4258">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:4258">EPSG:4258</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs3035">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:3035">EPSG:3035</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32628">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32628">EPSG:32628</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32629">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32629">EPSG:32629</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32630">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32630">EPSG:32630</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32631">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32631">EPSG:32631</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32632">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32632">EPSG:32632</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32633">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32633">EPSG:32633</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32634">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32634">EPSG:32634</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32635">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32635">EPSG:32635</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32740">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/EPSG:32740">EPSG:32740</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+            </template>
+          </action>
+
+          <text ref="eea-crs-help"/>
+
+          <field name="eea-dm-disclaimer"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceConstraints/*/mco:useLimitation"/>
+
+
+          <field name="eea-dm-lineage"
+                 xpath="/mdb:MD_Metadata/mdb:resourceLineage/*/mrl:statement"/>
+          <text ref="eea-dm-lineage-help"/>
+
+
+          <text ref="eea-dm-source-help"/>
+          <action type="associatedResource"
+                  name="eea-dm-source-add"
+                  process="source"/>
+
+          <field name="eea-dm-additionalinfo"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:supplementalInformation"/>
+          <text ref="eea-dm-additionalinfo-help"/>
+
+          <!-- TODO: unit-->
+
+        </section>
+      </tab>
+      <tab id="eea-dm-categorization" mode="flat">
+        <section>
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() != 'EEA Management Plan']"/>
+          <text ref="eea-dm-tags-help"/>
+
+          <field name="eea-dm-geographic-coverage"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:extent/*/gex:geographicElement"/>
+          <action type="add"
+                  btnLabel="eea-add-extent"
+                  or="extent"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:extent>
+                  <gex:EX_Extent>
+                    <gex:geographicElement>
+                      <gex:EX_GeographicBoundingBox>
+                        <gex:westBoundLongitude>
+                          <gco:Decimal></gco:Decimal>
+                        </gex:westBoundLongitude>
+                        <gex:eastBoundLongitude>
+                          <gco:Decimal></gco:Decimal>
+                        </gex:eastBoundLongitude>
+                        <gex:southBoundLatitude>
+                          <gco:Decimal></gco:Decimal>
+                        </gex:southBoundLatitude>
+                        <gex:northBoundLatitude>
+                          <gco:Decimal></gco:Decimal>
+                        </gex:northBoundLatitude>
+                      </gex:EX_GeographicBoundingBox>
+                    </gex:geographicElement>
+                  </gex:EX_Extent>
+                </mri:extent>
+              </snippet>
+            </template>
+          </action>
+
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:defaultLocale"/>
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement"/>
+
+          <action type="add"
+                  btnLabel="eea-add-temporal-extent"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement) = 0"
+                  or="extent"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:extent>
+                  <gex:EX_Extent>
+                    <gex:temporalElement>
+                      <gex:EX_TemporalExtent>
+                        <gex:extent>
+                          <gml:TimePeriod>
+                            <gml:beginPosition/>
+                            <gml:endPosition/>
+                          </gml:TimePeriod>
+                        </gex:extent>
+                      </gex:EX_TemporalExtent>
+                    </gex:temporalElement>
+                  </gex:EX_Extent>
+                </mri:extent>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-temporal-help"/>
+        </section>
+      </tab>
+      <tab id="eea-dm-dates" mode="flat">
+        <section>
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/cit:date"
+                 or="date" in="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*"/>
+          <text ref="eea-dm-last-upload-help"/>
+
+          <!-- TODO: Expiration date-->
+        </section>
+      </tab>
+      <tab id="eea-dm-creators" mode="flat">
+        <section name="eea-dm-contact">
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:pointOfContact"/>
+          <!-- TODO: Add add action -->
+          <text ref="eea-dm-contact-help"/>
+        </section>
+      </tab>
+      <tab id="eea-dm-settings" mode="flat">
+        <section/>
+      </tab>
+
+      <flatModeExceptions>
+        <for name="cit:date"/>
+        <for name="mri:extent"/>
+      </flatModeExceptions>
+    </view>
+
+
     <view name="advanced">
       <sidePanel>
         <directive data-gn-validation-report=""/>
@@ -581,7 +1019,7 @@
         <template><![CDATA[<gco:CharacterString xmlns:gco='http://standards.iso.org/iso/19115/-3/gco/1.0'>{{value}}</gco:CharacterString>]]></template>
       </field>
 
-      <!-- Insert a new keyword in the first gmd:descriptiveKeywords found.
+      <!-- Insert a new keyword in the first mri:descriptiveKeywords found.
       Warning: The section may contains a thesaurusName reference and
       the keyword may not be part of it.
       Warning: Duplicates may be inserted.

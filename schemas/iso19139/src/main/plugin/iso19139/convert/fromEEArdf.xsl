@@ -1,9 +1,6 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:foaf="http://xmlns.com/foaf/0.1/"
-                xmlns:wf="http://intelleo.eu/ontologies/workflow/ns#"
-                xmlns:eea="http://www.eea.europa.eu/ontologies.rdf#"
                 xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-                xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                 xmlns:owl="http://www.w3.org/2002/07/owl#"
                 xmlns:data="http://www.eea.europa.eu/portal_types/Data#"
                 xmlns:datatable="http://www.eea.europa.eu/portal_types/DataTable#"
@@ -22,6 +19,9 @@
   <xsl:variable name="withFeatureCatalogue"
                 select="false()"/>
 
+  <xsl:variable name="uuidPrefix"
+                select="'eea-data-and-maps-data-'"/>
+
   <xsl:template match="/">
     <xsl:apply-templates select="//data:Data"/>
   </xsl:template>
@@ -38,7 +38,6 @@
      <gfc:valueMeasurementUnit>
         <gco:UomIdentifier/>
      </gfc:valueMeasurementUnit>
-
 
     <dcterms:expires xml:lang="en">None</dcterms:expires>
 
@@ -80,10 +79,10 @@
                      xmlns:gco2="http://standards.iso.org/iso/19115/-3/gco/1.0"
                      xmlns:gml="http://www.opengis.net/gml"
                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    >
       <gmd:fileIdentifier>
         <!-- <data:id xml:lang="en">vans-16</data:id>-->
-        <gco:CharacterString>eea-data-and-maps-data-<xsl:value-of select="data:id"/></gco:CharacterString>
+        <gco:CharacterString><xsl:value-of select="concat($uuidPrefix, data:id)"/></gco:CharacterString>
       </gmd:fileIdentifier>
       <gmd:language>
         <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
@@ -121,6 +120,7 @@
                     <gco:CharacterString>Denmark</gco:CharacterString>
                   </gmd:country>
                   <gmd:electronicMailAddress>
+                    <!-- TODO: Check contact point email. -->
                     <gco:CharacterString>sdi@eea.europa.eu</gco:CharacterString>
                   </gmd:electronicMailAddress>
                 </gmd:CI_Address>
@@ -264,14 +264,6 @@
             </gco:CharacterString>
           </gmd:abstract>
 
-          <!-- <data:dataSource xml:lang="en"><![CDATA[<p><span>Directorate-General for Climate Action, 2016.</span><br style="margin: 0px; padding: 0px; " /><span>Data are submitted by Member States at: http://cdr.eionet.europa.eu/</span></p>]]></data:dataSource>-->
-          <xsl:for-each select="data:dataSource[. != '']">
-            <gmd:credit>
-              <gco:CharacterString>
-                <xsl:value-of select="util:html2text(.)"/>
-              </gco:CharacterString>
-            </gmd:credit>
-          </xsl:for-each>
           <xsl:for-each select="data:units[. != '']">
             <gmd:purpose>
               <gco:CharacterString>
@@ -296,26 +288,97 @@
             cinzia.pastorello@eea.europa.eu&#13;
             Operator: Peter Kjeld, peter.kjeld@eea.europa.eu</data:contact>
           -->
+
           <xsl:for-each select="data:contact">
-            <gmd:pointOfContact>
-              <gmd:CI_ResponsibleParty>
-                <gmd:individualName gco:nilReason="missing">
-                  <gco:CharacterString/>
-                </gmd:individualName>
-                <gmd:organisationName>
-                  <gco:CharacterString>
-                    <xsl:value-of select="."/>
-                  </gco:CharacterString>
-                </gmd:organisationName>
-                <gmd:positionName gco:nilReason="missing">
-                  <gco:CharacterString/>
-                </gmd:positionName>
-                <gmd:role>
-                  <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
-                                   codeListValue="processor"/>
-                </gmd:role>
-              </gmd:CI_ResponsibleParty>
-            </gmd:pointOfContact>
+            <xsl:choose>
+              <xsl:when test="matches(., '([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)')">
+                <xsl:analyze-string select="." regex="([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)">
+                  <xsl:matching-substring>
+                    <xsl:variable name="isEEA"
+                                  select="ends-with(., 'eea.europa.eu')"/>
+                    <xsl:variable name="orgFromEmail"
+                                  select="upper-case(replace(., '.*@([a-zA-Z0-9_-]+).*', '$1'))"/>
+
+                    <gmd:pointOfContact>
+                      <gmd:CI_ResponsibleParty>
+                        <gmd:organisationName>
+                          <gco:CharacterString>
+                            <xsl:value-of select="if ($isEEA) then 'European Environment Agency' else $orgFromEmail"/>
+                          </gco:CharacterString>
+                        </gmd:organisationName>
+                        <xsl:choose>
+                          <xsl:when test="$isEEA">
+                            <gmd:contactInfo>
+                              <gmd:CI_Contact>
+                                <gmd:address>
+                                  <gmd:CI_Address>
+                                    <gmd:deliveryPoint>
+                                      <gco:CharacterString>Kongens Nytorv 6</gco:CharacterString>
+                                    </gmd:deliveryPoint>
+                                    <gmd:city>
+                                      <gco:CharacterString>Copenhagen</gco:CharacterString>
+                                    </gmd:city>
+                                    <gmd:administrativeArea>
+                                      <gco:CharacterString>K</gco:CharacterString>
+                                    </gmd:administrativeArea>
+                                    <gmd:postalCode>
+                                      <gco:CharacterString>1050</gco:CharacterString>
+                                    </gmd:postalCode>
+                                    <gmd:country>
+                                      <gco:CharacterString>Denmark</gco:CharacterString>
+                                    </gmd:country>
+                                    <gmd:electronicMailAddress>
+                                      <gco:CharacterString><xsl:value-of select="."/> </gco:CharacterString>
+                                    </gmd:electronicMailAddress>
+                                  </gmd:CI_Address>
+                                </gmd:address>
+                              </gmd:CI_Contact>
+                            </gmd:contactInfo>
+                          </xsl:when>
+                          <xsl:otherwise>
+                            <gmd:contactInfo>
+                              <gmd:CI_Contact>
+                                <gmd:address>
+                                  <gmd:CI_Address>
+                                    <gmd:electronicMailAddress>
+                                      <gco:CharacterString><xsl:value-of select="."/> </gco:CharacterString>
+                                    </gmd:electronicMailAddress>
+                                  </gmd:CI_Address>
+                                </gmd:address>
+                              </gmd:CI_Contact>
+                            </gmd:contactInfo>
+                          </xsl:otherwise>
+                        </xsl:choose>
+                        <gmd:role>
+                          <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                                           codeListValue="pointOfContact"/>
+                        </gmd:role>
+                      </gmd:CI_ResponsibleParty>
+                    </gmd:pointOfContact>
+                  </xsl:matching-substring>
+                  <xsl:non-matching-substring>
+                  </xsl:non-matching-substring>
+                </xsl:analyze-string>
+              </xsl:when>
+              <xsl:otherwise>
+                <gmd:pointOfContact>
+                  <gmd:CI_ResponsibleParty>
+                    <gmd:organisationName>
+                      <gco:CharacterString>
+                      </gco:CharacterString>
+                    </gmd:organisationName>
+                    <gmd:individualName>
+                      <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                    </gmd:individualName>
+                    <gmd:role>
+                      <gmd:CI_RoleCode
+                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                        codeListValue="pointOfContact"/>
+                    </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+                </gmd:pointOfContact>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:for-each>
 
           <!--
@@ -337,9 +400,52 @@
                     <xsl:value-of select="schema:Organization/schema:name"/>
                   </gco:CharacterString>
                 </gmd:organisationName>
+                <gmd:contactInfo>
+                  <gmd:CI_Contact>
+                    <gmd:onlineResource>
+                      <gmd:CI_OnlineResource>
+                        <gmd:linkage>
+                          <gmd:URL><xsl:value-of select="schema:Organization/@rdf:about"/></gmd:URL>
+                        </gmd:linkage>
+                      </gmd:CI_OnlineResource>
+                    </gmd:onlineResource>
+                  </gmd:CI_Contact>
+                </gmd:contactInfo>
                 <gmd:role>
                   <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
                                    codeListValue="publisher"/>
+                </gmd:role>
+              </gmd:CI_ResponsibleParty>
+            </gmd:pointOfContact>
+          </xsl:for-each>
+
+          <!--
+          <data:processor>http://acm.eionet.europa.eu</data:processor>
+          -->
+          <xsl:for-each select="data:processor">
+            <xsl:variable name="isEEA"
+                          select="contains(., 'www.eea.europa.eu')"/>
+            <gmd:pointOfContact>
+              <gmd:CI_ResponsibleParty>
+                <gmd:organisationName>
+                  <gco:CharacterString>
+                    <xsl:value-of select="if ($isEEA) then 'European Environment Agency' else ."/>
+                  </gco:CharacterString>
+                </gmd:organisationName>
+                <gmd:contactInfo>
+                  <gmd:CI_Contact>
+                    <gmd:onlineResource>
+                      <gmd:CI_OnlineResource>
+                        <gmd:linkage>
+                          <gmd:URL><xsl:value-of select="."/></gmd:URL>
+                        </gmd:linkage>
+                      </gmd:CI_OnlineResource>
+                    </gmd:onlineResource>
+                  </gmd:CI_Contact>
+                </gmd:contactInfo>
+                <gmd:role>
+                  <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                                   codeListValue="processor"/>
                 </gmd:role>
               </gmd:CI_ResponsibleParty>
             </gmd:pointOfContact>
@@ -865,64 +971,131 @@ TODO
           </xsl:for-each>
         </gmd:MD_DataIdentification>
       </gmd:identificationInfo>
+
+      <xsl:variable name="formats" as="node()*">
+        <format fileWith=".gml" format="GML"/>
+        <format fileWith=".csv" format="CSV"/>
+        <format fileWith="_csv" format="CSV"/>
+        <format fileWith="-csv" format="CSV"/>
+        <format fileWith=".xls" format="Excel"/>
+        <format fileWith="db-excel" format="Excel"/>
+        <format fileWith="xlsx" format="Excel"/>
+        <format fileWith="-xls" format="Excel"/>
+        <format fileWith="gpkg" format="GeoPackage"/>
+        <format fileWith=".mdb" format="Access database"/>
+        <format fileWith="access-database" format="Access database"/>
+        <format fileWith="microsoft-access-format" format="Access database"/>
+        <format fileWith=".dbf" format="DBF"/>
+        <format fileWith=".pdf" format="PDF"/>
+        <format fileWith="sqlite" format="SpatiaLite"/>
+        <format fileWith="spatialite" format="SpatiaLite"/>
+        <format fileWith="tiff" format="GeoTIFF"/>
+        <format fileWith="tif-" format="GeoTIFF"/>
+        <format fileWith="in_json" format="JSON"/>
+        <format fileWith="geodatabase" format="ESRI Geodatabase"/>
+        <format fileWith="shapefile" format="ESRI Shapefile"/>
+        <format fileWith="shape-file" format="ESRI Shapefile"/>
+        <format fileWith="_shp" format="ESRI Shapefile"/>
+        <format fileWith="inspire-compliant" format="INSPIRE"/>
+      </xsl:variable>
+
+      <xsl:variable name="protocols" as="node()*">
+        <protocol fileWith="wms-service" protocol="OGC:WMS"/>
+      </xsl:variable>
+
+      <!--
+          <dcterms:hasPart rdf:resource="http://www.eea.europa.eu/data-and-maps/data/vans-16/monitoring-vans-co2-emissions_2013f"/>
+          <dcterms:hasPart rdf:resource="http://www.eea.europa.eu/data-and-maps/data/vans-16/monitoring-of-co2-emissions-vans-2016-final"/>
+      -->
+      <xsl:variable name="listOfHasPart">
+        <xsl:for-each select="dcterms:hasPart">
+          <entry id="{@rdf:resource}">
+            <xsl:copy-of select="document(concat(@rdf:resource, '/@@rdf'))"/>
+          </entry>
+        </xsl:for-each>
+      </xsl:variable>
+
+      <xsl:variable name="transferOptions">
+
+        <xsl:for-each select="$listOfHasPart/entry">
+          <xsl:sort select="rdf:RDF/datatable:DataTable/dcterms:title"
+                    order="descending"/>
+          <xsl:variable name="entry"
+                        select="current()"/>
+          <xsl:for-each select="rdf:RDF/datatable:DataTable/dcterms:hasPart">
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <xsl:variable name="url" select="@rdf:resource"/>
+                <xsl:variable name="protocol"
+                              select="($protocols[contains($url, @fileWith)]/@protocol)[1]"/>
+                <xsl:variable name="format"
+                              select="($formats[contains($url, @fileWith)]/@format)[1]"/>
+                <gmd:linkage>
+                  <gmd:URL><xsl:value-of select="@rdf:resource"/></gmd:URL>
+                </gmd:linkage>
+                <gmd:name>
+                  <gco:CharacterString>
+                    <xsl:value-of select="$entry/rdf:RDF/datatable:DataTable/dcterms:title"/>
+                  </gco:CharacterString>
+                </gmd:name>
+                <gmd:protocol>
+                  <gco:CharacterString><xsl:value-of select="
+                        if ($protocol != '') then $protocol
+                        else if ($format != '') then 'WWW:DOWNLOAD'
+                        else 'WWW:LINK'"/><xsl:value-of select="
+                        if ($format != '')
+                        then concat(':', $format)
+                        else ''"/></gco:CharacterString>
+                </gmd:protocol>
+                <gmd:function>
+                  <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                             codeListValue="download"/>
+                </gmd:function>
+
+                <xsl:if test="$withFeatureCatalogue">
+                  <xsl:copy-of select="$entry/rdf:RDF
+                            /datatable:DataTable/datatable:tableDefinition"/>
+                </xsl:if>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+          </xsl:for-each>
+        </xsl:for-each>
+      </xsl:variable>
+
+
       <gmd:distributionInfo>
         <gmd:MD_Distribution>
-          <gmd:distributionFormat>
-            <gmd:MD_Format>
-              <gmd:name gco:nilReason="missing">
-                <gco:CharacterString/>
-              </gmd:name>
-              <gmd:version gco:nilReason="unknown">
-                <gco:CharacterString/>
-              </gmd:version>
-            </gmd:MD_Format>
-          </gmd:distributionFormat>
+          <xsl:variable name="dataFormats"
+                        select="distinct-values($transferOptions//gmd:protocol/gco:CharacterString[starts-with(., 'WWW:DOWNLOAD:')])"/>
+          <xsl:for-each select="$dataFormats">
+            <gmd:distributionFormat>
+              <gmd:MD_Format>
+                <gmd:name gco:nilReason="missing">
+                  <gco:CharacterString>
+                    <xsl:value-of select="replace(., 'WWW:DOWNLOAD:', '')"/>
+                  </gco:CharacterString>
+                </gmd:name>
+                <gmd:version gco:nilReason="unknown">
+                  <gco:CharacterString/>
+                </gmd:version>
+              </gmd:MD_Format>
+            </gmd:distributionFormat>
+          </xsl:for-each>
+          <xsl:if test="count($dataFormats) = 0">
+            <gmd:distributionFormat>
+              <gmd:MD_Format>
+                <gmd:name gco:nilReason="missing">
+                  <gco:CharacterString/>
+                </gmd:name>
+                <gmd:version gco:nilReason="unknown">
+                  <gco:CharacterString/>
+                </gmd:version>
+              </gmd:MD_Format>
+            </gmd:distributionFormat>
+          </xsl:if>
           <gmd:transferOptions>
             <gmd:MD_DigitalTransferOptions>
-              <!--
-                  <dcterms:hasPart rdf:resource="http://www.eea.europa.eu/data-and-maps/data/vans-16/monitoring-vans-co2-emissions_2013f"/>
-                  <dcterms:hasPart rdf:resource="http://www.eea.europa.eu/data-and-maps/data/vans-16/monitoring-of-co2-emissions-vans-2016-final"/>
-              -->
-              <xsl:variable name="listOfHasPart">
-                <xsl:for-each select="dcterms:hasPart">
-                  <entry id="{@rdf:resource}">
-                    <xsl:copy-of select="document(concat(@rdf:resource, '/@@rdf'))"/>
-                  </entry>
-                </xsl:for-each>
-              </xsl:variable>
-
-              <xsl:for-each select="$listOfHasPart/entry">
-                <xsl:sort select="rdf:RDF/datatable:DataTable/dcterms:title"
-                          order="descending"/>
-                <xsl:variable name="entry"
-                              select="current()"/>
-                <xsl:for-each select="rdf:RDF/datatable:DataTable/dcterms:hasPart">
-                  <gmd:onLine>
-                    <gmd:CI_OnlineResource>
-                      <gmd:linkage>
-                        <gmd:URL><xsl:value-of select="@rdf:resource"/></gmd:URL>
-                      </gmd:linkage>
-                      <gmd:name>
-                        <gco:CharacterString>
-                          <xsl:value-of select="$entry/rdf:RDF/datatable:DataTable/dcterms:title"/>
-                        </gco:CharacterString>
-                      </gmd:name>
-                      <gmd:protocol>
-                        <gco:CharacterString>WWW:DOWNLOAD</gco:CharacterString>
-                      </gmd:protocol>
-                      <gmd:function>
-                        <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
-                                                   codeListValue="download"/>
-                      </gmd:function>
-
-                      <xsl:if test="$withFeatureCatalogue">
-                        <xsl:copy-of select="$entry/rdf:RDF
-                            /datatable:DataTable/datatable:tableDefinition"/>
-                      </xsl:if>
-                    </gmd:CI_OnlineResource>
-                  </gmd:onLine>
-                </xsl:for-each>
-              </xsl:for-each>
+              <xsl:copy-of select="$transferOptions"/>
             </gmd:MD_DigitalTransferOptions>
           </gmd:transferOptions>
         </gmd:MD_Distribution>
@@ -949,6 +1122,20 @@ TODO
               </gmd:statement>
             </gmd:LI_Lineage>
           </gmd:lineage>
+
+
+          <!-- <data:dataSource xml:lang="en"><![CDATA[<p><span>Directorate-General for Climate Action, 2016.</span><br style="margin: 0px; padding: 0px; " /><span>Data are submitted by Member States at: http://cdr.eionet.europa.eu/</span></p>]]></data:dataSource>-->
+          <xsl:for-each select="data:dataSource[. != '']">
+            <gmd:source>
+              <gmd:LI_Source>
+                <gmd:description>
+                  <gco:CharacterString>
+                    <xsl:value-of select="util:html2text(.)"/>
+                  </gco:CharacterString>
+                </gmd:description>
+              </gmd:LI_Source>
+            </gmd:source>
+          </xsl:for-each>
         </gmd:DQ_DataQuality>
       </gmd:dataQualityInfo>
     </gmd:MD_Metadata>

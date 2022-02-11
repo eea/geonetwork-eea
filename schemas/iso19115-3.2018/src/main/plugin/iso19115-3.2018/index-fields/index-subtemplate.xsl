@@ -46,6 +46,7 @@
                 xmlns:skos="http://www.w3.org/2004/02/skos/core#">
 
   <!-- Subtemplate indexing
+  TODO: Migrate to ES
 
   Add the [count(ancestor::node()) =  1] to only match element at the root of the document.
   This is the method to identify a subtemplate.

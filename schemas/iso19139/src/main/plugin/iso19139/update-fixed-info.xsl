@@ -131,7 +131,10 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
       <xsl:variable name="linkLabel"
                     select="if ($isPublic) then 'Direct download' else 'Direct download (Eionet authentication)'"/>
 
-      <gmd:onLine gco:nilReason="withheld">
+      <gmd:onLine>
+        <xsl:if test="not($isPublic)">
+          <xsl:attribute name="gco:nilReason" select="'withheld'"/>
+        </xsl:if>
         <gmd:CI_OnlineResource>
           <gmd:linkage>
             <gmd:URL>https://sdi.eea.europa.eu/data/<xsl:value-of select="/root/env/uuid"/></gmd:URL>
