@@ -41,7 +41,7 @@
 
         </strong>
       </div>
-      <div data-ng-class="mainType === 'MDFCATS' ? 'col-xs-11' : 'col-xs-7 col-sm-7'"
+      <div data-ng-class="mainType === 'MDFCATS' ? 'col-xs-11' : 'col-xs-10 col-sm-7'"
            gn-popover-anchor="">
         <div gn-popover-content="">
           <p class="text-muted">
@@ -65,10 +65,6 @@
           <a data-ng-href="{{::r.locUrl}}">
             {{::r.locTitle || r.locUrl}}
           </a>
-          <div class="pull-right"
-               gn-copy-to-clipboard-button=""
-               data-text="{{::r.locUrl}}"
-               data-tooltip="copyUrlToClipboard"></div>
         </h3>
         <!-- Display description if available -->
         <p data-ng-if="::r.locDescription.length > 0
@@ -181,11 +177,21 @@
         </button>
 
         <div data-ng-if="mainType.indexOf('EEA') === -1"
-             data-gn-record-links-button="[r]"
-             data-type="type"
-             data-icon-mode="none"
-             data-btn-class="btn-block"
-             data-record="md">
+             class="row">
+          <div class="col-md-8 gn-nopadding-left gn-nopadding-right">
+            <div data-gn-record-links-button="[r]"
+                 data-type="type"
+                 data-icon-mode="none"
+                 data-btn-class="btn btn-default btn-block"
+                 data-record="md">
+            </div>
+          </div>
+          <div class="col-md-4 gn-nopadding-right">
+            <div data-btn-class="btn btn-default btn-sm"
+                 gn-copy-to-clipboard-button=""
+                 data-text="{{::r.locUrl}}"
+                 data-tooltip="copyUrlToClipboard"></div>
+          </div>
         </div>
 
         <!-- Check layer is available in EEA GeoServer node or not -->

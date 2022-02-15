@@ -454,7 +454,8 @@
                 + (angular.isDefined(resource.serviceType) ? resource.serviceType : ''))
               : '';
 
-            if (resource.locUrl.indexOf('discodata.eea') !== -1) {
+            if (resource && resource.locUrl
+              && resource.locUrl.indexOf('discodata.eea') !== -1) {
               return 'EEADISCODATA';
             } else if (resource.locUrl.indexOf('sdi.eea.europa.eu/data') !== -1) {
               return 'LINKDOWNLOAD-EEA';

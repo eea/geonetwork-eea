@@ -421,9 +421,9 @@ goog.require('gn_alert');
                 'collapsed': true
               }
             },
-            'cl_status.default': {
+            'cl_status.key': {
               'terms': {
-                'field': 'cl_status.default',
+                'field': 'cl_status.key',
                 'size': 10
               }
             },
@@ -542,6 +542,7 @@ goog.require('gn_alert');
           }],
           'resultTemplate': '../../catalog/components/' +
               'search/resultsview/partials/viewtemplates/grid.html',
+          'searchResultContact': 'OrgForResource',
           'formatter': {
             'list': [{
               'label': 'defaultView',
@@ -694,13 +695,14 @@ goog.require('gn_alert');
         'recordview': {
           'isSocialbarEnabled': true,
           'showStatusWatermarkFor': '',
-          'showStatusTopBarFor': 'historicalArchive,obsolete,superseded',
+          // 'showStatusTopBarFor': 'historicalArchive,obsolete,superseded',
+          'showStatusTopBarFor': '',
           'showCitation': {
             'enabled': false,
             'if': null // {'documentStandard': ['iso19115-3.2018']}
           },
           'sortKeywordsAlphabetically': true,
-          'mainThesaurus': ['th_gemet'],
+          'mainThesaurus': ['th_gemet', 'th_gemet-theme'],
           'locationThesaurus': ['th_regions', 'th_httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope'],
           'internalThesaurus': [],
           'collectionTableConfig': {
@@ -1433,7 +1435,7 @@ goog.require('gn_alert');
           },
           // Privileges management may be allowed for harvested records.
           canManagePrivileges: function(md) {
-            if (md.isHarvested
+            if (md && md.isHarvested
                 && JSON.parse(md.isHarvested) == true
                 && gnConfig['system.harvester.enablePrivilegesManagement'] === true
                 && md.edit) {
