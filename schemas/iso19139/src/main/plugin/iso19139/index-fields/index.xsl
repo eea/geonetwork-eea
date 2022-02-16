@@ -366,6 +366,9 @@
                     <xsl:value-of select="string-join((self::*|preceding-sibling::*)/text(), '/')"/>
                   </shortResourceIdentifier_tree>
                 </xsl:for-each>
+                <shortResourceIdentifier>
+                  <xsl:value-of select="$levels/*[position() = (6)]"/>
+                </shortResourceIdentifier>
               </xsl:if>
             </xsl:if>
           </xsl:for-each>
