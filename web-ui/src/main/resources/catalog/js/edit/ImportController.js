@@ -65,6 +65,7 @@
         rejectIfInvalid: false,
         publishToAll: false,
         assignToCatalog: true,
+        allowEditGroupMembers: true,
         transformWith: '_none_',
         group: null,
         category: null
