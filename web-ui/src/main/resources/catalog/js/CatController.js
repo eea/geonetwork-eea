@@ -542,7 +542,7 @@ goog.require('gn_alert');
           }],
           'resultTemplate': '../../catalog/components/' +
               'search/resultsview/partials/viewtemplates/grid.html',
-          'searchResultContact': 'OrgForResource',
+          'searchResultContact': 'pointOfContactOrgForResource',
           'formatter': {
             'list': [{
               'label': 'defaultView',
