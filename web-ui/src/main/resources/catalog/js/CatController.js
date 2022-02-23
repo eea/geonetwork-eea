@@ -873,6 +873,28 @@ goog.require('gn_alert');
             }
           }
         },
+        'directory': {
+          'sortbyValues': [{
+            'sortBy': 'relevance',
+            'sortOrder': ''
+          }, {
+            'sortBy': 'dateStamp',
+            'sortOrder': 'desc'
+          }, {
+            'sortBy': 'resourceTitleObject.default.keyword',
+            'sortOrder': ''
+          }, {
+            'sortBy': 'recordOwner',
+            'sortOrder': ''
+          }, {
+            'sortBy': 'valid',
+            'sortOrder': 'desc'
+          }],
+          'sortBy': 'relevance',
+          // Add some fuzziness when search on directory entries
+          // but boost exact match.
+          'queryBase': 'any.${searchLang}:(${any}) any.common:(${any}) resourceTitleObject.${searchLang}:"${any}"^10 resourceTitleObject.${searchLang}:(${any})^5 resourceTitleObject.${searchLang}:(${any}~2)'
+        },
         'admin': {
           'enabled': true,
           'appUrl': '../../{{node}}/{{lang}}/admin.console',
