@@ -54,6 +54,7 @@
   "mapLegend": "Legend",
   "kmlFile": "{{layer}} (KML)",
   "eeafileLinkDetails": "EEA Webdav, CIFS and FTPS access.",
+  "linkdownload-eeaLinkDetails": "Data share link",
   "esriRestLinkDetails": "ESRI REST service <a href='{{url}}' target='_blank'>{{url}}</a>.",
   "noRecordFoundWithResourceRegistered": "No record found with one or more WMS layers registered.",
   "noRecordFoundWithResourceRegisteredmap": "No record found with one or more maps registered.",

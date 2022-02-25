@@ -62,9 +62,13 @@
         </div>
         <!-- Always display title if available -->
         <h3>
-          <a data-ng-href="{{::r.locUrl}}">
+          <a data-ng-hide="mainType === 'EEAFILE'"
+             data-ng-href="{{::r.locUrl}}" target="_blank">
             {{::r.locTitle || r.locUrl}}
           </a>
+          <span data-ng-show="mainType === 'EEAFILE'">
+            {{::r.locTitle || r.locUrl}}
+          </span>
         </h3>
         <!-- Display description if available -->
         <p data-ng-if="::r.locDescription.length > 0

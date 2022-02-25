@@ -112,7 +112,7 @@ goog.require('gn_alert');
           'appUrl': '../../{{node}}/{{lang}}/catalog.search#/home',
           'showSocialBarInFooter': true,
           'showMaps': false,
-          'showMosaic': true,
+          'showMosaic': false,
           'facetConfig': {
             'th_httpinspireeceuropaeutheme-theme_tree.key': {
               'terms': {

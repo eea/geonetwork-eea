@@ -148,7 +148,8 @@
               }
             });
 
-            $http.post('../api/search/records/_msearch', body).then(function (data) {
+            // TODO: Should check if available in portal
+            $http.post('../../srv/api/search/records/_msearch', body).then(function (data) {
               gnMdViewObj.current.record.relatedRecords = [];
 
               var recordMap = {};
