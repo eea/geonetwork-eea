@@ -706,8 +706,8 @@ goog.require('gn_alert');
             'if': null // {'documentStandard': ['iso19115-3.2018']}
           },
           'sortKeywordsAlphabetically': true,
-          'mainThesaurus': ['th_gemet', 'th_gemet-theme'],
-          'locationThesaurus': ['th_regions', 'th_httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope'],
+          'mainThesaurus': ['th_gemet', 'th_gemet-theme', 'th_httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope'],
+          'locationThesaurus': ['th_regions'],
           'internalThesaurus': [],
           'collectionTableConfig': {
             'labels': 'title,cl_status,format,Download,Esri,View',
@@ -717,10 +717,9 @@ goog.require('gn_alert');
             // 'layout': 'tabset',
             'layout': '',
             'sections': [
-              // {'types': 'services', 'title': 'Services', 'layout': 'card'},
-              {'types': 'onlines', 'filter': '-protocol:OGC:.*|ESRI:.*|atom.*|.*DOWNLOAD.*|DB:.*|FILE:.* AND -function:legend|featureCatalogue|dataQualityReport', 'title': 'links'},
-              {'types': 'onlines', 'filter': 'protocol:.*DOWNLOAD.*|DB:.*|FILE:.*', 'title': 'download'},
-              {'types': 'onlines', 'filter': 'protocol:OGC:.*|ESRI:.*|atom.*', 'title': 'API'},
+              {'types': 'onlines', 'filter': 'protocol:WWW:URL|EEA.*', 'title': 'download'},
+              {'types': 'onlines', 'filter': 'protocol:OGC:.*|ESRI:.*', 'title': 'Services'},
+              {'types': 'onlines', 'filter': '-protocol:OGC:.*|ESRI:.*|EEA.* AND -function:legend|featureCatalogue|dataQualityReport', 'title': 'links'},
               {'types': 'onlines', 'filter': 'function:legend', 'title': 'mapLegend'},
               // {'types': 'onlines', 'filter': 'function:featureCatalogue', 'title': 'featureCatalog'},
               {'types': 'onlines', 'filter': 'function:dataQualityReport', 'title': 'quality'}]
