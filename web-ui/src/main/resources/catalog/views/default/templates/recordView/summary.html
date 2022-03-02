@@ -29,7 +29,6 @@
       <span class="badge badge-rounded">
         <i class="fa fa-fw fa-clock-o"></i>
       </span>
-    <div>
       <h3 data-translate="">resourceVerticalRange</h3>
       <div class="flex flex-row flex-align-center gn-vertical-range"
            data-ng-repeat="range in mdView.current.record.resourceVerticalRange">
@@ -47,7 +46,30 @@
       </div>
     </div>
   </div>
+
+  <div data-ng-show="mdView.current.record.th_regions"
+       class="gn-margin-bottom flex-row">
+    <span class="badge badge-rounded">
+      <i class="fa fa-fw fa-globe"></i>
+    </span>
+    <div>
+      <h3 data-translate="">spatialExtent</h3>
+      <div data-gn-keyword-badges="mdView.current.record"
+           data-thesaurus="viewConfig.locationThesaurus"></div>
+    </div>
+  </div>
+
+  <div data-ng-show="viewConfig.mainThesaurus.length > 0"
+       class="gn-margin-bottom flex-row">
+    <span class="badge badge-rounded">
+      <i class="fa fa-fw fa-tags"></i>
+    </span>
+    <div>
+      <h3 data-translate="">keywords</h3>
+      <div data-gn-keyword-badges="mdView.current.record"
+           data-thesaurus="viewConfig.mainThesaurus"></div>
+    </div>
+  </div>
+
 </section>
 
-<div data-gn-keyword-badges="mdView.current.record"
-     data-thesaurus="viewConfig.mainThesaurus"/>

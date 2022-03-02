@@ -706,9 +706,9 @@ goog.require('gn_alert');
             'if': null // {'documentStandard': ['iso19115-3.2018']}
           },
           'sortKeywordsAlphabetically': true,
-          'mainThesaurus': ['th_gemet', 'th_gemet-theme', 'th_httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope'],
+          'mainThesaurus': ['th_eea-topics', 'th_gemet', 'th_gemet-theme', 'th_httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope'],
           'locationThesaurus': ['th_regions'],
-          'internalThesaurus': [],
+          'internalThesaurus': ['th_eea-categories'],
           'collectionTableConfig': {
             'labels': 'title,cl_status,format,Download,Esri,View',
             'columns': 'resourceTitle,cl_status[0].key,format,link/EEA:FILEPATH,link/ESRI:REST,link/OGC:WMS'
