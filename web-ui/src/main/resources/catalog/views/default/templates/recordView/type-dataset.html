@@ -18,8 +18,9 @@
 </div>
 
 <!-- map & extent -->
-<div class="row gn-padding-top">
+<div class="row gn-section gn-padding-top">
   <div class="col-md-8 gn-record">
+    <h2 data-translate="">spatialExtent</h2>
     <div data-gn-data-preview="mdView.current.record"/>
 
     <br/>
@@ -28,6 +29,7 @@
   </div>
   <!-- /.col-md-8 gn-record -->
   <div class="col-md-4 gn-md-side gn-nopadding-top">
+<<<<<<< HEAD
     <div data-ng-if="mdView.current.record.cl_maintenanceAndUpdateFrequency.length > 0"
          class="gn-margin-bottom flex-row">
       <span class="badge badge-rounded" title="{{'updateFrequency' | translate}}">
@@ -65,6 +67,8 @@
       </div>
     </div>
 
+=======
+>>>>>>> tit/4.1.x
     <div data-ng-if="mdView.current.record.cl_spatialRepresentationType.length > 0"
          class="gn-margin-bottom flex-row">
       <span class="badge badge-rounded">
@@ -128,7 +132,7 @@
 </div>
 
 <!-- links (Download, API, Others) -->
-<div class="row">
+<div class="row gn-section">
   <div class="col-md-8 gn-record">
     <div ng-include="'../../catalog/views/default/templates/recordView/downloads.html'"/>
 
@@ -169,79 +173,21 @@
          data-title="{{'<span class=\'badge badge-rounded\'><i class=\'fa fa-fw gn-icon-dataset\'></i></span><strong>' + ('openRecorddatasets' | translate) + '</strong>'}}">
     </div>
   </div>
-  <!-- /.col-md-4 gn-md-side -->
 </div>
+
+
+<div ng-include="'../../catalog/views/default/templates/recordView/technical.html'"/>
 
 <div ng-include="'../../catalog/views/default/templates/recordView/featurecatalogue.html'"/>
 
 
-<div ng-include="'../../catalog/views/default/templates/recordView/lineage.html'"/>
+<div class="gn-section"
+     ng-include="'../../catalog/views/default/templates/recordView/lineage.html'"/>
 
 
-<div class="row">
+<div class="row gn-section">
   <div class="col-md-8 gn-record gn-break">
     <div ng-include="'../../catalog/views/default/templates/recordView/contact.html'"/>
-  </div>
-  <!-- /.col-md-8 gn-record -->
-  <div class="col-md-4 gn-md-side">
-
-    <!-- Resource identifier-->
-    <div data-ng-if="mdView.current.record.resourceIdentifier"
-         class="gn-margin-bottom flex-row">
-      <span class="badge badge-rounded" title="{{identifier | translate}}">
-        <i class="fa fa-fw fa-info"></i>
-      </span>
-      <div>
-        <h3 data-translate="">identifier</h3>
-        <ul class="gn-comma-list">
-          <li data-ng-repeat="i in mdView.current.record.resourceIdentifier">
-            <span data-ng-bind-html="i.code | linky"/>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Language-->
-    <div data-ng-if="mdView.current.record.resourceLanguage.length > 0"
-         class="gn-margin-bottom flex-row">
-      <span class="badge badge-rounded" title="{{'language' | translate}}">
-        <i class="fa fa-fw fa-language"></i>
-      </span>
-      <div>
-        <h3 data-translate="">language</h3>
-        <ul class="gn-comma-list">
-          <li data-ng-repeat="l in mdView.current.record.resourceLanguage">
-            {{l | translate}}
-          </li>
-        </ul>
-      </div>
-    </div>
-
-
-    <div ng-include="'../../catalog/views/default/templates/recordView/keywords.html'"/>
-
-
-    <div data-ng-if="mdView.current.record.cl_classification > 0"
-         class="gn-margin-bottom flex-row">
-      <span class="badge badge-rounded" title="{{'classification' | translate}}">
-        <i class="fa fa-fw fa-tags"></i>
-      </span>
-      <div>
-        <h3 data-translate="">classification</h3>
-        <ul>
-          <li data-ng-repeat="c in mdView.current.record.cl_classification">{{c.default}}</li>
-        </ul>
-      </div>ß
-    </div>
-
-<!--    <div data-ng-show="isRatingEnabled"
-         class="gn-md-side-rating gn-margin-bottom">
-      <h2>
-        <i class="fa fa-fw"></i>
-        <span data-translate="">rate</span>
-      </h2>
-      <div data-gn-metadata-rate="mdView.current.record"/>
-    </div>-->
   </div>
 </div>
 
@@ -251,8 +197,9 @@
   </div>
 </div>
 
-<div ng-include="'../../catalog/views/default/templates/recordView/share.html'"/>
+<div class="gn-section"
+     ng-include="'../../catalog/views/default/templates/recordView/metadata.html'"/>
 
-<div ng-include="'../../catalog/views/default/templates/recordView/metadata.html'"/>
+<div ng-include="'../../catalog/views/default/templates/recordView/share.html'"/>
 
 <div ng-include="'../../catalog/views/default/templates/recordView/footer.html'"/>
