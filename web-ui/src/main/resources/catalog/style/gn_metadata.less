@@ -521,6 +521,7 @@ ul.container-list {
   & div.gn-section {
     border-bottom: 1px solid #ddd;
     margin-top: 5px;
+    padding-bottom: 10px;
   }
   .gn-relation-type-MDFCATS {
     border: none;
@@ -578,6 +579,9 @@ ul.container-list {
       text-align: left;
       padding: 10px;
       border-radius: 3px;
+      &.gn-card {
+        padding: 0;
+      }
       &:hover, &:focus {
         background-color: #f8f8f8;
       }
@@ -595,15 +599,18 @@ ul.container-list {
         margin-bottom: 10px;
       }
       .gn-contact-card-role {
-        font-style: italic;
         font-weight: bolder;
       }
       .gn-contact-card-org-group {
-        font-style: italic;
         font-weight: bolder;
       }
       .gn-contact-card-group-role {
         padding: 5px;
+      }
+      .gn-card-heading {
+        height: auto;
+        padding-left: 15px;
+        padding-right: 15px;
       }
     }
   }

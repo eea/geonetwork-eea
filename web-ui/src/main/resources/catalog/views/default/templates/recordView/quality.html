@@ -7,11 +7,11 @@
         <li class="list-group-item"
             data-ng-repeat="c in mdView.current.record.specificationConformance"
             title="{{c.explanation}}">
-          <i class="fa fa-fw"
+          <i class="fa"
              data-ng-class="{
-               'fa-check text-success': c.pass == 'true',
+               'fa-fw fa-check text-success': c.pass == 'true',
                '': c.pass == '',
-               'fa-times text-danger': c.pass == 'false'
+               'fa-fw fa-times text-danger': c.pass == 'false'
                }"></i>
           <a data-ng-if="::c.link" data-ng-href="{{c.link}}">{{c.title}}</a>
           <span data-ng-if="::!c.link">{{c.title}}</span>

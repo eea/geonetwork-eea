@@ -45,35 +45,30 @@
     </li>
 
     <!-- Group by role -->
-    <li class="gn-contact-card"
+    <li class="panel panel-default gn-card gn-contact-card"
         data-ng-if="mode == 'role'"
         data-ng-repeat="cnts in mdContacts | groupBy:'role' track by $index"
         gn-popover
         gn-popover-dismiss=".content">
 
-      <div gn-popover-anchor
-           class="row">
-        <div class="col-md-12">
-          <div class="gn-contact-card-role">
+      <div gn-popover-anchor>
+          <div class="panel-heading gn-card-heading gn-contact-card-role">
             {{cnts[0].role | translate}}
           </div>
-          <div class="col-md-12" data-ng-repeat="c in cnts | orderBy:'organisation'">
-            <div class="row">
-              <div class="col-md-4"
-                   data-gn-circle-letter-icon="c.organisation"
-                   data-org-key="c.email | getMailDomain"/>
-              <div class="col-md-8">
-                <div class="gn-contact-card-org-group">
-                  <span data-ng-if="::c.website">
-                    <a data-ng-href="{{::c.website}}">{{c.organisation}}</a>
-                  </span>
-                  <span data-ng-if="::!c.website">
-                    {{c.organisation}}
-                  </span>
-                </div>
+          <div data-ng-repeat="c in cnts | orderBy:'organisation'" class="row panel-body">
+            <div class="col-md-4 gn-nopadding-left"
+                 data-gn-circle-letter-icon="c.organisation"
+                 data-org-key="c.email | getMailDomain"/>
+            <div class="col-md-8">
+              <div class="gn-contact-card-org-group">
+                <span data-ng-if="::c.website">
+                  <a data-ng-href="{{::c.website}}">{{c.organisation}}</a>
+                </span>
+                <span data-ng-if="::!c.website">
+                  {{c.organisation}}
+                </span>
               </div>
             </div>
-          </div>
         </div>
       </div>
 
@@ -107,8 +102,7 @@
         gn-popover
         gn-popover-dismiss=".content">
 
-      <div gn-popover-anchor
-           class="row">
+      <div gn-popover-anchor>
         <div class="col-md-4"
              data-gn-circle-letter-icon="org"
              data-org-key="contactByOrgRole[0].email | getMailDomain"/>
@@ -127,7 +121,7 @@
             {{r | translate}} <span data-ng-if="!$last"><br/></span>
           </div>
 
-          </div>
+        </div>
       </div>
 
       <div gn-popover-content>
