@@ -1605,7 +1605,7 @@
             var feedMdPromise =
               md && typeof md === 'object' ?
                 $q.resolve(md).then(function(md) {
-                  olL.set('md', md);
+                  olLayer.set('md', md);
                 }) : (
                   typeof md === 'string'
                     ? this.feedLayerMd(olLayer, md)
