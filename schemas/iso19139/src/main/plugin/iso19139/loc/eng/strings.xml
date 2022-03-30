@@ -34,6 +34,11 @@
   <xml_iso19139>Save this metadata as an ISO19139 XML file</xml_iso19139>
   <xml_iso19139Tooai_dc>Save this metadata as an OAI Dublin Core XML file</xml_iso19139Tooai_dc>
 
+  <collection-updater>Update information from members</collection-updater>
+  <eea-series>EEA - Series</eea-series>
+  <eea-add-member>Add members</eea-add-member>
+  <eea-series-identification>Collection information</eea-series-identification>
+  <eea-series-member-info>Collection member's information</eea-series-member-info>
   <metadata-contact>Metadata contact</metadata-contact>
   <eea>EEA</eea>
   <eea-add-overview>Add overview</eea-add-overview>

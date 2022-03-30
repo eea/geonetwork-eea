@@ -1632,6 +1632,143 @@
       </flatModeExceptions>
     </view>
 
+    <view name="eea-series"
+          displayIfRecord="contains(gmd:MD_Metadata/
+                                     gmd:hierarchyLevel/*/@codeListValue,
+                                   'series')"
+          upAndDownControlHidden="true"
+          hideTimeInCalendar="true"
+          class="gn-indent-colored gn-label-above-input">
+      <thesaurusList>
+        <thesaurus key="external.theme.httpinspireeceuropaeutheme-theme"
+                   fieldset="false"
+                   transformations="to-iso19139-keyword-with-anchor"/>
+        <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory"
+                   fieldset="false"
+                   transformations="to-iso19139-keyword-with-anchor"/>
+        <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope"
+                   fieldset="false"
+                   transformations="to-iso19139-keyword-with-anchor"/>
+        <thesaurus key="external.theme.eea-topics"
+                   fieldset="false"
+                   transformations="to-iso19139-keyword-with-anchor"/>
+      </thesaurusList>
+      <sidePanel>
+        <directive data-gn-overview-manager=""/>
+        <directive data-gn-onlinesrc-list=""
+                   data-types="sibling|associated"/>
+
+        <text ref="eea-contact"/>
+      </sidePanel>
+
+      <tab id="eea-series-default" default="true" mode="flat">
+        <section name="eea-series-identification">
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
+          <text ref="eea-title-help"/>
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/>
+
+          <action type="add"
+                  btnLabel="eea-add-identifier"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code) = 0"
+                  or="identifier"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*">
+            <template>
+              <snippet>
+                <gmd:identifier>
+                  <gmd:MD_Identifier>
+                    <gmd:code>
+                      <gco:CharacterString>[Provider_DataType_EpsgCode_ScaleResolution_ScaleResUnit_DatasetShortName_PublicOrInternal_TimeCoverage_VersionNumber_RevisionNumber]</gco:CharacterString>
+                    </gmd:code>
+                  </gmd:MD_Identifier>
+                </gmd:identifier>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-identifier-help"/>
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:edition"
+                 or="edition" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*"/>
+          <text ref="eea-edition-help"/>
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:status"
+                 or="status" in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
+          <text ref="eea-hr"/>
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:abstract"/>
+          <text ref="eea-abstract-help"/>
+
+        </section>
+
+
+        <section name="eea-series-member-info">
+
+          <action type="process"
+                  process="collection-updater"
+                  btnLabel="collection-updater"
+                  forceLabel="true"
+                  btnClass="fa-refresh"/>
+
+          <action type="associatedResource"
+                  name="eea-add-member"
+                  process="sibling">
+            <directiveAttributes>{"associationType": "partOfSeamlessDatabase"}</directiveAttributes>
+          </action>
+
+          <section name="eea-classification">
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:topicCategory"/>
+
+            <field name="eea-keyword-inspire"
+                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']"/>
+
+            <field name="eea-keyword-gemet"
+                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'GEMET']"/>
+
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Spatial scope']"/>
+
+            <field name="eea-keyword-spatial"
+                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Continents, countries, sea regions of the world.']"/>
+
+            <field name="eea-keyword-cat"
+                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA categories']"/>
+
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA topics']"/>
+
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'INSPIRE priority data set']"/>
+
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Temporal resolution']"/>
+          </section>
+
+          <section name="eea-coverage">
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement"/>
+
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/*/gmd:temporalElement"/>
+          </section>
+
+          <section name="eea-additional">
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:language"/>
+
+            <field name="eea-distributionFormat"
+                   xpath="/gmd:MD_Metadata/gmd:distributionInfo/*/gmd:distributionFormat/*/gmd:name"
+                   del="../.."/>
+          </section>
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact"/>
+        </section>
+      </tab>
+
+      <flatModeExceptions>
+        <for name="gmd:keyword"/>
+        <for name="gmd:edition"/>
+        <for name="gmd:date"/>
+        <for name="gmd:status"/>
+        <for name="gmd:pointOfContact"/>
+        <for name="gmd:resourceMaintenance"/>
+        <for name="gmd:lineage"/>
+      </flatModeExceptions>
+    </view>
+
 
     <!--
     Customize the editor layout by adding a class attribute
