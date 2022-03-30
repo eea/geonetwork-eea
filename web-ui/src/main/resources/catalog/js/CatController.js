@@ -793,10 +793,19 @@ goog.require('gn_alert');
                 "include": "dataset|series|service|nonGeographicDataset"
               }
             },
-            "cl_status.key": {
-              "terms": {
-                "field": "cl_status.key",
-                "size": 15
+            'mdStatus': {
+              'terms': {
+                'field': 'statusWorkflow',
+                'size': 20
+              },
+              'meta': {
+                'field': 'statusWorkflow'
+              }
+            },
+            'cl_status.key': {
+              'terms': {
+                'field': 'cl_status.key',
+                'size': 15
               }
             },
             'valid': {
@@ -969,6 +978,12 @@ goog.require('gn_alert');
         'page': {
           'enabled': true,
           'appUrl': '../../{{node}}/{{lang}}/catalog.search#/page'
+        },
+        'workflowHelper': {
+          'enabled': false,
+          'workflowAssistApps': [
+            {'appUrl': '', 'appLabelKey': ''}
+          ]
         }
       }
     };
@@ -1029,7 +1044,8 @@ goog.require('gn_alert');
         'locationThesaurus',
         'distributionConfig',
         'collectionTableConfig',
-        'queryBaseOptions'
+        'queryBaseOptions',
+        'workflowAssistApps'
       ],
       current: null,
       isDisableLoginForm: false,
