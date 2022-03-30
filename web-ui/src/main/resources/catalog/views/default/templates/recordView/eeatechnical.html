@@ -1,171 +1,198 @@
-<div class="row gn-section">
-  <div class="col-md-12 gn-record">
-    <h2 data-translate="">technicalInformation</h2>
+<h2 data-translate="">technicalInformation</h2>
 
-    <div class="row">
-      <div class="col-md-4 gn-md-side">
-        <div data-ng-if="mdView.current.record.cl_spatialRepresentationType.length > 0"
-             class="gn-margin-bottom flex-row">
-          <span class="badge badge-rounded">
-            <i class="fa fa-fw fa-globe"></i>
-          </span>
-          <div>
-            <h3 data-translate="">spatialRepresentationType</h3>
-            <ul class="gn-label-list"
-                data-ng-repeat="c in mdView.current.record.cl_spatialRepresentationType">
-              <li data-gn-search-filter-popup-link="cl_spatialRepresentationType.key"
-                  data-filter="c.key">{{c.default}}
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div data-ng-if="mdView.current.record.resolutionScaleDenominator"
-               class="gn-margin-bottom flex-row">
-          <span class="badge badge-rounded ">
-            <i class="fa fa-fw fa-globe"></i>
-          </span>
-          <div>
-            <h3 data-translate="">scale</h3>
-            <ul class="gn-comma-list">
-              <li data-ng-repeat="d in mdView.current.record.resolutionScaleDenominator"
-                  class="gn-scale">{{d}}
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div data-ng-if="mdView.current.record.resolutionDistance"
-             class="gn-margin-bottom flex-row">
-          <span class="badge badge-rounded">
-            <i class="fa fa-fw fa-globe"></i>
-          </span>
-          <div>
-            <h3 data-translate="">resolution</h3>
-            <ul class="gn-comma-list">
-              <li data-ng-repeat="r in mdView.current.record.resolutionDistance">{{r}}</li>
-            </ul>
-          </div>
-        </div>
-
-        <div data-ng-if="mdView.current.record.crsDetails"
-             class="gn-margin-bottom flex-row">
-          <span class="badge badge-rounded">
-            <i class="fa fa-fw fa-compass"></i>
-          </span>
-          <div>
-            <h3 data-translate="">crs</h3>
-            <ul class="gn-comma-list">
-              <li data-ng-repeat="r in mdView.current.record.crsDetails">
-                <a ng-show="r.url" href="{{r.url}}">{{r.name || r.code}}</a>
-                <span ng-hide="r.url">{{r.name || r.code}}</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-
-        <section class="gn-md-side-dates"
-                 data-ng-if="mdView.current.record.resourceDate.length > 0">
-          <ul>
-            <li data-ng-repeat="date in mdView.current.record.resourceDate">
-              <div class="badge badge-rounded"
-                   data-ng-class="{'danger': date.type === 'deprecated'}">
-                <i class="fa fa-fw"
-                   data-ng-class="{'fa-chevron-right': date.type === 'creation', 'fa-code-fork': date.type === 'superseded','fa-ban': date.type === 'deprecated', 'fa-retweet': date.type === 'revision', 'fa-check': date.type === 'publication', 'fa-calendar': date.type === 'nextUpdate'}" />
-              </div>
-              <span>
-                <h3 data-translate>{{date.type | translate}}</h3>
-                <span data-gn-humanize-time="{{date.date}}"></span>
-              </span>
-            </li>
-          </ul>
-        </section>
-
-
-        <div data-ng-if="mdView.current.record.cl_maintenanceAndUpdateFrequency.length > 0"
-             class="gn-margin-bottom flex-row">
-          <span class="badge badge-rounded" title="{{'updateFrequency' | translate}}">
-            <i class="fa fa-fw fa-language"></i>
-          </span>
-          <div>
-            <h3 data-translate="">updateFrequency</h3>
-            <p data-ng-repeat="c in mdView.current.record.cl_maintenanceAndUpdateFrequency">
-              {{c.default}}
-            </p>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-md-4 gn-md-side">
-        <div data-ng-repeat="(key, t) in mdView.current.record.allKeywords"
-             data-ng-if="(user.canEditRecord(mdView.current.record)
-                       && viewConfig.internalThesaurus
-                       && viewConfig.internalThesaurus.indexOf(key) !== -1)
-                      || highlightedThesaurus.indexOf(key) === -1"
-             class="gn-margin-bottom flex-row">
+<div data-ng-if="mdView.current.record.format"
+     class="gn-margin-bottom flex-row">
       <span class="badge badge-rounded">
-        <i class="fa fa-fw fa-tags"></i>
+        <i class="fa fa-fw fa-globe"></i>
       </span>
-          <div>
-            <h3 data-translate="">{{(t.title || key) | translate}}</h3>
-
-            <div data-gn-keyword-badges="mdView.current.record"
-                 data-thesaurus="key" />
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4 gn-md-side">
-        <!-- Resource identifier-->
-        <div data-ng-if="mdView.current.record.resourceIdentifier"
-             class="gn-margin-bottom flex-row">
-        <span class="badge badge-rounded" title="{{identifier | translate}}">
-          <i class="fa fa-fw fa-info"></i>
-        </span>
-          <div>
-            <h3 data-translate="">identifier</h3>
-            <ul class="gn-comma-list">
-              <li data-ng-repeat="i in mdView.current.record.resourceIdentifier">
-                <span data-ng-bind-html="i.code | linky" />
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Language-->
-        <div data-ng-if="mdView.current.record.resourceLanguage.length > 0"
-             class="gn-margin-bottom flex-row">
-        <span class="badge badge-rounded" title="{{'language' | translate}}">
-          <i class="fa fa-fw fa-language"></i>
-        </span>
-          <div>
-            <h3 data-translate="">language</h3>
-            <ul class="gn-comma-list">
-              <li data-ng-repeat="l in mdView.current.record.resourceLanguage">
-                {{l | translate}}
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div ng-include="'../../catalog/views/default/templates/recordView/categories.html'" />
-
-        <div data-ng-if="mdView.current.record.cl_classification > 0"
-             class="gn-margin-bottom flex-row">
-        <span class="badge badge-rounded" title="{{'classification' | translate}}">
-          <i class="fa fa-fw fa-tags"></i>
-        </span>
-          <div>
-            <h3 data-translate="">classification</h3>
-            <ul>
-              <li data-ng-repeat="c in mdView.current.record.cl_classification">{{c.default}}</li>
-            </ul>
-          </div>
-          ß
-        </div>
-      </div>
-    </div>
+  <div>
+    <h3 data-translate="">format</h3>
+    <ul class="gn-label-list">
+      <li data-ng-repeat="f in mdView.current.record.format track by $index"
+      <a data-gn-search-filter-popup-link="format"
+         data-filter="f">{{f}}</a>
+      </li>
+    </ul>
   </div>
+</div>
+
+<div data-ng-if="mdView.current.record.cl_spatialRepresentationType.length > 0"
+     class="gn-margin-bottom flex-row">
+  <span class="badge badge-rounded">
+    <i class="fa fa-fw fa-globe"></i>
+  </span>
+  <div>
+    <h3 data-translate="">spatialRepresentationType</h3>
+    <ul class="gn-label-list"
+        data-ng-repeat="c in mdView.current.record.cl_spatialRepresentationType">
+      <li data-gn-search-filter-popup-link="cl_spatialRepresentationType.key"
+          data-filter="c.key">{{c.default}}
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div data-ng-if="mdView.current.record.resolutionScaleDenominator"
+       class="gn-margin-bottom flex-row">
+  <span class="badge badge-rounded ">
+    <i class="fa fa-fw fa-globe"></i>
+  </span>
+  <div>
+    <h3 data-translate="">scale</h3>
+    <ul class="gn-comma-list">
+      <li data-ng-repeat="d in mdView.current.record.resolutionScaleDenominator"
+          class="gn-scale">{{d}}
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div data-ng-if="mdView.current.record.resolutionDistance"
+     class="gn-margin-bottom flex-row">
+  <span class="badge badge-rounded">
+    <i class="fa fa-fw fa-globe"></i>
+  </span>
+  <div>
+    <h3 data-translate="">resolution</h3>
+    <ul class="gn-comma-list">
+      <li data-ng-repeat="r in mdView.current.record.resolutionDistance">{{r}}</li>
+    </ul>
+  </div>
+</div>
+
+<div data-ng-if="mdView.current.record.crsDetails"
+     class="gn-margin-bottom flex-row">
+  <span class="badge badge-rounded">
+    <i class="fa fa-fw fa-compass"></i>
+  </span>
+  <div>
+    <h3 data-translate="">crs</h3>
+    <ul class="gn-comma-list">
+      <li data-ng-repeat="r in mdView.current.record.crsDetails">
+        <a ng-show="r.url" href="{{r.url}}">{{r.name || r.code}}</a>
+        <span ng-hide="r.url">{{r.name || r.code}}</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<section class="gn-md-side-dates"
+         data-ng-if="mdView.current.record.resourceDate.length > 0">
+  <ul>
+    <li data-ng-repeat="date in mdView.current.record.resourceDate">
+      <div class="badge badge-rounded"
+           data-ng-class="{'danger': date.type === 'deprecated'}">
+        <i class="fa fa-fw"
+           data-ng-class="{'fa-chevron-right': date.type === 'creation', 'fa-code-fork': date.type === 'superseded','fa-ban': date.type === 'deprecated', 'fa-retweet': date.type === 'revision', 'fa-check': date.type === 'publication', 'fa-calendar': date.type === 'nextUpdate'}" />
+      </div>
+      <span>
+        <h3 data-translate>{{date.type | translate}}</h3>
+        <span data-gn-humanize-time="{{date.date}}"></span>
+      </span>
+    </li>
+  </ul>
+</section>
+
+<div data-ng-show="mdView.current.record.resourceTemporalExtentDetails"
+     class="gn-margin-bottom flex-row">
+      <span class="badge badge-rounded">
+        <i class="fa fa-fw fa-calendar"></i>
+      </span>
+  <div>
+    <h3 data-translate="">tempExtent</h3><br/>
+    <p data-ng-repeat="range in mdView.current.record.resourceTemporalExtentDetails">
+          <span data-ng-show="range.start">
+              <span data-ng-show="range.start.indeterminatePosition">{{range.start.indeterminatePosition | translate}}&nbsp;</span>
+              <span data-gn-humanize-time="{{range.start.date}}"/>
+              <span data-ng-show="range.start.calendarEraName">{{range.start.calendarEraName | translate}}</span>
+          </span>
+      <span class="spacer">
+            <i class="fa fa-long-arrow-right"></i>
+          </span>
+      <span data-ng-show="range.end">
+            <span data-ng-show="range.end.indeterminatePosition">{{range.end.indeterminatePosition | translate}}&nbsp;</span>
+            <span data-gn-humanize-time="{{range.end.date}}"/>
+            <span data-ng-show="range.end.calendarEraName">{{range.end.calendarEraName | translate}}</span>
+          </span>
+    </p>
+  </div>
+</div>
+
+<div data-ng-if="mdView.current.record.cl_maintenanceAndUpdateFrequency.length > 0"
+     class="gn-margin-bottom flex-row">
+  <span class="badge badge-rounded" title="{{'updateFrequency' | translate}}">
+    <i class="fa fa-fw fa-language"></i>
+  </span>
+  <div>
+    <h3 data-translate="">updateFrequency</h3>
+    <p data-ng-repeat="c in mdView.current.record.cl_maintenanceAndUpdateFrequency">
+      {{c.default}}
+    </p>
+  </div>
+</div>
+
+<div data-ng-repeat="(key, t) in mdView.current.record.allKeywords"
+     data-ng-if="(user.canEditRecord(mdView.current.record)
+               && viewConfig.internalThesaurus
+               && viewConfig.internalThesaurus.indexOf(key) !== -1)
+              || highlightedThesaurus.indexOf(key) === -1"
+     class="gn-margin-bottom flex-row">
+  <span class="badge badge-rounded">
+  <i class="fa fa-fw fa-tags"></i>
+  </span>
+  <div>
+    <h3 data-translate="">{{(t.title || key) | translate}}</h3>
+
+    <div data-gn-keyword-badges="mdView.current.record"
+         data-thesaurus="key" />
+  </div>
+</div>
+
+<!-- Resource identifier-->
+<div data-ng-if="mdView.current.record.resourceIdentifier"
+     class="gn-margin-bottom flex-row">
+<span class="badge badge-rounded" title="{{identifier | translate}}">
+  <i class="fa fa-fw fa-info"></i>
+</span>
+  <div>
+    <h3 data-translate="">identifier</h3>
+    <ul class="gn-comma-list">
+      <li data-ng-repeat="i in mdView.current.record.resourceIdentifier">
+        <span data-ng-bind-html="i.code | linky" />
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Language-->
+<div data-ng-if="mdView.current.record.resourceLanguage.length > 0"
+     class="gn-margin-bottom flex-row">
+<span class="badge badge-rounded" title="{{'language' | translate}}">
+  <i class="fa fa-fw fa-language"></i>
+</span>
+  <div>
+    <h3 data-translate="">language</h3>
+    <ul class="gn-comma-list">
+      <li data-ng-repeat="l in mdView.current.record.resourceLanguage">
+        {{l | translate}}
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div ng-include="'../../catalog/views/default/templates/recordView/categories.html'" />
+
+<div data-ng-if="mdView.current.record.cl_classification > 0"
+     class="gn-margin-bottom flex-row">
+<span class="badge badge-rounded" title="{{'classification' | translate}}">
+  <i class="fa fa-fw fa-tags"></i>
+</span>
+  <div>
+    <h3 data-translate="">classification</h3>
+    <ul>
+      <li data-ng-repeat="c in mdView.current.record.cl_classification">{{c.default}}</li>
+    </ul>
+  </div>
+</div>
 </div>

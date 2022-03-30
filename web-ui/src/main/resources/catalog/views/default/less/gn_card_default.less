@@ -422,7 +422,7 @@ ul.gn-resultview {
   .gn-info-list {
     .gn-card {
       min-width: 150px;
-      width: calc(~"(100% / 4) - 20px");
+      width: calc(~"(100% / 3) - 20px");
       @media (max-width: @screen-sm-min) {
         width: calc(~"(100% / 2) - 20px");
       }
@@ -454,6 +454,19 @@ ul.gn-resultview {
         height: calc(~"@{gn-card-height-map} - @{gn-card-header-height} - @{gn-card-footer-height}") !important;
         .gn-img-thumbnail, .gn-md-no-thumbnail {
           height: calc(~"@{gn-card-height-map} - @{gn-card-header-height} - @{gn-card-footer-height}") !important;
+        }
+      }
+    }
+  }
+}
+
+// ----- recordView - main column
+.col-md-8 {
+  &.gn-record {
+    .gn-info-list-blocks {
+      .gn-info-list {
+        .gn-card {
+          width: calc(~"(100% / 2) - 20px");
         }
       }
     }
