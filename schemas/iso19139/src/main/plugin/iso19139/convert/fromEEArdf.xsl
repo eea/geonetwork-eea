@@ -44,7 +44,6 @@
     <data:relatedItems rdf:resource="http://www.eea.europa.eu/data-and-maps/daviz/average-statistics-of-new-vans-1"/>
 
     <data:shortId xml:lang="en">1100</data:shortId>
-    <schema:productID>DAT-20-en</schema:productID>
 
     <data:pdfStatic xml:lang="en">None</data:pdfStatic>
     <data:pdfMaxBreadth xml:lang="en">None</data:pdfMaxBreadth>
@@ -81,6 +80,7 @@
                      xmlns:xlink="http://www.w3.org/1999/xlink"
     >
       <gmd:fileIdentifier>
+<!--        <dcterms:identifier>0a93718db6f541eaa565ba86d6f9ac85</dcterms:identifier>-->
         <!-- <data:id xml:lang="en">vans-16</data:id>-->
         <gco:CharacterString><xsl:value-of select="concat($uuidPrefix, data:id)"/></gco:CharacterString>
       </gmd:fileIdentifier>
@@ -200,7 +200,7 @@
               </xsl:for-each> -->
               <!--
                 <dcterms:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-29T08:58:25+00:00</dcterms:issued>
-
+              -->
               <xsl:for-each select="data:issued">
                 <gmd:date>
                   <gmd:CI_Date>
@@ -211,11 +211,11 @@
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                           codeListValue="publication"/>
+                                           codeListValue="creation"/>
                     </gmd:dateType>
                   </gmd:CI_Date>
                 </gmd:date>
-              </xsl:for-each> -->
+              </xsl:for-each>
               <!--
                 <data:lastUpload rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2019-06-19T22:00:00+00:00</data:lastUpload>
               -->
@@ -243,6 +243,21 @@
                 <data:Data rdf:about="http://www.eea.europa.eu/data-and-maps/data/vans-16">
               -->
               <xsl:for-each select="@rdf:about">
+                <gmd:identifier>
+                  <gmd:MD_Identifier>
+                    <gmd:code>
+                      <gco:CharacterString>
+                        <xsl:value-of select="."/>
+                      </gco:CharacterString>
+                    </gmd:code>
+                  </gmd:MD_Identifier>
+                </gmd:identifier>
+              </xsl:for-each>
+
+              <!--
+                  <schema:productID>DAT-20-en</schema:productID>
+              -->
+              <xsl:for-each select="schema:productID">
                 <gmd:identifier>
                   <gmd:MD_Identifier>
                     <gmd:code>
@@ -482,55 +497,53 @@
           <data:reportingObligations>141</data:reportingObligations>
           eg. https://rod.eionet.europa.eu/obligations/665
 -->
-          <xsl:if test="count(data:reportingObligations[. != '']) > 0">
-            <gmd:descriptiveKeywords>
-              <gmd:MD_Keywords>
-                <xsl:for-each select="data:reportingObligations">
-                  <xsl:variable name="uri"
-                                select="concat('http://rod.eionet.europa.eu/obligations/', .)"/>
-                  <xsl:variable name="keyword"
-                                select="util:getKeywordValueByUri(
-                                $uri,
-                                'external.theme.rod-eionet-europa-eu',
-                                'eng')"/>
-                  <gmd:keyword>
-                    <gmx:Anchor xlink:href="{$uri}">
-                      <xsl:value-of select="$keyword"/>
-                    </gmx:Anchor>
-                  </gmd:keyword>
-                </xsl:for-each>
-                <gmd:type>
-                  <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
-                                          codeListValue="theme"/>
-                </gmd:type>
-                <gmd:thesaurusName>
-                  <gmd:CI_Citation>
-                    <gmd:title>
-                      <gco:CharacterString>Reporting obligations</gco:CharacterString>
-                    </gmd:title>
-                    <gmd:date>
-                      <gmd:CI_Date>
-                        <gmd:date>
-                          <gco:Date>2021-08-25</gco:Date>
-                        </gmd:date>
-                        <gmd:dateType>
-                          <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                               codeListValue="publication"/>
-                        </gmd:dateType>
-                      </gmd:CI_Date>
-                    </gmd:date>
-                    <gmd:identifier>
-                      <gmd:MD_Identifier>
-                        <gmd:code>
-                          <gmx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.rod-eionet-europa-eu">geonetwork.thesaurus.external.theme.rod-eionet-europa-eu</gmx:Anchor>
-                        </gmd:code>
-                      </gmd:MD_Identifier>
-                    </gmd:identifier>
-                  </gmd:CI_Citation>
-                </gmd:thesaurusName>
-              </gmd:MD_Keywords>
-            </gmd:descriptiveKeywords>
-          </xsl:if>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <xsl:for-each select="data:reportingObligations">
+                <xsl:variable name="uri"
+                              select="concat('http://rod.eionet.europa.eu/obligations/', .)"/>
+                <xsl:variable name="keyword"
+                              select="util:getKeywordValueByUri(
+                              $uri,
+                              'external.theme.rod-eionet-europa-eu',
+                              'eng')"/>
+                <gmd:keyword>
+                  <gmx:Anchor xlink:href="{$uri}">
+                    <xsl:value-of select="$keyword"/>
+                  </gmx:Anchor>
+                </gmd:keyword>
+              </xsl:for-each>
+              <gmd:type>
+                <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                        codeListValue="theme"/>
+              </gmd:type>
+              <gmd:thesaurusName>
+                <gmd:CI_Citation>
+                  <gmd:title>
+                    <gco:CharacterString>Reporting obligations</gco:CharacterString>
+                  </gmd:title>
+                  <gmd:date>
+                    <gmd:CI_Date>
+                      <gmd:date>
+                        <gco:Date>2021-08-25</gco:Date>
+                      </gmd:date>
+                      <gmd:dateType>
+                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                             codeListValue="publication"/>
+                      </gmd:dateType>
+                    </gmd:CI_Date>
+                  </gmd:date>
+                  <gmd:identifier>
+                    <gmd:MD_Identifier>
+                      <gmd:code>
+                        <gmx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.rod-eionet-europa-eu">geonetwork.thesaurus.external.theme.rod-eionet-europa-eu</gmx:Anchor>
+                      </gmd:code>
+                    </gmd:MD_Identifier>
+                  </gmd:identifier>
+                </gmd:CI_Citation>
+              </gmd:thesaurusName>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
 
           <!--
             <data:eeaManagementPlan xml:lang="en">2019 1.3.7</data:eeaManagementPlan>
