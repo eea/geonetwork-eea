@@ -978,7 +978,7 @@ TODO
           <xsl:for-each select="data:moreInfo[. != '']">
             <gmd:supplementalInformation>
               <gco:CharacterString>
-                <xsl:value-of select="util:html2text(.)"/>
+                <xsl:value-of select="util:html2text(., true())"/>
               </gco:CharacterString>
             </gmd:supplementalInformation>
           </xsl:for-each>
