@@ -714,7 +714,7 @@ goog.require('gn_alert');
           'internalThesaurus': ['th_eea-categories'],
           'collectionTableConfig': {
             'labels': 'title,cl_status,format,Download,Esri,View',
-            'columns': 'resourceTitle,cl_status[0].key,format,link/EEA:FILEPATH,link/ESRI:REST,link/OGC:WMS'
+            'columns': 'resourceTitle,cl_status[0].key,format,link/name:Direct download.*,link/protocol:ESRI:.*,link/protocol:OGC:.*'
           },
           'distributionConfig': {
             // 'layout': 'tabset',
