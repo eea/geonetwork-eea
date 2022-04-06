@@ -799,13 +799,7 @@
 
                 scope.columnsConfig.map(function(c) {
                   if (c.startsWith('link/')) {
-                    var filters = gnRelatedService.parseFilters(c.split('/')[1]),
-                        links = r.getLinks(), matches = [];
-                    for (var i = 0; i < links.length; i++) {
-                      gnRelatedService.testFilters(filters, links[i])
-                      && matches.push(links[i]);
-                    }
-                    recordData[c] = matches;
+                    recordData[c] = r.getLinksByFilter(c.split('/')[1]);
                   } else {
                     recordData[c] = (c.indexOf('.') != -1 ? _.at(r, c) : r[c]);
                   }
@@ -864,5 +858,5 @@
             };
           }
         }
-    }]);
+      }]);
 })();
