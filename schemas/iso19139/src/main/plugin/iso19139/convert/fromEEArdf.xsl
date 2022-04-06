@@ -304,97 +304,91 @@
             Operator: Peter Kjeld, peter.kjeld@eea.europa.eu</data:contact>
           -->
 
-          <xsl:for-each select="data:contact">
-            <xsl:choose>
-              <xsl:when test="matches(., '([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)')">
-                <xsl:analyze-string select="." regex="([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)">
-                  <xsl:matching-substring>
-                    <xsl:variable name="isEEA"
-                                  select="ends-with(., 'eea.europa.eu')"/>
-                    <xsl:variable name="orgFromEmail"
-                                  select="upper-case(replace(., '.*@([a-zA-Z0-9_-]+).*', '$1'))"/>
+          <xsl:variable name="orgs" as="node()*">
+            <xsl:for-each select="data:contact">
+              <xsl:choose>
+                <xsl:when test="matches(., '([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)')">
+                  <xsl:analyze-string select="." regex="([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)">
+                    <xsl:matching-substring>
+                      <xsl:variable name="isEEA"
+                                    select="ends-with(., 'eea.europa.eu')"/>
+                      <xsl:variable name="orgFromEmail"
+                                    select="upper-case(replace(., '.*@([a-zA-Z0-9_-]+).*', '$1'))"/>
+                      <org name="{if ($isEEA) then 'European Environment Agency' else $orgFromEmail}" mail="{.}"/>
+                    </xsl:matching-substring>
+                    <xsl:non-matching-substring>
+                    </xsl:non-matching-substring>
+                  </xsl:analyze-string>
+                </xsl:when>
+                <xsl:otherwise>
+                  <!-- ignored -->
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:for-each>
+          </xsl:variable>
 
-                    <gmd:pointOfContact>
-                      <gmd:CI_ResponsibleParty>
-                        <gmd:organisationName>
-                          <gco:CharacterString>
-                            <xsl:value-of select="if ($isEEA) then 'European Environment Agency' else $orgFromEmail"/>
-                          </gco:CharacterString>
-                        </gmd:organisationName>
-                        <xsl:choose>
-                          <xsl:when test="$isEEA">
-                            <gmd:contactInfo>
-                              <gmd:CI_Contact>
-                                <gmd:address>
-                                  <gmd:CI_Address>
-                                    <gmd:deliveryPoint>
-                                      <gco:CharacterString>Kongens Nytorv 6</gco:CharacterString>
-                                    </gmd:deliveryPoint>
-                                    <gmd:city>
-                                      <gco:CharacterString>Copenhagen</gco:CharacterString>
-                                    </gmd:city>
-                                    <gmd:administrativeArea>
-                                      <gco:CharacterString>K</gco:CharacterString>
-                                    </gmd:administrativeArea>
-                                    <gmd:postalCode>
-                                      <gco:CharacterString>1050</gco:CharacterString>
-                                    </gmd:postalCode>
-                                    <gmd:country>
-                                      <gco:CharacterString>Denmark</gco:CharacterString>
-                                    </gmd:country>
-                                    <gmd:electronicMailAddress>
-                                      <gco:CharacterString><xsl:value-of select="."/> </gco:CharacterString>
-                                    </gmd:electronicMailAddress>
-                                  </gmd:CI_Address>
-                                </gmd:address>
-                              </gmd:CI_Contact>
-                            </gmd:contactInfo>
-                          </xsl:when>
-                          <xsl:otherwise>
-                            <gmd:contactInfo>
-                              <gmd:CI_Contact>
-                                <gmd:address>
-                                  <gmd:CI_Address>
-                                    <gmd:electronicMailAddress>
-                                      <gco:CharacterString><xsl:value-of select="."/> </gco:CharacterString>
-                                    </gmd:electronicMailAddress>
-                                  </gmd:CI_Address>
-                                </gmd:address>
-                              </gmd:CI_Contact>
-                            </gmd:contactInfo>
-                          </xsl:otherwise>
-                        </xsl:choose>
-                        <gmd:role>
-                          <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
-                                           codeListValue="pointOfContact"/>
-                        </gmd:role>
-                      </gmd:CI_ResponsibleParty>
-                    </gmd:pointOfContact>
-                  </xsl:matching-substring>
-                  <xsl:non-matching-substring>
-                  </xsl:non-matching-substring>
-                </xsl:analyze-string>
-              </xsl:when>
-              <xsl:otherwise>
-                <gmd:pointOfContact>
-                  <gmd:CI_ResponsibleParty>
-                    <gmd:organisationName>
-                      <gco:CharacterString>
-                      </gco:CharacterString>
-                    </gmd:organisationName>
-                    <gmd:individualName>
-                      <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-                    </gmd:individualName>
-                    <gmd:role>
-                      <gmd:CI_RoleCode
-                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
-                        codeListValue="pointOfContact"/>
-                    </gmd:role>
-                  </gmd:CI_ResponsibleParty>
-                </gmd:pointOfContact>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:for-each>
+          <xsl:for-each-group select="$orgs" group-by="@name">
+            <gmd:pointOfContact>
+              <gmd:CI_ResponsibleParty>
+                <gmd:organisationName>
+                  <gco:CharacterString>
+                    <xsl:value-of select="current-grouping-key()"/>
+                  </gco:CharacterString>
+                </gmd:organisationName>
+                <xsl:choose>
+                  <xsl:when test="current-grouping-key() = 'European Environment Agency'">
+                    <gmd:contactInfo>
+                      <gmd:CI_Contact>
+                        <gmd:address>
+                          <gmd:CI_Address>
+                            <gmd:deliveryPoint>
+                              <gco:CharacterString>Kongens Nytorv 6</gco:CharacterString>
+                            </gmd:deliveryPoint>
+                            <gmd:city>
+                              <gco:CharacterString>Copenhagen</gco:CharacterString>
+                            </gmd:city>
+                            <gmd:administrativeArea>
+                              <gco:CharacterString>K</gco:CharacterString>
+                            </gmd:administrativeArea>
+                            <gmd:postalCode>
+                              <gco:CharacterString>1050</gco:CharacterString>
+                            </gmd:postalCode>
+                            <gmd:country>
+                              <gco:CharacterString>Denmark</gco:CharacterString>
+                            </gmd:country>
+                            <!--<xsl:for-each select="current-group()">
+                              <gmd:electronicMailAddress>
+                                <gco:CharacterString><xsl:value-of select="@mail"/> </gco:CharacterString>
+                              </gmd:electronicMailAddress>
+                            </xsl:for-each>-->
+                          </gmd:CI_Address>
+                        </gmd:address>
+                      </gmd:CI_Contact>
+                    </gmd:contactInfo>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <!--<gmd:contactInfo>
+                      <gmd:CI_Contact>
+                        <gmd:address>
+                          <gmd:CI_Address>
+                            <xsl:for-each select="current-group()">
+                              <gmd:electronicMailAddress>
+                                <gco:CharacterString><xsl:value-of select="@mail"/> </gco:CharacterString>
+                              </gmd:electronicMailAddress>
+                            </xsl:for-each>
+                          </gmd:CI_Address>
+                        </gmd:address>
+                      </gmd:CI_Contact>
+                    </gmd:contactInfo>-->
+                  </xsl:otherwise>
+                </xsl:choose>
+                <gmd:role>
+                  <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                                   codeListValue="pointOfContact"/>
+                </gmd:role>
+              </gmd:CI_ResponsibleParty>
+            </gmd:pointOfContact>
+          </xsl:for-each-group>
 
           <!--
            <schema:publisher>
@@ -437,14 +431,24 @@
           <!--
           <data:processor>http://acm.eionet.europa.eu</data:processor>
           -->
+          <xsl:variable name="eea-providers"
+                        select="document('eea-providers.rdf')"/>
+
           <xsl:for-each select="data:processor">
+            <xsl:variable name="url"
+                          select="."/>
+            <xsl:variable name="providerInfo"
+                          select="$eea-providers//resources[Organisation_url = $url]"/>
             <xsl:variable name="isEEA"
                           select="contains(., 'www.eea.europa.eu')"/>
             <gmd:pointOfContact>
               <gmd:CI_ResponsibleParty>
                 <gmd:organisationName>
                   <gco:CharacterString>
-                    <xsl:value-of select="if ($isEEA) then 'European Environment Agency' else ."/>
+                    <xsl:value-of select="if ($isEEA)
+                                          then 'European Environment Agency'
+                                          else if ($providerInfo/name != '')
+                                          then $providerInfo/name else ."/>
                   </gco:CharacterString>
                 </gmd:organisationName>
                 <gmd:contactInfo>
