@@ -232,11 +232,6 @@
             }
           };
 
-          var addToEEAMap = function(link, uuid) {
-            var url = 'https://sdi.eea.europa.eu/eea/databrowser/?uuid=';
-            return window.open(url + uuid, '_blank');
-          };
-
           this.map = {
             'WMS' : {
               iconClass: 'fa-globe',
@@ -353,11 +348,6 @@
               iconClass: 'fa-download',
               label: 'download',
               action: openLink
-            },
-            'EEAMAP' : {
-              iconClass: 'fa-globe',
-              label: 'addToEEAMap',
-              action: addToEEAMap
             },
             'EEADISCODATA' : {
               iconClass: 'fa-database',
@@ -500,12 +490,6 @@
                 return 'DB';
               } else if (protocolOrType.match(/link/i)) {
                 return 'LINK';
-              } else if (!protocolOrType.match(/EEA:FOLDERPATH/i) &&
-                 resource.url && resource.url.contains &&
-                 !resource.url.contains('.sqlite') &&
-                 !resource.url.contains('.mdb') &&
-                 !resource.url.contains('.gdp')) {
-                return 'EEAMAP';
               } else if (protocolOrType.match(/tms/i)) {
                 return 'TMS';
               } else if (protocolOrType.match(/wfs/i)) {
