@@ -93,7 +93,7 @@
         autoUpload: false,
         done: uploadImportMdDone,
         fail: uploadImportMdError,
-        headers: {'X-XSRF-TOKEN': $rootScope.csrf}
+        headers: {'X-XSRF-TOKEN': $rootScope.csrf, 'Accept-Language': $scope.lang}
       };
 
 

@@ -750,7 +750,7 @@ public class ServiceManager {
                 String contentDisposition = binaryFile.getContentDisposition();
                 String contentLength = binaryFile.getContentLength();
 
-                int cl = (contentLength == null) ? -1 : Integer.parseInt(contentLength);
+                long cl = (contentLength == null) ? -1 : Long.parseLong(contentLength);
 
                 // Did we set up a status code for the response?
                 if (context.getStatusCode() != null) {
@@ -773,7 +773,7 @@ public class ServiceManager {
                 String contentDisposition = BLOB.getContentDisposition(response);
                 String contentLength = BLOB.getContentLength(response);
 
-                int cl = (contentLength == null) ? -1 : Integer.parseInt(contentLength);
+                long cl = (contentLength == null) ? -1 : Long.parseLong(contentLength);
 
                 req.beginStream(contentType, cl, contentDisposition, cache);
                 BLOB.write(response, req.getOutputStream());

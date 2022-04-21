@@ -327,9 +327,10 @@
                   });
                 }
 
-                if (angular.isNumber(scope.ownerGroup)) {
+                var groupId = parseInt(scope.ownerGroup);
+                if (groupId != NaN) {
                   scope.selectedGroup = scope.groups.find(function(v) {
-                    return v.id === scope.ownerGroup || v['@id'] === scope.ownerGroup
+                    return v.id === groupId || v['@id'] === groupId
                   });
 
                   if (scope.selectedGroup === undefined) {
@@ -614,7 +615,7 @@
               var initialized = false;
               var baseList = null;
               var defaultValue;
-              var allowBlank = JSON.parse(attrs['allowBlank']) == true;
+              var allowBlank = angular.fromJson(attrs['allowBlank']) == true;
 
               var addBlankValueAndSetDefault = function() {
                 var blank = {label: '', code: ''},

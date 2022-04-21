@@ -1,60 +1,32 @@
-<div class="row"
-     data-ng-if="mdView.current.record.lineage
-                 || mdView.current.record.sourceDescription
-                 || mdView.current.record.supplementalInformation">
-  <div class="col-md-8 gn-record">
-    <div data-ng-if="mdView.current.record.lineage">
-      <h2 data-translate="">lineage</h2>
-      <p data-ng-bind-html="mdView.current.record.lineage | linky | newlines"/>
-    </div>
 
-    <div data-ng-if="mdView.current.record.sourceDescription">
-      <h2 data-translate="">sourceDescription</h2>
-      <p data-ng-bind-html="mdView.current.record.sourceDescription | linky | newlines"/>
-    </div>
-
-    <div data-ng-if="mdView.current.record.supplementalInformation">
-      <h2 data-translate="">supplementalInformation</h2>
-      <p data-ng-bind-html="mdView.current.record.supplementalInformation | linky | newlines"/>
-    </div>
-
-    <div data-ng-if="mdView.current.record.relatedRecords"
-         data-gn-related="mdView.current.record"
-         data-user="user"
-         data-types="sources"
-         data-layout="card"
-         data-has-results="hasRelations.sources"
-         data-title="{{'sourceDatasets' | translate}}">
-    </div>
-    <div data-ng-if="mdView.current.record.relatedRecords"
-         data-gn-related="mdView.current.record"
-         data-user="user"
-         data-types="hassources"
-         data-layout="card"
-         data-has-results="hasRelations.hassources"
-         data-title="{{'isSourceOfDatasets' | translate}}">
-    </div>
-  </div>
-  <div class="col-md-4 gn-md-side">
-
-    <div data-ng-repeat="(key, t) in mdView.current.record.allKeywords"
-         data-ng-if="(user.canEditRecord(mdView.current.record)
-               && viewConfig.internalThesaurus
-               && viewConfig.internalThesaurus.indexOf(key) !== -1)
-              || highlightedThesaurus.indexOf(key) === -1"
-         class="gn-margin-bottom flex-row">
-      <span class="badge badge-rounded">
-        <i class="fa fa-fw fa-tags"></i>
-      </span>
-      <div>
-        <h3 data-translate="">{{(t.title || key) | translate}}</h3>
-
-        <div data-gn-keyword-badges="mdView.current.record"
-             data-thesaurus="key" />
-      </div>
-    </div>
-  </div>
+<div data-ng-if="mdView.current.record.lineage">
+  <h2 data-translate="">lineage</h2>
+  <p data-ng-bind-html="mdView.current.record.lineage | linky | newlines"/>
 </div>
 
-<div ng-include="'../../catalog/views/default/templates/recordView/quality.html'"/>
+<div data-ng-if="mdView.current.record.sourceDescription">
+  <h2 data-translate="">sourceDescription</h2>
+  <p data-ng-bind-html="mdView.current.record.sourceDescription | linky | newlines"/>
+</div>
 
+<div data-ng-if="mdView.current.record.supplementalInformation">
+  <h2 data-translate="">supplementalInformation</h2>
+  <p data-ng-bind-html="mdView.current.record.supplementalInformation | linky | newlines"/>
+</div>
+
+<div data-ng-if="mdView.current.record.relatedRecords"
+     data-gn-related="mdView.current.record"
+     data-user="user"
+     data-types="sources"
+     data-layout="card"
+     data-has-results="hasRelations.sources"
+     data-title="{{'sourceDatasets' | translate}}">
+</div>
+<div data-ng-if="mdView.current.record.relatedRecords"
+     data-gn-related="mdView.current.record"
+     data-user="user"
+     data-types="hassources"
+     data-layout="card"
+     data-has-results="hasRelations.hassources"
+     data-title="{{'isSourceOfDatasets' | translate}}">
+</div>

@@ -100,7 +100,8 @@ goog.require('gn_alert');
           'fluidHeaderLayout': true,
           'showGNName': true,
           'isHeaderFixed': false,
-          'isMenubarAccessible': true
+          'isMenubarAccessible': true,
+          'showPortalSwitcher': true
         },
         'cookieWarning': {
           'enabled': true,
@@ -546,6 +547,11 @@ goog.require('gn_alert');
               'search/resultsview/partials/viewtemplates/list.html',
             'tooltip': 'List',
             'icon': 'fa-bars'
+          },{
+            'tplUrl': '../../catalog/components/' +
+              'search/resultsview/partials/viewtemplates/table.html',
+            'tooltip': 'Table',
+            'icon': 'fa-table'
           }],
           'resultTemplate': '../../catalog/components/' +
               'search/resultsview/partials/viewtemplates/grid.html',
@@ -722,10 +728,11 @@ goog.require('gn_alert');
             'sections': [
               {'types': 'onlines', 'filter': 'protocol:WWW:URL|EEA.*', 'title': 'download'},
               {'types': 'onlines', 'filter': 'protocol:OGC:.*|ESRI:.*', 'title': 'Services'},
-              {'types': 'onlines', 'filter': '-protocol:OGC:.*|ESRI:.*|EEA.* AND -function:legend|featureCatalogue|dataQualityReport', 'title': 'links'},
-              {'types': 'onlines', 'filter': 'function:legend', 'title': 'mapLegend'},
+              {'types': 'onlines', 'filter': '-protocol:OGC:.*|ESRI:.*|EEA.*|WWW:URL', 'title': 'links'},
+              // {'types': 'onlines', 'filter': 'function:legend', 'title': 'mapLegend'},
               // {'types': 'onlines', 'filter': 'function:featureCatalogue', 'title': 'featureCatalog'},
-              {'types': 'onlines', 'filter': 'function:dataQualityReport', 'title': 'quality'}]
+              // {'types': 'onlines', 'filter': 'function:dataQualityReport', 'title': 'quality'}
+            ]
           },
           'relatedFacetConfig':  {
             'cl_status': {
