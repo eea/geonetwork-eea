@@ -66,14 +66,14 @@
   </div>
 </div>
 
-<div class="row gn-section">
+<!--<div class="row gn-section">
   <div class="col-md-12 gn-record">
     <h2 data-translate="">technicalInformation</h2>
   </div>
   <div class="col-md-12 gn-md-side gn-nopadding-top">
     <div class="col-3 gn-padding-bottom-lg" ng-include="'../../catalog/views/default/templates/recordView/technical.html'"/>
   </div>
-</div>
+</div>-->
 
 <div class="row gn-section"
      data-ng-if="mdView.current.record.featureTypes.length
@@ -89,10 +89,29 @@
                  || mdView.current.record.supplementalInformation">
   <div class="col-md-8 gn-record">
     <div ng-include="'../../catalog/views/default/templates/recordView/lineage.html'"/>
+
+    <div ng-include="'../../catalog/views/default/templates/recordView/sources.html'"/>
   </div>
   <!-- /.col-md-8 gn-record -->
   <div class="gn-md-side">
-    <div ng-include="'../../catalog/views/default/templates/recordView/sources.html'"/>
+    <div>
+      <div data-ng-repeat="(key, t) in mdView.current.record.allKeywords"
+           data-ng-if="(user.canEditRecord(mdView.current.record)
+                 && viewConfig.internalThesaurus
+                 && viewConfig.internalThesaurus.indexOf(key) !== -1)
+                || highlightedThesaurus.indexOf(key) === -1"
+           class="gn-margin-bottom flex-row">
+    <span class="badge badge-rounded">
+      <i class="fa fa-fw fa-tags"></i>
+    </span>
+        <div>
+          <h3 data-translate="">{{(t.title || key) | translate}}</h3>
+
+          <div data-gn-keyword-badges="mdView.current.record"
+               data-thesaurus="key" />
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
