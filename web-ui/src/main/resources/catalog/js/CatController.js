@@ -728,7 +728,7 @@ goog.require('gn_alert');
             'sections': [
               {'types': 'onlines', 'filter': 'protocol:WWW:URL|EEA.*', 'title': 'download'},
               {'types': 'onlines', 'filter': 'protocol:OGC:.*|ESRI:.*', 'title': 'Services'},
-              {'types': 'onlines', 'filter': '-protocol:OGC:.*|ESRI:.*|EEA.*|WWW:URL', 'title': 'links'},
+              {'types': 'onlines', 'filter': '-protocol:OGC:.*|ESRI:.*|EEA.*|WWW:URL', 'title': 'links'}
               // {'types': 'onlines', 'filter': 'function:legend', 'title': 'mapLegend'},
               // {'types': 'onlines', 'filter': 'function:featureCatalogue', 'title': 'featureCatalog'},
               // {'types': 'onlines', 'filter': 'function:dataQualityReport', 'title': 'quality'}
