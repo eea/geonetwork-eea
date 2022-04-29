@@ -11,6 +11,8 @@
       <span class="gn-status gn-status-mdview gn-status-obsolete">Draft</span>
     </div>
 
+    <div gn-record-is-replaced-by="mdView.current.record.uuid"></div>
+
     <div class="gn-margin-top" ng-include="'../../catalog/views/default/templates/recordView/thumbnails.html'"/>
 
     <div class="gn-margin-top" ng-include="'../../catalog/views/default/templates/recordView/summary.html'"/>
@@ -43,16 +45,16 @@
   </div>
   <!-- /.col-md-8 gn-record -->
   <div class="gn-md-side"
-       data-ng-class="[].concat(mdView.current.record.relatedRecords.datasets, mdView.current.record.relatedRecords.services).length > 3 ? 'col-md-12' : 'col-md-4'">
+       data-ng-class="[].concat(mdView.current.record.related.datasets, mdView.current.record.related.services).length > 3 ? 'col-md-12' : 'col-md-4'">
 
-    <div data-ng-if="mdView.current.record.relatedRecords"
+    <div data-ng-if="mdView.current.record.related.uuids"
          data-gn-related="mdView.current.record"
          data-user="user"
          data-layout="card"
          data-types="services"
          data-title="{{'<span class=\'badge badge-rounded\'><i class=\'fa fa-fw gn-icon-service\'></i></span><strong>' + ('openRecordservices' | translate) + '</strong>'}}">
     </div>
-    <div data-ng-if="mdView.current.record.relatedRecords"
+    <div data-ng-if="mdView.current.record.related.uuids"
          data-gn-related="mdView.current.record"
          data-user="user"
          data-layout="card"
@@ -77,7 +79,7 @@
 
 <div class="row gn-section"
      data-ng-if="mdView.current.record.featureTypes.length
-                 || mdView.current.record.relatedRecords.fcats.length > 0">
+                 || mdView.current.record.related.fcats.length > 0">
   <div class="col-md-12 gn-record">
     <div ng-include="'../../catalog/views/default/templates/recordView/featurecatalogue.html'"/>
   </div>

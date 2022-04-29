@@ -107,8 +107,8 @@
                indexOf(link.protocol) > -1;
           };
 
-          var addWMSToMap = gnViewerSettings.resultviewFns.addMdLayerToMap;
-          var addEsriRestToMap = gnViewerSettings.resultviewFns.addMdLayerToMap;
+          var addWMSToMap = gnViewerSettings.resultviewFns && gnViewerSettings.resultviewFns.addMdLayerToMap;
+          var addEsriRestToMap = gnViewerSettings.resultviewFns && gnViewerSettings.resultviewFns.addMdLayerToMap;
 
           var addWFSToMap = function(link, md) {
             var url = $filter('gnLocalized')(link.url) || link.url;
@@ -155,7 +155,7 @@
           };
 
 
-          var addWMTSToMap = gnViewerSettings.resultviewFns.addMdLayerToMap;
+          var addWMTSToMap = gnViewerSettings.resultviewFns && gnViewerSettings.resultviewFns.addMdLayerToMap;
 
           var addTMSToMap = function(link, md) {
             // Link is localized when using associated resource service
@@ -267,7 +267,8 @@
             },
             'ATOM' : {
               iconClass: 'fa-globe',
-              label: 'download'
+              label: 'download',
+              action: openLink
             },
             'WCS' : {
               iconClass: 'fa-globe',
@@ -436,9 +437,9 @@
           };
 
           this.getType = function(resource, type) {
-            resource.locTitle = $filter('gnLocalized')(resource.title);
-            resource.locDescription = $filter('gnLocalized')(resource.description);
-            resource.locUrl = $filter('gnLocalized')(resource.url);
+            resource.locTitle = $filter('gnLocalized')(resource.name) || resource.name;
+            resource.locDescription = $filter('gnLocalized')(resource.description) || resource.description;
+            resource.locUrl = $filter('gnLocalized')(resource.url) || resource.url;
             var protocolOrType = angular.isDefined(resource.protocol)
               ? (resource.protocol
                 + (angular.isDefined(resource.serviceType) ? resource.serviceType : ''))
