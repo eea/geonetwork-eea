@@ -87,10 +87,10 @@
               <input class="form-control"
                      type="text"
                      onClick="this.setSelectionRange(0, this.value.length)"
-                     value="{{r.url.eng.substr(0, r.url.eng.lastIndexOf('/'))}}"/>
+                     value="{{r.locUrl.substr(0, r.locUrl.lastIndexOf('/'))}}"/>
               <span class="input-group-btn">
                 <a class="btn btn-default" type="button"
-                   data-ng-href="{{r.url.eng.substr(0, r.url.eng.lastIndexOf('/'))}}"
+                   data-ng-href="{{r.locUrl.substr(0, r.locUrl.lastIndexOf('/'))}}"
                    data-translate="">openLink</a>
               </span>
             </div>
@@ -99,7 +99,7 @@
               <input class="form-control"
                      type="text"
                      onClick="this.setSelectionRange(0, this.value.length)"
-                     value="\\sdi.eea.europa.eu\data{{formatCifsLink(r.url.eng)}}"/>
+                     value="\\sdi.eea.europa.eu\data{{formatCifsLink(r.locUrl)}}"/>
 
             </div>
             <div class="input-group">
@@ -107,7 +107,7 @@
               <input class="form-control"
                      type="text"
                      onClick="this.setSelectionRange(0, this.value.length)"
-                     value="{{r.url.eng.substr(0, (r.url.eng.lastIndexOf('/'))).replace('ftps://sdi.eea.europa.eu/data', 'https://sdi.eea.europa.eu/webdav')}}"/>
+                     value="{{r.locUrl.substr(0, (r.locUrl.lastIndexOf('/'))).replace('ftps://sdi.eea.europa.eu/data', 'https://sdi.eea.europa.eu/webdav')}}"/>
             </div>
 
           </div>

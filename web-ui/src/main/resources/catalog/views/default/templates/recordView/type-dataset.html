@@ -95,9 +95,10 @@
     <div ng-include="'../../catalog/views/default/templates/recordView/sources.html'"/>
   </div>
   <!-- /.col-md-8 gn-record -->
-  <div class="gn-md-side">
+  <div class="col-md-4 gn-md-side">
     <div>
       <div data-ng-repeat="(key, t) in mdView.current.record.allKeywords"
+           data-ng-hide="key === 'th_temporal-update'"
            data-ng-if="(user.canEditRecord(mdView.current.record)
                  && viewConfig.internalThesaurus
                  && viewConfig.internalThesaurus.indexOf(key) !== -1)

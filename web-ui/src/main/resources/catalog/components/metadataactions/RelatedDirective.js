@@ -357,12 +357,13 @@
                 //
                 var layerName = '';
                 if (r.protocol == 'EEA:FILEPATH') {
-                  layerName = r.id.replace(/\//g, '-').substring(1)
-                    .replace(/.tif|.gpkg|.shp/, '');
+                  layerName = r.locUrl.split('/').filter(function(t) {
+                    return t !== '';
+                  }).pop().replace(/.tif|.gpkg|.shp/, '');
                 } else if (r.protocol == 'EEA:FOLDERPATH') {
                   // Not supported
                 } else if (r.protocol == 'EEA:DBPG') {
-                  layerName = r.id.split(':')[1].replace(/\/|\./g, '-');
+                  layerName = r.locUrl.split(':')[1].replace(/\/|\./g, '-');
                 }
 
                 if (layerName != '') {
