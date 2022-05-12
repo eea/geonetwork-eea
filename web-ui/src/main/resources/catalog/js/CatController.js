@@ -80,7 +80,7 @@ goog.require('gn_alert');
       'mods': {
         'global': {
           'humanizeDates': true,
-          'dateFormat': 'DD-MM-YYYY',
+          'dateFormat': 'D MMM YYYY',
           // 'timezone': 'Australia/Hobart',
           'timezone': 'Europe/Copenhagen',
           'eeaGeoServer': 'https://sdi.eea.europa.eu/geoserver/ows',
