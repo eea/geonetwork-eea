@@ -122,8 +122,13 @@ public class ISO19139SchemaPlugin
                         List children = getChild(agId, "code", GMD)
                             .getChildren();
                         String sibUuid = "";
+                        String title = "";
+                        String url = "";
                         if (children.size() == 1) {
-                            sibUuid = ((Element) children.get(0)).getText();
+                            Element charStringOrAnchor = ((Element) children.get(0));
+                            sibUuid = charStringOrAnchor.getText();
+                            title = charStringOrAnchor.getAttributeValue("title", XLINK);
+                            url = charStringOrAnchor.getAttributeValue("href", XLINK);
                         }
                         final Element associationTypeEl = getChild(sib, "associationType", GMD);
                         String associationType = getChild(associationTypeEl, "DS_AssociationTypeCode", GMD)
@@ -134,7 +139,9 @@ public class ISO19139SchemaPlugin
                             initiativeType = getChild(initiativeTypeEl, "DS_InitiativeTypeCode", GMD)
                                 .getAttributeValue("codeListValue");
                         }
-                        AssociatedResource resource = new AssociatedResource(sibUuid, initiativeType, associationType);
+
+                        AssociatedResource resource = new AssociatedResource(
+                            sibUuid, initiativeType, associationType, url, title);
                         listOfResources.add(resource);
                     }
                 } catch (Exception e) {
@@ -178,7 +185,8 @@ public class ISO19139SchemaPlugin
                 associatedResources.add(elementAsAssociatedResource(anchor));
             }
         }
-        // TODO: There is no support of parent relation using aggregation see parentAssociatedResourceType in ISO19115-3
+        // Parent relation is also frequently encoded using
+        // aggregation. See parentAssociatedResourceType in ISO19115-3
         return associatedResources;
     }
 
@@ -245,6 +253,9 @@ public class ISO19139SchemaPlugin
 
     private AssociatedResource elementAsAssociatedResource(Element ref) {
         String sibUuid = ref.getAttributeValue("uuidref");
+        if (StringUtils.isEmpty(sibUuid)) {
+            sibUuid = ref.getTextNormalize();
+        }
         String title = ref.getAttributeValue("title", XLINK);
         String url = ref.getAttributeValue("href", XLINK);
         return new AssociatedResource(sibUuid, "", "", url, title);
