@@ -177,6 +177,11 @@
   <eea-keyword-cat>Keywords – EEA data categories</eea-keyword-cat>
   <eea-keyword-list>Keywords – EEA keywords list</eea-keyword-list>
   <eea-keyword-spatial>Keywords – Spatial coverage of the dataset</eea-keyword-spatial>
+  <eea-keyword-rod>Keywords - Reporting obligations</eea-keyword-rod>
+  <eea-keyword-eeamp>Keywords - EEA Management Plan</eea-keyword-eeamp>
+
+  <eea-add-rod>Add reporting obligations</eea-add-rod>
+  <eea-add-eeamp>Add EEA Management Plan</eea-add-eeamp>
 
   <eea-inspire-help>
     <div class="row">
