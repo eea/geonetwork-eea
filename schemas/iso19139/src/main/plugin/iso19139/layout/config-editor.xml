@@ -577,6 +577,9 @@
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:abstract"/>
           <text ref="eea-abstract-help"/>
 
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:supplementalInformation"
+                 or="supplementalInformation"
+                 in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
 
           <action type="add"
                   btnLabel="eea-add-overview"
@@ -610,11 +613,16 @@
           </section>
 
           <field name="eea-keyword-inspire"
+                 if="not(contains(gmd:MD_Metadata/
+                                    gmd:hierarchyLevel/*/@codeListValue,
+                                    'nonGeographicDataset'))"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']"/>
 
           <action type="add"
                   btnLabel="eea-add-inspiretheme"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']) = 0"
+                  if="(count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+                                    'nonGeographicDataset'])
+                      + count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0'])) = 0"
                   or="descriptiveKeywords"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*">
             <template>
@@ -658,7 +666,10 @@
               </snippet>
             </template>
           </action>
-          <text ref="eea-inspire-help"/>
+          <text if="not(contains(gmd:MD_Metadata/
+                                    gmd:hierarchyLevel/*/@codeListValue,
+                                    'nonGeographicDataset'))"
+                ref="eea-inspire-help"/>
           <field name="eea-keyword-gemet"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'GEMET']"/>
 
@@ -816,11 +827,15 @@
           <text ref="eea-hr"/>
 
 
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Spatial scope']"/>
+          <field if="count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Spatial scope']"/>
 
           <action type="add"
                   btnLabel="eea-add-spatial-scope"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Spatial scope']) = 0"
+                  if="(count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+                                    'nonGeographicDataset'])
+                      + count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Spatial scope'])) = 0"
                   or="descriptiveKeywords"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*">
             <template>
@@ -864,7 +879,9 @@
               </snippet>
             </template>
           </action>
-          <text ref="eea-spatialscope-help"/>
+          <text if="count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0"
+                ref="eea-spatialscope-help"/>
 
           <field name="eea-keyword-spatial"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Continents, countries, sea regions of the world.']"/>
@@ -1072,8 +1089,12 @@
         </section>
 
         <section name="eea-coverage">
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement"/>
-          <action type="add"
+          <field  if="count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0"
+                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement"/>
+          <action if="count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0"
+                  type="add"
                   btnLabel="eea-add-extent"
                   or="extent"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*">
@@ -1103,7 +1124,9 @@
             </template>
           </action>
 
-          <text ref="eea-bbox-help"/>
+          <text if="count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0"
+                ref="eea-bbox-help"/>
 
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/*/gmd:temporalElement"/>
@@ -1138,9 +1161,13 @@
 
         <section name="eea-technical-details">
 
-          <field xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo"/>
+          <field if="count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0"
+                 xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo"/>
           <!-- Add one of the CRS proposed using the dropdown -->
-          <action type="add"
+          <action if="count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0"
+                  type="add"
                   btnLabel="addCrs"
                   name="referenceSystemInfo" or="referenceSystemInfo"
                   in="/gmd:MD_Metadata">
@@ -1305,13 +1332,21 @@
             </template>
           </action>
 
-          <text ref="eea-crs-help"/>
+          <text if="count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0"
+                ref="eea-crs-help"/>
 
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialRepresentationType"/>
+          <field if="count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialRepresentationType"/>
 
           <!-- -Display action only if none set. -->
-          <action type="add" btnLabel="addSpatialRepresentationType" or="spatialRepresentationType"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialRepresentationType/*/@codeListValue) = 0"
+          <action type="add"
+                  btnLabel="addSpatialRepresentationType"
+                  or="spatialRepresentationType"
+                  if="(count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+                                    'nonGeographicDataset'])
+                      + count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialRepresentationType/*/@codeListValue)) = 0"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*">
             <template>
               <snippet>
@@ -1323,7 +1358,9 @@
             </template>
           </action>
 
-          <text ref="eea-spatialreptype-help"/>
+          <text if="count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0"
+                ref="eea-spatialreptype-help"/>
 
 
 
@@ -1435,7 +1472,8 @@
         <section name="eea-additional">
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceMaintenance"
-                 or="resourceMaintenance" in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
+                 or="resourceMaintenance"
+                 in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
           <text ref="eea-maintenance-help"/>
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:language"/>
@@ -1506,14 +1544,15 @@
           <text ref="eea-lineage"/>
 
           <!-- Conformity -->
-
           <field name="conformity" templateModeOnly="true"
                  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/
                     gmd:report/gmd:DQ_DomainConsistency/gmd:result[count(gmd:DQ_ConformanceResult/gmd:specification/
                       gmd:CI_Citation/gmd:title/gco:CharacterString) > 0]"
-                 if="count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/
+                 if="(count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue !=
+          'nonGeographicDataset'])
+                     + count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/
                       gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/
-                      gmd:CI_Citation/gmd:title[gco:CharacterString]) > 0"
+                      gmd:CI_Citation/gmd:title[gco:CharacterString])) > 0"
                  del="../..">
             <template>
               <values>
@@ -1582,8 +1621,10 @@
           <action type="add"
                   class="gn-required"
                   btnLabel="eea-add-inspire-conformity"
-                  if="count(gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency[
-                              contains(gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString, 'No 1089/2010')]) = 0"
+                  if="(count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+          'nonGeographicDataset'])
+                      + count(gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency[
+                              contains(gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString, 'No 1089/2010')])) = 0"
                   or="report"
                   in="/gmd:MD_Metadata/gmd:dataQualityInfo/*">
             <template>
@@ -1621,8 +1662,14 @@
             </template>
           </action>
 
-          <text if="count(gmd:MD_Metadata/gmd:dataQualityInfo) > 0"
+          <text if="count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
+          'nonGeographicDataset']) = 0"
                 ref="eea-conformity-help"/>
+
+
+          <field name="eea-source-desc"
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:source/*/gmd:description"/>
+
         </section>
 
 
@@ -1733,6 +1780,7 @@
         <for name="gmd:date"/>
         <for name="gmd:pointOfContact"/>
         <for name="gmd:resourceMaintenance"/>
+        <for name="gmd:supplementalInformation"/>
         <for name="gmd:lineage"/>
       </flatModeExceptions>
     </view>

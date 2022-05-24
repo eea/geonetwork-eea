@@ -57,6 +57,7 @@
   <eea-hr>
     <hr/>
   </eea-hr>
+  <eea-source-desc>Source description</eea-source-desc>
   <eea-add-eea-keywords>Add EEA keywords</eea-add-eea-keywords>
   <eea-dq-add>Add lineage</eea-dq-add>
   <eea-constraints-add>Add access and use constraints</eea-constraints-add>
