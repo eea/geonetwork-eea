@@ -741,13 +741,6 @@ goog.require('gn_alert');
                 "order" : { "_key" : "asc" }
               }
             },
-            'creationYearForResource': {
-              'terms': {
-                'field': 'creationYearForResource',
-                'size': 100,
-                "order" : { "_key" : "asc" }
-              }
-            },
             'cl_spatialRepresentationType': {
               'terms': {
                 'field': 'cl_spatialRepresentationType.default',
