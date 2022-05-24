@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
-                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                 xmlns:gml="http://www.opengis.net/gml/3.2"
+                 xmlns:gsr="http://www.isotc211.org/2005/gsr"
+                 xmlns:srv="http://www.isotc211.org/2005/srv"
+                 xmlns:gmi="http://www.isotc211.org/2005/gmi"
                  xmlns:gco="http://www.isotc211.org/2005/gco"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:gml="http://www.opengis.net/gml/3.2"
                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                 xmlns:gts="http://www.isotc211.org/2005/gts"
+                 xmlns:gmx="http://www.isotc211.org/2005/gmx">
   <gmd:fileIdentifier>
     <gco:CharacterString>9074c7dc-b311-41db-a638-b309ceeba98e</gco:CharacterString>
   </gmd:fileIdentifier>
@@ -12,11 +15,11 @@
     <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
   </gmd:language>
   <gmd:characterSet>
-    <gmd:MD_CharacterSetCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"
+    <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"
                              codeListValue="utf8"/>
   </gmd:characterSet>
   <gmd:hierarchyLevel>
-    <gmd:MD_ScopeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+    <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
                       codeListValue="dataset"/>
   </gmd:hierarchyLevel>
   <gmd:contact>
@@ -51,28 +54,26 @@
         </gmd:CI_Contact>
       </gmd:contactInfo>
       <gmd:role>
-        <gmd:CI_RoleCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+        <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
                          codeListValue="pointOfContact"/>
       </gmd:role>
     </gmd:CI_ResponsibleParty>
   </gmd:contact>
   <gmd:dateStamp>
-    <gco:DateTime>2018-06-12T12:19:26</gco:DateTime>
+    <gco:DateTime>2022-05-24T11:30:54.839Z</gco:DateTime>
   </gmd:dateStamp>
   <gmd:metadataStandardName>
-    <gco:CharacterString xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                         xmlns:srv="http://www.isotc211.org/2005/srv">ISO 19115:2003/19139</gco:CharacterString>
+    <gco:CharacterString>ISO 19115/19139</gco:CharacterString>
   </gmd:metadataStandardName>
   <gmd:metadataStandardVersion>
-    <gco:CharacterString xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                         xmlns:srv="http://www.isotc211.org/2005/srv">1.0</gco:CharacterString>
+    <gco:CharacterString>1.0</gco:CharacterString>
   </gmd:metadataStandardVersion>
   <gmd:identificationInfo>
     <gmd:MD_DataIdentification>
       <gmd:citation>
         <gmd:CI_Citation>
           <gmd:title>
-            <gco:CharacterString>Final EEA metadata template</gco:CharacterString>
+            <gco:CharacterString>EEA metadata template</gco:CharacterString>
           </gmd:title>
           <gmd:date>
             <gmd:CI_Date>
@@ -80,7 +81,7 @@
                 <gco:Date/>
               </gmd:date>
               <gmd:dateType>
-                <gmd:CI_DateTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                      codeListValue="creation"/>
               </gmd:dateType>
             </gmd:CI_Date>
@@ -91,18 +92,18 @@
                 <gco:Date/>
               </gmd:date>
               <gmd:dateType>
-                <gmd:CI_DateTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                      codeListValue="publication"/>
               </gmd:dateType>
             </gmd:CI_Date>
           </gmd:date>
-          <gmd:edition gco:nilReason="missing">
-            <gco:CharacterString/>
+          <gmd:edition>
+            <gco:CharacterString>[VersionNumber.RevisionNumber]</gco:CharacterString>
           </gmd:edition>
           <gmd:identifier>
             <gmd:MD_Identifier>
-              <gmd:code gco:nilReason="missing">
-                <gco:CharacterString/>
+              <gmd:code>
+                <gco:CharacterString>[Provider_DataType_EpsgCode_ScaleResolution_ScaleResUnit_DatasetShortName_PublicOrInternal_TimeCoverage_VersionNumber_RevisionNumber]</gco:CharacterString>
               </gmd:code>
             </gmd:MD_Identifier>
           </gmd:identifier>
@@ -111,10 +112,6 @@
       <gmd:abstract gco:nilReason="missing">
         <gco:CharacterString/>
       </gmd:abstract>
-      <gmd:status>
-        <gmd:MD_ProgressCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ProgressCode"
-                             codeListValue="completed"/>
-      </gmd:status>
       <gmd:pointOfContact>
         <gmd:CI_ResponsibleParty>
           <gmd:organisationName>
@@ -156,7 +153,7 @@
                     <gco:CharacterString>European Environment Agency public website</gco:CharacterString>
                   </gmd:name>
                   <gmd:function>
-                    <gmd:CI_OnLineFunctionCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
+                    <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
                                                codeListValue="information"/>
                   </gmd:function>
                 </gmd:CI_OnlineResource>
@@ -164,7 +161,7 @@
             </gmd:CI_Contact>
           </gmd:contactInfo>
           <gmd:role>
-            <gmd:CI_RoleCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+            <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
                              codeListValue="pointOfContact"/>
           </gmd:role>
         </gmd:CI_ResponsibleParty>
@@ -204,68 +201,15 @@
             </gmd:CI_Contact>
           </gmd:contactInfo>
           <gmd:role>
-            <gmd:CI_RoleCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+            <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
                              codeListValue="custodian"/>
-          </gmd:role>
-        </gmd:CI_ResponsibleParty>
-      </gmd:pointOfContact>
-      <gmd:pointOfContact>
-        <gmd:CI_ResponsibleParty>
-          <gmd:individualName gco:nilReason="missing">
-            <gco:CharacterString/>
-          </gmd:individualName>
-          <gmd:organisationName gco:nilReason="missing">
-            <gco:CharacterString/>
-          </gmd:organisationName>
-          <gmd:positionName gco:nilReason="missing">
-            <gco:CharacterString/>
-          </gmd:positionName>
-          <gmd:contactInfo>
-            <gmd:CI_Contact>
-              <gmd:phone>
-                <gmd:CI_Telephone>
-                  <gmd:voice gco:nilReason="missing">
-                    <gco:CharacterString/>
-                  </gmd:voice>
-                  <gmd:facsimile gco:nilReason="missing">
-                    <gco:CharacterString/>
-                  </gmd:facsimile>
-                </gmd:CI_Telephone>
-              </gmd:phone>
-              <gmd:address>
-                <gmd:CI_Address>
-                  <gmd:deliveryPoint gco:nilReason="missing">
-                    <gco:CharacterString/>
-                  </gmd:deliveryPoint>
-                  <gmd:city gco:nilReason="missing">
-                    <gco:CharacterString/>
-                  </gmd:city>
-                  <gmd:administrativeArea gco:nilReason="missing">
-                    <gco:CharacterString/>
-                  </gmd:administrativeArea>
-                  <gmd:postalCode gco:nilReason="missing">
-                    <gco:CharacterString/>
-                  </gmd:postalCode>
-                  <gmd:country gco:nilReason="missing">
-                    <gco:CharacterString/>
-                  </gmd:country>
-                  <gmd:electronicMailAddress gco:nilReason="missing">
-                    <gco:CharacterString/>
-                  </gmd:electronicMailAddress>
-                </gmd:CI_Address>
-              </gmd:address>
-            </gmd:CI_Contact>
-          </gmd:contactInfo>
-          <gmd:role>
-            <gmd:CI_RoleCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
-                             codeListValue="processor"/>
           </gmd:role>
         </gmd:CI_ResponsibleParty>
       </gmd:pointOfContact>
       <gmd:resourceMaintenance>
         <gmd:MD_MaintenanceInformation>
           <gmd:maintenanceAndUpdateFrequency>
-            <gmd:MD_MaintenanceFrequencyCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_MaintenanceFrequencyCode"
+            <gmd:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_MaintenanceFrequencyCode"
                                              codeListValue=""/>
           </gmd:maintenanceAndUpdateFrequency>
         </gmd:MD_MaintenanceInformation>
@@ -280,24 +224,24 @@
       <gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
           <gmd:keyword gco:nilReason="missing">
-            <gco:CharacterString/>
+            <gmx:Anchor xlink:href=""/>
           </gmd:keyword>
           <gmd:type>
-            <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode"
+            <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
                                     codeListValue="theme"/>
           </gmd:type>
           <gmd:thesaurusName>
             <gmd:CI_Citation>
               <gmd:title>
-                <gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/theme">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
               </gmd:title>
               <gmd:date>
                 <gmd:CI_Date>
                   <gmd:date>
-                    <gco:Date>2018-05-25</gco:Date>
+                    <gco:Date>2008-06-01</gco:Date>
                   </gmd:date>
                   <gmd:dateType>
-                    <gmd:CI_DateTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                          codeListValue="publication"/>
                   </gmd:dateType>
                 </gmd:CI_Date>
@@ -305,8 +249,7 @@
               <gmd:identifier>
                 <gmd:MD_Identifier>
                   <gmd:code>
-                    <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                                xlink:href="https://sdi.eea.europa.eu/catalogue/srv/eng/thesaurus.download?ref=external.theme.httpinspireeceuropaeutheme-theme">geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme</gmx:Anchor>
+                    <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme">geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme</gmx:Anchor>
                   </gmd:code>
                 </gmd:MD_Identifier>
               </gmd:identifier>
@@ -314,9 +257,9 @@
           </gmd:thesaurusName>
         </gmd:MD_Keywords>
       </gmd:descriptiveKeywords>
-      <gmd:descriptiveKeywords>
+      <gmd:descriptiveKeywords gco:nilReason="withheld">
         <gmd:MD_Keywords>
-          <gmd:keyword>
+          <gmd:keyword gco:nilReason="missing">
             <gco:CharacterString/>
           </gmd:keyword>
           <gmd:thesaurusName>
@@ -330,7 +273,7 @@
                     <gco:Date>2002-03-01</gco:Date>
                   </gmd:date>
                   <gmd:dateType>
-                    <gmd:CI_DateTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                          codeListValue="publication"/>
                   </gmd:dateType>
                 </gmd:CI_Date>
@@ -339,13 +282,13 @@
           </gmd:thesaurusName>
         </gmd:MD_Keywords>
       </gmd:descriptiveKeywords>
-      <gmd:descriptiveKeywords>
+      <gmd:descriptiveKeywords gco:nilReason="withheld">
         <gmd:MD_Keywords>
           <gmd:keyword>
             <gco:CharacterString>geospatial data</gco:CharacterString>
           </gmd:keyword>
           <gmd:type>
-            <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode"
+            <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
                                     codeListValue="theme"/>
           </gmd:type>
           <gmd:thesaurusName>
@@ -356,10 +299,10 @@
               <gmd:date>
                 <gmd:CI_Date>
                   <gmd:date>
-                    <gco:Date>2011-05-11</gco:Date>
+                    <gco:Date>2010-07-06</gco:Date>
                   </gmd:date>
                   <gmd:dateType>
-                    <gmd:CI_DateTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                          codeListValue="publication"/>
                   </gmd:dateType>
                 </gmd:CI_Date>
@@ -367,7 +310,7 @@
               <gmd:identifier>
                 <gmd:MD_Identifier>
                   <gmd:code>
-                    <gmx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/eng/thesaurus.download?ref=local.theme.eea-categories">geonetwork.thesaurus.local.theme.eea-categories</gmx:Anchor>
+                    <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/api/registries/vocabularies/local.theme.eea-categories">geonetwork.thesaurus.local.theme.eea-categories</gmx:Anchor>
                   </gmd:code>
                 </gmd:MD_Identifier>
               </gmd:identifier>
@@ -381,7 +324,7 @@
             <gco:CharacterString/>
           </gmd:keyword>
           <gmd:type>
-            <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode"
+            <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
                                     codeListValue="theme"/>
           </gmd:type>
           <gmd:thesaurusName>
@@ -392,10 +335,10 @@
               <gmd:date>
                 <gmd:CI_Date>
                   <gmd:date>
-                    <gco:Date>2012-07-20</gco:Date>
+                    <gco:Date>2021-11-30</gco:Date>
                   </gmd:date>
                   <gmd:dateType>
-                    <gmd:CI_DateTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                          codeListValue="publication"/>
                   </gmd:dateType>
                 </gmd:CI_Date>
@@ -403,8 +346,7 @@
               <gmd:identifier>
                 <gmd:MD_Identifier>
                   <gmd:code>
-                    <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                                xlink:href="https://sdi.eea.europa.eu/catalogue/srv/eng/thesaurus.download?ref=external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gmx:Anchor>
+                    <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gmx:Anchor>
                   </gmd:code>
                 </gmd:MD_Identifier>
               </gmd:identifier>
@@ -418,7 +360,7 @@
             <gco:CharacterString/>
           </gmd:keyword>
           <gmd:type>
-            <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode"
+            <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
                                     codeListValue="place"/>
           </gmd:type>
           <gmd:thesaurusName>
@@ -432,7 +374,7 @@
                     <gco:Date>2015-07-17</gco:Date>
                   </gmd:date>
                   <gmd:dateType>
-                    <gmd:CI_DateTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                          codeListValue="publication"/>
                   </gmd:dateType>
                 </gmd:CI_Date>
@@ -440,8 +382,7 @@
               <gmd:identifier>
                 <gmd:MD_Identifier>
                   <gmd:code>
-                    <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                                xlink:href="https://sdi.eea.europa.eu/catalogue/srv/eng/thesaurus.download?ref=external.place.regions">geonetwork.thesaurus.external.place.regions</gmx:Anchor>
+                    <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.place.regions">geonetwork.thesaurus.external.place.regions</gmx:Anchor>
                   </gmd:code>
                 </gmd:MD_Identifier>
               </gmd:identifier>
@@ -451,8 +392,8 @@
       </gmd:descriptiveKeywords>
       <gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
-          <gmd:keyword gco:nilReason="missing">
-            <gmx:Anchor/>
+          <gmd:keyword>
+            <gco:CharacterString>European</gco:CharacterString>
           </gmd:keyword>
           <gmd:type>
             <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
@@ -466,7 +407,7 @@
               <gmd:date>
                 <gmd:CI_Date>
                   <gmd:date>
-                    <gco:Date>2019-11-20</gco:Date>
+                    <gco:Date>2019-05-22</gco:Date>
                   </gmd:date>
                   <gmd:dateType>
                     <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
@@ -477,7 +418,79 @@
               <gmd:identifier>
                 <gmd:MD_Identifier>
                   <gmd:code>
-                    <gmx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/eng/thesaurus.download?ref=external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope">geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope</gmx:Anchor>
+                    <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope">geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope</gmx:Anchor>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
+            </gmd:CI_Citation>
+          </gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                    codeListValue="theme"/>
+          </gmd:type>
+          <gmd:thesaurusName>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gco:CharacterString>Reporting obligations</gco:CharacterString>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:Date>2021-08-25</gco:Date>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                         codeListValue="publication"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.rod-eionet-europa-eu">geonetwork.thesaurus.external.theme.rod-eionet-europa-eu</gmx:Anchor>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
+            </gmd:CI_Citation>
+          </gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                    codeListValue="theme"/>
+          </gmd:type>
+          <gmd:thesaurusName>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gco:CharacterString>EEA Management Plan</gco:CharacterString>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:Date>2021-08-25</gco:Date>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                         codeListValue="publication"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.eea-mp">geonetwork.thesaurus.external.theme.eea-mp</gmx:Anchor>
                   </gmd:code>
                 </gmd:MD_Identifier>
               </gmd:identifier>
@@ -503,33 +516,35 @@
                                     codeListValue="otherRestrictions"/>
           </gmd:useConstraints>
           <gmd:otherConstraints>
-            <gco:CharacterString>--To keep the following text if EEA data re-use policy applies, otherwise to remove the text and add the applicable policy--
-              EEA standard re-use policy: unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged (http://www.eea.europa.eu/legal/copyright). Copyright holder: European Environment Agency (EEA).</gco:CharacterString>
+            <gco:CharacterString>--To keep the following text if EEA data re-use policy applies, otherwise to remove the text and add the applicable policy-- EEA standard re-use policy: unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged (http://www.eea.europa.eu/legal/copyright). Copyright holder: European Environment Agency (EEA).</gco:CharacterString>
           </gmd:otherConstraints>
         </gmd:MD_LegalConstraints>
       </gmd:resourceConstraints>
+      <gmd:spatialRepresentationType>
+        <gmd:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
+                                              codeListValue=""/>
+      </gmd:spatialRepresentationType>
       <gmd:language>
         <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
       </gmd:language>
       <gmd:topicCategory>
         <gmd:MD_TopicCategoryCode>environment</gmd:MD_TopicCategoryCode>
       </gmd:topicCategory>
-      <gmd:topicCategory/>
       <gmd:extent>
         <gmd:EX_Extent>
           <gmd:geographicElement>
             <gmd:EX_GeographicBoundingBox>
               <gmd:westBoundLongitude>
-                <gco:Decimal></gco:Decimal>
+                <gco:Decimal/>
               </gmd:westBoundLongitude>
               <gmd:eastBoundLongitude>
-                <gco:Decimal></gco:Decimal>
+                <gco:Decimal/>
               </gmd:eastBoundLongitude>
               <gmd:southBoundLatitude>
-                <gco:Decimal></gco:Decimal>
+                <gco:Decimal/>
               </gmd:southBoundLatitude>
               <gmd:northBoundLatitude>
-                <gco:Decimal></gco:Decimal>
+                <gco:Decimal/>
               </gmd:northBoundLatitude>
             </gmd:EX_GeographicBoundingBox>
           </gmd:geographicElement>
@@ -552,22 +567,22 @@
       </gmd:extent>
     </gmd:MD_DataIdentification>
   </gmd:identificationInfo>
-  <gmd:distributionInfo xmlns:che="http://www.geocat.ch/2008/che">
+  <gmd:distributionInfo>
     <gmd:MD_Distribution>
-      <gmd:distributionFormat>
+      <gmd:distributionFormat xmlns:che="http://www.geocat.ch/2008/che">
         <gmd:MD_Format>
           <gmd:name gco:nilReason="missing">
             <gco:CharacterString/>
           </gmd:name>
-          <gmd:version gco:nilReason="missing">
+          <gmd:version gco:nilReason="unknown">
             <gco:CharacterString/>
           </gmd:version>
         </gmd:MD_Format>
       </gmd:distributionFormat>
-      <gmd:distributor/>
+      <gmd:distributor xmlns:che="http://www.geocat.ch/2008/che"/>
       <gmd:transferOptions>
         <gmd:MD_DigitalTransferOptions>
-          <gmd:onLine>
+          <gmd:onLine xmlns:che="http://www.geocat.ch/2008/che">
             <gmd:CI_OnlineResource>
               <gmd:linkage>
                 <gmd:URL>---LINK TO WEBSITE</gmd:URL>
@@ -576,7 +591,34 @@
                 <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
               </gmd:protocol>
               <gmd:function>
-                <gmd:CI_OnLineFunctionCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
+                <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                           codeListValue="download"/>
+              </gmd:function>
+            </gmd:CI_OnlineResource>
+          </gmd:onLine>
+          <gmd:onLine gco:nilReason="withheld">
+            <gmd:CI_OnlineResource>
+              <gmd:linkage>
+                <gmd:URL>https://sdi.eea.europa.eu/data/9074c7dc-b311-41db-a638-b309ceeba98e</gmd:URL>
+              </gmd:linkage>
+              <gmd:protocol>
+                <gco:CharacterString>WWW:URL</gco:CharacterString>
+              </gmd:protocol>
+              <gmd:name>
+                <gco:CharacterString>Direct download (Eionet authentication)</gco:CharacterString>
+              </gmd:name>
+            </gmd:CI_OnlineResource>
+          </gmd:onLine>
+          <gmd:onLine>
+            <gmd:CI_OnlineResource>
+              <gmd:linkage>
+                <gmd:URL>https://sdi.eea.europa.eu/webdav/---LINK TO THE FOLDER PATH</gmd:URL>
+              </gmd:linkage>
+              <gmd:protocol>
+                <gco:CharacterString>EEA:FOLDERPATH</gco:CharacterString>
+              </gmd:protocol>
+              <gmd:function>
+                <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
                                            codeListValue="download"/>
               </gmd:function>
             </gmd:CI_OnlineResource>
@@ -584,35 +626,33 @@
           <gmd:onLine>
             <gmd:CI_OnlineResource>
               <gmd:linkage>
-                <gmd:URL>---LINK TO THE FILE PATH</gmd:URL>
-              </gmd:linkage>
-              <gmd:protocol>
-                <gco:CharacterString>EEA:FILEPATH</gco:CharacterString>
-              </gmd:protocol>
-            </gmd:CI_OnlineResource>
-          </gmd:onLine>
-          <gmd:onLine>
-            <gmd:CI_OnlineResource>
-              <gmd:linkage>
-                <gmd:URL>---LINK TO THE WEB MAP SERVICE</gmd:URL>
+                <gmd:URL>---HTTPS LINK TO THE WEB MAP SERVICE</gmd:URL>
               </gmd:linkage>
               <gmd:protocol>
                 <gco:CharacterString>OGC:WMS</gco:CharacterString>
               </gmd:protocol>
+              <gmd:function>
+                <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                           codeListValue="information"/>
+              </gmd:function>
             </gmd:CI_OnlineResource>
           </gmd:onLine>
         </gmd:MD_DigitalTransferOptions>
       </gmd:transferOptions>
-      <gmd:transferOptions>
+      <gmd:transferOptions xmlns:che="http://www.geocat.ch/2008/che">
         <gmd:MD_DigitalTransferOptions>
           <gmd:onLine>
             <gmd:CI_OnlineResource>
               <gmd:linkage>
-                <gmd:URL>--LINK TO REST WEB SERVICES</gmd:URL>
+                <gmd:URL>-- HTTPS LINK TO REST WEB SERVICES</gmd:URL>
               </gmd:linkage>
               <gmd:protocol>
                 <gco:CharacterString>ESRI:REST</gco:CharacterString>
               </gmd:protocol>
+              <gmd:function>
+                <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                           codeListValue="information"/>
+              </gmd:function>
             </gmd:CI_OnlineResource>
           </gmd:onLine>
         </gmd:MD_DigitalTransferOptions>
@@ -625,13 +665,11 @@
         <gmd:DQ_Scope>
           <gmd:level>
             <gmd:MD_ScopeCode codeListValue="dataset"
-                              codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"/>
+                              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"/>
           </gmd:level>
         </gmd:DQ_Scope>
       </gmd:scope>
-      <gmd:report xmlns:gn="http://www.fao.org/geonetwork"
-                  xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                  xmlns:srv="http://www.isotc211.org/2005/srv">
+      <gmd:report>
         <gmd:DQ_DomainConsistency>
           <gmd:result>
             <gmd:DQ_ConformanceResult>
@@ -646,7 +684,7 @@
                         <gco:Date>2010-12-08</gco:Date>
                       </gmd:date>
                       <gmd:dateType>
-                        <gmd:CI_DateTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                              codeListValue="publication"/>
                       </gmd:dateType>
                     </gmd:CI_Date>
