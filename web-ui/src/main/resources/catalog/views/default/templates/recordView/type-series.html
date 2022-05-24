@@ -120,6 +120,21 @@
     <div ng-include="'../../catalog/views/default/templates/recordView/metadatacontact.html'"/>
   </div>
   <div class="col-md-4 gn-md-side">
+    <div data-ng-if="mdView.current.record.resourceIdentifier"
+         class="gn-margin-bottom flex-row">
+    <span class="badge badge-rounded" title="{{identifier | translate}}">
+      <i class="fa fa-fw fa-info"></i>
+    </span>
+      <div>
+        <h3 data-translate="">identifier</h3>
+        <ul class="gn-comma-list">
+          <li data-ng-repeat="i in mdView.current.record.resourceIdentifier">
+            <span data-ng-bind-html="i.code | linky" />
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <div ng-include="'../../catalog/views/default/templates/recordView/metadata.html'"/>
   </div>
 </div>
