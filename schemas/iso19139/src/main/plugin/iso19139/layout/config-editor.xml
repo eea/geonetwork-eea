@@ -773,7 +773,8 @@
               </snippet>
             </template>
           </action>
-          <text ref="eea-hr"/>
+
+          <text ref="eea-keyword-rod-help"/>
 
           <field name="eea-keyword-eeamp"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA Management Plan']"/>

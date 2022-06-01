@@ -179,6 +179,17 @@
   <eea-keyword-list>Keywords – EEA keywords list</eea-keyword-list>
   <eea-keyword-spatial>Keywords – Spatial coverage of the dataset</eea-keyword-spatial>
   <eea-keyword-rod>Keywords - Reporting obligations</eea-keyword-rod>
+  <eea-keyword-rod-help>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          Add the Reporting Obligation(s) from EEA's Reporting Obligation Database (ROD) used to obtain the data. Reporting obligations are legal provisions requiring the submission of data, information or reports to the European Commission, the European Environment Agency or specific international conventions, which are identified in a piece of legislation or any other instrument or agreement.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-keyword-rod-help>
   <eea-keyword-eeamp>Keywords - EEA Management Plan</eea-keyword-eeamp>
 
   <eea-add-rod>Add reporting obligations</eea-add-rod>
