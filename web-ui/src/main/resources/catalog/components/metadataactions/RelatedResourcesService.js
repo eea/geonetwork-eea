@@ -534,7 +534,7 @@
               (type === 'children')) {
               return 'MDCHILDREN';
             } else if (type &&
-               (type === 'siblings')) {
+               (type.indexOf('siblings') === 0)) {
               return 'MDSIBLING';
             } else if (type &&
                (type === 'services')) {

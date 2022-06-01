@@ -325,7 +325,8 @@
               hasResults: '=?',
               layout: '@',
               // Only apply to card layout
-              size: '@'
+              size: '@',
+              groupSiblingsByType: '=?'
             },
             require: '?^gnRelatedObserver',
             link: function(scope, element, attrs, controller) {
@@ -433,6 +434,7 @@
                   // are preserved
                   // * Exclude children and parent from associated and siblings,
                   // and also filter siblings from associated to avoid duplicates
+                  var siblingsCount = 0;
                   if (idx === 'associated' || idx === 'siblings') {
                     var indexToRemove = [];
                     for (var i = 0; i < scope.relations[idx].length; i++) {
@@ -448,9 +450,28 @@
                     indexToRemove.reverse().forEach(function(value) {
                       scope.relations[idx].splice(value, 1);
                     });
+
+                    if (scope.relations.siblings
+                      && scope.relations.siblings.map
+                      && scope.groupSiblingsByType) {
+                      scope.relations.siblings.map(function(r) {
+                        return r.properties && r.properties.initiativeType || '';
+                      }).filter(function(value, index, self) {
+                        return self.indexOf(value) === index;
+                      }).forEach(function(type) {
+                        scope.relations['siblings' + type] = scope.relations.siblings.filter(function (r) {
+                          return r.properties && r.properties.initiativeType === type;
+                        });
+                        siblingsCount += scope.relations['siblings' + type].length;
+                      });
+                      scope.relations.siblings = [];
+                    } else {
+                      siblingsCount = scope.relations[idx].length;
+                    }
                   }
 
-                  relationCount += scope.relations[idx].length;
+                  relationCount += idx === 'siblings'
+                    ? siblingsCount : scope.relations[idx].length;
                 });
                 scope.relationFound = relationCount > 0;
               };
@@ -486,8 +507,8 @@
               };
 
               scope.getOrderBy = function(link) {
-                return link.record && link.record.resourceTitle
-                        ? link.record.resourceTitle
+                return link && link.resourceTitle
+                        ? link.resourceTitle
                         : link.locTitle
               };
 
