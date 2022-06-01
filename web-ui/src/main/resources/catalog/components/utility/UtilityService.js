@@ -642,7 +642,7 @@
       }
     };
 
-    var createNode = function(node, fieldId, g, index, e) {
+      var createNode = function(node, fieldId, g, index, e, missingValue) {
       var group = g[index];
       if (group) {
         registerTranslation(group, fieldId);
@@ -658,12 +658,16 @@
           node.items = node.nodes;
           //node.nodes.sort(sortNodeFn);
         }
-        createNode(newNode, fieldId, g, index + 1, e);
+          createNode(newNode, fieldId, g, index + 1, e, missingValue);
       } else {
         node.key = e.key;
         node.count = e.doc_count;
         node.size = node.count;
-        node.path = [e.key];
+          if (e.key === missingValue) {
+            node.key = '#MISSING#';
+          } else {
+            node.path = [e.key];
+          }
       }
     };
 
@@ -693,7 +697,7 @@
       return deferred.promise;
     };
 
-    function buildTree(list, fieldId, tree, meta) {
+    function buildTree(list, fieldId, tree, meta, missingValue) {
       var translateOnLoad = meta && meta.translateOnLoad;
       list.forEach(function(e) {
         var name = e.key;
@@ -729,11 +733,11 @@
         }
 
         var g = name.split(separator);
-        createNode(tree, fieldId, g, 0, e);
+        createNode(tree, fieldId, g, 0, e, missingValue);
       });
     }
 
-    this.getTree = function(list, fieldId, meta) {
+    this.getTree = function(list, fieldId, meta, missingValue) {
       var tree = {
         nodes: []
       },
@@ -754,7 +758,7 @@
         translationsToLoad[fieldId] = [];
       }
 
-      buildTree(list, fieldId, tree, meta);
+      buildTree(list, fieldId, tree, meta, missingValue);
 
       if(Object.keys(translationsToLoad[fieldId]).length > 0) {
         loadTranslation(fieldId, meta && meta.thesaurus).then(function(translations) {
@@ -771,7 +775,7 @@
                 tree.items.length = 0;
               }
               $timeout(function() {
-                buildTree(list, fieldId, tree, meta);
+                buildTree(list, fieldId, tree, meta, missingValue);
               });
             }
             deferred.resolve(tree);
