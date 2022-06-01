@@ -126,6 +126,7 @@ goog.require('gn_alert');
               'terms': {
                 'field': 'th_eea-topics.default',
                 'size': 15,
+                'missing': '- Not categorized -',
                 'exclude': 'http.*',
                 "order" : { "_key" : "asc" }
               }
@@ -331,6 +332,7 @@ goog.require('gn_alert');
               'terms': {
                 'field': 'th_eea-topics.default',
                 'size': 15,
+                'missing': '- Not categorized -',
                 'exclude': 'http.*',
                 "order" : { "_key" : "asc" }
               }
