@@ -721,7 +721,7 @@ goog.require('gn_alert');
           // 'showStatusTopBarFor': 'historicalArchive,obsolete,superseded',
           'showStatusTopBarFor': '',
           'showCitation': {
-            'enabled': false,
+            'enabled': true,
             'if': null // {'documentStandard': ['iso19115-3.2018']}
           },
           'sortKeywordsAlphabetically': true,
