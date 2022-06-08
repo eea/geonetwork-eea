@@ -1576,6 +1576,13 @@
 		<help>name of the data transfer format(s)</help>
 		<condition>mandatory</condition>
 		<helper rel="gmd:version">
+      <option value="">---Tabular data---</option>
+      <option value='CSV'>Comma Separated Value (.csv)</option>
+      <option value='XLS'>XLS</option>
+      <option value='XML'>XML</option>
+      <option value='Database'>Database</option>
+      <option value='Tableau'>Tableau</option>
+      <option value='Text'>Text</option>
       <option value="">---Raster---</option>
       <option value='AAIGrid'>Arc/Info ASCII Grid</option>
       <option value='AIG'>Arc/Info Binary Grid (.adf)</option>
@@ -2393,7 +2400,7 @@
 		<description>Status of the resource(s)</description>
 	</element>
 	<element name="gmd:supplementalInformation" id="46.0">
-		<label>Supplemental Information</label>
+		<label>Additional Information</label>
 		<description>Any other descriptive information about the dataset</description>
 	</element>
 	<element name="gmd:temporalElement" id="337.0">
