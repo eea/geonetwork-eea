@@ -1577,12 +1577,12 @@
 		<condition>mandatory</condition>
 		<helper rel="gmd:version">
       <option value="">---Tabular data---</option>
-      <option value='CSV'>Comma Separated Value (.csv)</option>
-      <option value='XLS'>XLS</option>
+      <option value='ascii (.csv, .txt, .sql)'>ascii (.csv, .txt, .sql)</option>
+      <option value='Excel (.xls, .xlsx)'>Excel (.xls, .xlsx)</option>
       <option value='XML'>XML</option>
-      <option value='Database'>Database</option>
-      <option value='Tableau'>Tableau</option>
-      <option value='Text'>Text</option>
+      <option value='SQLite'>SQLite</option>
+      <option value='Microsoft Access (.mdb, .accdb)'>Microsoft Access (.mdb, .accdb)</option>
+      <option value='dBASE (.dbf)'>dBASE (.dbf)</option>
       <option value="">---Raster---</option>
       <option value='AAIGrid'>Arc/Info ASCII Grid</option>
       <option value='AIG'>Arc/Info Binary Grid (.adf)</option>
