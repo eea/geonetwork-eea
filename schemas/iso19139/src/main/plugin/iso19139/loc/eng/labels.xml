@@ -1575,14 +1575,17 @@
 		<description>Name of the data transfer format(s)</description>
 		<help>name of the data transfer format(s)</help>
 		<condition>mandatory</condition>
-		<helper rel="gmd:version">
-      <option value="">---Tabular data---</option>
+		<helper rel="gmd:version"
+            displayIf="ancestor::node()[name()='gmd:MD_Metadata']/gmd:hierarchyLevel[*/@codeListValue = 'nonGeographicDataset']">
       <option value='ascii (.csv, .txt, .sql)'>ascii (.csv, .txt, .sql)</option>
       <option value='Excel (.xls, .xlsx)'>Excel (.xls, .xlsx)</option>
       <option value='XML'>XML</option>
       <option value='SQLite'>SQLite</option>
       <option value='Microsoft Access (.mdb, .accdb)'>Microsoft Access (.mdb, .accdb)</option>
       <option value='dBASE (.dbf)'>dBASE (.dbf)</option>
+    </helper>
+    <helper rel="gmd:version"
+            displayIf="ancestor::node()[name()='gmd:MD_Metadata']/gmd:hierarchyLevel[*/@codeListValue != 'nonGeographicDataset']">
       <option value="">---Raster---</option>
       <option value='AAIGrid'>Arc/Info ASCII Grid</option>
       <option value='AIG'>Arc/Info Binary Grid (.adf)</option>
