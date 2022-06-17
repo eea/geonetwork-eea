@@ -1617,6 +1617,13 @@
       <option value='Postgis'>Postgresql/Postgis database</option>
       <option value='Spatialite'>SQLite/SpatiaLite database</option>
       <option value='Geopackage'>Geopackage</option>
+      <option value="">---Tabular---</option>
+      <option value='ascii (.csv, .txt, .sql)'>ascii (.csv, .txt, .sql)</option>
+      <option value='Excel (.xls, .xlsx)'>Excel (.xls, .xlsx)</option>
+      <option value='XML'>XML</option>
+      <option value='SQLite'>SQLite</option>
+      <option value='Microsoft Access (.mdb, .accdb)'>Microsoft Access (.mdb, .accdb)</option>
+      <option value='dBASE (.dbf)'>dBASE (.dbf)</option>
 		</helper>
 	</element>
 	<element name="gmd:name" context="gmd:MD_ExtendedElementInformation"
