@@ -88,7 +88,8 @@ goog.require('gn_alert');
         },
         'footer':{
           'enabled': true,
-          'showSocialBarInFooter': true
+          'showSocialBarInFooter': true,
+          'showApplicationInfoAndLinksInFooter': true
         },
         'header': {
           'enabled': true,
@@ -617,6 +618,7 @@ goog.require('gn_alert');
           'isFilterTagsDisplayedInSearch': true,
           'showMapInFacet': false,
           'showStatusFooterFor': 'historicalArchive,obsolete,superseded',
+          'showBatchDropdown': true,
           'usersearches': {
             'enabled': true,
             'includePortals': true,
@@ -708,6 +710,11 @@ goog.require('gn_alert');
             'context': '',
             'extent': [0, 0, 0, 0],
             'layers': [{'type': 'osm'}]
+          },
+          'map-thumbnail': {
+            'context': '../../map/config-viewer.xml',
+            'extent': [0, 0, 0, 0],
+            'layers': []
           },
           'autoFitOnLayer': false
         },
@@ -1076,6 +1083,24 @@ goog.require('gn_alert');
         gnViewerSettings.defaultContext =
           gnViewerSettings.mapConfig['map-viewer'].context;
         gnViewerSettings.geocoder = this.gnCfg.mods.geocoder.appUrl || defaultConfig.mods.geocoder.appUrl;
+
+        // Map protocols used to load layers/services in the map viewer
+        gnSearchSettings.mapProtocols = {
+          layers: [
+            'OGC:WMS',
+            'OGC:WMTS',
+            'OGC:WMS-1.1.1-http-get-map',
+            'OGC:WMS-1.3.0-http-get-map',
+            'OGC:WFS',
+            'ESRI:REST'
+          ],
+          services: [
+            'OGC:WMS-1.3.0-http-get-capabilities',
+            'OGC:WMS-1.1.1-http-get-capabilities',
+            'OGC:WMTS-1.0.0-http-get-capabilities',
+            'OGC:WFS-1.0.0-http-get-capabilities'
+          ]
+        };
       },
       getObjectKeysPaths: function(obj, stopKeyList, allLevels, prefix) {
         var keys = Object.keys(obj);
@@ -1285,6 +1310,10 @@ goog.require('gn_alert');
         return !onMdView && gnGlobalSettings.gnCfg.mods.footer.showSocialBarInFooter;
       };
 
+      $scope.getApplicationInfoVisible = function() {
+        return gnGlobalSettings.gnCfg.mods.footer.showApplicationInfoAndLinksInFooter;
+      };
+
       function detectNode(detector) {
         if (detector.regexp) {
           var res = new RegExp(detector.regexp).exec(location.pathname);
@@ -1492,6 +1521,14 @@ goog.require('gn_alert');
           },
           canImportMetadata: function () {
             var profile = gnConfig['metadata.import.userprofile']
+                || 'Editor',
+              fnName = (profile !== '' ?
+                ('is' + profile[0].toUpperCase() + profile.substring(1) + 'OrMore') :
+                '');
+            return angular.isFunction(this[fnName]) ? this[fnName]() : false;
+          },
+          canDeletePublishedMetadata: function () {
+            var profile = gnConfig['metadata.delete.profilePublishedMetadata']
                 || 'Editor',
               fnName = (profile !== '' ?
                 ('is' + profile[0].toUpperCase() + profile.substring(1) + 'OrMore') :

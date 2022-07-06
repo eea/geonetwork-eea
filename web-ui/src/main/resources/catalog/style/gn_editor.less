@@ -359,12 +359,12 @@ form.gn-editor {
       width: 15%;
     }
     > input.gn-date.gn-notime {
-      width: 100%;
+      width: 100% !important;
     }
     > input.gn-time.hidden,
     > select.gn-timezone.hidden,
     > input.gn-timezone.hidden{
-      width: 0%;
+      width: 0% !important;
     }
 
     .gn-indeterminate-position {
@@ -475,7 +475,9 @@ form.gn-editor {
     visibility: hidden;
     padding: 5px;
   }
-
+  .gn-file-uploader i.btn.fa-times.text-danger {
+      visibility: visible;
+  }
   .show {
     visibility: visible;
   }

@@ -31,6 +31,106 @@
   goog.require('gn_urlutils_service');
   goog.require('gn_related_directive');
 
+
+  var fileUploaderList = [
+    'gnOnlinesrc', 'gnFileStoreService', 'gnCurrentEdit', '$rootScope', '$translate',
+    function(gnOnlinesrc, gnFileStoreService, gnCurrentEdit, $rootScope, $translate) {
+      return {
+        restrict: 'A',
+        templateUrl: '../../catalog/components/edit/onlinesrc/' +
+          'partials/fileUploader.html',
+        scope: {},
+        link: function (scope, element, attrs) {
+          scope.relations = {};
+          scope.uuid = undefined;
+          scope.lang = scope.$parent.lang;
+          scope.readonly = false;
+          scope.numberOfOverviews = parseInt(attrs['numberOfOverviews']) || Infinity;
+          scope.onlinesrcService = gnOnlinesrc;
+
+          scope.defaultType = 'thumbnails';
+          scope.type = attrs['type'] || scope.defaultType;
+          scope.panelMode = angular.isDefined(attrs['title'])
+            && attrs['title'] === '' ? false : true;
+          scope.fileTypes = angular.isDefined(attrs['fileTypes'])
+            ? attrs['fileTypes'] : '';
+          scope.protocol = attrs['protocol'] || 'WWW:DOWNLOAD';
+          scope.isOverview = scope.type === scope.defaultType;
+          scope.title = attrs['title'] || (scope.isOverview ? 'overview' : 'download');
+          scope.icon = attrs['icon'] || (scope.isOverview ? 'gn-icon-thumbnail' : 'fa-download');
+          scope.btnLabel = attrs['btnLabel'] || (scope.isOverview ? 'chooseImage': 'chooseFileToUpload');
+          scope.removeBtnConfirm = scope.isOverview ? 'removeThumbnailConfirm' : 'removeOnlinesrcConfirm';
+          scope.removeBtnTitle = scope.isOverview ? 'removeThumbnail' : 'remove';
+
+          var loadRelations = function() {
+            gnOnlinesrc.getAllResources([scope.type])
+              .then(function(data) {
+                var res = gnOnlinesrc.formatResources(
+                  data,
+                  scope.lang,
+                  gnCurrentEdit.mdLanguage);
+                scope.relations = scope.isOverview
+                  ? res.relations[scope.type]
+                  : res.relations[scope.type].filter(function(l) {
+                    return l.protocol === scope.protocol;
+                  });
+              });
+          };
+
+          scope.linkUploadedFileToRecord = function (link) {
+            var tokens = link.url.split('.'),
+              params = scope.isOverview ? {
+              thumbnail_url: link.url,
+              thumbnail_desc: link.name || '',
+              process: 'thumbnail-add',
+              id: gnCurrentEdit.id
+            } : {
+              url: link.url,
+              protocol: scope.protocol,
+              process: 'onlinesrc-add',
+              id: gnCurrentEdit.id,
+              mimeType: tokens.length ? tokens.pop().toLowerCase() : '',
+              mimeTypeStrategy: 'mimeType',
+              name: link.name || link.url.split('/').pop() || ''
+              };
+            gnOnlinesrc.add(params);
+          };
+
+          scope.removeFile = function(file) {
+            var url = file.url[gnCurrentEdit.mdLanguage];
+            if (url.match(".*/api/records/" + gnCurrentEdit.uuid + "/attachments/.*") == null) {
+              // An external URL
+              gnOnlinesrc[scope.isOverview ? 'removeThumbnail' : 'removeOnlinesrc'](file).then(function() {
+                loadRelations();
+              });
+            } else {
+              // A thumbnail from the filestore
+              gnFileStoreService.delete({url: url}).then(function () {
+                // then remove from record
+                gnOnlinesrc[scope.isOverview ? 'removeThumbnail' : 'removeOnlinesrc'](file).then(function() {
+                  loadRelations();
+                });
+              }, function (r) {
+                  // Can be missing in filestore, then remove the dead link from the record
+                  gnOnlinesrc[scope.isOverview ? 'removeThumbnail' : 'removeOnlinesrc'](file).then(function() {
+                    loadRelations();
+                  });
+              });
+            }
+          };
+          function init(n, o) {
+            if (angular.isUndefined(scope.uuid) ||
+              n != o) {
+              scope.uuid = n;
+              loadRelations();
+            }
+          }
+          scope.$watch('gnCurrentEdit.uuid', init);
+          scope.$watch('$parent.gnCurrentEdit.uuid', init);
+        }
+      }
+    }];
+
   /**
    * @ngdoc overview
    * @name gn_onlinesrc
@@ -206,123 +306,19 @@
       }
     }])
   /**
-   * Simple interface to add or remove overview.
+   * Simple interface to add or remove file/overview.
    *
    * This directive handle in one step the add to filestore
    * action and the update metadata record steps. User
-   * can easily drag & drop thumbnails in here.
+   * can easily drag & drop file/overview in here.
    *
    * It does not provide the possibility to set
-   * overview name and description. See onlineSrcList directive
+   * name and description. See onlineSrcList directive
    * or full editor mode.
    */
-    .directive('gnOverviewManager', [
-      'gnOnlinesrc', 'gnFileStoreService', 'gnCurrentEdit', '$rootScope', '$translate',
-      function(gnOnlinesrc, gnFileStoreService, gnCurrentEdit, $rootScope, $translate) {
-        return {
-          restrict: 'A',
-          templateUrl: '../../catalog/components/edit/onlinesrc/' +
-          'partials/overview-manager.html',
-          scope: {},
-          link: function (scope, element, attrs) {
-            scope.relations = {};
-            scope.uuid = undefined;
-            scope.lang = scope.$parent.lang;
-            scope.readonly = false;
-            scope.numberOfOverviews = parseInt(attrs['numberOfOverviews']) || Infinity;
-            scope.onlinesrcService = gnOnlinesrc;
+    .directive('gnFileUploader', fileUploaderList)
+    .directive('gnOverviewManager', fileUploaderList)
 
-            // Load thumbnail list.
-            var loadRelations = function() {
-              gnOnlinesrc.getAllResources(['thumbnails'])
-                .then(function(data) {
-                  var res = gnOnlinesrc.formatResources(
-                    data,
-                    scope.lang,
-                    gnCurrentEdit.mdLanguage);
-                  scope.relations = res.relations;
-                });
-            };
-
-            // Upload overview once dropped or selected
-            var uploadOverview = function() {
-              scope.queue = [];
-              scope.filestoreUploadOptions = {
-                autoUpload: true,
-                url: '../api/records/' + gnCurrentEdit.uuid +
-                '/attachments?visibility=public',
-                dropZone: $('#gn-overview-dropzone'),
-                singleUpload: true,
-                // TODO: acceptFileTypes: /(\.|\/)(xml|skos|rdf)$/i,
-                done: uploadResourceSuccess,
-                fail: uploadResourceFailed,
-                headers: {'X-XSRF-TOKEN': $rootScope.csrf}
-              };
-            };
-
-            var linkOverviewToRecord = function (link) {
-              var params = {
-                thumbnail_url: link.url,
-                thumbnail_desc: link.name || '',
-                process: 'thumbnail-add',
-                id: gnCurrentEdit.id
-              };
-              gnOnlinesrc.add(params);
-            };
-
-            var uploadResourceSuccess = function(e, data) {
-              $rootScope.$broadcast('gnFileStoreUploadDone');
-              scope.clear(scope.queue);
-              linkOverviewToRecord(data.response().jqXHR.responseJSON);
-            };
-
-            scope.$on('gnFileStoreUploadDone', scope.loadRelations);
-
-            var uploadResourceFailed = function(e, data) {
-              $rootScope.$broadcast('StatusUpdated', {
-                title: $translate.instant('resourceUploadError'),
-                error: {
-                  message: data.errorThrown +
-                  angular.isDefined(
-                    data.response().jqXHR.responseJSON.message) ?
-                    data.response().jqXHR.responseJSON.message : ''
-                },
-                timeout: 0,
-                type: 'danger'});
-              scope.clear(scope.queue);
-            };
-
-            scope.removeOverview = function(thumbnail) {
-              var url = thumbnail.url[gnCurrentEdit.mdLanguage];
-              if (url.match(".*/api/records/" + gnCurrentEdit.uuid + "/attachments/.*") == null) {
-                // An external URL
-                gnOnlinesrc.removeThumbnail(thumbnail).then(function() {
-                  // and update list.
-                  loadRelations();
-                });
-              } else {
-                // A thumbnail from the filestore
-                gnFileStoreService.delete({url: url}).then(function () {
-                  // then remove from record
-                  gnOnlinesrc.removeThumbnail(thumbnail).then(function() {
-                    // and update list.
-                    loadRelations();
-                  })
-                });
-              }
-
-            };
-            scope.$watch('gnCurrentEdit.uuid', function(n, o) {
-              if (angular.isUndefined(scope.uuid) ||
-                n != o) {
-                scope.uuid = n;
-                loadRelations();
-                uploadOverview();
-              }
-            });
-          }
-        }
-      }])
 
   /**
    * @ngdoc directive
@@ -352,9 +348,11 @@
    * </ul>
    *
    */
-      .directive('gnOnlinesrcList', ['gnOnlinesrc', 'gnCurrentEdit',
-        'gnConfigService', '$filter',
-        function(gnOnlinesrc, gnCurrentEdit, gnConfigService, $filter) {
+      .directive('gnOnlinesrcList', [
+          'gnOnlinesrc', 'gnCurrentEdit', 'gnRelatedResources',
+          'gnConfigService', '$filter', 'gnConfig',
+        function(gnOnlinesrc, gnCurrentEdit, gnRelatedResources,
+                 gnConfigService, $filter, gnConfig) {
           return {
             restrict: 'A',
             templateUrl: '../../catalog/components/edit/onlinesrc/' +
@@ -365,12 +363,20 @@
             link: function(scope, element, attrs) {
               scope.onlinesrcService = gnOnlinesrc;
               scope.gnCurrentEdit = gnCurrentEdit;
+              scope.gnRelatedResources = gnRelatedResources;
               scope.allowEdits = true;
               scope.lang = scope.$parent.lang;
               scope.readonly = attrs['readonly'] || false;
               scope.gnCurrentEdit.associatedPanelConfigId = attrs['configId'] || 'default';
-              scope.relations = {};
+              scope.relations = [];
               scope.gnCurrentEdit.codelistFilter  = attrs['codelistFilter'];
+              scope.isMdWorkflowEnableForMetadata = gnConfig['metadata.workflow.enable'] &&
+                scope.gnCurrentEdit.metadata.draft === 'y';
+              scope.isDoiApplicableForMetadata = gnConfig['system.publication.doi.doienabled']
+                && scope.gnCurrentEdit.metadata.isTemplate === 'n'
+                && scope.gnCurrentEdit.metadata.isPublished()
+                && JSON.parse(scope.gnCurrentEdit.metadata.isHarvested) === false;
+
 
               /**
                * Calls service 'relations.get' to load
@@ -393,6 +399,21 @@
                 return angular.isUndefined(scope.types) ? true :
                         category.match(scope.types) !== null;
               };
+
+              /**
+               * Doi can be published for a resource if:
+               *   - Doi publication is enabled.
+               *   - The resource matches doi.org url
+               *   - The workflow is not enabled for the metadata and
+               *     the metadata is published.
+               *
+               */
+              scope.canPublishDoiForResource = function (resource){
+                return scope.isDoiApplicableForMetadata
+                  && resource.lUrl !== null
+                  && resource.lUrl.match('doi.org') !== null
+                  && !scope.isMdWorkflowEnableForMetadata;
+              }
 
               /**
                * Builds metadata url checking if the resource points to internal or external url.
@@ -645,7 +666,7 @@
                 var initThumbnailMaker = function() {
 
                   if (!scope.loaded) {
-                    scope.map = gnMapsManager.createMap(gnMapsManager.VIEWER_MAP);
+                    scope.map = gnMapsManager.createMap(gnMapsManager.GENERATE_THUMBNAIL_MAP);
 
                     // scope.map = new ol.Map({
                     //   layers: [],
@@ -674,6 +695,12 @@
                     },
                     "protocol": {
                       "isMultilingual": false
+                    },
+                    "mimeType": {
+                      "isMultilingual": false
+                    },
+                    "mimeTypeStrategy": {
+                      "value": "mimeType"
                     },
                     "name": {},
                     "desc": {},
@@ -861,6 +888,8 @@
                         linkType: typeConfig,
                         url: fields.url,
                         protocol: linkToEdit.protocol,
+                        mimeType: linkToEdit.mimeType,
+                        mimeTypeStrategy: 'mimeType',
                         name: fields.name,
                         desc: fields.desc,
                         applicationProfile: linkToEdit.applicationProfile,
@@ -871,6 +900,8 @@
                       scope.editingKey = null;
                       scope.params.linkType = typeConfig;
                       scope.params.protocol = null;
+                      scope.params.mimeType = '';
+                      scope.mimeTypeStrategy = 'mimeType';
                       scope.params.name= '';
                       scope.params.desc= '';
                       initMultilingualFields();
@@ -957,6 +988,7 @@
                   if (scope.params) {
                     scope.params.url = '';
                     scope.params.protocol = '';
+                    scope.params.mimeType = '';
                     scope.params.function = '';
                     scope.params.applicationProfile = '';
                     resetProtocol();
@@ -968,6 +1000,7 @@
                   scope.OGCProtocol = false;
                   if (scope.params && !scope.isEditing) {
                     if (scope.clearFormOnProtocolChange) {
+                      scope.params.mimeType = '';
                       scope.params.name = '';
                       scope.params.desc = '';
                       initMultilingualFields();
@@ -1220,7 +1253,7 @@
                       selectedLayersNames = params[scope.addLayersInUrl].split(',');
                     }
 
-                    scope.layers.forEach(function(l) {
+                    scope.layers.forEach && scope.layers.forEach(function(l) {
                       if (selectedLayersNames.indexOf(l.Name) != -1) {
                         scope.params.selectedLayers.push(l);
                       }
@@ -1228,9 +1261,10 @@
 
                     scope.params.url = gnUrlUtils.remove(scope.params.url, [scope.addLayersInUrl], true);
                   } else {
-                    var selectedLayersNames = scope.params.name.split(',');
+                    var selectedLayersNames =
+                      angular.isObject(scope.params.name) ? [] : scope.params.name.split(',');
                     scope.params.selectedLayers = [];
-                    scope.layers.forEach(function(l) {
+                    scope.layers.forEach && scope.layers.forEach(function(l) {
                       if (selectedLayersNames.indexOf(l.Name) != -1) {
                         scope.params.selectedLayers.push(l);
                       }
@@ -1250,6 +1284,7 @@
                     if (scope.OGCProtocol != null && !scope.isEditing && scope.clearFormOnProtocolChange) {
                       // Reset parameter in case of multilingual metadata
                       // Those parameters are object.
+                      scope.params.mimeType = '';
                       scope.params.name = '';
                       scope.params.desc = '';
                     }
