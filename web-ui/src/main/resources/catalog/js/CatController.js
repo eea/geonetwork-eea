@@ -350,15 +350,6 @@ goog.require('gn_alert');
                 'collapsed': true
               }
             },
-            'inspireTheme': {
-              'terms': {
-                'field': 'inspireTheme',
-                'size': 20
-              },
-              'meta': {
-                'collapsed': true
-              }
-            },
             'th_httpinspireeceuropaeumetadatacodelistPriorityDataset-PriorityDataset_tree.default': {
               'terms': {
                 'field': 'th_httpinspireeceuropaeumetadatacodelistPriorityDataset-PriorityDataset_tree.default',
@@ -473,9 +464,9 @@ goog.require('gn_alert');
                 'collapsed': true
               }
             },
-            'thesaurus_geonetworkthesaurusexternalplaceregions_tree.default': {
+            'th_regions_tree.default': {
               'terms': {
-                'field': 'thesaurus_geonetworkthesaurusexternalplaceregions_tree.default',
+                'field': 'th_regions_tree.default',
                 'size': 400,
                 "order" : { "_key" : "asc" },
                 "include": "Europe.*|EEA.*|EU.*"
