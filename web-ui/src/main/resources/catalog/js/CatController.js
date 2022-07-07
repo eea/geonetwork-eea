@@ -296,6 +296,7 @@ goog.require('gn_alert');
             "from": 0,
             "size": 20
           },
+          'moreLikeThisSameType': true,
           'moreLikeThisConfig': {
             "more_like_this" : {
               "fields" : [
@@ -975,6 +976,12 @@ goog.require('gn_alert');
               'meta': {
                 'vega': 'arc'
               }
+            },
+            'indexingErrorMsg': {
+              'terms': {
+                'field': 'indexingErrorMsg',
+                'size': 12
+              }
             }
           }
         },
@@ -1034,6 +1041,7 @@ goog.require('gn_alert');
         'map-viewer',
         'map-search',
         'map-editor',
+        'map-thumbnail',
         'projectionList',
         'switcherProjectionList',
         'cookieWarning',
