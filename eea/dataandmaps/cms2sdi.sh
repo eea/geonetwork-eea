@@ -1,7 +1,7 @@
 curl 'https://semantic.eea.europa.eu/sparql?selectedBookmarkName=&query=SELECT+DISTINCT+%3Fs%0D%0AWHERE+%7B%0D%0A++%3Fs+%3Fo+%3Chttp%3A%2F%2Fwww.eea.europa.eu%2Fportal_types%2FData%23Data%3E+.%0D%0A++FILTER+NOT+EXISTS+%7B+%3Fs+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2FisReplacedBy%3E+%3FisReplacedBy+.+%7D%0D%0A%7D&format=application%2Fsparql-results%2Bjson&nrOfHits=20&execute=Execute' --output eea-data.json
 
 TOKEN=8ad98c39-e5fc-487e-8f52-6b208a116caa
-JSESSIONID=node0fh7km7bzwk3r1jtbcpecvgt3a3.node0
+JSESSIONID=node0r3vi9rb279cx92s95r1qte7y1.node0
 SERVER=http://localhost:8080/geonetwork
 AUTH=""
 #GROUP=1069870
@@ -114,11 +114,11 @@ while IFS=";" read -r uuid cmsid type action resourceid year final; do
     xpath=$(echo "not(contains(*/gmd:linkage/gmd:URL/text(), '$year'))")
     if [ "$final" == "-prov" ]; then
       recordTitle=$(echo "$recordTitle - Provisional data")
-      xpath=$(echo "$xpath or (contains(*/gmd:linkage/gmd:URL/text(), '$year') and contains(*/gmd:linkage/gmd:URL/text(), '$final'))")
+      xpath=$(echo "$xpath or (contains(*/gmd:linkage/gmd:URL/text(), '$year') and contains(*/gmd:name/gco:CharacterString/text(), 'Final'))")
     fi
     if [ "$final" == "-final" ]; then
       recordTitle=$(echo "$recordTitle - Final data")
-      xpath=$(echo "$xpath or (contains(*/gmd:linkage/gmd:URL/text(), '$year') and contains(*/gmd:linkage/gmd:URL/text(), '$final'))")
+      xpath=$(echo "$xpath or (contains(*/gmd:linkage/gmd:URL/text(), '$year') and contains(*/gmd:name/gco:CharacterString/text(), 'Provisional'))")
     fi
 
     recordTitle=$(echo "$recordTitle, $year")
