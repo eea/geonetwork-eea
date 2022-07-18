@@ -136,7 +136,7 @@ while IFS=";" read -r uuid cmsid type action resourceid year final; do
 
     # TODO: Once in datashare, change link to point to datashare instead of CMS
   fi
-done < ../listsimple.csv
+done < ../list.csv
 
 
 echo "____________________________________"

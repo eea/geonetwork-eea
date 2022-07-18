@@ -125,8 +125,7 @@ while IFS=";" read -r title rid abstract uuids; do
   echo "Update title, abstract and date..."
   abstract=${abstract//\"/\'}
   abstract=${abstract//&/&amp;}
-  echo "title: $title"
-  echo "abstract: $abstract"
+
   curl $AUTH "$SERVER/srv/api/records/batchediting?bucket=s101" \
     -X 'PUT' \
     -H 'Accept: application/json, text/plain, */*' \
@@ -151,6 +150,6 @@ while IFS=";" read -r title rid abstract uuids; do
     --compressed
 
     ((i=i+1))
-done < listsimple.csv
+done < list.csv
 
 
