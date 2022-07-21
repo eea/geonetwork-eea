@@ -242,22 +242,7 @@
               <!--
                 <data:Data rdf:about="http://www.eea.europa.eu/data-and-maps/data/vans-16">
               -->
-              <xsl:for-each select="@rdf:about">
-                <gmd:identifier>
-                  <gmd:MD_Identifier>
-                    <gmd:code>
-                      <gco:CharacterString>
-                        <xsl:value-of select="."/>
-                      </gco:CharacterString>
-                    </gmd:code>
-                  </gmd:MD_Identifier>
-                </gmd:identifier>
-              </xsl:for-each>
-
-              <!--
-                  <schema:productID>DAT-20-en</schema:productID>
-              -->
-              <xsl:for-each select="schema:productID">
+              <xsl:for-each select="@rdf:about|data:id|schema:productID">
                 <gmd:identifier>
                   <gmd:MD_Identifier>
                     <gmd:code>
