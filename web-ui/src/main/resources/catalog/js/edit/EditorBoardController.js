@@ -184,8 +184,8 @@
       $scope.facetConfig = gnGlobalSettings.gnCfg.mods.editor.facetConfig;
 
       gnSearchSettings.sortbyValues = gnSearchSettings.sortbyValues;
-
-      gnSearchSettings.hitsperpageValues = [20, 50, 100];
+      
+      gnSearchSettings.hitsperpageValues = gnSearchSettings.hitsperpageValues;
 
       gnSearchSettings.paginationInfo = {
         hitsPerPage: gnSearchSettings.hitsperpageValues[0]
