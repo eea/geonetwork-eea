@@ -149,7 +149,7 @@ public class ThumbnailMaker {
     }
 
     public Path generateThumbnail(String jsonConfig, Integer rotationAngle)
-        throws IOException {
+        throws IOException, com.itextpdf.text.DocumentException {
 
         PJsonObject specJson = MapPrinter.parseSpec(jsonConfig);
         if (Log.isDebugEnabled(LOGGER_NAME)) {
