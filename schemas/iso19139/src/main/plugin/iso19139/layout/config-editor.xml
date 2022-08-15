@@ -599,6 +599,8 @@
                  or="supplementalInformation"
                  in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
 
+          <text ref="eea-supplementalInformation-help"/>
+
           <action type="add"
                   btnLabel="eea-add-overview"
                   if="(count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
@@ -847,7 +849,7 @@
               </snippet>
             </template>
           </action>
-          <text ref="eea-hr"/>
+          <text ref="eea-keyword-mp-help"/>
 
 
           <field if="count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
@@ -1729,11 +1731,15 @@
                   process="source">
           </action>
 
+          <text ref="eea-add-source-help"/>
+
           <action type="associatedResource"
                   name="eea-add-isrevision"
                   process="sibling">
             <directiveAttributes>{"associationType": "isRevisionOf"}</directiveAttributes>
           </action>
+
+          <text ref="eea-add-isrevision-help"/>
         </section>
 
 

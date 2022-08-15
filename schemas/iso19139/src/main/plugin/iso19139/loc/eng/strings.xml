@@ -184,13 +184,25 @@
       <div class="col-sm-2"></div>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          Add the Reporting Obligation(s) from EEA's Reporting Obligation Database (ROD) used to obtain the data. Reporting obligations are legal provisions requiring the submission of data, information or reports to the European Commission, the European Environment Agency or specific international conventions, which are identified in a piece of legislation or any other instrument or agreement.
+          Add the Reporting Obligation(s) from <a href="https://rod.eionet.europa.eu/">EEA's Reporting Obligation Database (ROD)</a> used to obtain the data. Reporting obligations are legal provisions requiring the submission of data, information or reports to the European Commission, the European Environment Agency or specific international conventions, which are identified in a piece of legislation or any other instrument or agreement.
         </div>
       </div>
     </div>
     <hr/>
   </eea-keyword-rod-help>
   <eea-keyword-eeamp>Keywords - EEA Management Plan</eea-keyword-eeamp>
+  <eea-keyword-mp-help>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          EEA Management Plan code and year corresponding to the EEA project under which the dataset was created or used. The codes can be consulted in
+          <a href="https://applications.eea.europa.eu/ManagementPlan/">the EEA Management Plan System</a>.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-keyword-mp-help>
 
   <eea-add-rod>Add reporting obligations</eea-add-rod>
   <eea-add-eeamp>Add EEA Management Plan</eea-add-eeamp>
@@ -212,7 +224,7 @@
       <div class="col-sm-2"></div>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          Choose at least 2-3 GEMET concepts.
+          Choose at least 2-3 <a href="https://www.eionet.europa.eu/gemet/en/about/)">GEMET concepts</a>.
         </div>
       </div>
     </div>
@@ -345,7 +357,39 @@
   </eea-format-tabular-help>
 
   <eea-add-source>Add a source dataset</eea-add-source>
+  <eea-add-source-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          This element provides information about the source data used in creating the data specified by the scope. This metadata element allows the logical link between a data set metadata and the metadata of the corresponding source data set(s).
+        </div>
+      </div>
+    </div>
+  </eea-add-source-help>
+
+  <eea-supplementalInformation-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          This element is in principle used to include any other descriptive information about the data set which is not appropriate or is too detailed to be added in the abstract.
+        </div>
+      </div>
+    </div>
+  </eea-supplementalInformation-help>
+
   <eea-add-isrevision>Indicate this dataset is revision of</eea-add-isrevision>
+  <eea-add-isrevision-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          Only for data sets that are a revision of data sets referenced in the EEA SDI Catalogue. This metadata element allows the logical link between a data set metadata and the metadata of a data set with which the new resource is associated.
+        </div>
+      </div>
+    </div>
+  </eea-add-isrevision-help>
   <eea-additional>Additional technical information</eea-additional>
   <eea-contacts>Responsible Party</eea-contacts>
   <eea-contact-help>
