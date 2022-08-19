@@ -669,6 +669,7 @@ public final class XslUtil {
     public static String htmlElement2textReplacer(String html) {
         return html
             .replaceAll("<br */?>", System.getProperty("line.separator"))
+            .replaceAll("<a.*?href=\"(?<url>https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*))\".*?>(?<label>.*?)<\\/a>", "${label} (${url})")
             .replaceAll("<li>(.*)</li>", System.getProperty("line.separator") + "* $1");
     }
     public static String html2text(String html) {
