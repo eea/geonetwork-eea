@@ -1,7 +1,7 @@
 curl 'https://semantic.eea.europa.eu/sparql?selectedBookmarkName=&query=SELECT+DISTINCT+%3Fs%0D%0AWHERE+%7B%0D%0A++%3Fs+%3Fo+%3Chttp%3A%2F%2Fwww.eea.europa.eu%2Fportal_types%2FData%23Data%3E+.%0D%0A++FILTER+NOT+EXISTS+%7B+%3Fs+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2FisReplacedBy%3E+%3FisReplacedBy+.+%7D%0D%0A%7D&format=application%2Fsparql-results%2Bjson&nrOfHits=20&execute=Execute' --output eea-data.json
 
 TOKEN=8ad98c39-e5fc-487e-8f52-6b208a116caa
-JSESSIONID=node0r3vi9rb279cx92s95r1qte7y1.node0
+JSESSIONID=node0v4fumdznb3sacjgfcnmev9f71.node0
 SERVER=http://localhost:8080/geonetwork
 AUTH=""
 #GROUP=1069870
@@ -31,12 +31,13 @@ for url in $(jq '.results.bindings[].s.value' ../eea-data.json); do
   fi
 done
 
-
+# uuid	cmsid	type	action	resourceid	links	year	yearmax	final
 i=0
-while IFS=";" read -r uuid cmsid type action resourceid year final; do
+while IFS=";" read -r uuid cmsid type action resourceid title links year yearmax final; do
   echo ""
   echo "____________________________________"
-  echo "Processing #$i = $cmsid > $uuid ($type), $action, $year";
+  echo "Processing #$i"
+  echo "$cmsid > $uuid ($type), $action, $year-$yearmax";
 
   filename=$(sed -E "s/eea-data-and-maps-data-(.*)/\1/g" <<< $cmsid)
   echo "Importing CMS record from file $filename.rdf"
@@ -97,46 +98,115 @@ while IFS=";" read -r uuid cmsid type action resourceid year final; do
 
 
   echo ""
-  echo "Set SDI resource identifier ..."
-  curl $AUTH "$SERVER/srv/api/records/batchediting?bucket=s101" \
-    -X 'PUT' \
-    -H 'Accept: application/json, text/plain, */*' \
-    -H 'Content-Type: application/json;charset=UTF-8' \
-    -H "X-XSRF-TOKEN: $TOKEN" \
-    -H "Cookie: XSRF-TOKEN=$TOKEN; JSESSIONID=$JSESSIONID" \
-    --data-raw "[{\"xpath\":\"/gmd:identificationInfo/*/gmd:citation/*\",\"value\":\"<gn_add><gmd:identifier xmlns:gmd=\\\"http://www.isotc211.org/2005/gmd\\\"  xmlns:gco=\\\"http://www.isotc211.org/2005/gco\\\" ><gmd:MD_Identifier><gmd:code><gco:CharacterString>$resourceid</gco:CharacterString></gmd:code></gmd:MD_Identifier></gmd:identifier></gn_add>\"}]" \
-      --compressed
+
+  xpath=$(echo "*/gmd:linkage/*/text() != '${links//###/\' and */gmd:linkage/*/text() != \'}'")
 
   if [ "$action" == "1 to N" ]; then
-    echo ""
+    echo "1..n"
     recordTitle=$(xmllint --xpath "//*[local-name() = 'identificationInfo']/*/*[local-name() = 'citation']/*/*[local-name() = 'title']/*[local-name() = 'CharacterString']/text()" tmp/$cmsid.xml)
 
-    xpath=$(echo "not(contains(*/gmd:linkage/gmd:URL/text(), '$year'))")
-    if [ "$final" == "-prov" ]; then
-      recordTitle=$(echo "$recordTitle - Provisional data")
-      xpath=$(echo "$xpath or (contains(*/gmd:linkage/gmd:URL/text(), '$year') and contains(*/gmd:name/gco:CharacterString/text(), 'Final'))")
-    fi
-    if [ "$final" == "-final" ]; then
-      recordTitle=$(echo "$recordTitle - Final data")
-      xpath=$(echo "$xpath or (contains(*/gmd:linkage/gmd:URL/text(), '$year') and contains(*/gmd:name/gco:CharacterString/text(), 'Provisional'))")
+    if [ -z "$title" ]; then
+      # Composing title based on status and temporal extent
+      if [ "$final" == "-prov" ]; then
+        recordTitle="$recordTitle - Provisional data"
+      fi
+      if [ "$final" == "-final" ]; then
+        recordTitle="$recordTitle - Final data"
+      fi
+
+      recordTitle="$recordTitle, $year"
+      if [ -z "$yearmax" ]; then
+        yearmax="$year"
+      else
+        recordTitle="$recordTitle - $yearmax"
+      fi
+    else
+      recordTitle=$title
+      if [ -z "$yearmax" ]; then
+        yearmax="$year"
+      fi
     fi
 
-    recordTitle=$(echo "$recordTitle, $year")
 
-    echo "Updating title with $recordTitle, removing linkage not targeting year $year"
+    ## TODO: Update temporal extent ?
+    echo "Keep only $links and datashare"
+
+    echo "Updating title with $recordTitle,"
+    echo " updating temporal extent to $year-$yearmax,"
+    echo " remove all links not in that record $xpath,"
+    echo " add datashare link."
+    if [ "$links" == https://discomap* ]; then
+      directDownload=""
+    else
+      read -r -d '' directDownload << EOF
+, {
+  "xpath":"/gmd:distributionInfo/*/gmd:transferOptions/*",
+  "value":"<gn_add><gmd:onLine xmlns:gmd=\\"http://www.isotc211.org/2005/gmd\\"  xmlns:gco=\\"http://www.isotc211.org/2005/gco\\" ><gmd:CI_OnlineResource><gmd:linkage><gmd:URL>https://sdi.eea.europa.eu/data/$uuid</gmd:URL></gmd:linkage><gmd:protocol><gco:CharacterString>WWW:URL</gco:CharacterString></gmd:protocol><gmd:name><gco:CharacterString>Direct Download</gco:CharacterString></gmd:name></gmd:CI_OnlineResource></gmd:onLine></gn_add>"
+}
+EOF
+    fi
+
+
+    if [ "$year$yearmax" == "" ]; then
+      temporalElement=""
+    else
+      read -r -d '' temporalElement << EOF
+,{
+  "xpath":"/gmd:identificationInfo/*/gmd:extent/*/gmd:temporalElement/*/gmd:extent",
+  "value":"<gn_replace><gml:TimePeriod xmlns:gml=\\"http://www.opengis.net/gml\\"><gml:beginPosition>$year-01-01</gml:beginPosition><gml:endPosition>$yearmax-12-31</gml:endPosition></gml:TimePeriod></gn_replace>"
+}
+EOF
+    fi
+
+
     curl $AUTH "$SERVER/srv/api/records/batchediting?bucket=s101" \
       -X 'PUT' \
       -H 'Accept: application/json, text/plain, */*' \
       -H 'Content-Type: application/json;charset=UTF-8' \
       -H "X-XSRF-TOKEN: $TOKEN" \
       -H "Cookie: XSRF-TOKEN=$TOKEN; JSESSIONID=$JSESSIONID" \
-      --data-raw "[{\"xpath\":\"/gmd:identificationInfo/*/gmd:citation/*/gmd:title/gco:CharacterString\",\"value\":\"<gn_replace>$recordTitle</gn_replace>\"},{\"xpath\":\".//gmd:onLine[$xpath]\",\"value\":\"<gn_delete/>\"}]" \
-        --compressed
-
-
-    # TODO: Once in datashare, change link to point to datashare instead of CMS
+      --data-binary @- << EOF
+[{
+  "xpath":"/gmd:identificationInfo/*/gmd:citation/*/gmd:title/gco:CharacterString",
+  "value":"<gn_replace>$recordTitle</gn_replace>"
+}$temporalElement,{
+  "xpath":".//gmd:onLine[$xpath]",
+  "value":"<gn_delete/>"
+},{
+  "xpath":"/gmd:identificationInfo/*/gmd:citation/*",
+  "value":"<gn_add><gmd:identifier xmlns:gmd=\\"http://www.isotc211.org/2005/gmd\\"  xmlns:gco=\\"http://www.isotc211.org/2005/gco\\" ><gmd:MD_Identifier><gmd:code><gco:CharacterString>$resourceid</gco:CharacterString></gmd:code></gmd:MD_Identifier></gmd:identifier></gn_add>"
+}]"
+EOF
+  else
+    echo "1..1"
+    echo "Set SDI resource identifier and data share link ..."
+    echo "Keep only $xpath"
+    curl $AUTH "$SERVER/srv/api/records/batchediting?bucket=s101" \
+           -X 'PUT' \
+           -H 'Accept: application/json, text/plain, */*' \
+           -H 'Content-Type: application/json;charset=UTF-8' \
+           -H "X-XSRF-TOKEN: $TOKEN" \
+           -H "Cookie: XSRF-TOKEN=$TOKEN; JSESSIONID=$JSESSIONID" \
+           --data-binary @- << EOF
+[{
+ "xpath":".//gmd:onLine[$xpath]",
+ "value":"<gn_delete/>"
+},{
+ "xpath":"/gmd:identificationInfo/*/gmd:citation/*",
+ "value":"<gn_add><gmd:identifier xmlns:gmd=\\"http://www.isotc211.org/2005/gmd\\"  xmlns:gco=\\"http://www.isotc211.org/2005/gco\\" ><gmd:MD_Identifier><gmd:code><gco:CharacterString>$resourceid</gco:CharacterString></gmd:code></gmd:MD_Identifier></gmd:identifier></gn_add>"
+}]"
+EOF
   fi
-done < ../list.csv
+
+
+  curl -X POST $AUTH "$SERVER/srv/api/processes/eea-dd-add?uuids=$uuid" \
+        "&updateDateStamp=false&index=true&" \
+       --data-urlencode "replaceLinks=$links" \
+       -H "accept: application/json" \
+       -H "X-XSRF-TOKEN: $TOKEN" \
+       -H "Cookie: XSRF-TOKEN=$TOKEN; JSESSIONID=$JSESSIONID"
+
+done < ../listsimple.csv
 
 
 echo "____________________________________"

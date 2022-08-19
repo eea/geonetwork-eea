@@ -4,6 +4,7 @@
                 xmlns:owl="http://www.w3.org/2002/07/owl#"
                 xmlns:data="http://www.eea.europa.eu/portal_types/Data#"
                 xmlns:datatable="http://www.eea.europa.eu/portal_types/DataTable#"
+                xmlns:datafilelink="http://www.eea.europa.eu/portal_types/DataFileLink#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 xmlns:dcterms="http://purl.org/dc/terms/"
                 xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
@@ -79,6 +80,7 @@
                      xmlns:gml="http://www.opengis.net/gml"
                      xmlns:xlink="http://www.w3.org/1999/xlink"
     >
+      <xsl:variable name="cmsId" select="data:id"/>
       <gmd:fileIdentifier>
 <!--        <dcterms:identifier>0a93718db6f541eaa565ba86d6f9ac85</dcterms:identifier>-->
         <!-- <data:id xml:lang="en">vans-16</data:id>-->
@@ -135,30 +137,9 @@
       </gmd:contact>
 
       <xsl:if test="dcterms:modified[. != '']">
-        <mdb:dateInfo>
-          <cit:CI_Date>
-            <cit:date>
-              <gco2:DateTime><xsl:value-of select="dcterms:modified"/></gco2:DateTime>
-            </cit:date>
-            <cit:dateType>
-              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode"
-                                   codeListValue="revision"/>
-            </cit:dateType>
-          </cit:CI_Date>
-        </mdb:dateInfo>
-      </xsl:if>
-      <xsl:if test="dcterms:created[. != '']">
-        <mdb:dateInfo>
-          <cit:CI_Date>
-            <cit:date>
-              <gco2:DateTime><xsl:value-of select="dcterms:created"/></gco2:DateTime>
-            </cit:date>
-            <cit:dateType>
-              <cit:CI_DateTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode"
-                                   codeListValue="creation">creation</cit:CI_DateTypeCode>
-            </cit:dateType>
-          </cit:CI_Date>
-        </mdb:dateInfo>
+        <gmd:dateStamp>
+          <gco:DateTime><xsl:value-of select="dcterms:modified"/></gco:DateTime>
+        </gmd:dateStamp>
       </xsl:if>
 
       <gmd:metadataStandardName>
@@ -201,7 +182,7 @@
               <!--
                 <dcterms:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-29T08:58:25+00:00</dcterms:issued>
               -->
-              <xsl:for-each select="data:issued">
+              <xsl:for-each select="(data:issued[. != '']|dcterms:modified[. != ''])[1]">
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
@@ -218,8 +199,9 @@
               </xsl:for-each>
               <!--
                 <data:lastUpload rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2019-06-19T22:00:00+00:00</data:lastUpload>
+                is ignored has it does not sounds relevant. Use dcterms:modified
               -->
-              <xsl:for-each select="data:lastUpload">
+              <xsl:for-each select="dcterms:modified[. != '']">
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
@@ -905,22 +887,6 @@ TODO
           </gmd:topicCategory>
           <gmd:extent>
             <gmd:EX_Extent>
-              <gmd:geographicElement>
-                <gmd:EX_GeographicBoundingBox>
-                  <gmd:westBoundLongitude>
-                    <gco:Decimal/>
-                  </gmd:westBoundLongitude>
-                  <gmd:eastBoundLongitude>
-                    <gco:Decimal/>
-                  </gmd:eastBoundLongitude>
-                  <gmd:southBoundLatitude>
-                    <gco:Decimal/>
-                  </gmd:southBoundLatitude>
-                  <gmd:northBoundLatitude>
-                    <gco:Decimal/>
-                  </gmd:northBoundLatitude>
-                </gmd:EX_GeographicBoundingBox>
-              </gmd:geographicElement>
 
               <!-- <data:temporalCoverage>2012</data:temporalCoverage> -->
               <xsl:variable name="start"
@@ -941,60 +907,50 @@ TODO
                   </gmd:extent>
                 </gmd:EX_TemporalExtent>
               </gmd:temporalElement>
-             <!-- <xsl:for-each select="data:temporalCoverage">
-                <xsl:sort select="." order="descending"/>
-                <gmd:temporalElement>
-                  <gmd:EX_TemporalExtent>
-                    <gmd:extent>
-                      <gml:TimePeriod gml:id="d17964e856a1052958">
-                        <gml:beginPosition>
-                          <xsl:value-of select="."/>
-                        </gml:beginPosition>
-                        <gml:endPosition>
-                          <xsl:value-of select="."/>
-                        </gml:endPosition>
-                      </gml:TimePeriod>
-                    </gmd:extent>
-                  </gmd:EX_TemporalExtent>
-                </gmd:temporalElement>
-              </xsl:for-each>-->
             </gmd:EX_Extent>
           </gmd:extent>
 
           <!--
           <data:moreInfo xml:lang="en"><![CDATA[<p>Since 2013 the EEA ha
           -->
-          <xsl:for-each select="data:moreInfo[. != '']">
+          <xsl:if test="data:moreInfo[. != ''] or data:geoAccuracy[. != '']">
             <gmd:supplementalInformation>
               <gco:CharacterString>
-                <xsl:value-of select="util:html2text(., true())"/>
+                <xsl:for-each select="data:moreInfo[. != '']">
+                  <xsl:value-of select="util:html2text(., true())"/>
+                </xsl:for-each>
+
+                <xsl:for-each select="data:geoAccuracy[. != '']">
+                  <xsl:value-of select="util:html2text(.)"/>
+                </xsl:for-each>
               </gco:CharacterString>
             </gmd:supplementalInformation>
-          </xsl:for-each>
+          </xsl:if>
         </gmd:MD_DataIdentification>
       </gmd:identificationInfo>
 
       <xsl:variable name="formats" as="node()*">
         <format fileWith=".gml" format="GML"/>
-        <format fileWith=".csv" format="CSV"/>
-        <format fileWith="_csv" format="CSV"/>
-        <format fileWith="-csv" format="CSV"/>
-        <format fileWith=".xls" format="Excel"/>
-        <format fileWith="db-excel" format="Excel"/>
-        <format fileWith="xlsx" format="Excel"/>
-        <format fileWith="-xls" format="Excel"/>
+        <format fileWith=".csv" format="ascii (.csv, .txt, .sql)"/>
+        <format fileWith="_csv" format="ascii (.csv, .txt, .sql)"/>
+        <format fileWith="-csv" format="ascii (.csv, .txt, .sql)"/>
+        <format fileWith=".xls" format="Microsoft Excel (.xls, .xlsx)"/>
+        <format fileWith="db-excel" format="Microsoft Excel (.xls, .xlsx)"/>
+        <format fileWith="xlsx" format="Microsoft Excel (.xls, .xlsx)"/>
+        <format fileWith="-xls" format="Microsoft Excel (.xls, .xlsx)"/>
         <format fileWith="gpkg" format="GeoPackage"/>
-        <format fileWith=".mdb" format="Access database"/>
-        <format fileWith="access-database" format="Access database"/>
-        <format fileWith="microsoft-access-format" format="Access database"/>
-        <format fileWith=".dbf" format="DBF"/>
+        <format fileWith=".mdb" format="Microsoft Access (.mdb, .accdb)"/>
+        <format fileWith="_mdb" format="Microsoft Access (.mdb, .accdb)"/>
+        <format fileWith="access-database" format="Microsoft Access (.mdb, .accdb)"/>
+        <format fileWith="microsoft-access-format" format="Microsoft Access (.mdb, .accdb)"/>
+        <format fileWith=".dbf" format="dBASE (.dbf)"/>
         <format fileWith=".pdf" format="PDF"/>
         <format fileWith="sqlite" format="SpatiaLite"/>
         <format fileWith="spatialite" format="SpatiaLite"/>
-        <format fileWith="tiff" format="GeoTIFF"/>
-        <format fileWith="tif-" format="GeoTIFF"/>
+        <format fileWith="tiff" format="GTiff"/>
+        <format fileWith="tif-" format="GTiff"/>
         <format fileWith="in_json" format="JSON"/>
-        <format fileWith="geodatabase" format="ESRI Geodatabase"/>
+        <format fileWith="geodatabase" format="ESRI Personal Geodatabase"/>
         <format fileWith="shapefile" format="ESRI Shapefile"/>
         <format fileWith="shape-file" format="ESRI Shapefile"/>
         <format fileWith="_shp" format="ESRI Shapefile"/>
@@ -1012,7 +968,24 @@ TODO
       <xsl:variable name="listOfHasPart">
         <xsl:for-each select="dcterms:hasPart">
           <entry id="{@rdf:resource}">
-            <xsl:copy-of select="document(concat(@rdf:resource, '/@@rdf'))"/>
+            <xsl:variable name="part" as="node()">
+              <xsl:copy-of select="document(concat(@rdf:resource, '/@@rdf'))"/>
+            </xsl:variable>
+
+            <xsl:copy-of select="$part"/>
+            <xsl:for-each select="$part/rdf:RDF/datatable:DataTable/dcterms:hasPart">
+              <xsl:variable name="file" as="node()">
+                <xsl:copy-of select="document(concat(@rdf:resource, '/@@rdf'))"/>
+              </xsl:variable>
+
+              <xsl:for-each select="$file/rdf:RDF/datafilelink:DataFileLink">
+                <remoteUrl>
+                  <xsl:copy-of select="datafilelink:remoteUrl"/>
+                  <xsl:copy-of select="dcterms:title"/>
+                  <xsl:copy-of select="dcterms:description"/>
+                </remoteUrl>
+              </xsl:for-each>
+            </xsl:for-each>
           </entry>
         </xsl:for-each>
       </xsl:variable>
@@ -1024,43 +997,101 @@ TODO
                     order="descending"/>
           <xsl:variable name="entry"
                         select="current()"/>
-          <xsl:for-each select="rdf:RDF/datatable:DataTable/dcterms:hasPart">
-            <gmd:onLine>
-              <gmd:CI_OnlineResource>
-                <xsl:variable name="url" select="@rdf:resource"/>
-                <xsl:variable name="protocol"
-                              select="($protocols[contains($url, @fileWith)]/@protocol)[1]"/>
-                <xsl:variable name="format"
-                              select="($formats[contains($url, @fileWith)]/@format)[1]"/>
-                <gmd:linkage>
-                  <gmd:URL><xsl:value-of select="@rdf:resource"/></gmd:URL>
-                </gmd:linkage>
-                <gmd:name>
-                  <gco:CharacterString>
-                    <xsl:value-of select="$entry/rdf:RDF/datatable:DataTable/dcterms:title"/>
-                  </gco:CharacterString>
-                </gmd:name>
-                <gmd:protocol>
-                  <gco:CharacterString><xsl:value-of select="
+          <xsl:choose>
+            <xsl:when test="remoteUrl">
+              <xsl:for-each select="remoteUrl">
+                <xsl:message>REMOTE URL <xsl:value-of select="datafilelink:remoteUrl"/></xsl:message>
+                <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                    <xsl:variable name="url"
+                                  select="datafilelink:remoteUrl"/>
+                    <xsl:variable name="protocol"
+                                  select="($protocols[contains($url, @fileWith)]/@protocol)[1]"/>
+                    <xsl:variable name="format"
+                                  select="($formats[contains($url, @fileWith)]/@format)[1]"/>
+                    <gmd:linkage>
+                      <gmd:URL><xsl:value-of select="$url"/></gmd:URL>
+                    </gmd:linkage>
+                    <gmd:protocol>
+                      <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                    </gmd:protocol>
+                    <gmd:name>
+                      <gco:CharacterString>
+                        <xsl:value-of select="dcterms:title"/>
+                      </gco:CharacterString>
+                    </gmd:name>
+                    <gmd:description>
+                      <gco:CharacterString>
+                        <xsl:value-of select="if (dcterms:description)
+                                              then dcterms:description
+                                              else $entry/rdf:RDF/datatable:DataTable/dcterms:description"/>
+                      </gco:CharacterString>
+                    </gmd:description>
+
+                    <gmd:function>
+                      <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                                 codeListValue="information"/>
+                    </gmd:function>
+                  </gmd:CI_OnlineResource>
+                </gmd:onLine>
+              </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:for-each select="rdf:RDF/datatable:DataTable/dcterms:hasPart">
+                <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                    <xsl:message>Parts = <xsl:value-of select="@rdf:resource"/> </xsl:message>
+
+                    <xsl:variable name="url"
+                                  select="@rdf:resource"/>
+                    <xsl:variable name="protocol"
+                                  select="($protocols[contains($url, @fileWith)]/@protocol)[1]"/>
+                    <xsl:variable name="format"
+                                  select="($formats[contains($url, @fileWith)]/@format)[1]"/>
+                    <gmd:linkage>
+                      <gmd:URL><xsl:value-of select="$url"/></gmd:URL>
+                    </gmd:linkage>
+                    <gmd:protocol>
+                      <gco:CharacterString><xsl:value-of select="
                         if ($protocol != '') then $protocol
                         else if ($format != '') then 'WWW:DOWNLOAD'
                         else 'WWW:LINK'"/><xsl:value-of select="
                         if ($format != '')
                         then concat(':', $format)
                         else ''"/></gco:CharacterString>
-                </gmd:protocol>
-                <gmd:function>
-                  <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
-                                             codeListValue="download"/>
-                </gmd:function>
+                    </gmd:protocol>
+                    <gmd:name>
+                      <gco:CharacterString>
+                        <xsl:value-of select="$entry/rdf:RDF/datatable:DataTable/dcterms:title"/>
+                      </gco:CharacterString>
+                    </gmd:name>
+                    <xsl:for-each select="$entry/rdf:RDF/datatable:DataTable/dcterms:description">
+                      <gmd:description>
+                        <gco:CharacterString>
+                          <xsl:value-of select="$entry/rdf:RDF/datatable:DataTable/dcterms:description"/>
+                        </gco:CharacterString>
+                      </gmd:description>
+                    </xsl:for-each>
 
-                <xsl:if test="$withFeatureCatalogue">
-                  <xsl:copy-of select="$entry/rdf:RDF
+                    <gmd:function>
+                      <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                                 codeListValue="download"/>
+                    </gmd:function>
+
+                    <xsl:if test="$withFeatureCatalogue">
+                      <xsl:copy-of select="$entry/rdf:RDF
                             /datatable:DataTable/datatable:tableDefinition"/>
-                </xsl:if>
-              </gmd:CI_OnlineResource>
-            </gmd:onLine>
-          </xsl:for-each>
+                    </xsl:if>
+
+                    <!--                <xsl:if test="$entry/rdf:RDF
+                                                /datatable:DataTable/datatable:tableDefinition">
+                                    <xsl:message><xsl:value-of select="$entry/rdf:RDF/datatable:DataTable/dcterms:title"/>;<xsl:value-of select="@rdf:resource"/>;<xsl:value-of select="$cmsId"/></xsl:message>
+                                    </xsl:if>-->
+                  </gmd:CI_OnlineResource>
+                </gmd:onLine>
+              </xsl:for-each>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:for-each>
       </xsl:variable>
 
@@ -1113,31 +1144,20 @@ TODO
               </gmd:level>
             </gmd:DQ_Scope>
           </gmd:scope>
+
+          <!-- <data:dataSource xml:lang="en"><![CDATA[<p><span>Directorate-General for Climate Action, 2016.</span><br style="margin: 0px; padding: 0px; " /><span>Data are submitted by Member States at: http://cdr.eionet.europa.eu/</span></p>]]></data:dataSource>-->
           <gmd:lineage>
             <gmd:LI_Lineage>
               <gmd:statement>
                 <gco:CharacterString>
-                  <xsl:for-each select="data:geoAccuracy[. != '']">
-                    <xsl:value-of select="."/>
+                  <xsl:for-each select="data:dataSource[. != '']|data:methodology[. != '']">
+                    <xsl:value-of select="util:html2text(., true())"/><xsl:text>
+                  </xsl:text>
                   </xsl:for-each>
                 </gco:CharacterString>
               </gmd:statement>
             </gmd:LI_Lineage>
           </gmd:lineage>
-
-
-          <!-- <data:dataSource xml:lang="en"><![CDATA[<p><span>Directorate-General for Climate Action, 2016.</span><br style="margin: 0px; padding: 0px; " /><span>Data are submitted by Member States at: http://cdr.eionet.europa.eu/</span></p>]]></data:dataSource>-->
-          <xsl:for-each select="data:dataSource[. != '']">
-            <gmd:source>
-              <gmd:LI_Source>
-                <gmd:description>
-                  <gco:CharacterString>
-                    <xsl:value-of select="util:html2text(.)"/>
-                  </gco:CharacterString>
-                </gmd:description>
-              </gmd:LI_Source>
-            </gmd:source>
-          </xsl:for-each>
         </gmd:DQ_DataQuality>
       </gmd:dataQualityInfo>
     </gmd:MD_Metadata>
