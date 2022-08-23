@@ -46,30 +46,37 @@
 
   <xsl:template match="gmd:transferOptions/*">
     <xsl:copy>
-      <xsl:copy-of select="gmd:onLine/*[not(contains($replaceLinks, gmd:linkage/*/text()))]"/>
-<xsl:message>=<xsl:value-of select="$replaceLinks"/> </xsl:message>
-      <gmd:onLine>
-        <gmd:CI_OnlineResource>
-          <gmd:linkage>
-            <gmd:URL>https://sdi.eea.europa.eu/data/<xsl:value-of select="$uuid"/></gmd:URL>
-          </gmd:linkage>
-          <gmd:protocol>
-            <gco:CharacterString>WWW:URL</gco:CharacterString>
-          </gmd:protocol>
-          <gmd:name>
-            <gco:CharacterString>Direct Download</gco:CharacterString>
-          </gmd:name>
-          <gmd:description>
-            <gco:CharacterString>
-              <xsl:for-each select="distinct-values(gmd:onLine/*[contains($replaceLinks, gmd:linkage/*/text())]/gmd:description/*/text())">
-                <xsl:value-of select="."/>
-                &#160;
-                &#160;
-              </xsl:for-each>
-            </gco:CharacterString>
-          </gmd:description>
-        </gmd:CI_OnlineResource>
-      </gmd:onLine>
+      <xsl:variable name="linksToKeep"
+                    select="gmd:onLine[contains($replaceLinks, */gmd:linkage/*/text())]"/>
+      <xsl:copy-of select="$linksToKeep"/>
+
+      <xsl:variable name="onlyDiscomap"
+                    select="count($linksToKeep[contains(*/gmd:linkage/*/text(), 'https://discomap.eea.europa.eu')]) = count($linksToKeep)"/>
+
+      <xsl:if test="not($onlyDiscomap)">
+        <gmd:onLine>
+          <gmd:CI_OnlineResource>
+            <gmd:linkage>
+              <gmd:URL>https://sdi.eea.europa.eu/data/<xsl:value-of select="$uuid"/></gmd:URL>
+            </gmd:linkage>
+            <gmd:protocol>
+              <gco:CharacterString>WWW:URL</gco:CharacterString>
+            </gmd:protocol>
+            <gmd:name>
+              <gco:CharacterString>Direct Download</gco:CharacterString>
+            </gmd:name>
+            <gmd:description>
+              <gco:CharacterString>
+                <xsl:for-each select="distinct-values(gmd:onLine/*[contains($replaceLinks, gmd:linkage/*/text())]/gmd:description/*/text())">
+                  <xsl:value-of select="."/>
+                  &#160;
+                  &#160;
+                </xsl:for-each>
+              </gco:CharacterString>
+            </gmd:description>
+          </gmd:CI_OnlineResource>
+        </gmd:onLine>
+      </xsl:if>
     </xsl:copy>
   </xsl:template>
 
