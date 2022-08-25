@@ -4,6 +4,7 @@ set -e
 
 mkdir -p /catalogue-data/htmlcache
 mkdir -p /catalogue-data/lucene
+mkdir -p /catalogue-data/logs
 
 if [ "${ES_HOST}" != "localhost" ]; then
     sed -i "s#http://localhost:9200#${ES_PROTOCOL:="http"}://${ES_HOST}:${ES_PORT:="9200"}#g" "${JETTY_BASE}/webapps/$CATALOGUE/WEB-INF/web.xml" ;
