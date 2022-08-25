@@ -23,14 +23,13 @@ MAINTAINER michimau <mauro.michielon@eea.europa.eu>
 USER root
 
 RUN rm -rf /var/lib/jetty/webapps/*  && \
-    chown jetty:jetty /var/lib/jetty/webapps
+    chown jetty:jetty /var/lib/jetty/webapps && \
+    mkdir -p /catalogue-data && \
+    chown -R jetty:jetty /catalogue-data
 
 COPY --from=build /var/lib/jetty/webapps/catalogue /var/lib/jetty/webapps/catalogue
 
 COPY docker-entrypoint.sh /
-
-RUN mkdir -p /var/local/gn_data && \
-    chown -R jetty:jetty /var/local/gn_data
 
 USER jetty
 
