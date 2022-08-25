@@ -26,7 +26,6 @@ RUN rm -rf /var/lib/jetty/webapps/*  && \
     chown jetty:jetty /var/lib/jetty/webapps
 
 COPY --from=build /var/lib/jetty/webapps/catalogue /var/lib/jetty/webapps/catalogue
-#RUN unzip /tmp/catalogue.war -d /var/lib/jetty/webapps/catalogue
 
 COPY docker-entrypoint.sh /
 
