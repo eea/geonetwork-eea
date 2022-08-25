@@ -5,8 +5,6 @@ set -e
 mkdir -p /catalogue-data/htmlcache
 mkdir -p /catalogue-data/lucene
 
-unzip -o /target/$CATALOGUE.war -d /var/lib/jetty/webapps/$CATALOGUE
-
 if [ "${ES_HOST}" != "localhost" ]; then
     sed -i "s#http://localhost:9200#${ES_PROTOCOL:="http"}://${ES_HOST}:${ES_PORT:="9200"}#g" "${JETTY_BASE}/webapps/$CATALOGUE/WEB-INF/web.xml" ;
     sed -i "s#es.host=localhost#es.host=${ES_HOST}#" "${JETTY_BASE}/webapps/$CATALOGUE/WEB-INF/config.properties" ;
@@ -47,7 +45,6 @@ if [ "$1" = jetty.sh ]; then
 		exit 1
 	fi
 	cat >&2 <<- 'EOWARN'
-
 		********************************************************************
 		WARNING: Use of jetty.sh from this image is deprecated and may
 			 be removed at some point in the future.
@@ -147,7 +144,3 @@ if [ "${1##*/}" = java -a -n "$JAVA_OPTIONS" ] ; then
 fi
 
 exec "$@"
-
-
-
-
