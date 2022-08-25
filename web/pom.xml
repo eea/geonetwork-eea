@@ -1278,7 +1278,7 @@
         <env>prod</env>
         <geonetwork.config.security>config-securitycatalogue</geonetwork.config.security>
         <application.name>catalogue</application.name>
-        <geonetwork.log>/var/local/gn_data/logs/catalogue.log</geonetwork.log>
+	<geonetwork.log>/catalogue-data/logs/catalogue.log</geonetwork.log>
         <geonetwork.data.dir>file:///catalogue-data</geonetwork.data.dir>
         <!-- If merging internal and editor / this should enable ldap auth. -->
         <security.config.file>config-security-noldap.xml</security.config.file>
