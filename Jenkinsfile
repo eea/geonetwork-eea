@@ -19,7 +19,7 @@ pipeline {
         script{
                  sh '''env''' 
                  if (env.BRANCH_NAME == 'michimau-eea-4.2.0') {
-                         tagName = '$GIT_COMMIT'
+                         tagName = GIT_COMMIT.take(8)
                  } else {
                          tagName = "$BRANCH_NAME"
                  }
