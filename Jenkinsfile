@@ -5,7 +5,6 @@ pipeline {
 
   environment {
     GIT_NAME = "geonetwork-eea"
-    SONARQUBE_TAGS = "cr.eionet.europa.eu"
     registry = "eeacms/eea-geonetwork"
    }
 
@@ -17,8 +16,7 @@ pipeline {
       }
       steps {
         script{
-                 sh '''env''' 
-                 if (env.BRANCH_NAME == 'michimau-eea-4.2.0') {
+                 if (env.BRANCH_NAME == 'eea-4.2.0') {
                          tagName = GIT_COMMIT.take(8)
                  } else {
                          tagName = "$BRANCH_NAME"
@@ -49,7 +47,7 @@ pipeline {
           def details = """<h1>${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - ${status}</h1>
                            <p>Check console output at <a href="${url}">${env.JOB_BASE_NAME} - #${env.BUILD_NUMBER}</a></p>
                         """
-          emailext (subject: '$DEFAULT_SUBJECT', to: '$DEFAULT_RECIPIENTS', body: details, recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']])
+          emailext (subject: summary, body: details, attachLog: true, compressLog: true, recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']])
         }
       }
     }
