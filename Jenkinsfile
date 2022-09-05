@@ -6,6 +6,7 @@ pipeline {
   environment {
     GIT_NAME = "geonetwork-eea"
     registry = "eeacms/eea-geonetwork"
+    default_branch = "eea-4.2.0"
    }
 
   stages {
@@ -16,7 +17,7 @@ pipeline {
       }
       steps {
         script{
-                 if (env.BRANCH_NAME == 'eea-4.2.0') {
+                 if (env.BRANCH_NAME == env.default_branch ) {
                          tagName = GIT_COMMIT.take(8)
                  } else {
                          tagName = "$BRANCH_NAME"
