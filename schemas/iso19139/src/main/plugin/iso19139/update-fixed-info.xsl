@@ -108,6 +108,28 @@
   <xsl:variable name="hasNextCloudLink"
                 select="count(//gmd:onLine/*[starts-with(gmd:linkage/*/text(), 'https://sdi.eea.europa.eu/data')]) > 0"/>
 
+
+  <xsl:template match="//gmd:onLine[
+                          starts-with(*/gmd:linkage/gmd:URL, 'https://land.copernicus.eu')
+                          and ends-with(*/gmd:linkage/gmd:URL, 'tab=download')
+                          and (not(*/gmd:name) or */gmd:name/gco:CharacterString = '')]"
+                priority="199">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <gmd:CI_OnlineResource>
+        <xsl:copy-of select="*/gmd:linkage"/>
+        <xsl:copy-of select="*/gmd:protocol"/>
+        <xsl:copy-of select="*/gmd:applicationProfile"/>
+        <gmd:name>
+          <gco:CharacterString>Download (requires authentication)</gco:CharacterString>
+        </gmd:name>
+        <xsl:copy-of select="*/gmd:description"/>
+        <xsl:copy-of select="*/gmd:function"/>
+      </gmd:CI_OnlineResource>
+    </xsl:copy>
+  </xsl:template>
+
+
   <xsl:template match="//gmd:onLine[(*/gmd:protocol/*/text() = 'EEA:FILEPATH' or
                                      */gmd:protocol/*/text() = 'EEA:FOLDERPATH')
                                      and starts-with(*/gmd:linkage/gmd:URL, 'https://sdi.eea.europa.eu/webdav')]"
