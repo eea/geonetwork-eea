@@ -1894,7 +1894,7 @@
                   var searchParams = {};
                   if (scope.mode === "fcats") {
                     searchParams = {
-                      documentStandard: "iso19110",
+                      resourceType: "featureCatalog",
                       isTemplate: "n"
                     };
                     scope.btn = {
