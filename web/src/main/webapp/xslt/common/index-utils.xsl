@@ -658,6 +658,7 @@
   </xsl:template>
 
 
+
   <!-- Produce a thesaurus field name valid in an XML document
   and as an Elasticsearch field name. -->
   <xsl:function name="gn-fn-index:build-thesaurus-index-field-name">

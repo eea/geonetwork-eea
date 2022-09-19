@@ -26,6 +26,25 @@ div[gn-transfer-ownership] * .list-group {
   }
 }
 
+/* skiplink */
+.gn-skiplink {
+  margin: 10px;
+  top: 0;
+  left: 0;
+  padding: 8px;
+  position: absolute;
+  transform: translateX(-200%);
+  transition: transform 0.3s;
+  z-index: 10000;
+  &:focus {
+    transform: translateX(0%);
+    outline: 2px auto @brand-warning !important;
+  }
+}
+.gn-skiplink-nav {
+  top: @gn-header-height;
+}
+
 .gn-copy-to-clipboard-button-floatright {
   position: relative;
   right: 4px;
@@ -177,6 +196,16 @@ div[gn-save-user-search] .panel {
   #gn-new-metadata-container, #gn-import-container {
     padding-top: 70px;
   }
+  #gn-import-reports-row {
+    max-height: calc(~"100vh - @{gn-header-height} - @{gn-menubar-height} - 120px");
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  #gn-import-uploadfile-list {
+    max-height: 525px;
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
 }
 
 a {
@@ -207,9 +236,9 @@ a {
 }
 .gn-img-modal {
   width: 95vw;
-
+  background-color: #fff;
   img {
-    width: 100%
+    max-width: 100%
   }
   .gn-img-background {
     background-image: linear-gradient(to bottom,transparent,rgba(0,0,0,0.74));
@@ -985,13 +1014,8 @@ html[lang=fr] {
   color: #d3d3d3;
 }
 
-button, .btn, .btn:active, a {
-  &:focus {
-    outline: none;
-  }
-}
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 12px;
   height: 6px;
   background-color: transparent;
 }
@@ -1523,9 +1547,17 @@ gn-indexing-task-status {
 .flex-nowrap, .flex-no-wrap { flex-wrap: nowrap; }
 .flex-wrap { flex-wrap: wrap; }
 .flex-wrap-r { flex-wrap: wrap-reverse; }
+.flex-grow-4 { flex-grow: 4; }
+.flex-self-center { align-self: center; }
+.flex-gap-5 { gap: 5px; }
+.flex-gap-10 { gap: 10px; }
+.flex-gap-15 { gap: 15px; }
 .text-wrap { white-space: normal; }
 .text-nowrap, .text-no-wrap { white-space: nowrap; }
 .text-ellipsis { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+.text-small { font-size: 12px;}
+.text-medium { font-size: 20px; }
+.text-large { font-size: 30px; }
 .width-100 { width: 100%; } .width-75 { width: 75%; } .width-50 { width: 50%; }
 .width-25 { width: 25%; } .width-33 { width: 33%; } .width-66 { width: 66%; }
 .max-width-none { max-width: none; }
@@ -1542,6 +1574,8 @@ gn-indexing-task-status {
     break-inside: avoid;
   }
 }
+.d-inline { display: inline; }
+.d-inline-block { display: inline-block; }
 
 html {
   // As a side-effect of setting the @viewport in bootstrap,
@@ -1563,4 +1597,42 @@ html {
 .batch-report-metadata-info {
   max-height: 300px;
   overflow: scroll;
+}
+
+.external-resource-validation-status-unknown,
+.external-resource-validation-status-incomplete,
+.external-resource-validation-status-valid {
+  position: relative;
+
+}
+
+/* CSS hex codes used in "content:" property below are located at https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-4x/ */
+
+.external-resource-validation-status-unknown::before,
+.external-resource-validation-status-incomplete::before,
+.external-resource-validation-status-valid::before{
+  content: "\f15c";  /* fa-file-text */
+  position: relative;
+  font-size: 1.1em;
+  color: #3277B3;
+  left: 0;
+  vertical-align: text-top;
+}
+
+.external-resource-validation-status-incomplete::after {
+  content: "\f071"; /* fa-exclamation-triangle */
+  position: absolute;
+  font-size: 0.5em;
+  left: 1.75em;
+  top: 1.9em;
+  color: darkorange;
+}
+
+.external-resource-validation-status-valid::after {
+  content: "\f14a";  /* fa-check-square */
+  position: absolute;
+  font-size: 0.5em;
+  left: 1.75em;
+  top: 1.9em;
+  color: green;
 }
