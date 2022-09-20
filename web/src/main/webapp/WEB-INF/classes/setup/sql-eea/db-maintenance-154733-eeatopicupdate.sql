@@ -7,4 +7,8 @@ UPDATE metadata SET data = replace(data, 'sustainability-transitions">Sustainabi
 UPDATE metadata SET data = replace(data, 'transport">Transport<', 'transport-and-mobility">Transport and mobility<') WHERE data LIKE '%>Transport<%' and isHarvested = 'n';
 UPDATE metadata SET data = replace(data, 'waste">Resource efficiency and waste<', 'waste-and-recycling">Waste and recycling<') WHERE data LIKE '%>Resource efficiency and waste<%' and isHarvested = 'n';
 UPDATE metadata SET data = replace(data, 'water">Water and marine environment<', 'water">Water<') WHERE data LIKE '%>Water and marine environment<%' and isHarvested = 'n';
+
 UPDATE metadata SET data = replace(data, '<gmx:Anchor xlink:href="https://www.eea.europa.eu/themes/policy">Policy instruments</gmx:Anchor>', '<gmx:Anchor/>') WHERE data LIKE '%>Policy instruments<%' and isHarvested = 'n';
+UPDATE metadata SET data = replace(data, '<gmx:Anchor xlink:href="http://www.eea.europa.eu/portal_vocabularies/themes/policy">Policy instruments</gmx:Anchor>', '<gmx:Anchor/>') WHERE data LIKE '%>Policy instruments<%' and isHarvested = 'n';
+
+UPDATE metadata SET data = replace(data, 'http://www.eea.europa.eu/portal_vocabularies/themes', 'https://www.eea.europa.eu/themes') WHERE data LIKE '%http://www.eea.europa.eu/portal_vocabularies/themes%' and isHarvested = 'n';
