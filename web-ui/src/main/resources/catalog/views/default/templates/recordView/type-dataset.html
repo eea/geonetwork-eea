@@ -1,21 +1,31 @@
 <!-- title & summary -->
-<div class="row gn-card gn-card-{{mdView.current.record.resourceType[0]}} gn-margin-top gn-margin-bottom gn-padding-top gn-padding-bottom">
-  <div ng-include="'../../catalog/views/default/templates/recordView/status.html'"/>
+<div
+  class="row gn-card gn-card-{{mdView.current.record.resourceType[0]}} gn-margin-top gn-margin-bottom gn-padding-top gn-padding-bottom"
+>
+  <div ng-include="'../../catalog/views/default/templates/recordView/status.html'" />
 
   <div class="col-md-8 gn-record">
-    <div ng-include="'../../catalog/views/default/templates/recordView/title.html'"/>
+    <div ng-include="'../../catalog/views/default/templates/recordView/title.html'" />
   </div>
   <div class="col-md-4 gn-md-side">
-    <div data-ng-if="(('group-' + mdView.current.record.groupOwner) | translate).indexOf('SDI_DRAFT') === 0"
-         class="gn-status-stamp">
+    <div
+      data-ng-if="(('group-' + mdView.current.record.groupOwner) | translate).indexOf('SDI_DRAFT') === 0"
+      class="gn-status-stamp"
+    >
       <span class="gn-status gn-status-mdview gn-status-obsolete">Draft</span>
     </div>
 
     <div gn-record-is-replaced-by="mdView.current.record.uuid"></div>
 
-    <div class="gn-margin-top" ng-include="'../../catalog/views/default/templates/recordView/thumbnails.html'"/>
+    <div
+      class="gn-margin-top"
+      ng-include="'../../catalog/views/default/templates/recordView/thumbnails.html'"
+    />
 
-    <div class="gn-margin-top" ng-include="'../../catalog/views/default/templates/recordView/summary.html'"/>
+    <div
+      class="gn-margin-top"
+      ng-include="'../../catalog/views/default/templates/recordView/summary.html'"
+    />
   </div>
 </div>
 
@@ -41,32 +51,39 @@
 <!-- links (Download, API, Others) -->
 <div class="row gn-section">
   <div class="col-md-8 gn-record">
-    <div ng-include="'../../catalog/views/default/templates/recordView/downloads.html'"/>
+    <div ng-include="'../../catalog/views/default/templates/recordView/downloads.html'" />
 
-    <div  class="gn-page-break-avoid" ng-include="'../../catalog/views/default/templates/recordView/constraints.html'"/>
+    <div
+      class="gn-page-break-avoid"
+      ng-include="'../../catalog/views/default/templates/recordView/constraints.html'"
+    />
   </div>
   <!-- /.col-md-8 gn-record -->
-  <div class="gn-md-side"
-       data-ng-class="[].concat(mdView.current.record.related.datasets, mdView.current.record.related.services).length > 3 ? 'col-md-12' : 'col-md-4'">
+  <div
+    class="gn-md-side"
+    data-ng-class="[].concat(mdView.current.record.related.datasets, mdView.current.record.related.services).length > 3 ? 'col-md-12' : 'col-md-4'"
+  >
+    <div
+      data-ng-if="mdView.current.record.related.uuids"
+      data-gn-related="mdView.current.record"
+      data-user="user"
+      data-layout="card"
+      data-types="services"
+      data-title="{{'<span class=\'badge badge-rounded\'><i class=\'fa fa-fw gn-icon-service\'></i></span><strong>' + ('openRecordservices' | translate) + '</strong>'}}"
+    ></div>
+    <div
+      data-ng-if="mdView.current.record.related.uuids"
+      data-gn-related="mdView.current.record"
+      data-user="user"
+      data-layout="card"
+      data-size="4"
+      data-types="datasets"
+      data-title="{{'<span class=\'badge badge-rounded\'><i class=\'fa fa-fw gn-icon-dataset\'></i></span><strong>' + ('openRecorddatasets' | translate) + '</strong>'}}"
+    ></div>
 
-    <div data-ng-if="mdView.current.record.related.uuids"
-         data-gn-related="mdView.current.record"
-         data-user="user"
-         data-layout="card"
-         data-types="services"
-         data-title="{{'<span class=\'badge badge-rounded\'><i class=\'fa fa-fw gn-icon-service\'></i></span><strong>' + ('openRecordservices' | translate) + '</strong>'}}">
-    </div>
-    <div data-ng-if="mdView.current.record.related.uuids"
-         data-gn-related="mdView.current.record"
-         data-user="user"
-         data-layout="card"
-         data-size="4"
-         data-types="datasets"
-         data-title="{{'<span class=\'badge badge-rounded\'><i class=\'fa fa-fw gn-icon-dataset\'></i></span><strong>' + ('openRecorddatasets' | translate) + '</strong>'}}">
-    </div>
-
-    <div ng-include="'../../catalog/views/default/templates/recordView/eeatechnical.html'"/>
-
+    <div
+      ng-include="'../../catalog/views/default/templates/recordView/eeatechnical.html'"
+    />
   </div>
 </div>
 
@@ -85,86 +102,102 @@
 </div>
 -->
 
-<div class="row gn-section"
-     data-ng-if="mdView.current.record.featureTypes.length
-                 || mdView.current.record.related.fcats.length > 0">
+<div
+  class="row gn-section"
+  data-ng-if="mdView.current.record.featureTypes.length
+                 || mdView.current.record.related.fcats.length > 0"
+>
   <div class="col-md-12 gn-record">
-    <div ng-include="'../../catalog/views/default/templates/recordView/featurecatalogue.html'"/>
+    <div
+      ng-include="'../../catalog/views/default/templates/recordView/featurecatalogue.html'"
+    />
   </div>
 </div>
 
-<div class="row"
-     data-ng-if="mdView.current.record.lineage
+<div
+  class="row"
+  data-ng-if="mdView.current.record.lineage
                  || mdView.current.record.sourceDescription
-                 || mdView.current.record.supplementalInformation">
+                 || mdView.current.record.supplementalInformation"
+>
   <div class="col-md-8 gn-record gn-page-break-avoid">
-    <div ng-include="'../../catalog/views/default/templates/recordView/lineage.html'"/>
+    <div ng-include="'../../catalog/views/default/templates/recordView/lineage.html'" />
 
-    <div ng-include="'../../catalog/views/default/templates/recordView/sources.html'"/>
+    <div ng-include="'../../catalog/views/default/templates/recordView/sources.html'" />
   </div>
   <!-- /.col-md-8 gn-record -->
   <div class="col-md-4 gn-md-side">
     <div>
-      <div data-ng-repeat="(key, t) in mdView.current.record.allKeywords"
-           data-ng-hide="key === 'th_temporal-update'"
-           data-ng-if="(user.canEditRecord(mdView.current.record)
+      <div
+        data-ng-repeat="(key, t) in mdView.current.record.allKeywords"
+        data-ng-hide="key === 'th_temporal-update'"
+        data-ng-if="(user.canEditRecord(mdView.current.record)
                  && viewConfig.internalThesaurus
                  && viewConfig.internalThesaurus.indexOf(key) !== -1)
                 || highlightedThesaurus.indexOf(key) === -1"
-           class="gn-margin-bottom flex-row">
+        class="gn-margin-bottom flex-row"
+      >
         <span class="badge badge-rounded">
           <i class="fa fa-fw fa-tags"></i>
         </span>
         <div>
           <h3 data-translate="">{{(t.title || key) | translate}}</h3>
 
-          <div data-gn-keyword-badges="mdView.current.record"
-               data-thesaurus="key" />
+          <div data-gn-keyword-badges="mdView.current.record" data-thesaurus="key" />
         </div>
       </div>
     </div>
 
-    <div ng-include="'../../catalog/views/default/templates/recordView/categories.html'" />
+    <div
+      ng-include="'../../catalog/views/default/templates/recordView/categories.html'"
+    />
 
-    <div data-ng-if="mdView.current.record.cl_classification > 0"
-         class="gn-margin-bottom flex-row">
+    <div
+      data-ng-if="mdView.current.record.cl_classification > 0"
+      class="gn-margin-bottom flex-row"
+    >
       <span class="badge badge-rounded" title="{{'classification' | translate}}">
         <i class="fa fa-fw fa-tags"></i>
       </span>
       <div>
         <h3 data-translate="">classification</h3>
         <ul>
-          <li data-ng-repeat="c in mdView.current.record.cl_classification">{{c.default}}</li>
+          <li data-ng-repeat="c in mdView.current.record.cl_classification">
+            {{c.default}}
+          </li>
         </ul>
       </div>
     </div>
   </div>
 </div>
 
-<div class="row gn-section gn-padding-bottom-lg"
-     data-ng-if="mdView.current.record.specificationConformance">
+<div
+  class="row gn-section gn-padding-bottom-lg"
+  data-ng-if="mdView.current.record.specificationConformance"
+>
   <div class="col-md-8 gn-record">
-    <div ng-include="'../../catalog/views/default/templates/recordView/quality.html'"/>
+    <div ng-include="'../../catalog/views/default/templates/recordView/quality.html'" />
   </div>
 </div>
 
 <div class="row gn-section">
   <div class="col-md-8 gn-record gn-break">
-    <div ng-include="'../../catalog/views/default/templates/recordView/contact.html'"/>
+    <div ng-include="'../../catalog/views/default/templates/recordView/contact.html'" />
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-12 gn-record">
-    <div data-ng-if="mdView.current.record.related.uuids"
-         data-gn-related="mdView.current.record"
-         data-user="user"
-         data-layout="card"
-         data-types="children"
-         data-title="{{'seriesComposedOf' | translate}}">
-    </div>
+    <div
+      data-ng-if="mdView.current.record.related.uuids"
+      data-gn-related="mdView.current.record"
+      data-user="user"
+      data-layout="card"
+      data-types="children"
+      data-title="{{'seriesComposedOf' | translate}}"
+    ></div>
 
-    <div ng-include="'../../catalog/views/default/templates/recordView/related.html'"/>
+    <div ng-include="'../../catalog/views/default/templates/recordView/related.html'" />
   </div>
 </div>
 
@@ -172,17 +205,26 @@
 <div class="gn-section row">
   <h2 class="col-md-12" data-translate="">metadataInformation</h2>
   <div class="col-md-8">
-    <div class="gn-page-break-avoid" ng-include="'../../catalog/views/default/templates/recordView/metadatacontact.html'"/>
+    <div
+      class="gn-page-break-avoid"
+      ng-include="'../../catalog/views/default/templates/recordView/metadatacontact.html'"
+    />
   </div>
   <div class="col-md-4 gn-md-side">
-    <div class="gn-page-break-avoid" ng-include="'../../catalog/views/default/templates/recordView/metadata.html'"/>
+    <div
+      class="gn-page-break-avoid"
+      ng-include="'../../catalog/views/default/templates/recordView/metadata.html'"
+    />
   </div>
 </div>
 
 <div class="row hidden-print">
   <div class="col-md-8">
-    <div ng-include="'../../catalog/views/default/templates/recordView/share.html'"/>
+    <div ng-include="'../../catalog/views/default/templates/recordView/share.html'" />
   </div>
 </div>
 
-<div class="hidden-print" ng-include="'../../catalog/views/default/templates/recordView/footer.html'"/>
+<div
+  class="hidden-print"
+  ng-include="'../../catalog/views/default/templates/recordView/footer.html'"
+/>

@@ -5,18 +5,17 @@
 @import (less) "../lib/jquery.ext/jquery.fileupload-ui.css";
 @import "gn.less";
 
-
 @import "../lib/style/bootstrap/less/glyphicons.less";
 
 //url is wrong on original file
 // Import the fonts
 @font-face {
-  font-family: 'Glyphicons Halflings';
+  font-family: "Glyphicons Halflings";
   src: ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.eot')";
   src: ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.eot?#iefix') format('embedded-opentype')",
-  ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.woff') format('woff')",
-  ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.ttf') format('truetype')",
-  ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.svg#@{icon-font-svg-id}') format('svg')";
+    ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.woff') format('woff')",
+    ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.ttf') format('truetype')",
+    ~"url('../catalog/lib/style/bootstrap/fonts/@{icon-font-name}.svg#@{icon-font-svg-id}') format('svg')";
 }
 
 body {
@@ -30,7 +29,9 @@ body {
   line-height: 1.8 !important;
 }
 
-input[type=text], input[type=number], select {
+input[type="text"],
+input[type="number"],
+select {
   .form-control;
 }
 
@@ -58,7 +59,6 @@ input[type=text], input[type=number], select {
   min-height: 85vh;
 }
 
-
 @media only screen and (max-width: @screen-xs-max) {
   .gn-editor-container {
     margin-top: 50px;
@@ -70,7 +70,6 @@ input[type=text], input[type=number], select {
     margin-top: 100px;
   }
 }
-
 
 #gn-directory-container {
   .gn-facet-dropdown {
@@ -190,8 +189,10 @@ input[type=text], input[type=number], select {
         border-radius: 4px;
       }
     }
-
-    .col-lg-8, .col-md-8, .col-lg-4, .col-md-4 {
+    .col-lg-8,
+    .col-md-8,
+    .col-lg-4,
+    .col-md-4 {
       padding-left: 0;
       padding-right: 0;
     }
@@ -209,10 +210,10 @@ form.gn-editor {
   @editor-fieldset-padding-left: 5px;
 
   /**
-  * Make space on the following element of a well
-  */
-
-  div.well + fieldset, div.well + div {
+   * Make space on the following element of a well
+   */
+  div.well + fieldset,
+  div.well + div {
     padding-top: 10px;
   }
 
@@ -311,7 +312,6 @@ form.gn-editor {
     font-weight: 200;
     padding-top: 0px;
     line-height: 22px;
-
   }
 
   .gn-required > label {
@@ -335,7 +335,8 @@ form.gn-editor {
   }
 
   .gn-has-xlink {
-    label, fieldset > legend {
+    label,
+    fieldset > legend {
       //    opacity: .7;
     }
   }
@@ -363,7 +364,7 @@ form.gn-editor {
     }
     > input.gn-time.hidden,
     > select.gn-timezone.hidden,
-    > input.gn-timezone.hidden{
+    > input.gn-timezone.hidden {
       width: 0% !important;
     }
 
@@ -380,12 +381,10 @@ form.gn-editor {
       > select.gn-indeterminate-position {
         width: 20%;
       }
-
-      > input[type=date] {
+      > input[type="date"] {
         width: 40%;
       }
-
-      > input[type=time] {
+      > input[type="time"] {
         width: 40%;
       }
     }
@@ -400,7 +399,6 @@ form.gn-editor {
     margin-bottom: 0px;
   }
 
-
   /* Avoid white on white when i:hover
   */
 
@@ -409,9 +407,8 @@ form.gn-editor {
   }
 
   /**
-  * Keyword selector directive
-  */
-
+   * Keyword selector directive
+   */
   *[data-gn-keyword-selector] {
     margin-bottom: 10px;
   }
@@ -433,12 +430,13 @@ form.gn-editor {
     .tt-input {
       border: none;
       box-shadow: none;
-      background-color: #FFFFFF !important;
+      background-color: #ffffff !important;
     }
   }
 
   .gn-maxtags .bootstrap-tagsinput {
-    .twitter-typeahead, .twitter-typeahead > input {
+    .twitter-typeahead,
+    .twitter-typeahead > input {
       display: none !important;
     }
   }
@@ -476,7 +474,7 @@ form.gn-editor {
     padding: 5px;
   }
   .gn-file-uploader i.btn.fa-times.text-danger {
-      visibility: visible;
+    visibility: visible;
   }
   .show {
     visibility: visible;
@@ -494,9 +492,12 @@ form.gn-editor {
     font-size: 12px;
   }
 
-  .gn-required > div.th-inner:after, legend.gn-required:after,
-  label.gn-required:after, .gn-required > label:after,
-  label.gn-mandatory:after, .gn-mandatory > label:after {
+  .gn-required > div.th-inner:after,
+  legend.gn-required:after,
+  label.gn-required:after,
+  .gn-required > label:after,
+  label.gn-mandatory:after,
+  .gn-mandatory > label:after {
     content: "*";
     font-size: 2.5em;
     margin: 7px 0 0 7px;
@@ -541,8 +542,10 @@ form.gn-editor {
   .gn-eea-technical-details > div > label:after,
   .gn-eea-resourceConstraints > div.gn-otherConstraints > label:after,
   .gn-eea-technical-details > fieldset > legend.referenceSystemInfo:after,
-  label.gn-required:after, .gn-required > label:after,
-  label.gn-mandatory:after, .gn-mandatory > label:after {
+  label.gn-required:after,
+  .gn-required > label:after,
+  label.gn-mandatory:after,
+  .gn-mandatory > label:after {
     content: "*";
     font-size: 2.5em;
     margin: 7px 0 0 7px;
@@ -686,7 +689,8 @@ form.gn-tab-inspire {
     margin-top: 10px;
   }
 }
-.onlinesrc-container, [gn-directory-entry-list-selector] {
+.onlinesrc-container,
+[gn-directory-entry-list-selector] {
   .list-group {
     max-height: 50%;
     overflow: auto;
@@ -712,7 +716,6 @@ form.gn-tab-inspire {
       background-color: #428bca;
     }
   }
-
 }
 .onlinesrc-container {
   .gn-layers-grid-container {
@@ -999,7 +1002,8 @@ gn-directory-associated-md {
 }
 
 // md type widget (used only in editor for now)
-gn-md-type-widget, gn-md-type-inspire-validation-widget {
+gn-md-type-widget,
+gn-md-type-inspire-validation-widget {
   display: inline-block;
 
   & > div {
@@ -1016,14 +1020,16 @@ gn-md-type-widget, gn-md-type-inspire-validation-widget {
     background-color: @gray-light;
     overflow: hidden;
 
-    &.valid-status-1, &.valid-inspire-status-1 {
+    &.valid-status-1,
+    &.valid-inspire-status-1 {
       background-color: @gray-light;
     }
-
-    &.valid-status0, &.valid-inspire-status0 {
+    &.valid-status0,
+    &.valid-inspire-status0 {
       background-color: @btn-danger-bg;
     }
-    &.valid-status1, &.valid-inspire-status1 {
+    &.valid-status1,
+    &.valid-inspire-status1 {
       background-color: @btn-success-bg;
     }
 
@@ -1037,7 +1043,7 @@ gn-md-type-widget, gn-md-type-inspire-validation-widget {
       }
     }
     &::after {
-      content: '';
+      content: "";
       background-color: rgba(255, 255, 255, 0.25);
       position: absolute;
       top: 0px;
@@ -1079,7 +1085,7 @@ gn-draft-validation-widget {
     }
 
     &::after {
-      content: '';
+      content: "";
       background-color: rgba(255, 255, 255, 0.25);
       position: absolute;
       top: 0px;
@@ -1092,7 +1098,8 @@ gn-draft-validation-widget {
 
 .gn-editor-board {
   .table.gn-results-editor td {
-    gn-md-type-widget, gn-md-type-inspire-validation-widget {
+    gn-md-type-widget,
+    gn-md-type-inspire-validation-widget {
       margin-top: 5px;
     }
   }
@@ -1114,7 +1121,6 @@ gn-draft-validation-widget {
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   }
 }
-
 
 .gn-editor-sidebar {
   margin-top: 15px;
@@ -1155,7 +1161,6 @@ gn-bounding-polygon {
 
   > fieldset > legend {
     border-bottom: groove thick #9d9d9d;
-
   }
 
   button.gn-attr-gco_nilReason,
