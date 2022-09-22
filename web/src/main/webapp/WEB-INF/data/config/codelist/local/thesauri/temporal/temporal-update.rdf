@@ -11,10 +11,10 @@
 <rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution">
 	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
 	<dc:title>Temporal resolution</dc:title>
-	<dc:creator rdf:nodeID="node1dqpfmk3ox1"/>
+	<dc:creator rdf:nodeID="node1fppmoc2qx1"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="node1dqpfmk3ox1">
+<rdf:Description rdf:nodeID="node1fppmoc2qx1">
 	<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Organization"/>
 	<foaf:name>EEA</foaf:name>
 </rdf:Description>
@@ -99,4 +99,31 @@
 	<skos:prefLabel xml:lang="en">Triennial</skos:prefLabel>
 	<skos:scopeNote xml:lang="en">Every three years</skos:scopeNote>
 </rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#sixdays">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Six days</skos:prefLabel>
+	<ns3:BoundedBy rdf:nodeID="node1fq5idk3ex1"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1fq5idk3ex1">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns3:lowerCorner> </ns3:lowerCorner>
+	<ns3:upperCorner> </ns3:upperCorner>
+	<ns3:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#tendays">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Ten days</skos:prefLabel>
+	<ns3:BoundedBy rdf:nodeID="node1fq5ie57mx1"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1fq5ie57mx1">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns3:lowerCorner> </ns3:lowerCorner>
+	<ns3:upperCorner> </ns3:upperCorner>
+	<ns3:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
 </rdf:RDF>

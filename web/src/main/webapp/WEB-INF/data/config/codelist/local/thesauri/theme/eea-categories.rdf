@@ -22,5 +22,9 @@
     <skos:prefLabel xml:lang='en'>geospatial data</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/categories/2'>
+    <skos:prefLabel xml:lang='en'>tabular data</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
 </rdf:RDF>
 
