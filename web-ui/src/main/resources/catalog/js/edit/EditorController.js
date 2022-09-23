@@ -278,7 +278,7 @@
                     // Example : open ISO19139 record having
                     // standardName containing medsea in advanced mode
                     iso19139: function (md) {
-                      if (md.resourceType[0] === "series") {
+                      if (md.resourceType && md.resourceType[0] === "series") {
                         return "eea-series-default";
                       }
                       return defaultTab;
