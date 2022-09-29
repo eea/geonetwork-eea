@@ -212,6 +212,30 @@
     </xsl:copy>
   </xsl:template>
 
+
+  <xsl:template match="gmd:CI_Citation" mode="expand">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates select="gmd:title" mode="expand"/>
+      <xsl:apply-templates select="gmd:alternateTitle" mode="expand"/>
+      <xsl:apply-templates select="gmd:date" mode="expand"/>
+      <xsl:apply-templates select="gmd:edition" mode="expand"/>
+      <xsl:apply-templates select="gmd:editionDate" mode="expand"/>
+      <xsl:call-template name="copyOrAddElement">
+        <xsl:with-param name="elements" select="gmd:identifier"/>
+        <xsl:with-param name="name" select="'gmd:identifier'"/>
+      </xsl:call-template>
+      <xsl:apply-templates select="gmd:citedResponsibleParty" mode="expand"/>
+      <xsl:apply-templates select="gmd:presentationForm" mode="expand"/>
+      <xsl:apply-templates select="gmd:series" mode="expand"/>
+      <xsl:apply-templates select="gmd:otherCitationDetails" mode="expand"/>
+      <xsl:apply-templates select="gmd:collectiveTitle" mode="expand"/>
+      <xsl:apply-templates select="gmd:ISBN" mode="expand"/>
+      <xsl:apply-templates select="gmd:ISSN" mode="expand"/>
+    </xsl:copy>
+  </xsl:template>
+
+
   <xsl:template match="@*|node()" mode="expand">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()" mode="expand"/>

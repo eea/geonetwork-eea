@@ -30,6 +30,21 @@
                 extension-element-prefixes="saxon"
                 exclude-result-prefixes="#all">
 
+  <xsl:template match="gmd:CI_Citation/gmd:identifier" mode="merge" priority="3">
+    <xsl:copy-of select="."/>
+
+    <xsl:for-each-group select="$existingMembers//gmd:CI_Citation/
+                                  gmd:identifier/*/gmd:code/*[starts-with(text(), 'DAT-')]"
+                        group-by=".">
+      <gmd:identifier>
+        <gmd:MD_Identifier>
+          <gmd:code>
+            <gco:CharacterString><xsl:value-of select="current-grouping-key()"/> </gco:CharacterString>
+          </gmd:code>
+        </gmd:MD_Identifier>
+      </gmd:identifier>
+    </xsl:for-each-group>
+  </xsl:template>
 
   <xsl:template match="*[name() = $elements/@name]" mode="merge" priority="2">
     <xsl:variable name="name"
