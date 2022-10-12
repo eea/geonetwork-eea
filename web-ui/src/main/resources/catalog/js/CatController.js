@@ -188,6 +188,7 @@
             queryTitle: "resourceTitleObject.\\*:(${any})",
             queryTitleExactMatch: 'resourceTitleObject.\\*:"${any}"',
             searchOptions: {
+              fullText: true,
               titleOnly: true,
               exactMatch: true,
               language: false
@@ -242,6 +243,10 @@
               // }
               boost: "5",
               functions: [
+                {
+                  filter: { match: { resourceType: "series" } },
+                  weight: 1.5
+                },
                 // Boost down member of a series
                 {
                   filter: { exists: { field: "parentUuid" } },
@@ -285,6 +290,7 @@
                           "resourceTitleObject.${searchLang}^6",
                           "resourceAbstractObject.${searchLang}^.5",
                           "tag",
+                          "uuid",
                           "resourceIdentifier"
                           // "anytext",
                           // "anytext._2gram",
@@ -295,20 +301,7 @@
                   ]
                 }
               },
-              _source: ["resourceTitleObject"],
-              // Fuzzy autocomplete
-              // {
-              //   query: {
-              //     // match_phrase_prefix: match
-              //     "multi_match" : {
-              //       "query" : query,
-              //         // "type":       "phrase_prefix",
-              //         "fields" : [ field + "^3", "tag" ]
-              //     }
-              //   },
-              //   _source: [field]
-              // }
-              from: 0,
+              _source: ["resourceTitle*", "resourceType"],
               size: 20
             },
             moreLikeThisSameType: true,
@@ -1019,6 +1012,38 @@
               }
             ],
             sortBy: "relevance",
+            facetConfig: {
+              valid: {
+                terms: {
+                  field: "valid",
+                  size: 10
+                }
+              },
+              groupOwner: {
+                terms: {
+                  field: "groupOwner",
+                  size: 10
+                }
+              },
+              recordOwner: {
+                terms: {
+                  field: "recordOwner",
+                  size: 10
+                }
+              },
+              groupPublished: {
+                terms: {
+                  field: "groupPublished",
+                  size: 10
+                }
+              },
+              isHarvested: {
+                terms: {
+                  field: "isHarvested",
+                  size: 2
+                }
+              }
+            },
             // Add some fuzziness when search on directory entries
             // but boost exact match.
             queryBase:
@@ -1094,7 +1119,7 @@
         requireProxy: [],
         gnCfg: angular.copy(defaultConfig),
         gnUrl: "",
-        docUrl: "https://geonetwork-opensource.org/manuals/4.0.x/",
+        docUrl: "https://geonetwork-opensource.org/manuals/4.0.x/{lang}",
         //docUrl: '../../doc/',
         modelOptions: {
           updateOn: "default blur",

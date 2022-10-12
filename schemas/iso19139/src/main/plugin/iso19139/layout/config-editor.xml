@@ -2010,6 +2010,8 @@
         In the full view, editor can access and manage the file store and
         thumbnail name and description not supported by the overview manager.
         -->
+        <directive data-gn-need-help="creating-metadata"/>
+
         <directive data-gn-overview-manager=""
                    data-file-types=".png,.gif,.jpeg,.jpg"/>
 
@@ -2028,7 +2030,6 @@
 
         <directive data-gn-suggestion-list=""/>
 
-        <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
       </sidePanel>
 
       <tab id="default" default="true" mode="flat">
@@ -2133,6 +2134,7 @@
     </view>
     <view name="advanced">
       <sidePanel>
+        <directive data-gn-need-help="creating-metadata"/>
         <directive data-gn-validation-report=""/>
         <directive data-gn-onlinesrc-list=""/>
         <directive gn-geo-publisher=""
@@ -2140,7 +2142,6 @@
                    data-config="{{gnCurrentEdit.geoPublisherConfig}}"
                    data-lang="lang"/>
         <directive data-gn-suggestion-list=""/>
-        <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
       </sidePanel>
 
       <tab id="identificationInfo" default="true">
@@ -2209,6 +2210,7 @@
     </view>
     <view name="xml">
       <sidePanel>
+        <directive data-gn-need-help="creating-metadata"/>
         <directive data-gn-validation-report=""/>
         <directive data-gn-onlinesrc-list=""/>
         <directive gn-geo-publisher=""
@@ -2216,7 +2218,6 @@
                    data-config="{{gnCurrentEdit.geoPublisherConfig}}"
                    data-lang="lang"/>
         <directive data-gn-suggestion-list=""/>
-        <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
       </sidePanel>
       <tab id="xml" default="true"/>
     </view>
