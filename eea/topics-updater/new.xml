@@ -1,0 +1,323 @@
+<?xml version='1.0' encoding='utf-8'?>
+<vdex xmlns="http://www.imsglobal.org/xsd/imsvdex_v1p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsvdex_v1p0 imsvdex_v1p0.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd" orderSignificant="false" profileType="hierarchicalTokenTerms" language="en">
+  <vocabName>
+    <langstring language="en">Topics</langstring>
+  </vocabName>
+  <vocabIdentifier>eea.topics.taxonomy</vocabIdentifier>
+
+  <term>
+    <termIdentifier>term1</termIdentifier>
+    <caption>
+      <langstring language="en">Agriculture and food</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term2</termIdentifier>
+    <caption>
+      <langstring language="en">Air pollution</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term3</termIdentifier>
+    <caption>
+      <langstring language="en">Bathing water quality</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term4</termIdentifier>
+    <caption>
+      <langstring language="en">Biodiversity</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term5</termIdentifier>
+    <caption>
+      <langstring language="en">Bioeconomy</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term6</termIdentifier>
+    <caption>
+      <langstring language="en">Buildings and construction</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term7</termIdentifier>
+    <caption>
+      <langstring language="en">Chemicals</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term8</termIdentifier>
+    <caption>
+      <langstring language="en">Circular economy</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term9</termIdentifier>
+    <caption>
+      <langstring language="en">Climate</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term10</termIdentifier>
+    <caption>
+      <langstring language="en">Climate adaptation</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term11</termIdentifier>
+    <caption>
+      <langstring language="en">Climate mitigation</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term12</termIdentifier>
+    <caption>
+      <langstring language="en">Economy and resources</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term13</termIdentifier>
+    <caption>
+      <langstring language="en">Electric vehicles</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term14</termIdentifier>
+    <caption>
+      <langstring language="en">Energy</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term15</termIdentifier>
+    <caption>
+      <langstring language="en">Energy efficiency</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term16</termIdentifier>
+    <caption>
+      <langstring language="en">Environmental health impacts</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term17</termIdentifier>
+    <caption>
+      <langstring language="en">Environmental inequalities</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term18</termIdentifier>
+    <caption>
+      <langstring language="en">Extreme weather</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term19</termIdentifier>
+    <caption>
+      <langstring language="en">Fisheries and aquaculture</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term20</termIdentifier>
+    <caption>
+      <langstring language="en">Forests and forestry</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term21</termIdentifier>
+    <caption>
+      <langstring language="en">Health</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term22</termIdentifier>
+    <caption>
+      <langstring language="en">Industry</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term23</termIdentifier>
+    <caption>
+      <langstring language="en">Land use</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term24</termIdentifier>
+    <caption>
+      <langstring language="en">Nature</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term25</termIdentifier>
+    <caption>
+      <langstring language="en">Nature protection and restoration</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term26</termIdentifier>
+    <caption>
+      <langstring language="en">Nature-based solutions</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term27</termIdentifier>
+    <caption>
+      <langstring language="en">Noise</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term28</termIdentifier>
+    <caption>
+      <langstring language="en">Plastics</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term29</termIdentifier>
+    <caption>
+      <langstring language="en">Pollution</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term30</termIdentifier>
+    <caption>
+      <langstring language="en">Production and consumption</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term31</termIdentifier>
+    <caption>
+      <langstring language="en">Renewable energy</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term32</termIdentifier>
+    <caption>
+      <langstring language="en">Resource use and materials</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term33</termIdentifier>
+    <caption>
+      <langstring language="en">Road transport</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term34</termIdentifier>
+    <caption>
+      <langstring language="en">Seas and coasts</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term35</termIdentifier>
+    <caption>
+      <langstring language="en">Soil</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term36</termIdentifier>
+    <caption>
+      <langstring language="en">State of Europe's environment</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term37</termIdentifier>
+    <caption>
+      <langstring language="en">Sustainability</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term38</termIdentifier>
+    <caption>
+      <langstring language="en">Sustainability challenges</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term39</termIdentifier>
+    <caption>
+      <langstring language="en">Sustainability solutions</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term40</termIdentifier>
+    <caption>
+      <langstring language="en">Sustainable finance</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term41</termIdentifier>
+    <caption>
+      <langstring language="en">Textiles</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term42</termIdentifier>
+    <caption>
+      <langstring language="en">Transport and mobility</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term43</termIdentifier>
+    <caption>
+      <langstring language="en">Urban sustainability</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term44</termIdentifier>
+    <caption>
+      <langstring language="en">Waste and recycling</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>term45</termIdentifier>
+    <caption>
+      <langstring language="en">Water</langstring>
+    </caption>
+  </term>
+
+</vdex>
