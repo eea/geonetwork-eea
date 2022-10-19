@@ -380,8 +380,14 @@
               var values = angular.isArray(prop.if[key]) ? prop.if[key] : [prop.if[key]];
 
               var recordValue = this.getObjectValueByPath(record, key);
-              if (values.includes(recordValue)) {
-                cb();
+              if (angular.isArray(recordValue)) {
+                if (values.filter(value => recordValue.includes(value)).length > 0) {
+                  cb();
+                }
+              } else {
+                if(values.includes(recordValue)) {
+                  cb();
+                }
               }
             }
           }

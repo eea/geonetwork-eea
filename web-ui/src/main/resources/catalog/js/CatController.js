@@ -776,7 +776,7 @@
             showStatusTopBarFor: "",
             showCitation: {
               enabled: true,
-              if: null // {'documentStandard': ['iso19115-3.2018']}
+              if: {'resourceType': ['series', 'dataset', 'nonGeographicDataset']}
             },
             sortKeywordsAlphabetically: true,
             mainThesaurus: [
