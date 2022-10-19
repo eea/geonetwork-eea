@@ -538,7 +538,7 @@
                                     gmd:hierarchyLevel/*/@codeListValue,
                                     'nonGeographicDataset'))"/>
         <directive data-gn-onlinesrc-list=""
-                   data-types="onlinesrc|parent|source"
+                   data-types="onlinesrc|parent|source|fcats"
                    displayIfRecord="contains(gmd:MD_Metadata/
                                     gmd:hierarchyLevel/*/@codeListValue,
                                     'nonGeographicDataset')"/>
