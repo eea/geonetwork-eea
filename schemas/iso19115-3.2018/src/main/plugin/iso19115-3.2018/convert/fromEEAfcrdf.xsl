@@ -242,7 +242,7 @@
                                 select="xmlutil:isXMLLike($cdata)"/>
                   <xsl:choose>
                     <xsl:when test="true()">
-<!--                    <xsl:when test="$isXMLLike">-->
+                      <!--                    <xsl:when test="$isXMLLike">-->
                       <xsl:variable name="content"
                                     select="saxon:parse($cdata)"/>
                       <!--
@@ -285,42 +285,77 @@
                             <gfc:isAbstract>
                               <gco:Boolean>false</gco:Boolean>
                             </gfc:isAbstract>
-                            <xsl:for-each select="$columns//tbody/tr">
-                              <gfc:carrierOfCharacteristics>
-                                <gfc:FC_FeatureAttribute>
-                                  <gfc:memberName>
-                                    <xsl:value-of select="td[1]"/>
-                                  </gfc:memberName>
-                                  <gfc:definition>
-                                    <gco:CharacterString>
-                                      <xsl:value-of select="td[2]"/>.
-                                      <xsl:if test="$noteColumnPosition and td[$noteColumnPosition + 1] != ''">
-                                        <xsl:text> Note: </xsl:text>
-                                        <xsl:value-of select="td[$noteColumnPosition + 1]"/>
-                                      </xsl:if>
-                                    </gco:CharacterString>
-                                  </gfc:definition>
-                                  <gfc:cardinality>
-                                    <gco:CharacterString>
-                                      <xsl:value-of
-                                        select="if (td[$cardinalityColumnPosition + 1] = 'Yes') then '1..1' else '0..1'"/>
-                                    </gco:CharacterString>
-                                  </gfc:cardinality>
-                                  <!--<gfc:valueMeasurementUnit>
-                                    <gco:UomIdentifier/>
-                                  </gfc:valueMeasurementUnit>-->
-                                  <gfc:valueType>
-                                    <gco:TypeName>
-                                      <gco:aName>
+
+                            <xsl:choose>
+                              <xsl:when test="$columns//tbody">
+                                <xsl:for-each select="$columns//tbody/tr">
+                                  <gfc:carrierOfCharacteristics>
+                                    <gfc:FC_FeatureAttribute>
+                                      <gfc:memberName>
+                                        <xsl:value-of select="td[1]"/>
+                                      </gfc:memberName>
+                                      <gfc:definition>
                                         <gco:CharacterString>
-                                          <xsl:value-of select="td[$typeColumnPosition + 1]"/>
+                                          <xsl:value-of select="td[2]"/>.
+                                          <xsl:if test="$noteColumnPosition and td[$noteColumnPosition + 1] != ''">
+                                            <xsl:text> Note: </xsl:text>
+                                            <xsl:value-of select="td[$noteColumnPosition + 1]"/>
+                                          </xsl:if>
                                         </gco:CharacterString>
-                                      </gco:aName>
-                                    </gco:TypeName>
-                                  </gfc:valueType>
-                                </gfc:FC_FeatureAttribute>
-                              </gfc:carrierOfCharacteristics>
-                            </xsl:for-each>
+                                      </gfc:definition>
+                                      <gfc:cardinality>
+                                        <gco:CharacterString>
+                                          <xsl:value-of
+                                            select="if (td[$cardinalityColumnPosition + 1] = 'Yes') then '1..1' else '0..1'"/>
+                                        </gco:CharacterString>
+                                      </gfc:cardinality>
+                                      <!--<gfc:valueMeasurementUnit>
+                                        <gco:UomIdentifier/>
+                                      </gfc:valueMeasurementUnit>-->
+                                      <gfc:valueType>
+                                        <gco:TypeName>
+                                          <gco:aName>
+                                            <gco:CharacterString>
+                                              <xsl:value-of select="td[$typeColumnPosition + 1]"/>
+                                            </gco:CharacterString>
+                                          </gco:aName>
+                                        </gco:TypeName>
+                                      </gfc:valueType>
+                                    </gfc:FC_FeatureAttribute>
+                                  </gfc:carrierOfCharacteristics>
+                                </xsl:for-each>
+                              </xsl:when>
+                              <xsl:otherwise>
+                                <xsl:for-each select="$columns//tr">
+                                  <gfc:carrierOfCharacteristics>
+                                    <gfc:FC_FeatureAttribute>
+                                      <gfc:memberName>
+                                        <xsl:value-of select="td[1]"/>
+                                      </gfc:memberName>
+                                      <gfc:definition>
+                                        <gco:CharacterString>
+                                          <xsl:value-of select="td[2]"/>.
+                                        </gco:CharacterString>
+                                      </gfc:definition>
+                                      <gfc:cardinality>
+                                        <gco:CharacterString>
+
+                                        </gco:CharacterString>
+                                      </gfc:cardinality>
+                                      <gfc:valueType>
+                                        <gco:TypeName>
+                                          <gco:aName>
+                                            <gco:CharacterString>
+                                              <xsl:value-of select="td[4]"/>
+                                            </gco:CharacterString>
+                                          </gco:aName>
+                                        </gco:TypeName>
+                                      </gfc:valueType>
+                                    </gfc:FC_FeatureAttribute>
+                                  </gfc:carrierOfCharacteristics>
+                                </xsl:for-each>
+                              </xsl:otherwise>
+                            </xsl:choose>
                           </gfc:FC_FeatureType>
                         </gfc:featureType>
                       </xsl:for-each>
