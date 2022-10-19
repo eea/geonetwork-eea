@@ -871,7 +871,7 @@
               resourceType: {
                 terms: {
                   field: "resourceType",
-                  include: "dataset|series|service|nonGeographicDataset"
+                  include: "dataset|series|service|nonGeographicDataset|featureCatalog"
                 }
               },
               mdStatus: {
