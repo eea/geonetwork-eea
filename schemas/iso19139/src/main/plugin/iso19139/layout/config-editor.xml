@@ -601,6 +601,10 @@
 
           <text ref="eea-supplementalInformation-help"/>
 
+
+          <field name="overviews"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName"/>
+
           <action type="add"
                   btnLabel="eea-add-overview"
                   if="(count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
