@@ -64,6 +64,7 @@
         source.uiConfig = source.uiConfig && source.uiConfig.toString();
         source.groupOwner = source.groupOwner || null;
         $scope.source = source;
+        $scope.isNew = false;
       };
 
       function filterSources() {
@@ -92,6 +93,12 @@
         }
         $http.get(url).success(function (data) {
           $scope.sources = data;
+          if ($scope.source && $scope.source.uuid !== null) {
+            var selectedSource = _.find($scope.sources, { uuid: $scope.source.uuid });
+            if (selectedSource) {
+              $scope.source = selectedSource;
+            }
+          }
           filterSources();
           $scope.isNew = false;
         });
@@ -121,7 +128,8 @@
           uiConfig: "",
           filter: "",
           serviceRecord: null,
-          groupOwner: null
+          groupOwner: null,
+          listableInHeaderSelector: true
         };
         // TODO: init labels
       };
@@ -149,7 +157,11 @@
           });
       };
 
-      $scope.removeSource = function () {
+      $scope.deleteSourceConfig = function () {
+        $("#gn-confirm-remove-source").modal("show");
+      };
+
+      $scope.confirmDeleteSourceConfig = function () {
         $http
           .delete("../api/sources/" + $scope.source.uuid)
           .success(function (data) {
@@ -160,6 +172,7 @@
             });
 
             loadSources();
+            $scope.source = null;
           })
           .error(function (data) {
             $rootScope.$broadcast("StatusUpdated", {

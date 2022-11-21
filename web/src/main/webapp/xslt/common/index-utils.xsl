@@ -54,7 +54,7 @@
   <xsl:variable name="openDataKeywords"
                 select="'opendata|open data|donnees ouvertes'"/>
 
-  <xsl:variable name="isStoringOverviewInIndex" select="true()"/>
+  <xsl:variable name="isStoringOverviewInIndex" select="false()"/>
 
   <xsl:variable name="keywordExpansion" as="node()*">
     <thesaurus id="external.place.regions" depth="1"/>
