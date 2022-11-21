@@ -148,7 +148,7 @@
               resourceType: {
                 terms: {
                   field: "resourceType",
-                  include: "dataset|series|service|nonGeographicDataset"
+                  include: "dataset|series|service|nonGeographicDataset|featureCatalog"
                 },
                 meta: {
                   decorator: {
@@ -328,7 +328,7 @@
               resourceType: {
                 terms: {
                   field: "resourceType",
-                  include: "dataset|series|service|nonGeographicDataset"
+                  include: "dataset|series|service|nonGeographicDataset|featureCatalog"
                 },
                 aggs: {
                   format: {
