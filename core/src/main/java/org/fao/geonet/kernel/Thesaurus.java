@@ -1080,9 +1080,6 @@ public class Thesaurus {
     public List<KeywordBean> getBroader(String uri, String... languages) {
         return getRelated(uri, KeywordRelation.NARROWER, languages);
     }
-    public List<KeywordBean> getNarrower(String uri, String... languages) {
-        return getRelated(uri, KeywordRelation.BROADER, languages);
-    }
 
     public List<KeywordBean> getNarrower(String uri, String... languages) {
         return getRelated(uri, KeywordRelation.BROADER, languages);
