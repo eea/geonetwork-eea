@@ -781,7 +781,7 @@
             showStatusTopBarFor: "",
             showCitation: {
               enabled: true,
-              if: {'resourceType': ['series', 'dataset', 'nonGeographicDataset']}
+              if: { resourceType: ["series", "dataset", "nonGeographicDataset"] }
             },
             sortKeywordsAlphabetically: true,
             mainThesaurus: [
