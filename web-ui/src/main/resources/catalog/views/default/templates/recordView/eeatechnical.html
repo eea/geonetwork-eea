@@ -1,4 +1,18 @@
-<h2 data-translate="">technicalInformation</h2>
+<h2
+  data-translate=""
+  data-ng-if="mdView.current.record.format
+                || mdView.current.record.cl_spatialRepresentationType.length > 0
+                || mdView.current.record.resolutionScaleDenominator
+                || mdView.current.record.resolutionDistance
+                || mdView.current.record.allKeywords
+                || mdView.current.record.crsDetails
+                || mdView.current.record.resourceDate.length > 0
+                || mdView.current.record.cl_maintenanceAndUpdateFrequency.length > 0
+                || mdView.current.record.resourceIdentifier
+                || mdView.current.record.resourceLanguage.length > 0"
+>
+  technicalInformation
+</h2>
 
 <div data-ng-if="mdView.current.record.format" class="gn-margin-bottom flex-row">
   <span class="badge badge-rounded">
