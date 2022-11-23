@@ -991,28 +991,6 @@
         </xsl:apply-templates>
       </xsl:if>
 
-      <xsl:if test="$isOnlyFeatureCatalog">
-        <resourceType>featureCatalog</resourceType>
-
-        <xsl:for-each select="mdb:contentInfo/*/mrc:featureCatalogue/*">
-          <xsl:copy-of select="gn-fn-index:add-multilingual-field('resourceTitle',
-                                cat:name, $allLanguages)"/>
-
-          <xsl:for-each select="cat:versionNumber/*">
-            <xsl:copy-of select="gn-fn-index:add-field('resourceEdition', .)"/>
-          </xsl:for-each>
-
-          <xsl:copy-of select="gn-fn-index:add-multilingual-field('resourceAbstract',
-                                cat:scope, $allLanguages)"/>
-        </xsl:for-each>
-
-
-        <xsl:apply-templates mode="index-contact"
-                             select="mdb:contentInfo//gfc:producer">
-          <xsl:with-param name="fieldSuffix" select="'ForResource'"/>
-        </xsl:apply-templates>
-      </xsl:if>
-
       <xsl:variable name="jsonFeatureTypes">[
         <xsl:for-each select="mdb:contentInfo//gfc:FC_FeatureCatalogue/gfc:featureType">{
 
