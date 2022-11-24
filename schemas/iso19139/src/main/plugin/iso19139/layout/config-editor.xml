@@ -560,7 +560,8 @@
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
           <text ref="eea-title-help"/>
 
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"
+          <field name="eea-resource-identifier"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"
                  displayIfServiceInfo="count(session[profile = 'Administrator']) = 1"/>
 
           <action type="add"
@@ -1393,7 +1394,9 @@
 
           <text ref="eea-crs-help"/>
 
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialRepresentationType"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialRepresentationType"
+                 or="spatialRepresentationType"
+                 in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
 
           <!-- -Display action only if none set. -->
           <action type="add"
@@ -1863,6 +1866,7 @@
         <for name="gmd:edition"/>
         <for name="gmd:date"/>
         <for name="gmd:pointOfContact"/>
+        <for name="gmd:spatialRepresentationType"/>
         <for name="gmd:resourceMaintenance"/>
         <for name="gmd:supplementalInformation"/>
         <for name="gmd:lineage"/>

@@ -35,6 +35,7 @@
   <xml_iso19139Tooai_dc>Save this metadata as an OAI Dublin Core XML file</xml_iso19139Tooai_dc>
 
   <collection-updater>Update information from members</collection-updater>
+  <eea-resource-identifier>Resource identifier</eea-resource-identifier>
   <eea-series>EEA - Series</eea-series>
   <eea-add-member>Add members</eea-add-member>
   <eea-series-identification>Collection information</eea-series-identification>
