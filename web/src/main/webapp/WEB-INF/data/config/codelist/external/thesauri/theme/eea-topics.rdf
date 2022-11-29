@@ -17,227 +17,227 @@
     <dcterms:modified>2022-10-18</dcterms:modified>
   </skos:ConceptScheme>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term1'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term1'>
     <skos:prefLabel xml:lang='en'>Agriculture and food</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term2'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term2'>
     <skos:prefLabel xml:lang='en'>Air pollution</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term3'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term3'>
     <skos:prefLabel xml:lang='en'>Bathing water quality</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term4'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term4'>
     <skos:prefLabel xml:lang='en'>Biodiversity</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term5'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term5'>
     <skos:prefLabel xml:lang='en'>Bioeconomy</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term6'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term6'>
     <skos:prefLabel xml:lang='en'>Buildings and construction</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term7'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term7'>
     <skos:prefLabel xml:lang='en'>Chemicals</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term8'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term8'>
     <skos:prefLabel xml:lang='en'>Circular economy</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term9'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term9'>
     <skos:prefLabel xml:lang='en'>Climate</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term10'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term10'>
     <skos:prefLabel xml:lang='en'>Climate adaptation</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term11'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term11'>
     <skos:prefLabel xml:lang='en'>Climate mitigation</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term12'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term12'>
     <skos:prefLabel xml:lang='en'>Economy and resources</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term13'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term13'>
     <skos:prefLabel xml:lang='en'>Electric vehicles</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term14'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term14'>
     <skos:prefLabel xml:lang='en'>Energy</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term15'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term15'>
     <skos:prefLabel xml:lang='en'>Energy efficiency</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term16'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term16'>
     <skos:prefLabel xml:lang='en'>Environmental health impacts</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term17'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term17'>
     <skos:prefLabel xml:lang='en'>Environmental inequalities</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term18'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term18'>
     <skos:prefLabel xml:lang='en'>Extreme weather</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term19'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term19'>
     <skos:prefLabel xml:lang='en'>Fisheries and aquaculture</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term20'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term20'>
     <skos:prefLabel xml:lang='en'>Forests and forestry</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term21'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term21'>
     <skos:prefLabel xml:lang='en'>Health</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term22'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term22'>
     <skos:prefLabel xml:lang='en'>Industry</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term23'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term23'>
     <skos:prefLabel xml:lang='en'>Land use</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term24'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term24'>
     <skos:prefLabel xml:lang='en'>Nature</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term25'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term25'>
     <skos:prefLabel xml:lang='en'>Nature protection and restoration</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term26'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term26'>
     <skos:prefLabel xml:lang='en'>Nature-based solutions</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term27'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term27'>
     <skos:prefLabel xml:lang='en'>Noise</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term28'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term28'>
     <skos:prefLabel xml:lang='en'>Plastics</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term29'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term29'>
     <skos:prefLabel xml:lang='en'>Pollution</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term30'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term30'>
     <skos:prefLabel xml:lang='en'>Production and consumption</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term31'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term31'>
     <skos:prefLabel xml:lang='en'>Renewable energy</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term32'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term32'>
     <skos:prefLabel xml:lang='en'>Resource use and materials</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term33'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term33'>
     <skos:prefLabel xml:lang='en'>Road transport</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term34'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term34'>
     <skos:prefLabel xml:lang='en'>Seas and coasts</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term35'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term35'>
     <skos:prefLabel xml:lang='en'>Soil</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term36'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term36'>
     <skos:prefLabel xml:lang='en'>State of Europe's environment</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term37'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term37'>
     <skos:prefLabel xml:lang='en'>Sustainability</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term38'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term38'>
     <skos:prefLabel xml:lang='en'>Sustainability challenges</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term39'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term39'>
     <skos:prefLabel xml:lang='en'>Sustainability solutions</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term40'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term40'>
     <skos:prefLabel xml:lang='en'>Sustainable finance</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term41'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term41'>
     <skos:prefLabel xml:lang='en'>Textiles</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term42'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term42'>
     <skos:prefLabel xml:lang='en'>Transport and mobility</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term43'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term43'>
     <skos:prefLabel xml:lang='en'>Urban sustainability</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term44'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term44'>
     <skos:prefLabel xml:lang='en'>Waste and recycling</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes/term45'>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term45'>
     <skos:prefLabel xml:lang='en'>Water</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
