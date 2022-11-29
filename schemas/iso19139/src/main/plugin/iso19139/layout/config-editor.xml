@@ -1892,7 +1892,7 @@
                    transformations="to-iso19139-keyword-with-anchor"/>
         <thesaurus key="external.theme.eea-topics"
                    fieldset="false"
-                   transformations="to-iso19139-keyword-with-anchor"/>
+                   transformations="to-iso19139-keyword"/>
       </thesaurusList>
       <sidePanel>
         <directive data-gn-overview-manager=""/>
