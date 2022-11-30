@@ -19,3 +19,14 @@ UPDATE metadata SET data = regexp_replace(data, '<gmx:Anchor xlink:href="http://
 UPDATE metadata SET data = regexp_replace(data, '<gmx:Anchor xlink:href="http://www.eea.europa.eu/portal_vocabularies/themes/policy">Policy instruments</gmx:Anchor>', '<gco:CharacterString></gco:CharacterString>') WHERE data LIKE '%<gmx:Anchor xlink:href="http://www.eea.europa.eu/portal_vocabularies/themes/policy">Policy instruments</gmx:Anchor>%';
 
 UPDATE metadata SET data = regexp_replace(data, '<gmx:Anchor xlink:href="https://www.eea.europa.eu/themes/[a-z-]+">Sustainability transitions</gmx:Anchor>', '<gco:CharacterString>Sustainability solutions</gco:CharacterString>') WHERE data LIKE '%<gmx:Anchor xlink:href="https://www.eea.europa.eu/themes/%">Sustainability transitions</gmx:Anchor>%';
+
+
+UPDATE metadata SET data = regexp_replace(data, '<gmx:Anchor xlink:href="http://www.eea.europa.eu/portal_vocabularies/themes/sustainability-transitions">Sustainability transitions</gmx:Anchor>', '<gco:CharacterString>Sustainability solutions</gco:CharacterString>') WHERE data LIKE '%<gmx:Anchor xlink:href="http://www.eea.europa.eu/portal_vocabularies/themes/sustainability-transitions">Sustainability transitions</gmx:Anchor>%';
+
+
+
+
+UPDATE metadata SET data = regexp_replace(data, '<gmx:Anchor xlink:href="http://www.eea.europa.eu/portal_vocabularies/themes/landuse">Land use</gmx:Anchor>', '<gco:CharacterString>Land use</gco:CharacterString>') WHERE data LIKE '%<gmx:Anchor xlink:href="http://www.eea.europa.eu/portal_vocabularies/themes/landuse">Land use</gmx:Anchor>%';
+
+
+SELECT count(*) FROM metadata WHERE data LIKE '%.europa.eu/portal_vocabularies/theme%';
