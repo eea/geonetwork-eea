@@ -1941,6 +1941,25 @@
 
         <section name="eea-series-member-info">
 
+          <text>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="alert alert-info">
+                  Series information (ie. keywords, spatial and temporal extents, contact, languages, spatial representation type) can be computed from its members.
+
+                  Use the buttons below to:
+                  <ul>
+                    <li>Add a new member</li>
+                    <li>Synchronize the series with its members</li>
+                  </ul>
+                </div>
+                <div class="alert alert-warning">
+                  When synchronizing information from the series members you may lose information if you did manual editing of those information. Either do a complete manual encoding of the series information or synchronize it when adding a member. But don't do both.
+                </div>
+              </div>
+            </div>
+          </text>
+
           <action type="associatedResource"
                   name="eea-add-member"
                   process="sibling">
