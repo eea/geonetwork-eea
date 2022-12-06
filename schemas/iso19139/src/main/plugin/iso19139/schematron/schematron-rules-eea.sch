@@ -191,14 +191,14 @@
                  -->
             <sch:let name="identifier"
                 value="gmd:citation/*/gmd:identifier/
-                */gmd:code/gco:CharacterString"/>
+                */gmd:code/gco:CharacterString[. != '']"/>
 
-            <sch:assert test="normalize-space($identifier) != ''"
+            <sch:assert test="count($identifier) > 0"
                 ><sch:value-of
                     select="$loc/strings/EEAID.alert"/></sch:assert>
-            <sch:report test="normalize-space($identifier) != ''"><sch:value-of
+            <sch:report test="count($identifier) > 0"><sch:value-of
                 select="$loc/strings/EEAID.report"/> "<sch:value-of
-                    select="normalize-space($identifier)"/>"</sch:report>
+                    select="string-join($identifier, ', ')"/>"</sch:report>
 
 
             <!-- MD_Metadata/identificationInfo/*/abstract. Is mandatory for EEA

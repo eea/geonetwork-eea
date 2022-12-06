@@ -129,7 +129,7 @@
 
         <sch:let name="identifier"
                  value="gmd:citation/*/gmd:identifier/
-                */gmd:code/gco:CharacterString"/>
+                */gmd:code/gco:CharacterString[not(starts-with(., 'DAT'))]"/>
 
         <sch:let name="eeaFilePath"
                  value="ancestor::gmd:MD_Metadata
@@ -141,7 +141,7 @@
                  value="count($eeaFilePath/gmd:linkage/gmd:URL[contains(., concat('/', $identifier, '/'))])"/>
 
         <sch:let name="identifierIsInAllFilePath"
-                 value="normalize-space($identifier) != ''
+                 value="string-join($identifier, ',') != ''
                           and $filePathCount > 0
                           and $filePathCount = $filePathWithoutIdentifierCount"/>
         <sch:assert test="$identifierIsInAllFilePath"><sch:value-of
