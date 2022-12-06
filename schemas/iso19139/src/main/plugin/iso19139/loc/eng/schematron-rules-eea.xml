@@ -55,6 +55,10 @@
     <EEA_KEYWORD_EEA.report> EEA keyword(s) found.</EEA_KEYWORD_EEA.report>
     <EEA_KEYWORD_EEA.error>No keyword from the EEA list has been set.</EEA_KEYWORD_EEA.error>
 
+    <EEA_KEYWORD_EEA_TOPIC.alert>There shall be one EEA topic</EEA_KEYWORD_EEA_TOPIC.alert>
+    <EEA_KEYWORD_EEA_TOPIC.report> EEA topic(s) found.</EEA_KEYWORD_EEA_TOPIC.report>
+    <EEA_KEYWORD_EEA_TOPIC.error>No EEA topic defined.</EEA_KEYWORD_EEA_TOPIC.error>
+
     <EEA_KEYWORD_SPATIALSCOPE.alert>There shall be one keyword defining the spatial scope</EEA_KEYWORD_SPATIALSCOPE.alert>
     <EEA_KEYWORD_SPATIALSCOPE.report> Spatial scope keyword(s) found.</EEA_KEYWORD_SPATIALSCOPE.report>
 

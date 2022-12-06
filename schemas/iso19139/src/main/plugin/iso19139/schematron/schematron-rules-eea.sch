@@ -273,6 +273,15 @@
 
                  To be updated for Anchor usage in TODO TGv2
                  -->
+            <sch:let name="atLeastOneKeywordFromEEATopics"
+                     value="count(gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'EEA topics')]
+                  /gmd:keyword[gco:CharacterString!=''])"/>
+
+            <sch:assert test="$atLeastOneKeywordFromEEATopics != 0"><sch:value-of
+              select="$loc/strings/EEA_KEYWORD_EEA_TOPIC.error"/> </sch:assert>
+            <sch:report test="$atLeastOneKeywordFromEEATopics != 0"><sch:value-of select="$atLeastOneKeywordFromEEATopics"/> <sch:value-of
+              select="$loc/strings/EEA_KEYWORD_EEA_TOPIC.report"/> </sch:report>
+
 
             <!-- MD_Metadata/identificationInfo/*/descriptiveKeywords (EEA keywords list)
                  https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfodescriptiveKeywords-EEA-keywords-list
