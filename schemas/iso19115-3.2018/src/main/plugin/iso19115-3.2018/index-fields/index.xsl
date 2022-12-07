@@ -391,13 +391,11 @@
 
         <xsl:copy-of select="gn-fn-index:add-multilingual-field('resourceAbstract', mri:abstract, $allLanguages)"/>
 
-
-
-        <!-- # Characterset -->
-        <xsl:if test="mri:defaultLocale/lan:PT_Locale/lan:characterEncoding/lan:MD_CharacterSetCode">
+        <xsl:for-each-group select="mri:defaultLocale/*/lan:characterEncoding/*[@codeListValue != '']" 
+                            group-by="@codeListValue">
           <xsl:copy-of select="gn-fn-index:add-codelist-field(
-                                  'cl_resourceCharacterSet', mri:defaultLocale/lan:PT_Locale/lan:characterEncoding/lan:MD_CharacterSetCode, $allLanguages)"/>
-        </xsl:if>
+                                'cl_resourceCharacterSet', ., $allLanguages)"/>
+        </xsl:for-each-group>
 
         <!-- Indexing resource contact -->
         <xsl:apply-templates mode="index-contact"
@@ -541,7 +539,9 @@
                                           mcc:code/(gco:CharacterString|gcx:Anchor)"/>
 
             <xsl:variable name="thesaurusId"
-                          select="normalize-space($thesaurusRef/text())"/>
+                          select="if ($thesaurusRef != '')
+                                  then normalize-space($thesaurusRef/text())
+                                  else util:getThesaurusIdByTitle($thesaurusTitle)"/>
 
             <xsl:variable name="thesaurusUri"
                           select="$thesaurusRef/@xlink:href"/>
@@ -872,7 +872,7 @@
 
 
         <!-- Service information -->
-        <xsl:for-each select="srv:serviceType/gco:ScopedName">
+        <xsl:for-each select="srv:serviceType/gco:ScopedName[string(text())]">
           <serviceType>
             <xsl:value-of select="text()"/>
           </serviceType>

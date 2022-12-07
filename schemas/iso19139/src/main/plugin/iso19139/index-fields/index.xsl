@@ -278,7 +278,7 @@
                           select="string(gmd:date[1]/gco:Date|gmd:date[1]/gco:DateTime)"/>
 
             <xsl:variable name="zuluDateTime" as="xs:string?">
-              <xsl:if test="gn-fn-index:is-isoDate(.)">
+              <xsl:if test="gn-fn-index:is-isoDate($date)">
                 <xsl:value-of select="date-util:convertToISOZuluDateTime(normalize-space($date))"/>
               </xsl:if>
             </xsl:variable>
@@ -531,7 +531,9 @@
                                           gmd:code/(gco:CharacterString|gmx:Anchor)"/>
 
             <xsl:variable name="thesaurusId"
-                          select="normalize-space($thesaurusRef/text())"/>
+                          select="if ($thesaurusRef != '')
+                                  then normalize-space($thesaurusRef/text())
+                                  else util:getThesaurusIdByTitle($thesaurusTitle)"/>
 
             <xsl:variable name="thesaurusUri"
                           select="$thesaurusRef/@xlink:href"/>
@@ -859,7 +861,7 @@
 
 
         <!-- Service information -->
-        <xsl:for-each select="srv:serviceType/gco:LocalName">
+        <xsl:for-each select="srv:serviceType/gco:LocalName[string(text())]">
           <serviceType>
             <xsl:value-of select="text()"/>
           </serviceType>
