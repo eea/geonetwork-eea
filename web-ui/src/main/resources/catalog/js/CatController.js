@@ -512,15 +512,16 @@
               //   }
               // },
               //
+
               resourceTemporalDateRange: {
                 gnBuildFilterForRange: {
                   field: "resourceTemporalDateRange",
-                  buckets: 2021 - 1970,
+                  buckets: 2023 - 1970,
                   dateFormat: "YYYY",
                   dateSelectMode: "years",
                   vegaDateFormat: "%Y",
                   from: 1970,
-                  to: 2021,
+                  to: 2023,
                   mark: "area"
                 },
                 meta: {
@@ -838,6 +839,27 @@
                 terms: {
                   field: "format",
                   order: { _key: "asc" }
+                }
+              },
+              // resourceTemporalDateRange: {
+              //   gnBuildFilterForRange: {
+              //     field: "resourceTemporalDateRange",
+              //     buckets: 2023 - 1970,
+              //     dateFormat: "YYYY",
+              //     from: 1970,
+              //     to: 2023
+              //   }
+              // },
+              parameter: {
+                terms: {
+                  field: "th_EEAkeywordlist.default",
+                  include: ["O3", "POD6", "NOx", "NO2", "PM2.5"],
+                  order: {
+                    _key: "asc"
+                  }
+                },
+                meta: {
+                  field: "th_EEAkeywordlist.default"
                 }
               }
             }
