@@ -330,13 +330,6 @@
                   field: "resourceType",
                   include: "dataset|series|service|nonGeographicDataset|featureCatalog"
                 },
-                aggs: {
-                  format: {
-                    terms: {
-                      field: "format"
-                    }
-                  }
-                },
                 meta: {
                   decorator: {
                     type: "icon",
@@ -444,6 +437,14 @@
                 terms: {
                   field: "cl_spatialRepresentationType.default",
                   size: 10
+                }
+              },
+              format: {
+                terms: {
+                  field: "format"
+                },
+                meta: {
+                  collapsed: true
                 }
               },
               "cl_maintenanceAndUpdateFrequency.default": {
