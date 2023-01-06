@@ -374,6 +374,9 @@
             if (scope.decorator.type == "img") {
               scope.ext =
                 "image/" + (key.substr(key.lastIndexOf(".") + 1, key.length) || "png");
+              if (scope.decorator.path) {
+                key = scope.decorator.path.replace("{key}", key);
+              }
             }
 
             scope.class = scope.decorator.prefix ? scope.decorator.prefix + key : key;
@@ -383,12 +386,51 @@
     }
   ]);
 
+  module.filter("facetBgUrlBuilder", [
+    function () {
+      return function (key, decorator) {
+        if (decorator && decorator.path) {
+          return "background-image:url('" + decorator.path.replace("{key}", key) + "')";
+        } else if (decorator && decorator.map) {
+          return "background-image:url('" + decorator.map[key] + "');";
+        }
+        return "";
+      };
+    }
+  ]);
+
+  module.filter("facetSearchUrlBuilder", [
+    function () {
+      return function (facetValue, key, response, config, missingValue) {
+        var field = (response.meta && response.meta.field) || key,
+          filter = config.filters
+            ? config.filters.filters[facetValue].query_string.query
+            : undefined,
+          value = response.meta && response.meta.wildcard ? facetValue + "*" : facetValue;
+
+        return (
+          '#/search?query_string={"' +
+          field +
+          '": {"' +
+          (value === missingValue ? "%23MISSING%23" : value) +
+          '": ' +
+          (filter ? '"' + filter + '"' : "true") +
+          "}}"
+        );
+      };
+    }
+  ]);
+
   module.filter("facetCssClassCode", [
     function () {
       return function (key, isInspire) {
-        return isInspire
-          ? key.slice(key.lastIndexOf("/") + 1)
-          : key.replace("/", "").replace(" ", "");
+        if (key) {
+          return isInspire
+            ? key.slice(key.lastIndexOf("/") + 1)
+            : key.replace("/", "").replace(" ", "");
+        } else {
+          return "";
+        }
       };
     }
   ]);
@@ -810,7 +852,10 @@
               scope.vl.view.addEventListener("click", function (event, item) {
                 if (item.datum && item.datum.$$hashKey) {
                   $timeout(function () {
-                    scope.updateCallback({ facet: scope.facet, item: item.datum });
+                    scope.updateCallback({
+                      facet: scope.facet,
+                      item: item.datum
+                    });
                   }, 10);
                 }
               });

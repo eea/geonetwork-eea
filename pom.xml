@@ -29,7 +29,7 @@
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>geonetwork</artifactId>
   <packaging>pom</packaging>
-  <version>4.2.2-SNAPSHOT</version>
+  <version>4.2.3-SNAPSHOT</version>
   <name>GeoNetwork opensource</name>
   <description>GeoNetwork opensource is a standards based, Free and
     Open Source catalog application to manage spatially referenced
@@ -389,7 +389,7 @@
       <dependency>
         <groupId>org.jsoup</groupId>
         <artifactId>jsoup</artifactId>
-        <version>1.14.3</version>
+        <version>1.15.3</version>
       </dependency>
 
       <dependency>
@@ -472,7 +472,7 @@
       <dependency>
         <groupId>commons-net</groupId>
         <artifactId>commons-net</artifactId>
-        <version>3.0.1</version>
+        <version>3.9.0</version>
       </dependency>
       <dependency>
         <groupId>commons-digester</groupId>
@@ -818,7 +818,7 @@
       <dependency>
         <groupId>org.tmatesoft.svnkit</groupId>
         <artifactId>svnkit</artifactId>
-        <version>1.7.8</version>
+        <version>1.10.9</version>
       </dependency>
       <dependency>
         <groupId>dlib</groupId>  <!--FIXME Handled by local repository -->
@@ -1552,10 +1552,10 @@
     <spring.version>5.2.20.RELEASE</spring.version>
     <spring.security.version>5.7.3</spring.security.version>
     <spring.jpa.version>2.2.13.RELEASE</spring.jpa.version>
-    <springboot.version>2.2.2.RELEASE</springboot.version>
+    <springboot.version>2.7.0</springboot.version>
     <springdoc.version>1.5.9</springdoc.version>
 
-    <metrics.version>2.1.1</metrics.version>
+    <metrics.version>2.2.0</metrics.version>
     <maven.build.timestamp.format>yyyy-MM-dd'T'HH'\:'mm'\:'ssZ</maven.build.timestamp.format>
     <build.timestamp>${maven.build.timestamp}</build.timestamp>
     <rootProjectDir>..</rootProjectDir>
@@ -1570,7 +1570,7 @@
     <camel.version>2.25.1</camel.version>
     <log4j2.version>2.17.2</log4j2.version>
     <slf4j.version>1.8.0-beta2</slf4j.version>
-    <xbean.version>3.18</xbean.version>
+    <xbean.version>4.22</xbean.version>
     <jolokia.version>1.6.0</jolokia.version>
     <httpcomponents.version>4.5.9</httpcomponents.version>
     <jasypt.version>1.9.3</jasypt.version>

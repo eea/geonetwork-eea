@@ -899,6 +899,12 @@
                 terms: {
                   field: "resourceType",
                   include: "dataset|series|service|nonGeographicDataset|featureCatalog"
+                },
+                meta: {
+                  decorator: {
+                    type: "icon",
+                    prefix: "fa fa-fw gn-icon-"
+                  }
                 }
               },
               mdStatus: {
@@ -942,6 +948,10 @@
                   filterByTranslation: true,
                   displayFilter: true,
                   collapsed: true
+                  // decorator: {
+                  //   type: "img",
+                  //   path: "../../images/logos/{key}.png"
+                  // }
                 }
               },
               groupOwner: {
@@ -971,6 +981,16 @@
                 terms: {
                   field: "isPublishedToAll",
                   size: 2
+                },
+                meta: {
+                  decorator: {
+                    type: "icon",
+                    prefix: "fa fa-fw ",
+                    map: {
+                      false: "fa-lock",
+                      true: "fa-unlock"
+                    }
+                  }
                 }
               },
               groupPublishedId: {
@@ -1001,7 +1021,15 @@
                   size: 2
                 },
                 meta: {
-                  collapsed: true
+                  collapsed: true,
+                  decorator: {
+                    type: "icon",
+                    prefix: "fa fa-fw ",
+                    map: {
+                      false: "fa-folder",
+                      true: "fa-cloud"
+                    }
+                  }
                 }
               },
               isTemplate: {
@@ -1010,7 +1038,15 @@
                   size: 5
                 },
                 meta: {
-                  collapsed: true
+                  collapsed: true,
+                  decorator: {
+                    type: "icon",
+                    prefix: "fa fa-fw ",
+                    map: {
+                      n: "fa-file-text",
+                      y: "fa-file"
+                    }
+                  }
                 }
               }
             }
@@ -1863,7 +1899,10 @@
                   var keys = Object.keys(gnGlobalSettings.gnCfg.mods.home.facetConfig);
                   selectedFacet = keys[0];
                   for (var i = 0; i < keys.length; i++) {
-                    if ($scope.searchInfo.aggregations[keys[i]].buckets.length > 0) {
+                    if (
+                      $scope.searchInfo.aggregations[keys[i]].buckets.length > 0 ||
+                      Object.keys($scope.searchInfo.aggregations[keys[i]]).length > 0
+                    ) {
                       selectedFacet = keys[i];
                       break;
                     }
