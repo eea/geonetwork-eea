@@ -44,11 +44,11 @@
                 select="//gmd:identifier/*/gmd:code/*[starts-with(text(), 'eea_t')]"/>
 
   <!-- Reorder identifier for the datashare synch script to catch the first one. -->
-  <xsl:template match="gmd:identifier[1]">
+  <xsl:template match="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier[1]" priority="2">
     <xsl:copy-of select="../gmd:identifier[starts-with(*/gmd:code/*/text(), 'eea_t')]"/>
     <xsl:copy-of select="../gmd:identifier[not(starts-with(*/gmd:code/*/text(), 'eea_t')) and not(starts-with(*/gmd:code/*/text(), 'http://www.eea.europa.eu/data-and-maps/data/'))]"/>
   </xsl:template>
-  <xsl:template match="gmd:identifier"/>
+  <xsl:template match="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier"/>
 
 
   <xsl:template match="gmd:transferOptions/*">
