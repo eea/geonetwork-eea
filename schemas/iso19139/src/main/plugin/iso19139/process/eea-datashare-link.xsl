@@ -37,42 +37,41 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:param name="replaceLinks"
-             select="''"/>
 
   <xsl:variable name="uuid"
                 select="//gmd:fileIdentifier/gco:CharacterString"/>
+  <xsl:variable name="resourceId"
+                select="//gmd:identifier/*/gmd:code/*[starts-with(text(), 'eea_t')]"/>
+
+  <!-- Reorder identifier for the datashare synch script to catch the first one. -->
+  <xsl:template match="gmd:identifier[1]">
+    <xsl:copy-of select="../gmd:identifier[starts-with(*/gmd:code/*/text(), 'eea_t')]"/>
+    <xsl:copy-of select="../gmd:identifier[not(starts-with(*/gmd:code/*/text(), 'eea_t')) and not(starts-with(*/gmd:code/*/text(), 'http://www.eea.europa.eu/data-and-maps/data/'))]"/>
+  </xsl:template>
+  <xsl:template match="gmd:identifier"/>
 
 
   <xsl:template match="gmd:transferOptions/*">
     <xsl:copy>
-      <xsl:variable name="linksToKeep"
-                    select="gmd:onLine[contains($replaceLinks, */gmd:linkage/*/text())]"/>
-      <xsl:copy-of select="$linksToKeep"/>
+      <xsl:copy-of select="gmd:onLine"/>
 
-      <xsl:variable name="onlyDiscomap"
-                    select="count($linksToKeep[contains(*/gmd:linkage/*/text(), 'https://discomap.eea.europa.eu')]) = count($linksToKeep)"/>
-      <xsl:if test="not($onlyDiscomap)">
+      <xsl:variable name="hasFolderPath"
+                    select="count(gmd:onLine[*/gmd:protocol/*/text() = 'EEA:FOLDERPATH']) > 0"/>
+      <xsl:if test="not($hasFolderPath)">
         <gmd:onLine>
           <gmd:CI_OnlineResource>
             <gmd:linkage>
-              <gmd:URL>https://sdi.eea.europa.eu/data/<xsl:value-of select="$uuid"/></gmd:URL>
+              <gmd:URL>
+                <xsl:value-of select="concat('https://sdi.eea.europa.eu/webdav/continental/tabular/', $resourceId, '/')"/>
+              </gmd:URL>
             </gmd:linkage>
             <gmd:protocol>
-              <gco:CharacterString>WWW:URL</gco:CharacterString>
+              <gco:CharacterString>EEA:FOLDERPATH</gco:CharacterString>
             </gmd:protocol>
-            <gmd:name>
-              <gco:CharacterString>Direct Download</gco:CharacterString>
-            </gmd:name>
-            <gmd:description>
-              <gco:CharacterString>
-                <xsl:for-each select="distinct-values(gmd:onLine/*[contains($replaceLinks, gmd:linkage/*/text())]/gmd:description/*/text())">
-                  <xsl:value-of select="."/>
-                  &#160;
-                  &#160;
-                </xsl:for-each>
-              </gco:CharacterString>
-            </gmd:description>
+            <gmd:function>
+              <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                         codeListValue="download"/>
+            </gmd:function>
           </gmd:CI_OnlineResource>
         </gmd:onLine>
       </xsl:if>
