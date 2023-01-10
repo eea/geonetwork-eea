@@ -1578,7 +1578,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>nonGeographicDataset</code>
-      <label>Non geographic dataset</label>
+      <label>Tabular dataset</label>
       <description>Information applies to non-geographic data</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
