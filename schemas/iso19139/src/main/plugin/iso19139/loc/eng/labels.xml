@@ -1602,7 +1602,7 @@
       <option value='HDF'>Hierarchical Data Format Release (specify the version number [4 or 5] in the metadata element version)</option>
       <option value='MrSID'>Multi-resolution Seamless Image Database</option>
       <option value='netCDF'>NetCDF</option>
-      <option value='GTiff'>TIFF / BigTIFF / GeoTIFF (if no georeferencing information is available in the TIFF file itself, an ESRI world file [.tfw] must be present)</option>
+      <option value='GeoTIFF'>TIFF / BigTIFF / GeoTIFF (if no georeferencing information is available in the TIFF file itself, an ESRI world file [.tfw] must be present)</option>
       <option value="">---Vector---</option>
       <option value='AVCBin'>Arc/Info Binary Coverage</option>
       <option value='AVCE00'>Arc/Info .E00 (ASCII) Coverage</option>
