@@ -105,41 +105,29 @@
   <xsl:variable name="publicEmails"
                 select="'info@eea.europa.eu,sdi@eea.europa.eu'"/>
 
-  <xsl:variable name="hasNextCloudLink"
-                select="count(//gmd:onLine/*[starts-with(gmd:linkage/*/text(), 'https://sdi.eea.europa.eu/data')]) > 0"/>
+
+  <!-- Matching the first gmd:online, we reorder links
+   datashare synch script to catch the first one.
+   We add datashare link if missing or wrong,
+   We copy siblings. -->
+  <xsl:template match="gmd:transferOptions/*/gmd:onLine[1]" priority="2">
+    <xsl:apply-templates mode="copy-online"
+                         select="../gmd:onLine[(*/gmd:protocol/*/text() = 'EEA:FILEPATH'
+                                           or */gmd:protocol/*/text() = 'EEA:FOLDERPATH')
+                                           and starts-with(*/gmd:linkage/gmd:URL,
+                                            'https://sdi.eea.europa.eu/webdav')]"/>
 
 
-  <xsl:template match="//gmd:onLine[
-                          starts-with(*/gmd:linkage/gmd:URL, 'https://land.copernicus.eu')
-                          and ends-with(*/gmd:linkage/gmd:URL, 'tab=download')
-                          and (not(*/gmd:name) or */gmd:name/gco:CharacterString = '')]"
-                priority="199">
-    <xsl:copy>
-      <xsl:copy-of select="@*"/>
-      <gmd:CI_OnlineResource>
-        <xsl:copy-of select="*/gmd:linkage"/>
-        <xsl:copy-of select="*/gmd:protocol"/>
-        <xsl:copy-of select="*/gmd:applicationProfile"/>
-        <gmd:name>
-          <gco:CharacterString>Download (requires authentication)</gco:CharacterString>
-        </gmd:name>
-        <xsl:copy-of select="*/gmd:description"/>
-        <xsl:copy-of select="*/gmd:function"/>
-      </gmd:CI_OnlineResource>
-    </xsl:copy>
-  </xsl:template>
+    <xsl:variable name="hasEEAFile"
+                  select="count(../gmd:onLine[(*/gmd:protocol/*/text() = 'EEA:FILEPATH'
+                                           or */gmd:protocol/*/text() = 'EEA:FOLDERPATH')
+                                           and starts-with(*/gmd:linkage/gmd:URL,
+                                            'https://sdi.eea.europa.eu/webdav')]) > 0"/>
 
+    <xsl:variable name="hasNextCloudLink"
+                  select="count(../gmd:onLine/*[gmd:linkage/*/text() = concat('https://sdi.eea.europa.eu/data/', /root/env/uuid)]) > 0"/>
 
-  <xsl:template match="//gmd:onLine[(*/gmd:protocol/*/text() = 'EEA:FILEPATH' or
-                                     */gmd:protocol/*/text() = 'EEA:FOLDERPATH')
-                                     and starts-with(*/gmd:linkage/gmd:URL, 'https://sdi.eea.europa.eu/webdav')]"
-                priority="199">
-
-    <xsl:variable name="isFirstEEAResource"
-                  select="count(preceding-sibling::gmd:onLine[
-                                     */gmd:protocol/*/text() = 'EEA:FILEPATH' or
-                                     */gmd:protocol/*/text() = 'EEA:FOLDERPATH']) = 0"/>
-    <xsl:if test="not($hasNextCloudLink) and $isFirstEEAResource">
+    <xsl:if test="$hasEEAFile and not($hasNextCloudLink)">
       <!--
 Dataset identifier
 See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions#1-Dataset-Identifier-convention
@@ -171,8 +159,60 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
       </gmd:onLine>
     </xsl:if>
 
-    <xsl:copy-of select="."/>
+    <xsl:apply-templates mode="copy-online"
+                         select="../gmd:onLine[*/gmd:protocol/*/text() != 'EEA:FILEPATH'
+                                               and */gmd:protocol/*/text() != 'EEA:FOLDERPATH'
+                                               and not(starts-with(*/gmd:linkage/gmd:URL,
+                                                'https://sdi.eea.europa.eu/webdav'))]"/>
   </xsl:template>
+
+
+  <xsl:template mode="copy-online"
+                match="gmd:onLine[
+                          starts-with(*/gmd:linkage/gmd:URL, 'https://land.copernicus.eu')
+                          and ends-with(*/gmd:linkage/gmd:URL, 'tab=download')
+                          and (not(*/gmd:name) or */gmd:name/gco:CharacterString = '')]"
+                priority="199">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <gmd:CI_OnlineResource>
+        <xsl:copy-of select="*/gmd:linkage"/>
+        <xsl:copy-of select="*/gmd:protocol"/>
+        <xsl:copy-of select="*/gmd:applicationProfile"/>
+        <gmd:name>
+          <gco:CharacterString>Download (requires authentication)</gco:CharacterString>
+        </gmd:name>
+        <xsl:copy-of select="*/gmd:description"/>
+        <xsl:copy-of select="*/gmd:function"/>
+      </gmd:CI_OnlineResource>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template mode="copy-online"
+                match="gmd:onLine[starts-with(*/gmd:protocol/gco:CharacterString, 'EEA')]">
+    <xsl:copy>
+      <xsl:attribute name="gco:nilReason">withheld</xsl:attribute>
+      <xsl:apply-templates select="@*[name() != 'gco:nilReason']"/>
+      <xsl:apply-templates select="*"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template mode="copy-online"
+                match="gmd:onLine">
+    <xsl:copy>
+      <xsl:apply-templates select="*"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- We skip those not in first position as they are copied by previous template. -->
+  <xsl:template match="gmd:transferOptions/*/gmd:onLine"/>
+
+  <xsl:template match="gmx:MimeFileType[@type = '']">
+    <gco:CharacterString>
+      <xsl:copy-of select="text()"/>
+    </gco:CharacterString>
+  </xsl:template>
+
 
   <xsl:template match="gmd:graphicOverview/*/gmd:fileName/*[text() = 'https://sdi.eea.europa.eu/public/catalogue-graphic-overview/REPLACEBYUUID.png']">
     <xsl:copy>
@@ -190,7 +230,6 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
   is set.-->
 
   <xsl:template match="
-                  gmd:onLine[starts-with(*/gmd:protocol/gco:CharacterString, 'EEA')]|
                   gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/* = 'EEA categories']|
                   gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/* = 'EEA keyword list']|
                   *[gmd:CI_ResponsibleParty and not(contains($publicEmails, */gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()))]"
