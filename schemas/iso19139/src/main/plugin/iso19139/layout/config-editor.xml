@@ -2003,6 +2003,9 @@
           </section>
 
           <section name="eea-additional">
+
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:date"/>
+
             <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:language"/>
 
             <field name="eea-distributionFormat"
