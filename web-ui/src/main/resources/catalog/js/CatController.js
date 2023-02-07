@@ -408,7 +408,7 @@
               },
               OrgForResource: {
                 terms: {
-                  field: "OrgForResource",
+                  field: "OrgForResource.default",
                   include: ".*",
                   size: 15
                 },
