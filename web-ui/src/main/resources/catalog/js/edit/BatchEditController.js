@@ -302,14 +302,17 @@
         value,
         index,
         insertMode,
-        isXpath
+        isXpath,
+        condition
       ) {
         $scope.changes[index] = {
           field: field,
           insertMode: insertMode || field.insertMode,
           xpath: xpath,
+          condition: condition,
           value: template && value !== "" ? template.replace("{{value}}", value) : value,
-          isXpath: isXpath || false
+          isXpath: isXpath || false,
+          condition: condition || ""
         };
       };
 
@@ -321,7 +324,8 @@
           field.template,
           $event.target.value,
           $scope.changes.length,
-          field.insertMode
+          field.insertMode,
+          field.condition
         );
       };
 
@@ -344,7 +348,8 @@
             field.template,
             $event.target.value,
             index,
-            field.insertMode
+            field.insertMode,
+            field.condition
           );
         }
       };
@@ -386,7 +391,8 @@
             field.template,
             "",
             $scope.changes.length,
-            mode || "gn_delete"
+            mode || "gn_delete",
+            field.condition
           );
         }
       };
@@ -446,8 +452,10 @@
       $scope.defaultCurrentXpath = {
         field: "",
         xpath: "",
+        condition: "",
         value: "",
-        insertMode: "gn_add"
+        insertMode: "gn_add",
+        condition: ""
       }; // The default value when reset.
       $scope.currentXpath = angular.copy($scope.defaultCurrentXpath, {});
 
@@ -465,7 +473,8 @@
           c.value,
           $scope.changes.length,
           c.insertMode,
-          true
+          true,
+          c.condition
         );
 
         $scope.currentXpath = angular.copy($scope.defaultCurrentXpath, {});
@@ -526,7 +535,7 @@
             } else {
               value = value;
             }
-            params.push({ xpath: xpath, value: value });
+            params.push({ xpath: xpath, value: value, condition: field.condition });
             i++;
           }
         });
