@@ -32,16 +32,6 @@
   goog.require("gn_session_service");
   goog.require("gn_alert");
 
-  // On the editor catalog, search are restricted on this catalog
-  // only to not mix all records harvested (from internal for example)
-  // which are used to be linked to draft records (eg. has sources)
-  var editorCatalogId = "d1bd08f0-16ac-47c3-b581-2e8db715530c";
-  // var editorCatalogId = 'd1bd08f0-16ac-47c3-b581-2e8db715530b';
-  // var editorCatalogPath = '/geonetwork';
-  var editorCatalogPath = "/editor-catalogue";
-  // Also update in EditorBoardController.js
-  // Also update in module.js
-
   var module = angular.module("gn_cat_controller", [
     "gn_search_manager",
     "gn_session_service",
@@ -193,15 +183,19 @@
               exactMatch: true,
               language: false
             },
+            // The language strategy define how to search on multilingual content.
+            // It also applies to aggregation using ${aggLanguage} substitute.
             // Language strategy can be:
             // * searchInUILanguage: search in UI languages
-            // eg. full text field is any.langfre if French
-            // * searchInAllLanguages: search using any.* fields
+            // eg. full text field is any.langfre if French, aggLanguage is uiLanguage.
+            // * searchInAllLanguages: search using any.* fields, aggLanguage is default
             // (no analysis is done, more records are returned)
             // * searchInDetectedLanguage: restrict the search to the language detected
-            // based on user search. If language detection fails, search in all languages.
+            // based on user search. aggLanguage is detectedLanguage.
+            // If language detection fails, search in all languages and aggLanguage is uiLanguage
             // * searchInThatLanguage: Force a language using searchInThatLanguage:fre
             // 'languageStrategy': 'searchInThatLanguage:fre',
+            // aggLanguage is forcedLanguage.
             languageStrategy: "searchInAllLanguages",
             // Limit language detection to some languages only.
             // If empty, the list of languages in catalogue records is used
@@ -1241,10 +1235,17 @@
         isShowLoginAsLink: false,
         isUserProfileUpdateEnabled: true,
         isUserGroupUpdateEnabled: true,
-        init: function (configOverlay, gnUrl, gnViewerSettings, gnSearchSettings) {
+        init: function (
+          configOverlay,
+          gnUrl,
+          nodeUrl,
+          gnViewerSettings,
+          gnSearchSettings
+        ) {
           this.applyConfig(configOverlay !== null ? configOverlay : {});
           this.setLegacyOption(gnViewerSettings, gnSearchSettings);
           this.gnUrl = gnUrl || "../";
+          this.nodeUrl = nodeUrl || "../";
           this.proxyUrl = this.gnUrl + "../proxy?url=";
         },
         setLegacyOption: function (gnViewerSettings, gnSearchSettings) {
@@ -1727,25 +1728,25 @@
         // Retrieve site information
         // TODO: Add INSPIRE, harvester, ... information
         var catInfo = promiseStart.then(function (value) {
-          return $http
-            .get("../api/site")
-            .success(function (data, status) {
-              $scope.info = data;
+          return $http.get("../api/site").then(
+            function (response) {
+              $scope.info = response.data;
               // Add the last time catalog info where updated.
               // That could be useful to append to catalog image URL
               // in order to trigger a reload of the logo when info are
               // reloaded.
               $scope.info["system/site/lastUpdate"] = new Date().getTime();
               $scope.initialized = true;
-            })
-            .error(function (data, status, headers, config) {
+            },
+            function (response) {
               $rootScope.$broadcast("StatusUpdated", {
                 id: "catalogueStatus",
                 title: $translate.instant("somethingWrong"),
                 msg: $translate.instant("msgNoCatalogInfo"),
                 type: "danger"
               });
-            });
+            }
+          );
         });
 
         // Utility functions for user
@@ -1833,7 +1834,8 @@
         var userLogin = catInfo.then(function (value) {
           return $http
             .get("../api/me?_random=" + Math.floor(Math.random() * 10000))
-            .success(function (me, status) {
+            .then(function (response) {
+              var me = response.data;
               if (angular.isObject(me)) {
                 me["isAdmin"] = function (groupId) {
                   return me.admin;
