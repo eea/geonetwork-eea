@@ -18,6 +18,7 @@
     <skos:hasTopConcept rdf:resource="http://www.naturalearthdata.com/ne_admin#CountryGroup"/>
     <skos:hasTopConcept rdf:resource="http://www.naturalearthdata.com/ne_admin#Country/Dependency"/>
     <skos:hasTopConcept rdf:resource="http://vocab.nerc.ac.uk/collection/C19/current/#SeaVoXGazetteer"/>
+    <skos:hasTopConcept rdf:resource="https://sdi.eea.europa.eu/vocabularies/msfd/subregions"/>
   </skos:ConceptScheme>
 
   <skos:Concept rdf:about="http://www.naturalearthdata.com/ne_admin#Continent">
@@ -43,6 +44,114 @@
     <skos:prefLabel xml:lang="de">Kolonien</skos:prefLabel>
     <skos:inScheme rdf:resource="http://vocab.nerc.ac.uk/collection/C19/current/#SeaVoXGazetteer"/>
   </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/vocabularies/msfd/subregions">
+    <skos:prefLabel xml:lang="en">MSFD subregion</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">MSFD subregion</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">MSFD subregion</skos:prefLabel>
+  </skos:Concept>
+
+    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="https://sdi.eea.europa.eu/vocabularies/msfd/subregions/MAD">
+    <skos:prefLabel xml:lang="en">Adriatic Sea</skos:prefLabel>
+    <gml:BoundedBy xmlns:gml="http://www.opengis.net/gml#">
+      <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+        <gml:lowerCorner>11.947498864679535 39.64684399639401</gml:lowerCorner>
+        <gml:upperCorner>20.98470990758931 45.84213206161191</gml:upperCorner>
+      </gml:Envelope>
+    </gml:BoundedBy>
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/vocabularies/msfd/subregions"/>
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="https://sdi.eea.europa.eu/vocabularies/msfd/subregions/ABI">
+    <skos:prefLabel xml:lang="en">Bay of Biscay and the Iberian Coast</skos:prefLabel>
+    <gml:BoundedBy xmlns:gml="http://www.opengis.net/gml#">
+      <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+        <gml:lowerCorner>-17.35524907716971 34.37261216107225</gml:lowerCorner>
+        <gml:upperCorner>0.5153948751671455 49.188613197728905</gml:upperCorner>
+      </gml:Envelope>
+    </gml:BoundedBy>
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/vocabularies/msfd/subregions"/>
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="https://sdi.eea.europa.eu/vocabularies/msfd/subregions/MIC">
+    <skos:prefLabel xml:lang="en">Ionian Sea and the Central Mediterranean Sea</skos:prefLabel>
+    <gml:BoundedBy xmlns:gml="http://www.opengis.net/gml#">
+      <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+        <gml:lowerCorner>10.014191788806674 29.730787151181435</gml:lowerCorner>
+        <gml:upperCorner>25.146361012134932 40.77647605438008</gml:upperCorner>
+      </gml:Envelope>
+    </gml:BoundedBy>
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/vocabularies/msfd/subregions"/>
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="https://sdi.eea.europa.eu/vocabularies/msfd/subregions/MWE">
+    <skos:prefLabel xml:lang="en">Western Mediterranean Sea</skos:prefLabel>
+    <gml:BoundedBy xmlns:gml="http://www.opengis.net/gml#">
+      <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+        <gml:lowerCorner>-7.778807755380049 34.516080735788435</gml:lowerCorner>
+        <gml:upperCorner>16.787699459516173 44.43336871906717</gml:upperCorner>
+      </gml:Envelope>
+    </gml:BoundedBy>
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/vocabularies/msfd/subregions"/>
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="https://sdi.eea.europa.eu/vocabularies/msfd/subregions/AMA">
+    <skos:prefLabel xml:lang="en">Macaronesia</skos:prefLabel>
+    <gml:BoundedBy xmlns:gml="http://www.opengis.net/gml#">
+      <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+        <gml:lowerCorner>-47.95588492670047 18.672305090295186</gml:lowerCorner>
+        <gml:upperCorner>-9.243698301547811 52.833080977711276</gml:upperCorner>
+      </gml:Envelope>
+    </gml:BoundedBy>
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/vocabularies/msfd/subregions"/>
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="https://sdi.eea.europa.eu/vocabularies/msfd/subregions/ANS">
+    <skos:prefLabel xml:lang="en">Greater North Sea, incl. the Kattegat and the English Channel</skos:prefLabel>
+    <gml:BoundedBy xmlns:gml="http://www.opengis.net/gml#">
+      <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+        <gml:lowerCorner>-8.937104399238619 48.36878843970374</gml:lowerCorner>
+        <gml:upperCorner>13.694587892837879 62.250054228761144</gml:upperCorner>
+      </gml:Envelope>
+    </gml:BoundedBy>
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/vocabularies/msfd/subregions"/>
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="https://sdi.eea.europa.eu/vocabularies/msfd/subregions/BAL">
+    <skos:prefLabel xml:lang="en">Baltic Sea</skos:prefLabel>
+    <gml:BoundedBy xmlns:gml="http://www.opengis.net/gml#">
+      <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+        <gml:lowerCorner>9.170700645643239 52.50896836564108</gml:lowerCorner>
+        <gml:upperCorner>33.835161025929374 66.42040913650531</gml:upperCorner>
+      </gml:Envelope>
+    </gml:BoundedBy>
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/vocabularies/msfd/subregions"/>
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="https://sdi.eea.europa.eu/vocabularies/msfd/subregions/BLK">
+    <skos:prefLabel xml:lang="en">Black Sea</skos:prefLabel>
+    <gml:BoundedBy xmlns:gml="http://www.opengis.net/gml#">
+      <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+        <gml:lowerCorner>27.175037352465495 38.37269002136913</gml:lowerCorner>
+        <gml:upperCorner>43.041694754496646 47.463827654196685</gml:upperCorner>
+      </gml:Envelope>
+    </gml:BoundedBy>
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/vocabularies/msfd/subregions"/>
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="https://sdi.eea.europa.eu/vocabularies/msfd/subregions/ACS">
+    <skos:prefLabel xml:lang="en">Celtic Seas</skos:prefLabel>
+    <gml:BoundedBy xmlns:gml="http://www.opengis.net/gml#">
+      <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+        <gml:lowerCorner>-20.797130312260936 46.09960870539101</gml:lowerCorner>
+        <gml:upperCorner>-1.5179483766546111 58.4525214982932</gml:upperCorner>
+      </gml:Envelope>
+    </gml:BoundedBy>
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/vocabularies/msfd/subregions"/>
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="https://sdi.eea.europa.eu/vocabularies/msfd/subregions/MAL">
+    <skos:prefLabel xml:lang="en">Aegean-Levantine Sea</skos:prefLabel>
+    <gml:BoundedBy xmlns:gml="http://www.opengis.net/gml#">
+      <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+        <gml:lowerCorner>21.18485182917088 29.44029723671108</gml:lowerCorner>
+        <gml:upperCorner>37.49810416918749 41.4216335168797</gml:upperCorner>
+      </gml:Envelope>
+    </gml:BoundedBy>
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/vocabularies/msfd/subregions"/>
+  </skos:Concept>
+
+
 
   <skos:Concept rdf:about="http://www.naturalearthdata.com/ne_admin#Continent/North America">
     <skos:prefLabel xml:lang="en">North America</skos:prefLabel>
