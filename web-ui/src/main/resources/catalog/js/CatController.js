@@ -772,7 +772,7 @@
           },
           recordview: {
             isSocialbarEnabled: true,
-            showStatusWatermarkFor: "",
+            showStatusWatermarkFor: "obsolete,superseded",
             // 'showStatusTopBarFor': 'historicalArchive,obsolete,superseded',
             showStatusTopBarFor: "",
             showCitation: {
