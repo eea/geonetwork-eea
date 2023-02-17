@@ -773,8 +773,8 @@
         },
         link: function (scope, element, attrs, controller) {
           scope.lang = scope.lang || scope.$parent.lang;
-          scope.showStatusWatermarkFor =
-            gnGlobalSettings.gnCfg.mods.recordview.showStatusWatermarkFor;
+          scope.showStatusFooterFor =
+            gnGlobalSettings.gnCfg.mods.search.showStatusFooterFor;
         }
       };
     }
