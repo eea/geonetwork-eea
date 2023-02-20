@@ -794,16 +794,12 @@ or not and with which colors */
   border-color: darken(@brand-success, 5%);
   color: @brand-success;
 }
-.gn-status-historicalArchive {
+.gn-status-historicalArchive,
+.gn-status-superseded {
   border-color: darken(@brand-warning, 5%);
   color: @brand-warning;
 }
-.gn-status-obsolete,
-.gn-status-superseded {
-  border-color: darken(@brand-danger, 5%);
-  color: @brand-danger;
-}
-.gn-status-superseded {
+.gn-status-obsolete {
   border-color: darken(@brand-danger, 5%);
   color: @brand-danger;
 }
@@ -910,12 +906,12 @@ or not and with which colors */
     background-color: darken(@brand-success, 5%);
     color: #fff;
   }
-  .gn-status-historicalArchive-bg {
+  .gn-status-historicalArchive-bg,
+  .gn-status-superseded-bg {
     background-color: darken(@brand-warning, 5%);
     color: #fff;
   }
-  .gn-status-obsolete-bg,
-  .gn-status-superseded-bg {
+  .gn-status-obsolete-bg {
     background-color: darken(@brand-danger, 5%);
     color: #fff;
   }
@@ -970,6 +966,17 @@ or not and with which colors */
   // - in a table row
   .gn-status-bottomleft {
     position: relative;
+  }
+  .gn-card {
+    .gn-status {
+      position: absolute;
+      left: auto;
+      right: 0;
+      float: right;
+      margin-right: -8px;
+      bottom: 10px;
+      line-height: 1.6em;
+    }
   }
   .gn-status-topright {
     position: absolute;
