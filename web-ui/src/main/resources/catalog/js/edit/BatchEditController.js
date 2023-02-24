@@ -98,7 +98,6 @@
           $scope.selectedRecordsCount = 0;
           $scope.selectedStandards = [];
           $scope.selectedRecords = [];
-
           $http.get("../api/selections/e101").then(function (response) {
             var uuids = response.data;
             $scope.selectedRecordsCount = uuids.length;
@@ -131,7 +130,6 @@
                 },
                 _source: ["resourceTitleObject.default"]
               };
-
               $http.post("../api/search/records/_search", query).then(
                 function (r) {
                   $scope.selectedRecords = r.data.hits;
