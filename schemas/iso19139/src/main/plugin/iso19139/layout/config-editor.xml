@@ -533,7 +533,7 @@
                                     gmd:hierarchyLevel/*/@codeListValue,
                                     'nonGeographicDataset'))"/>
         <directive data-gn-onlinesrc-list=""
-                   data-types="onlinesrc|parent|dataset|service|source|sibling|associated|fcats"
+                   data-types="onlinesrc|dataset|service|source|sibling|associated|fcats"
                    displayIfRecord="not(contains(gmd:MD_Metadata/
                                     gmd:hierarchyLevel/*/@codeListValue,
                                     'nonGeographicDataset'))"/>
@@ -595,6 +595,9 @@
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:abstract"/>
           <text ref="eea-abstract-help"/>
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:status"
+                 or="status" in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:supplementalInformation"
                  or="supplementalInformation"
@@ -1865,6 +1868,7 @@
         <for name="gmd:keyword"/>
         <for name="gmd:edition"/>
         <for name="gmd:date"/>
+        <for name="gmd:status"/>
         <for name="gmd:pointOfContact"/>
         <for name="gmd:spatialRepresentationType"/>
         <for name="gmd:resourceMaintenance"/>
@@ -1963,7 +1967,7 @@
           <action type="associatedResource"
                   name="eea-add-member"
                   process="sibling">
-            <directiveAttributes>{"associationType": "partOfSeamlessDatabase"}</directiveAttributes>
+            <directiveAttributes>{"associationType": "isComposedOf"}</directiveAttributes>
           </action>
 
           <action type="process"
