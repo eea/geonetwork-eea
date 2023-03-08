@@ -95,6 +95,7 @@
   "loadMoreResults": "load more results...",
   "rating": "rating",
   "popularity": "popularity",
+  "alternateTitle": "Also named: ",
   "isHarvested-true": "Harvested",
   "isHarvested-false": "Local",
   "sortBy-popularity": "popularity",

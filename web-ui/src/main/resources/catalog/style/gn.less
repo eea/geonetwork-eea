@@ -221,6 +221,7 @@ div[gn-save-user-search] .panel {
 
 a {
   word-wrap: break-word;
+  word-break: break-all;
 }
 .gn-break {
   word-wrap: break-word;
@@ -494,9 +495,6 @@ div.thumb-small {
 }
 .gn-list-file {
   position: relative;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
   width: 100%;
   text-align: left;
   margin-bottom: 5px !important;
@@ -931,6 +929,7 @@ or not and with which colors */
     position: absolute;
     right: 0;
     margin: 100px;
+    right: 0;
     overflow: hidden;
     transform: rotate(-15deg);
     font-size: 4rem;
@@ -1003,6 +1002,16 @@ or not and with which colors */
   }
   .gn-status-lg {
     font-size: 1.6em;
+  }
+
+  // ----- Keep the text size inside card panels for related metadata
+  .gn-card-heading {
+    .gn-status-md {
+      font-size: inherit !important;
+    }
+    .gn-status-lg {
+      font-size: inherit !important;
+    }
   }
 }
 

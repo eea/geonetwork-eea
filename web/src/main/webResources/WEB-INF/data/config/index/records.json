@@ -1295,7 +1295,7 @@
           "mapping": {
             "type": "nested",
             "properties": {
-              "org": {
+              "organisation": {
                 "type": "keyword"
               },
               "role": {
@@ -1769,6 +1769,66 @@
           },
           "link": {
             "type": "keyword"
+          }
+        }
+      },
+      "featureTypes": {
+        "type": "object",
+        "properties": {
+          "aliases": {
+            "type": "keyword",
+            "copy_to": "any.common"
+          },
+          "code": {
+            "type": "keyword"
+          },
+          "definition": {
+            "type": "text"
+          },
+          "typeName": {
+            "type": "keyword",
+            "copy_to": "any.common"
+          },
+          "isAbstract": {
+            "type": "boolean"
+          },
+          "attributeTable": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "keyword",
+                "copy_to": "any.common"
+              },
+              "definition": {
+                "type": "text"
+              },
+              "link": {
+                "type": "keyword"
+              },
+              "name": {
+                "type": "keyword",
+                "copy_to": "any.common"
+              },
+              "type": {
+                "type": "keyword"
+              },
+              "values": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "keyword",
+                    "copy_to": "any.common"
+                  },
+                  "definition": {
+                    "type": "text"
+                  },
+                  "label": {
+                    "type": "keyword",
+                    "copy_to": "any.common"
+                  }
+                }
+              }
+            }
           }
         }
       },

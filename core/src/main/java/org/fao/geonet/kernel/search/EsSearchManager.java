@@ -521,6 +521,7 @@ public class EsSearchManager implements ISearchManager {
             .add("cat")
             .add("keyword")
             .add("extentDescriptionObject")
+            .add("resourceAltTitleObject")
             .add("resourceCredit")
             .add("resourceCreditObject")
             .add("resolutionScaleDenominator")
@@ -569,6 +570,7 @@ public class EsSearchManager implements ISearchManager {
             .add("resourceTemporalDateRange")
             .add("resourceTemporalExtentDateRange")
             .add("resourceTemporalExtentDetails")
+            .add("licenseObject")
             .build();
         booleanFields = ImmutableSet.<String>builder()
             .add("hasxlinks")
