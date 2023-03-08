@@ -516,6 +516,7 @@
       <thesaurusList>
         <thesaurus key="external.theme.httpinspireeceuropaeutheme-theme"
                    fieldset="false"
+                   suggestion="true"
                    transformations="to-iso19139-keyword-with-anchor"/>
         <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory"
                    fieldset="false"
@@ -523,8 +524,17 @@
         <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope"
                    fieldset="false"
                    transformations="to-iso19139-keyword-with-anchor"/>
+        <thesaurus key="external.theme.gemet"
+                   fieldset="false"
+                   suggestion="true"
+                   transformations="to-iso19139-keyword-with-anchor"/>
         <thesaurus key="external.theme.eea-topics"
                    fieldset="false"
+                   suggestion="true"
+                   transformations="to-iso19139-keyword-with-anchor"/>
+        <thesaurus key="external.theme.rod-eionet-europa-eu"
+                   fieldset="false"
+                   suggestion="true"
                    transformations="to-iso19139-keyword-with-anchor"/>
       </thesaurusList>
       <sidePanel>
@@ -1884,9 +1894,11 @@
           upAndDownControlHidden="true"
           hideTimeInCalendar="true"
           class="gn-indent-colored gn-label-above-input">
+
       <thesaurusList>
         <thesaurus key="external.theme.httpinspireeceuropaeutheme-theme"
                    fieldset="false"
+                   suggestion="true"
                    transformations="to-iso19139-keyword-with-anchor"/>
         <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory"
                    fieldset="false"
@@ -1894,9 +1906,18 @@
         <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope"
                    fieldset="false"
                    transformations="to-iso19139-keyword-with-anchor"/>
+        <thesaurus key="external.theme.gemet"
+                   fieldset="false"
+                   suggestion="true"
+                   transformations="to-iso19139-keyword-with-anchor"/>
         <thesaurus key="external.theme.eea-topics"
                    fieldset="false"
-                   transformations="to-iso19139-keyword"/>
+                   suggestion="true"
+                   transformations="to-iso19139-keyword-with-anchor"/>
+        <thesaurus key="external.theme.rod-eionet-europa-eu"
+                   fieldset="false"
+                   suggestion="true"
+                   transformations="to-iso19139-keyword-with-anchor"/>
       </thesaurusList>
       <sidePanel>
         <directive data-gn-overview-manager=""/>
