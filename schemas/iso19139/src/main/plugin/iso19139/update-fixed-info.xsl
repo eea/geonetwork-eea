@@ -135,7 +135,7 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
  -->
       <xsl:variable name="datasetIdentifier"
                     select="/root/gmd:MD_Metadata/gmd:identificationInfo/*/
-                              gmd:citation/*/gmd:identifier/*/gmd:code/*[starts-with(text(), 'eea_')]/text()"/>
+                              gmd:citation/*/gmd:identifier/*/gmd:code/*[matches(text(), '.*_[ip]_.*')]/text()"/>
       <xsl:variable name="isPublic"
                     select="contains($datasetIdentifier, '_p_')"/>
       <xsl:variable name="linkLabel"
