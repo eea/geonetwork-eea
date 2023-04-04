@@ -609,6 +609,9 @@
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:status"
                  or="status" in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
 
+          <action type="suggest"
+                  process="add-date-for-status"/>
+
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:supplementalInformation"
                  or="supplementalInformation"
                  in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
