@@ -39,6 +39,7 @@
   <xsl:include href="process/related-metadata-checker.xsl"/>
   <xsl:include href="process/add-resource-id.xsl"/>
   <xsl:include href="process/add-thumbnail-based-on-uuid.xsl"/>
+  <xsl:include href="process/add-date-for-status.xsl"/>
   <!--<xsl:include href="process/vacuum.xsl"/>-->
 <!--  Disabled by default because related to INSPIRE only
   <xsl:include href="process/inspire-add-conformity.xsl"/>
@@ -57,6 +58,7 @@
     <p>related-metadata-checker</p>
     <p>add-resource-id</p>
     <p>add-thumbnail-based-on-uuid</p>
+    <p>add-date-for-status</p>
     <!--<p>vacuum</p>-->
 <!--  Disabled by default because related to INSPIRE only
     <p>inspire-add-conformity</p>
