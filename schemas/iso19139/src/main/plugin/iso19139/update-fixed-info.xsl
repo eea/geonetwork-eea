@@ -155,6 +155,10 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
           <gmd:name>
             <gco:CharacterString><xsl:value-of select="$linkLabel"/></gco:CharacterString>
           </gmd:name>
+          <gmd:function>
+            <gmd:CI_OnLineFunctionCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                       codeListValue="download" />
+          </gmd:function>
         </gmd:CI_OnlineResource>
       </gmd:onLine>
     </xsl:if>
