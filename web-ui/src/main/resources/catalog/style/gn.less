@@ -1,5 +1,7 @@
 // GN Styles
-@import "../lib/style/font-awesome/less/font-awesome.less";
+@import "../catalog/lib/style/font-awesome/css/all.css";
+@import "../catalog/lib/style/font-awesome/css/v4-shims.css";
+@import "../catalog/lib/style/font-awesome/css/v4-font-face.css";
 @import "../lib/style/bootstrap/less/variables.less";
 
 @font-family-sans-serif: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -12,7 +14,7 @@
 @import "../views/default/less/gn_variables_default.less"; // must be last
 
 @fa-version: "4.4.0";
-@fa-font-path: "../catalog/lib/style/font-awesome/fonts";
+@fa-font-path: "../catalog/lib/style/font-awesome/webfonts";
 
 div[gn-transfer-ownership] * .list-group {
   max-height: 45em;
@@ -700,18 +702,18 @@ input[type="file"] {
   left: 5px;
 }
 
-.gn-recordtype-n:before {
-  content: @fa-var-file-text;
-}
-.gn-recordtype-s:before {
-  content: @fa-var-bookmark;
-}
-.gn-recordtype-y:before {
-  content: @fa-var-file-o;
-}
-.gn-recordtype-t:before {
-  content: @fa-var-bookmark-o;
-}
+//.gn-recordtype-n:before {
+//  content: @fa-var-file-text;
+//}
+//.gn-recordtype-s:before {
+//  content: @fa-var-bookmark;
+//}
+//.gn-recordtype-y:before {
+//  content: @fa-var-file-o;
+//}
+//.gn-recordtype-t:before {
+//  content: @fa-var-bookmark-o;
+//}
 
 [data-gn-slide-toggle] {
   padding-left: 20px;
@@ -1139,7 +1141,8 @@ fieldset[disabled] .radio label {
   }
 }
 
-input.ng-invalid {
+input.ng-invalid,
+select.ng-invalid {
   border-color: #a94442;
 }
 
@@ -1171,29 +1174,6 @@ input.ng-invalid {
   }
 }
 
-/* Highlight updated checkboxes in sharing form */
-.gn-sharing-batch {
-  // remove
-  input.ng-dirty.ng-empty:after {
-    content: "-";
-    padding-left: 20px;
-    margin-top: -20px;
-    color: @brand-danger;
-    font-size: 24px;
-    display: inline-block;
-    font-weight: bold;
-  }
-  // add
-  input.ng-dirty.ng-not-empty:after {
-    content: "+";
-    padding-left: 20px;
-    margin-top: -20px;
-    color: @brand-success;
-    font-size: 24px;
-    display: inline-block;
-    font-weight: bold;
-  }
-}
 [gn-batch-categories] {
   // remove
   input.ng-dirty.ng-empty ~ span {

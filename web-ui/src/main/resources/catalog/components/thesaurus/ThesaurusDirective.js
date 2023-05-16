@@ -256,7 +256,8 @@
           // Max number of tags allowed. Use 1 to restrict to only
           // on keyword.
           maxTags: "@",
-          thesaurusTitle: "@"
+          thesaurusTitle: "@",
+          browsable: "@"
         },
         templateUrl: "../../catalog/components/thesaurus/partials/keywordselector.html",
         link: function (scope, element, attrs) {
@@ -626,9 +627,11 @@
 
           if (scope.thesaurusKey) {
             init();
-            gnThesaurusService.getTopConcept(scope.thesaurusKey).then(function (c) {
-              scope.concept = c;
-            });
+            if (scope.browsable !== "false") {
+              gnThesaurusService.getTopConcept(scope.thesaurusKey).then(function (c) {
+                scope.concept = c;
+              });
+            }
           }
         }
       };
