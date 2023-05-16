@@ -68,7 +68,9 @@
 
 
       <sch:let name="publisher"
-               value="(gmd:distributionInfo//gmd:distributorContact)[1]/*/gmd:organisationName/gco:CharacterString"/>
+               value="if (gmd:distributionInfo//gmd:distributorContact)
+                      then gmd:distributionInfo//gmd:distributorContact/*/gmd:organisationName/*/text()
+                      else gmd:identificationInfo/*/gmd:pointOfContact[*/gmd:role/*/@codeListValue = ('distributor', 'custodian')]/*/gmd:organisationName/*/text()"/>
 
       <sch:assert test="$publisher != ''">$loc/strings/datacite.publisher.missing</sch:assert>
       <sch:report test="$publisher != ''">
