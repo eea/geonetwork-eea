@@ -561,8 +561,7 @@
                                     gmd:hierarchyLevel/*/@codeListValue,
                                     'nonGeographicDataset'))"/>
 
-        <directive data-gn-validation-report=""
-                   displayIfServiceInfo="count(session[profile = 'Administrator']) = 1"/>
+        <directive data-gn-validation-report=""/>
 
         <text ref="eea-contact"/>
       </sidePanel>
@@ -574,13 +573,11 @@
           <text ref="eea-title-help"/>
 
           <field name="eea-resource-identifier"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"
-                 displayIfServiceInfo="count(session[profile = 'Administrator']) = 1"/>
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/>
 
           <action type="add"
                   btnLabel="eea-add-identifier"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code) = 0"
-                  displayIfServiceInfo="count(session[profile = 'Administrator']) = 1"
                   or="identifier"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*">
             <template>
@@ -595,8 +592,7 @@
               </snippet>
             </template>
           </action>
-          <text ref="eea-identifier-help"
-                displayIfServiceInfo="count(session[profile = 'Administrator']) = 1"/>
+          <text ref="eea-identifier-help"/>
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:edition"
                  or="edition" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*"/>
@@ -985,12 +981,11 @@
 
           <field name="eea-keyword-cat"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA categories']"
-                 displayIfServiceInfo="count(session[profile = 'Administrator']) = 1"/>
+                 />
 
           <action type="add"
                   btnLabel="eea-add-categories"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA categories']) = 0"
-                  displayIfServiceInfo="count(session[profile = 'Administrator']) = 1"
                   or="descriptiveKeywords"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*">
             <template>
@@ -1549,10 +1544,8 @@
                  in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
           <text ref="eea-maintenance-help"/>
 
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:language"
-                 displayIfServiceInfo="count(session[profile = 'Administrator']) = 1"/>
-          <text ref="eea-hr"
-                displayIfServiceInfo="count(session[profile = 'Administrator']) = 1"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:language"/>
+          <text ref="eea-hr"/>
 
 
           <field name="eea-distributionFormat"
