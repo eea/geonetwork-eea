@@ -33,7 +33,6 @@
   goog.require("gn_alert");
   goog.require("gn_es");
 
-
   var module = angular.module("gn_cat_controller", [
     "gn_search_manager",
     "gn_session_service",
@@ -81,7 +80,18 @@
             enabled: true,
             showSocialBarInFooter: true,
             showApplicationInfoAndLinksInFooter: true,
-            footerCustomMenu: [] // List of static pages identifiers to display
+            footerCustomMenu: [], // List of static pages identifiers to display
+            rssFeeds: [
+              {
+                // List of rss feeds links to display when the OGC API Records service is enabled
+                url: "f=rss&sortby=-createDate&size=30",
+                label: "lastCreatedRecords"
+              }
+              // , {
+              //   url: "f=rss&sortby=-publicationDateForResource&size=30",
+              //   label: "lastPublishedRecords"
+              // }
+            ]
           },
           header: {
             enabled: true,
@@ -669,7 +679,7 @@
               maps: ["ows"]
             },
             isFilterTagsDisplayedInSearch: true,
-            showMapInFacet: false,
+            searchMapPlacement: "results", // results, facets or none
             showStatusFooterFor: "historicalArchive,obsolete,superseded",
             showBatchDropdown: true,
             usersearches: {
@@ -1532,6 +1542,8 @@
       $scope.langs = gnGlobalSettings.gnCfg.mods.header.languages;
       $scope.lang = gnLangs.detectLang(null, gnGlobalSettings);
       $scope.iso2lang = gnLangs.getIso2Lang($scope.lang);
+
+      $scope.rssFeeds = gnGlobalSettings.gnCfg.mods.footer.rssFeeds;
 
       $scope.getSocialLinksVisible = function () {
         var onMdView = $location.absUrl().indexOf("/metadata/") > -1;
