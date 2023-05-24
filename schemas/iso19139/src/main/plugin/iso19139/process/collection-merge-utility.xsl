@@ -45,6 +45,8 @@
       </gmd:identifier>
     </xsl:for-each-group>
   </xsl:template>
+  <xsl:template match="gmd:CI_Citation/gmd:identifier[*/gmd:code/*[not(ends-with(text(), '_s'))]]" mode="merge" priority="3"/>
+
 
   <xsl:template match="*[name() = $elements/@name]" mode="merge" priority="2">
     <xsl:variable name="name"
