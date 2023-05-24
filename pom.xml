@@ -1452,7 +1452,7 @@
         GEONETWORK_DB_CONNECTION_PROPERTIES=
     -->
 
-    <db.type>${geonetwork.db.type:h2}</db.type>
+    <db.type>${geonetwork.db.type:postgres}</db.type>
     <!-- Instead of using db_type a specific config file can be specified -->
     <db.config.file>../config-db/${db.type}.xml</db.config.file>
     <db.host>#{systemEnvironment['GEONETWORK_DB_HOST']?:'localhost'}</db.host>
@@ -1482,7 +1482,7 @@
     <savedselection.watchlist.frequency>0 0 4 * * ?</savedselection.watchlist.frequency>
 
     <microservices.url/>
-    <!--<microservices.url>http://localhost:9901</microservices.url>-->
+<!--    <microservices.url>http://localhost:9901</microservices.url>-->
 
     <!-- Proxy security configuration:
     * NONE: allow all.

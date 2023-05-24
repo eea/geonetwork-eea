@@ -44,6 +44,5 @@
        * postgres
        * sqlserver
     -->
-  <import resource="../config-db/eea-postgres.xml"/>
-  <!--  <import resource="@db.config.file@"/>-->
+    <import resource="@db.config.file@"/>
 </beans>
