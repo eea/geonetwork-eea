@@ -33,10 +33,10 @@
         <dc:title>EEA Management Plan</dc:title>
         <dc:description></dc:description>
         <dcterms:issued>2021-08-25</dcterms:issued>
-        <dcterms:modified>2021-08-25</dcterms:modified>
+        <dcterms:modified>2023-05-31</dcterms:modified>
       </skos:ConceptScheme>
 
-      <xsl:for-each select="//sparql:literal">
+      <xsl:for-each select="//sparql:literal[@xml:lang = 'en']">
         <xsl:sort select="." order="descending"/>
         <xsl:apply-templates select="."/>
       </xsl:for-each>

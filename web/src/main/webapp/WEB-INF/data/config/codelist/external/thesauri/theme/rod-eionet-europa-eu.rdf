@@ -965,14 +965,12 @@ Guide to use Reportnet for data delivery is provided.</skos:definition>
 
 Data must be submitted as full data sets (no incremental updates).
 
-Countries reporting under WFD are advised to consolidate their spatial data and report only once under:
+Countries reporting under WFD must report under:
 
 - Water Framework Directive - River Basin Management Plans - 2022 Spatial data  (https://rod.eionet.europa.eu/obligations/780)
 
 Detailed reporting guidance on the structure of the spatial data sets is available in http://cdr.eionet.europa.eu/help/WISE_SoE/wise5
-As of 2021, the data model and data flow for reporting of EIONET spatial data (WISE-5) is aligned with the data model for the reporting of the 3rd River Basin Management Plans spatial data, under the Water Framework Directive (WFD2022 Spatial).
-The information already reported under WFD must not be reported under WISE-5. 
-Countries reporting under WFD should use WISE-5 only in exceptional circumstances (i.e. to report water bodies not designated under WFD and required for the reporting of time series data under the WISE SoE data flows). </skos:definition>
+As of 2021, the data model and data flow for reporting of EIONET spatial data (WISE-5) is aligned with the data model for the reporting of the 3rd River Basin Management Plans spatial data, under the Water Framework Directive (WFD2022 Spatial).</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/9">
     <skos:prefLabel xml:lang="en">Summary  of emission  inventory for large combustion plants (LCP), Art 4.(4) and 15.(3) plants</skos:prefLabel>
@@ -1175,6 +1173,10 @@ The first WFD implementation report published by the Commission on transposition
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/805">
     <skos:prefLabel xml:lang="en">Water Framework Directive - River Basin Management Plans - 2022 RBD XML data</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/828">
+    <skos:prefLabel xml:lang="en">Water Framework Directive - Programmes of Measures - 2024 reporting</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/137">
@@ -3289,7 +3291,7 @@ Annual data shall be made available to the Commission upon request.</skos:defini
     <skos:definition xml:lang="en">Note: Reporting for this obligation in BDR is through https://rod.eionet.europa.eu/obligations/665</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/669">
-    <skos:prefLabel xml:lang="en">Fluorinated gases (F-Gases) reporting by undertakings (Regulation 2006)</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Fluorinated gases (F-gases) reporting by undertakings (Regulation 2006)</skos:prefLabel>
     <skos:definition xml:lang="en">Information on the reporting procedure as well as Frequently Asked Questions (FAQ) are available on the EEA website at: https://bdr.eionet.europa.eu/help</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/670">
@@ -3457,16 +3459,16 @@ UNFCCC Guidelines on reporting biennial reports (BRs): https://unfccc.int/proces
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/713">
     <skos:prefLabel xml:lang="en">Fluorinated gases (F-gases) reporting by undertakings (Regulation 2014)</skos:prefLabel>
-    <skos:definition xml:lang="en">Information on the policy area can also be found at DG CLIMA's website at https://ec.europa.eu/clima/policies/f-gas_en
+    <skos:definition xml:lang="en">Information on the policy area can also be found at DG CLIMA's website at: https://climate.ec.europa.eu/eu-action/fluorinated-greenhouse-gases_en
 </skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/764">
     <skos:prefLabel xml:lang="en">Fluorinated gases (F-gases) verification reporting (Bulk imports)</skos:prefLabel>
-    <skos:definition xml:lang="en">Information on the policy area can also be found at DG CLIMA's website at: https://ec.europa.eu/clima/policies/f-gas_en</skos:definition>
+    <skos:definition xml:lang="en">Information on the policy area can also be found at DG CLIMA's website at: https://climate.ec.europa.eu/eu-action/fluorinated-greenhouse-gases_en</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/765">
     <skos:prefLabel xml:lang="en">Fluorinated gases (F-gases) verification reporting (Equipment imports)</skos:prefLabel>
-    <skos:definition xml:lang="en">Information on the policy area can also be found at DG CLIMA's website at: https://ec.europa.eu/clima/policies/f-gas_en</skos:definition>
+    <skos:definition xml:lang="en">Information on the policy area can also be found at DG CLIMA's website at: https://climate.ec.europa.eu/eu-action/fluorinated-greenhouse-gases_en</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/274">
     <skos:prefLabel xml:lang="en">Information on Natura 2000 sites (SPAs, Birds Directive)</skos:prefLabel>
@@ -3558,7 +3560,7 @@ UNFCCC Guidelines on reporting biennial reports (BRs): https://unfccc.int/proces
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/748">
     <skos:prefLabel xml:lang="en">National Emission reduction Commitments Directive (NECD) - National emission inventories</skos:prefLabel>
-    <skos:definition xml:lang="en">Natural emissions shall be reported in accordance with the methodologies on the LRTAP Convention and EMEP/EEA air pollutant emissions inventory guidebook. They shall not be included in national totals and shall be reported separately.
+    <skos:definition xml:lang="en">ECE/EB.AIR/125 (URL: https://unece.org/fileadmin/DAM/env/documents/2013/air/eb/ece.eb.air.125_E_ODS.pdf). All information including the latest template Annex I (URL: https://www.ceip.at/fileadmin/inhalte/ceip/1_reporting_guidelines2014/annex_i_rev18-11.xlsx) to be used can be found here: https://www.ceip.at/reporting-instructions.
 
 Re-submissions due to errors shall be provided within four weeks and include a clear explanation of the change made.</skos:definition>
   </skos:Concept>
@@ -3571,16 +3573,17 @@ Re-submissions due to errors shall be provided within four weeks and include a c
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/751">
-    <skos:prefLabel xml:lang="en">National Emission reduction Commitments Directive (NECD) - Projected emissions by aggregated NFR sectors</skos:prefLabel>
-    <skos:definition xml:lang="en"/>
+    <skos:prefLabel xml:lang="en">National Emission reduction Commitments Directive (NECD) - Projected emissions</skos:prefLabel>
+    <skos:definition xml:lang="en">All information including the latest templates to be used can be found here: https://www.ceip.at/reporting-instructions. 
+For 2023, Member States are free to use either the new Annex IV (URL: https://www.ceip.at/fileadmin/inhalte/ceip/00_pdf_other/2023/annex_iv_v2023.xlsx) template or the version used in previous years with aggregated NFR source categories.</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/752">
     <skos:prefLabel xml:lang="en">National Emission reduction Commitments Directive (NECD) - Informative Inventory Report (IIR)</skos:prefLabel>
-    <skos:definition xml:lang="en"/>
+    <skos:definition xml:lang="en">The informative inventory reports shall be prepared in accordance with the EMEP Reporting Guidelines (URL: https://www.ceip.at/reporting-instructions/annexes-to-the-2023-reporting-guidelines), EMEP/EEA technical guidebook (URL: https://www.eea.europa.eu/publications/emep-eea-guidebook-2019), and reported using the template for inventory reports (URL: https://www.ceip.at/fileadmin/inhalte/ceip/1_reporting_guidelines2014/annex_ii_informative_inventory_report_issue2021_final.pdf) as specified therein (Annex IV, Part 3 of NEC Directive).</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/753">
     <skos:prefLabel xml:lang="en">National Emission reduction Commitments Directive (NECD) - National air pollution control programmes</skos:prefLabel>
-    <skos:definition xml:lang="en"/>
+    <skos:definition xml:lang="en">Communication on Guidance for the development of National Air Pollution Control Programmes (URL: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=uriserv:OJ.C_.2019.077.01.0001.01.ENG), Commission Implementing Decision (EU) 2018/1522 (URL: https://eur-lex.europa.eu/eli/dec_impl/2018/1522/oj) on NAPCP format</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/767">
     <skos:prefLabel xml:lang="en">National Emission reduction Commitments Directive (NECD) - Network of impact monitoring sites</skos:prefLabel>
@@ -3588,7 +3591,7 @@ Re-submissions due to errors shall be provided within four weeks and include a c
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/768">
     <skos:prefLabel xml:lang="en">National Emission reduction Commitments Directive (NECD) - Impact monitoring data</skos:prefLabel>
-    <skos:definition xml:lang="en"/>
+    <skos:definition xml:lang="en">Commission Guidance notice on ecosystem monitoring (URL: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:C:2019:092:TOC), reporting template (URL: https://circabc.europa.eu/ui/group/cd69a4b9-1a68-4d6c-9c48-77c0399f225d/library/2922dd49-80d6-4fd1-b510-812dab4da6be/details), guidance on monitoring site selection (2022) (URL: https://circabc.europa.eu/ui/group/cd69a4b9-1a68-4d6c-9c48-77c0399f225d/library/85f4b9c0-e232-42b7-9940-9262f75ac625/details)</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/771">
     <skos:prefLabel xml:lang="en">National Emission reduction Commitments Directive (NECD) - Flexibilities</skos:prefLabel>
@@ -3606,6 +3609,10 @@ Information compiled into Annex II (new adjustment) and/or Annex VII (approved a
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/770">
     <skos:prefLabel xml:lang="en">Reporting of data on new heavy-duty vehicles by manufacturers</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/829">
+    <skos:prefLabel xml:lang="en">Reporting on HDV baseline resimulation</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/783">
@@ -3708,5 +3715,17 @@ https://circabc.europa.eu/ui/group/fcb355ee-7434-4448-a53d-5dc5d1dac678/library/
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/817">
     <skos:prefLabel xml:lang="en">Map My Tree - Organisations</skos:prefLabel>
     <skos:definition xml:lang="en">[notes about who reporting and how to register]</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/823">
+    <skos:prefLabel xml:lang="en">National systems for policies and measures and projections</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/824">
+    <skos:prefLabel xml:lang="en">Integrated reporting on greenhouse gas policies and measures</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/825">
+    <skos:prefLabel xml:lang="en">Integrated reporting on national adaptation actions</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
   </skos:Concept>
 </rdf:RDF>

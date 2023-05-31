@@ -31,11 +31,11 @@
       <skos:ConceptScheme rdf:about="{$thesaurusId}">
         <dc:title>Reporting obligations</dc:title>
         <dc:description></dc:description>
-        <dcterms:issued>2021-08-25</dcterms:issued>
-        <dcterms:modified>2021-08-25</dcterms:modified>
+        <dcterms:issued>2023-02-06</dcterms:issued>
+        <dcterms:modified>2023-02-06</dcterms:modified>
       </skos:ConceptScheme>
 
-      <xsl:apply-templates/>
+      <xsl:apply-templates select=".//rod:Obligation"/>
     </rdf:RDF>
   </xsl:template>
 
