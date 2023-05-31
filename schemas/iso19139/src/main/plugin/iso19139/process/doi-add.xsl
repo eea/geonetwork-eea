@@ -25,7 +25,7 @@
   <xsl:variable name="doiProtocol"
                 select="'DOI'"/>
   <xsl:variable name="doiName"
-                select="'Digital Object Identifier (DOI)'"/>
+                select="''"/>
 
 
   <xsl:variable name="isDoiAlreadySet"
