@@ -680,7 +680,7 @@
             },
             isFilterTagsDisplayedInSearch: true,
             searchMapPlacement: "results", // results, facets or none
-            showStatusFooterFor: "historicalArchive,obsolete,superseded",
+            showStatusFooterFor: "historicalArchive,obsolete,superseded,completed",
             showBatchDropdown: true,
             usersearches: {
               enabled: true,
