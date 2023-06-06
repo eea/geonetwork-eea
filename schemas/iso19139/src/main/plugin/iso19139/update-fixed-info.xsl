@@ -193,7 +193,8 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
   </xsl:template>
 
   <xsl:template mode="copy-online"
-                match="gmd:onLine[starts-with(*/gmd:protocol/gco:CharacterString, 'EEA')]">
+                match="gmd:onLine[starts-with(*/gmd:protocol/gco:CharacterString, 'EEA')
+                                  or starts-with(*/gmd:linkage/*/text(), 'https://taskman.eionet.europa.eu/issues')]">
     <xsl:copy>
       <xsl:attribute name="gco:nilReason">withheld</xsl:attribute>
       <xsl:apply-templates select="@*[name() != 'gco:nilReason']"/>
