@@ -552,7 +552,7 @@
                     <gmd:identifier>
                       <gmd:MD_Identifier>
                         <gmd:code>
-                          <gmx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.eea-mp">geonetwork.thesaurus.external.theme.eea-mp</gmx:Anchor>
+                          <gmx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/local.theme.eea-mp">geonetwork.thesaurus.local.theme.eea-mp</gmx:Anchor>
                         </gmd:code>
                       </gmd:MD_Identifier>
                     </gmd:identifier>
