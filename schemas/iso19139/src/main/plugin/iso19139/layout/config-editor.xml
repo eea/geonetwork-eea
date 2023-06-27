@@ -1649,23 +1649,28 @@
           <text ref="eea-lineage"/>
 
           <!-- Conformity -->
-          <field name="conformity" templateModeOnly="true"
+          <field name="conformity"
+                 templateModeOnly="true"
+                 notDisplayedIfMissing="true"
                  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/
                     gmd:report/gmd:DQ_DomainConsistency/gmd:result[count(gmd:DQ_ConformanceResult/gmd:specification/
-                      gmd:CI_Citation/gmd:title/gco:CharacterString) > 0]"
+                      gmd:CI_Citation/gmd:title/(gco:CharacterString|gmx:Anchor)) > 0]"
                  if="(count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue !=
           'nonGeographicDataset'])
                      + count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/
                       gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/
-                      gmd:CI_Citation/gmd:title[gco:CharacterString])) > 0"
+                      gmd:CI_Citation/gmd:title[(gco:CharacterString|gmx:Anchor)])) > 0"
                  del="../..">
             <template>
               <values>
-                <key label="conformity_title"
-                     xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString"
+                <key label="conformity_desc"
+                     xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/(gco:CharacterString|gmx:Anchor)/text()"
                      tooltip="gmd:pass">
                   <helper name="gmd:title"
                           context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title"/>
+                </key>
+                <key label="conformity_linkage"
+                     xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href">
                 </key>
                 <key label="conformity_date"
                      xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date"
@@ -1685,8 +1690,7 @@
                     <gmd:specification>
                       <gmd:CI_Citation>
                         <gmd:title>
-                          <gco:CharacterString>{{conformity_title}}</gco:CharacterString>
-                          <gn:copy select="gmd:PT_FreeText"/>
+                          <gmx:Anchor xlink:href="{{conformity_linkage}}">{{conformity_desc}}</gmx:Anchor>
                         </gmd:title>
                         <gn:copy select="gmd:alternateTitle"/>
                         <gmd:date>
@@ -1696,7 +1700,7 @@
                             </gmd:date>
                             <gmd:dateType>
                               <gmd:CI_DateTypeCode
-                                codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                 codeListValue="publication"/>
                             </gmd:dateType>
                           </gmd:CI_Date>
@@ -1729,7 +1733,7 @@
                   if="(count(gmd:MD_Metadata/gmd:hierarchyLevel[*/@codeListValue =
           'nonGeographicDataset'])
                       + count(gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency[
-                              contains(gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString, 'No 1089/2010')])) = 0"
+                              contains(gmd:result/*/gmd:specification/*/gmd:title/(gco:CharacterString|gmx:Anchor), 'No 1089/2010')])) = 0"
                   or="report"
                   in="/gmd:MD_Metadata/gmd:dataQualityInfo/*">
             <template>
@@ -1741,7 +1745,7 @@
                         <gmd:specification>
                           <gmd:CI_Citation>
                             <gmd:title>
-                              <gco:CharacterString>Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</gco:CharacterString>
+                              <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2010/1089">Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</gmx:Anchor>
                             </gmd:title>
                             <gmd:date>
                               <gmd:CI_Date>
