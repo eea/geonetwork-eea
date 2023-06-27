@@ -1595,6 +1595,7 @@
       <option value='DIMAP'>DIMAP format (used by some satellite image providers)</option>
       <option value='ENVI'>ENVI .hdr Labelled Raster</option>
       <option value='EHdr'>ESRI .hdr Labelled</option>
+      <option value='GDB'>ESRI GeoDatabase</option>
       <option value='HFA'>Erdas Imagine (.img)</option>
       <option value='LAN'>Erdas 7.x .LAN and .GIS</option>
       <option value='ECW'>ERMapper Compressed Wavelets (.ecw)</option>
@@ -1607,8 +1608,7 @@
       <option value='AVCBin'>Arc/Info Binary Coverage</option>
       <option value='AVCE00'>Arc/Info .E00 (ASCII) Coverage</option>
       <option value='CSV'>Comma Separated Value (.csv)</option>
-      <option value='FGeo'>ESRI File GeoDatabase</option>
-      <option value='PGeo'>ESRI Personal GeoDatabase</option>
+      <option value='GDB'>ESRI GeoDatabase</option>
       <option value='SHP'>ESRI Shapefile</option>
       <option value='GML'>Geography Markup Language</option>
       <option value='GRASS'>GRASS vector</option>
