@@ -1898,6 +1898,7 @@
                  use="data-gn-keyword-picker">
             <directiveAttributes data-thesaurus-key="external.theme.httpinspireeceuropaeumetadatacodelistLimitationsOnPublicAccess-LimitationsOnPublicAccess"
                                  data-display-definition="true"
+                                 data-show-hints-on-focus="true"
                                  data-thesaurus-concept-id-attribute="xlinkCOLONhref"/>
           </field>
 
