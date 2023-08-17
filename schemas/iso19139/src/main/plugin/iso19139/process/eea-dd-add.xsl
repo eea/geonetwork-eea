@@ -42,7 +42,14 @@
 
   <xsl:variable name="uuid"
                 select="//gmd:fileIdentifier/gco:CharacterString"/>
+  <xsl:variable name="resourceIdentifier"
+                select="//gmd:identifier/*/gmd:code/*[starts-with(., 'eea_t_')]"/>
 
+
+  <xsl:template match="gmd:aggregationInfo[starts-with(*/gmd:aggregateDataSetIdentifier/*/gmd:code/gmx:Anchor/@xlink:href, 'http://www.eea.europa.eu/data-and-maps/')]"/>
+
+  <xsl:template match="gmd:identifier[not(starts-with(*/gmd:code/*, 'eea_t_'))
+                        and not(starts-with(*/gmd:code/*, 'DAT'))]"/>
 
   <xsl:template match="gmd:transferOptions/*">
     <xsl:copy>
@@ -51,8 +58,20 @@
       <xsl:copy-of select="$linksToKeep"/>
 
       <xsl:variable name="onlyDiscomap"
-                    select="count($linksToKeep[contains(*/gmd:linkage/*/text(), 'https://discomap.eea.europa.eu')]) = count($linksToKeep)"/>
-      <xsl:if test="not($onlyDiscomap)">
+                    select="count($linksToKeep[contains(*/gmd:linkage/*/text(), 'https://discomap.eea.europa.eu')]) = count($linksToKeep)
+                      or count($linksToKeep) = 0"/>
+      <xsl:if test="not($onlyDiscomap) or count($linksToKeep) = 0">
+        <gmd:onLine gco:nilReason="withheld">
+          <gmd:CI_OnlineResource>
+            <gmd:linkage>
+              <xsl:message>===<xsl:value-of select="$resourceIdentifier"/> </xsl:message>
+              <gmd:URL>https://sdi.eea.europa.eu/webdav/continental/tabular/<xsl:value-of select="$resourceIdentifier"/>/</gmd:URL>
+            </gmd:linkage>
+            <gmd:protocol>
+              <gco:CharacterString>EEA:FOLDERPATH</gco:CharacterString>
+            </gmd:protocol>
+          </gmd:CI_OnlineResource>
+        </gmd:onLine>
         <gmd:onLine>
           <gmd:CI_OnlineResource>
             <gmd:linkage>
@@ -62,7 +81,7 @@
               <gco:CharacterString>WWW:URL</gco:CharacterString>
             </gmd:protocol>
             <gmd:name>
-              <gco:CharacterString>Direct Download</gco:CharacterString>
+              <gco:CharacterString>Direct download</gco:CharacterString>
             </gmd:name>
             <gmd:description>
               <gco:CharacterString>
