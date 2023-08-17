@@ -75,6 +75,20 @@
     </div>
   </eea-lineage>
 
+  <eea-mmu>Minimum Mapping Unit (ha)</eea-mmu>
+  <eea-mmw>Minimum Mapping width (m)</eea-mmw>
+  <eea-mmuw-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+        CLMS vector products have Minimum Mapping Unit (normally in ha) and Minimum Mapping Width (normally in m). These parameters show the accuracy of the product.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-mmuw-help>
+
   <eea-title-help>
     <div class="row">
       <div class="col-sm-2"/>

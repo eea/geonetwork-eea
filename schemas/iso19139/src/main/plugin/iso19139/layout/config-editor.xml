@@ -1516,6 +1516,75 @@
           <text ref="eea-spatialresolution-help"/>
 
 
+
+          <field name="eea-mmu"
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
+                          gmd:nameOfMeasure = 'Minimum Mapping Unit']/gmd:result/*/gmd:value"/>
+
+          <field name="eea-mmw"
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
+                          gmd:nameOfMeasure = 'Minimum Mapping Width']/gmd:result/*/gmd:value"/>
+
+          <action type="add" btnLabel="eea-mmu" or="report"
+                  in="/gmd:MD_Metadata/gmd:dataQualityInfo/*"
+                  if="count(gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report[
+                          */gmd:nameOfMeasure = 'Minimum Mapping Unit']) = 0">
+            <template>
+              <snippet>
+                <gmd:report>
+                  <gmd:DQ_AbsoluteExternalPositionalAccuracy>
+                    <gmd:nameOfMeasure>
+                      <gco:CharacterString>Minimum Mapping Unit</gco:CharacterString>
+                    </gmd:nameOfMeasure>
+                    <gmd:result>
+                      <gmd:DQ_QuantitativeResult>
+                        <gmd:valueUnit>
+                          <gml:UnitDefinition gml:id="d3888e669a1051934">
+                            <gml:identifier codeSpace="">ha</gml:identifier>
+                          </gml:UnitDefinition>
+                        </gmd:valueUnit>
+                        <gmd:value>
+                          <gco:Record/>
+                        </gmd:value>
+                      </gmd:DQ_QuantitativeResult>
+                    </gmd:result>
+                  </gmd:DQ_AbsoluteExternalPositionalAccuracy>
+                </gmd:report>
+              </snippet>
+            </template>
+          </action>
+          <action type="add" btnLabel="eea-mmw" or="report"
+                  in="/gmd:MD_Metadata/gmd:dataQualityInfo/*"
+                  if="count(gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report[
+                          */gmd:nameOfMeasure = 'Minimum Mapping Width']) = 0">
+            <template>
+              <snippet>
+                <gmd:report>
+                  <gmd:DQ_AbsoluteExternalPositionalAccuracy>
+                    <gmd:nameOfMeasure>
+                      <gco:CharacterString>Minimum Mapping Width</gco:CharacterString>
+                    </gmd:nameOfMeasure>
+                    <gmd:result/>
+                    <gmd:result>
+                      <gmd:DQ_QuantitativeResult>
+                        <gmd:valueUnit>
+                          <gml:UnitDefinition gml:id="d3433e675a1051934">
+                            <gml:identifier codeSpace="">m</gml:identifier>
+                          </gml:UnitDefinition>
+                        </gmd:valueUnit>
+                        <gmd:value>
+                          <gco:Record/>
+                        </gmd:value>
+                      </gmd:DQ_QuantitativeResult>
+                    </gmd:result>
+                  </gmd:DQ_AbsoluteExternalPositionalAccuracy>
+                </gmd:report>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-mmuw-help"/>
+
+
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Temporal resolution']"/>
 
           <action type="add"
