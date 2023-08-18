@@ -58,7 +58,9 @@
     holds, archives, publishes
     prints, distributes, releases,
     issues, or produces the
-    resource. Check distribution section, the publisher is the first distributor contact. This field is mandatory.
+    resource. Check the distribution section, the publisher is the first distributor contact
+    or in the identification section, the first contact with role distributor or custodian.
+    This field is mandatory.
   </datacite.publisher.missing>
   <datacite.publisher.present>The publisher is: </datacite.publisher.present>
 </strings>
