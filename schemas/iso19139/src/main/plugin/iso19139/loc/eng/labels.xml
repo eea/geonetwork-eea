@@ -1619,10 +1619,11 @@
       <option value='Geopackage'>Geopackage</option>
       <option value="">---Tabular---</option>
       <option value='ascii (.csv, .txt, .sql)'>ascii (.csv, .txt, .sql)</option>
-      <option value='Microsoft Excel (.xls, .xlsx)'>Microsoft Excel (.xls, .xlsx)</option>
       <option value='XML'>XML</option>
-      <option value='SQLite'>SQLite</option>
+      <option value='Parquet'>Parquet</option>
+      <option value='Microsoft Excel (.xls, .xlsx)'>Microsoft Excel (.xls, .xlsx)</option>
       <option value='Microsoft Access (.mdb, .accdb)'>Microsoft Access (.mdb, .accdb)</option>
+      <option value='SQLite'>SQLite</option>
       <option value='dBASE (.dbf)'>dBASE (.dbf)</option>
 		</helper>
 	</element>
