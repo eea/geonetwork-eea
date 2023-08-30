@@ -1578,10 +1578,11 @@
 		<helper rel="gmd:version"
             displayIf="ancestor::node()[name()='gmd:MD_Metadata']/gmd:hierarchyLevel[*/@codeListValue = 'nonGeographicDataset']">
       <option value='ascii (.csv, .txt, .sql)'>ascii (.csv, .txt, .sql)</option>
-      <option value='Microsoft Excel (.xls, .xlsx)'>Microsoft Excel (.xls, .xlsx)</option>
       <option value='XML'>XML</option>
-      <option value='SQLite'>SQLite</option>
+      <option value='Parquet'>Parquet</option>
+      <option value='Microsoft Excel (.xls, .xlsx)'>Microsoft Excel (.xls, .xlsx)</option>
       <option value='Microsoft Access (.mdb, .accdb)'>Microsoft Access (.mdb, .accdb)</option>
+      <option value='SQLite'>SQLite</option>
       <option value='dBASE (.dbf)'>dBASE (.dbf)</option>
     </helper>
     <helper rel="gmd:version"
