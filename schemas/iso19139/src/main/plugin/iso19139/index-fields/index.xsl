@@ -29,7 +29,7 @@
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:srv="http://www.isotc211.org/2005/srv"
                 xmlns:gml="http://www.opengis.net/gml/3.2"
-                xmlns:gml31="http://www.opengis.net/gml"
+                xmlns:gml320="http://www.opengis.net/gml"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:gn-fn-index="http://geonetwork-opensource.org/xsl/functions/index"
                 xmlns:index="java:org.fao.geonet.kernel.search.EsSearchManager"
@@ -702,7 +702,7 @@
         <xsl:for-each select="*/gmd:EX_Extent/*/gmd:EX_BoundingPolygon/gmd:polygon">
           <xsl:variable name="geojson"
                         select="util:gmlToGeoJson(
-                                  saxon:serialize((gml:*|gml31:*), 'default-serialize-mode'),
+                                  saxon:serialize((gml:*|gml320:*), 'default-serialize-mode'),
                                   true(), 5)"/>
           <xsl:choose>
             <xsl:when test="$geojson = ''"></xsl:when>
