@@ -243,6 +243,11 @@
 
     <script type="text/javascript">
       var module = angular.module('<xsl:value-of select="$angularApp"/>');
+
+      module.config(['gnGlobalSettings',
+      function(gnGlobalSettings) {
+      gnGlobalSettings.webAnalyticsService = '<xsl:value-of select="util:getWebAnalyticsService()"/>';
+      }]);
     </script>
 
     <xsl:if test="$angularApp = 'gn_search' or $angularApp = 'gn_login' or $angularApp = 'gn_admin'">
@@ -308,27 +313,14 @@
   </xsl:template>
 
 
-  <xsl:template name="eea-matomo">
-    <!-- Matomo -->
-    <script type="text/javascript">
-      var _paq = _paq || [];
-      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
-      (function() {
-      var u="https://matomo.eea.europa.eu/";
-      _paq.push(['setTrackerUrl', u+'piwik.php']);
-      _paq.push(['setSiteId', '23']);
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-      })();
-    </script>
-    <noscript>
-      <p>
-        <img src="https://matomo.eea.europa.eu/piwik.php?idsite=23&amp;rec=1" style="border:0;" alt="" />
-      </p>
-    </noscript>
-    <!-- End Matomo Code -->
+  <xsl:template name="webAnalytics">
+    <xsl:variable name="webAnalyticsService" select="util:getWebAnalyticsService()" />
+    <xsl:variable name="webAnalyticsCode" select="util:getWebAnalyticsJavascriptCode()" />
+    <xsl:if test="string($webAnalyticsService) and string($webAnalyticsCode)">
+      <script type="text/javascript">
+        <xsl:value-of select="$webAnalyticsCode" />
+      </script>
+    </xsl:if>
   </xsl:template>
 
 </xsl:stylesheet>

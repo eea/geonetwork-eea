@@ -168,6 +168,7 @@
     "gnFacetSorter",
     "gnExternalViewer",
     "gnUrlUtils",
+    "gnWebAnalyticsService",
     function (
       $scope,
       $location,
@@ -190,7 +191,8 @@
       gnESFacet,
       gnFacetSorter,
       gnExternalViewer,
-      gnUrlUtils
+      gnUrlUtils,
+      gnWebAnalyticsService
     ) {
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
@@ -414,10 +416,14 @@
 
       $scope.resultviewFns = {
         addMdLayerToMap: function (link, md) {
+          var config = buildAddToMapConfig(link, md);
+
+          gnWebAnalyticsService.trackLink(config.url, link.protocol);
+
           // This is probably only a service
           // Open the add service layer tab
           $location.path("map").search({
-            add: encodeURIComponent(angular.toJson([buildAddToMapConfig(link, md)]))
+            add: encodeURIComponent(angular.toJson([config]))
           });
           return;
         },
@@ -426,6 +432,11 @@
           angular.forEach(layers, function (layer) {
             config.push(buildAddToMapConfig(layer, md));
           });
+
+          config.forEach(function (c) {
+            gnWebAnalyticsService.trackLink(c.url, c.type);
+          });
+
           $location.path("map").search({
             add: encodeURIComponent(angular.toJson(config))
           });

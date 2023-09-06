@@ -304,4 +304,9 @@
       </util:list>
     </entry>
   </util:map>
+
+  <bean class="org.fao.geonet.analytics.WebAnalyticsConfiguration" name="webAnalyticsConfiguration">
+    <property name="service" value="\${analytics.web.service}" />
+    <property name="javascriptCode" value="\${analytics.web.jscode}" />
+  </bean>
 </beans>

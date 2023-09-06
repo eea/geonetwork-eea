@@ -153,7 +153,7 @@
           </xsl:otherwise>
         </xsl:choose>
 
-        <xsl:call-template name="eea-matomo"/>
+        <xsl:call-template name="webAnalytics"/>
       </body>
     </html>
   </xsl:template>
