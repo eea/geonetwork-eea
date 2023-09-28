@@ -11,7 +11,7 @@ RUN git clone --recursive https://github.com/eea/geonetwork-eea.git /tmp/geonetw
 WORKDIR /tmp/geonetwork-eea
 RUN git checkout $COMMIT_OR_BRANCH
 RUN git submodule update --init --recursive
-RUN mvn install  -DskipTests -Penv-catalogue
+RUN mvn install -DskipTests
 RUN unzip /tmp/geonetwork-eea/web/target/geonetwork.war -d /tmp/geonetwork
 
 
