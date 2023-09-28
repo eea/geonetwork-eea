@@ -12,7 +12,7 @@ WORKDIR /tmp/geonetwork-eea
 RUN git checkout $COMMIT_OR_BRANCH
 RUN git submodule update --init --recursive
 RUN mvn install  -DskipTests -Penv-catalogue
-RUN unzip /tmp/geonetwork-eea/web/target/catalogue.war -d /tmp/geonetwork
+RUN unzip /tmp/geonetwork-eea/web/target/geonetwork.war -d /tmp/geonetwork
 
 
 FROM jetty:9-jdk8-eclipse-temurin AS final
