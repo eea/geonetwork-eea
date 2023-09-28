@@ -1229,8 +1229,6 @@
         </property>
       </activation>
       <properties>
-        <application.name>geonetwork</application.name>
-        <geonetwork.config.security>config-security</geonetwork.config.security>
         <env>prod</env>
       </properties>
     </profile>
@@ -1244,9 +1242,6 @@
       </activation>
       <properties>
         <env>prod</env>
-        <geonetwork.config.security>config-security</geonetwork.config.security>
-        <application.name>geonetwork</application.name>
-        <security.config.file>config-security-noldap.xml</security.config.file>
       </properties>
     </profile>
     <profile>
@@ -1259,32 +1254,7 @@
       </activation>
       <properties>
         <env>dev</env>
-        <geonetwork.data.dir>${geonetwork.webapp.dir}/WEB-INF/data</geonetwork.data.dir>
-        <geonetwork.config.security>config-security</geonetwork.config.security>
-        <application.name>geonetwork</application.name>
-        <security.config.file>config-security-noldap.xml</security.config.file>
         <wro.debug>true</wro.debug>
-      </properties>
-    </profile>
-    <profile>
-      <id>env-catalogue</id>
-      <activation>
-        <property>
-          <name>env</name>
-          <value>prod</value>
-        </property>
-      </activation>
-      <properties>
-        <env>prod</env>
-        <geonetwork.config.security>config-securitycatalogue</geonetwork.config.security>
-        <application.name>catalogue</application.name>
-	<geonetwork.log>/catalogue-data/logs/catalogue.log</geonetwork.log>
-        <geonetwork.data.dir>file:///catalogue-data</geonetwork.data.dir>
-        <!-- If merging internal and editor / this should enable ldap auth. -->
-        <security.config.file>config-security-noldap.xml</security.config.file>
-        <war.excludes>xml/schemas/**,WEB-INF/web*.xml</war.excludes>
-        <ldap.mapping.defaultProfile>Editor</ldap.mapping.defaultProfile>
-        <ldap.mapping.defaultGroup>SDI_EDITING_DEFAULT</ldap.mapping.defaultGroup>
       </properties>
     </profile>
     <profile>

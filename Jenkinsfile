@@ -1,6 +1,6 @@
 pipeline {
   agent {
-            node { label "docker-host" }
+    node { label "docker-host" }
   }
 
   environment {
@@ -10,31 +10,32 @@ pipeline {
    }
 
   stages {
-    
+
     stage ('Docker build and push') {
       when {
-          environment name: 'CHANGE_ID', value: ''
+        environment name: 'CHANGE_ID', value: ''
       }
+
       steps {
         script{
-                 if (env.BRANCH_NAME == env.default_branch ) {
-                         tagName = GIT_COMMIT.take(8)
-                 } else {
-                         tagName = "$BRANCH_NAME"
-                 }
-                 try {
-                          dockerImage = docker.build("$registry:$tagName", "--no-cache ./build-in-docker/")
-                          docker.withRegistry( '', 'eeajenkins' ) {
-                             dockerImage.push()
-                          }
-                      } 
-                 finally {
-                           sh "docker rmi $registry:$tagName"
-                      }
+            if (env.BRANCH_NAME == env.default_branch ) {
+                tagName = GIT_COMMIT.take(8)
+            } else {
+                tagName = "$BRANCH_NAME"
             }
-          }
+            try {
+                dockerImage = docker.build("$registry:$tagName", "--no-cache --build-arg COMMIT_OR_BRANCH=$tagName ./build-in-docker/")
+                docker.withRegistry( '', 'eeajenkins' ) {
+                    dockerImage.push()
+                }
+            }
+            finally {
+                sh "docker rmi $registry:$tagName"
+            }
         }
-    
+      }
+    }
+
   }
 
   post {

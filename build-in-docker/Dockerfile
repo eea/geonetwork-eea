@@ -1,39 +1,51 @@
-FROM jetty:9-jdk8-eclipse-temurin as build
+FROM maven:3-eclipse-temurin-8 AS build
 
-USER root
+ARG COMMIT_OR_BRANCH=eea-4.2.0
+
 RUN apt-get -y update && \
-    apt-get install -y maven \
-    git \
-    zip
-
-USER jetty
-RUN git clone --recursive https://github.com/eea/geonetwork-eea.git
-
-RUN cd geonetwork-eea && \
-    mvn clean install -DskipTests
-RUN cd geonetwork-eea/web && \
-    mvn package  -DskipTests -Penv-catalogue
-
-RUN unzip /var/lib/jetty/geonetwork-eea/web/target/catalogue.war -d /var/lib/jetty/webapps/catalogue
+    apt-get install -y --no-install-recommends \
+      unzip
 
 
-FROM jetty:9-jdk8-eclipse-temurin
-MAINTAINER michimau <mauro.michielon@eea.europa.eu>
+RUN git clone --recursive https://github.com/eea/geonetwork-eea.git /tmp/geonetwork-eea
+WORKDIR /tmp/geonetwork-eea
+RUN git checkout $COMMIT_OR_BRANCH
+RUN git submodule update --init --recursive
+RUN mvn install  -DskipTests -Penv-catalogue
+RUN unzip /tmp/geonetwork-eea/web/target/catalogue.war -d /tmp/geonetwork
+
+
+FROM jetty:9-jdk8-eclipse-temurin AS final
+LABEL maintainer="michimau <mauro.michielon@eea.europa.eu>"
+
+ENV DATA_DIR /catalogue-data
+ENV WEBAPP_CONTEXT_PATH /geonetwork
+ENV GN_CONFIG_PROPERTIES -Dgeonetwork.dir=${DATA_DIR} \
+        -Dgeonetwork.formatter.dir=${DATA_DIR}/data/formatter \
+        -Dgeonetwork.schema.dir=/opt/geonetwork/WEB-INF/data/config/schema_plugins \
+        -Dgeonetwork.indexConfig.dir=/opt/geonetwork/WEB-INF/data/config/index
+
+
+ENV JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true \
+        -Xms512M -Xss512M -Xmx2G -XX:+UseConcMarkSweepGC
+
 
 USER root
 
 RUN rm -rf /var/lib/jetty/webapps/*  && \
     chown jetty:jetty /var/lib/jetty/webapps && \
-    mkdir -p /catalogue-data && \
-    chown -R jetty:jetty /catalogue-data
-
-COPY --from=build /var/lib/jetty/webapps/catalogue /var/lib/jetty/webapps/catalogue
-
-COPY docker-entrypoint.sh /
+    mkdir -p ${DATA_DIR} && \
+    chown -R jetty:jetty ${DATA_DIR}
 
 USER jetty
+COPY jetty/geonetwork_context_template.xml /usr/local/share/geonetwork/geonetwork_context_template.xml
+RUN java -jar /usr/local/jetty/start.jar --create-startd --add-module=http-forwarded
+COPY docker-entrypoint.sh /geonetwork-entrypoint.sh
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+COPY --chown=jetty:jetty --from=build /tmp/geonetwork /opt/geonetwork
+
+ENTRYPOINT ["/geonetwork-entrypoint.sh"]
+CMD ["java","-jar","/usr/local/jetty/start.jar"]
 
 
 
