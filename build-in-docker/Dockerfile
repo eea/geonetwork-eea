@@ -1,4 +1,4 @@
-FROM maven:3-eclipse-temurin-8 AS build
+FROM maven:3-eclipse-temurin-8-focal AS build
 
 ARG COMMIT_OR_BRANCH=eea-4.2.0
 
@@ -11,7 +11,7 @@ RUN git clone --recursive https://github.com/eea/geonetwork-eea.git /tmp/geonetw
 WORKDIR /tmp/geonetwork-eea
 RUN git checkout $COMMIT_OR_BRANCH
 RUN git submodule update --init --recursive
-RUN mvn install -DskipTests
+RUN --mount=type=cache,target=/root/.m2/repository mvn -B install -DskipTests
 RUN unzip /tmp/geonetwork-eea/web/target/geonetwork.war -d /tmp/geonetwork
 
 
