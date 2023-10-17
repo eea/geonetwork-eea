@@ -199,6 +199,19 @@
             </xsl:if>
           </div>
           <div class="gn-md-side gn-md-side-advanced col-md-4">
+            <section class="gn-md-side-access">
+              <a class="btn btn-lg btn-block btn-primary"
+                 href="{if ($portalLink != '')
+                        then replace($portalLink, '\$\{uuid\}', $metadataUuid)
+                        else utils:getDefaultUrl($metadataUuid, $language)}">
+                <i class="fa fa-fw fa-home"><xsl:comment select="'icon'"/></i>
+                <xsl:value-of select="$schemaStrings/linkToPortal"/>
+              </a>
+              <div class="hidden-xs hidden-sm">
+                <xsl:value-of select="$schemaStrings/linkToPortal-help"/>
+              </div>
+            </section>
+
             <xsl:apply-templates mode="getOverviews" select="$metadata"/>
             <xsl:apply-templates mode="getExtent" select="$metadata"/>
 
@@ -281,19 +294,6 @@
                 </xsl:for-each>
               </section>
             </xsl:if>
-
-            <section class="gn-md-side-access">
-              <a class="btn btn-block btn-primary"
-                 href="{if ($portalLink != '')
-                        then replace($portalLink, '\$\{uuid\}', $metadataUuid)
-                        else utils:getDefaultUrl($metadataUuid, $language)}">
-                <i class="fa fa-fw fa-link"><xsl:comment select="'icon'"/></i>
-                <xsl:value-of select="$schemaStrings/linkToPortal"/>
-              </a>
-              <div class="hidden-xs hidden-sm">
-                <xsl:value-of select="$schemaStrings/linkToPortal-help"/>
-              </div>
-            </section>
 
             <xsl:if test="$sideRelated != ''">
               <section class="gn-md-side-associated">
