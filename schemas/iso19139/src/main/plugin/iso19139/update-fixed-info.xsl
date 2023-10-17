@@ -103,7 +103,7 @@
 
 
   <xsl:variable name="publicEmails"
-                select="'info@eea.europa.eu,sdi@eea.europa.eu'"/>
+                select="'info@eea.europa.eu,sdi@eea.europa.eu,copernicus@eea.europa.eu'"/>
 
 
   <!-- Matching the first gmd:online, we reorder links
