@@ -1305,7 +1305,6 @@
     <module>healthmonitor</module>
     <module>services</module>
     <module>wro4j</module>
-    <module>web</module>
     <module>inspire-atom</module>
     <module>doi</module>
     <module>es</module>
