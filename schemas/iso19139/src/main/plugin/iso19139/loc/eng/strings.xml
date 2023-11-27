@@ -418,6 +418,7 @@
     </div>
   </eea-contact-help>
   <eea-add-principal-investigator>Add EEA data steward (not displayed to anonymous users)</eea-add-principal-investigator>
+  <eea-add-originator>Add originator</eea-add-originator>
   <eea-taskman-ticket>EEA Taskman ticket</eea-taskman-ticket>
   <eea-add-taskman-ticket>Add the EEA Taskman ticket reference</eea-add-taskman-ticket>
   <eea-resourceConstraints>Resource constraints</eea-resourceConstraints>
