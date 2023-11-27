@@ -1072,6 +1072,10 @@
                 "type": "keyword",
                 "copy_to": ["any.langita"]
               },
+              "langdut": {
+                "type": "keyword",
+                "copy_to": ["any.langdut"]
+              },
               "langspa": {
                 "type": "keyword",
                 "copy_to": ["any.langspa"]
@@ -1316,6 +1320,14 @@
             "properties": {
               "organisation": {
                 "type": "keyword"
+              },
+              "email": {
+                "type": "keyword",
+                "copy_to": ["any.default"]
+              },
+              "individual": {
+                "type": "keyword",
+                "copy_to": ["any.default"]
               },
               "role": {
                 "type": "keyword"
@@ -1846,6 +1858,9 @@
               "type": {
                 "type": "keyword"
               },
+              "cardinality": {
+                "type": "keyword"
+              },
               "values": {
                 "type": "object",
                 "properties": {
@@ -1959,6 +1974,26 @@
       },
       "userSavedCount": {
         "type": "long"
+      },
+      "resourceTemporalExtentDetails": {
+        "properties": {
+          "start": {
+            "properties": {
+              "date": {
+                "type": "date",
+                "format": "date_optional_time"
+              }
+            }
+          },
+          "end": {
+            "properties": {
+              "date": {
+                "type": "date",
+                "format": "date_optional_time"
+              }
+            }
+          }
+        }
       }
     }
   }

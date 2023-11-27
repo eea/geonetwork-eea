@@ -900,18 +900,31 @@
                 // Compute default name and add a
                 // tokens element which is used for filter
                 angular.forEach(data, function (lang) {
-                  var defaultName = lang.label["eng"];
-                  lang.name = lang.label[scope.lang] || defaultName;
+                  lang.english = lang.label["eng"];
+                  lang.name = lang.label[scope.lang] || lang.english;
                   lang.code = scope.prefix + lang.code;
-                  lang.tokens = [lang.name, lang.code, defaultName];
+                  lang.tokens = [lang.name, lang.code, lang.english];
                 });
                 var source = new Bloodhound({
-                  datumTokenizer: Bloodhound.tokenizers.obj.whitespace("name"),
+                  datumTokenizer: Bloodhound.tokenizers.obj.whitespace(
+                    "name",
+                    "code",
+                    "english"
+                  ),
                   queryTokenizer: Bloodhound.tokenizers.whitespace,
                   local: data,
                   limit: 30
                 });
                 source.initialize();
+
+                function allOrSearchFn(q, sync) {
+                  if (q === "") {
+                    sync(source.all());
+                  } else {
+                    source.search(q, sync);
+                  }
+                }
+
                 $(element).typeahead(
                   {
                     minLength: 0,
@@ -920,7 +933,7 @@
                   {
                     name: "isoLanguages",
                     displayKey: "code",
-                    source: source.ttAdapter(),
+                    source: allOrSearchFn,
                     templates: {
                       suggestion: function (datum) {
                         return "<p>" + datum.name + " (" + datum.code + ")</p>";
@@ -1254,18 +1267,22 @@
   ]);
 
   module.directive("gnStatusBadge", [
-    function () {
+    "$translate",
+    function ($translate) {
       return {
         restrict: "A",
         replace: true,
-        transclude: true,
-        template:
-          '<div data-ng-if="::md.cl_status.length > 0"' +
-          ' title="{{::md.cl_status[0].key | translate}}"' +
-          ' class="gn-status gn-status-{{::md.cl_status[0].key}}">{{::md.cl_status[0].key | translate}}' +
-          "</div>",
+        templateUrl: "../../catalog/components/utility/partials/statusbadge.html",
         scope: {
           md: "=gnStatusBadge"
+        },
+        link: function (scope, element, attrs) {
+          scope.statusTitle = "";
+          if (scope.md && scope.md.cl_status && scope.md.cl_status.length > 0) {
+            angular.forEach(scope.md.cl_status, function (status) {
+              scope.statusTitle += $translate.instant(status.key) + "\n";
+            });
+          }
         }
       };
     }
@@ -2355,7 +2372,7 @@
                   '  <button type=button class="btn btn-danger gn-btn-modal-img">' +
                   '<i class="fa fa-times"/></button>' +
                   '  <img src="' +
-                  (img.lUrl || img.url || img.id) +
+                  (attr.ngSrc || img.lUrl || img.url || img.id) +
                   '"/>' +
                   (label != "" ? labelDiv : "") +
                   "</div>" +
@@ -2561,7 +2578,7 @@
         replace: true,
         scope: {
           uuid: "=gnMetadataSelector", // Model property with the metadata uuid selected
-          searchObj: "=", // ElasticSearch search object
+          searchObj: "=", // Elasticsearch search object
           md: "=", // Metadata object selected
           elementName: "@" // Input element name for the uuid control
         },

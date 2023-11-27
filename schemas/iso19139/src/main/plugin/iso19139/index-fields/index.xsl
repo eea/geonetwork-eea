@@ -333,7 +333,7 @@
             </xsl:for-each-group>
           </xsl:if>
 
-          <xsl:for-each select="gmd:identifier/*">
+          <xsl:for-each select="gmd:identifier/*[string(gmd:code/*)]">
             <xsl:variable name="code"
                           select="gmd:code/(gco:CharacterString|gmx:Anchor)"/>
             <resourceIdentifier type="object">{
@@ -720,6 +720,10 @@
         <xsl:for-each select="*/gmd:EX_Extent">
           <xsl:copy-of select="gn-fn-index:add-multilingual-field('extentDescription', gmd:description, $allLanguages)"/>
 
+          <xsl:for-each select=".//gmd:geographicIdentifier">
+            <xsl:copy-of select="gn-fn-index:add-multilingual-field('extentIdentifier', */gmd:code, $allLanguages)"/>
+          </xsl:for-each>
+
           <!-- TODO: index bounding polygon -->
           <xsl:variable name="bboxes"
                         select=".//gmd:EX_GeographicBoundingBox[
@@ -801,11 +805,17 @@
             <!--<xsl:value-of select="($e + $w) div 2"/>,<xsl:value-of select="($n + $s) div 2"/></field>-->
           </xsl:for-each>
 
-          <xsl:for-each select=".//gmd:temporalElement/*/gmd:extent/gml:TimePeriod">
+          <xsl:for-each select=".//gmd:temporalElement/*/gmd:extent/(gml:TimePeriod|gml320:TimePeriod)">
             <xsl:variable name="start"
-                          select="gml:beginPosition|gml:begin/gml:TimeInstant/gml:timePosition"/>
+                          select="gml:beginPosition
+                                  |gml:begin/gml:TimeInstant/gml:timePosition
+                                  |gml320:beginPosition
+                                  |gml320:begin/gml320:TimeInstant/gml320:timePosition"/>
             <xsl:variable name="end"
-                          select="gml:endPosition|gml:end/gml:TimeInstant/gml:timePosition"/>
+                          select="gml:endPosition
+                                  |gml:end/gml:TimeInstant/gml:timePosition
+                                  |gml320:endPosition
+                                  |gml320:end/gml320:TimeInstant/gml320:timePosition"/>
 
             <xsl:variable name="zuluStartDate"
                           select="date-util:convertToISOZuluDateTime($start)"/>
@@ -1154,11 +1164,11 @@
             "urlObject":{"default": "<xsl:value-of select="gn-fn-index:json-escape(gmd:linkage/gmd:URL)"/>"},
             <xsl:if test="normalize-space(gmd:name) != ''">
               "nameObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
-                                'name', gmd:name, $allLanguages)"/>,
+                                'name', gmd:name, $allLanguages, true())"/>,
             </xsl:if>
             <xsl:if test="normalize-space(gmd:description) != ''">
               "descriptionObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
-                                'description', gmd:description, $allLanguages)"/>,
+                                'description', gmd:description, $allLanguages, true())"/>,
             </xsl:if>
             <xsl:if test="../@gco:nilReason">
               "nilReason": "<xsl:value-of select="../@gco:nilReason"/>",
@@ -1316,7 +1326,7 @@
       <xsl:attribute name="type" select="'object'"/>{
       <xsl:if test="$organisationName">
         "organisationObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
-                              'organisation', $organisationName, $languages)"/>,
+                              'organisation', $organisationName, $languages, true())"/>,
       </xsl:if>
       "role":"<xsl:value-of select="$role"/>",
       "email":"<xsl:value-of select="gn-fn-index:json-escape($email[1])"/>",

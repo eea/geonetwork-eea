@@ -2,8 +2,6 @@
 <div
   class="row gn-card gn-card-{{mdView.current.record.resourceType[0]}} gn-margin-top gn-margin-bottom gn-padding-top gn-padding-bottom"
 >
-  <div ng-include="'../../catalog/views/default/templates/recordView/status.html'" />
-
   <div class="col-md-8 gn-record">
     <div ng-include="'../../catalog/views/default/templates/recordView/title.html'" />
   </div>
@@ -14,6 +12,8 @@
     >
       <span class="gn-status gn-status-mdview gn-status-obsolete">Draft</span>
     </div>
+
+    <div ng-include="'../../catalog/views/default/templates/recordView/status.html'" />
 
     <div gn-record-is-replaced-by="mdView.current.record.uuid"></div>
 
@@ -33,6 +33,9 @@
 <!--EEA hidden
 <div
   class="row gn-section gn-section-{{mdView.current.record.resourceType[0]}} gn-padding-top"
+  data-ng-if="mdView.current.record.geom
+              || mdView.current.record.extentDescriptionObject
+              || mdView.current.record.extentIdentifierObject"
 >
   <div class="gn-record" data-ng-class="showDataBrowser ? 'col-md-12' : 'col-md-8'">
     <div data-ng-if="mdView.current.record.geom">
@@ -40,6 +43,22 @@
       <div data-gn-data-preview="mdView.current.record" />
       <br />
     </div>
+
+    <div
+      data-ng-repeat="t in ['extentDescription', 'extentIdentifier']"
+      data-ng-if="mdView.current.record[t + 'Object']"
+    >
+      <ul
+        class="gn-label-list pull-left"
+        data-ng-repeat="c in mdView.current.record[t + 'Object']"
+      >
+        <li title="{{t | translate}}">
+          <i class="fa fa-fw fa-location-pin"></i>
+          {{c.default}}
+        </li>
+      </ul>
+    </div>
+
     <div
       data-gn-keyword-badges="mdView.current.record"
       data-thesaurus="viewConfig.locationThesaurus"

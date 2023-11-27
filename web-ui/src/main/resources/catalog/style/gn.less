@@ -748,10 +748,24 @@ i.fa-times.delete:hover {
 
 .gn-search-page {
   .gn-status {
-    position: absolute;
     bottom: 9px;
     margin-left: -8px;
     z-index: 98;
+  }
+  [data-search-results] .gn-status {
+    position: absolute;
+  }
+  [data-search-results] table .gn-status {
+    position: unset;
+  }
+  .gn-status-container {
+    text-align: right;
+    margin-right: -10px;
+
+    .gn-status {
+      border-radius: 3px;
+      margin-left: 2px;
+    }
   }
   .gn-status,
   .gn-workflow-status {
@@ -1331,7 +1345,7 @@ gn-md-type-inspire-validation-widget {
     vertical-align: middle;
     padding-left: 3px;
     margin: -6px 0px;
-    line-height: 1em;
+    line-height: normal;
     .gn-user-name {
       max-width: 200px;
       display: inline-block;

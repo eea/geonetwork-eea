@@ -103,7 +103,6 @@
             fluidHeaderLayout: true,
             showGNName: true,
             isHeaderFixed: false,
-            isMenubarAccessible: true,
             showPortalSwitcher: true,
             topCustomMenu: [] // List of static pages identifiers to display
           },
@@ -707,6 +706,7 @@
               valuesSeparator: ","
             },
             is3DModeAllowed: false,
+            singleTileWMS: true,
             isSaveMapInCatalogAllowed: true,
             isExportMapAsImageEnabled: false,
             isAccessible: false,
@@ -759,6 +759,8 @@
               syncAllLayers: false,
               drawVector: false
             },
+            defaultTool: "layers",
+            defaultToolAfterMapLoad: "layers",
             graticuleOgcService: {},
             "map-viewer": {
               context: "../../map/config-viewer.xml",
@@ -1194,7 +1196,7 @@
         requireProxy: [],
         gnCfg: angular.copy(defaultConfig),
         gnUrl: "",
-        docUrl: "https://geonetwork-opensource.org/manuals/4.0.x/{lang}",
+        docUrl: "https://docs.geonetwork-opensource.org/4.2/{lang}",
         //docUrl: '../../doc/',
         modelOptions: {
           updateOn: "default blur",
@@ -1529,12 +1531,11 @@
 
       // Links for social media
       $scope.socialMediaLink = $location.absUrl();
-      $scope.getPermalink = gnUtilityService.getPermalink;
+      $scope.getPermalink = gnUtilityService.displayPermalink;
       $scope.fluidEditorLayout = gnGlobalSettings.gnCfg.mods.editor.fluidEditorLayout;
       $scope.fluidHeaderLayout = gnGlobalSettings.gnCfg.mods.header.fluidHeaderLayout;
       $scope.showGNName = gnGlobalSettings.gnCfg.mods.header.showGNName;
       $scope.isHeaderFixed = gnGlobalSettings.gnCfg.mods.header.isHeaderFixed;
-      $scope.isMenubarAccessible = gnGlobalSettings.gnCfg.mods.header.isMenubarAccessible;
       $scope.isLogoInHeader = gnGlobalSettings.gnCfg.mods.header.isLogoInHeader;
       $scope.isFooterEnabled = gnGlobalSettings.gnCfg.mods.footer.enabled;
 
@@ -1636,6 +1637,11 @@
       $scope.isUserGroupUpdateEnabled = gnGlobalSettings.isUserGroupUpdateEnabled;
       $scope.isExternalViewerEnabled = gnExternalViewer.isEnabled();
       $scope.externalViewerUrl = gnExternalViewer.getBaseUrl();
+      $scope.publicationOptions = [];
+
+      $http.get("../api/records/sharing/options").then(function (response) {
+        $scope.publicationOptions = response.data;
+      });
 
       $scope.isSelfRegisterPossible = function () {
         return gnConfig["system.userSelfRegistration.enable"];
@@ -1796,6 +1802,14 @@
                   : "";
             return angular.isFunction(this[fnName]) ? this[fnName]() : false;
           },
+          canBatchEditMetadata: function () {
+            var profile = gnConfig["metadata.batchediting.accesslevel"] || "Editor",
+              fnName =
+                profile !== ""
+                  ? "is" + profile[0].toUpperCase() + profile.substring(1) + "OrMore"
+                  : "";
+            return angular.isFunction(this[fnName]) ? this[fnName]() : false;
+          },
           canDeletePublishedMetadata: function () {
             var profile =
                 gnConfig["metadata.delete.profilePublishedMetadata"] || "Editor",
@@ -1906,6 +1920,15 @@
             });
         });
 
+        // Retrieve the publication options
+        userLogin.then(function (value) {
+          if ($scope.user && $scope.user.isReviewerOrMore()) {
+            $http.get("../api/records/sharing/options").then(function (response) {
+              $scope.publicationOptions = response.data;
+            });
+          }
+        });
+
         // Retrieve main search information
         var searchInfo = userLogin.then(function (value) {
           // Check index status.
@@ -1981,11 +2004,17 @@
         return gnConfig["metadata.workflow.allowPublishNonApprovedMd"];
       };
 
-      $scope.getPublicationOptionClass = function (md, user, isMdWorkflowEnable) {
+      $scope.getPublicationOptionClass = function (
+        md,
+        user,
+        isMdWorkflowEnable,
+        pubOption
+      ) {
         var publicationOptionTitle = $scope.getPublicationOptionTitle(
           md,
           user,
-          isMdWorkflowEnable
+          isMdWorkflowEnable,
+          pubOption
         );
         switch (publicationOptionTitle) {
           case "mdnonapprovedcantpublish":
@@ -1998,16 +2027,22 @@
       };
 
       // Function to get the title name to be used when displaying the publish item in the menu
-      $scope.getPublicationOptionTitle = function (md, user, isMdWorkflowEnable) {
+      $scope.getPublicationOptionTitle = function (
+        md,
+        user,
+        isMdWorkflowEnable,
+        pubOption
+      ) {
         var publicationOptionTitle = "";
-        if (!md.isPublished()) {
+        if (!md.isPublished(pubOption)) {
           if (md.isValid()) {
             publicationOptionTitle = "mdvalid";
           } else {
             if (
               isMdWorkflowEnable &&
               md.isWorkflowEnabled() &&
-              $scope.allowPublishInvalidMd() === false
+              $scope.allowPublishInvalidMd() === false &&
+              pubOption.name === "default"
             ) {
               publicationOptionTitle = "mdinvalidcantpublish";
             } else {
@@ -2024,7 +2059,8 @@
             isMdWorkflowEnable &&
             md.isWorkflowEnabled() &&
             md.mdStatus != 2 &&
-            $scope.allowPublishNonApprovedMd() === false
+            $scope.allowPublishNonApprovedMd() === false &&
+            pubOption.name === "default"
           ) {
             publicationOptionTitle = "mdnonapprovedcantpublish";
           }

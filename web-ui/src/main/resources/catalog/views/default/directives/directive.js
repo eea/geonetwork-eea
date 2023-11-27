@@ -66,10 +66,12 @@
           ) {
             scope.attributeTable = [scope.attributeTable];
           }
-          scope.showCodeColumn = false;
+          scope.columnVisibility = {
+            code: false
+          };
           angular.forEach(scope.attributeTable, function (elem) {
             if (elem.code > "") {
-              scope.showCodeColumn = true;
+              scope.columnVisibility.code = true;
             }
           });
         }
@@ -136,9 +138,9 @@
                 "../api/records/" +
                 uuid +
                 url.replace("${lang}", scope.lang) +
-                (url.indexOf("?") !== -1 ? "&" : "?") +
-                "approved=" +
-                (isDraft != "y")
+                (isDraft == "y"
+                  ? (url.indexOf("?") !== -1 ? "&" : "?") + "approved=false"
+                  : "")
               );
             }
           };
@@ -243,13 +245,13 @@
            * @param user
            * @returns {*|boolean|false|boolean}
            */
-          scope.displayPublicationOption = function (md, user) {
+          scope.displayPublicationOption = function (md, user, pubOption) {
             return (
               md.canReview &&
               md.draft != "y" &&
               md.mdStatus != 3 &&
-              ((md.isPublished() && user.canUnpublishMetadata()) ||
-                (!md.isPublished() && user.canPublishMetadata()))
+              ((md.isPublished(pubOption) && user.canUnpublishMetadata()) ||
+                (!md.isPublished(pubOption) && user.canPublishMetadata()))
             );
           };
 

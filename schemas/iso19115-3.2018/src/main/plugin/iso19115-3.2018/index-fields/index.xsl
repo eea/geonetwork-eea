@@ -375,7 +375,7 @@
             </xsl:for-each-group>
           </xsl:if>
 
-          <xsl:for-each select="cit:identifier/*">
+          <xsl:for-each select="cit:identifier/*[string(mcc:code/*)]">
             <resourceIdentifier type="object">{
               "code": "<xsl:value-of select="mcc:code/(gco:CharacterString|gcx:Anchor)"/>",
               "codeSpace": "<xsl:value-of select="mcc:codeSpace/(gco:CharacterString|gcx:Anchor)"/>",
@@ -735,6 +735,16 @@
         </xsl:for-each>
 
         <xsl:for-each select="*/gex:EX_Extent">
+
+          <xsl:for-each select="gex:geographicElement/*/gex:geographicIdentifier/
+                                  */mcc:code[*/normalize-space(.) != '']">
+            <xsl:copy-of select="gn-fn-index:add-multilingual-field('extentIdentifier', ., $allLanguages)"/>
+          </xsl:for-each>
+
+          <xsl:for-each select="gex:description[*/normalize-space(.) != '']">
+            <xsl:copy-of select="gn-fn-index:add-multilingual-field('extentDescription', ., $allLanguages)"/>
+          </xsl:for-each>
+
           <!-- TODO: index bounding polygon -->
           <xsl:for-each select=".//gex:EX_GeographicBoundingBox[
                                 ./gex:westBoundLongitude/gco:Decimal castable as xs:decimal and
@@ -1027,9 +1037,14 @@
               "code": "<xsl:value-of select="gn-fn-index:json-escape(*/gfc:code/*/text())"/>",
               "link": "<xsl:value-of select="*/gfc:code/*/@xlink:href"/>",
               "type": "<xsl:value-of select="*/gfc:valueType/gco:TypeName/gco:aName/*/text()"/>"
-              <xsl:if test="*/gfc:listedValue">
+              <xsl:if test="*/gfc:cardinality">
+                ,"cardinality": "<xsl:value-of select="gn-fn-index:json-escape(*/gfc:cardinality/*/text())"/>"
+              </xsl:if>
+              <xsl:variable name="codeList"
+                            select="*/gfc:listedValue[normalize-space(*) != '']"/>
+              <xsl:if test="$codeList">
                 ,"values": [
-                <xsl:for-each select="*/gfc:listedValue">{
+                <xsl:for-each select="$codeList">{
                   "label": "<xsl:value-of select="gn-fn-index:json-escape(*/gfc:label/gco:CharacterString/text())"/>",
                   "code": "<xsl:value-of select="gn-fn-index:json-escape(*/gfc:code/*/text())"/>",
                   "definition": "<xsl:value-of select="gn-fn-index:json-escape(*/gfc:definition/gco:CharacterString/text())"/>"}
@@ -1074,15 +1089,15 @@
                                         function/text())"/>",
           <xsl:if test="normalize-space(url) != ''">
             "urlObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
-                                'url', url/*, $allLanguages)"/>,
+                                'url', url/*, $allLanguages, true())"/>,
           </xsl:if>
           <xsl:if test="normalize-space(title) != ''">
             "nameObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
-                                'name', title/*, $allLanguages)"/>,
+                                'name', title/*, $allLanguages, true())"/>,
           </xsl:if>
           <xsl:if test="normalize-space(description) != ''">
             "descriptionObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
-                                'description', description/*, $allLanguages)"/>,
+                                'description', description/*, $allLanguages, true())"/>,
           </xsl:if>
           <xsl:if test="nilReason">
             "nilReason": "<xsl:value-of select="nilReason"/>",
@@ -1249,15 +1264,15 @@
                                               else ''"/>",
             <xsl:if test="normalize-space(cit:linkage) != ''">
               "urlObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
-                                'url', cit:linkage, $allLanguages)"/>,
+                                'url', cit:linkage, $allLanguages, true())"/>,
             </xsl:if>
             <xsl:if test="normalize-space(cit:name) != ''">
               "nameObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
-                                'name', cit:name, $allLanguages)"/>,
+                                'name', cit:name, $allLanguages, true())"/>,
             </xsl:if>
             <xsl:if test="normalize-space(cit:description) != ''">
               "descriptionObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
-                                'description', cit:description, $allLanguages)"/>,
+                                'description', cit:description, $allLanguages, true())"/>,
             </xsl:if>
             <xsl:if test="../@gco:nilReason">
               "nilReason": "<xsl:value-of select="../@gco:nilReason"/>",
@@ -1419,7 +1434,7 @@
       <xsl:attribute name="type" select="'object'"/>{
       <xsl:if test="$organisationName">
         "organisationObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
-                                'organisation', $organisationName, $languages)"/>,
+                                'organisation', $organisationName, $languages, true())"/>,
       </xsl:if>
       "role":"<xsl:value-of select="$role"/>",
       "email":"<xsl:value-of select="gn-fn-index:json-escape($email)"/>",
