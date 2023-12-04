@@ -81,6 +81,9 @@
           }
         }
       };
+      this.getDefaultSize = function () {
+        return DEFAULT_SIZE;
+      };
       this.buildDefaultQuery = function (query, size) {
         return {
           script_fields: defaultScriptedFields,
@@ -390,6 +393,9 @@
               facetModel.type = "terms";
               facetModel.size = reqAgg.terms.size;
               facetModel.more = respAgg.sum_other_doc_count > 0;
+              facetModel.less =
+                respAgg.buckets &&
+                respAgg.buckets.length > Math.min(reqAgg.terms.size, DEFAULT_SIZE);
               facetModel.includeFilter = reqAgg.terms.include !== undefined;
               facetModel.excludeFilter = reqAgg.terms.exclude !== undefined;
               var esFacet = this;
