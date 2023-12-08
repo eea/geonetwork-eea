@@ -582,7 +582,7 @@
     <dependency>
       <groupId>net.bytebuddy</groupId>
       <artifactId>byte-buddy</artifactId>
-      <version>1.10.10</version>
+      <version>1.12.3</version>
     </dependency>
 
     <!-- Add dependencies to built-in schema plugin having a custom bean to be loaded. -->
