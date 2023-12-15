@@ -59,7 +59,7 @@ copy_and_create_links() {
           target_dir_rel_path="$(realpath --relative-to="$(dirname "${target_directory}")" "${target_path}/${link_name}")"
 
           if [[ ! -e "${target_path}/${link_name}" ]]; then
-            echo "${target_directory};${target_path}" >> "${logfile}"
+            echo "${target_directory};${target_path};${target_dir_rel_path}" >> "${logfile}"
             echo "Moving ${target_directory} to ${target_path}"
             mv "${target_directory}" "${target_path}"
             echo "Creating link ${target_directory} -> ${target_dir_rel_path}"
