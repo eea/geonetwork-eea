@@ -27,19 +27,21 @@ mkdir -p "${restricted_dir}"
 #   <search_path> - The path where the search for directories matching the regular expression begins.
 #   <target_path> - The destination path where matched directories will be moved.
 #   <regexp>      - Regular expression to match directories in the search path.
+#   <logfile>     - File with the log of the changes made.
 
 # Example:
 # copy_and_create_links "/path/to/source" "/path/to/destination" ".*pattern.*"
 copy_and_create_links() {
     # Check if the correct number of arguments is provided
-    if [ "$#" -ne 3 ]; then
-        echo "Usage: copy_and_create_links <search_path> <target_path> <regexp>"
+    if [ "$#" -ne 4 ]; then
+        echo "Usage: copy_and_create_links <search_path> <target_path> <regexp> <logfile>"
         return 1
     fi
 
     local search_path="$1"
     local target_path="$2"
     local regexp="$3"
+    local logfile="$4"
 
     # Find directories matching the regular expression in the search path
     find "${search_path}" -type d \
@@ -57,6 +59,7 @@ copy_and_create_links() {
           target_dir_rel_path="$(realpath --relative-to="$(dirname "${target_directory}")" "${target_path}/${link_name}")"
 
           if [[ ! -e "${target_path}/${link_name}" ]]; then
+            echo "${target_directory};${target_path}" >> "${logfile}"
             echo "Moving ${target_directory} to ${target_path}"
             mv "${target_directory}" "${target_path}"
             echo "Creating link ${target_directory} -> ${target_dir_rel_path}"
@@ -67,17 +70,18 @@ copy_and_create_links() {
     done
 }
 
-
+current_log=/var/log/copy_and_create_links_$(date +"%d-%m-%Y").log
+touch "${current_log}"
 echo "Processing public resources"
-copy_and_create_links "${webdav_dir}" "${public_dir}" ".*_p_.*"
+copy_and_create_links "${webdav_dir}" "${public_dir}" ".*_p_.*" "${current_log}"
 echo "Public files done."
 
 echo "Processing internal resources"
-copy_and_create_links "${webdav_dir}" "${internal_dir}" ".*_i_.*"
+copy_and_create_links "${webdav_dir}" "${internal_dir}" ".*_i_.*" "${current_log}"
 echo "Internal files done."
 
 echo "Processing restricted resources"
-copy_and_create_links "${webdav_dir}" "${restricted_dir}" ".*_r_.*"
+copy_and_create_links "${webdav_dir}" "${restricted_dir}" ".*_r_.*" "${current_log}"
 echo "Restricted resources done."
 
 echo "Script finished at: $(date)"
