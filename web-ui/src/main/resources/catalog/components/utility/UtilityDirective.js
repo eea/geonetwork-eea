@@ -486,7 +486,7 @@
 
           function setDefault() {
             var defaultThesaurus = attrs["default"];
-            for (t in scope.regionTypes) {
+            for (var t in scope.regionTypes) {
               if (scope.regionTypes[t].name === defaultThesaurus) {
                 scope.regionType = scope.regionTypes[t];
                 return;
@@ -731,7 +731,7 @@
         link: function (scope, element, attrs) {
           if (attrs["gnRegionType"]) {
             gnRegionService.loadList().then(function (data) {
-              for (i = 0; i < data.length; ++i) {
+              for (var i = 0; i < data.length; ++i) {
                 if (attrs["gnRegionType"] == data[i].name) {
                   scope.regionType = data[i];
                 }
@@ -1355,7 +1355,7 @@
           "    </defs>" +
           '    <circle fill="url(\'#image{{imageId}}\')" style="stroke-miterlimit:10;" cx="250" cy="250" r="240"/>' +
           '    <text x="50%" y="50%"' +
-          '          text-anchor="middle" alignment-baseline="central"' +
+          '          text-anchor="middle" alignment-baseline="central" dominant-baseline="central"' +
           "          font-size=\"300\">{{hasIcon ? '' : org.substr(0, 1).toUpperCase()}}</text>" +
           "</svg>",
         scope: {
@@ -2604,6 +2604,41 @@
     }
   ]);
 
+  module.directive("gnInspireUsageDetails", [
+    "$http",
+    function ($http) {
+      return {
+        restrict: "A",
+        replace: true,
+        scope: {
+          inspireApiUrl: "=gnInspireUsageDetails",
+          inspireApiKey: "=apiKey"
+        },
+        templateUrl: "../../catalog/components/utility/partials/inspireapiusage.html",
+        link: function (scope, element, attrs) {
+          scope.inspireApiUsage = undefined;
+          if (
+            scope.inspireApiUrl &&
+            scope.inspireApiUrl.length > 0 &&
+            scope.inspireApiKey &&
+            scope.inspireApiKey.length > 0
+          ) {
+            $http
+              .get(scope.inspireApiUrl + "/v2/Usages/" + scope.inspireApiKey + "/")
+              .then(
+                function (response) {
+                  scope.inspireApiUsage = response.data;
+                },
+                function (error) {
+                  console.warn("Error while retrieving INSPIRE API quotas: ", error);
+                }
+              );
+          }
+        }
+      };
+    }
+  ]);
+
   module.directive("gnSuggest", [
     "gnMetadataManager",
     function (gnMetadataManager) {
@@ -2687,6 +2722,42 @@
         };
 
         updateInputCss();
+      }
+    };
+  });
+
+  module.directive("equalWith", function () {
+    return {
+      require: "ngModel",
+      scope: { equalWith: "&" },
+      link: function (scope, elem, attrs, ngModelCtrl) {
+        ngModelCtrl.$validators.equalWith = function (modelValue) {
+          return modelValue === scope.equalWith();
+        };
+
+        scope.$watch(scope.equalWith, function (value) {
+          ngModelCtrl.$validate();
+        });
+      }
+    };
+  });
+
+  module.directive("confirmOnExit", function () {
+    return {
+      link: function ($scope, elem, attrs) {
+        var message = attrs["confirmMessage"];
+        window.onbeforeunload = function () {
+          if ($scope[attrs["name"]].$dirty) {
+            return message;
+          }
+        };
+        $scope.$on("$locationChangeStart", function (event, next, current) {
+          if ($scope[attrs["name"]].$dirty) {
+            if (!confirm(message)) {
+              event.preventDefault();
+            }
+          }
+        });
       }
     };
   });

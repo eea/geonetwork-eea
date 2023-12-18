@@ -8,19 +8,20 @@
     data-ng-mouseover="getSaveStatus()"
     title="{{savedStatus}}"
   >
+    <div
+      data-ng-if="(('group-' + groupOwner) | translate).indexOf('SDI_DRAFT') === 0"
+      class="gn-status-stamp pull-left"
+    >
+      <span class="gn-status gn-status-mdview gn-status-obsolete">Draft</span>
+    </div>
     <h1 title="{{gnCurrentEdit.mdTitle}}">
       {{gnCurrentEdit.mdTitle | limitTo: 50 }} {{gnCurrentEdit.mdTitle.length > 50 ? '...'
       : ''}}
     </h1>
-    <span data-ng-if="savedStatus">| </span>
-    <span data-ng-class="saveError ? 'text-danger' : ''">{{savedStatus}}</span>
-
-    <div
-      data-ng-if="(('group-' + groupOwner) | translate).indexOf('SDI_DRAFT') === 0"
-      class="gn-status-stamp pull-right"
+    <br />
+    <span class="label label-default" data-ng-class="saveError ? 'text-danger' : ''"
+      >{{savedStatus}}</span
     >
-      <span class="gn-status gn-status-mdview gn-status-obsolete">Draft</span>
-    </div>
   </div>
 
   <!-- If using the category selector in the editor

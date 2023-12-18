@@ -84,11 +84,11 @@
             rssFeeds: [
               {
                 // List of rss feeds links to display when the OGC API Records service is enabled
-                url: "f=rss&sortby=-createDate&size=30",
+                url: "f=rss&sortby=-createDate&limit=30",
                 label: "lastCreatedRecords"
               }
               // , {
-              //   url: "f=rss&sortby=-publicationDateForResource&size=30",
+              //   url: "f=rss&sortby=-publicationDateForResource&limit=30",
               //   label: "lastPublishedRecords"
               // }
             ]
@@ -1196,7 +1196,7 @@
         requireProxy: [],
         gnCfg: angular.copy(defaultConfig),
         gnUrl: "",
-        docUrl: "https://docs.geonetwork-opensource.org/4.2/{lang}",
+        docUrl: "https://docs.geonetwork-opensource.org/latest/{lang}",
         //docUrl: '../../doc/',
         modelOptions: {
           updateOn: "default blur",
@@ -1281,6 +1281,8 @@
           gnSearchSettings.mapProtocols = {
             layers: [
               "OGC:WMS",
+              "OGC:3DTILES",
+              "OGC:COG",
               "OGC:WMTS",
               "OGC:WMS-1.1.1-http-get-map",
               "OGC:WMS-1.3.0-http-get-map",
@@ -1339,7 +1341,7 @@
               _.set(this.gnCfg, p, o);
             }
             if (runAllChecks) {
-              optionInDefaultConfig = _.get(defaultConfig, p);
+              var optionInDefaultConfig = _.get(defaultConfig, p);
               if (optionInDefaultConfig === undefined) {
                 console.warn(
                   "Path " +
@@ -1375,7 +1377,7 @@
               option = _.get(config, p);
             if (angular.isObject(option) && Object.keys(option).length === 0) {
               var key = pathToken.pop();
-              parent = _.get(config, pathToken.join("."));
+              var parent = _.get(config, pathToken.join("."));
               delete parent[key];
             }
           }
@@ -1454,7 +1456,7 @@
       return angular.isDefined(this.langs[lang]);
     },
     isValidIso2Lang: function (lang) {
-      for (p in this.langs) {
+      for (var p in this.langs) {
         if (this.langs[p] === lang) {
           return true;
         }
@@ -1465,7 +1467,7 @@
       return this.langs[iso3lang] || "en";
     },
     getIso3Lang: function (iso2lang) {
-      for (p in this.langs) {
+      for (var p in this.langs) {
         if (this.langs[p] === iso2lang) {
           return p;
         }
@@ -1962,7 +1964,7 @@
                 .then(function (r) {
                   $scope.searchInfo = r.data;
                   var keys = Object.keys(gnGlobalSettings.gnCfg.mods.home.facetConfig);
-                  selectedFacet = keys[0];
+                  var selectedFacet = keys[0];
 
                   for (var i = 0; i < keys.length; i++) {
                     if (

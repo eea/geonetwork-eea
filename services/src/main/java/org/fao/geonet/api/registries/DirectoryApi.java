@@ -50,14 +50,14 @@ import org.fao.geonet.kernel.search.IndexingMode;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.search.index.BatchOpsMetadataReindexer;
 import org.fao.geonet.utils.Xml;
-import org.geotools.data.DataStore;
-import org.geotools.data.DataStoreFinder;
+import org.geotools.api.data.DataStore;
+import org.geotools.api.data.DataStoreFinder;
 import org.geotools.data.DataUtilities;
-import org.geotools.data.Query;
+import org.geotools.api.data.Query;
 import org.geotools.data.collection.ListFeatureCollection;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.api.data.SimpleFeatureSource;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.SchemaException;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
@@ -68,15 +68,15 @@ import org.geotools.wfs.GML;
 import org.jdom.Element;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
-import org.opengis.geometry.BoundingBox;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.NoSuchAuthorityCodeException;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-import org.opengis.referencing.operation.MathTransform;
-import org.opengis.referencing.operation.TransformException;
+import org.geotools.api.feature.simple.SimpleFeature;
+import org.geotools.api.feature.simple.SimpleFeatureType;
+import org.geotools.api.filter.Filter;
+import org.geotools.api.geometry.BoundingBox;
+import org.geotools.api.referencing.FactoryException;
+import org.geotools.api.referencing.NoSuchAuthorityCodeException;
+import org.geotools.api.referencing.crs.CoordinateReferenceSystem;
+import org.geotools.api.referencing.operation.MathTransform;
+import org.geotools.api.referencing.operation.TransformException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
@@ -176,24 +176,24 @@ public class DirectoryApi {
             required = false,
             example = "")
         @RequestParam(required = false)
-            String[] uuids,
+        String[] uuids,
         @Parameter(
             description = ApiParams.API_PARAM_BUCKET_NAME,
             required = false)
         @RequestParam(
             required = false
         )
-            String bucket,
+        String bucket,
         @Parameter(description = APIPARAM_XPATH,
             required = true,
             example = ".//gmd:CI_ResponsibleParty")
         @RequestParam(required = true)
-            String xpath,
+        String xpath,
         @Parameter(description = APIPARAM_IDENTIFIER_XPATH,
             required = false,
             example = "@uuid")
         @RequestParam(required = false)
-            String identifierXpath,
+        String identifierXpath,
         HttpServletRequest request
     ) throws Exception {
         ServiceContext context = ApiUtils.createServiceContext(request);
@@ -219,24 +219,24 @@ public class DirectoryApi {
             required = false,
             example = "")
         @RequestParam(required = false)
-            String[] uuids,
+        String[] uuids,
         @Parameter(
             description = ApiParams.API_PARAM_BUCKET_NAME,
             required = false)
         @RequestParam(
             required = false
         )
-            String bucket,
+        String bucket,
         @Parameter(description = APIPARAM_XPATH,
             required = true,
             example = ".//gmd:CI_ResponsibleParty")
         @RequestParam(required = true)
-            String xpath,
+        String xpath,
         @Parameter(description = APIPARAM_IDENTIFIER_XPATH,
             required = false,
             example = "@uuid")
         @RequestParam(required = false)
-            String identifierXpath,
+        String identifierXpath,
         HttpServletRequest request
         // TODO: Add an option to set categories ?
         // TODO: Add an option to set groupOwner ?
@@ -337,39 +337,39 @@ public class DirectoryApi {
             required = false,
             example = "")
         @RequestParam(required = false)
-            String[] uuids,
+        String[] uuids,
         @Parameter(
             description = ApiParams.API_PARAM_BUCKET_NAME,
             required = false)
         @RequestParam(
             required = false
         )
-            String bucket,
+        String bucket,
         @Parameter(description = APIPARAM_XPATH,
             required = true,
             example = ".//gmd:CI_ResponsibleParty")
         @RequestParam(required = true)
-            String xpath,
+        String xpath,
         @Parameter(description = APIPARAM_IDENTIFIER_XPATH,
             required = false,
             example = "@uuid or .//gmd:electronicMailAddress/gco:CharacterString/text()")
         @RequestParam(required = false)
-            String identifierXpath,
+        String identifierXpath,
         @Parameter(description = APIPARAM_PROPERTIESTOCOPY,
             required = false,
             example = "./gmd:role/*/@codeListValue")
         @RequestParam(required = false)
-            List<String> propertiesToCopy,
+        List<String> propertiesToCopy,
         @Parameter(description = APIPARAM_REPLACEWITHXLINK,
             required = false,
             example = "@uuid")
         @RequestParam(required = false, defaultValue = "false")
-            boolean substituteAsXLink,
+        boolean substituteAsXLink,
         @Parameter(description = APIPARAM_DIRECTORYFILTERQUERY,
             required = false,
             example = "groupPublished:IFREMER")
         @RequestParam(required = false)
-            String fq,
+        String fq,
         HttpServletRequest request
     ) throws Exception {
         ServiceContext context = ApiUtils.createServiceContext(request);
@@ -392,38 +392,38 @@ public class DirectoryApi {
             required = false,
             example = "")
         @RequestParam(required = false)
-            String[] uuids,
+        String[] uuids,
         @Parameter(
             description = ApiParams.API_PARAM_BUCKET_NAME,
             required = false)
         @RequestParam(
             required = false
         )
-            String bucket,
+        String bucket,
         @Parameter(description = APIPARAM_XPATH,
             required = true,
             example = ".//gmd:CI_ResponsibleParty")
         @RequestParam(required = true)
-            String xpath,
+        String xpath,
         @Parameter(description = APIPARAM_IDENTIFIER_XPATH,
             required = false,
             example = "@uuid")
         @RequestParam(required = false)
-            String identifierXpath,
+        String identifierXpath,
         @Parameter(description = APIPARAM_PROPERTIESTOCOPY,
             required = false,
             example = "./gmd:role/*/@codeListValue")
         @RequestParam(required = false)
-            List<String> propertiesToCopy,
+        List<String> propertiesToCopy,
         @Parameter(description = APIPARAM_REPLACEWITHXLINK,
             required = false)
         @RequestParam(required = false, defaultValue = "false")
-            boolean substituteAsXLink,
+        boolean substituteAsXLink,
         @Parameter(description = APIPARAM_DIRECTORYFILTERQUERY,
             required = false,
             example = "groupPublished:IFREMER")
         @RequestParam(required = false)
-            String fq,
+        String fq,
         HttpServletRequest request
     ) throws Exception {
         ServiceContext context = ApiUtils.createServiceContext(request);
@@ -541,14 +541,14 @@ public class DirectoryApi {
             required = true
         )
         @RequestParam("file")
-            MultipartFile file,
+        MultipartFile file,
         @Parameter(
             description = "Attribute to use for UUID. If none, random UUID are generated.",
             required = false)
         @RequestParam(
             required = false
         )
-            String uuidAttribute,
+        String uuidAttribute,
         @Parameter(
             description = "Pattern to build UUID from. Default is '{{uuid}}'.",
             required = false)
@@ -556,7 +556,7 @@ public class DirectoryApi {
             defaultValue = "{{uuid}}",
             required = false
         )
-            String uuidPattern,
+        String uuidPattern,
         @Parameter(
             description = "Attribute to use for extent description. " +
                 "If none, no extent description defined. TODO: Add per language desc ?",
@@ -564,7 +564,7 @@ public class DirectoryApi {
         @RequestParam(
             required = false
         )
-            String descriptionAttribute,
+        String descriptionAttribute,
         @Parameter(
             description = "geomProjectionTo",
             required = false
@@ -572,7 +572,7 @@ public class DirectoryApi {
         @RequestParam(
             required = false
         )
-            String geomProjectionTo,
+        String geomProjectionTo,
         @Parameter(
             description = "lenient",
             required = false
@@ -580,7 +580,7 @@ public class DirectoryApi {
         @RequestParam(
             required = false
         )
-            boolean lenient,
+        boolean lenient,
         @Parameter(
             description = "Attribute table charset",
             required = false
@@ -589,14 +589,14 @@ public class DirectoryApi {
             required = false,
             defaultValue = ""
         )
-            String charset,
+        String charset,
         @Parameter(
             description = "Create only bounding box for each spatial objects.",
             required = false)
         @RequestParam(
             required = false,
             defaultValue = "true")
-            boolean onlyBoundingBox,
+        boolean onlyBoundingBox,
         @Parameter(
             description = "Process",
             required = false
@@ -604,7 +604,7 @@ public class DirectoryApi {
         @RequestParam(
             required = false
         )
-            String process,
+        String process,
         @Parameter(
             description = "Schema identifier",
             required = false
@@ -612,7 +612,7 @@ public class DirectoryApi {
         @RequestParam(
             required = false
         )
-            String schema,
+        String schema,
         @Parameter(
             description = API_PARAM_RECORD_UUID_PROCESSING,
             required = false
@@ -629,7 +629,7 @@ public class DirectoryApi {
             required = false
         ) final Integer group,
         @Parameter(hidden = true)
-            MultipartHttpServletRequest request)
+        MultipartHttpServletRequest request)
         throws Exception {
 
         ServiceContext context = ApiUtils.createServiceContext(request);
@@ -733,9 +733,7 @@ public class DirectoryApi {
         return report;
     }
 
-
-
-    public static Geometry reprojGeom(String geomProjectionTo, boolean lenient, SimpleFeature feature)
+    private Geometry reprojGeom(String geomProjectionTo, boolean lenient, SimpleFeature feature)
         throws FactoryException, ResourceNotFoundException, TransformException {
         CoordinateReferenceSystem fromCrs = feature.getDefaultGeometryProperty().getDescriptor().getCoordinateReferenceSystem();
         CoordinateReferenceSystem toCrs = null;
@@ -777,14 +775,14 @@ public class DirectoryApi {
         return outXml.toString();
     }
 
-    public static Envelope computeEnvelope(SimpleFeature feature) throws TransformException {
+    private Envelope computeEnvelope(SimpleFeature feature) throws TransformException {
         BoundingBox bounds = feature.getBounds();
         return JTS.toGeographic(
             new Envelope(bounds.getMinX(), bounds.getMaxX(), bounds.getMinY(), bounds.getMaxY()),
             feature.getDefaultGeometryProperty().getDescriptor().getCoordinateReferenceSystem());
     }
 
-    public static String computeUuid(String uuidAttribute, String uuidPattern, SimpleFeature feature) {
+    private String computeUuid(String uuidAttribute, String uuidPattern, SimpleFeature feature) {
         String featureUuidValue = null;
         if (StringUtils.isNotEmpty(uuidAttribute)) {
             Object attribute = feature.getAttribute(uuidAttribute);
@@ -796,7 +794,7 @@ public class DirectoryApi {
         return uuidPattern.replace("{{uuid}}", uuid);
     }
 
-    public static String computeDescription(String descriptionAttribute, SimpleFeature feature) {
+    private String computeDescription(String descriptionAttribute, SimpleFeature feature) {
         String featureDescriptionValue = "";
         if (StringUtils.isNotEmpty(descriptionAttribute)) {
             Object attribute = feature.getAttribute(descriptionAttribute);
@@ -807,7 +805,7 @@ public class DirectoryApi {
         return StringUtils.isNotEmpty(featureDescriptionValue) ? featureDescriptionValue : "";
     }
 
-    public static SimpleFeatureCollection shapeFileToFeatureCollection(File shapefile, String charset) throws IOException {
+    private SimpleFeatureCollection shapeFileToFeatureCollection(File shapefile, String charset) throws IOException {
         Map<String, Object> map = new HashMap<>();
         map.put("url", shapefile.toURI().toURL());
         DataStore dataStore = DataStoreFinder.getDataStore(map);
@@ -821,7 +819,7 @@ public class DirectoryApi {
         return source.getFeatures(query);
     }
 
-    public static File[] unzipAndFilterShp(MultipartFile file) throws IOException, URISyntaxException {
+    private File[] unzipAndFilterShp(MultipartFile file) throws IOException, URISyntaxException {
         Path toDirectory = Files.createTempDirectory("gn-imported-entries-");
         toDirectory.toFile().deleteOnExit();
         File zipFile = new File(Paths.get(toDirectory.toString(), file.getOriginalFilename()).toString());

@@ -55,15 +55,10 @@ import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.languages.IsoLanguagesMapper;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.utils.*;
-import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.feature.FeatureIterator;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-import org.locationtech.jts.geom.Envelope;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.referencing.operation.TransformException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
@@ -73,7 +68,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.ServletOutputStream;
@@ -92,7 +86,6 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.fao.geonet.api.registries.DirectoryApi.*;
 import static org.fao.geonet.constants.Params.CONTENT_TYPE;
 import static org.fao.geonet.csw.common.Csw.NAMESPACE_DC;
 import static org.fao.geonet.csw.common.Csw.NAMESPACE_DCT;
@@ -114,8 +107,6 @@ import static org.fao.geonet.kernel.rdf.Selectors.SKOS_NAMESPACE;
     description = ApiParams.API_CLASS_REGISTRIES_OPS)
 public class KeywordsApi {
 
-    public static final String NO_XSLT = "_none_";
-    public static final String THESAURUS_X_LOADED_IN_Y_SEC = "Thesaurus '%s' loaded in %d sec.";
     /**
      * The language utils.
      */
@@ -167,8 +158,9 @@ public class KeywordsApi {
     @io.swagger.v3.oas.annotations.Operation(
         summary = "Search keywords",
         description = "")
-    @GetMapping(
+    @RequestMapping(
         path = "/search",
+        method = RequestMethod.GET,
         produces = {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE
@@ -184,7 +176,7 @@ public class KeywordsApi {
         @RequestParam(
             required = false
         )
-            String q,
+        String q,
         @Parameter(
             description = "Query in that language",
             required = false
@@ -193,7 +185,7 @@ public class KeywordsApi {
             value = "lang",
             defaultValue = "eng"
         )
-            String lang,
+        String lang,
         @Parameter(
             description = "Number of rows",
             required = false
@@ -202,7 +194,7 @@ public class KeywordsApi {
             required = false,
             defaultValue = "1000"
         )
-            int rows,
+        int rows,
         @Parameter(
             description = "Start from",
             required = false
@@ -211,7 +203,7 @@ public class KeywordsApi {
             defaultValue = "0",
             required = false
         )
-            int start,
+        int start,
         @Parameter(
             description = "Return keyword information in one or more languages",
             required = false
@@ -220,7 +212,7 @@ public class KeywordsApi {
             value = XmlParams.pLang,
             required = false
         )
-            List<String> targetLangs,
+        List<String> targetLangs,
         @Parameter(
             description = "Thesaurus identifier",
             required = false
@@ -228,7 +220,7 @@ public class KeywordsApi {
         @RequestParam(
             required = false
         )
-            String[] thesaurus,
+        String[] thesaurus,
 //        @Parameter(
 //            value = "?",
 //            required = false
@@ -244,7 +236,7 @@ public class KeywordsApi {
         @RequestParam(
             defaultValue = "CONTAINS"
         )
-            KeywordSearchType type,
+        KeywordSearchType type,
         @Parameter(
             description = "URI query",
             required = false
@@ -252,7 +244,7 @@ public class KeywordsApi {
         @RequestParam(
             required = false
         )
-            String uri,
+        String uri,
         @Parameter(
             description = "Sort by",
             required = false
@@ -261,11 +253,11 @@ public class KeywordsApi {
             required = false,
             defaultValue = "DESC"
         )
-            String sort,
+        String sort,
         @Parameter(hidden = true)
-            HttpServletRequest request,
+        HttpServletRequest request,
         @Parameter(hidden = true)
-            HttpSession httpSession
+        HttpSession httpSession
     )
         throws Exception {
         ServiceContext context = ApiUtils.createServiceContext(request);
@@ -353,35 +345,35 @@ public class KeywordsApi {
             description = "Keyword identifier or list of keyword identifiers comma separated.",
             required = true)
         @RequestParam(name = "id")
-            String uri,
+        String uri,
         @Parameter(
             description = "Thesaurus to look info for the keyword(s).",
             required = true)
         @RequestParam(name = "thesaurus")
-            String sThesaurusName,
+        String sThesaurusName,
         @Parameter(
             description = "Languages.",
             required = false)
         @RequestParam(name = "lang", required = false)
-            String[] langs,
+        String[] langs,
         @Parameter(
             description = "Only print the keyword, no thesaurus information.",
             required = false)
         @RequestParam(required = false, defaultValue = "false")
-            boolean keywordOnly,
+        boolean keywordOnly,
         @Parameter(
             description = "XSL template to use (ISO19139 keyword by default, see convert.xsl).",
             required = false)
         @RequestParam(required = false)
-            String transformation,
+        String transformation,
         @Parameter(
             description = "langMap, that converts the values in the 'lang' parameter to how they will be actually represented in the record. {'fre':'fra'} or {'fre':'fr'}.  Missing/empty means to convert to iso 2 letter.",
             required = false)
         @RequestParam (name = "langMap", required = false)
-            String  langMapJson,
+        String  langMapJson,
         @Parameter(hidden = true)
         @RequestParam
-            Map<String, String> allRequestParams,
+        Map<String, String> allRequestParams,
         @RequestHeader(
             value = "Accept",
             defaultValue = MediaType.APPLICATION_XML_VALUE
@@ -389,7 +381,7 @@ public class KeywordsApi {
         String accept,
         @Parameter(hidden = true)
         HttpServletRequest request
-        ) throws Exception {
+    ) throws Exception {
         final String SEPARATOR = ",";
         ServiceContext context = ApiUtils.createServiceContext(request);
         boolean isJson = MediaType.APPLICATION_JSON_VALUE.equals(accept);
@@ -466,7 +458,7 @@ public class KeywordsApi {
             }
         }
 
-       Element langConversion = null;
+        Element langConversion = null;
         if ( (langMapJson != null) && (!langMapJson.isEmpty()) ){
             JSONObject obj = JSONObject.fromObject(langMapJson);
             langConversion = new Element("languageConversions");
@@ -474,10 +466,11 @@ public class KeywordsApi {
                 String key = ((Map.Entry) entry).getKey().toString();
                 String value = ((Map.Entry) entry).getValue().toString();
                 Element conv = new Element("conversion");
-                conv.setAttribute("from", key);
-                conv.setAttribute("to", value.replace("#",""));
+                conv.setAttribute("from",key.toString());
+                conv.setAttribute("to",value.toString().replace("#",""));
                 langConversion.addContent(conv);
             }
+
         }
 
 
@@ -513,7 +506,9 @@ public class KeywordsApi {
             root.addContent(gui);
             root.addContent(nodeUrl);
             root.addContent(nodeId);
-            return Xml.transform(root, convertXsl);
+            final Element transform = Xml.transform(root, convertXsl);
+
+            return transform;
         }
     }
 
@@ -530,8 +525,9 @@ public class KeywordsApi {
         summary = "Download a thesaurus by name",
         description = "Download the thesaurus in SKOS format."
     )
-    @GetMapping(
+    @RequestMapping(
         value = "/{thesaurus:.+}",
+        method = RequestMethod.GET,
         produces = {
             MediaType.TEXT_XML_VALUE
         })
@@ -546,7 +542,7 @@ public class KeywordsApi {
             description = "Thesaurus to download.",
             required = true)
         @PathVariable(value = "thesaurus")
-            String thesaurus,
+        String thesaurus,
         HttpServletResponse response
     ) throws Exception {
 
@@ -579,7 +575,9 @@ public class KeywordsApi {
         summary = "Delete a thesaurus by name",
         description = "Delete a thesaurus."
     )
-    @DeleteMapping(value = "/{thesaurus:.+}")
+    @RequestMapping(
+        value = "/{thesaurus:.+}",
+        method = RequestMethod.DELETE)
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Thesaurus deleted."),
         @ApiResponse(responseCode = "403", description = ApiParams.API_RESPONSE_NOT_ALLOWED_ONLY_USER_ADMIN),
@@ -593,7 +591,7 @@ public class KeywordsApi {
             description = "Thesaurus to delete.",
             required = true)
         @PathVariable(value = "thesaurus")
-            String thesaurus
+        String thesaurus
     ) throws Exception {
 
         Thesaurus thesaurusObject = thesaurusMan.getThesaurusByName(thesaurus);
@@ -627,7 +625,8 @@ public class KeywordsApi {
         summary = "Uploads a new thesaurus from a file",
         description = "Uploads a new thesaurus."
     )
-    @PostMapping(
+    @RequestMapping(
+        method = RequestMethod.POST,
         produces = MediaType.TEXT_XML_VALUE
     )
     @ApiResponses(value = {
@@ -641,19 +640,19 @@ public class KeywordsApi {
         @Parameter(
             description = "If set, do a file upload.")
         @RequestParam(value = "file", required = false)
-            MultipartFile file,
+        MultipartFile file,
         @Parameter(
             description = "Local or external (default).")
         @RequestParam(value = "type", defaultValue = "external")
-            ThesaurusType type,
+        ThesaurusType type,
         @Parameter(
             description = "Type of thesaurus, usually one of the ISO thesaurus type codelist value. Default is theme.")
         @RequestParam(value = "dir", defaultValue = "theme")
-            String dir,
+        String dir,
         @Parameter(
             description = "XSL to be use to convert the thesaurus before load. Default _none_.")
-        @RequestParam(value = "stylesheet", defaultValue = NO_XSLT)
-            String stylesheet,
+        @RequestParam(value = "stylesheet", defaultValue = "_none_")
+        String stylesheet,
         HttpServletRequest request
     ) throws Exception {
 
@@ -721,7 +720,7 @@ public class KeywordsApi {
             long end = System.currentTimeMillis();
             long duration = (end - start) / 1000;
 
-            return String.format(THESAURUS_X_LOADED_IN_Y_SEC,
+            return String.format("Thesaurus '%s' loaded in %d sec.",
                 fname, duration);
         } finally {
             if (tempDir != null) {
@@ -740,8 +739,9 @@ public class KeywordsApi {
         summary = "Uploads a CSV file and convert it to SKOS format",
         description = "CSV file MUST contains columns at least for concept id and label. For multilingual thesaurus, consider using columns like label, label_fre, label_ita with languages parameter set to [en, fr, it]. Default language value is used if translations are empty. The thesaurus filename will be the filename of the CSV file (with .rdf extension). It is recommended to set the thesaurus title and namespace URL even if default values will be used based on the filename. Thesaurus dates are set to the date of import."
     )
-    @PostMapping(
+    @RequestMapping(
         value = "/import/csv",
+        method = RequestMethod.POST,
         produces = MediaType.APPLICATION_XML_VALUE
     )
     @ApiResponses(value = {
@@ -755,63 +755,63 @@ public class KeywordsApi {
         @Parameter(
             description = "If set, do a file upload.")
         @RequestParam(value = "file", required = false)
-            MultipartFile file,
+        MultipartFile file,
         @Parameter(
             description = "Local or external (default).")
         @RequestParam(value = "type", defaultValue = "external")
-            ThesaurusType type,
+        ThesaurusType type,
         @Parameter(
             description = "Type of thesaurus, usually one of the ISO thesaurus type codelist value. Default is theme.")
         @RequestParam(value = "dir", defaultValue = "theme")
-            String dir,
+        String dir,
         @Parameter(
             description = "Encoding. Default is UTF-8.")
         @RequestParam(value = "encoding", defaultValue = "UTF-8")
-            String encoding,
+        String encoding,
         @Parameter(
             description = "Thesaurus namespace. Default is filename.")
         @RequestParam(value = "thesaurusNs", defaultValue = "")
-            String thesaurusNs,
+        String thesaurusNs,
         @Parameter(
             description = "Thesaurus languages")
         @RequestParam(value = "languages", defaultValue = "en")
-            String[] languages,
+        String[] languages,
         @Parameter(
             description = "Thesaurus title. Default is filename.")
         @RequestParam(value = "thesaurusTitle", defaultValue = "")
-            String thesaurusTitle,
+        String thesaurusTitle,
         @Parameter(
             description = "Column name for concept id. Default is id.")
         @RequestParam(value = "conceptIdColumn", defaultValue = "id")
-            String conceptIdColumn,
+        String conceptIdColumn,
         @Parameter(
             description = "Column name for concept label. Default is label.")
         @RequestParam(value = "conceptLabelColumn", defaultValue = "label")
-            String conceptLabelColumn,
+        String conceptLabelColumn,
         @Parameter(
             description = "Column name for concept description. Default is description.")
         @RequestParam(value = "conceptDescriptionColumn", defaultValue = "")
-            String conceptDescriptionColumn,
+        String conceptDescriptionColumn,
         @Parameter(
             description = "Column name for broader concept id. Default is broader.")
         @RequestParam(value = "conceptBroaderIdColumn", defaultValue = "broader")
-            String conceptBroaderIdColumn,
+        String conceptBroaderIdColumn,
         @Parameter(
             description = "Column name for narrower concept id. Default is narrower.")
         @RequestParam(value = "conceptNarrowerIdColumn", defaultValue = "narrower")
-            String conceptNarrowerIdColumn,
+        String conceptNarrowerIdColumn,
         @Parameter(
             description = "Column name for related concept id. Default is related.")
         @RequestParam(value = "conceptRelatedIdColumn", defaultValue = "related")
-            String conceptRelatedIdColumn,
+        String conceptRelatedIdColumn,
         @Parameter(
             description = "Separator used when multiple broader/narrower/related ids are in the same column. Default is '|'.")
         @RequestParam(value = "conceptLinkSeparator", defaultValue = "\\|")
-            String conceptLinkSeparator,
+        String conceptLinkSeparator,
         @Parameter(
-            description = "Import CSV file as thesaurus if true (default) or return it in  SKOS format.")
+            description = "Import CSV file as thesaurus if true (detault) or return it in  SKOS format.")
         @RequestParam(value = "importAsThesaurus", defaultValue = "true")
-            boolean importAsThesaurus,
+        boolean importAsThesaurus,
         HttpServletRequest request,
         HttpServletResponse response
     ) throws Exception {
@@ -864,7 +864,7 @@ public class KeywordsApi {
                 xmlOutput.output(element,
                     new OutputStreamWriter(new FileOutputStream(rdfFile.toFile().getCanonicalPath()),
                         StandardCharsets.UTF_8));
-                uploadThesaurus(rdfFile, NO_XSLT, context, fname, type.toString(), dir);
+                uploadThesaurus(rdfFile, "_none_", context, fname, type.toString(), dir);
                 response.setStatus(HttpServletResponse.SC_CREATED);
             } else {
                 response.addHeader("Content-Disposition", "inline; filename=\"" + fname + "\"");
@@ -892,10 +892,10 @@ public class KeywordsApi {
                                     String conceptNarrowerIdColumn,
                                     String conceptRelatedIdColumn,
                                     String conceptLinkSeparator) throws IOException {
-       Log.debug(Geonet.THESAURUS, "Convert CSV file SKOS" + csvFile.getFileName());
+        Log.debug(Geonet.THESAURUS, "Convert CSV file SKOS" + csvFile.getFileName());
 
-       String thesaurusNamespaceUrl = StringUtils.isEmpty(thesaurusNs) ?
-           csvFile.getFileName().toString() + "#" : thesaurusNs;
+        String thesaurusNamespaceUrl = StringUtils.isEmpty(thesaurusNs) ?
+            csvFile.getFileName().toString() + "#" : thesaurusNs;
         Element thesaurus = new Element("RDF", RDF_NAMESPACE);
 
         try (
@@ -945,7 +945,7 @@ public class KeywordsApi {
                     extractRelated(key, thesaurusNamespaceUrl, csvParser, csvRecord,
                         conceptLinkSeparator, conceptBroaderIdColumn,
                         broaderLinks);
-                    if (broaderLinks.get(key) == null || broaderLinks.get(key).isEmpty()) {
+                    if (broaderLinks.get(key) == null || broaderLinks.get(key).size() == 0) {
                         topConcepts.add(key);
                     }
                     extractRelated(key, thesaurusNamespaceUrl, csvParser, csvRecord,
@@ -966,7 +966,7 @@ public class KeywordsApi {
             }
 
             Element scheme = buildConceptScheme(csvFile, thesaurusTitle, thesaurusNamespaceUrl);
-            if(!broaderLinks.isEmpty() && !topConcepts.isEmpty()) {
+            if(broaderLinks.size() > 0 && topConcepts.size() > 0) {
                 topConcepts.forEach(t -> {
                     Element topConcept = new Element("hasTopConcept", SKOS_NAMESPACE);
                     topConcept.setAttribute("resource", t, RDF_NAMESPACE);
@@ -992,7 +992,9 @@ public class KeywordsApi {
                 key,
                 Arrays.stream(csvRecord.get(column).split(conceptLinkSeparator))
                     .filter(StringUtils::isNotEmpty)
-                    .map(c ->  thesaurusNamespaceUrl + c)
+                    .map(c -> {
+                        return thesaurusNamespaceUrl + c;
+                    })
                     .collect(Collectors.toList())
             );
         }
@@ -1003,18 +1005,17 @@ public class KeywordsApi {
             .orElseGet(Collections::emptyList)
             .stream()
             .filter(Objects::nonNull).forEach(b -> {
-            Element broader = new Element(type, SKOS_NAMESPACE);
-            broader.setAttribute("resource", b, RDF_NAMESPACE);
-            keywordSkos.addContent(broader);
-        });
+                Element broader = new Element(type, SKOS_NAMESPACE);
+                broader.setAttribute("resource", b, RDF_NAMESPACE);
+                keywordSkos.addContent(broader);
+            });
     }
 
     public Element buildConceptScheme(Path csvFile, String thesaurusTitle, String thesaurusNamespaceUrl) {
         Element conceptScheme = new Element("ConceptScheme", SKOS_NAMESPACE);
         conceptScheme.setAttribute("about", thesaurusNamespaceUrl, RDF_NAMESPACE);
         Element conceptSchemeTitle = new Element("title", NAMESPACE_DC);
-        conceptSchemeTitle.setText(StringUtils.isEmpty(thesaurusTitle) && csvFile != null
-            ? csvFile.getFileName().toString() : thesaurusTitle);
+        conceptSchemeTitle.setText(StringUtils.isEmpty(thesaurusTitle) ? csvFile.getFileName().toString() : thesaurusTitle);
         conceptScheme.addContent(conceptSchemeTitle);
 
         Element conceptSchemeDateIssued = new Element("issued", NAMESPACE_DCT);
@@ -1050,7 +1051,8 @@ public class KeywordsApi {
         summary = "Uploads a new thesaurus from URL or Registry",
         description = "Uploads a new thesaurus."
     )
-    @PutMapping(
+    @RequestMapping(
+        method = RequestMethod.PUT,
         produces = MediaType.TEXT_XML_VALUE
     )
     @ApiResponses(value = {
@@ -1064,32 +1066,32 @@ public class KeywordsApi {
         @Parameter(
             description = "If set, try to download from the Internet.")
         @RequestParam(value = "url", required = false)
-            String url,
+        String url,
         @Parameter(
             description = "If set, try to download from a registry.")
         @RequestParam(value = "registryUrl", required = false)
-            String registryUrl,
+        String registryUrl,
         @Parameter(
             description = "If using registryUrl, then define the type of registry." +
                 " If not set, default mode is re3gistry.")
         @RequestParam(value = "registryType", required = false)
-            REGISTRY_TYPE registryType,
+        REGISTRY_TYPE registryType,
         @Parameter(
             description = "Languages to download from a registry.")
         @RequestParam(value = "registryLanguage", required = false)
-            String[] registryLanguage,
+        String[] registryLanguage,
         @Parameter(
             description = "Local or external (default).")
         @RequestParam(value = "type", defaultValue = "external")
-            ThesaurusType type,
+        ThesaurusType type,
         @Parameter(
             description = "Type of thesaurus, usually one of the ISO thesaurus type codelist value. Default is theme.")
         @RequestParam(value = "dir", defaultValue = "theme")
-            String dir,
+        String dir,
         @Parameter(
             description = "XSL to be use to convert the thesaurus before load. Default _none_.")
-        @RequestParam(value = "stylesheet", defaultValue = NO_XSLT)
-            String stylesheet,
+        @RequestParam(value = "stylesheet", defaultValue = "_none_")
+        String stylesheet,
         @RequestBody(required = false) ThesaurusInfo thesaurusInfo,
         HttpServletRequest request
     ) throws Exception {
@@ -1148,7 +1150,7 @@ public class KeywordsApi {
             long end = System.currentTimeMillis();
             long duration = (end - start) / 1000;
 
-            return String.format(THESAURUS_X_LOADED_IN_Y_SEC,
+            return String.format("Thesaurus '%s' loaded in %d sec.",
                 fname, duration);
         } else {
 
@@ -1190,192 +1192,9 @@ public class KeywordsApi {
         long end = System.currentTimeMillis();
         long duration = (end - start) / 1000;
 
-        return String.format(THESAURUS_X_LOADED_IN_Y_SEC,
+        return String.format("Thesaurus '%s' loaded in %d sec.",
             fname, duration);
     }
-
-
-    @io.swagger.v3.oas.annotations.Operation(summary = "Create thesaurus from Shapefile",
-        description = "")
-    @PostMapping(
-        value = "/import/spatial",
-        consumes = {
-            MediaType.MULTIPART_FORM_DATA_VALUE
-        },
-        produces = {
-            MediaType.APPLICATION_JSON_VALUE
-        })
-    @ResponseStatus(HttpStatus.CREATED)
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Thesaurus created."),
-        @ApiResponse(responseCode = "403", description = ApiParams.API_RESPONSE_NOT_ALLOWED_ONLY_REVIEWER)
-    })
-    @PreAuthorize("hasAuthority('Reviewer')")
-    @ResponseBody
-    public void importSpatial(
-        @Parameter(
-            description = "The ZIP file to upload containing the Shapefile.",
-            required = true
-        )
-        @RequestParam("file")
-        MultipartFile file,
-        @Parameter(
-            description = "Attribute to use for UUID. If none, random UUID are generated.",
-            required = false)
-        @RequestParam(
-            required = false
-        )
-        String uuidAttribute,
-        @Parameter(
-            description = "Pattern to build UUID from. Default is '{{uuid}}'.",
-            required = false)
-        @RequestParam(
-            defaultValue = "{{uuid}}",
-            required = false
-        )
-        String uuidPattern,
-        @Parameter(
-            description = "Attribute to use for extent description. " +
-                "If none, no extent description defined. TODO: Add per language desc ?",
-            required = false)
-        @RequestParam(
-            required = false
-        )
-        String descriptionAttribute,
-        @Parameter(
-            description = "geomProjectionTo",
-            required = false
-        )
-        @RequestParam(
-            required = false
-        )
-        String geomProjectionTo,
-        @Parameter(
-            description = "lenient",
-            required = false
-        )
-        @RequestParam(
-            required = false
-        )
-        boolean lenient,
-        @Parameter(
-            description = "Attribute table charset",
-            required = false
-        )
-        @RequestParam(
-            required = false,
-            defaultValue = ""
-        )
-        String charset,
-        @Parameter(
-            description = "Create only bounding box for each spatial objects.",
-            required = false)
-        @RequestParam(
-            required = false,
-            defaultValue = "true")
-        boolean onlyBoundingBox,
-        @Parameter(
-            description = "Local or external (default).")
-        @RequestParam(value = "type", defaultValue = "external")
-        ThesaurusType type,
-        @Parameter(
-            description = "Type of thesaurus, usually one of the ISO thesaurus type codelist value. Default is theme.")
-        @RequestParam(value = "dir", defaultValue = "place")
-        String dir,
-        @Parameter(
-            description = "Thesaurus namespace. Default is filename.")
-        @RequestParam(value = "thesaurusNs", defaultValue = "")
-        String thesaurusNs,
-        @Parameter(
-            description = "Thesaurus languages")
-        @RequestParam(value = "languages", defaultValue = "en")
-        String[] languages,
-        @Parameter(
-            description = "Thesaurus title. Default is filename.")
-        @RequestParam(value = "thesaurusTitle", defaultValue = "")
-        String thesaurusTitle,
-        @Parameter(
-            description = "Import Shapefile file as thesaurus if true (default) or return it in SKOS format.")
-        @RequestParam(value = "importAsThesaurus", defaultValue = "true")
-        boolean importAsThesaurus,
-        @Parameter(hidden = true)
-        MultipartHttpServletRequest request,
-        @Parameter(hidden = true)
-        HttpServletResponse response)
-        throws Exception {
-        ServiceContext context = ApiUtils.createServiceContext(request);
-
-        String fname = file.getOriginalFilename();
-        File tempDir = Files.createTempDirectory("thesaurus").toFile();
-
-        String extension = FilenameUtils.getExtension(fname);
-        Element thesaurus = convertShapefileToSkos(file, uuidAttribute, uuidPattern, descriptionAttribute, geomProjectionTo, lenient, charset, thesaurusNs, languages, thesaurusTitle);
-
-        fname = fname.replace(extension, "rdf");
-
-        if(importAsThesaurus) {
-            Path rdfFile = tempDir.toPath().resolve(fname);
-            XMLOutputter xmlOutput = new XMLOutputter();
-            xmlOutput.setFormat(Format.getCompactFormat());
-            xmlOutput.output(thesaurus,
-                new OutputStreamWriter(new FileOutputStream(rdfFile.toFile().getCanonicalPath()),
-                    StandardCharsets.UTF_8));
-            uploadThesaurus(rdfFile, NO_XSLT, context, fname, type.toString(), dir);
-            response.setStatus(HttpServletResponse.SC_CREATED);
-        } else {
-            response.addHeader("Content-Disposition", "inline; filename=\"" + fname + "\"");
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.setCharacterEncoding(Constants.ENCODING);
-            response.setContentType(MediaType.APPLICATION_XML_VALUE);
-            response.getOutputStream().write(Xml.getString(thesaurus).getBytes());
-        }
-    }
-
-    private Element convertShapefileToSkos(MultipartFile file, String uuidAttribute, String uuidPattern, String descriptionAttribute, String geomProjectionTo, boolean lenient, String charset, String thesaurusNs, String[] languages, String thesaurusTitle) throws IOException, URISyntaxException, TransformException {
-        File[] shapeFiles = unzipAndFilterShp(file);
-
-        String thesaurusNamespaceUrl = StringUtils.isEmpty(thesaurusNs) ?
-            file.getName() + "#" : thesaurusNs;
-        Element thesaurus = new Element("RDF", RDF_NAMESPACE);
-        Map<String, KeywordBean> allConcepts = new LinkedHashMap<>();
-
-        for (File shapeFile : shapeFiles) {
-            SimpleFeatureCollection collection = shapeFileToFeatureCollection(shapeFile, charset);
-
-            try (FeatureIterator<SimpleFeature> features = collection.features()) {
-
-                while (features.hasNext()) {
-                    SimpleFeature feature = features.next();
-
-                    String uuid = computeUuid(uuidAttribute, uuidPattern, feature);
-                    String description = computeDescription(descriptionAttribute, feature);
-                    Envelope wgsEnvelope = computeEnvelope(feature);
-
-                    String key = thesaurusNs + uuid;
-                    KeywordBean keyword = new KeywordBean(languagesMapper);
-                    keyword.setNamespaceCode(thesaurusNamespaceUrl);
-                    keyword.setKeywordUrl(thesaurusNamespaceUrl);
-                    keyword.setUriCode(uuid);
-                    Arrays.stream(languages).forEach(l -> keyword.setValue(description, l));
-                    keyword.setCoordEast("" + wgsEnvelope.getMaxX());
-                    keyword.setCoordNorth("" + wgsEnvelope.getMaxY());
-                    keyword.setCoordWest("" + wgsEnvelope.getMinX());
-                    keyword.setCoordSouth("" + wgsEnvelope.getMinY());
-                    allConcepts.put(key, keyword);
-                }
-            }
-        }
-
-        Element scheme = buildConceptScheme(null, thesaurusTitle, thesaurusNamespaceUrl);
-
-        thesaurus.addContent(scheme);
-        allConcepts.forEach((uri, keyword) -> {
-            Element keywordSkos = keyword.getSkos();
-            thesaurus.addContent(keywordSkos);
-        });
-        return thesaurus;
-    }
-
 
     /**
      * Update the information related to a local thesaurus .
@@ -1388,8 +1207,9 @@ public class KeywordsApi {
         summary = "Updates the information of a local thesaurus",
         description = "Updates the information of a local thesaurus."
     )
-    @PutMapping(
+    @RequestMapping(
         value = "/{thesaurus:.+}",
+        method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ApiResponses(value = {
@@ -1404,7 +1224,7 @@ public class KeywordsApi {
             description = "Thesaurus to update.",
             required = true)
         @PathVariable(value = "thesaurus")
-            String thesaurus,
+        String thesaurus,
         @Parameter(
             description = "Thesaurus information")
         @RequestBody
@@ -1499,7 +1319,7 @@ public class KeywordsApi {
      * @throws IOException           Signals that an I/O exception has occurred.
      * @throws MalformedURLException the malformed URL exception
      */
-    private Path getXMLContentFromUrl(String url, ServiceContext context) throws URISyntaxException, IOException {
+    private Path getXMLContentFromUrl(String url, ServiceContext context) throws URISyntaxException, IOException, MalformedURLException {
         Path rdfFile;
         URI uri = new URI(url);
         rdfFile = Files.createTempFile("thesaurus", ".rdf");
@@ -1515,7 +1335,7 @@ public class KeywordsApi {
      * Load a thesaurus in the catalogue and optionnaly convert it using XSL.
      *
      * @param rdfFile the rdf file
-     * @param stylesheet   the stylesheet
+     * @param style   the style
      * @param context the context
      * @param fname   the fname
      * @param type    the type
@@ -1523,7 +1343,7 @@ public class KeywordsApi {
      * @return Element thesaurus uploaded
      * @throws Exception the exception
      */
-    private void uploadThesaurus(Path rdfFile, String stylesheet,
+    private void uploadThesaurus(Path rdfFile, String style,
                                  ServiceContext context, String fname, String type, String dir)
         throws Exception {
 
@@ -1533,10 +1353,10 @@ public class KeywordsApi {
         Element xml = Xml.loadFile(rdfFile);
         xml.detach();
 
-        if (!NO_XSLT.equals(stylesheet)) {
-            FilePathChecker.verify(stylesheet);
+        if (!"_none_".equals(style)) {
+            FilePathChecker.verify(style);
 
-            tsXml = Xml.transform(xml, stylePath.resolve(stylesheet));
+            tsXml = Xml.transform(xml, stylePath.resolve(style));
             tsXml.detach();
         } else {
             tsXml = xml;
@@ -1600,8 +1420,8 @@ public class KeywordsApi {
 
         if (thesauri == null) {
             Map<String, Thesaurus> listOfThesaurus = thesaurusMan.getThesauriMap();
-            for (Map.Entry<String, Thesaurus> e : listOfThesaurus.entrySet()) {
-                parsedParams.addThesaurus(e.getValue().getKey());
+            for (String t : listOfThesaurus.keySet()) {
+                parsedParams.addThesaurus(listOfThesaurus.get(t).getKey());
             }
         } else {
             for (String thesaurusName : thesauri) {

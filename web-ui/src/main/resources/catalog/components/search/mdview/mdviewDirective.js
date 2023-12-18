@@ -597,9 +597,10 @@
             name: false,
             description: false,
             value: false,
-            type: false
+            type: false,
+            date: false
           };
-          for (idx in scope.measures) {
+          for (var idx in scope.measures) {
             angular.forEach(Object.keys(scope.columnVisibility), function (p) {
               if (scope.measures[idx][p]) {
                 scope.columnVisibility[p] = true;
