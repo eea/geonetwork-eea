@@ -1606,7 +1606,7 @@
     <rootProjectDir>..</rootProjectDir>
     <wro.version>1.10.1</wro.version>
     <wro.debug>true</wro.debug>
-    <fop.version>2.7</fop.version>
+    <fop.version>2.9</fop.version>
     <xmlunit.version>2.1.1</xmlunit.version>
     <jackson.version>2.15.3</jackson.version>
     <flying-saucer>9.1.22</flying-saucer>
