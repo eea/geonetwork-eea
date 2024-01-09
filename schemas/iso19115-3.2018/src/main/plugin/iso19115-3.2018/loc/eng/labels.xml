@@ -4306,7 +4306,7 @@
     <description>Status of the resource(s)</description>
   </element>
   <element name="mri:supplementalInformation" id="46.0">
-    <label>Supplemental Information</label>
+    <label>Additional Information</label>
     <description>Any other descriptive information about the dataset
     </description>
   </element>
