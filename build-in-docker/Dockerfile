@@ -1,6 +1,6 @@
-FROM maven:3-eclipse-temurin-8-focal AS build
+FROM maven:3-eclipse-temurin-11-focal AS build
 
-ARG COMMIT_OR_BRANCH=eea-4.2.0
+ARG COMMIT_OR_BRANCH=eea-4.4.x
 
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends \
@@ -15,7 +15,7 @@ RUN mvn -B install -DskipTests
 RUN unzip /tmp/geonetwork-eea/web/target/geonetwork.war -d /tmp/geonetwork
 
 
-FROM jetty:9-jdk8-eclipse-temurin AS final
+FROM jetty:9-jdk11-eclipse-temurin AS final
 LABEL maintainer="michimau <mauro.michielon@eea.europa.eu>"
 
 ENV DATA_DIR /catalogue-data
