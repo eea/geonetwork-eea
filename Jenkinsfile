@@ -6,7 +6,7 @@ pipeline {
   environment {
     GIT_NAME = "geonetwork-eea"
     registry = "eeacms/eea-geonetwork"
-    default_branch = "eea-4.2.0"
+    default_branch = "eea-4.4.x"
    }
 
   stages {
