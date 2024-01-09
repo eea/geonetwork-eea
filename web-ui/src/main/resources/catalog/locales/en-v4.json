@@ -352,7 +352,7 @@
   "regexpFlags-i": "enables case insensitive matching",
   "regexpFlags-c": "disables case insensitive matching",
   "createCollectionFromSelectionAs": "Create collection from selection as",
-  "supplementalInformation": "Supplemental Information",
+  "supplementalInformation": "Additional information",
   "sourceDescription": "Source description",
   "processSteps": "Process steps",
   "orderingInstructions": "Ordering instructions",
