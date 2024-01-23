@@ -114,6 +114,6 @@ EOF
 
 
         #mkdir -p "$BY_DIR/$FIELD_DIR/$key/$resourceIdentifier"
-        ln -s "$BY_DIR/$FIELD_DIR/$key/$resourceIdentifier" "/catalogue_data/$ACCESSFOLDER/$resourceIdentifier"
+        ln -s "/var/local/gis_sdi/datastore/$ACCESSFOLDER/$resourceIdentifier" "$BY_DIR/$FIELD_DIR/$key/$resourceIdentifier"
     done
 done
