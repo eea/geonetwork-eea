@@ -322,6 +322,7 @@
     "gnExternalViewer",
     "gnConfigService",
     "gnUrlUtils",
+    "$rootScope",
     function (
       gnRelatedService,
       gnGlobalSettings,
@@ -330,7 +331,8 @@
       gnRelatedResources,
       gnExternalViewer,
       gnConfigService,
-      gnUrlUtils
+      gnUrlUtils,
+      $rootScope
     ) {
       return {
         restrict: "A",
@@ -394,6 +396,9 @@
           scope.loadRelations = function (relation) {
             var relationCount = 0;
             scope.relationFound = false;
+
+            scope.user = $rootScope.user;
+            
             angular.forEach(relation, function (value, idx) {
               if (!value) {
                 return;
