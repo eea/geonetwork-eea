@@ -599,7 +599,16 @@
               </snippet>
             </template>
           </action>
+          <action type="process"
+                  process="eea-add-datasharelink"
+                  btnLabel="eea-add-datasharelink"
+                  btnClass="fa fa-fw fa-download"
+                  if="count(*/gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*[starts-with(gmd:linkage/*/text(), 'https://sdi.eea.europa.eu/webdav/datastore')]) = 0"
+                  or="onLine"
+                  in="/gmd:MD_Metadata/gmd:distributionInfo/*/gmd:transferOptions/*"/>
+
           <text ref="eea-identifier-help"/>
+
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:edition"
                  or="edition" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*"/>

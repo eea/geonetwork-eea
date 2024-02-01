@@ -74,6 +74,7 @@
       </div>
     </div>
   </eea-lineage>
+  <eea-add-datasharelink>Add Webdav default link</eea-add-datasharelink>
 
   <eea-mmu>Minimum Mapping Unit (ha)</eea-mmu>
   <eea-mmw>Minimum Mapping width (m)</eea-mmw>
