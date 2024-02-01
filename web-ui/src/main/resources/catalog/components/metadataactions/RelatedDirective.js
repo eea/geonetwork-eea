@@ -383,62 +383,6 @@
             controller.registerGnRelated(elem);
           }
 
-          // At EEA a Talend process is publishing all SDI
-          // datasets in a GeoServer instance. Based on the onlineSource link
-          // check if the GeoServer provides access to that resource.
-          // It may not if it is a not supported format.
-          scope.isAvailableInEEAGeoServer = {};
-          scope.eeaGeoServer = gnGlobalSettings.gnCfg.mods.global.eeaGeoServer || "";
-          scope.eeaNextCloudServer =
-            gnGlobalSettings.gnCfg.mods.global.eeaNextCloudServer || "";
-          scope.checkGeoServerAvailability = function (r) {
-            var geoserverNode =
-              gnGlobalSettings.gnCfg.mods.global.eeaGeoServer ||
-              "https://sdi.eea.europa.eu/geoserver/ows";
-            // var geoserverNode = 'http://localhost:8081/geoserver/ows';
-            var geoserverWorkspace = "sdi";
-
-            //
-            var layerName = "";
-            if (r.protocol == "EEA:FILEPATH") {
-              layerName = r.locUrl
-                .split("/")
-                .filter(function (t) {
-                  return t !== "";
-                })
-                .pop()
-                .replace(/.tif|.gpkg|.shp/, "");
-            } else if (r.protocol == "EEA:FOLDERPATH") {
-              // Not supported
-            } else if (r.protocol == "EEA:DBPG") {
-              layerName = r.locUrl.split(":")[1].replace(/\/|\./g, "-");
-            }
-
-            if (layerName != "") {
-              gnOwsCapabilities.getWMSCapabilities(geoserverNode).then(
-                function (capObj) {
-                  // For geopackage, can be any of the table contained in the DB
-                  var capL = gnOwsCapabilities.getLayerInfoFromCap(
-                    geoserverWorkspace + ":" + layerName,
-                    capObj
-                  );
-                  scope.isAvailableInEEAGeoServer[r.id] = capL
-                    ? {
-                        id: r.id,
-                        title: layerName,
-                        protocol: "OGC:WMS",
-                        url: { eng: geoserverNode }
-                      }
-                    : false;
-                },
-                function () {
-                  scope.isAvailableInEEAGeoServer[r.id] = false;
-                }
-              );
-            } else {
-              scope.isAvailableInEEAGeoServer[r.id] = false;
-            }
-          };
 
           scope.sizeConfig = {};
           scope.showAllItems = function (type) {

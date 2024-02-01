@@ -72,9 +72,7 @@
             humanizeDates: true,
             dateFormat: "DD-MM-YYYY",
             // 'timezone': 'Australia/Hobart',
-            timezone: "Europe/Copenhagen",
-            eeaGeoServer: "https://sdi.eea.europa.eu/geoserver/ows",
-            eeaNextCloudServer: "https://galliwasp.eea.europa.eu/data/"
+            timezone: "Europe/Copenhagen"
           },
           footer: {
             enabled: true,
