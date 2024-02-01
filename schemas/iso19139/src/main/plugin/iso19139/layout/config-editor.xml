@@ -554,7 +554,7 @@
                    data-editor-config="default"
                    data-related-config="[{
                                            title: 'download',
-                                           filter: 'protocol:WWW:URL|WWW:LINK*|EEA.*|WWW:DOWNLOAD.*',
+                                           filter: 'protocol:WWW:URL|EEA.*|WWW:DOWNLOAD.*',
                                            editActions: ['addOnlinesrc']},
                                          {
                                            title: 'Services',
