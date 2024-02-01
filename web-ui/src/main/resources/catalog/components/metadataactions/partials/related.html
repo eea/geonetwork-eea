@@ -117,8 +117,10 @@
         </p>
         <div data-ng-switch on="mainType">
           <div class="text-muted" data-ng-switch-when="EEAFILE">
-            <div class="input-group"
-                 data-ng-init="webdavlink = r.locUrl.endsWith('/') ? r.locUrl.substr(0, r.locUrl.lastIndexOf('/')) : r.locUrl">
+            <div
+              class="input-group"
+              data-ng-init="webdavlink = r.locUrl.endsWith('/') ? r.locUrl.substr(0, r.locUrl.lastIndexOf('/')) : r.locUrl"
+            >
               <span class="input-group-addon" data-translate="">webdavLink</span>
               <input
                 class="form-control"
@@ -160,6 +162,13 @@
               data-ng-if="::isLayerProtocol(r)"
               data-gn-wfs-download=""
               data-typename="{{::isLayerProtocol(r) ? r.locTitle : ''}}"
+              data-url="{{::r.locUrl}}"
+            ></div>
+
+            <div
+              data-ng-if="::!isLayerProtocol(r)"
+              data-gn-wfs-download=""
+              data-typename=""
               data-url="{{::r.locUrl}}"
             ></div>
           </div>

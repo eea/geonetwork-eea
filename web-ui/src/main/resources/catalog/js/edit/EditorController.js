@@ -206,6 +206,7 @@
 
           // Enable workflow functions
           $scope.isMdWorkflowEnable = gnConfig["metadata.workflow.enable"];
+          $scope.viewConfig = gnGlobalSettings.gnCfg.mods.recordview;
 
           if ($routeParams.id) {
             // Check requested metadata exists
@@ -384,6 +385,7 @@
       var formLoadExtraFunctions = function () {
         setViewMenuInTopToolbar();
         setEditorIndentType();
+        refreshMetadata();
       };
 
       $scope.$on("$locationChangeSuccess", function (e, newUrl, oldUrl) {
@@ -412,6 +414,37 @@
           // add indent type to editor based on UI configuration
           f.addClass(gnGlobalSettings.gnCfg.mods.editor.editorIndentType);
         }
+      };
+
+      /**
+       * Refresh the metadata information in the current edit session
+       */
+      var refreshMetadata = function () {
+        // Refresh the metadata property
+        $http
+          .post("../api/search/records/_search", {
+            query: {
+              bool: {
+                must: [
+                  {
+                    multi_match: {
+                      query: gnCurrentEdit.id,
+                      fields: ["id^2", "uuid"]
+                    }
+                  },
+                  { terms: { draft: ["n", "y", "e"] } },
+                  { terms: { isTemplate: ["n", "y", "s"] } }
+                ]
+              }
+            }
+          })
+          .then(function (r) {
+            var metadataFound = r.data.hits.total.value !== 0;
+
+            if (metadataFound) {
+              $scope.gnCurrentEdit.metadata = new Metadata(r.data.hits.hits[0]);
+            }
+          });
       };
 
       /**

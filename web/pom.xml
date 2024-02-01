@@ -30,7 +30,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>4.4.2-SNAPSHOT</version>
+    <version>4.4.3-SNAPSHOT</version>
   </parent>
 
 
@@ -750,7 +750,8 @@
                   <includes>
                     <include>META-INF/MANIFEST.MF</include>
                     <include>data/**</include>
-                    <include>doc/**</include>
+                    <include>doc/en/**</include>
+                    <include>doc/fr/**</include>
                     <include>images/logos/*</include>
                     <include>images/logos/statTmp</include>
                     <include>scripts/lib/**</include>
@@ -976,7 +977,8 @@
             catalog/lib/style/bootstrap/*.js,
             catalog/lib/style/bootstrap/*.md,
             catalog/lib/style/bootstrap/CNAME,
-            catalog/lib/style/bootstrap/docs/**,
+            catalog/lib/style/bootstrap/docs/en/**,
+            catalog/lib/style/bootstrap/docs/fr/**,
             catalog/lib/style/bootstrap/fonts/**,
             catalog/lib/style/bootstrap/nuget/**,
             catalog/lib/style/bootstrap/grunt/**,

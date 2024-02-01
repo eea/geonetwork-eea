@@ -4,8 +4,6 @@ INSERT INTO Settings (name, value, datatype, position, internal) SELECT distinct
 INSERT INTO Settings (name, value, datatype, position, internal) SELECT distinct 'metadata/pdfReport/headerLogoFileName', '', 0, 12508, 'y' from settings WHERE NOT EXISTS (SELECT name FROM Settings WHERE name = 'metadata/pdfReport/headerLogoFileName');
 
 UPDATE Settings SET value='4.4.2' WHERE name='system/platform/version';
-UPDATE Settings SET value='SNAPSHOT' WHERE name='system/platform/subVersion';
+UPDATE Settings SET value='0' WHERE name='system/platform/subVersion';
 
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('region/getmap/useGeodesicExtents', 'false', 2, 9591, 'n');
-
-ALTER TABLE public.spg_page ADD icon varchar NULL;

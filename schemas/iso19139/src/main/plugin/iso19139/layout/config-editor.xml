@@ -543,22 +543,36 @@
                    transformations="to-iso19139-keyword-with-anchor"/>
       </thesaurusList>
       <sidePanel>
-
-        <directive data-gn-distribution-resources-container="gnCurrentEdit.metadata"
-                   data-mode="viewConfig.distributionConfig.layout || ''"
-                   data-related-config="[{api, download, links}]"/>
-
         <directive data-gn-overview-manager=""
+                   data-file-types=".png,.gif,.jpeg,.jpg"
+                   displayIfRecord="not(contains(gmd:MD_Metadata/
+                                    gmd:hierarchyLevel/*/@codeListValue,
+                                    'nonGeographicDataset'))"/>
+
+        <directive data-gn-distribution-resources-panel="gnCurrentEdit.metadata"
+                   data-mode="viewConfig.distributionConfig.layout || ''"
+                   data-editor-config="default"
+                   data-related-config="[{
+                                           title: 'download',
+                                           filter: 'protocol:WWW:URL|WWW:LINK*|EEA.*|WWW:DOWNLOAD.*',
+                                           editActions: ['addOnlinesrc']},
+                                         {
+                                           title: 'Services',
+                                           filter: 'protocol:OGC:.*|ESRI:.*',
+                                           editActions: ['addOnlinesrc']},
+                                         {
+                                            title: 'links',
+                                            filter:'-protocol:OGC:.*|ESRI:.*|EEA.*|WWW:URL|WWW:DOWNLOAD.*',
+                                            editActions: ['addOnlinesrc']}]"
+        />
+
+        <directive data-gn-onlinesrc-list=""
+                   data-types="dataset|service|source|sibling|associated|fcats"
                    displayIfRecord="not(contains(gmd:MD_Metadata/
                                     gmd:hierarchyLevel/*/@codeListValue,
                                     'nonGeographicDataset'))"/>
         <directive data-gn-onlinesrc-list=""
-                   data-types="onlinesrc|dataset|service|source|sibling|associated|fcats"
-                   displayIfRecord="not(contains(gmd:MD_Metadata/
-                                    gmd:hierarchyLevel/*/@codeListValue,
-                                    'nonGeographicDataset'))"/>
-        <directive data-gn-onlinesrc-list=""
-                   data-types="onlinesrc|parent|source|fcats"
+                   data-types="parent|source|fcats"
                    displayIfRecord="contains(gmd:MD_Metadata/
                                     gmd:hierarchyLevel/*/@codeListValue,
                                     'nonGeographicDataset')"/>
@@ -2255,31 +2269,39 @@
           hideTimeInCalendar="true"
           class="gn-label-above-input gn-indent-bluescale">
       <sidePanel>
-        <!-- Simple overview manager + online source manger for other types
-        Limit the max number of overviews with data-number-of-overviews="3" attribute.
-        In the full view, editor can access and manage the file store and
-        thumbnail name and description not supported by the overview manager.
-        -->
         <directive data-gn-need-help="creating-metadata"/>
+
+        <directive data-gn-validation-report=""/>
 
         <directive data-gn-overview-manager=""
                    data-file-types=".png,.gif,.jpeg,.jpg"/>
 
-        <directive data-gn-file-uploader=""
-                   data-type="onlines"/>
+        <directive data-gn-distribution-resources-panel="gnCurrentEdit.metadata"
+                   data-mode="viewConfig.distributionConfig.layout || ''"
+                   data-editor-config="default"
+                   data-related-config="[{
+                                           title: 'API',
+                                           filter: 'protocol:OGC:.*|ESRI:.*|atom.*',
+                                           editActions: ['addOnlinesrc']},
+                                         {
+                                           title: 'download',
+                                           filter: 'protocol:.*DOWNLOAD.*|DB:.*|FILE:.*',
+                                           editActions: ['addOnlinesrc']},
+                                         {
+                                            title: 'links',
+                                            filter:'-protocol:OGC:.*|ESRI:.*|atom.*|.*DOWNLOAD.*|DB:.*|FILE:.* AND -function:legend|featureCatalogue|dataQualityReport',
+                                            editActions: ['addOnlinesrc']}]"
+        />
 
         <directive data-gn-onlinesrc-list=""
-                   data-types="onlinesrc|parent|dataset|service|source|sibling|associated|fcats"/>
+                   data-types="parent|dataset|service|source|sibling|associated|fcats"/>
 
         <directive gn-geo-publisher=""
                    data-ng-if="gnCurrentEdit.geoPublisherConfig"
                    data-config="{{gnCurrentEdit.geoPublisherConfig}}"
                    data-lang="lang"/>
 
-        <directive data-gn-validation-report=""/>
-
         <directive data-gn-suggestion-list=""/>
-
       </sidePanel>
 
       <tab id="default" default="true" mode="flat">
@@ -2386,12 +2408,37 @@
           class="gn-label-above-input gn-indent-bluescale">
       <sidePanel>
         <directive data-gn-need-help="creating-metadata"/>
+
         <directive data-gn-validation-report=""/>
-        <directive data-gn-onlinesrc-list=""/>
+
+        <directive data-gn-overview-manager=""
+                   data-file-types=".png,.gif,.jpeg,.jpg"/>
+
+        <directive data-gn-distribution-resources-panel="gnCurrentEdit.metadata"
+                   data-mode="viewConfig.distributionConfig.layout || ''"
+                   data-editor-config="default"
+                   data-related-config="[{
+                                           title: 'API',
+                                           filter: 'protocol:OGC:.*|ESRI:.*|atom.*',
+                                           editActions: ['addOnlinesrc']},
+                                         {
+                                           title: 'download',
+                                           filter: 'protocol:.*DOWNLOAD.*|DB:.*|FILE:.*',
+                                           editActions: ['addOnlinesrc']},
+                                         {
+                                            title: 'links',
+                                            filter:'-protocol:OGC:.*|ESRI:.*|atom.*|.*DOWNLOAD.*|DB:.*|FILE:.* AND -function:legend|featureCatalogue|dataQualityReport',
+                                            editActions: ['addOnlinesrc']}]"
+        />
+
+        <directive data-gn-onlinesrc-list=""
+                   data-types="parent|dataset|service|source|sibling|associated|fcats"/>
+
         <directive gn-geo-publisher=""
                    data-ng-if="gnCurrentEdit.geoPublisherConfig"
                    data-config="{{gnCurrentEdit.geoPublisherConfig}}"
                    data-lang="lang"/>
+
         <directive data-gn-suggestion-list=""/>
       </sidePanel>
 
@@ -2462,12 +2509,37 @@
     <view name="xml">
       <sidePanel>
         <directive data-gn-need-help="creating-metadata"/>
+
         <directive data-gn-validation-report=""/>
-        <directive data-gn-onlinesrc-list=""/>
+
+        <directive data-gn-overview-manager=""
+                   data-file-types=".png,.gif,.jpeg,.jpg"/>
+
+        <directive data-gn-distribution-resources-panel="gnCurrentEdit.metadata"
+                   data-mode="viewConfig.distributionConfig.layout || ''"
+                   data-editor-config="default"
+                   data-related-config="[{
+                                           title: 'API',
+                                           filter: 'protocol:OGC:.*|ESRI:.*|atom.*',
+                                           editActions: ['addOnlinesrc']},
+                                         {
+                                           title: 'download',
+                                           filter: 'protocol:.*DOWNLOAD.*|DB:.*|FILE:.*',
+                                           editActions: ['addOnlinesrc']},
+                                         {
+                                            title: 'links',
+                                            filter:'-protocol:OGC:.*|ESRI:.*|atom.*|.*DOWNLOAD.*|DB:.*|FILE:.* AND -function:legend|featureCatalogue|dataQualityReport',
+                                            editActions: ['addOnlinesrc']}]"
+        />
+
+        <directive data-gn-onlinesrc-list=""
+                   data-types="parent|dataset|service|source|sibling|associated|fcats"/>
+
         <directive gn-geo-publisher=""
                    data-ng-if="gnCurrentEdit.geoPublisherConfig"
                    data-config="{{gnCurrentEdit.geoPublisherConfig}}"
                    data-lang="lang"/>
+
         <directive data-gn-suggestion-list=""/>
       </sidePanel>
       <tab id="xml" default="true"/>
