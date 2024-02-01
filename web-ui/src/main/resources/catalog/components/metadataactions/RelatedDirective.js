@@ -398,7 +398,7 @@
             scope.relationFound = false;
 
             scope.user = $rootScope.user;
-            
+
             angular.forEach(relation, function (value, idx) {
               if (!value) {
                 return;

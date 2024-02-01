@@ -117,19 +117,20 @@
         </p>
         <div data-ng-switch on="mainType">
           <div class="text-muted" data-ng-switch-when="EEAFILE">
-            <div class="input-group">
+            <div class="input-group"
+                 data-ng-init="webdavlink = r.locUrl.endsWith('/') ? r.locUrl.substr(0, r.locUrl.lastIndexOf('/')) : r.locUrl">
               <span class="input-group-addon" data-translate="">webdavLink</span>
               <input
                 class="form-control"
                 type="text"
                 onClick="this.setSelectionRange(0, this.value.length)"
-                value="{{r.locUrl.substr(0, r.locUrl.lastIndexOf('/'))}}"
+                value="{{webdavlink}}"
               />
               <span class="input-group-btn">
                 <a
                   class="btn btn-default"
                   type="button"
-                  data-ng-href="{{r.locUrl.substr(0, r.locUrl.lastIndexOf('/'))}}"
+                  data-ng-href="{{webdavlink}}"
                   data-translate=""
                   >openLink</a
                 >
