@@ -825,7 +825,7 @@
               sections: [
                 {
                   types: "onlines",
-                  filter: "protocol:WWW:URL|EEA.*",
+                  filter: "protocol:WWW:URL|EEA.*|WWW:DOWNLOAD.*",
                   title: "download"
                 },
                 {
@@ -835,7 +835,7 @@
                 },
                 {
                   types: "onlines",
-                  filter: "-protocol:OGC:.*|ESRI:.*|EEA.*|WWW:URL",
+                  filter: "-protocol:OGC:.*|ESRI:.*|EEA.*|WWW:URL|WWW:DOWNLOAD.*",
                   title: "links"
                 }
                 // {'types': 'onlines', 'filter': 'function:legend', 'title': 'mapLegend'},
