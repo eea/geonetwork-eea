@@ -195,8 +195,16 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
   <xsl:template mode="copy-online"
                 match="gmd:onLine[starts-with(*/gmd:protocol/gco:CharacterString, 'EEA')
                                   or starts-with(*/gmd:linkage/*/text(), 'https://taskman.eionet.europa.eu/issues')]">
+    <xsl:variable name="datasetIdentifier"
+                  select="/root/gmd:MD_Metadata/gmd:identificationInfo/*/
+                              gmd:citation/*/gmd:identifier/*/gmd:code/*[matches(text(), '.*_[ip]_.*')]/text()"/>
+    <xsl:variable name="isPublic"
+                  select="contains($datasetIdentifier, '_p_')"/>
+
     <xsl:copy>
-      <xsl:attribute name="gco:nilReason">withheld</xsl:attribute>
+      <xsl:if test="not($isPublic)">
+        <xsl:attribute name="gco:nilReason">withheld</xsl:attribute>
+      </xsl:if>
       <xsl:apply-templates select="@*[name() != 'gco:nilReason']"/>
       <xsl:apply-templates select="*"/>
     </xsl:copy>

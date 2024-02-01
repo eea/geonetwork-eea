@@ -135,7 +135,7 @@
                 >
               </span>
             </div>
-            <div class="input-group">
+            <div class="input-group" data-ng-if="user.isConnected()">
               <span class="input-group-addon" data-translate="">cifsLink</span>
               <input
                 class="form-control"
@@ -144,7 +144,7 @@
                 value="\\sdi.eea.europa.eu\data{{formatCifsLink(r.locUrl)}}"
               />
             </div>
-            <div class="input-group">
+            <div class="input-group" data-ng-if="user.isConnected()">
               <span class="input-group-addon" data-translate="">ftpsLink</span>
               <input
                 class="form-control"
