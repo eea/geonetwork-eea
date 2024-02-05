@@ -1,2 +1,6 @@
 {
+  "spatialRepresentationTypes": "Spatial representation types",
+  "spatialRepresentationType": "Spatial representation type",
+  "cl_spatialRepresentationType": "Spatial representation type",
+  "format": "Distribution format"
 }

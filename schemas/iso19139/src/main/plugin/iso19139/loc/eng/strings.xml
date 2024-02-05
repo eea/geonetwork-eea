@@ -604,7 +604,7 @@
   <temporalRangeSection>Temporal extent</temporalRangeSection>
   <beginPosition>Begin</beginPosition>
   <endPosition>End</endPosition>
-  <conformity>Conformity</conformity>
+  <conformity>Specification conformance</conformity>
   <conformity_title>Title</conformity_title>
   <conformity_date>Date</conformity_date>
   <explanation>Explanation</explanation>
