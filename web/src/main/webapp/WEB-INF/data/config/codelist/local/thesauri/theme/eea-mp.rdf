@@ -6,6 +6,861 @@
     <dcterms:issued>2021-08-25</dcterms:issued>
     <dcterms:modified>2023-05-31</dcterms:modified>
   </skos:ConceptScheme>
+
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6867">
+    <skos:prefLabel xml:lang="en">2024 6.9.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Future workplace</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6866">
+    <skos:prefLabel xml:lang="en">2024 6.9.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Staff representation</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6865">
+    <skos:prefLabel xml:lang="en">2024 6.9.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Learning organisation &amp; wellbeing</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6864">
+    <skos:prefLabel xml:lang="en">2024 6.9.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Giving training and peer learning</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6863">
+    <skos:prefLabel xml:lang="en">2024 6.9.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Own learning and development</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6862">
+    <skos:prefLabel xml:lang="en">2024 6.7.5</skos:prefLabel>
+    <skos:definition xml:lang="en">WP5 air pollution and industry</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6861">
+    <skos:prefLabel xml:lang="en">2024 6.7.4</skos:prefLabel>
+    <skos:definition xml:lang="en">WP4 update of urban atlas</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6860">
+    <skos:prefLabel xml:lang="en">2024 6.7.3</skos:prefLabel>
+    <skos:definition xml:lang="en">WP3 datasets, data cubes and dashboards</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6859">
+    <skos:prefLabel xml:lang="en">2024 6.7.2</skos:prefLabel>
+    <skos:definition xml:lang="en">WP2 Urban green and accessibility</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6858">
+    <skos:prefLabel xml:lang="en">2024 6.7.1</skos:prefLabel>
+    <skos:definition xml:lang="en">WP1 Impact of land use</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6857">
+    <skos:prefLabel xml:lang="en">2024 6.7.0</skos:prefLabel>
+    <skos:definition xml:lang="en">WP0 Project management</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6856">
+    <skos:prefLabel xml:lang="en">2024 6.6.4</skos:prefLabel>
+    <skos:definition xml:lang="en">WP4 Representing the European Caucus</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6855">
+    <skos:prefLabel xml:lang="en">2024 6.6.3</skos:prefLabel>
+    <skos:definition xml:lang="en">WP3 Standard processes to facilitate data re-use</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6854">
+    <skos:prefLabel xml:lang="en">2024 6.6.2</skos:prefLabel>
+    <skos:definition xml:lang="en">WP2 Interoperability and quality requirements</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6853">
+    <skos:prefLabel xml:lang="en">2024 6.6.1</skos:prefLabel>
+    <skos:definition xml:lang="en">WP1 Improving the value of sharing GEOSS data</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6852">
+    <skos:prefLabel xml:lang="en">2024 6.6.0</skos:prefLabel>
+    <skos:definition xml:lang="en">WP0 Project management &amp; support</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6851">
+    <skos:prefLabel xml:lang="en">2024 6.5.80</skos:prefLabel>
+    <skos:definition xml:lang="en">In Situ Data coordination</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6850">
+    <skos:prefLabel xml:lang="en">2024 6.5.74</skos:prefLabel>
+    <skos:definition xml:lang="en">Administrative services</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6849">
+    <skos:prefLabel xml:lang="en">2024 6.5.73</skos:prefLabel>
+    <skos:definition xml:lang="en">Missions and meetings</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6848">
+    <skos:prefLabel xml:lang="en">2024 6.5.72</skos:prefLabel>
+    <skos:definition xml:lang="en">Inhouse consultants</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6847">
+    <skos:prefLabel xml:lang="en">2024 6.5.71</skos:prefLabel>
+    <skos:definition xml:lang="en">ETC coordination</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6846">
+    <skos:prefLabel xml:lang="en">2024 6.5.70</skos:prefLabel>
+    <skos:definition xml:lang="en">WP9000 Project management</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6845">
+    <skos:prefLabel xml:lang="en">2024 6.5.64</skos:prefLabel>
+    <skos:definition xml:lang="en">User uptake</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6844">
+    <skos:prefLabel xml:lang="en">2024 6.5.63</skos:prefLabel>
+    <skos:definition xml:lang="en">Awareness raising</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6843">
+    <skos:prefLabel xml:lang="en">2024 6.5.62</skos:prefLabel>
+    <skos:definition xml:lang="en">WP5200 Outreach and uptake</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6842">
+    <skos:prefLabel xml:lang="en">2024 6.5.61</skos:prefLabel>
+    <skos:definition xml:lang="en">WP5100 User support</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6841">
+    <skos:prefLabel xml:lang="en">2024 6.5.50</skos:prefLabel>
+    <skos:definition xml:lang="en">WP4000 Thematic/sectorial actions</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6840">
+    <skos:prefLabel xml:lang="en">2024 6.5.40</skos:prefLabel>
+    <skos:definition xml:lang="en">WP3000 CLMS evolution</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6839">
+    <skos:prefLabel xml:lang="en">2024 6.5.32</skos:prefLabel>
+    <skos:definition xml:lang="en">WP2500 European Ground Motion Service</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6838">
+    <skos:prefLabel xml:lang="en">2024 6.5.31</skos:prefLabel>
+    <skos:definition xml:lang="en">Coastal Zone</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6837">
+    <skos:prefLabel xml:lang="en">2024 6.5.30</skos:prefLabel>
+    <skos:definition xml:lang="en">Riparian Zone</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6836">
+    <skos:prefLabel xml:lang="en">2024 6.5.29</skos:prefLabel>
+    <skos:definition xml:lang="en">Natura 2K</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6835">
+    <skos:prefLabel xml:lang="en">2024 6.5.28</skos:prefLabel>
+    <skos:definition xml:lang="en">Urban Atlas</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6834">
+    <skos:prefLabel xml:lang="en">2024 6.5.27</skos:prefLabel>
+    <skos:definition xml:lang="en">WP2400 Priority area monitoring in Europe</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6833">
+    <skos:prefLabel xml:lang="en">2024 6.5.26</skos:prefLabel>
+    <skos:definition xml:lang="en">High Resolution Layers</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6832">
+    <skos:prefLabel xml:lang="en">2024 6.5.25</skos:prefLabel>
+    <skos:definition xml:lang="en">Corine Land Cover +</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6831">
+    <skos:prefLabel xml:lang="en">2024 6.5.24</skos:prefLabel>
+    <skos:definition xml:lang="en">WP2300 Pan-European LC/LU mapping and monitoring</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6830">
+    <skos:prefLabel xml:lang="en">2024 6.5.23</skos:prefLabel>
+    <skos:definition xml:lang="en">Snow and Ice</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6829">
+    <skos:prefLabel xml:lang="en">2024 6.5.22</skos:prefLabel>
+    <skos:definition xml:lang="en">Vegetation and Phenology</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6828">
+    <skos:prefLabel xml:lang="en">2024 6.5.21</skos:prefLabel>
+    <skos:definition xml:lang="en">WP2200 Biophysical parameters</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6827">
+    <skos:prefLabel xml:lang="en">2024 6.5.20</skos:prefLabel>
+    <skos:definition xml:lang="en">WP2100 Image mosaics, in situ and reference data</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6826">
+    <skos:prefLabel xml:lang="en">2024 6.5.15</skos:prefLabel>
+    <skos:definition xml:lang="en">WP1400 Product QA/QC and validation</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6825">
+    <skos:prefLabel xml:lang="en">2024 6.5.14</skos:prefLabel>
+    <skos:definition xml:lang="en">WEkEO</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6824">
+    <skos:prefLabel xml:lang="en">2024 6.5.13</skos:prefLabel>
+    <skos:definition xml:lang="en">Contribution to EEA IT</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6823">
+    <skos:prefLabel xml:lang="en">2024 6.5.12</skos:prefLabel>
+    <skos:definition xml:lang="en">Copernicus Land Data Store</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6822">
+    <skos:prefLabel xml:lang="en">2024 6.5.11</skos:prefLabel>
+    <skos:definition xml:lang="en">CLMS Portal</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6821">
+    <skos:prefLabel xml:lang="en">2024 6.5.10</skos:prefLabel>
+    <skos:definition xml:lang="en">WP1300 System infrastructure</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6820">
+    <skos:prefLabel xml:lang="en">2024 6.4.7</skos:prefLabel>
+    <skos:definition xml:lang="en">Digitalisation</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6819">
+    <skos:prefLabel xml:lang="en">2024 6.4.6</skos:prefLabel>
+    <skos:definition xml:lang="en">Information security</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6818">
+    <skos:prefLabel xml:lang="en">2024 6.4.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Reportnet operation and development</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6817">
+    <skos:prefLabel xml:lang="en">2024 6.4.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Data Governance</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6816">
+    <skos:prefLabel xml:lang="en">2024 6.4.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Data management</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6815">
+    <skos:prefLabel xml:lang="en">2024 6.4.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Application management</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6814">
+    <skos:prefLabel xml:lang="en">2024 6.4.1</skos:prefLabel>
+    <skos:definition xml:lang="en">IT support</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6813">
+    <skos:prefLabel xml:lang="en">2024 6.3.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Web project</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6812">
+    <skos:prefLabel xml:lang="en">2024 6.3.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Internal communication</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6811">
+    <skos:prefLabel xml:lang="en">2024 6.3.2</skos:prefLabel>
+    <skos:definition xml:lang="en">External communication</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6810">
+    <skos:prefLabel xml:lang="en">2024 6.3.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Strategic communication</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6809">
+    <skos:prefLabel xml:lang="en">2024 6.2.8</skos:prefLabel>
+    <skos:definition xml:lang="en">Europe’s Environment Situation Room</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6808">
+    <skos:prefLabel xml:lang="en">2024 6.2.7</skos:prefLabel>
+    <skos:definition xml:lang="en">Scientific Committee</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6807">
+    <skos:prefLabel xml:lang="en">2024 6.2.6</skos:prefLabel>
+    <skos:definition xml:lang="en">EU Agencies Network</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6806">
+    <skos:prefLabel xml:lang="en">2024 6.2.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Western Balkan cooperation</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6805">
+    <skos:prefLabel xml:lang="en">2024 6.2.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Institutional relations/EU liaison coordination</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6804">
+    <skos:prefLabel xml:lang="en">2024 6.2.3</skos:prefLabel>
+    <skos:definition xml:lang="en">International cooperation, including the pan-European and Mediterranean</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6803">
+    <skos:prefLabel xml:lang="en">2024 6.2.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Governance and corporate processes;</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6802">
+    <skos:prefLabel xml:lang="en">2024 6.2.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Networks and partnerships</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6869">
+    <skos:prefLabel xml:lang="en">2024 6.10.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Leave</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6868">
+    <skos:prefLabel xml:lang="en">2024 6.10.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Sick leave</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6801">
+    <skos:prefLabel xml:lang="en">2024 6.1.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Audits and internal controls</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6800">
+    <skos:prefLabel xml:lang="en">2024 6.1.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Legal services</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6799">
+    <skos:prefLabel xml:lang="en">2024 6.1.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Facilities management</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6798">
+    <skos:prefLabel xml:lang="en">2024 6.1.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Accounting</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6797">
+    <skos:prefLabel xml:lang="en">2024 6.0.8</skos:prefLabel>
+    <skos:definition xml:lang="en">Administrative systems</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6796">
+    <skos:prefLabel xml:lang="en">2024 6.0.6</skos:prefLabel>
+    <skos:definition xml:lang="en">Procurement, legal and data protection</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6795">
+    <skos:prefLabel xml:lang="en">2024 6.0.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Finance, budget and resource management</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6794">
+    <skos:prefLabel xml:lang="en">2024 6.0.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Interactions with Eionet, other networks and partners</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6793">
+    <skos:prefLabel xml:lang="en">2024 6.0.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Planning, meetings, programme support and administration</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6792">
+    <skos:prefLabel xml:lang="en">2024 6.0.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Line and personnel management and administration</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6791">
+    <skos:prefLabel xml:lang="en">2024 6.0.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Management of ETC Digitalisation</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6790">
+    <skos:prefLabel xml:lang="en">2024 5.4.4</skos:prefLabel>
+    <skos:definition xml:lang="en">WP4 - Making better use of EUROSTAT products</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6789">
+    <skos:prefLabel xml:lang="en">2024 5.4.3</skos:prefLabel>
+    <skos:definition xml:lang="en">WP3 – Support to ecosystem accounting</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6788">
+    <skos:prefLabel xml:lang="en">2024 5.4.2</skos:prefLabel>
+    <skos:definition xml:lang="en">WP2 - Supporting EU SDG monitoring</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6787">
+    <skos:prefLabel xml:lang="en">2024 5.4.1</skos:prefLabel>
+    <skos:definition xml:lang="en">WP1 - Development of a dissemination IT infrastructure</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6786">
+    <skos:prefLabel xml:lang="en">2024 5.4.0</skos:prefLabel>
+    <skos:definition xml:lang="en">WP0 - Project Management/Support</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6891">
+    <skos:prefLabel xml:lang="en">2024 5.3.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Support to strategic policies</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6785">
+    <skos:prefLabel xml:lang="en">2024 5.3.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Indicator management</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6784">
+    <skos:prefLabel xml:lang="en">2024 5.3.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Scenarios 2050</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6783">
+    <skos:prefLabel xml:lang="en">2024 5.3.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Horizon scanning</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6782">
+    <skos:prefLabel xml:lang="en">2024 5.3.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Strategic and applied foresight</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6890">
+    <skos:prefLabel xml:lang="en">2024 5.2.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Innovative social innovation</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6781">
+    <skos:prefLabel xml:lang="en">2024 5.2.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Just transitions</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6780">
+    <skos:prefLabel xml:lang="en">2024 5.2.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Governance and urban</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6779">
+    <skos:prefLabel xml:lang="en">2024 5.2.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Economics of transitions</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6778">
+    <skos:prefLabel xml:lang="en">2024 5.2.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Sustainable Finance</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6777">
+    <skos:prefLabel xml:lang="en">2024 5.1.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Transition monitoring</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6776">
+    <skos:prefLabel xml:lang="en">2024 5.1.3</skos:prefLabel>
+    <skos:definition xml:lang="en">SOER 2025</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6775">
+    <skos:prefLabel xml:lang="en">2024 5.1.2</skos:prefLabel>
+    <skos:definition xml:lang="en">8th EAP </skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6774">
+    <skos:prefLabel xml:lang="en">2024 5.1.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Systems, system thinking and cross-systems</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6773">
+    <skos:prefLabel xml:lang="en">2024 5.0.6</skos:prefLabel>
+    <skos:definition xml:lang="en">Procurement, legal and data protection </skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6772">
+    <skos:prefLabel xml:lang="en">2024 5.0.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Finance, budget and resource management</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6771">
+    <skos:prefLabel xml:lang="en">2024 5.0.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Interactions with Eionet, other networks and partners </skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6770">
+    <skos:prefLabel xml:lang="en">2024 5.0.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Planning, meetings, programme support and administration</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6769">
+    <skos:prefLabel xml:lang="en">2024 5.0.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Line &amp; personnel management and administration</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6768">
+    <skos:prefLabel xml:lang="en">2024 5.0.1</skos:prefLabel>
+    <skos:definition xml:lang="en">ETC management</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6767">
+    <skos:prefLabel xml:lang="en">2024 4.3.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Beyond circularity – nexus climate, biodiversity, zero pollution</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6766">
+    <skos:prefLabel xml:lang="en">2024 4.3.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Transformation of key-product value chains </skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6870">
+    <skos:prefLabel xml:lang="en">2024 4.2.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Cooperation with IRP and Global Resource Outlook </skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6765">
+    <skos:prefLabel xml:lang="en">2024 4.2.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Material flows and sustainable resource use</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6764">
+    <skos:prefLabel xml:lang="en">2024 4.2.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Waste management assessments</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6763">
+    <skos:prefLabel xml:lang="en">2024 4.2.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Waste prevention assessments and data flows</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6760">
+    <skos:prefLabel xml:lang="en">2024 4.1.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Circularity Metrics Lab</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6759">
+    <skos:prefLabel xml:lang="en">2024 4.1.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Assessment of the transition to Circular Economy</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6758">
+    <skos:prefLabel xml:lang="en">2024 4.0.6</skos:prefLabel>
+    <skos:definition xml:lang="en">Procurement, legal and data protection</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6757">
+    <skos:prefLabel xml:lang="en">2024 4.0.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Finance, budget and resource management</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6756">
+    <skos:prefLabel xml:lang="en">2024 4.0.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Interactions with Eionet Groups</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6755">
+    <skos:prefLabel xml:lang="en">2024 4.0.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Planning, meetings, programme support and administration</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6754">
+    <skos:prefLabel xml:lang="en">2024 4.0.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Line &amp; personnel management and administration</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6753">
+    <skos:prefLabel xml:lang="en">2024 4.0.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Management of ETC Circular Economy</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6738">
+    <skos:prefLabel xml:lang="en">2024 3.2.7</skos:prefLabel>
+    <skos:definition xml:lang="en">Food systems and health</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6737">
+    <skos:prefLabel xml:lang="en">2024 3.2.6</skos:prefLabel>
+    <skos:definition xml:lang="en">Chemical impacts on ecosystems and health</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6736">
+    <skos:prefLabel xml:lang="en">2024 3.2.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Environmental health</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6735">
+    <skos:prefLabel xml:lang="en">2024 3.2.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Noise assessments</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6889">
+    <skos:prefLabel xml:lang="en">2024 3.2.30</skos:prefLabel>
+    <skos:definition xml:lang="en">SANTE- Serious Cross-Border Threats to Health</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6734">
+    <skos:prefLabel xml:lang="en">2024 3.2.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Noise reporting</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6752">
+    <skos:prefLabel xml:lang="en">2024 3.2.28</skos:prefLabel>
+    <skos:definition xml:lang="en">PARC WP 8</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6751">
+    <skos:prefLabel xml:lang="en">2024 3.2.27</skos:prefLabel>
+    <skos:definition xml:lang="en">PARC WP 3</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6750">
+    <skos:prefLabel xml:lang="en">2024 3.2.26</skos:prefLabel>
+    <skos:definition xml:lang="en">PARC WP 2</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6749">
+    <skos:prefLabel xml:lang="en">2024 3.2.25</skos:prefLabel>
+    <skos:definition xml:lang="en">PARC WP 1</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6746">
+    <skos:prefLabel xml:lang="en">2024 3.2.22</skos:prefLabel>
+    <skos:definition xml:lang="en">Chemical indicator framework</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6733">
+    <skos:prefLabel xml:lang="en">2024 3.2.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Air quality assessments</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6732">
+    <skos:prefLabel xml:lang="en">2024 3.2.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Air quality reporting</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6731">
+    <skos:prefLabel xml:lang="en">2024 3.1.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Chemical strategy for sustainability</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6730">
+    <skos:prefLabel xml:lang="en">2024 3.1.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Zero pollution action plan</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6729">
+    <skos:prefLabel xml:lang="en">2024 3.1.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Industrial Accidents</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6728">
+    <skos:prefLabel xml:lang="en">2024 3.1.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Industrial Emissions</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6727">
+    <skos:prefLabel xml:lang="en">2024 3.1.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Air pollution and CLRTAP/NECD reporting</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6726">
+    <skos:prefLabel xml:lang="en">2024 3.0.6</skos:prefLabel>
+    <skos:definition xml:lang="en">Procurement, legal and data protection</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6725">
+    <skos:prefLabel xml:lang="en">2024 3.0.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Finance, budget and resource management</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6724">
+    <skos:prefLabel xml:lang="en">2024 3.0.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Interactions with Eionet, other networks and partners</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6723">
+    <skos:prefLabel xml:lang="en">2024 3.0.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Planning, meetings, programme support</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6722">
+    <skos:prefLabel xml:lang="en">2024 3.0.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Line and personnel management and administration</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6721">
+    <skos:prefLabel xml:lang="en">2024 3.0.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Management of ETC Environment and Health</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6719">
+    <skos:prefLabel xml:lang="en">2024 2.4.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Scientific advice</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6718">
+    <skos:prefLabel xml:lang="en">2024 2.4.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Strategy, communication and outreach</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6717">
+    <skos:prefLabel xml:lang="en">2024 2.4.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Advisory Board administration and meetings</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6716">
+    <skos:prefLabel xml:lang="en">2024 2.4.1</skos:prefLabel>
+    <skos:definition xml:lang="en">People management and administration</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6712">
+    <skos:prefLabel xml:lang="en">2024 2.3.8</skos:prefLabel>
+    <skos:definition xml:lang="en">Economics of impacts and adaptation</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6711">
+    <skos:prefLabel xml:lang="en">2024 2.3.7</skos:prefLabel>
+    <skos:definition xml:lang="en">Climate-ADAPT</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6710">
+    <skos:prefLabel xml:lang="en">2024 2.3.6</skos:prefLabel>
+    <skos:definition xml:lang="en">European climate and health observatory</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6709">
+    <skos:prefLabel xml:lang="en">2024 2.3.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Climate change adaptation and sectors</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6888">
+    <skos:prefLabel xml:lang="en">2024 2.3.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Just resilience in the context of adaptation</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6708">
+    <skos:prefLabel xml:lang="en">2024 2.3.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Monitoring, reporting and evaluation of adaptation strategies and plans</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6707">
+    <skos:prefLabel xml:lang="en">2024 2.3.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Cooperation with the Copernicus and DestinE</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6715">
+    <skos:prefLabel xml:lang="en">2024 2.3.14</skos:prefLabel>
+    <skos:definition xml:lang="en">European Climate risk assessment</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6714">
+    <skos:prefLabel xml:lang="en">2024 2.3.12</skos:prefLabel>
+    <skos:definition xml:lang="en">Mission on adaptation</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6713">
+    <skos:prefLabel xml:lang="en">2024 2.3.11</skos:prefLabel>
+    <skos:definition xml:lang="en">Urban and local Aspects of Adaptation</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6706">
+    <skos:prefLabel xml:lang="en">2024 2.3.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Climate change hazards and impacts and risks</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6893">
+    <skos:prefLabel xml:lang="en">2024 2.2.8</skos:prefLabel>
+    <skos:definition xml:lang="en">Sustainable carbon cycles</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6892">
+    <skos:prefLabel xml:lang="en">2024 2.2.7</skos:prefLabel>
+    <skos:definition xml:lang="en">Cross-cutting activity on EU land related policies</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6705">
+    <skos:prefLabel xml:lang="en">2024 2.2.6</skos:prefLabel>
+    <skos:definition xml:lang="en">Knowledge sharing and capacity building</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6704">
+    <skos:prefLabel xml:lang="en">2024 2.2.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Geographical tracking of greenhouse gas emissions and carbon removals in the land sector</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6703">
+    <skos:prefLabel xml:lang="en">2024 2.2.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Assessments on climate neutrality including the land sector, co-benefits and trade-offs</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6702">
+    <skos:prefLabel xml:lang="en">2024 2.2.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Review and compliance under LULUCF, ESR, CRCF and progress to targets</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6701">
+    <skos:prefLabel xml:lang="en">2024 2.2.2</skos:prefLabel>
+    <skos:definition xml:lang="en">EU greenhouse gas emission inventory compilation</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6700">
+    <skos:prefLabel xml:lang="en">2024 2.2.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Quality checks of national greenhouse gas inventories</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6699">
+    <skos:prefLabel xml:lang="en">2024 2.1.9</skos:prefLabel>
+    <skos:definition xml:lang="en">Energy Community</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6698">
+    <skos:prefLabel xml:lang="en">2024 2.1.8</skos:prefLabel>
+    <skos:definition xml:lang="en">National and EU pathways to climate neutrality</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6697">
+    <skos:prefLabel xml:lang="en">2024 2.1.7</skos:prefLabel>
+    <skos:definition xml:lang="en">Buildings system: knowledge development</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6696">
+    <skos:prefLabel xml:lang="en">2024 2.1.6</skos:prefLabel>
+    <skos:definition xml:lang="en">Mobility system: knowledge development</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6695">
+    <skos:prefLabel xml:lang="en">2024 2.1.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Mobility system: monitoring and reporting</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6694">
+    <skos:prefLabel xml:lang="en">2024 2.1.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Energy system: knowledge development</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6693">
+    <skos:prefLabel xml:lang="en">2024 2.1.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Energy system: monitoring and reporting</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6692">
+    <skos:prefLabel xml:lang="en">2024 2.1.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Climate change mitigation: knowledge development</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6691">
+    <skos:prefLabel xml:lang="en">2024 2.1.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Climate change mitigation: monitoring and reporting</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6690">
+    <skos:prefLabel xml:lang="en">2024 2.0.6</skos:prefLabel>
+    <skos:definition xml:lang="en">Procurement, legal and data protection</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6689">
+    <skos:prefLabel xml:lang="en">2024 2.0.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Finance, budget and resource management</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6688">
+    <skos:prefLabel xml:lang="en">2024 2.0.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Interactions with Eionet, other networks and partners</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6687">
+    <skos:prefLabel xml:lang="en">2024 2.0.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Planning, meetings, programme support</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6686">
+    <skos:prefLabel xml:lang="en">2024 2.0.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Line management</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6685">
+    <skos:prefLabel xml:lang="en">2024 2.0.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Management of ETC Climate Mitigation and ETC Climate Adaptation</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6887">
+    <skos:prefLabel xml:lang="en">2024 1.2.9</skos:prefLabel>
+    <skos:definition xml:lang="en">Economics, sustainable finance, ecosystems accounting</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6886">
+    <skos:prefLabel xml:lang="en">2024 1.2.8</skos:prefLabel>
+    <skos:definition xml:lang="en">Offshore energy</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6885">
+    <skos:prefLabel xml:lang="en">2024 1.2.7</skos:prefLabel>
+    <skos:definition xml:lang="en">Maritime transport</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6884">
+    <skos:prefLabel xml:lang="en">2024 1.2.6</skos:prefLabel>
+    <skos:definition xml:lang="en">Fisheries</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6883">
+    <skos:prefLabel xml:lang="en">2024 1.2.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Forestry</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6882">
+    <skos:prefLabel xml:lang="en">2024 1.2.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Agriculture</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6681">
+    <skos:prefLabel xml:lang="en">2024 1.2.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Biodiversity and climate change</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6680">
+    <skos:prefLabel xml:lang="en">2024 1.2.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Freshwater and climate change, water scarcity and droughts</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6679">
+    <skos:prefLabel xml:lang="en">2024 1.2.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Marine ecosystems and climate change</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6873">
+    <skos:prefLabel xml:lang="en">2024 1.1.9</skos:prefLabel>
+    <skos:definition xml:lang="en">Drinking Water Directive</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6872">
+    <skos:prefLabel xml:lang="en">2024 1.1.8</skos:prefLabel>
+    <skos:definition xml:lang="en">Bathing Water Directive</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6871">
+    <skos:prefLabel xml:lang="en">2024 1.1.7</skos:prefLabel>
+    <skos:definition xml:lang="en">Urban Waste Water Treatment Directive</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6678">
+    <skos:prefLabel xml:lang="en">2024 1.1.6</skos:prefLabel>
+    <skos:definition xml:lang="en">Water Framework Directive, WISE-SoE and Floods</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6677">
+    <skos:prefLabel xml:lang="en">2024 1.1.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Nature Restoration Law</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6676">
+    <skos:prefLabel xml:lang="en">2024 1.1.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Protected areas </skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6675">
+    <skos:prefLabel xml:lang="en">2024 1.1.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Invasive Alien Species</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6674">
+    <skos:prefLabel xml:lang="en">2024 1.1.2</skos:prefLabel>
+    <skos:definition xml:lang="en">2030 Biodiversity Strategy</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6894">
+    <skos:prefLabel xml:lang="en">2024 1.1.18</skos:prefLabel>
+    <skos:definition xml:lang="en">Soil Monitoring</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6881">
+    <skos:prefLabel xml:lang="en">2024 1.1.17</skos:prefLabel>
+    <skos:definition xml:lang="en">Integrated Information System for Europe</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6880">
+    <skos:prefLabel xml:lang="en">2024 1.1.16</skos:prefLabel>
+    <skos:definition xml:lang="en">Indicators </skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6879">
+    <skos:prefLabel xml:lang="en">2024 1.1.15</skos:prefLabel>
+    <skos:definition xml:lang="en">Support to future marine and maritime data management </skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6878">
+    <skos:prefLabel xml:lang="en">2024 1.1.14</skos:prefLabel>
+    <skos:definition xml:lang="en">Marine Strategy Framework Directive, Maritime Spatial Planning Directive </skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6877">
+    <skos:prefLabel xml:lang="en">2024 1.1.13</skos:prefLabel>
+    <skos:definition xml:lang="en">Free-flowing rivers and barriers</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6876">
+    <skos:prefLabel xml:lang="en">2024 1.1.12</skos:prefLabel>
+    <skos:definition xml:lang="en">Nitrates Directive</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6875">
+    <skos:prefLabel xml:lang="en">2024 1.1.11</skos:prefLabel>
+    <skos:definition xml:lang="en">EQSD / Groundwater</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6874">
+    <skos:prefLabel xml:lang="en">2024 1.1.10</skos:prefLabel>
+    <skos:definition xml:lang="en">Water Reuse Regulation</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6673">
+    <skos:prefLabel xml:lang="en">2024 1.1.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Nature directives</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6672">
+    <skos:prefLabel xml:lang="en">2024 1.0.6</skos:prefLabel>
+    <skos:definition xml:lang="en">Procurement, legal and data protection</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6671">
+    <skos:prefLabel xml:lang="en">2024 1.0.5</skos:prefLabel>
+    <skos:definition xml:lang="en">Finance, budget and resource management</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6670">
+    <skos:prefLabel xml:lang="en">2024 1.0.4</skos:prefLabel>
+    <skos:definition xml:lang="en">Interactions with Eionet, other networks and partners</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6669">
+    <skos:prefLabel xml:lang="en">2024 1.0.3</skos:prefLabel>
+    <skos:definition xml:lang="en">Planning, meetings, programme support</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6668">
+    <skos:prefLabel xml:lang="en">2024 1.0.2</skos:prefLabel>
+    <skos:definition xml:lang="en">Line and personnel management and administration</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/managementplan/Level3_Structure.aspx?id=6667">
+    <skos:prefLabel xml:lang="en">2024 1.0.1</skos:prefLabel>
+    <skos:definition xml:lang="en">Management of ETC Biodiversity and cross-cutting efforts</skos:definition>
+  </skos:Concept>
+
+
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="https://applications.eea.europa.eu/ManagementPlan/default.aspx#5.3.3 1664">
     <skos:prefLabel xml:lang="en">5.3.3 1664</skos:prefLabel>
     <skos:definition xml:lang="en" />
