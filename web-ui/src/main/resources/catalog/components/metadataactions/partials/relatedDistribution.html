@@ -52,7 +52,7 @@
       </div>
 
       <!-- Always display title if available -->
-      <h3>
+      <h3 data-ng-hide="mainType === 'EEAFILE'">
         <a data-ng-href="{{::r.locUrl}}"> {{::r.locTitle || r.locUrl}} </a>
       </h3>
       <!-- Display description if available -->
@@ -66,6 +66,47 @@
         {{::r.locDescription | striptags}}
       </p>
       <div data-ng-switch on="mainType">
+        <div class="text-muted" data-ng-switch-when="EEAFILE">
+          <div
+                  class="input-group"
+                  data-ng-init="webdavlink = r.locUrl.endsWith('/') ? r.locUrl.substr(0, r.locUrl.lastIndexOf('/')) : r.locUrl"
+          >
+            <span class="input-group-addon" data-translate="">webdavLink</span>
+            <input
+                    class="form-control"
+                    type="text"
+                    onClick="this.setSelectionRange(0, this.value.length)"
+                    value="{{webdavlink}}"
+            />
+            <span class="input-group-btn">
+                <a
+                        class="btn btn-default"
+                        type="button"
+                        data-ng-href="{{webdavlink}}"
+                        data-translate=""
+                >openLink</a
+                >
+              </span>
+          </div>
+          <div class="input-group" data-ng-if="user.isConnected()">
+            <span class="input-group-addon" data-translate="">cifsLink</span>
+            <input
+                    class="form-control"
+                    type="text"
+                    onClick="this.setSelectionRange(0, this.value.length)"
+                    value="\\sdi.eea.europa.eu\data{{formatCifsLink(r.locUrl)}}"
+            />
+          </div>
+          <div class="input-group" data-ng-if="user.isConnected()">
+            <span class="input-group-addon" data-translate="">ftpsLink</span>
+            <input
+                    class="form-control"
+                    type="text"
+                    onClick="this.setSelectionRange(0, this.value.length)"
+                    value="{{r.locUrl.substr(0, (r.locUrl.lastIndexOf('/'))).replace('ftps://sdi.eea.europa.eu/data', 'https://sdi.eea.europa.eu/webdav')}}"
+            />
+          </div>
+        </div>
         <div data-ng-switch-when="WFS">
           <div
             data-ng-if="::isLayerProtocol(r)"
