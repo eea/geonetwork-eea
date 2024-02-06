@@ -65,7 +65,7 @@
   </xsl:template>
 
 
-  <xsl:template match="gmd:transferOptions/*[not($hasEEAFile)]">
+  <xsl:template match="gmd:transferOptions[1]/*[not($hasEEAFile)]">
     <xsl:copy>
       <xsl:apply-templates select="gmd:unitsOfDistribution
                                   |gmd:transferSize"/>
