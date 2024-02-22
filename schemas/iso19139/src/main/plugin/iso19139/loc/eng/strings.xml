@@ -76,8 +76,13 @@
   </eea-lineage>
   <eea-add-datasharelink>Add Webdav default link</eea-add-datasharelink>
 
+  <eea-add-statistical-measures>Add statistical measures</eea-add-statistical-measures>
   <eea-mmu>Minimum Mapping Unit (ha)</eea-mmu>
   <eea-mmw>Minimum Mapping width (m)</eea-mmw>
+  <eea-measure-accuracy>Accuracy - overall</eea-measure-accuracy>
+  <eea-measure-timeliness>Timeliness</eea-measure-timeliness>
+  <eea-measure-comparability-geo>Comparability - geographical</eea-measure-comparability-geo>
+  <eea-measure-comparability-overtime>Comparability - over time</eea-measure-comparability-overtime>
   <eea-mmuw-help>
     <div class="row">
       <div class="col-sm-2"/>
