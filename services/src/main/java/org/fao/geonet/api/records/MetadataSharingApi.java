@@ -559,18 +559,18 @@ public class MetadataSharingApi implements ApplicationEventPublisherAware {
                 }
             }
 
-            if (sharing.isClear() && !metadataUtils.isMetadataPublished(metadata.getId())) {
-                // Throw the metadata unpublish event, as when removing privileges, are not part of the parameters,
+
+            java.util.Optional<GroupPrivilege> allGroupPrivsBefore =
+                sharingBefore.getPrivileges().stream().filter(p -> p.getGroup() == ReservedGroup.all.getId()).findFirst();
+            boolean publishedBefore = allGroupPrivsBefore.get().getOperations().get(ReservedOperation.view.name());
+
+            if (sharing.isClear() && publishedBefore && !metadataUtils.isMetadataPublished(metadata.getId())) {
+                // Throw the metadata unpublish event, when removing privileges, are not part of the parameters,
                 // not processed in setOperation / unsetOperation that triggers the metadata publish/unpublish events
                 eventPublisher.publishEvent(new MetadataUnpublished(metadata));
             }
 
             if (notifyByMail) {
-                java.util.Optional<GroupPrivilege> allGroupPrivsBefore =
-                    sharingBefore.getPrivileges().stream().filter(p -> p.getGroup() == ReservedGroup.all.getId()).findFirst();
-
-                boolean publishedBefore = allGroupPrivsBefore.get().getOperations().get(ReservedOperation.view.name());
-
                 java.util.Optional<GroupOperations> allGroupOpsAfter =
                     privileges.stream().filter(p -> p.getGroup() == ReservedGroup.all.getId()).findFirst();
 
