@@ -48,6 +48,7 @@ import org.fao.geonet.domain.utils.ObjectJSONUtils;
 import org.fao.geonet.events.history.RecordGroupOwnerChangeEvent;
 import org.fao.geonet.events.history.RecordOwnerChangeEvent;
 import org.fao.geonet.events.history.RecordPrivilegesChangeEvent;
+import org.fao.geonet.events.md.MetadataUnpublished;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.datamanager.*;
@@ -63,6 +64,8 @@ import org.fao.geonet.util.UserUtil;
 import org.fao.geonet.util.WorkflowUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -91,7 +94,7 @@ import static org.springframework.data.jpa.domain.Specification.where;
 @PreAuthorize("hasAuthority('Editor')")
 @Controller("recordSharing")
 @ReadWriteController
-public class MetadataSharingApi {
+public class MetadataSharingApi implements ApplicationEventPublisherAware {
     private static final String DEFAULT_PUBLICATION_TYPE_NAME = "default";
 
     @Autowired
@@ -157,6 +160,13 @@ public class MetadataSharingApi {
     @Autowired
     private IPublicationConfig publicationConfig;
 
+    private ApplicationEventPublisher eventPublisher;
+
+    @Override
+    public void setApplicationEventPublisher(
+        ApplicationEventPublisher applicationEventPublisher) {
+        this.eventPublisher = applicationEventPublisher;
+    }
     public static Vector<OperationAllowedId> retrievePrivileges(ServiceContext context, String id, Integer userId, Integer groupId) {
 
         OperationAllowedRepository opAllowRepo = context.getBean(OperationAllowedRepository.class);
@@ -547,6 +557,12 @@ public class MetadataSharingApi {
                         sharingChanges = true;
                     }
                 }
+            }
+
+            if (sharing.isClear() && !metadataUtils.isMetadataPublished(metadata.getId())) {
+                // Throw the metadata unpublish event, as when removing privileges, are not part of the parameters,
+                // not processed in setOperation / unsetOperation that triggers the metadata publish/unpublish events
+                eventPublisher.publishEvent(new MetadataUnpublished(metadata));
             }
 
             if (notifyByMail) {
