@@ -26,5 +26,9 @@
     <skos:prefLabel xml:lang='en'>tabular data</skos:prefLabel>
     <skos:definition xml:lang='en'></skos:definition>
   </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/categories/3'>
+    <skos:prefLabel xml:lang='en'>statistical data</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
 </rdf:RDF>
 

@@ -1240,7 +1240,6 @@
 
           <action type="add"
                   btnLabel="eea-add-temporal-extent"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo//gmd:temporalElement) = 0"
                   or="extent"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*">
             <template>
@@ -1617,57 +1616,69 @@
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*/text(), 'Unit of measure')]"/>
 
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*/text(), 'Reference period')]"/>
 
-          <field name="Accuracy - overall"
-                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
-                          gmd:nameOfMeasure/*/text() = 'Accuracy - overall']/gmd:result/*/gmd:value"
-                 del="ancestor::gmd:report"/>
 
-          <field name="Timeliness"
+          <field name="Timeliness - Grade"
                  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
                           gmd:nameOfMeasure/*/text() = 'Timeliness']/gmd:result/*/gmd:value"
-                 del="ancestor::gmd:report"/>
+                 del="ancestor::gmd:report"
+                 use="data-gn-keyword-picker">
+            <directiveAttributes data-thesaurus-key="local.theme.eea-stat-time-coverage-grade"/>
+          </field>
+          <field name="Timeliness - Comment"
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
+                          gmd:nameOfMeasure/*/text() = 'Timeliness']/gmd:measureDescription"/>
 
-          <field name="Comparability - geographical"
+          <field name="Reference area - Grade"
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
+                          gmd:nameOfMeasure/*/text() = 'Reference area']/gmd:result/*/gmd:value"
+                 del="ancestor::gmd:report"
+                 use="data-gn-keyword-picker">
+            <directiveAttributes data-thesaurus-key="local.theme.eea-stat-comparability-overtime-grade"/>
+          </field>
+          <field name="Reference area - Comment"
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
+                          gmd:nameOfMeasure/*/text() = 'Reference area']/gmd:measureDescription"/>
+
+          <field name="Comparability - geographical - Grade"
                  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
                           gmd:nameOfMeasure/*/text() = 'Comparability - geographical']/gmd:result/*/gmd:value"
-                 del="ancestor::gmd:report"/>
+                 del="ancestor::gmd:report"
+                 use="data-gn-keyword-picker">
+            <directiveAttributes data-thesaurus-key="local.theme.eea-stat-comparability-geographical-grade"/>
+          </field>
+          <field name="Comparability - geographical - Comment"
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
+                          gmd:nameOfMeasure/*/text() = 'Comparability - geographical']/gmd:measureDescription"/>
 
-          <field name="Comparability - over time"
+          <field name="Time coverage - Grade"
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
+                          gmd:nameOfMeasure/*/text() = 'Time coverage']/gmd:result/*/gmd:value"
+                 del="ancestor::gmd:report"
+                 use="data-gn-keyword-picker">
+            <directiveAttributes data-thesaurus-key="local.theme.eea-stat-time-coverage-grade"/>
+          </field>
+          <field name="Time Coverage - Comment"
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
+                          gmd:nameOfMeasure/*/text() = 'Time coverage']/gmd:measureDescription"/>
+
+          <field name="Comparability - over time - Grade"
                  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
                           gmd:nameOfMeasure/*/text() = 'Comparability - over time']/gmd:result/*/gmd:value"
-                 del="ancestor::gmd:report"/>
+                 del="ancestor::gmd:report"
+                 use="data-gn-keyword-picker">
+            <directiveAttributes data-thesaurus-key="local.theme.eea-stat-comparability-overtime-grade"/>
+          </field>
+          <field name="Comparability - over time - Comment"
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
+                          gmd:nameOfMeasure/*/text() = 'Comparability - over time']/gmd:measureDescription"/>
 
           <action type="add"
                   btnLabel="eea-add-statistical-measures"
                   or="report"
                   in="/gmd:MD_Metadata/gmd:dataQualityInfo/*">
             <template>
-              <snippet label="eea-measure-accuracy">
-                <gmd:report>
-                  <gmd:DQ_QuantitativeAttributeAccuracy>
-                    <gmd:nameOfMeasure>
-                      <gco:CharacterString>Accuracy - overall</gco:CharacterString>
-                    </gmd:nameOfMeasure>
-                    <gmd:measureDescription>
-                      <gco:CharacterString>Assessment of accuracy, linked to a certain Data Set or domain, which is summarising the various components into one single measure.</gco:CharacterString>
-                    </gmd:measureDescription>
-                    <gmd:result>
-                      <gmd:DQ_QuantitativeResult>
-                        <gmd:valueUnit>
-                          <gml:BaseUnit gml:id="d22718e609a1052934">
-                            <gml:identifier codeSpace=""/>
-                            <gml:unitsSystem/>
-                          </gml:BaseUnit>
-                        </gmd:valueUnit>
-                        <gmd:value>
-                          <gco:Record></gco:Record>
-                        </gmd:value>
-                      </gmd:DQ_QuantitativeResult>
-                    </gmd:result>
-                  </gmd:DQ_QuantitativeAttributeAccuracy>
-                </gmd:report>
-              </snippet>
               <snippet label="eea-measure-timeliness">
                 <gmd:report>
                   <gmd:DQ_AccuracyOfATimeMeasurement>
@@ -1675,7 +1686,7 @@
                       <gco:CharacterString>Timeliness</gco:CharacterString>
                     </gmd:nameOfMeasure>
                     <gmd:measureDescription>
-                      <gco:CharacterString>Length of time between data availability and the event or phenomenon they describe.</gco:CharacterString>
+                      <gco:CharacterString></gco:CharacterString>
                     </gmd:measureDescription>
                     <gmd:result>
                       <gmd:DQ_QuantitativeResult>
@@ -1693,6 +1704,31 @@
                   </gmd:DQ_AccuracyOfATimeMeasurement>
                 </gmd:report>
               </snippet>
+              <snippet label="eea-measure-reference-area">
+                <gmd:report>
+                  <gmd:DQ_QuantitativeAttributeAccuracy>
+                    <gmd:nameOfMeasure>
+                      <gco:CharacterString>Reference area</gco:CharacterString>
+                    </gmd:nameOfMeasure>
+                    <gmd:measureDescription>
+                      <gco:CharacterString></gco:CharacterString>
+                    </gmd:measureDescription>
+                    <gmd:result>
+                      <gmd:DQ_QuantitativeResult>
+                        <gmd:valueUnit>
+                          <gml:BaseUnit gml:id="d22718e609a1052934">
+                            <gml:identifier codeSpace=""/>
+                            <gml:unitsSystem/>
+                          </gml:BaseUnit>
+                        </gmd:valueUnit>
+                        <gmd:value>
+                          <gco:Record></gco:Record>
+                        </gmd:value>
+                      </gmd:DQ_QuantitativeResult>
+                    </gmd:result>
+                  </gmd:DQ_QuantitativeAttributeAccuracy>
+                </gmd:report>
+              </snippet>
               <snippet label="eea-measure-comparability-geo">
                 <gmd:report>
                   <gmd:DQ_DomainConsistency>
@@ -1700,12 +1736,37 @@
                       <gco:CharacterString>Comparability - geographical</gco:CharacterString>
                     </gmd:nameOfMeasure>
                     <gmd:measureDescription>
-                      <gco:CharacterString>Extent to which statistics are comparable between geographical areas.</gco:CharacterString>
+                      <gco:CharacterString></gco:CharacterString>
                     </gmd:measureDescription>
                     <gmd:result>
                       <gmd:DQ_QuantitativeResult>
                         <gmd:valueUnit>
                           <gml:BaseUnit gml:id="d22718e609a1051934">
+                            <gml:identifier codeSpace=""/>
+                            <gml:unitsSystem/>
+                          </gml:BaseUnit>
+                        </gmd:valueUnit>
+                        <gmd:value>
+                          <gco:Record></gco:Record>
+                        </gmd:value>
+                      </gmd:DQ_QuantitativeResult>
+                    </gmd:result>
+                  </gmd:DQ_DomainConsistency>
+                </gmd:report>
+              </snippet>
+              <snippet label="eea-measure-time-coverage">
+                <gmd:report>
+                  <gmd:DQ_DomainConsistency>
+                    <gmd:nameOfMeasure>
+                      <gco:CharacterString>Time coverage</gco:CharacterString>
+                    </gmd:nameOfMeasure>
+                    <gmd:measureDescription>
+                      <gco:CharacterString></gco:CharacterString>
+                    </gmd:measureDescription>
+                    <gmd:result>
+                      <gmd:DQ_QuantitativeResult>
+                        <gmd:valueUnit>
+                          <gml:BaseUnit gml:id="d9765e687a1051934">
                             <gml:identifier codeSpace=""/>
                             <gml:unitsSystem/>
                           </gml:BaseUnit>
@@ -1725,7 +1786,7 @@
                       <gco:CharacterString>Comparability - over time</gco:CharacterString>
                     </gmd:nameOfMeasure>
                     <gmd:measureDescription>
-                      <gco:CharacterString>Extent to which statistics are comparable or reconcilable over time.</gco:CharacterString>
+                      <gco:CharacterString></gco:CharacterString>
                     </gmd:measureDescription>
                     <gmd:result>
                       <gmd:DQ_QuantitativeResult>

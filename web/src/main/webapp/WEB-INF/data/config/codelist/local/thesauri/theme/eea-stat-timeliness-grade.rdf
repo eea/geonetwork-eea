@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:dcterms="http://purl.org/dc/terms/"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <skos:ConceptScheme rdf:about="https://www.eea.europa.eu/stat-timeliness-grade">
+    <dc:title>Timeliness - Grade</dc:title>
+    <dc:description>Time lag between end of reference period and data availability for indicator dissemination.
+      Indicators based on models: Timeliness of the statistical input data is considered for rating as the time of running the model is not decisive.</dc:description>
+    <dc:creator>
+      <foaf:Organization>
+        <foaf:name>EEA</foaf:name>
+      </foaf:Organization>
+    </dc:creator>
+    <dcterms:issued>2024-03-11</dcterms:issued>
+    <dcterms:modified>2024-03-11</dcterms:modified>
+  </skos:ConceptScheme>
+
+  <skos:Concept rdf:about='https://www.eea.europa.eu/stat-timeliness-grade/1'>
+    <skos:prefLabel xml:lang='en'>T+1 year</skos:prefLabel>
+    <skos:definition xml:lang='en'>New data points are disseminated within one year after the reference year</skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/stat-timeliness-grade/2'>
+    <skos:prefLabel xml:lang='en'>T+2 years</skos:prefLabel>
+    <skos:definition xml:lang='en'>New data points are disseminated within two years after the reference year</skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/stat-timeliness-grade/3'>
+    <skos:prefLabel xml:lang='en'>&gt; T+2 years</skos:prefLabel>
+    <skos:definition xml:lang='en'>New data points are disseminated within [n] years after the reference year.</skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/stat-timeliness-grade/notapplicable'>
+    <skos:prefLabel xml:lang='en'>not applicable</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/stat-timeliness-grade/notavailable'>
+    <skos:prefLabel xml:lang='en'>not available</skos:prefLabel>
+    <skos:definition xml:lang='en'>Timeliness of indicator dissemination is not specified.</skos:definition>
+  </skos:Concept>
+</rdf:RDF>
+

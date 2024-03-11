@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:dcterms="http://purl.org/dc/terms/"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <skos:ConceptScheme rdf:about="https://www.eea.europa.eu/stat-reference-period">
+    <dc:title>Reference period</dc:title>
+    <dc:description></dc:description>
+    <dc:creator>
+      <foaf:Organization>
+        <foaf:name>EEA</foaf:name>
+      </foaf:Organization>
+    </dc:creator>
+    <dcterms:issued>2024-03-11</dcterms:issued>
+    <dcterms:modified>2024-03-11</dcterms:modified>
+  </skos:ConceptScheme>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/stat-reference-period/1'>
+    <skos:prefLabel xml:lang='en'>Calendar year</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+</rdf:RDF>
+
