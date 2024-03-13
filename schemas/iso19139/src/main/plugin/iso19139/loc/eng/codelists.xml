@@ -1158,6 +1158,29 @@
       <label>As needed</label>
       <description>Data is updated as deemed necessary</description>
     </entry>
+    <!-- EEA - Extended codelist values -->
+    <entry>
+      <code>twoYears</code>
+      <label>Every 2 years</label>
+      <description>Data is updated every two years</description>
+    </entry>
+    <entry>
+      <code>threeYears</code>
+      <label>Every 3 years</label>
+      <description>Data is updated every three years</description>
+    </entry>
+    <entry>
+      <code>fourYears</code>
+      <label>Every 4 years</label>
+      <description>Data is updated every four years</description>
+    </entry>
+    <entry>
+      <code>fiveYears</code>
+      <label>Every 5 years</label>
+      <description>Data is updated every five years</description>
+    </entry>
+    <!-- EEA - End of extended codelist values -->
+
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>irregular</code>
