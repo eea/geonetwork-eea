@@ -1908,8 +1908,9 @@
 
 
         <section name="eea-dq">
-          <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:lineage"
-                 or="lineage" in="/gmd:MD_Metadata/gmd:dataQualityInfo/*"/>
+          <field name="Lineage statement"
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement"/>
+
           <action type="add" btnLabel="eea-dq-add"
                   class="gn-required"
                   if="count(gmd:MD_Metadata/gmd:dataQualityInfo) = 0"
@@ -2070,7 +2071,7 @@
 
 
           <field name="eea-source-desc"
-                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:source/*/gmd:description"/>
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:lineage/*/gmd:source/*/gmd:description"/>
 
 
           <action type="associatedResource"
