@@ -54,52 +54,6 @@
       "addLayerNamesMode": "resourcename"
     },
     "associatedResourcesTypes": [{
-      "type": "parent",
-      "label": "linkToParent",
-      "config": {
-        "sources": {
-          "metadataStore": {
-            "label": "linkToParent",
-            "params": {
-              "resourceType": ["series"],
-              "isTemplate": "n"
-            }
-          },
-          "remoteurl": {"multiple": false}
-        }
-      }
-    }, {
-        "type": "service",
-        "label": "linkToService",
-        "condition": "!gnCurrentEdit.isService",
-        "config": {
-          "sources": {
-            "metadataStore": {
-              "label": "searchAservice",
-              "params": {
-                "resourceType": ["service"],
-                "isTemplate": "n"
-              }
-            },
-            "remoteurl": {"multiple": false}
-          }
-        }
-    }, {
-      "type": "dataset",
-      "label": "linkToDataset",
-      "condition": "gnCurrentEdit.isService",
-      "config": {
-        "sources": {
-          "metadataStore": {
-            "params": {
-              "resourceType": ["dataset"],
-              "isTemplate": "n"
-            }
-          },
-          "remoteurl": {"multiple": false}
-        }
-      }
-    }, {
       "type": "source",
       "label": "linkToSource",
       "config": {
@@ -142,7 +96,37 @@
           "remoteurl": {"multiple": true}
         }
       }
-    }
-    ]
+    }, {
+      "type": "service",
+      "label": "linkToService",
+      "condition": "!gnCurrentEdit.isService",
+      "config": {
+        "sources": {
+          "metadataStore": {
+            "label": "searchAservice",
+            "params": {
+              "resourceType": ["service"],
+              "isTemplate": "n"
+            }
+          },
+          "remoteurl": {"multiple": false}
+        }
+      }
+    }, {
+      "type": "dataset",
+      "label": "linkToDataset",
+      "condition": "gnCurrentEdit.isService",
+      "config": {
+        "sources": {
+          "metadataStore": {
+            "params": {
+              "resourceType": ["dataset"],
+              "isTemplate": "n"
+            }
+          },
+          "remoteurl": {"multiple": false}
+        }
+      }
+    }]
   }
 }
