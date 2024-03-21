@@ -295,7 +295,21 @@
               </section>
             </xsl:if>
 
-            <xsl:if test="$sideRelated != ''">
+            <section class="gn-md-side-access">
+              <a class="btn btn-block btn-primary"
+                 href="{if ($portalLink != '')
+                        then replace($portalLink, '\$\{uuid\}', $metadataUuid)
+                        else utils:getDefaultUrl($metadataUuid, $language)}">
+                <i class="fa fa-fw fa-link"><xsl:comment select="'icon'"/></i>
+                <xsl:value-of select="$schemaStrings/linkToPortal"/>
+              </a>
+              <div class="hidden-xs hidden-sm">
+                <xsl:value-of select="$schemaStrings/linkToPortal-help"/>
+              </div>
+            </section>
+
+            <!-- Don't add the associated resources in the metadata static page, this page doesn't include JS libs -->
+            <xsl:if test="$sideRelated != '' and $root != 'html'">
               <section class="gn-md-side-associated">
                 <h2>
                   <i class="fa fa-fw fa-link"><xsl:comment select="'icon'"/></i>

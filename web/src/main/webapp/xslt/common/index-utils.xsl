@@ -500,7 +500,9 @@
     </xsl:for-each>
 
     <xsl:for-each select="$allKeywords//indexingErrorMsg">
-      <indexingErrorMsg><xsl:value-of select="."/></indexingErrorMsg>
+      <indexingErrorMsg type="object">
+        <xsl:value-of select="."/>
+      </indexingErrorMsg>
     </xsl:for-each>
   </xsl:template>
 

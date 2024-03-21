@@ -151,7 +151,8 @@
   class="row"
   data-ng-if="mdView.current.record.lineage
                  || mdView.current.record.sourceDescription
-                 || mdView.current.record.supplementalInformation"
+                 || mdView.current.record.supplementalInformation
+                 || mdView.current.record.allKeywords"
 >
   <div class="col-md-8 gn-record gn-page-break-avoid">
     <div ng-include="'../../catalog/views/default/templates/recordView/lineage.html'" />

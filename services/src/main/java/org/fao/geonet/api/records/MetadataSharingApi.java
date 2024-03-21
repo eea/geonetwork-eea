@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2023 Food and Agriculture Organization of the
+ * Copyright (C) 2001-2024 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
  *
@@ -94,7 +94,8 @@ import static org.springframework.data.jpa.domain.Specification.where;
 @PreAuthorize("hasAuthority('Editor')")
 @Controller("recordSharing")
 @ReadWriteController
-public class MetadataSharingApi implements ApplicationEventPublisherAware {
+public class MetadataSharingApi implements ApplicationEventPublisherAware
+{
     private static final String DEFAULT_PUBLICATION_TYPE_NAME = "default";
 
     @Autowired
@@ -167,6 +168,7 @@ public class MetadataSharingApi implements ApplicationEventPublisherAware {
         ApplicationEventPublisher applicationEventPublisher) {
         this.eventPublisher = applicationEventPublisher;
     }
+
     public static Vector<OperationAllowedId> retrievePrivileges(ServiceContext context, String id, Integer userId, Integer groupId) {
 
         OperationAllowedRepository opAllowRepo = context.getBean(OperationAllowedRepository.class);
@@ -558,7 +560,6 @@ public class MetadataSharingApi implements ApplicationEventPublisherAware {
                     }
                 }
             }
-
 
             java.util.Optional<GroupPrivilege> allGroupPrivsBefore =
                 sharingBefore.getPrivileges().stream().filter(p -> p.getGroup() == ReservedGroup.all.getId()).findFirst();
