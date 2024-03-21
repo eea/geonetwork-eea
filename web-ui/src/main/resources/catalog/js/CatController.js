@@ -134,7 +134,7 @@
               "th_eea-topics.default": {
                 terms: {
                   field: "th_eea-topics.default",
-                  size: 15,
+                  size: 55,
                   missing: "- Not categorized -",
                   exclude: "http.*",
                   order: { _key: "asc" }
@@ -347,7 +347,7 @@
               "th_eea-topics.default": {
                 terms: {
                   field: "th_eea-topics.default",
-                  size: 15,
+                  size: 55,
                   missing: "- Not categorized -",
                   exclude: "http.*",
                   order: { _key: "asc" }
