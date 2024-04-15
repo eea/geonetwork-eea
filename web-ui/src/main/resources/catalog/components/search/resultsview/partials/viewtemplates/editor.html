@@ -35,6 +35,7 @@
                 >
                 {{md.resourceTitle}}
               </a>
+              <div data-gn-status-badge="md" />
               <span data-ng-show="md.isTemplate == 's'">{{md.resourceTitle}}</span>
               <div class="gn-record-details text-muted">
                 <small><span data-translate="">owner</span>:</small>
@@ -65,13 +66,6 @@
                   >
                 </span>
               </div>
-            </div>
-
-            <div
-              data-ng-if="(('group-' + md.groupOwner) | translate).indexOf('SDI_DRAFT') === 0"
-              class="gn-status-stamp gn-status-stamp-editor pull-right"
-            >
-              <span class="gn-status gn-status-mdview gn-status-obsolete">Draft</span>
             </div>
           </div>
           <gn-draft-validation-widget
@@ -125,6 +119,13 @@
             >
               <i class="fa fa-copy text-muted"></i>
             </a>
+
+            <div
+                    data-ng-if="(('group-' + md.groupOwner) | translate).indexOf('SDI_DRAFT') === 0"
+                    class="gn-status-stamp gn-status-stamp-editor"
+            >
+              <span class="gn-status gn-status-mdview gn-status-obsolete">Draft</span>
+            </div>
           </div>
         </div>
       </div>

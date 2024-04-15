@@ -142,6 +142,7 @@
               "dateStamp",
               "documentStandard",
               "mdStatus*",
+              "cl_status*",
               "*inspire*"
             ]
           },
