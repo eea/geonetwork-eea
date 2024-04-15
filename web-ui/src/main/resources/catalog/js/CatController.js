@@ -721,8 +721,11 @@
             bingKey: "",
             listOfServices: {
               wms: [],
-              wmts: []
+              wmts: [],
+              wps: []
             },
+            // wpsSource: ["list", "url", "recent"],
+            wpsSource: ["url", "recent"],
             projection: "EPSG:3857",
             projectionList: [
               {
@@ -1221,6 +1224,7 @@
           "languageWhitelist",
           "hitsperpageValues",
           "sortbyValues",
+          "wpsSource",
           "resultViewTpls",
           "formatter",
           "downloadFormatter",
@@ -1831,6 +1835,17 @@
                 profile !== ""
                   ? "is" + profile[0].toUpperCase() + profile.substring(1) + "OrMore"
                   : "";
+            return angular.isFunction(this[fnName]) ? this[fnName]() : false;
+          },
+          canViewMetadataHistory: function () {
+            var profile = gnConfig["metadata.history.accesslevel"] || "Editor",
+              fnName =
+                profile !== ""
+                  ? "is" + profile[0].toUpperCase() + profile.substring(1) + "OrMore"
+                  : "";
+            if (profile === "RegisteredUser") {
+              return true;
+            }
             return angular.isFunction(this[fnName]) ? this[fnName]() : false;
           },
           canDeletePublishedMetadata: function () {
