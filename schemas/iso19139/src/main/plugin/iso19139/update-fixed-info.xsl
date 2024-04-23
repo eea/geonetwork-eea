@@ -199,7 +199,8 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
                   select="/root/gmd:MD_Metadata/gmd:identificationInfo/*/
                               gmd:citation/*/gmd:identifier/*/gmd:code/*[matches(text(), '.*_[ip]_.*')]/text()"/>
     <xsl:variable name="isPublic"
-                  select="contains($datasetIdentifier, '_p_')"/>
+                  select="contains($datasetIdentifier, '_p_')
+                          and not(starts-with(*/gmd:linkage/*/text(), 'https://taskman.eionet.europa.eu/issues'))"/>
 
     <xsl:copy>
       <xsl:if test="not($isPublic)">
