@@ -2391,8 +2391,11 @@
 
           <action type="associatedResource"
                   name="eea-add-member"
-                  process="sibling">
-            <directiveAttributes>{"associationType": "isComposedOf"}</directiveAttributes>
+                  process="siblings">
+            <directiveAttributes>{
+              "fields": {"associationType": "isComposedOf"},
+              "sources": {"metadataStore": {"params": {"isTemplate": "n"}}}
+              }</directiveAttributes>
           </action>
 
           <action type="process"
