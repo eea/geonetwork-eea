@@ -1493,7 +1493,6 @@
 
 
 
-
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/
                     */gmd:spatialResolution/
                       */gmd:equivalentScale/*/gmd:denominator"
@@ -1614,6 +1613,59 @@
           </action>
           <text ref="eea-mmuw-help"/>
 
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Temporal resolution']"/>
+
+          <action type="add"
+                  btnLabel="eea-add-temporal-resolution"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Temporal resolution']) = 0"
+                  or="descriptiveKeywords"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+            <template>
+              <snippet>
+                <gmd:descriptiveKeywords>
+                  <gmd:MD_Keywords>
+                    <gmd:type>
+                      <gmd:MD_KeywordTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="temporal"/>
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                      <gmd:CI_Citation>
+                        <gmd:title>
+                          <gco:CharacterString>Temporal resolution</gco:CharacterString>
+                        </gmd:title>
+                        <gmd:date>
+                          <gmd:CI_Date>
+                            <gmd:date>
+                              <gco:Date>2017-11-07</gco:Date>
+                            </gmd:date>
+                            <gmd:dateType>
+                              <gmd:CI_DateTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </gmd:dateType>
+                          </gmd:CI_Date>
+                        </gmd:date>
+                        <gmd:identifier>
+                          <gmd:MD_Identifier>
+                            <gmd:code>
+                              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                                          xlink:href="http://localhost:8080/geonetwork/srv/eng/thesaurus.download?ref=local.temporal.temporal-update">geonetwork.thesaurus.local.temporal.temporal-update</gmx:Anchor>
+                            </gmd:code>
+                          </gmd:MD_Identifier>
+                        </gmd:identifier>
+                      </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                  </gmd:MD_Keywords>
+                </gmd:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-temporalresolution-help"/>
+
+        </section>
+
+        <section name="eea-statistical-data-details"
+                 displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA categories' and */gmd:keyword/gco:CharacterString/text() = 'statistical data']) = 1">
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*/text(), 'Unit of measure')]"/>
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*/text(), 'Reference period')]"/>
@@ -1806,57 +1858,6 @@
               </snippet>
             </template>
           </action>
-
-          <text ref="eea-hr"/>
-
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Temporal resolution']"/>
-
-          <action type="add"
-                  btnLabel="eea-add-temporal-resolution"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Temporal resolution']) = 0"
-                  or="descriptiveKeywords"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
-            <template>
-              <snippet>
-                <gmd:descriptiveKeywords>
-                  <gmd:MD_Keywords>
-                    <gmd:type>
-                      <gmd:MD_KeywordTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
-                                              codeListValue="temporal"/>
-                    </gmd:type>
-                    <gmd:thesaurusName>
-                      <gmd:CI_Citation>
-                        <gmd:title>
-                          <gco:CharacterString>Temporal resolution</gco:CharacterString>
-                        </gmd:title>
-                        <gmd:date>
-                          <gmd:CI_Date>
-                            <gmd:date>
-                              <gco:Date>2017-11-07</gco:Date>
-                            </gmd:date>
-                            <gmd:dateType>
-                              <gmd:CI_DateTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
-                                                   codeListValue="publication"/>
-                            </gmd:dateType>
-                          </gmd:CI_Date>
-                        </gmd:date>
-                        <gmd:identifier>
-                          <gmd:MD_Identifier>
-                            <gmd:code>
-                              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                                          xlink:href="http://localhost:8080/geonetwork/srv/eng/thesaurus.download?ref=local.temporal.temporal-update">geonetwork.thesaurus.local.temporal.temporal-update</gmx:Anchor>
-                            </gmd:code>
-                          </gmd:MD_Identifier>
-                        </gmd:identifier>
-                      </gmd:CI_Citation>
-                    </gmd:thesaurusName>
-                  </gmd:MD_Keywords>
-                </gmd:descriptiveKeywords>
-              </snippet>
-            </template>
-          </action>
-          <text ref="eea-temporalresolution-help"/>
-
         </section>
 
 
