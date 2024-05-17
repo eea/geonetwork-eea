@@ -2323,9 +2323,10 @@
                    transformations="to-iso19139-keyword-with-anchor"/>
       </thesaurusList>
       <sidePanel>
+        <directive data-gn-associated-resources-panel="gnCurrentEdit.metadata"
+                   editor-config="eeaseries"/>
+
         <directive data-gn-overview-manager=""/>
-        <directive data-gn-onlinesrc-list=""
-                   data-types="sibling|associated"/>
 
         <text ref="eea-contact"/>
       </sidePanel>
