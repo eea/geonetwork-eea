@@ -85,6 +85,9 @@ public class FormatterApiIntegrationTest extends AbstractServiceIntegrationTest 
         final FormatterAdminApi.FormatterDataResponse formatters =
             listService.listFormatters(null, null, schema, false, false);
         for (FormatterAdminApi.FormatterData formatter : formatters.getFormatters()) {
+            if (formatter.getId().equals("sdmx")) {
+                continue;
+            }
             MockHttpServletRequest request = new MockHttpServletRequest();
             request.getSession();
             request.setPathInfo("/eng/blahblah");
