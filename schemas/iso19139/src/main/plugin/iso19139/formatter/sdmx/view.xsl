@@ -381,7 +381,7 @@
     <xsl:template name="sdmx-measure">
         <xsl:param name="baseAttribute" as="xs:string" select="'TIMELINESS'"/>
         <xsl:param name="value" as="xs:string"/>
-        <xsl:param name="description" as="xs:string"/>
+        <xsl:param name="description" as="xs:string?"/>
 
         <metadata:ReportedAttribute conceptID="{$baseAttribute}">
             <metadata:Value></metadata:Value>
