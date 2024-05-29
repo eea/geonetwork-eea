@@ -614,6 +614,7 @@
               }
             });
           }
+          scope.columnVisibility.type = false;
         }
       };
     }
