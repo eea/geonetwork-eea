@@ -61,7 +61,6 @@
           "metadataStore": {
             "label": "linkToSource",
             "params": {
-              "resourceType": ["dataset"],
               "isTemplate": "n"
             }
           },
