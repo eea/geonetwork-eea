@@ -1676,7 +1676,7 @@
                           gmd:nameOfMeasure/*/text() = 'Timeliness']/gmd:result/*/gmd:value"
                  del="ancestor::gmd:report"
                  use="data-gn-keyword-picker">
-            <directiveAttributes data-thesaurus-key="local.theme.eea-stat-time-coverage-grade"/>
+            <directiveAttributes data-thesaurus-key="local.theme.eea-stat-timeliness-grade"/>
           </field>
           <field name="Timeliness - Comment"
                  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
