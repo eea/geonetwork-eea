@@ -287,12 +287,19 @@
                     </metadata:ReportedAttribute>
 
                     <metadata:ReportedAttribute conceptID="FREQ_TIMELINESS">
-                        <xsl:for-each select="$metadata/gmd:identificationInfo/*/gmd:resourceMaintenance/*">
+                       <!-- <xsl:for-each select="$metadata/gmd:identificationInfo/*/gmd:resourceMaintenance/*">
                             <xsl:call-template name="sdmx-measure">
                                 <xsl:with-param name="baseAttribute" select="'FREQ_DISS'"/>
                                 <xsl:with-param name="value" select="gmd:maintenanceAndUpdateFrequency/*/@codeListValue"/>
                                 <xsl:with-param name="description" select="gmd:maintenanceNote/gco:CharacterString/text()"/>
                             </xsl:call-template>
+                        </xsl:for-each>-->
+                        <xsl:for-each select="$metadata/gmd:dataQualityInfo/*/gmd:report/*[gmd:nameOfMeasure/gco:CharacterString = 'Frequency of dissemination']">
+                          <xsl:call-template name="sdmx-measure">
+                            <xsl:with-param name="baseAttribute" select="'FREQ_DISS'"/>
+                            <xsl:with-param name="value" select="gmd:result/*/gmd:value/gco:Record/text()"/>
+                            <xsl:with-param name="description" select="gmd:measureDescription/gco:CharacterString/text()"/>
+                          </xsl:call-template>
                         </xsl:for-each>
 
                         <xsl:for-each select="$metadata/gmd:dataQualityInfo/*/gmd:report/*[gmd:nameOfMeasure/gco:CharacterString = 'Timeliness']">
@@ -380,7 +387,7 @@
 
     <xsl:template name="sdmx-measure">
         <xsl:param name="baseAttribute" as="xs:string" select="'TIMELINESS'"/>
-        <xsl:param name="value" as="xs:string"/>
+        <xsl:param name="value" as="xs:string?"/>
         <xsl:param name="description" as="xs:string?"/>
 
         <metadata:ReportedAttribute conceptID="{$baseAttribute}">
