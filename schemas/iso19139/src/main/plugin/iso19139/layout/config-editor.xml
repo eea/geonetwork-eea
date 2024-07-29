@@ -1864,9 +1864,14 @@
 
         <section name="eea-additional">
 
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceMaintenance"
-                 or="resourceMaintenance"
-                 in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
+          <section forEach="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceMaintenance"
+                         del="."
+                         or="resourceMaintenance"
+                         in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+            <field xpath="*/gmd:maintenanceAndUpdateFrequency" or="maintenanceAndUpdateFrequency" in="*"/>
+            <field xpath="*/gmd:dateOfNextUpdate" or="dateOfNextUpdate" in="*"/>
+            <field xpath="*/gmd:maintenanceNote" or="maintenanceNote" in="*"/>
+          </section>
           <text ref="eea-maintenance-help"/>
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:language"/>
@@ -2285,6 +2290,9 @@
         <for name="gmd:pointOfContact"/>
         <for name="gmd:spatialRepresentationType"/>
         <for name="gmd:resourceMaintenance"/>
+        <for name="gmd:maintenanceAndUpdateFrequency"/>
+        <for name="gmd:dateOfNextUpdate"/>
+        <for name="gmd:maintenanceNote"/>
         <for name="gmd:supplementalInformation"/>
         <for name="gmd:lineage"/>
       </flatModeExceptions>
