@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:dcterms="http://purl.org/dc/terms/"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <skos:ConceptScheme rdf:about="https://www.eea.europa.eu/stat-frequency-of-dissemination-grade">
+    <dc:title>Frequency of dissemination - Grade</dc:title>
+    <dc:description>Time interval at which the indicator is produced (e.g.: annual, biennial, every three years, a-periodic etc.).</dc:description>
+    <dc:creator>
+      <foaf:Organization>
+        <foaf:name>EEA</foaf:name>
+      </foaf:Organization>
+    </dc:creator>
+    <dcterms:issued>2024-07-29</dcterms:issued>
+    <dcterms:modified>2024-07-29</dcterms:modified>
+  </skos:ConceptScheme>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/stat-frequency-of-dissemination-grade/1'>
+    <skos:prefLabel xml:lang='en'>Every year</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/stat-frequency-of-dissemination-grade/2'>
+    <skos:prefLabel xml:lang='en'>Every 2 years</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/stat-frequency-of-dissemination-grade/3'>
+    <skos:prefLabel xml:lang='en'>Every 3+ years</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/stat-frequency-of-dissemination-grade/notapplicable'>
+    <skos:prefLabel xml:lang='en'>not applicable</skos:prefLabel>
+    <skos:definition xml:lang='en'></skos:definition>
+  </skos:Concept>
+  <skos:Concept rdf:about='https://www.eea.europa.eu/stat-frequency-of-dissemination-grade/notavailable'>
+    <skos:prefLabel xml:lang='en'>not available</skos:prefLabel>
+    <skos:definition xml:lang='en'>No data for EU aggregates available.</skos:definition>
+  </skos:Concept>
+</rdf:RDF>

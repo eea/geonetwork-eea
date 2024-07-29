@@ -82,6 +82,7 @@
   <eea-measure-accuracy>Accuracy - overall</eea-measure-accuracy>
   <eea-measure-reference-area>Reference area</eea-measure-reference-area>
   <eea-measure-timeliness>Timeliness</eea-measure-timeliness>
+  <eea-measure-frequency-of-dissemination>Frequency of dissemination</eea-measure-frequency-of-dissemination>
   <eea-measure-time-coverage>Time coverage</eea-measure-time-coverage>
   <eea-measure-comparability-geo>Comparability - geographical</eea-measure-comparability-geo>
   <eea-measure-comparability-overtime>Comparability - over time</eea-measure-comparability-overtime>

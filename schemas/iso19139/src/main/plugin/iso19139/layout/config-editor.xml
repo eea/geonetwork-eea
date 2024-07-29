@@ -1671,6 +1671,18 @@
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*/text(), 'Reference period')]"/>
 
 
+
+          <field name="Frequency of dissemination - Grade"
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
+                          gmd:nameOfMeasure/*/text() = 'Frequency of dissemination']/gmd:result/*/gmd:value"
+                 del="ancestor::gmd:report"
+                 use="data-gn-keyword-picker">
+            <directiveAttributes data-thesaurus-key="local.theme.eea-stat-frequency-of-dissemination-grade"/>
+          </field>
+          <field name="Frequency of dissemination - Comment"
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
+                          gmd:nameOfMeasure/*/text() = 'Frequency of dissemination']/gmd:measureDescription"/>
+
           <field name="Timeliness - Grade"
                  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*[
                           gmd:nameOfMeasure/*/text() = 'Timeliness']/gmd:result/*/gmd:value"
@@ -1731,6 +1743,31 @@
                   or="report"
                   in="/gmd:MD_Metadata/gmd:dataQualityInfo/*">
             <template>
+              <snippet label="eea-measure-frequency-of-dissemination">
+                <gmd:report>
+                  <gmd:DQ_AccuracyOfATimeMeasurement>
+                    <gmd:nameOfMeasure>
+                      <gco:CharacterString>Frequency of dissemination</gco:CharacterString>
+                    </gmd:nameOfMeasure>
+                    <gmd:measureDescription>
+                      <gco:CharacterString></gco:CharacterString>
+                    </gmd:measureDescription>
+                    <gmd:result>
+                      <gmd:DQ_QuantitativeResult>
+                        <gmd:valueUnit>
+                          <gml:BaseUnit gml:id="d22718e609a1051924">
+                            <gml:identifier codeSpace=""/>
+                            <gml:unitsSystem/>
+                          </gml:BaseUnit>
+                        </gmd:valueUnit>
+                        <gmd:value>
+                          <gco:Record></gco:Record>
+                        </gmd:value>
+                      </gmd:DQ_QuantitativeResult>
+                    </gmd:result>
+                  </gmd:DQ_AccuracyOfATimeMeasurement>
+                </gmd:report>
+              </snippet>
               <snippet label="eea-measure-timeliness">
                 <gmd:report>
                   <gmd:DQ_AccuracyOfATimeMeasurement>
