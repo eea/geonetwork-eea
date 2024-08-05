@@ -2,5 +2,10 @@
   "spatialRepresentationTypes": "Spatial representation types",
   "spatialRepresentationType": "Spatial representation type",
   "cl_spatialRepresentationType": "Spatial representation type",
-  "format": "Distribution format"
+  "format": "Distribution format",
+  "qualityMeasures": "Quality profile",
+  "measureType": "Type",
+  "measureName": "Quality concept",
+  "measureDescription": "Comment",
+  "measureValue": "Grade"
 }
