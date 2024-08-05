@@ -294,11 +294,19 @@
                                 <xsl:with-param name="description" select="gmd:maintenanceNote/gco:CharacterString/text()"/>
                             </xsl:call-template>
                         </xsl:for-each>-->
+
+                      <xsl:variable name="maintenanceNote"
+                                    select="string-join($metadata/gmd:identificationInfo/*/gmd:resourceMaintenance/*/gmd:maintenanceAndUpdateFrequency/*/@codeListValue, ', ')"/>
                         <xsl:for-each select="$metadata/gmd:dataQualityInfo/*/gmd:report/*[gmd:nameOfMeasure/gco:CharacterString = 'Frequency of dissemination']">
+                          <xsl:variable name="frequencyOfDisseminationDesc"
+                                       select="if ($maintenanceNote)
+                                            then concat($maintenanceNote, ' ', gmd:measureDescription/gco:CharacterString/text())
+                                            else gmd:measureDescription/gco:CharacterString/text()"/>
+
                           <xsl:call-template name="sdmx-measure">
                             <xsl:with-param name="baseAttribute" select="'FREQ_DISS'"/>
                             <xsl:with-param name="value" select="gmd:result/*/gmd:value/gco:Record/text()"/>
-                            <xsl:with-param name="description" select="gmd:measureDescription/gco:CharacterString/text()"/>
+                            <xsl:with-param name="description" select="$frequencyOfDisseminationDesc"/>
                           </xsl:call-template>
                         </xsl:for-each>
 
