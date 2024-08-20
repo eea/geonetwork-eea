@@ -779,9 +779,9 @@ EEA Core Set of Indicators using WISE SoE data on groundwater quality (CSI 020 N
     <skos:definition xml:lang="en">Refer to obligations under Third Daughter Directive (2002/3/EC)Council Directive 92/72/EEC of 21 September 1992 on air pollution by ozone and/or EuroAirnet http://reports.eea.eu.int/TEC12/en</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/32">
-    <skos:prefLabel xml:lang="en">Nationally designated areas (CDDA)</skos:prefLabel>
-    <skos:definition xml:lang="en">Background information on CDDA reporting is available in CDR help at http://cdr.eionet.europa.eu/help/cddaCountries are requested to maintain updated lists of
-national designation types and individual site records including site boundaries.</skos:definition>
+    <skos:prefLabel xml:lang="en">Nationally designated areas (NatDA)</skos:prefLabel>
+    <skos:definition xml:lang="en">Background information on NatDA reporting is available in CDR help at http://cdr.eionet.europa.eu/help/cddaCountries are requested to maintain updated lists of
+national designation types and individual site records including their site boundaries.</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/33">
     <skos:prefLabel xml:lang="en">Soil Contamination (TE-2)</skos:prefLabel>
@@ -1071,7 +1071,7 @@ The data reported by Member States in accordance with Article 12 shall be accomp
     <skos:definition xml:lang="en">Information shall be supplied according to Article 17 of the Directive and Commission Decision 94/741/EC of 24 October 1994 concerning questionnaires for Member States reports on the implementation of certain Directives in the waste sector (implementation of Council Directive 91/692/EEC)The 94/741/EC Commission Decision's Annex contains a questionnaire to be filled in by the Member States. This report is part of the sectoral report referred to in Council Directive 91/692/EEC article 5 and Annex VI. The first reporting period was 1995-1997 inclusive.</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/812">
-    <skos:prefLabel xml:lang="en">Reporting on Sewage Sludge (new flow)</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Reporting on Sewage Sludge (revised)</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/136">
@@ -2748,6 +2748,10 @@ and sites in the context of European legislation.</skos:definition>
 http://eunis.eea.europa.eu/ that provides information on species, habitats
 and sites in the context of European legislation.</skos:definition>
   </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/833">
+    <skos:prefLabel xml:lang="en">Illegal trade report</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/365">
     <skos:prefLabel xml:lang="en">Limit values in force report (DF 3)</skos:prefLabel>
     <skos:definition xml:lang="en"/>
@@ -2778,7 +2782,7 @@ major airports &gt; 50.000 movements/year</skos:definition>
     <skos:definition xml:lang="en">After 31/12/2011, please refer to obligation "Action plan summaries (DF 7 and DF 10)" at http://rod.eionet.europa.eu/obligations/371</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/371">
-    <skos:prefLabel xml:lang="en">Action plan summaries  (DF 7 and DF 10)</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Action plan summaries and protection of quiet areas (DF 7 and DF 10)</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/558">
@@ -3178,7 +3182,7 @@ Member States shall take into account relevant measures required under Community
     <skos:definition xml:lang="en">The types of measures are listed in Annex VI.Member States shall take into account relevant measures required under Community legislation, in particular the Water Framework Directive, the UWWT Directive, the New Bathing Water Directive, as well as forthcoming legislation on environmental quality standards in the field of water policy, or international agreements.</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/759">
-    <skos:prefLabel xml:lang="en">MSFD - Articles 8, 9 and 10 - XML data</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">MSFD - Articles 8, 9 and 10 - Data</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/760">
@@ -3187,6 +3191,10 @@ Member States shall take into account relevant measures required under Community
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/761">
     <skos:prefLabel xml:lang="en">MSFD - Articles 8, 9 and 10 - Text reports</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/851">
+    <skos:prefLabel xml:lang="en">Marine Litter</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/614">
@@ -3258,7 +3266,7 @@ The Directive will be in effect from 12/12/2010 and it repeals the Directives 75
     <skos:definition xml:lang="en">Directive 2008/98/EC requires Member States to report to the commission , every three years as in accordance with Article 37, on their record with regard to meeting the targets of Article 11 ( 50% preparing for re-use and recycling of household and similar waste: 70 % preparing for reuse and recycling of contruction and demolition waste) by 2020. If the targets are not met, this report shall include the reasons for failure and the actions the Member State intends to take to meet those targets.</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/807">
-    <skos:prefLabel xml:lang="en">Reporting on reuse</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Measurement of reuse</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/655">
@@ -3367,6 +3375,10 @@ Annual data shall be made available to the Commission upon request.</skos:defini
     <skos:definition xml:lang="en">!! Obligation has been terminated by Directive (EU) 2018/849 (point 1(a) of Art. 3) 
 
 A guestionaire to be developed. According to Article 16(5) of Directive 2012/19/EU, Member States shall, at three-year intervals, send a report to the Commission on the implementation of this Directive and on the information set out in paragraph 4. The implementation report shall be drawn up on the basis of a questionnaire laid down in Commission Decisions 2004/249/EC ( 1 ) and 2005/369/EC ( 2 ).!! Obligation has been terminated by Directive (EU) 2018/849 (point 1(a) of Art. 3) </skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/846">
+    <skos:prefLabel xml:lang="en">Report on quantities and categories of EEE placed on their markets, collected through all routes, prepared for re-use, recycled and recovered [Art 16.4]</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/696">
     <skos:prefLabel xml:lang="en">National policies and measures (climate change mitigation)</skos:prefLabel>
@@ -3554,13 +3566,17 @@ UNFCCC Guidelines on reporting biennial reports (BRs): https://unfccc.int/proces
     <skos:prefLabel xml:lang="en">Information concerning the operation of the procedures</skos:prefLabel>
     <skos:definition xml:lang="en">The common format for submission by the Member States of the information required under Article 22(1) of Regulation (EU) No 649/2012 is set out in the Annex to this Decision. The first report on information to be submitted by the Member States pursuant to Article 22(1) of Regulation (EU) No 649/2012 shall cover the calendar years 2014, 2015 and 2016. The following reports shall cover subsequent three-year periods.</skos:definition>
   </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/849">
+    <skos:prefLabel xml:lang="en">Monitoring and reporting (Article 22)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/741">
     <skos:prefLabel xml:lang="en">Report on the results of the official controls, and other enforcement measures taken</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/748">
     <skos:prefLabel xml:lang="en">National Emission reduction Commitments Directive (NECD) - National emission inventories</skos:prefLabel>
-    <skos:definition xml:lang="en">ECE/EB.AIR/125 (URL: https://unece.org/fileadmin/DAM/env/documents/2013/air/eb/ece.eb.air.125_E_ODS.pdf). All information including the latest template Annex I (URL: https://www.ceip.at/fileadmin/inhalte/ceip/1_reporting_guidelines2014/annex_i_rev18-11.xlsx) to be used can be found here: https://www.ceip.at/reporting-instructions.
+    <skos:definition xml:lang="en">ECE/EB.AIR/125 (URL: https://unece.org/fileadmin/DAM/env/documents/2013/air/eb/ece.eb.air.125_E_ODS.pdf). All information including the latest template Annex I (URL: https://www.ceip.at/fileadmin/inhalte/ceip/1_reporting_guidelines2014/annex_i_rev18-11.xlsx) to be used can be found here: https://www.ceip.at/reporting-instructions
 
 Re-submissions due to errors shall be provided within four weeks and include a clear explanation of the change made.</skos:definition>
   </skos:Concept>
@@ -3613,6 +3629,10 @@ Information compiled into Annex II (new adjustment) and/or Annex VII (approved a
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/829">
     <skos:prefLabel xml:lang="en">Reporting on HDV baseline resimulation</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/852">
+    <skos:prefLabel xml:lang="en">REGULATION (EU) 2020/1079  of 20 July 2020  on the verification and correction of data referred to in Regulation (EU) 2018/956 on the monitoring and reporting of CO2 emissions from and fuel consumption of new heavy-duty vehicles </skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/783">
@@ -3696,7 +3716,7 @@ Information compiled into Annex II (new adjustment) and/or Annex VII (approved a
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/808">
-    <skos:prefLabel xml:lang="en">Real-world fuel consumption of cars and vans: Member States</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Real-world fuel consumption of cars and vans: Countries</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/809">
@@ -3726,6 +3746,78 @@ https://circabc.europa.eu/ui/group/fcb355ee-7434-4448-a53d-5dc5d1dac678/library/
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/825">
     <skos:prefLabel xml:lang="en">Integrated reporting on national adaptation actions</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/830">
+    <skos:prefLabel xml:lang="en">Information on the use of carbon price mechanism revenues - Annex II</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/831">
+    <skos:prefLabel xml:lang="en">Water Reuse Obligation</skos:prefLabel>
+    <skos:definition xml:lang="en">The reporting guideline might be revised based on the feedback received during or after the first data submission</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/832">
+    <skos:prefLabel xml:lang="en">DWD exceedances, incidents and derogations - Article 18.1 (c, d, e)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/834">
+    <skos:prefLabel xml:lang="en">Annual report</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/835">
+    <skos:prefLabel xml:lang="en">Report on information disseminated and on experience gained (Art 18.1)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/836">
+    <skos:prefLabel xml:lang="en">Weight of plastic packaging waste  not recycled (ART 5.4)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/837">
+    <skos:prefLabel xml:lang="en">Statistical data on the weight of plastic packaging waste generated in the Member State and on the weight of that plastic packaging waste that was recycled (Art 5.5)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/838">
+    <skos:prefLabel xml:lang="en">Declaration of the consumption of lightweight plastic carrier bags</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/839">
+    <skos:prefLabel xml:lang="en">Art 13: Reporting of items (a), (b), (c) and (d)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/841">
+    <skos:prefLabel xml:lang="en">Art 9: Separate collection of beverage bottles with a capacity of up to three litres, including their caps and lids.</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/842">
+    <skos:prefLabel xml:lang="en">Art 8: Extended producer responsibility (data on fishing gear containing plastic placed on the market and on waste fishing gear collected in the Member State each year)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/843">
+    <skos:prefLabel xml:lang="en">Art 6:  Product requirements (information on recycled content in beverage bottles)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/844">
+    <skos:prefLabel xml:lang="en">Air emissions accounts</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/845">
+    <skos:prefLabel xml:lang="en">Implementation of its national policy framework (art 10)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/847">
+    <skos:prefLabel xml:lang="en">Report on the implementation</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/848">
+    <skos:prefLabel xml:lang="en">Full progress report quantifying the minimum shares achieved</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/850">
+    <skos:prefLabel xml:lang="en">Report on the operation of this Regulation in their respective territories, including sections on evaluation and enforcement (art 117)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/853">
+    <skos:prefLabel xml:lang="en">Regulation (EU) 2019/1242 of the European Parliament and of the Council of 20 June 2019 setting CO2 emission performance standards for new heavy-duty vehicles and amending Regulations (EC) No 595/2009 and (EU) 2018/956 </skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
 </rdf:RDF>
