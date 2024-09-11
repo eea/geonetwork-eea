@@ -161,7 +161,22 @@
               scope.size
             );
 
-            query.query.bool.must[0].more_like_this.like = scope.md.resourceTitle;
+            function setMoreLikeThisFields(fields) {
+              var config = query.query.bool.must[0].more_like_this.like;
+              if (Array.isArray(config)) {
+                config.forEach(function(field) {
+                  if (typeof field === 'object' && field._id !== undefined) {
+                    field._id = scope.md.uuid;
+                  }
+                });
+                config.push(scope.md.resourceTitle);
+              } else {
+                config = scope.md.resourceTitle;
+              }
+              query.query.bool.must[0].more_like_this.like = config;
+            }
+
+            setMoreLikeThisFields();
 
             var resourceType = scope.md.resourceType
               ? scope.md.resourceType[0]

@@ -314,17 +314,11 @@
             moreLikeThisSameType: true,
             moreLikeThisConfig: {
               more_like_this: {
-                fields: [
-                  "resourceTitleObject.langeng"
-                  // "resourceAbstractObject.default",
-                  // "tag.raw"
-                ],
-                like: null,
-                min_term_freq: 1,
-                min_word_length: 3,
-                max_query_terms: 35,
+                like: [{
+                 "_id": null
+                }],
                 analyzer: "english",
-                minimum_should_match: "70%"
+                minimum_should_match: "40%"
               }
             },
             facetTabField: "",
