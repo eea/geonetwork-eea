@@ -314,9 +314,11 @@
             moreLikeThisSameType: true,
             moreLikeThisConfig: {
               more_like_this: {
-                like: [{
-                 "_id": null
-                }],
+                like: [
+                  {
+                    _id: null
+                  }
+                ],
                 analyzer: "english",
                 minimum_should_match: "40%"
               }

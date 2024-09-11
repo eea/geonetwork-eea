@@ -135,11 +135,27 @@
             };
 
           function buildQuery() {
+            function buildMoreLikeThisFields(fields) {
+              var config = {};
+              angular.copy(moreLikeThisQuery, config);
+              if (Array.isArray(config.more_like_this.like)) {
+                config.more_like_this.like.forEach(function (field) {
+                  if (typeof field === "object" && field._id !== undefined) {
+                    field._id = scope.md.uuid;
+                  }
+                });
+                config.more_like_this.like.push(scope.md.resourceTitle);
+              } else {
+                config.more_like_this.like = scope.md.resourceTitle;
+              }
+              return config;
+            }
+
             var query = gnESFacet.buildDefaultQuery(
               {
                 bool: {
                   must: [
-                    moreLikeThisQuery,
+                    buildMoreLikeThisFields(),
                     { terms: { isTemplate: ["n"] } },
                     // TODO: We may want to use it for subtemplate
                     { terms: { draft: ["n", "e"] } }
@@ -160,23 +176,6 @@
               },
               scope.size
             );
-
-            function setMoreLikeThisFields(fields) {
-              var config = query.query.bool.must[0].more_like_this.like;
-              if (Array.isArray(config)) {
-                config.forEach(function(field) {
-                  if (typeof field === 'object' && field._id !== undefined) {
-                    field._id = scope.md.uuid;
-                  }
-                });
-                config.push(scope.md.resourceTitle);
-              } else {
-                config = scope.md.resourceTitle;
-              }
-              query.query.bool.must[0].more_like_this.like = config;
-            }
-
-            setMoreLikeThisFields();
 
             var resourceType = scope.md.resourceType
               ? scope.md.resourceType[0]

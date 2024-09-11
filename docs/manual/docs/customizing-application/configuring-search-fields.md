@@ -290,3 +290,57 @@ in `records.json` (eg. adding Danish):
             ]
         },
 ```
+
+## Similar documents
+
+
+Similar documents are displayed at the bottom of the record view. 
+
+The more like this query can be configured for the user interface.
+
+* `moreLikeThisSameType` is a boolean to enable or disable the more like this query for the same type of document (eg. suggest series only for a record which is a series).
+* 
+* `moreLikeThisConfig` is the configuration of the more like this query. The configuration is the same as the [Elasticsearch more like this query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-mlt-query.html).
+
+
+To configure a more like this query computing similarity between the current record title terms (added to the `like` element) and the title, abstract and tag fields of other records:
+
+```json
+"moreLikeThisConfig": {
+  "more_like_this": {
+    "fields": [
+      "resourceTitleObject.default",
+      "resourceAbstractObject.default",
+      "tag.raw"
+    ],
+    "like": null,
+    "min_term_freq": 1,
+    "min_word_length": 3,
+    "max_query_terms": 35,
+    "minimum_should_match": "70%"
+  }
+},
+```
+
+`like` element can also be used to provide a document to compare with. In this case, the query will compute similarity for the complete document and.also search for current record title terms.
+
+```json
+"moreLikeThisConfig": {
+  "more_like_this": {
+    "like": [
+      {
+      "_id": null
+      }
+    ],
+    "analyzer": "english",
+    "minimum_should_match": "40%"
+  }
+}
+```
+  
+If all your records are in the same language, adding the analyzer to the `more_like_this` query can improve the similarity computation. 
+
+```json
+  "analyzer": "english",
+```
+
