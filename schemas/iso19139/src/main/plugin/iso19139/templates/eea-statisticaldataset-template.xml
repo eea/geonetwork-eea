@@ -1,782 +1,834 @@
 <gmd:MD_Metadata xmlns:gco="http://www.isotc211.org/2005/gco"
-                 xmlns:srv="http://www.isotc211.org/2005/srv"
-                 xmlns:gsr="http://www.isotc211.org/2005/gsr"
                  xmlns:gmd="http://www.isotc211.org/2005/gmd"
-                 xmlns:gmi="http://www.isotc211.org/2005/gmi"
-                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:xlink="http://www.w3.org/1999/xlink"
                  xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                 xmlns:gml="http://www.opengis.net/gml/3.2"
-                 xmlns:gts="http://www.isotc211.org/2005/gts">
-    <gmd:fileIdentifier>
-        <gco:CharacterString>ccf6afe7-6600-4c15-9b5d-cec4b55dad05</gco:CharacterString>
-    </gmd:fileIdentifier>
-    <gmd:language>
-        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
-    </gmd:language>
-    <gmd:characterSet>
-        <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"
-                                 codeListValue="utf8"/>
-    </gmd:characterSet>
-    <gmd:hierarchyLevel>
-        <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
-                          codeListValue="dataset"/>
-    </gmd:hierarchyLevel>
-    <gmd:contact>
+                 xmlns:gml="http://www.opengis.net/gml/3.2">
+  <gmd:fileIdentifier>
+    <gco:CharacterString>d2b5c95c-e3e8-42f3-8515-ad384d630318</gco:CharacterString>
+  </gmd:fileIdentifier>
+  <gmd:language>
+    <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
+  </gmd:language>
+  <gmd:characterSet>
+    <gmd:MD_CharacterSetCode
+      codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"
+      codeListValue="utf8"/>
+  </gmd:characterSet>
+  <gmd:hierarchyLevel>
+    <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+                      codeListValue="nonGeographicDataset"/>
+  </gmd:hierarchyLevel>
+  <gmd:hierarchyLevelName>
+    <gco:CharacterString>Tabular dataset</gco:CharacterString>
+  </gmd:hierarchyLevelName>
+  <gmd:contact>
+    <gmd:CI_ResponsibleParty>
+      <gmd:organisationName>
+        <gco:CharacterString>European Environment Agency</gco:CharacterString>
+      </gmd:organisationName>
+      <gmd:contactInfo>
+        <gmd:CI_Contact>
+          <gmd:address>
+            <gmd:CI_Address>
+              <gmd:deliveryPoint>
+                <gco:CharacterString>Kongens Nytorv 6</gco:CharacterString>
+              </gmd:deliveryPoint>
+              <gmd:city>
+                <gco:CharacterString>Copenhagen</gco:CharacterString>
+              </gmd:city>
+              <gmd:administrativeArea>
+                <gco:CharacterString>K</gco:CharacterString>
+              </gmd:administrativeArea>
+              <gmd:postalCode>
+                <gco:CharacterString>1050</gco:CharacterString>
+              </gmd:postalCode>
+              <gmd:country>
+                <gco:CharacterString>Denmark</gco:CharacterString>
+              </gmd:country>
+              <gmd:electronicMailAddress>
+                <gco:CharacterString>sdi@eea.europa.eu</gco:CharacterString>
+              </gmd:electronicMailAddress>
+            </gmd:CI_Address>
+          </gmd:address>
+        </gmd:CI_Contact>
+      </gmd:contactInfo>
+      <gmd:role>
+        <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                         codeListValue="pointOfContact"/>
+      </gmd:role>
+    </gmd:CI_ResponsibleParty>
+  </gmd:contact>
+  <gmd:dateStamp>
+    <gco:DateTime>2024-09-30T15:54:53.243519Z</gco:DateTime>
+  </gmd:dateStamp>
+  <gmd:metadataStandardName>
+    <gco:CharacterString>ISO 19115/19139</gco:CharacterString>
+  </gmd:metadataStandardName>
+  <gmd:metadataStandardVersion>
+    <gco:CharacterString>1.0</gco:CharacterString>
+  </gmd:metadataStandardVersion>
+  <gmd:identificationInfo>
+    <gmd:MD_DataIdentification>
+      <gmd:citation>
+        <gmd:CI_Citation>
+          <gmd:title>
+            <gco:CharacterString>EEA metadata template for statistical dataset</gco:CharacterString>
+          </gmd:title>
+          <gmd:date>
+            <gmd:CI_Date>
+              <gmd:date>
+                <gco:Date/>
+              </gmd:date>
+              <gmd:dateType>
+                <gmd:CI_DateTypeCode
+                  codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                  codeListValue="creation"/>
+              </gmd:dateType>
+            </gmd:CI_Date>
+          </gmd:date>
+          <gmd:date>
+            <gmd:CI_Date>
+              <gmd:date>
+                <gco:Date/>
+              </gmd:date>
+              <gmd:dateType>
+                <gmd:CI_DateTypeCode
+                  codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                  codeListValue="publication"/>
+              </gmd:dateType>
+            </gmd:CI_Date>
+          </gmd:date>
+          <gmd:edition>
+            <gco:CharacterString>[VersionNumber.RevisionNumber]</gco:CharacterString>
+          </gmd:edition>
+          <gmd:identifier>
+            <gmd:MD_Identifier>
+              <gmd:code>
+                <gco:CharacterString>
+                  [Provider_DataType_EpsgCode_ScaleResolution_ScaleResUnit_DatasetShortName_PublicOrInternal_TimeCoverage_VersionNumber_RevisionNumber]
+                </gco:CharacterString>
+              </gmd:code>
+            </gmd:MD_Identifier>
+          </gmd:identifier>
+        </gmd:CI_Citation>
+      </gmd:citation>
+      <gmd:abstract gco:nilReason="missing">
+        <gco:CharacterString/>
+      </gmd:abstract>
+      <gmd:pointOfContact>
         <gmd:CI_ResponsibleParty>
-            <gmd:organisationName>
-                <gco:CharacterString>European Environment Agency</gco:CharacterString>
-            </gmd:organisationName>
-            <gmd:contactInfo>
-                <gmd:CI_Contact>
-                    <gmd:address>
-                        <gmd:CI_Address>
-                            <gmd:deliveryPoint>
-                                <gco:CharacterString>Kongens Nytorv 6</gco:CharacterString>
-                            </gmd:deliveryPoint>
-                            <gmd:city>
-                                <gco:CharacterString>Copenhagen</gco:CharacterString>
-                            </gmd:city>
-                            <gmd:administrativeArea>
-                                <gco:CharacterString>K</gco:CharacterString>
-                            </gmd:administrativeArea>
-                            <gmd:postalCode>
-                                <gco:CharacterString>1050</gco:CharacterString>
-                            </gmd:postalCode>
-                            <gmd:country>
-                                <gco:CharacterString>Denmark</gco:CharacterString>
-                            </gmd:country>
-                            <gmd:electronicMailAddress>
-                                <gco:CharacterString>sdi@eea.europa.eu</gco:CharacterString>
-                            </gmd:electronicMailAddress>
-                        </gmd:CI_Address>
-                    </gmd:address>
-                </gmd:CI_Contact>
-            </gmd:contactInfo>
-            <gmd:role>
-                <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
-                                 codeListValue="pointOfContact"/>
-            </gmd:role>
+          <gmd:organisationName>
+            <gco:CharacterString>European Environment Agency</gco:CharacterString>
+          </gmd:organisationName>
+          <gmd:contactInfo>
+            <gmd:CI_Contact>
+              <gmd:address>
+                <gmd:CI_Address>
+                  <gmd:deliveryPoint>
+                    <gco:CharacterString>Kongens Nytorv 6</gco:CharacterString>
+                  </gmd:deliveryPoint>
+                  <gmd:city>
+                    <gco:CharacterString>Copenhagen</gco:CharacterString>
+                  </gmd:city>
+                  <gmd:administrativeArea>
+                    <gco:CharacterString>K</gco:CharacterString>
+                  </gmd:administrativeArea>
+                  <gmd:postalCode>
+                    <gco:CharacterString>1050</gco:CharacterString>
+                  </gmd:postalCode>
+                  <gmd:country>
+                    <gco:CharacterString>Denmark</gco:CharacterString>
+                  </gmd:country>
+                  <gmd:electronicMailAddress>
+                    <gco:CharacterString>sdi@eea.europa.eu</gco:CharacterString>
+                  </gmd:electronicMailAddress>
+                </gmd:CI_Address>
+              </gmd:address>
+              <gmd:onlineResource>
+                <gmd:CI_OnlineResource>
+                  <gmd:linkage>
+                    <gmd:URL>http://www.eea.europa.eu</gmd:URL>
+                  </gmd:linkage>
+                  <gmd:protocol>
+                    <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                  </gmd:protocol>
+                  <gmd:name>
+                    <gco:CharacterString>European Environment Agency public website</gco:CharacterString>
+                  </gmd:name>
+                  <gmd:function>
+                    <gmd:CI_OnLineFunctionCode
+                      codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                      codeListValue="information"/>
+                  </gmd:function>
+                </gmd:CI_OnlineResource>
+              </gmd:onlineResource>
+            </gmd:CI_Contact>
+          </gmd:contactInfo>
+          <gmd:role>
+            <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                             codeListValue="pointOfContact"/>
+          </gmd:role>
         </gmd:CI_ResponsibleParty>
-    </gmd:contact>
-    <gmd:dateStamp>
-        <gco:DateTime>2024-03-14T12:32:18.63329Z</gco:DateTime>
-    </gmd:dateStamp>
-    <gmd:metadataStandardName>
-        <gco:CharacterString>ISO 19115/19139</gco:CharacterString>
-    </gmd:metadataStandardName>
-    <gmd:metadataStandardVersion>
-        <gco:CharacterString>1.0</gco:CharacterString>
-    </gmd:metadataStandardVersion>
-    <gmd:identificationInfo>
-        <gmd:MD_DataIdentification>
-            <gmd:citation>
-                <gmd:CI_Citation>
-                    <gmd:title>
-                        <gco:CharacterString>EEA metadata template for statistical dataset</gco:CharacterString>
-                    </gmd:title>
-                    <gmd:date>
-                        <gmd:CI_Date>
-                            <gmd:date>
-                                <gco:Date/>
-                            </gmd:date>
-                            <gmd:dateType>
-                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                                     codeListValue="creation"/>
-                            </gmd:dateType>
-                        </gmd:CI_Date>
-                    </gmd:date>
-                    <gmd:date>
-                        <gmd:CI_Date>
-                            <gmd:date>
-                                <gco:Date/>
-                            </gmd:date>
-                            <gmd:dateType>
-                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                                     codeListValue="publication"/>
-                            </gmd:dateType>
-                        </gmd:CI_Date>
-                    </gmd:date>
-                    <gmd:edition>
-                        <gco:CharacterString>[VersionNumber.RevisionNumber]</gco:CharacterString>
-                    </gmd:edition>
-                    <gmd:identifier>
-                        <gmd:MD_Identifier>
-                            <gmd:code>
-                                <gco:CharacterString>[Provider_DataType_EpsgCode_ScaleResolution_ScaleResUnit_DatasetShortName_PublicOrInternal_TimeCoverage_VersionNumber_RevisionNumber]</gco:CharacterString>
-                            </gmd:code>
-                        </gmd:MD_Identifier>
-                    </gmd:identifier>
-                </gmd:CI_Citation>
-            </gmd:citation>
-            <gmd:abstract gco:nilReason="missing">
+      </gmd:pointOfContact>
+      <gmd:pointOfContact>
+        <gmd:CI_ResponsibleParty>
+          <gmd:organisationName>
+            <gco:CharacterString>European Environment Agency</gco:CharacterString>
+          </gmd:organisationName>
+          <gmd:positionName gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:positionName>
+          <gmd:contactInfo>
+            <gmd:CI_Contact>
+              <gmd:address>
+                <gmd:CI_Address>
+                  <gmd:deliveryPoint>
+                    <gco:CharacterString>Kongens Nytorv 6</gco:CharacterString>
+                  </gmd:deliveryPoint>
+                  <gmd:city>
+                    <gco:CharacterString>Copenhagen</gco:CharacterString>
+                  </gmd:city>
+                  <gmd:administrativeArea>
+                    <gco:CharacterString>K</gco:CharacterString>
+                  </gmd:administrativeArea>
+                  <gmd:postalCode>
+                    <gco:CharacterString>1050</gco:CharacterString>
+                  </gmd:postalCode>
+                  <gmd:country>
+                    <gco:CharacterString>Denmark</gco:CharacterString>
+                  </gmd:country>
+                  <gmd:electronicMailAddress>
+                    <gco:CharacterString>sdi@eea.europa.eu</gco:CharacterString>
+                  </gmd:electronicMailAddress>
+                </gmd:CI_Address>
+              </gmd:address>
+            </gmd:CI_Contact>
+          </gmd:contactInfo>
+          <gmd:role>
+            <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                             codeListValue="custodian"/>
+          </gmd:role>
+        </gmd:CI_ResponsibleParty>
+      </gmd:pointOfContact>
+      <gmd:resourceMaintenance>
+        <gmd:MD_MaintenanceInformation>
+          <gmd:maintenanceAndUpdateFrequency>
+            <gmd:MD_MaintenanceFrequencyCode
+              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_MaintenanceFrequencyCode"
+              codeListValue=""/>
+          </gmd:maintenanceAndUpdateFrequency>
+          <gmd:maintenanceNote gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:maintenanceNote>
+        </gmd:MD_MaintenanceInformation>
+      </gmd:resourceMaintenance>
+      <gmd:graphicOverview>
+        <gmd:MD_BrowseGraphic>
+          <gmd:fileName>
+            <gco:CharacterString>https://sdi.eea.europa.eu/public/catalogue-graphic-overview/blank.png
+            </gco:CharacterString>
+          </gmd:fileName>
+        </gmd:MD_BrowseGraphic>
+      </gmd:graphicOverview>
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword gco:nilReason="missing">
+            <gmx:Anchor xlink:href=""/>
+          </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode
+              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+              codeListValue="theme"/>
+          </gmd:type>
+          <gmd:thesaurusName>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/theme">GEMET - INSPIRE themes, version 1.0
+                </gmx:Anchor>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:Date>2008-06-01</gco:Date>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode
+                      codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="publication"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gmx:Anchor
+                      xlink:href="https://galliwasp.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme">
+                      geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme
+                    </gmx:Anchor>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
+            </gmd:CI_Citation>
+          </gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+      <gmd:descriptiveKeywords gco:nilReason="withheld">
+        <gmd:MD_Keywords>
+          <gmd:keyword gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:keyword>
+          <gmd:thesaurusName>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gco:CharacterString>EEA keyword list</gco:CharacterString>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:Date>2002-03-01</gco:Date>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode
+                      codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="publication"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+            </gmd:CI_Citation>
+          </gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+      <gmd:descriptiveKeywords gco:nilReason="withheld">
+        <gmd:MD_Keywords>
+          <gmd:keyword>
+            <gco:CharacterString>statistical data</gco:CharacterString>
+          </gmd:keyword>
+          <gmd:keyword>
+            <gco:CharacterString>tabular data</gco:CharacterString>
+          </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode
+              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+              codeListValue="theme"/>
+          </gmd:type>
+          <gmd:thesaurusName>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gco:CharacterString>EEA categories</gco:CharacterString>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:Date>2024-05-17</gco:Date>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode
+                      codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="publication"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gmx:Anchor
+                      xlink:href="https://galliwasp.eea.europa.eu/catalogue/srv/api/registries/vocabularies/local.theme.eea-categories">
+                      geonetwork.thesaurus.local.theme.eea-categories
+                    </gmx:Anchor>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
+            </gmd:CI_Citation>
+          </gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword gco:nilReason="missing">
+            <gmx:Anchor xlink:href=""/>
+          </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode
+              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+              codeListValue="theme"/>
+          </gmd:type>
+          <gmd:thesaurusName>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gmx:Anchor xlink:href="http://geonetwork-opensource.org/gemet">GEMET</gmx:Anchor>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:Date>2021-11-30</gco:Date>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode
+                      codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="publication"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gmx:Anchor
+                      xlink:href="https://galliwasp.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.gemet">
+                      geonetwork.thesaurus.external.theme.gemet
+                    </gmx:Anchor>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
+            </gmd:CI_Citation>
+          </gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode
+              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+              codeListValue="place"/>
+          </gmd:type>
+          <gmd:thesaurusName>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gco:CharacterString>Continents, countries, sea regions of the world.</gco:CharacterString>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:DateTime>2015-07-17T12:00:00</gco:DateTime>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode
+                      codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="publication"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gmx:Anchor
+                      xlink:href="https://galliwasp.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.place.regions">
+                      geonetwork.thesaurus.external.place.regions
+                    </gmx:Anchor>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
+            </gmd:CI_Citation>
+          </gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode
+              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+              codeListValue="theme"/>
+          </gmd:type>
+          <gmd:thesaurusName>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gco:CharacterString>Unit of measure</gco:CharacterString>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:DateTime>2024-01-30T23:00:00+0100</gco:DateTime>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode
+                      codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="publication"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gmx:Anchor
+                      xlink:href="https://galliwasp.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.ESTAT_UNIT_24.0">
+                      geonetwork.thesaurus.external.theme.ESTAT_UNIT_24.0
+                    </gmx:Anchor>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
+            </gmd:CI_Citation>
+          </gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword>
+            <gco:CharacterString>Calendar year</gco:CharacterString>
+          </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode
+              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+              codeListValue="theme"/>
+          </gmd:type>
+          <gmd:thesaurusName>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gco:CharacterString>Reference period</gco:CharacterString>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:Date>2024-03-11</gco:Date>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode
+                      codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="publication"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gmx:Anchor
+                      xlink:href="https://galliwasp.eea.europa.eu/catalogue/srv/api/registries/vocabularies/local.theme.eea-stat-reference-period">
+                      geonetwork.thesaurus.local.theme.eea-stat-reference-period
+                    </gmx:Anchor>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
+            </gmd:CI_Citation>
+          </gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode
+              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+              codeListValue="theme"/>
+          </gmd:type>
+          <gmd:thesaurusName>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gco:CharacterString>Available breakdowns</gco:CharacterString>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:Date/>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode
+                      codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="publication"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gmx:Anchor
+                      xlink:href="https://galliwasp.eea.europa.eu/catalogue/srv/api/registries/vocabularies/local.theme.eea-available-breakdowns">
+                      geonetwork.thesaurus.local.theme.eea-available-breakdowns
+                    </gmx:Anchor>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
+            </gmd:CI_Citation>
+          </gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+      <gmd:resourceConstraints>
+        <gmd:MD_LegalConstraints>
+          <gmd:accessConstraints>
+            <gmd:MD_RestrictionCode
+              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+              codeListValue="otherRestrictions"/>
+          </gmd:accessConstraints>
+          <gmd:otherConstraints>
+            <gmx:Anchor
+              xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">no
+              limitations to public access
+            </gmx:Anchor>
+          </gmd:otherConstraints>
+        </gmd:MD_LegalConstraints>
+      </gmd:resourceConstraints>
+      <gmd:resourceConstraints>
+        <gmd:MD_LegalConstraints>
+          <gmd:useConstraints>
+            <gmd:MD_RestrictionCode
+              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+              codeListValue="otherRestrictions"/>
+          </gmd:useConstraints>
+          <gmd:otherConstraints>
+            <gco:CharacterString>Copyrights: Eurostat Copyright/Licence Policy is applicable.
+              http://ec.europa.eu/eurostat/statistics-explained/index.php/Copyright/licence_policy
+            </gco:CharacterString>
+          </gmd:otherConstraints>
+          <gmd:otherConstraints>
+            <gco:CharacterString>-- additional constraint info --</gco:CharacterString>
+          </gmd:otherConstraints>
+        </gmd:MD_LegalConstraints>
+      </gmd:resourceConstraints>
+      <gmd:spatialRepresentationType>
+        <gmd:MD_SpatialRepresentationTypeCode
+          codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
+          codeListValue="textTable"/>
+      </gmd:spatialRepresentationType>
+      <gmd:language>
+        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
+      </gmd:language>
+      <gmd:topicCategory>
+        <gmd:MD_TopicCategoryCode>environment</gmd:MD_TopicCategoryCode>
+      </gmd:topicCategory>
+      <gmd:extent>
+        <gmd:EX_Extent>
+          <gmd:geographicElement>
+            <gmd:EX_GeographicBoundingBox>
+              <gmd:westBoundLongitude>
+                <gco:Decimal/>
+              </gmd:westBoundLongitude>
+              <gmd:eastBoundLongitude>
+                <gco:Decimal/>
+              </gmd:eastBoundLongitude>
+              <gmd:southBoundLatitude>
+                <gco:Decimal/>
+              </gmd:southBoundLatitude>
+              <gmd:northBoundLatitude>
+                <gco:Decimal/>
+              </gmd:northBoundLatitude>
+            </gmd:EX_GeographicBoundingBox>
+          </gmd:geographicElement>
+          <gmd:temporalElement>
+            <gmd:EX_TemporalExtent>
+              <gmd:extent>
+                <gml:TimePeriod gml:id="d17964e856a1052958">
+                  <gml:beginPosition/>
+                  <gml:endPosition/>
+                </gml:TimePeriod>
+              </gmd:extent>
+            </gmd:EX_TemporalExtent>
+          </gmd:temporalElement>
+        </gmd:EX_Extent>
+      </gmd:extent>
+      <gmd:extent>
+        <gmd:EX_Extent>
+          <gmd:temporalElement/>
+        </gmd:EX_Extent>
+      </gmd:extent>
+    </gmd:MD_DataIdentification>
+  </gmd:identificationInfo>
+  <gmd:distributionInfo>
+    <gmd:MD_Distribution>
+      <gmd:distributionFormat>
+        <gmd:MD_Format>
+          <gmd:name gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:name>
+          <gmd:version gco:nilReason="unknown">
+            <gco:CharacterString/>
+          </gmd:version>
+        </gmd:MD_Format>
+      </gmd:distributionFormat>
+      <gmd:distributor/>
+      <gmd:transferOptions>
+        <gmd:MD_DigitalTransferOptions>
+          <gmd:onLine>
+            <gmd:CI_OnlineResource>
+              <gmd:linkage>
+                <gmd:URL>---LINK TO WEBSITE</gmd:URL>
+              </gmd:linkage>
+              <gmd:protocol>
+                <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+              </gmd:protocol>
+              <gmd:function>
+                <gmd:CI_OnLineFunctionCode
+                  codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                  codeListValue="download"/>
+              </gmd:function>
+            </gmd:CI_OnlineResource>
+          </gmd:onLine>
+        </gmd:MD_DigitalTransferOptions>
+      </gmd:transferOptions>
+      <gmd:transferOptions>
+        <gmd:MD_DigitalTransferOptions/>
+      </gmd:transferOptions>
+    </gmd:MD_Distribution>
+  </gmd:distributionInfo>
+  <gmd:dataQualityInfo>
+    <gmd:DQ_DataQuality>
+      <gmd:scope>
+        <gmd:DQ_Scope>
+          <gmd:level>
+            <gmd:MD_ScopeCode codeListValue="dataset"
+                              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"/>
+          </gmd:level>
+        </gmd:DQ_Scope>
+      </gmd:scope>
+      <gmd:report>
+        <gmd:DQ_AccuracyOfATimeMeasurement>
+          <gmd:nameOfMeasure>
+            <gco:CharacterString>Timeliness</gco:CharacterString>
+          </gmd:nameOfMeasure>
+          <gmd:measureDescription gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:measureDescription>
+          <gmd:result>
+            <gmd:DQ_QuantitativeResult>
+              <gmd:valueUnit>
+                <gml:BaseUnit gml:id="d22718e609a1051924">
+                  <gml:identifier codeSpace=""/>
+                  <gml:unitsSystem/>
+                </gml:BaseUnit>
+              </gmd:valueUnit>
+              <gmd:errorStatistic gco:nilReason="missing">
                 <gco:CharacterString/>
-            </gmd:abstract>
-            <gmd:pointOfContact>
-                <gmd:CI_ResponsibleParty>
-                    <gmd:organisationName>
-                        <gco:CharacterString>European Environment Agency</gco:CharacterString>
-                    </gmd:organisationName>
-                    <gmd:contactInfo>
-                        <gmd:CI_Contact>
-                            <gmd:address>
-                                <gmd:CI_Address>
-                                    <gmd:deliveryPoint>
-                                        <gco:CharacterString>Kongens Nytorv 6</gco:CharacterString>
-                                    </gmd:deliveryPoint>
-                                    <gmd:city>
-                                        <gco:CharacterString>Copenhagen</gco:CharacterString>
-                                    </gmd:city>
-                                    <gmd:administrativeArea>
-                                        <gco:CharacterString>K</gco:CharacterString>
-                                    </gmd:administrativeArea>
-                                    <gmd:postalCode>
-                                        <gco:CharacterString>1050</gco:CharacterString>
-                                    </gmd:postalCode>
-                                    <gmd:country>
-                                        <gco:CharacterString>Denmark</gco:CharacterString>
-                                    </gmd:country>
-                                    <gmd:electronicMailAddress>
-                                        <gco:CharacterString>info@eea.europa.eu</gco:CharacterString>
-                                    </gmd:electronicMailAddress>
-                                </gmd:CI_Address>
-                            </gmd:address>
-                            <gmd:onlineResource>
-                                <gmd:CI_OnlineResource>
-                                    <gmd:linkage>
-                                        <gmd:URL>http://www.eea.europa.eu</gmd:URL>
-                                    </gmd:linkage>
-                                    <gmd:protocol>
-                                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
-                                    </gmd:protocol>
-                                    <gmd:name>
-                                        <gco:CharacterString>European Environment Agency public website</gco:CharacterString>
-                                    </gmd:name>
-                                    <gmd:function>
-                                        <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
-                                                                   codeListValue="information"/>
-                                    </gmd:function>
-                                </gmd:CI_OnlineResource>
-                            </gmd:onlineResource>
-                        </gmd:CI_Contact>
-                    </gmd:contactInfo>
-                    <gmd:role>
-                        <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
-                                         codeListValue="pointOfContact"/>
-                    </gmd:role>
-                </gmd:CI_ResponsibleParty>
-            </gmd:pointOfContact>
-            <gmd:pointOfContact>
-                <gmd:CI_ResponsibleParty>
-                    <gmd:organisationName>
-                        <gco:CharacterString>European Environment Agency</gco:CharacterString>
-                    </gmd:organisationName>
-                    <gmd:positionName gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:positionName>
-                    <gmd:contactInfo>
-                        <gmd:CI_Contact>
-                            <gmd:address>
-                                <gmd:CI_Address>
-                                    <gmd:deliveryPoint>
-                                        <gco:CharacterString>Kongens Nytorv 6</gco:CharacterString>
-                                    </gmd:deliveryPoint>
-                                    <gmd:city>
-                                        <gco:CharacterString>Copenhagen</gco:CharacterString>
-                                    </gmd:city>
-                                    <gmd:administrativeArea>
-                                        <gco:CharacterString>K</gco:CharacterString>
-                                    </gmd:administrativeArea>
-                                    <gmd:postalCode>
-                                        <gco:CharacterString>1050</gco:CharacterString>
-                                    </gmd:postalCode>
-                                    <gmd:country>
-                                        <gco:CharacterString>Denmark</gco:CharacterString>
-                                    </gmd:country>
-                                    <gmd:electronicMailAddress>
-                                        <gco:CharacterString>info@eea.europa.eu</gco:CharacterString>
-                                    </gmd:electronicMailAddress>
-                                </gmd:CI_Address>
-                            </gmd:address>
-                        </gmd:CI_Contact>
-                    </gmd:contactInfo>
-                    <gmd:role>
-                        <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
-                                         codeListValue="custodian"/>
-                    </gmd:role>
-                </gmd:CI_ResponsibleParty>
-            </gmd:pointOfContact>
-            <gmd:resourceMaintenance>
-                <gmd:MD_MaintenanceInformation>
-                    <gmd:maintenanceAndUpdateFrequency>
-                        <gmd:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_MaintenanceFrequencyCode"
-                                                         codeListValue=""/>
-                    </gmd:maintenanceAndUpdateFrequency>
-                    <gmd:maintenanceNote gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:maintenanceNote>
-                </gmd:MD_MaintenanceInformation>
-            </gmd:resourceMaintenance>
-            <gmd:graphicOverview>
-                <gmd:MD_BrowseGraphic>
-                    <gmd:fileName>
-                        <gco:CharacterString>https://sdi.eea.europa.eu/public/catalogue-graphic-overview/blank.png</gco:CharacterString>
-                    </gmd:fileName>
-                </gmd:MD_BrowseGraphic>
-            </gmd:graphicOverview>
-            <gmd:descriptiveKeywords>
-                <gmd:MD_Keywords>
-                    <gmd:keyword gco:nilReason="missing">
-                        <gmx:Anchor xlink:href=""/>
-                    </gmd:keyword>
-                    <gmd:type>
-                        <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
-                                                codeListValue="theme"/>
-                    </gmd:type>
-                    <gmd:thesaurusName>
-                        <gmd:CI_Citation>
-                            <gmd:title>
-                                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/theme">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
-                            </gmd:title>
-                            <gmd:date>
-                                <gmd:CI_Date>
-                                    <gmd:date>
-                                        <gco:Date>2008-06-01</gco:Date>
-                                    </gmd:date>
-                                    <gmd:dateType>
-                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                                             codeListValue="publication"/>
-                                    </gmd:dateType>
-                                </gmd:CI_Date>
-                            </gmd:date>
-                            <gmd:identifier>
-                                <gmd:MD_Identifier>
-                                    <gmd:code>
-                                        <gmx:Anchor xlink:href="https://galliwasp.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme">geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme</gmx:Anchor>
-                                    </gmd:code>
-                                </gmd:MD_Identifier>
-                            </gmd:identifier>
-                        </gmd:CI_Citation>
-                    </gmd:thesaurusName>
-                </gmd:MD_Keywords>
-            </gmd:descriptiveKeywords>
-            <gmd:descriptiveKeywords gco:nilReason="withheld">
-                <gmd:MD_Keywords>
-                    <gmd:keyword gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:keyword>
-                    <gmd:thesaurusName>
-                        <gmd:CI_Citation>
-                            <gmd:title>
-                                <gco:CharacterString>EEA keyword list</gco:CharacterString>
-                            </gmd:title>
-                            <gmd:date>
-                                <gmd:CI_Date>
-                                    <gmd:date>
-                                        <gco:Date>2002-03-01</gco:Date>
-                                    </gmd:date>
-                                    <gmd:dateType>
-                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                                             codeListValue="publication"/>
-                                    </gmd:dateType>
-                                </gmd:CI_Date>
-                            </gmd:date>
-                        </gmd:CI_Citation>
-                    </gmd:thesaurusName>
-                </gmd:MD_Keywords>
-            </gmd:descriptiveKeywords>
-            <gmd:descriptiveKeywords gco:nilReason="withheld">
-                <gmd:MD_Keywords>
-                    <gmd:keyword>
-                        <gco:CharacterString>statistical data</gco:CharacterString>
-                    </gmd:keyword>
-                    <gmd:keyword>
-                        <gco:CharacterString>tabular data</gco:CharacterString>
-                    </gmd:keyword>
-                    <gmd:type>
-                        <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
-                                                codeListValue="theme"/>
-                    </gmd:type>
-                    <gmd:thesaurusName>
-                        <gmd:CI_Citation>
-                            <gmd:title>
-                                <gco:CharacterString>EEA categories</gco:CharacterString>
-                            </gmd:title>
-                            <gmd:date>
-                                <gmd:CI_Date>
-                                    <gmd:date>
-                                        <gco:Date>2024-03-07</gco:Date>
-                                    </gmd:date>
-                                    <gmd:dateType>
-                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                                             codeListValue="publication"/>
-                                    </gmd:dateType>
-                                </gmd:CI_Date>
-                            </gmd:date>
-                            <gmd:identifier>
-                                <gmd:MD_Identifier>
-                                    <gmd:code>
-                                        <gmx:Anchor xlink:href="https://galliwasp.eea.europa.eu/catalogue/srv/api/registries/vocabularies/local.theme.eea-categories">geonetwork.thesaurus.local.theme.eea-categories</gmx:Anchor>
-                                    </gmd:code>
-                                </gmd:MD_Identifier>
-                            </gmd:identifier>
-                        </gmd:CI_Citation>
-                    </gmd:thesaurusName>
-                </gmd:MD_Keywords>
-            </gmd:descriptiveKeywords>
-            <gmd:descriptiveKeywords>
-                <gmd:MD_Keywords>
-                    <gmd:keyword gco:nilReason="missing">
-                        <gmx:Anchor xlink:href=""/>
-                    </gmd:keyword>
-                    <gmd:type>
-                        <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
-                                                codeListValue="theme"/>
-                    </gmd:type>
-                    <gmd:thesaurusName>
-                        <gmd:CI_Citation>
-                            <gmd:title>
-                                <gmx:Anchor xlink:href="http://geonetwork-opensource.org/gemet">GEMET</gmx:Anchor>
-                            </gmd:title>
-                            <gmd:date>
-                                <gmd:CI_Date>
-                                    <gmd:date>
-                                        <gco:Date>2021-11-30</gco:Date>
-                                    </gmd:date>
-                                    <gmd:dateType>
-                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                                             codeListValue="publication"/>
-                                    </gmd:dateType>
-                                </gmd:CI_Date>
-                            </gmd:date>
-                            <gmd:identifier>
-                                <gmd:MD_Identifier>
-                                    <gmd:code>
-                                        <gmx:Anchor xlink:href="https://galliwasp.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gmx:Anchor>
-                                    </gmd:code>
-                                </gmd:MD_Identifier>
-                            </gmd:identifier>
-                        </gmd:CI_Citation>
-                    </gmd:thesaurusName>
-                </gmd:MD_Keywords>
-            </gmd:descriptiveKeywords>
-            <gmd:descriptiveKeywords>
-                <gmd:MD_Keywords>
-                    <gmd:keyword gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:keyword>
-                    <gmd:type>
-                        <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
-                                                codeListValue="place"/>
-                    </gmd:type>
-                    <gmd:thesaurusName>
-                        <gmd:CI_Citation>
-                            <gmd:title>
-                                <gco:CharacterString>Continents, countries, sea regions of the world.</gco:CharacterString>
-                            </gmd:title>
-                            <gmd:date>
-                                <gmd:CI_Date>
-                                    <gmd:date>
-                                        <gco:Date>2015-07-17 12:00:00</gco:Date>
-                                    </gmd:date>
-                                    <gmd:dateType>
-                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                                             codeListValue="publication"/>
-                                    </gmd:dateType>
-                                </gmd:CI_Date>
-                            </gmd:date>
-                            <gmd:identifier>
-                                <gmd:MD_Identifier>
-                                    <gmd:code>
-                                        <gmx:Anchor xlink:href="https://galliwasp.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.place.regions">geonetwork.thesaurus.external.place.regions</gmx:Anchor>
-                                    </gmd:code>
-                                </gmd:MD_Identifier>
-                            </gmd:identifier>
-                        </gmd:CI_Citation>
-                    </gmd:thesaurusName>
-                </gmd:MD_Keywords>
-            </gmd:descriptiveKeywords>
-            <gmd:descriptiveKeywords>
-                <gmd:MD_Keywords>
-                    <gmd:keyword gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:keyword>
-                    <gmd:type>
-                        <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
-                                                codeListValue="temporal"/>
-                    </gmd:type>
-                    <gmd:thesaurusName>
-                        <gmd:CI_Citation>
-                            <gmd:title>
-                                <gco:CharacterString>Temporal resolution</gco:CharacterString>
-                            </gmd:title>
-                            <gmd:date>
-                                <gmd:CI_Date>
-                                    <gmd:date>
-                                        <gco:Date>2022-09-22</gco:Date>
-                                    </gmd:date>
-                                    <gmd:dateType>
-                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                                             codeListValue="publication"/>
-                                    </gmd:dateType>
-                                </gmd:CI_Date>
-                            </gmd:date>
-                            <gmd:identifier>
-                                <gmd:MD_Identifier>
-                                    <gmd:code>
-                                        <gmx:Anchor xlink:href="https://galliwasp.eea.europa.eu/catalogue/srv/api/registries/vocabularies/local.temporal.temporal-update">geonetwork.thesaurus.local.temporal.temporal-update</gmx:Anchor>
-                                    </gmd:code>
-                                </gmd:MD_Identifier>
-                            </gmd:identifier>
-                        </gmd:CI_Citation>
-                    </gmd:thesaurusName>
-                </gmd:MD_Keywords>
-            </gmd:descriptiveKeywords>
-            <gmd:descriptiveKeywords>
-                <gmd:MD_Keywords>
-                    <gmd:keyword gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:keyword>
-                    <gmd:type>
-                        <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
-                                                codeListValue="theme"/>
-                    </gmd:type>
-                    <gmd:thesaurusName>
-                        <gmd:CI_Citation>
-                            <gmd:title>
-                                <gco:CharacterString>Unit of measure (EUROSTAT)</gco:CharacterString>
-                            </gmd:title>
-                            <gmd:date>
-                                <gmd:CI_Date>
-                                    <gmd:date>
-                                        <gco:DateTime>2024-01-30T23:00:00+0100</gco:DateTime>
-                                    </gmd:date>
-                                    <gmd:dateType>
-                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                                             codeListValue="publication"/>
-                                    </gmd:dateType>
-                                </gmd:CI_Date>
-                            </gmd:date>
-                            <gmd:identifier>
-                                <gmd:MD_Identifier>
-                                    <gmd:code>
-                                        <gmx:Anchor xlink:href="https://galliwasp.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.ESTAT_UNIT_24.0">geonetwork.thesaurus.external.theme.ESTAT_UNIT_24.0</gmx:Anchor>
-                                    </gmd:code>
-                                </gmd:MD_Identifier>
-                            </gmd:identifier>
-                        </gmd:CI_Citation>
-                    </gmd:thesaurusName>
-                </gmd:MD_Keywords>
-            </gmd:descriptiveKeywords>
-            <gmd:descriptiveKeywords>
-                <gmd:MD_Keywords>
-                    <gmd:keyword>
-                        <gco:CharacterString>Calendar year</gco:CharacterString>
-                    </gmd:keyword>
-                    <gmd:type>
-                        <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
-                                                codeListValue="theme"/>
-                    </gmd:type>
-                    <gmd:thesaurusName>
-                        <gmd:CI_Citation>
-                            <gmd:title>
-                                <gco:CharacterString>Reference period</gco:CharacterString>
-                            </gmd:title>
-                            <gmd:date>
-                                <gmd:CI_Date>
-                                    <gmd:date>
-                                        <gco:Date>2024-03-11</gco:Date>
-                                    </gmd:date>
-                                    <gmd:dateType>
-                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                                             codeListValue="publication"/>
-                                    </gmd:dateType>
-                                </gmd:CI_Date>
-                            </gmd:date>
-                            <gmd:identifier>
-                                <gmd:MD_Identifier>
-                                    <gmd:code>
-                                        <gmx:Anchor xlink:href="https://galliwasp.eea.europa.eu/catalogue/srv/api/registries/vocabularies/local.theme.eea-stat-reference-period">geonetwork.thesaurus.local.theme.eea-stat-reference-period</gmx:Anchor>
-                                    </gmd:code>
-                                </gmd:MD_Identifier>
-                            </gmd:identifier>
-                        </gmd:CI_Citation>
-                    </gmd:thesaurusName>
-                </gmd:MD_Keywords>
-            </gmd:descriptiveKeywords>
-            <gmd:resourceConstraints>
-                <gmd:MD_LegalConstraints>
-                    <gmd:accessConstraints>
-                        <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
-                                                codeListValue="otherRestrictions"/>
-                    </gmd:accessConstraints>
-                    <gmd:otherConstraints>
-                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">no limitations to public access</gmx:Anchor>
-                    </gmd:otherConstraints>
-                </gmd:MD_LegalConstraints>
-            </gmd:resourceConstraints>
-            <gmd:resourceConstraints>
-                <gmd:MD_LegalConstraints>
-                    <gmd:useConstraints>
-                        <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
-                                                codeListValue="otherRestrictions"/>
-                    </gmd:useConstraints>
-                    <gmd:otherConstraints>
-                        <gco:CharacterString>Copyrights: Eurostat Copyright/Licence Policy is applicable. http://ec.europa.eu/eurostat/statistics-explained/index.php/Copyright/licence_policy</gco:CharacterString>
-                    </gmd:otherConstraints>
-                    <gmd:otherConstraints>
-                        <gco:CharacterString>-- additional constraint info --</gco:CharacterString>
-                    </gmd:otherConstraints>
-                </gmd:MD_LegalConstraints>
-            </gmd:resourceConstraints>
-            <gmd:spatialRepresentationType>
-                <gmd:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
-                                                      codeListValue="textTable"/>
-            </gmd:spatialRepresentationType>
-            <gmd:language>
-                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
-            </gmd:language>
-            <gmd:topicCategory>
-                <gmd:MD_TopicCategoryCode>environment</gmd:MD_TopicCategoryCode>
-            </gmd:topicCategory>
-            <gmd:extent>
-                <gmd:EX_Extent>
-                    <gmd:geographicElement>
-                        <gmd:EX_GeographicBoundingBox>
-                            <gmd:westBoundLongitude>
-                                <gco:Decimal/>
-                            </gmd:westBoundLongitude>
-                            <gmd:eastBoundLongitude>
-                                <gco:Decimal/>
-                            </gmd:eastBoundLongitude>
-                            <gmd:southBoundLatitude>
-                                <gco:Decimal/>
-                            </gmd:southBoundLatitude>
-                            <gmd:northBoundLatitude>
-                                <gco:Decimal/>
-                            </gmd:northBoundLatitude>
-                        </gmd:EX_GeographicBoundingBox>
-                    </gmd:geographicElement>
-                    <gmd:temporalElement>
-                        <gmd:EX_TemporalExtent>
-                            <gmd:extent>
-                                <gml:TimePeriod gml:id="d17964e856a1052958">
-                                    <gml:beginPosition/>
-                                    <gml:endPosition/>
-                                </gml:TimePeriod>
-                            </gmd:extent>
-                        </gmd:EX_TemporalExtent>
-                    </gmd:temporalElement>
-                </gmd:EX_Extent>
-            </gmd:extent>
-            <gmd:extent>
-                <gmd:EX_Extent>
-                    <gmd:temporalElement/>
-                </gmd:EX_Extent>
-            </gmd:extent>
-        </gmd:MD_DataIdentification>
-    </gmd:identificationInfo>
-    <gmd:distributionInfo>
-        <gmd:MD_Distribution>
-            <gmd:distributionFormat xmlns:che="http://www.geocat.ch/2008/che">
-                <gmd:MD_Format>
-                    <gmd:name gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:name>
-                    <gmd:version gco:nilReason="unknown">
-                        <gco:CharacterString/>
-                    </gmd:version>
-                </gmd:MD_Format>
-            </gmd:distributionFormat>
-            <gmd:distributor xmlns:che="http://www.geocat.ch/2008/che"/>
-            <gmd:transferOptions>
-                <gmd:MD_DigitalTransferOptions>
-                    <gmd:onLine xmlns:che="http://www.geocat.ch/2008/che">
-                        <gmd:CI_OnlineResource>
-                            <gmd:linkage>
-                                <gmd:URL>---LINK TO WEBSITE</gmd:URL>
-                            </gmd:linkage>
-                            <gmd:protocol>
-                                <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
-                            </gmd:protocol>
-                            <gmd:function>
-                                <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
-                                                           codeListValue="download"/>
-                            </gmd:function>
-                        </gmd:CI_OnlineResource>
-                    </gmd:onLine>
-                </gmd:MD_DigitalTransferOptions>
-            </gmd:transferOptions>
-            <gmd:transferOptions xmlns:che="http://www.geocat.ch/2008/che">
-                <gmd:MD_DigitalTransferOptions/>
-            </gmd:transferOptions>
-        </gmd:MD_Distribution>
-    </gmd:distributionInfo>
-    <gmd:dataQualityInfo>
-        <gmd:DQ_DataQuality>
-            <gmd:scope>
-                <gmd:DQ_Scope>
-                    <gmd:level>
-                        <gmd:MD_ScopeCode codeListValue="dataset"
-                                          codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"/>
-                    </gmd:level>
-                </gmd:DQ_Scope>
-            </gmd:scope>
-            <gmd:report>
-                <gmd:DQ_QuantitativeAttributeAccuracy>
-                    <gmd:nameOfMeasure>
-                        <gco:CharacterString>Accuracy - overall</gco:CharacterString>
-                    </gmd:nameOfMeasure>
-                    <gmd:measureDescription>
-                        <gco:CharacterString>Assessment of accuracy, linked to a certain Data Set or domain, which is summarising the various components into one single measure.</gco:CharacterString>
-                    </gmd:measureDescription>
-                    <gmd:result>
-                        <gmd:DQ_QuantitativeResult>
-                            <gmd:valueUnit>
-                                <gml:BaseUnit gml:id="d22718e609a1052934">
-                                    <gml:identifier codeSpace=""/>
-                                    <gml:unitsSystem/>
-                                </gml:BaseUnit>
-                            </gmd:valueUnit>
-                            <gmd:value>
-                                <gco:Record/>
-                            </gmd:value>
-                        </gmd:DQ_QuantitativeResult>
-                    </gmd:result>
-                </gmd:DQ_QuantitativeAttributeAccuracy>
-            </gmd:report>
-            <gmd:report>
-                <gmd:DQ_AccuracyOfATimeMeasurement>
-                    <gmd:nameOfMeasure>
-                        <gco:CharacterString>Timeliness</gco:CharacterString>
-                    </gmd:nameOfMeasure>
-                    <gmd:measureDescription gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:measureDescription>
-                    <gmd:result>
-                        <gmd:DQ_QuantitativeResult>
-                            <gmd:valueUnit>
-                                <gml:BaseUnit gml:id="d22718e609a1051924">
-                                    <gml:identifier codeSpace=""/>
-                                    <gml:unitsSystem/>
-                                </gml:BaseUnit>
-                            </gmd:valueUnit>
-                            <gmd:errorStatistic gco:nilReason="missing">
-                                <gco:CharacterString/>
-                            </gmd:errorStatistic>
-                            <gmd:value>
-                                <gco:Record/>
-                            </gmd:value>
-                        </gmd:DQ_QuantitativeResult>
-                    </gmd:result>
-                </gmd:DQ_AccuracyOfATimeMeasurement>
-            </gmd:report>
-            <gmd:report>
-                <gmd:DQ_DomainConsistency>
-                    <gmd:nameOfMeasure>
-                        <gco:CharacterString>Comparability - geographical</gco:CharacterString>
-                    </gmd:nameOfMeasure>
-                    <gmd:measureDescription gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:measureDescription>
-                    <gmd:result>
-                        <gmd:DQ_QuantitativeResult>
-                            <gmd:valueUnit>
-                                <gml:BaseUnit gml:id="d22718e609a1051934">
-                                    <gml:identifier codeSpace=""/>
-                                    <gml:unitsSystem/>
-                                </gml:BaseUnit>
-                            </gmd:valueUnit>
-                            <gmd:value>
-                                <gco:Record/>
-                            </gmd:value>
-                        </gmd:DQ_QuantitativeResult>
-                    </gmd:result>
-                </gmd:DQ_DomainConsistency>
-            </gmd:report>
-            <gmd:report>
-                <gmd:DQ_DomainConsistency>
-                    <gmd:nameOfMeasure>
-                        <gco:CharacterString>Comparability - over time</gco:CharacterString>
-                    </gmd:nameOfMeasure>
-                    <gmd:measureDescription gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:measureDescription>
-                    <gmd:result>
-                        <gmd:DQ_QuantitativeResult>
-                            <gmd:valueUnit>
-                                <gml:BaseUnit gml:id="d9765e687a1051934">
-                                    <gml:identifier codeSpace=""/>
-                                    <gml:unitsSystem/>
-                                </gml:BaseUnit>
-                            </gmd:valueUnit>
-                            <gmd:value>
-                                <gco:Record/>
-                            </gmd:value>
-                        </gmd:DQ_QuantitativeResult>
-                    </gmd:result>
-                </gmd:DQ_DomainConsistency>
-            </gmd:report>
-            <gmd:report>
-                <gmd:DQ_QuantitativeAttributeAccuracy>
-                    <gmd:nameOfMeasure>
-                        <gco:CharacterString>Reference area</gco:CharacterString>
-                    </gmd:nameOfMeasure>
-                    <gmd:measureDescription gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:measureDescription>
-                    <gmd:result>
-                        <gmd:DQ_QuantitativeResult>
-                            <gmd:valueUnit>
-                                <gml:BaseUnit gml:id="d22718e609a1052934">
-                                    <gml:identifier codeSpace=""/>
-                                    <gml:unitsSystem/>
-                                </gml:BaseUnit>
-                            </gmd:valueUnit>
-                            <gmd:value>
-                                <gco:Record/>
-                            </gmd:value>
-                        </gmd:DQ_QuantitativeResult>
-                    </gmd:result>
-                </gmd:DQ_QuantitativeAttributeAccuracy>
-            </gmd:report>
-            <gmd:report>
-                <gmd:DQ_DomainConsistency>
-                    <gmd:nameOfMeasure>
-                        <gco:CharacterString>Time coverage</gco:CharacterString>
-                    </gmd:nameOfMeasure>
-                    <gmd:measureDescription gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:measureDescription>
-                    <gmd:result>
-                        <gmd:DQ_QuantitativeResult>
-                            <gmd:valueUnit>
-                                <gml:BaseUnit gml:id="d9765e687a1051934">
-                                    <gml:identifier codeSpace=""/>
-                                    <gml:unitsSystem/>
-                                </gml:BaseUnit>
-                            </gmd:valueUnit>
-                            <gmd:value>
-                                <gco:Record/>
-                            </gmd:value>
-                        </gmd:DQ_QuantitativeResult>
-                    </gmd:result>
-                </gmd:DQ_DomainConsistency>
-            </gmd:report>
-            <gmd:lineage>
-                <gmd:LI_Lineage>
-                    <gmd:statement gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:statement>
-                    <gmd:source>
-                        <gmd:LI_Source>
-                            <gmd:description gco:nilReason="missing">
-                                <gco:CharacterString/>
-                            </gmd:description>
-                        </gmd:LI_Source>
-                    </gmd:source>
-                </gmd:LI_Lineage>
-            </gmd:lineage>
-        </gmd:DQ_DataQuality>
-    </gmd:dataQualityInfo>
+              </gmd:errorStatistic>
+              <gmd:value>
+                <gco:Record/>
+              </gmd:value>
+            </gmd:DQ_QuantitativeResult>
+          </gmd:result>
+        </gmd:DQ_AccuracyOfATimeMeasurement>
+      </gmd:report>
+      <gmd:report>
+        <gmd:DQ_DomainConsistency>
+          <gmd:nameOfMeasure>
+            <gco:CharacterString>Comparability - geographical</gco:CharacterString>
+          </gmd:nameOfMeasure>
+          <gmd:measureDescription gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:measureDescription>
+          <gmd:result>
+            <gmd:DQ_QuantitativeResult>
+              <gmd:valueUnit>
+                <gml:BaseUnit gml:id="d22718e609a1051934">
+                  <gml:identifier codeSpace=""/>
+                  <gml:unitsSystem/>
+                </gml:BaseUnit>
+              </gmd:valueUnit>
+              <gmd:value>
+                <gco:Record/>
+              </gmd:value>
+            </gmd:DQ_QuantitativeResult>
+          </gmd:result>
+        </gmd:DQ_DomainConsistency>
+      </gmd:report>
+      <gmd:report>
+        <gmd:DQ_DomainConsistency>
+          <gmd:nameOfMeasure>
+            <gco:CharacterString>Comparability - over time</gco:CharacterString>
+          </gmd:nameOfMeasure>
+          <gmd:measureDescription gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:measureDescription>
+          <gmd:result>
+            <gmd:DQ_QuantitativeResult>
+              <gmd:valueUnit>
+                <gml:BaseUnit gml:id="d9765e687a1051934">
+                  <gml:identifier codeSpace=""/>
+                  <gml:unitsSystem/>
+                </gml:BaseUnit>
+              </gmd:valueUnit>
+              <gmd:value>
+                <gco:Record/>
+              </gmd:value>
+            </gmd:DQ_QuantitativeResult>
+          </gmd:result>
+        </gmd:DQ_DomainConsistency>
+      </gmd:report>
+      <gmd:report>
+        <gmd:DQ_QuantitativeAttributeAccuracy>
+          <gmd:nameOfMeasure>
+            <gco:CharacterString>Reference area</gco:CharacterString>
+          </gmd:nameOfMeasure>
+          <gmd:measureDescription gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:measureDescription>
+          <gmd:result>
+            <gmd:DQ_QuantitativeResult>
+              <gmd:valueUnit>
+                <gml:BaseUnit gml:id="d22718e609a1052934">
+                  <gml:identifier codeSpace=""/>
+                  <gml:unitsSystem/>
+                </gml:BaseUnit>
+              </gmd:valueUnit>
+              <gmd:value>
+                <gco:Record/>
+              </gmd:value>
+            </gmd:DQ_QuantitativeResult>
+          </gmd:result>
+        </gmd:DQ_QuantitativeAttributeAccuracy>
+      </gmd:report>
+      <gmd:report>
+        <gmd:DQ_DomainConsistency>
+          <gmd:nameOfMeasure>
+            <gco:CharacterString>Time coverage</gco:CharacterString>
+          </gmd:nameOfMeasure>
+          <gmd:measureDescription gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:measureDescription>
+          <gmd:result>
+            <gmd:DQ_QuantitativeResult>
+              <gmd:valueUnit>
+                <gml:BaseUnit gml:id="d9765e687a1051934">
+                  <gml:identifier codeSpace=""/>
+                  <gml:unitsSystem/>
+                </gml:BaseUnit>
+              </gmd:valueUnit>
+              <gmd:value>
+                <gco:Record/>
+              </gmd:value>
+            </gmd:DQ_QuantitativeResult>
+          </gmd:result>
+        </gmd:DQ_DomainConsistency>
+      </gmd:report>
+      <gmd:report>
+        <gmd:DQ_AccuracyOfATimeMeasurement>
+          <gmd:nameOfMeasure>
+            <gco:CharacterString>Frequency of dissemination</gco:CharacterString>
+          </gmd:nameOfMeasure>
+          <gmd:measureDescription gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:measureDescription>
+          <gmd:result>
+            <gmd:DQ_QuantitativeResult>
+              <gmd:valueUnit>
+                <gml:BaseUnit gml:id="d22718e609a1051924">
+                  <gml:identifier codeSpace=""/>
+                  <gml:unitsSystem/>
+                </gml:BaseUnit>
+              </gmd:valueUnit>
+              <gmd:value>
+                <gco:Record/>
+              </gmd:value>
+            </gmd:DQ_QuantitativeResult>
+          </gmd:result>
+        </gmd:DQ_AccuracyOfATimeMeasurement>
+      </gmd:report>
+      <gmd:lineage>
+        <gmd:LI_Lineage>
+          <gmd:statement gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:statement>
+          <gmd:source>
+            <gmd:LI_Source>
+              <gmd:description gco:nilReason="missing">
+                <gco:CharacterString/>
+              </gmd:description>
+            </gmd:LI_Source>
+          </gmd:source>
+        </gmd:LI_Lineage>
+      </gmd:lineage>
+    </gmd:DQ_DataQuality>
+  </gmd:dataQualityInfo>
 </gmd:MD_Metadata>

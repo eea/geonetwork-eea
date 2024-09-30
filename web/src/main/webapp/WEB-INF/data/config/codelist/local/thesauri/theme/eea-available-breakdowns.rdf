@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:ns3="http://purl.org/dc/elements/1.1/"
+	xmlns:ns5="http://www.opengis.net/gml#"
+	xmlns:ns2="http://www.w3.org/2004/02/skos/core#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/theme/available-breakdowns">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+	<ns3:title xml:lang="en">Available breakdowns</ns3:title>
+	<ns3:identifier>eea-available-breakdowns.rdf</ns3:identifier>
+	<ns3:type>theme</ns3:type>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/theme/available-breakdowns/NUTS1">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">NUTS1</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1i8hhbcuox1"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1i8hhbcuox1">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner> </ns5:lowerCorner>
+	<ns5:upperCorner> </ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/theme/available-breakdowns/NUTS2">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">NUTS2</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1i8hhbmr5x1"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1i8hhbmr5x1">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner> </ns5:lowerCorner>
+	<ns5:upperCorner> </ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/theme/available-breakdowns/NUTS3">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">NUTS3</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1i8hhcdbex1"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1i8hhcdbex1">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner> </ns5:lowerCorner>
+	<ns5:upperCorner> </ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/theme/available-breakdowns/Country">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">Country</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1i8hhe14ox1"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1i8hhe14ox1">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner> </ns5:lowerCorner>
+	<ns5:upperCorner> </ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/theme/available-breakdowns/Riverbasins">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">River basins</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1i8hhesikx1"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1i8hhesikx1">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner> </ns5:lowerCorner>
+	<ns5:upperCorner> </ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/theme/available-breakdowns/Biogeographicalregions">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">Biogeographical regions</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1i8hhff48x1"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1i8hhff48x1">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner> </ns5:lowerCorner>
+	<ns5:upperCorner> </ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/theme/available-breakdowns/Europeanseas">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">European seas</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1i8hhgu4qx1"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1i8hhgu4qx1">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner> </ns5:lowerCorner>
+	<ns5:upperCorner> </ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/theme/available-breakdowns/MarineRegions">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">Marine Regions</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1i8hhhv2lx1"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1i8hhhv2lx1">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner> </ns5:lowerCorner>
+	<ns5:upperCorner> </ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/theme/available-breakdowns/Marinesub-regions">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">Marine sub-regions</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1i8hhijc3x1"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1i8hhijc3x1">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner> </ns5:lowerCorner>
+	<ns5:upperCorner> </ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+</rdf:RDF>
