@@ -347,7 +347,9 @@
   </eea-temporal-help>
 
   <eea-add-temporal-resolution>Add temporal resolution</eea-add-temporal-resolution>
+  <eea-add-unit-of-measure>Add unit of measure</eea-add-unit-of-measure>
   <eea-add-available-breakdowns>Add available breakdowns</eea-add-available-breakdowns>
+  <eea-add-reference-period>Add reference period</eea-add-reference-period>
 
   <eea-maintenance-help>
     <div class="row">
