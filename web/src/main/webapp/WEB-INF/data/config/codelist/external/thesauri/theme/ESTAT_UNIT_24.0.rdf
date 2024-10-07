@@ -4,8 +4,7 @@
     <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/" xml:lang="en">Unit of measure (EUROSTAT)</dc:title>
     <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/" xml:lang="de">Maßeinheit (EUROSTAT)</dc:title>
     <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/" xml:lang="fr">Unité de mesure (EUROSTAT)</dc:title>
-    <dcterms:issued xmlns:dcterms="http://purl.org/dc/terms/">2024-01-30T23:00:00+0100</dcterms:issued>
-    <dcterms:modified xmlns:dcterms="http://purl.org/dc/terms/">2024-01-30T23:00:00+0100</dcterms:modified>
+    <dcterms:issued xmlns:dcterms="http://purl.org/dc/terms/">2024-01-30</dcterms:issued>
   </skos:ConceptScheme>
   <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="urn:sdmx:org.sdmx.infomodel.codelist.Code=ESTAT:UNIT(24.0).TOTAL">
     <skos:prefLabel xml:lang="en">Total</skos:prefLabel>

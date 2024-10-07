@@ -1691,7 +1691,7 @@
                         <gmd:date>
                           <gmd:CI_Date>
                             <gmd:date>
-                              <gco:DateTime>2024-01-30T23:00:00+0100</gco:DateTime>
+                              <gco:Date>2024-10-07</gco:Date>
                             </gmd:date>
                             <gmd:dateType>
                               <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
@@ -1702,7 +1702,7 @@
                         <gmd:identifier>
                           <gmd:MD_Identifier>
                             <gmd:code>
-                              <gmx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.ESTAT_UNIT_24.0">geonetwork.thesaurus.external.theme.ESTAT_UNIT_24.0</gmx:Anchor>
+                              <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/api/registries/vocabularies/local.theme.eea-unit-of-measurement">geonetwork.thesaurus.local.theme.eea-unit-of-measurement</gmx:Anchor>
                             </gmd:code>
                           </gmd:MD_Identifier>
                         </gmd:identifier>
