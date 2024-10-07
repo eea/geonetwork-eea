@@ -387,7 +387,7 @@
           </xsl:for-each>
 
           <xsl:for-each
-            select="gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints">
+            select="$metadata/gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints">
             <metadata:ReportedAttribute conceptID="COMMENT_DSET">
               <metadata:Value>
                 <xsl:value-of select="gco:CharacterString/text()"/>
