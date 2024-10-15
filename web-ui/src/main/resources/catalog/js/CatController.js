@@ -312,6 +312,8 @@
               size: 20
             },
             moreLikeThisSameType: true,
+            moreLikeThisFilter:
+              "-cl_status.key:(obsolete OR historicalArchive OR superseded)",
             moreLikeThisConfig: {
               more_like_this: {
                 like: [
@@ -1244,6 +1246,7 @@
           "geocoder",
           "disabledTools",
           "filters",
+          "info",
           "scoreConfig",
           "autocompleteConfig",
           "moreLikeThisConfig",
