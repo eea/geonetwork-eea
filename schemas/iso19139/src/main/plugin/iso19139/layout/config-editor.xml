@@ -2260,13 +2260,24 @@
           <action type="associatedResource"
                   name="eea-add-source"
                   process="source">
+            <directiveAttributes>{ "sources": {
+              "metadataStore": {
+                "label": "linkToSource",
+                "params": {
+                "isTemplate": "n",
+                "from": 1,
+                "to": 10
+              }},
+              "remoteurl": {
+                "multiple": false
+              }}}</directiveAttributes>
           </action>
 
           <text ref="eea-add-source-help"/>
 
           <action type="associatedResource"
                   name="eea-add-isrevision"
-                  process="sibling">
+                  process="siblings">
             <directiveAttributes>{"associationType": "isRevisionOf"}</directiveAttributes>
           </action>
 
