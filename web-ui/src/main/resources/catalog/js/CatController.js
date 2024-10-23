@@ -313,7 +313,7 @@
             },
             moreLikeThisSameType: true,
             moreLikeThisFilter:
-              "-cl_status.key:(obsolete OR historicalArchive OR superseded)",
+              "-cl_status.key:(obsolete)",
             moreLikeThisConfig: {
               more_like_this: {
                 like: [
