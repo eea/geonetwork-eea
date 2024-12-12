@@ -278,6 +278,8 @@
         $scope.userUpdated = false;
         $scope.$broadcast("clearResults");
         $scope.userOperation = "editinfo";
+
+        $scope.gnUserEdit.$setPristine();
       };
 
       /**
@@ -708,6 +710,10 @@
           $scope.groupSelected.defaultCategory.id == null
         ) {
           $scope.groupSelected.defaultCategory = null;
+        }
+        // Ensure that the minimum profile for privileges is not an empty string
+        if ($scope.groupSelected.minimumProfileForPrivileges == "") {
+          $scope.groupSelected.minimumProfileForPrivileges = null;
         }
         $http
           .put(

@@ -52,10 +52,10 @@
         <xsl:variable name="htmlHeadTitle"
                       select="if ($discoveryServiceRecordUuid != '')
                               then util:getIndexField(
-                                        $lang,
+                                        string($lang),
                                         $discoveryServiceRecordUuid,
                                         'resourceTitleObject',
-                                        $lang)
+                                        string($lang))
                               else if (contains($nodeName, '|'))
                               then substring-before($nodeName, '|')
                               else $nodeName"/>
@@ -64,10 +64,10 @@
         <xsl:variable name="htmlHeadDescription"
                       select="if ($discoveryServiceRecordUuid != '')
                               then util:getIndexField(
-                                        $lang,
+                                        string($lang),
                                         $discoveryServiceRecordUuid,
                                         'resourceAbstractObject',
-                                        $lang)
+                                        string($lang))
                               else if (contains($nodeName, '|'))
                               then substring-after($nodeName, '|')
                               else $nodeName"/>
@@ -140,7 +140,6 @@
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
-
 
         <xsl:choose>
           <xsl:when test="$requestParameters/noeeaapi or $env/system/eea/templateapi = 'false'">

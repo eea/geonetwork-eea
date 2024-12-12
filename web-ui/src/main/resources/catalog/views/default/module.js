@@ -66,7 +66,7 @@
     }
   ]);
 
-  module.controller("gnsSearchPopularController", [
+  module.controller("gnsHomeSearchController", [
     "$scope",
     "gnSearchSettings",
     function ($scope, gnSearchSettings) {
@@ -75,33 +75,7 @@
         internal: true,
         filters: gnSearchSettings.filters,
         configId: "home",
-        params: {
-          isTemplate: "n",
-          sortBy: "popularity",
-          sortOrder: "desc",
-          from: 1,
-          to: 12
-        }
-      };
-    }
-  ]);
-
-  module.controller("gnsSearchLatestController", [
-    "$scope",
-    "gnSearchSettings",
-    function ($scope, gnSearchSettings) {
-      $scope.searchObj = {
-        permalink: false,
-        internal: true,
-        filters: gnSearchSettings.filters,
-        configId: "home",
-        params: {
-          isTemplate: "n",
-          sortBy: "createDate",
-          sortOrder: "desc",
-          from: 1,
-          to: 12
-        }
+        params: {}
       };
     }
   ]);
@@ -121,7 +95,7 @@
         filters: [
           {
             query_string: {
-              query: '+resourceType:"map/interactive"'
+              query: '+resourceType:"map-interactive"'
             }
           }
         ],
@@ -244,42 +218,56 @@
           "fa-angle-double-left fa-angle-double-right"
         );
       };
-      hotkeys
-        .bindTo($scope)
-        .add({
-          combo: "h",
-          description: $translate.instant("hotkeyHome"),
-          callback: function (event) {
-            $location.path("/home");
-          }
-        })
-        .add({
-          combo: "t",
-          description: $translate.instant("hotkeyFocusToSearch"),
-          callback: function (event) {
-            event.preventDefault();
-            var anyField = $("#gn-any-field");
-            if (anyField) {
-              gnUtilityService.scrollTo();
-              $location.path("/search");
-              anyField.focus();
+
+      if (gnGlobalSettings.gnCfg.mods.global.hotkeys) {
+        hotkeys
+          .bindTo($scope)
+          .add({
+            combo: "h",
+            description: $translate.instant("hotkeyHome"),
+            callback: function (event) {
+              $location.path("/home");
             }
-          }
-        })
-        .add({
-          combo: "m",
-          description: $translate.instant("hotkeyMap"),
-          callback: function (event) {
-            $location.path("/map");
-          }
-        });
+          })
+          .add({
+            combo: "t",
+            description: $translate.instant("hotkeyFocusToSearch"),
+            callback: function (event) {
+              event.preventDefault();
+              var anyField = $("#gn-any-field");
+              if (anyField) {
+                gnUtilityService.scrollTo();
+                $location.path("/search");
+                anyField.focus();
+              }
+            }
+          })
+          .add({
+            combo: "m",
+            description: $translate.instant("hotkeyMap"),
+            callback: function (event) {
+              $location.path("/map");
+            }
+          });
+      }
 
       // TODO: Previous record should be stored on the client side
       $scope.mdView = mdView;
       gnMdView.initMdView();
 
       $scope.goToSearch = function (any) {
+        // EEA specific
         $location.path("/search").search({ any: any, "facet.q": "status/notobsolete" });
+        return;
+        if (gnGlobalSettings.gnCfg.mods.search.appUrl.indexOf("http") === 0) {
+          location.replace(
+            $filter("setUrlPlaceholder")(gnGlobalSettings.gnCfg.mods.search.appUrl) +
+              "?any=" +
+              any
+          );
+        } else {
+          $location.path("/search").search({ any: any });
+        }
       };
       $scope.canEdit = function (record) {
         // TODO: take catalog config for harvested records
@@ -336,17 +324,12 @@
       $scope.toggleListType = function (type) {
         $scope.type = type;
       };
-
-      $scope.infoTabs = {
-        lastRecords: {
-          title: "lastRecords",
-          titleInfo: "",
-          active: true
-        },
-        preferredRecords: {
-          title: "preferredRecords",
-          titleInfo: "",
-          active: false
+      $scope.getActiveInfoTab = function () {
+        for (var i = 0; i < $scope.gnCfg.mods.home.info.length; i++) {
+          var info = $scope.gnCfg.mods.home.info[i];
+          if (info.active) {
+            return info;
+          }
         }
       };
 
@@ -432,7 +415,7 @@
             msg: $translate.instant("layerProtocolNotSupported", {
               type: link.protocol
             }),
-            delay: 20000,
+            delay: 20,
             type: "warning"
           });
           return;
@@ -456,6 +439,56 @@
           $location.path("map").search({
             add: encodeURIComponent(angular.toJson([config]))
           });
+        },
+        addMdWFSLayerToMap: function (link, md) {
+          var url = $filter("gnLocalized")(link.url) || link.url;
+          gnWebAnalyticsService.trackLink(url, link.protocol);
+
+          var isServiceLink =
+            gnSearchSettings.mapProtocols.services.indexOf(link.protocol) > -1;
+
+          var isGetFeatureLink = url.toLowerCase().indexOf("request=getfeature") > -1;
+
+          var featureName;
+          if (isGetFeatureLink) {
+            var name = "typename";
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+            var results = regex.exec(url);
+
+            if (results) {
+              featureName = decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+          } else {
+            featureName = $filter("gnLocalized")(link.title) || link.name;
+          }
+
+          // if an external viewer is defined, use it here
+          if (gnExternalViewer.isEnabled()) {
+            gnExternalViewer.viewService(
+              {
+                id: md ? md.id : null,
+                uuid: md ? md.uuid : null
+              },
+              {
+                type: "wfs",
+                url: url,
+                name: featureName
+              }
+            );
+            return;
+          }
+          if (featureName && (!isServiceLink || isGetFeatureLink)) {
+            gnMap.addWfsFromScratch(
+              gnSearchSettings.viewerMap,
+              url,
+              featureName,
+              false,
+              md
+            );
+          } else {
+            gnMap.addOwsServiceToMap(url, "WFS");
+          }
+          gnSearchLocation.setMap();
         },
         addAllMdLayersToMap: function (layers, md) {
           var config = layers
@@ -505,6 +538,26 @@
 
       setActiveTab();
       $scope.$on("$locationChangeSuccess", setActiveTab);
+
+      $scope.$on("$locationChangeSuccess", function (event, next, current) {
+        if (
+          gnSearchLocation.isSearch() &&
+          (!angular.isArray(searchMap.getSize()) || searchMap.getSize()[0] < 0)
+        ) {
+          setTimeout(function () {
+            searchMap.updateSize();
+          }, 0);
+        }
+
+        // Changing from the map to search pages, hide alerts
+        var currentUrlHash =
+          current.indexOf("#") > -1 ? current.slice(current.indexOf("#") + 1) : "";
+        if (gnSearchLocation.isMap(currentUrlHash)) {
+          setTimeout(function () {
+            gnAlertService.closeAlerts();
+          }, 0);
+        }
+      });
 
       var sortConfig = gnSearchSettings.sortBy.split("#");
       angular.extend($scope.searchObj, {

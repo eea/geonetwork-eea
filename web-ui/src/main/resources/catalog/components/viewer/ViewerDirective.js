@@ -255,7 +255,7 @@
                             }),
                             type: "success"
                           },
-                          5000
+                          5
                         );
                       }
                     },
@@ -293,7 +293,7 @@
                           url: config.url,
                           extent: extent ? extent.join(",") : ""
                         }),
-                        delay: 5000,
+                        delay: 5,
                         type: "warning"
                       });
                       // TODO: You may want to add more than one time
@@ -408,7 +408,7 @@
                         filters: {
                           filters: {
                             maps: {
-                              query_string: { query: '+resourceType:"map/interactive"' }
+                              query_string: { query: '+resourceType:"map-interactive"' }
                             }
                           }
                         }
@@ -474,7 +474,7 @@
 
                   // handle processes tool
                   if (scope.activeTools.processes && openedTool.url) {
-                    scope.wpsTabs.byUrl = true;
+                    scope.wpsTabs.url = true;
                     scope.selectedWps.url = openedTool.url;
                   }
 
@@ -496,6 +496,10 @@
               setTimeout(function () {
                 scope.map.updateSize();
               }, 300);
+
+              if (gnViewerSettings.mapConfig.disabledTools.scaleLine === false) {
+                scope.map.addControl(new ol.control.ScaleLine());
+              }
             }
           };
         }
@@ -510,11 +514,19 @@
       templateUrl: "../../catalog/components/viewer/partials/mouseposition.html",
       controller: [
         "gnViewerSettings",
+        "gnGlobalSettings",
         "hotkeys",
         "gnAlertService",
         "$translate",
         "$scope",
-        function (gnViewerSettings, hotkeys, gnAlertService, $translate, scope) {
+        function (
+          gnViewerSettings,
+          gnGlobalSettings,
+          hotkeys,
+          gnAlertService,
+          $translate,
+          scope
+        ) {
           scope.switchMousePosition = function () {
             scope.displayMousePosition = !scope.displayMousePosition;
           };
@@ -562,25 +574,27 @@
             });
             scope.map.addControl(scope.mousePositionControl);
 
-            hotkeys.bindTo(scope).add({
-              combo: "c",
-              description: $translate.instant("copyMousePosition"),
-              callback: function (event) {
-                if (scope.mousePosition != "") {
-                  navigator.clipboard.writeText(scope.mousePosition).then(function () {
-                    gnAlertService.addAlert(
-                      {
-                        msg: $translate.instant("mousePositionCopiedToClipboard", {
-                          position: scope.mousePosition
-                        }),
-                        type: "success"
-                      },
-                      2
-                    );
-                  });
+            if (gnGlobalSettings.gnCfg.mods.global.hotkeys) {
+              hotkeys.bindTo(scope).add({
+                combo: "c",
+                description: $translate.instant("copyMousePosition"),
+                callback: function (event) {
+                  if (scope.mousePosition != "") {
+                    navigator.clipboard.writeText(scope.mousePosition).then(function () {
+                      gnAlertService.addAlert(
+                        {
+                          msg: $translate.instant("mousePositionCopiedToClipboard", {
+                            position: scope.mousePosition
+                          }),
+                          type: "success"
+                        },
+                        2
+                      );
+                    });
+                  }
                 }
-              }
-            });
+              });
+            }
           }
         }
       ]

@@ -37,7 +37,9 @@
   module.directive("gnMetadataOpen", [
     "gnMdViewObj",
     "gnMdView",
-    function (gnMdViewObj, gnMdView) {
+    "gnGlobalSettings",
+    "$filter",
+    function (gnMdViewObj, gnMdView, gnGlobalSettings, $filter) {
       return {
         restrict: "A",
         scope: {
@@ -65,8 +67,18 @@
 
             var hyperlinkTagName = "A";
             if (element.get(0).tagName === hyperlinkTagName) {
+              var url = scope.appUrl || window.location.pathname + window.location.search;
+
+              if (
+                gnGlobalSettings.gnCfg.mods.recordview.appUrl &&
+                gnGlobalSettings.gnCfg.mods.recordview.appUrl.indexOf("http") === 0
+              ) {
+                url = $filter("setUrlPlaceholder")(
+                  gnGlobalSettings.gnCfg.mods.recordview.appUrl
+                );
+              }
               var url =
-                (scope.appUrl || window.location.pathname + window.location.search) +
+                url +
                 "#/" +
                 (scope.md.draft == "y" ? "metadraf" : "metadata") +
                 "/" +
@@ -606,15 +618,20 @@
         },
         link: function (scope, element, attrs) {
           scope.mdService = gnUtilityService;
-          scope.$watch(scope.md, function (newVal, oldVal) {
-            if (newVal !== null && newVal !== oldVal) {
-              $http
-                .get("../api/records/" + scope.md.getUuid() + "/permalink")
-                .then(function (r) {
-                  scope.socialMediaLink = r.data;
-                });
-            }
-          });
+
+          scope.$watch(
+            "md",
+            function (newVal, oldVal) {
+              if (newVal !== null && newVal !== oldVal) {
+                $http
+                  .get("../api/records/" + scope.md.getUuid() + "/permalink")
+                  .then(function (r) {
+                    scope.socialMediaLink = r.data;
+                  });
+              }
+            },
+            true
+          );
         }
       };
     }
