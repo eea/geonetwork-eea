@@ -81,23 +81,25 @@
   <div>
     <h3 data-translate="">resolution</h3>
     <ul class="gn-comma-list">
-      <li data-ng-repeat="r in mdView.current.record.resolutionDistance">{{r}}</li>
+      <li data-ng-repeat="r in mdView.current.record.resolutionDistance">
+        <span>{{r}}</span>
+      </li>
     </ul>
   </div>
 </div>
 
 <div
   data-ng-repeat="(key, t) in mdView.current.record.allKeywords"
-  data-ng-if="key === 'th_temporal-update'"
+  data-ng-if="::key === 'th_temporal-update'"
   class="gn-margin-bottom flex-row gn-thesaurus"
 >
   <span class="badge badge-rounded">
     <i class="fa fa-fw fa-calendar"></i>
   </span>
   <div>
-    <h3 data-translate="">{{(t.title || key) | translate}}</h3>
+    <h3>{{(t.multilingualTitle.default || t.title || key) | translate}}</h3>
 
-    <div data-gn-keyword-badges="mdView.current.record" data-thesaurus="key" />
+    <div data-gn-keyword-badges="mdView.current.record" data-thesaurus="key" ></div>
   </div>
 </div>
 
@@ -129,7 +131,7 @@
         <i
           class="fa fa-fw"
           data-ng-class="{'fa-chevron-right': date.type === 'creation', 'fa-code-fork': date.type === 'superseded','fa-ban': date.type === 'deprecated', 'fa-retweet': date.type === 'revision', 'fa-check': date.type === 'publication', 'fa-calendar': date.type === 'nextUpdate'}"
-        />
+        ></i>
       </div>
       <span>
         <h3 data-translate>{{date.type | translate}}</h3>
