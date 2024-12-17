@@ -863,19 +863,19 @@
               sections: [
                 {
                   types: "onlines",
-                  filter: "protocol:WWW:URL|EEA.*|WWW:DOWNLOAD.*",
+                  filter: "protocol:WWW:URL|EEA.*|.*DOWNLOAD.*|.*download.*",
                   title: "download"
                 },
                 { filter: "protocol:OGC:OWS-C", title: "map" },
                 { filter: "function:legend", title: "mapLegend" },
                 {
                   types: "onlines",
-                  filter: "protocol:OGC:.*|ESRI:.*",
+                  filter: "protocol:OGC.*|ESRI:.*",
                   title: "Services"
                 },
                 {
                   types: "onlines",
-                  filter: "-protocol:OGC:.*|ESRI:.*|EEA.*|WWW:URL|WWW:DOWNLOAD.*",
+                  filter: "-protocol:OGC.*|ESRI:.*|EEA.*|WWW:URL|.*DOWNLOAD.*|.*download.*",
                   title: "links"
                 }
                 // {'types': 'onlines', 'filter': 'function:legend', 'title': 'mapLegend'},
