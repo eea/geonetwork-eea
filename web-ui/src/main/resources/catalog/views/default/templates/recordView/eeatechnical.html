@@ -99,7 +99,7 @@
   <div>
     <h3>{{(t.multilingualTitle.default || t.title || key) | translate}}</h3>
 
-    <div data-gn-keyword-badges="mdView.current.record" data-thesaurus="key" ></div>
+    <div data-gn-keyword-badges="mdView.current.record" data-thesaurus="key"></div>
   </div>
 </div>
 
@@ -141,7 +141,7 @@
   </ul>
 </section>
 
-<div ng-include="'../../catalog/views/default/templates/recordView/maintenance.html'" />
+<div ng-include="'../../catalog/views/default/templates/recordView/maintenance.html'" ></div>
 
 <!-- Resource identifier-->
 <div
@@ -155,7 +155,7 @@
     <h3 data-translate="">identifier</h3>
     <ul class="gn-comma-list">
       <li data-ng-repeat="i in mdView.current.record.resourceIdentifier">
-        <span data-ng-bind-html="i.code | linky" />
+        <span data-ng-bind-html="i.code | linky" ></span>
       </li>
     </ul>
   </div>
@@ -173,7 +173,7 @@
     <h3 data-translate="">language</h3>
     <ul class="gn-comma-list">
       <li data-ng-repeat="l in mdView.current.record.resourceLanguage">
-        {{l | translate}}
+        <span>{{l | translate}}</span>
       </li>
     </ul>
   </div>
