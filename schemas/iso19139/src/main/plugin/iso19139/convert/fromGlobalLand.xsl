@@ -7,6 +7,7 @@
                 xmlns:gml320="http://www.opengis.net/gml"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:java="java:org.fao.geonet.util.XslUtil"
+                xmlns:uuid="java:java.util.UUID"
                 version="2.0" exclude-result-prefixes="#all">
 
   <xsl:variable name="isUsing2007Schema" select="true()"/>
@@ -31,6 +32,12 @@
       <xsl:apply-templates select="@*[name() != 'xsi:schemaLocation']"/>
 
       <xsl:apply-templates select="*"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="gmd:fileIdentifier">
+    <xsl:copy copy-namespaces="no">
+      <gco:CharacterString><xsl:value-of select="uuid:randomUUID()"/></gco:CharacterString>
     </xsl:copy>
   </xsl:template>
 
@@ -103,6 +110,18 @@
   <xsl:template
     match="gmd:referenceSystemInfo[not(starts-with(*/gmd:referenceSystemIdentifier/*/gmd:code/*/text(), 'EPSG:'))]"/>
 
+
+  <!-- Replace french text -->
+  <xsl:template match="gmd:otherConstraints[gmx:Anchor/@xlink:href = 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a']">
+    <xsl:copy>
+      <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a">Public access limited according to Article 13(1)(a) of the INSPIRE Directive</gmx:Anchor>
+    </xsl:copy>
+  </xsl:template>
+
+  <!--
+  Remove status
+  -->
+  <xsl:template match="gmd:status"/>
 
   <!--
   * Add EEA topics
