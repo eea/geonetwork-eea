@@ -85,6 +85,9 @@
     <tag name="gmd:characterSet" context="gmd:MD_DataIdentification|srv:SV_ServiceIdentification"
          groupBy="gmd:MD_CharacterSetCode/@codeListValue"
          merge="gmd:characterSet"/>
+    <tag name="gmd:status" context="gmd:MD_DataIdentification|srv:SV_ServiceIdentification"
+         groupBy="gmd:MD_ProgressCode/@codeListValue"
+         merge="gmd:status"/>
     <tag name="gmd:spatialRepresentationType" context="gmd:MD_DataIdentification|srv:SV_ServiceIdentification"
          groupBy="gmd:MD_SpatialRepresentationTypeCode/@codeListValue"
          merge="gmd:spatialRepresentationType"/>
@@ -153,7 +156,10 @@
       <xsl:apply-templates select="gmd:abstract" mode="expand"/>
       <xsl:apply-templates select="gmd:purpose" mode="expand"/>
       <xsl:apply-templates select="gmd:credit" mode="expand"/>
-      <xsl:apply-templates select="gmd:status" mode="expand"/>
+      <xsl:call-template name="copyOrAddElement">
+        <xsl:with-param name="elements" select="gmd:status"/>
+        <xsl:with-param name="name" select="'gmd:status'"/>
+      </xsl:call-template>
       <xsl:call-template name="copyOrAddElement">
         <xsl:with-param name="elements" select="gmd:pointOfContact"/>
         <xsl:with-param name="name" select="'gmd:pointOfContact'"/>
