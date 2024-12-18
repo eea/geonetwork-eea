@@ -36,7 +36,7 @@
               class="fa"
               data-ng-if="!r.locTitle.contains('Eionet')"
               data-ng-class="icon"
-            />
+            ></i>
           </div>
           <span
             data-ng-if="badge != ''"
@@ -241,7 +241,7 @@
             <i
               class="fa fa-fw fa-lock"
               data-ng-if="r.title.eng.contains('Eionet authentication')"
-            />
+            ></i>
           </span>
         </button>
 
@@ -292,7 +292,6 @@
       data-ng-init="keyToken = type.replace('siblings', '').split('-')"
       data-gn-associated-record-label="{associationType: keyToken[0], initiativeType: keyToken[1]}"
     ></h3>
-
     <ul class="gn-related-list list-group">
       <li class="list-group-item" data-ng-repeat="md in items | orderBy:getOrderBy">
         <a

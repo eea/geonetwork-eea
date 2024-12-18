@@ -141,7 +141,9 @@
   </ul>
 </section>
 
-<div ng-include="'../../catalog/views/default/templates/recordView/maintenance.html'" ></div>
+<div
+  ng-include="'../../catalog/views/default/templates/recordView/maintenance.html'"
+></div>
 
 <!-- Resource identifier-->
 <div
@@ -155,7 +157,7 @@
     <h3 data-translate="">identifier</h3>
     <ul class="gn-comma-list">
       <li data-ng-repeat="i in mdView.current.record.resourceIdentifier">
-        <span data-ng-bind-html="i.code | linky" ></span>
+        <span data-ng-bind-html="i.code | linky"></span>
       </li>
     </ul>
   </div>
