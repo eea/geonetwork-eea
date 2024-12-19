@@ -29,6 +29,7 @@ import com.google.common.collect.Sets;
 import com.google.common.io.ByteStreams;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.logging.Level;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
 import jeeves.xlink.Processor;
@@ -66,6 +67,7 @@ import org.openqa.selenium.Pdf;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.print.PrintOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -225,12 +227,15 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless");
             options.addArguments("--disable-gpu");
-            options.addArguments("user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0\"");
+
+            // Init driver without proxy which cause issue downloading the driver
+            // error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json)
+            new ChromeDriver(options).quit();
 
             // Proxy to inject current user session
             Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
+            seleniumProxy.setNoProxy("<-loopback>,accounts.google.com,content-autofill.googleapis.com,optimizationguide-pa.googleapis.com,googlechromelabs.github.io");
             options.setCapability(CapabilityType.PROXY, seleniumProxy);
-            seleniumProxy.setNoProxy("<-loopback>,accounts.google.com,content-autofill.googleapis.com,optimizationguide-pa.googleapis.com");
             ChromeDriver driver = new ChromeDriver(options);
 
             Locale locale = languageUtils.parseAcceptLanguage(servletRequest.getLocales());
@@ -243,6 +248,9 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
             driver.get(settingManager.getNodeURL() + formatterUrl);
             Pdf pdf = driver.print(new PrintOptions());
             byte[] pdfContent = Base64.getDecoder().decode(pdf.getContent());
+            String filename = "metadata-" + metadataUuid + "-" + formatterId + ".pdf";
+            servletResponse.addHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
+            servletResponse.setStatus(HttpServletResponse.SC_OK);
             servletResponse.getOutputStream().write(pdfContent);
             driver.quit();
         } finally {
