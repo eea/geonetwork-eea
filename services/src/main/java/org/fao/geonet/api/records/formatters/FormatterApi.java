@@ -30,6 +30,7 @@ import com.google.common.io.ByteStreams;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
 import jeeves.xlink.Processor;
@@ -241,9 +242,10 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
             Locale locale = languageUtils.parseAcceptLanguage(servletRequest.getLocales());
             String language = getLanguage(iso3lang, locale);
 
+            String urlParameters = servletRequest.getParameterMap().entrySet().stream().map(e -> e.getKey() + "=" + e.getValue()).collect(Collectors.joining("&"));
             String formatterUrl = "default".equals(formatterId)
                 ? String.format("%s/catalog.search#/metadata/%s", language, metadataUuid)
-                : String.format("api/records/%s/formatters/%s?language=%s&approved=%s", metadataUuid, formatterId, language, approved);
+                : String.format("api/records/%s/formatters/%s?%s", metadataUuid, formatterId, urlParameters);
 
             driver.get(settingManager.getNodeURL() + formatterUrl);
             Pdf pdf = driver.print(new PrintOptions());
