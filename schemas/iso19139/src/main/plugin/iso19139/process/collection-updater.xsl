@@ -85,9 +85,9 @@
     <tag name="gmd:characterSet" context="gmd:MD_DataIdentification|srv:SV_ServiceIdentification"
          groupBy="gmd:MD_CharacterSetCode/@codeListValue"
          merge="gmd:characterSet"/>
-    <tag name="gmd:status" context="gmd:MD_DataIdentification|srv:SV_ServiceIdentification"
+    <!--<tag name="gmd:status" context="gmd:MD_DataIdentification|srv:SV_ServiceIdentification"
          groupBy="gmd:MD_ProgressCode/@codeListValue"
-         merge="gmd:status"/>
+         merge="gmd:status"/>-->
     <tag name="gmd:spatialRepresentationType" context="gmd:MD_DataIdentification|srv:SV_ServiceIdentification"
          groupBy="gmd:MD_SpatialRepresentationTypeCode/@codeListValue"
          merge="gmd:spatialRepresentationType"/>
@@ -156,10 +156,19 @@
       <xsl:apply-templates select="gmd:abstract" mode="expand"/>
       <xsl:apply-templates select="gmd:purpose" mode="expand"/>
       <xsl:apply-templates select="gmd:credit" mode="expand"/>
-      <xsl:call-template name="copyOrAddElement">
-        <xsl:with-param name="elements" select="gmd:status"/>
-        <xsl:with-param name="name" select="'gmd:status'"/>
-      </xsl:call-template>
+      <!-- EEA specific -->
+      <xsl:choose>
+        <xsl:when test="count($existingMembers/record) = count($existingMembers/record[.//gmd:identificationInfo/*/gmd:status/*/@codeListValue = 'obsolete'])">
+          <gmd:status>
+            <gmd:MD_ProgressCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"
+                                 codeListValue="obsolete"/>
+          </gmd:status>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="gmd:status"/>
+        </xsl:otherwise>
+      </xsl:choose>
+
       <xsl:call-template name="copyOrAddElement">
         <xsl:with-param name="elements" select="gmd:pointOfContact"/>
         <xsl:with-param name="name" select="'gmd:pointOfContact'"/>
