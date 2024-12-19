@@ -16,6 +16,7 @@ RUN unzip /tmp/geonetwork-eea/web/target/geonetwork.war -d /tmp/geonetwork
 
 
 FROM jetty:9-jdk11-eclipse-temurin AS final
+
 LABEL maintainer="michimau <mauro.michielon@eea.europa.eu>"
 
 ENV DATA_DIR /catalogue-data
@@ -31,6 +32,32 @@ ENV JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true \
 
 
 USER root
+
+#============================================
+# Google Chrome
+#============================================
+# can specify versions by CHROME_VERSION;
+#  e.g. google-chrome-stable
+#       google-chrome-beta
+#       google-chrome-unstable
+#============================================
+ARG CHROME_VERSION="google-chrome-stable"
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor | tee /etc/apt/trusted.gpg.d/google.gpg >/dev/null \
+  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+  && apt-get update -qqy \
+  && if echo "${CHROME_VERSION}" | grep -qE "google-chrome-stable[_|=][0-9]*"; \
+    then \
+      CHROME_VERSION=$(echo "$CHROME_VERSION" | tr '=' '_') \
+      && wget -qO google-chrome.deb "https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/${CHROME_VERSION}_$(dpkg --print-architecture).deb" \
+      && apt-get -qqy --no-install-recommends install --allow-downgrades ./google-chrome.deb \
+      && rm -rf google-chrome.deb ; \
+    else \
+      apt-get -qqy --no-install-recommends install ${CHROME_VERSION} ; \
+    fi \
+  && rm /etc/apt/sources.list.d/google-chrome.list \
+  && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+  
+
 
 RUN rm -rf /var/lib/jetty/webapps/*  && \
     chown jetty:jetty /var/lib/jetty/webapps && \
