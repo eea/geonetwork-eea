@@ -242,7 +242,10 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
             Locale locale = languageUtils.parseAcceptLanguage(servletRequest.getLocales());
             String language = getLanguage(iso3lang, locale);
 
-            String urlParameters = servletRequest.getParameterMap().entrySet().stream().map(e -> e.getKey() + "=" + e.getValue()).collect(Collectors.joining("&"));
+            String urlParameters = servletRequest.getParameterMap().entrySet().stream().map(e -> {
+                String[] values = e.getValue();
+                return Arrays.stream(values).map(v -> e.getKey() + "=" + v).collect(Collectors.joining("&"));
+            }).collect(Collectors.joining("&"));
             String formatterUrl = "default".equals(formatterId)
                 ? String.format("%s/catalog.search#/metadata/%s", language, metadataUuid)
                 : String.format("api/records/%s/formatters/%s?%s", metadataUuid, formatterId, urlParameters);
