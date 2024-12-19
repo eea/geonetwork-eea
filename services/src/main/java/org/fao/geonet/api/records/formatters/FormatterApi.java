@@ -32,6 +32,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
 import jeeves.xlink.Processor;
+import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.client.ClientUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -60,6 +62,12 @@ import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.openqa.selenium.Pdf;
+import org.openqa.selenium.Proxy;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.print.PrintOptions;
+import org.openqa.selenium.remote.CapabilityType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
@@ -106,6 +114,12 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
 
     @Autowired
     LanguageUtils languageUtils;
+
+    @Autowired
+    SettingManager settingManager;
+
+    @Autowired
+    SeleniumHeaderModifier seleniumHeaderModifier;
 
     @Autowired
     IsoLanguagesMapper isoLanguagesMapper;
@@ -164,6 +178,75 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
                     return super.visitFile(file, attrs);
                 }
             });
+        }
+    }
+
+
+    @RequestMapping(value = {
+        "/{portal}/api/records/{metadataUuid}/formatters/{formatterId:.+}.pdf"
+    },
+        method = RequestMethod.GET,
+        produces = {
+            "application/pdf"
+        })
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Get a metadata record in PDF format"
+    )
+    public void getRecordFormattedAsPdfBy(
+        @Parameter(
+            description = "Formatter type to use."
+        )
+        @PathVariable(
+            value = "formatterId"
+        ) final String formatterId,
+        @Parameter(
+            description = API_PARAM_RECORD_UUID,
+            required = true)
+        @PathVariable
+        String metadataUuid,
+        @Parameter(
+            description = "Optional language ISO 3 letters code to override HTTP Accept-language header.",
+            required = false
+        )
+        @RequestParam(
+            value = "language",
+            required = false)
+        final String iso3lang,
+        @Parameter(description = "Download the approved version",
+            required = false)
+        @RequestParam(required = false, defaultValue = "true")
+        boolean approved,
+        HttpServletRequest servletRequest,
+        HttpServletResponse servletResponse) throws Exception {
+        ApiUtils.canViewRecord(metadataUuid, false, servletRequest);
+
+        BrowserMobProxy proxy = seleniumHeaderModifier.getProxyForUserSession(servletRequest);
+        try {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless");
+            options.addArguments("--disable-gpu");
+            options.addArguments("user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0\"");
+
+            // Proxy to inject current user session
+            Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
+            options.setCapability(CapabilityType.PROXY, seleniumProxy);
+            seleniumProxy.setNoProxy("<-loopback>,accounts.google.com,content-autofill.googleapis.com,optimizationguide-pa.googleapis.com");
+            ChromeDriver driver = new ChromeDriver(options);
+
+            Locale locale = languageUtils.parseAcceptLanguage(servletRequest.getLocales());
+            String language = getLanguage(iso3lang, locale);
+
+            String formatterUrl = "default".equals(formatterId)
+                ? String.format("%s/catalog.search#/metadata/%s", language, metadataUuid)
+                : String.format("api/records/%s/formatters/%s?language=%s&approved=%s", metadataUuid, formatterId, language, approved);
+
+            driver.get(settingManager.getNodeURL() + formatterUrl);
+            Pdf pdf = driver.print(new PrintOptions());
+            byte[] pdfContent = Base64.getDecoder().decode(pdf.getContent());
+            servletResponse.getOutputStream().write(pdfContent);
+            driver.quit();
+        } finally {
+            proxy.stop();
         }
     }
 
@@ -242,18 +325,7 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
             formatType = FormatType.xml;
         }
 
-        String language;
-        if (StringUtils.isNotEmpty(iso3lang)) {
-            if (PARAM_LANGUAGE_ALL_VALUES.equalsIgnoreCase(iso3lang)) {
-                language = iso3lang;
-            } else if (languageUtils.getUiLanguages().contains(iso3lang)) {
-                language = isoLanguagesMapper.iso639_2T_to_iso639_2B(iso3lang);
-            } else {
-                language = languageUtils.getDefaultUiLanguage();
-            }
-        } else {
-            language = isoLanguagesMapper.iso639_2T_to_iso639_2B(locale.getISO3Language());
-        }
+        String language = getLanguage(iso3lang, locale);
 
         AbstractMetadata metadata = ApiUtils.canViewRecord(metadataUuid, approved, servletRequest);
 
@@ -312,6 +384,22 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
                 isoLanguagesMapper.iso639_2T_to_iso639_2B(locale.getISO3Language()),
                 request.getNativeResponse(HttpServletResponse.class), formatType, bytes);
         }
+    }
+
+    private String getLanguage(String iso3lang, Locale locale) {
+        String language;
+        if (StringUtils.isNotEmpty(iso3lang)) {
+            if (PARAM_LANGUAGE_ALL_VALUES.equalsIgnoreCase(iso3lang)) {
+                language = iso3lang;
+            } else if (languageUtils.getUiLanguages().contains(iso3lang)) {
+                language = isoLanguagesMapper.iso639_2T_to_iso639_2B(iso3lang);
+            } else {
+                language = languageUtils.getDefaultUiLanguage();
+            }
+        } else {
+            language = isoLanguagesMapper.iso639_2T_to_iso639_2B(locale.getISO3Language());
+        }
+        return language;
     }
 
 

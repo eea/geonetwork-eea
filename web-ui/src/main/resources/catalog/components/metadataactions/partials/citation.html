@@ -3,7 +3,7 @@
     <h2>
       <span data-translate="">cite.dataset</span>
       <a
-        class="btn btn-xs"
+        class="btn btn-xs hidden-print"
         data-ng-repeat="(k, f) in formats"
         data-ng-click="getCitation(f.id)"
         title="{{::f.help}}"
@@ -15,7 +15,7 @@
   </div>
   <div>
     <div
-      class="gn-copy-to-clipboard-button-floatright"
+      class="gn-copy-to-clipboard-button-floatright hidden-print"
       gn-copy-to-clipboard-button=""
       timeout="1000"
     ></div>
