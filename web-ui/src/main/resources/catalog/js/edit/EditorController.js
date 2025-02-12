@@ -71,6 +71,9 @@
           templateUrl: gnGlobalSettings.gnCfg.mods.editor.createPageTpl,
           controller: "GnNewMetadataController"
         })
+        .when("/add-dataset", {
+          templateUrl: tplFolder + "add-dataset.html"
+        })
         .when("/create/from/:id/in/:group", {
           templateUrl: tplFolder + "editor.html",
           controller: "GnNewMetadataController"
