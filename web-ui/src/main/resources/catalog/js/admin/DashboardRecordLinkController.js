@@ -176,6 +176,30 @@
           }
         }
       });
+      
+      $scope.eeaRecordSearch = function() {
+        $http
+          .post(
+            "../api/search/records/_search?bucket=eea",
+            {
+              size: 0,
+              query: {
+                query_string: {
+                  query: '-cl_status.key:(obsolete or superseded) +isTemplate:n +isHarvested:false'
+                }
+              }
+            }
+          )
+          .then(function (r) {
+            $http.put("../api/selections/eea").then(function (r) {
+              $scope.selectedSelection.id = "eea";
+              $scope.urlFilter = "https://sdi.eea.europa.eu/data/";
+              $http.get("../api/selections/eea").then(function (r) {
+                $scope.triggerSearch();
+              });
+            });
+          });
+      }
 
       $element.on("post-body.bs.table", function () {
         $element.find("a[data-job-key]").click(function (event) {
