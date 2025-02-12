@@ -1147,6 +1147,7 @@
 		<condition>mandatory</condition>
 	</element>
 
+
   <element name="gmd:edition" id="363.0">
     <label>Edition</label>
     <description>Version of the cited resource</description>

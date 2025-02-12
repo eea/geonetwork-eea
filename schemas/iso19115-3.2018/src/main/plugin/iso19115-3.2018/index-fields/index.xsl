@@ -752,7 +752,11 @@
           <maintenance type="object">{
             "frequency": "<xsl:value-of select="*:maintenanceAndUpdateFrequency/*/@codeListValue"/>"
             <xsl:for-each select="*:dateOfNextUpdate[*/text() != '']">
+              <xsl:variable name="dateOfNextUpdateZulu"
+                            select="date-util:convertToISOZuluDateTime(*/text())"/>
+              <xsl:if test="$dateOfNextUpdateZulu != ''">
               ,"nextUpdateDate": "<xsl:value-of select="*/text()"/>"
+              </xsl:if>
             </xsl:for-each>
             <xsl:for-each select="*:userDefinedMaintenanceFrequency[*/text() != '']">
               ,"userDefinedFrequency": "<xsl:value-of select="*/text()"/>"
@@ -1194,10 +1198,13 @@
         <xsl:variable name="processSteps"
                       select="mrl:processStep/*[mrl:description/gco:CharacterString != '']"/>
         <xsl:for-each select="$processSteps">
+          <xsl:variable name="stepDateTimeZulu"
+                        select="date-util:convertToISOZuluDateTime(normalize-space(mrl:stepDateTime))"/>
+
           <processSteps type="object">{
             "descriptionObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
                                 'description', mrl:description, $allLanguages, true())"/>
-            <xsl:if test="normalize-space(mrl:stepDateTime) != ''">
+            <xsl:if test="$stepDateTimeZulu != ''">
               ,"date": "<xsl:value-of select="mrl:stepDateTime//gml:timePosition/text()"/>"
             </xsl:if>
             <xsl:if test="normalize-space(mrl:source) != ''">
@@ -1261,16 +1268,16 @@
                         select="mdq:valueUnit//gml:identifier"/>
           <xsl:variable name="description"
                         select="(../../mdq:measure/*/mdq:measureDescription/gco:CharacterString)[1]"/>
-
           <xsl:variable name="measureDate"
-                        select="mdq:dateTime/gco:DateTime"/>
-
+                        select="normalize-space(mdq:dateTime/gco:DateTime)"/>
+          <xsl:variable name="measureDateZulu"
+                        select="date-util:convertToISOZuluDateTime($measureDate)"/>
           <measure type="object">{
             "name": "<xsl:value-of select="util:escapeForJson($name)"/>",
             <xsl:if test="$description != ''">
               "description": "<xsl:value-of select="util:escapeForJson($description)"/>",
             </xsl:if>
-            <xsl:if test="$measureDate != ''">
+            <xsl:if test="$measureDateZulu != ''">
               "date": "<xsl:value-of select="util:escapeForJson($measureDate)"/>",
             </xsl:if>
             <!-- First value only. -->

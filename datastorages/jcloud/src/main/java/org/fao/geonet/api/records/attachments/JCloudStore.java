@@ -30,6 +30,7 @@ import jeeves.server.context.ServiceContext;
 
 import org.apache.commons.collections.MapUtils;
 import org.fao.geonet.ApplicationContextHolder;
+import org.fao.geonet.api.exception.InputStreamLimitExceededException;
 import org.fao.geonet.api.exception.ResourceNotFoundException;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.MetadataResource;
@@ -41,12 +42,14 @@ import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.languages.IsoLanguagesMapper;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.resources.JCloudConfiguration;
+import org.fao.geonet.util.LimitedInputStream;
 import org.fao.geonet.utils.IO;
 import org.fao.geonet.utils.Log;
 import org.jclouds.blobstore.ContainerNotFoundException;
 import org.jclouds.blobstore.domain.*;
 import org.jclouds.blobstore.options.CopyOptions;
 import org.jclouds.blobstore.options.ListContainerOptions;
+import org.jclouds.http.HttpResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
@@ -299,17 +302,34 @@ public class JCloudStore extends AbstractStore {
                 // Update/set version
                 setPropertiesVersion(context, properties, isNewResource, metadataUuid, metadataId, visibility, approved, filename);
 
+                long contentLength;
+                // If the input stream is a LimitedInputStream and the file size is known then use that value otherwise use the available value.
+                if (is instanceof LimitedInputStream && ((LimitedInputStream) is).getFileSize() > 0) {
+                    contentLength = ((LimitedInputStream) is).getFileSize();
+                } else {
+                    contentLength = is.available();
+                }
+
                 Blob blob = jCloudConfiguration.getClient().getBlobStore().blobBuilder(key)
                     .payload(is)
-                    .contentLength(is.available())
+                    .contentLength(contentLength)
                     .userMetadata(properties)
                     .build();
 
                 Log.info(Geonet.RESOURCES,
                     String.format("Put(2) blob '%s' with version label '%s'.", key, properties.get(jCloudConfiguration.getExternalResourceManagementVersionPropertyName())));
 
-                // Upload the Blob in multiple chunks to supports large files.
-                jCloudConfiguration.getClient().getBlobStore().putBlob(jCloudConfiguration.getContainerName(), blob, multipart());
+                try {
+                    // Upload the Blob in multiple chunks to supports large files.
+                    jCloudConfiguration.getClient().getBlobStore().putBlob(jCloudConfiguration.getContainerName(), blob, multipart());
+                } catch (HttpResponseException e) {
+                    // This is special logic for the jcloud store as the InputStreamLimitExceededException gets wrapped in a HttpResponseException
+                    Throwable cause = e.getCause();
+                    if (cause instanceof InputStreamLimitExceededException) {
+                        throw (InputStreamLimitExceededException) cause;
+                    }
+                    throw e;
+                }
                 Blob blobResults = jCloudConfiguration.getClient().getBlobStore().getBlob(jCloudConfiguration.getContainerName(), key);
 
                 return createResourceDescription(context, metadataUuid, visibility, filename, blobResults.getMetadata(), metadataId, approved);
