@@ -72,7 +72,7 @@
   <xsl:template mode="citation" match="citation[lower-case($format) = 'bibtex']">
     <!-- https://en.wikipedia.org/wiki/BibTeX -->
     <textResponse>@misc{<xsl:value-of select="uuid"/>,
-      author = {<xsl:value-of select="normalize-space(string-join(authorsNameAndOrgList/*, ', '))"/>},
+      author = {<xsl:value-of select="normalize-space(string-join(concat(authorsNameAndOrgList/*, ','), ' and '))"/>},
       publisher = {<xsl:value-of select="normalize-space(string-join(publishersNameAndOrgList/*, ', '))"/>},
       title = {<xsl:value-of select="normalize-space(translatedTitle)"/>},
       <xsl:if test="lastPublicationDate != ''">year = {<xsl:value-of select="substring(lastPublicationDate, 1, 4)"/>},</xsl:if>
