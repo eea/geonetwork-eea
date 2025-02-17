@@ -875,7 +875,8 @@
                 },
                 {
                   types: "onlines",
-                  filter: "-protocol:OGC.*|ESRI:.*|EEA.*|WWW:URL|.*DOWNLOAD.*|.*download.*",
+                  filter:
+                    "-protocol:OGC.*|ESRI:.*|EEA.*|WWW:URL|.*DOWNLOAD.*|.*download.*",
                   title: "links"
                 }
                 // {'types': 'onlines', 'filter': 'function:legend', 'title': 'mapLegend'},
@@ -1223,8 +1224,8 @@
           },
           authentication: {
             enabled: true,
-            signinUrl: "../../{{node}}/{{lang}}/catalog.signin",
-            signoutUrl: "../../signout"
+            signinUrl: "../../api/user/signin",
+            signoutUrl: "../../api/user/signout"
           },
           page: {
             enabled: true,
