@@ -93,7 +93,7 @@
         and improved or amended
       </description>
     </entry>
-    <entry>
+   <!-- <entry>
       <code>expiry</code>
       <label>Expiry</label>
       <description>Date identifies when the resource expires</description>
@@ -109,14 +109,14 @@
       <label>Last Revision</label>
       <description>Date identifies when the resource was last reviewed
       </description>
-    </entry>
+    </entry>-->
     <entry>
       <code>nextUpdate</code>
       <label>Next Update</label>
       <description>Date identifies when the resource will be next updated
       </description>
     </entry>
-    <entry>
+   <!-- <entry>
       <code>unavailable</code>
       <label>Unavailable</label>
       <description>Date identifies when the resource became not available or
@@ -139,7 +139,7 @@
       <label>Deprecated</label>
       <description>Date identifies when the resource was deprecated
       </description>
-    </entry>
+    </entry>-->
     <entry>
       <code>superseded</code>
       <label>Superseded</label>
@@ -147,7 +147,7 @@
         by another resource
       </description>
     </entry>
-    <entry>
+    <!--<entry>
       <code>validityBegins</code>
       <label>Validity Begins</label>
       <description>Date identifies when the resource is considered to be valid
@@ -173,7 +173,7 @@
       <description>Date identifies when an instance of the resource was
         distributed
       </description>
-    </entry>
+    </entry>-->
   </codelist>
   <codelist name="cit:CI_OnLineFunctionCode" alias="function">
     <entry>
@@ -1340,7 +1340,7 @@
       <label>Obsolete</label>
       <description>Data is no longer relevant</description>
     </entry>
-    <entry>
+   <!-- <entry>
       <code>onGoing</code>
       <label>On going</label>
       <description>Data is continually being updated</description>
@@ -1380,13 +1380,13 @@
       <description>Item is no longer recommended for use. It has not been
         superseded by another item
       </description>
-    </entry>
+    </entry>-->
     <entry>
       <code>superseded</code>
       <label>Superseded</label>
       <description>Replaced by new item</description>
     </entry>
-    <entry>
+    <!--<entry>
       <code>tentative</code>
       <label>Tentative</label>
       <description>Provisional changes likely before resource becomes final or
@@ -1425,7 +1425,7 @@
       <description>Resource superseded and will become obsolete, use only for
         historical purposes
       </description>
-    </entry>
+    </entry>-->
     <entry hideInEditMode="true">
       <code>notobsolete</code>
       <label>Not obsolete</label>
@@ -1433,7 +1433,7 @@
     </entry>
   </codelist>
   <codelist name="mco:MD_RestrictionCode">
-    <entry>
+    <!--<entry>
       <code>copyright</code>
       <label>Copyright</label>
       <description>Exclusive right to the publication, production, or sale of
@@ -1478,13 +1478,13 @@
       <code>restricted</code>
       <label>Restricted</label>
       <description>Withheld from general circulation or disclosure</description>
-    </entry>
+    </entry>-->
     <entry>
       <code>otherRestrictions</code>
       <label>Other restrictions</label>
       <description>Limitation not listed</description>
     </entry>
-    <entry>
+    <!--<entry>
       <code>unrestricted</code>
       <label>Unrestricted</label>
       <description>No constraints exist</description>
@@ -1540,7 +1540,7 @@
       <code>in-confidence</code>
       <label>In-Confidence</label>
       <description>With trust</description>
-    </entry>
+    </entry>-->
   </codelist>
 
   <codelist name="mcc:MD_ScopeCode">
@@ -1723,7 +1723,7 @@
         data
       </description>
     </entry>
-    <entry>
+    <!--<entry>
       <code>tin</code>
       <label>TIN</label>
       <description>Triangulated irregular network</description>
@@ -1739,7 +1739,7 @@
       <code>video</code>
       <label>Video</label>
       <description>Scene from a video recording</description>
-    </entry>
+    </entry>-->
   </codelist>
   <codelist name="mri:MD_TopicCategoryCode" alias="topicCategory">
     <entry>

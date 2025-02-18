@@ -1814,6 +1814,11 @@
     <description>Information about grid spatial objects in the dataset
     </description>
   </element>
+  <element name="mcc:MD_Identifier" id="431.0" context="mrs:referenceSystemIdentifier">
+    <label>Reference System Information</label>
+    <description>
+    </description>
+  </element>
   <element name="mcc:MD_Identifier" id="431.0">
     <label>Identifier</label>
     <description>Value uniquely identifying an object within a namespace
@@ -2181,6 +2186,16 @@
   <element name="mri:code" id="207.0" context="mri:RS_Identifier">
     <label>Unique resource identifier</label>
     <description>Alphanumeric value identifying an instance in the namespace
+    </description>
+    <condition>mandatory</condition>
+  </element>
+  <element name="mcc:code" id="433.0" context="mcc:MD_Identifier">
+    <label>Coordinate reference system identifier</label>
+    <description>Alphanumeric value identifying an instance in the namespace
+    </description>
+    <description iso="true">Alphanumeric value identifying an instance in the
+      namespace. NOTE Avoid characters that are not legal in URLs. EXAMPLE
+      EPSG::4326
     </description>
     <condition>mandatory</condition>
   </element>

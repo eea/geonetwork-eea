@@ -47,7 +47,7 @@
     <for name="mri:credit" use="textarea"/>
     <for name="mrd:description" use="textarea"/>
     <for name="gmd:evaluationMethodDescription" use="textarea"/>
-    <for name="gmd:explanation" use="textarea"/>
+    <for name="mdq:explanation" use="textarea"/>
     <for name="gmd:handlingDescription" use="textarea"/>
     <for name="mdq:measureDescription" use="textarea"/>
     <for name="mri:purpose" use="textarea"/>
@@ -171,7 +171,7 @@
       <!-- To use an ISO19139 contact directory in an ISO19115-3 record
       use the following configuration:
               data-filter='{"root": "gmd:CI_ResponsibleParty"}'
-              data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"
+              data-variables="cit:role/gmd:CI_RoleCode/@codeListValue~{role}"
               data-transformation="contact-from-iso19139-to-iso19115-3.2018"/>
        -->
       <directiveAttributes
@@ -592,16 +592,20 @@
     <table for="cit:CI_Responsibility">
       <header>
         <col/>
-        <col label="cit:role"/>
         <col label="cit:CI_Organisation"/>
+        <col label="cit:individual"/>
         <col label="cit:electronicMailAddress"/>
+        <col label="cit:onlineResource"/>
+        <col label="cit:role"/>
         <col/>
       </header>
       <row>
         <col orderControl=".."/>
-        <col xpath="cit:role"/>
         <col xpath="cit:party/cit:CI_Organisation/cit:name"/>
+        <col xpath="cit:party//cit:individual/cit:name"/>
         <col xpath="cit:party/*/cit:contactInfo/*/cit:address/*/cit:electronicMailAddress"/>
+        <col xpath="cit:party/*/cit:contactInfo/*/cit:onlineResource/*/cit:linkage"/>
+        <col xpath="cit:role"/>
         <col del=".."/>
       </row>
     </table>
@@ -643,6 +647,2165 @@
 
   <!-- View configuration -->
   <views>
+    <view name="eea"
+          upAndDownControlHidden="true"
+          hideTimeInCalendar="true"
+          class="gn-indent-colored gn-label-above-input">
+      <thesaurusList>
+        <thesaurus key="external.theme.httpinspireeceuropaeutheme-theme"
+                   fieldset="false"
+                   suggestion="true"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory"
+                   fieldset="false"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope"
+                   fieldset="false"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.gemet"
+                   fieldset="false"
+                   suggestion="true"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.eea-topics"
+                   fieldset="false"
+                   suggestion="true"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.rod-eionet-europa-eu"
+                   fieldset="false"
+                   suggestion="true"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+      </thesaurusList>
+      <sidePanel>
+        <directive data-gn-overview-manager=""
+                   data-file-types=".png,.gif,.jpeg,.jpg"
+                   displayIfRecord="not(contains(mdb:MD_Metadata/
+                                    mdb:metadataScope/*/mdb:resourceScope/*/@codeListValue,
+                                    'nonGeographicDataset'))"/>
+
+        <directive data-gn-distribution-resources-panel="gnCurrentEdit.metadata"
+                   data-mode="viewConfig.distributionConfig.layout || ''"
+                   data-editor-config="default"
+                   data-related-config="[{
+                                           title: 'download',
+                                           filter: 'protocol:WWW:URL|EEA.*|WWW:DOWNLOAD.*',
+                                           editActions: ['addOnlinesrc']},
+                                         {
+                                           title: 'Services',
+                                           filter: 'protocol:OGC:.*|ESRI:.*',
+                                           editActions: ['addOnlinesrc']},
+                                         {
+                                            title: 'links',
+                                            filter:'-protocol:OGC:.*|ESRI:.*|EEA.*|WWW:URL|WWW:DOWNLOAD.*',
+                                            editActions: ['addOnlinesrc']}]"
+        />
+
+        <directive data-gn-associated-resources-panel="gnCurrentEdit.metadata"
+                   editor-config="default"
+                   displayIfRecord="not(contains(mdb:MD_Metadata/
+                                    mdb:metadataScope/*/mdb:resourceScope/*/@codeListValue,
+                                    'nonGeographicDataset'))"/>
+        <directive data-gn-associated-resources-panel="gnCurrentEdit.metadata"
+                   editor-config="default"
+                   displayIfRecord="contains(mdb:MD_Metadata/
+                                    mdb:metadataScope/*/mdb:resourceScope/*/@codeListValue,
+                                    'nonGeographicDataset')"/>
+
+        <text ref="eea-associatedResource-help"
+              if="not(contains(mdb:MD_Metadata/
+                                    mdb:metadataScope/*/mdb:resourceScope/*/@codeListValue,
+                                    'nonGeographicDataset'))"/>
+
+        <directive data-gn-validation-report=""/>
+
+        <text ref="eea-contact"/>
+      </sidePanel>
+
+      <tab id="eea-default" default="true" mode="flat" >
+        <section name="eea-identification">
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/cit:title"/>
+          <text ref="eea-title-help"/>
+
+          <field name="eea-resource-identifier"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/cit:identifier/*/mcc:code"/>
+
+          <action type="add"
+                  btnLabel="eea-add-identifier"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/cit:identifier/*/mcc:code) = 0"
+                  or="identifier"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*">
+            <template>
+              <snippet>
+                <cit:identifier>
+                  <mcc:MD_Identifier>
+                    <mcc:code>
+                      <gco:CharacterString>[Provider_DataType_EpsgCode_ScaleResolution_ScaleResUnit_DatasetShortName_PublicOrInternal_TimeCoverage_VersionNumber_RevisionNumber]</gco:CharacterString>
+                    </mcc:code>
+                  </mcc:MD_Identifier>
+                </cit:identifier>
+              </snippet>
+            </template>
+          </action>
+          <action type="process"
+                  process="eea-add-datasharelink"
+                  btnLabel="eea-add-datasharelink"
+                  btnClass="fa fa-fw fa-download"
+                  if="count(*/mdb:distributionInfo/*/mrd:transferOptions/*/mrd:onLine/*[starts-with(cit:linkage/*/text(), 'https://sdi.eea.europa.eu/webdav/datastore')]) = 0"
+                  or="onLine"
+                  in="/mdb:MD_Metadata/mdb:distributionInfo/*/mrd:transferOptions/*"/>
+
+          <text ref="eea-identifier-help"/>
+
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/cit:edition"
+                 or="edition" in="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*"/>
+          <text ref="eea-edition-help"/>
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/cit:date"
+                 or="date" in="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*"/>
+          <text ref="eea-date-help"/>
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:abstract"/>
+          <text ref="eea-abstract-help"/>
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:status"
+                 or="status" in="/mdb:MD_Metadata/mdb:identificationInfo/*"/>
+
+          <action type="suggest"
+                  process="add-date-for-status"/>
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:supplementalInformation"
+                 or="supplementalInformation"
+                 in="/mdb:MD_Metadata/mdb:identificationInfo/*"/>
+
+          <text ref="eea-supplementalInformation-help"/>
+
+
+
+          <action type="add"
+                  btnLabel="eea-add-taskman-ticket"
+                  if="count(*/mdb:distributionInfo/*/mrd:transferOptions/*/mrd:onLine/*[starts-with(cit:linkage/*/text(), 'https://taskman.eionet.europa.eu/issues')]) = 0"
+                  or="onLine"
+                  in="/mdb:MD_Metadata/mdb:distributionInfo/*/mrd:transferOptions/*">
+            <template>
+              <snippet>
+                <mrd:onLine gco:nilReason="withheld">
+                  <cit:CI_OnlineResource>
+                    <cit:linkage>
+                      <gco:CharacterString>https://taskman.eionet.europa.eu/issues/...</gco:CharacterString>
+                    </cit:linkage>
+                    <cit:protocol>
+                      <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                    </cit:protocol>
+                    <cit:name>
+                      <gco:CharacterString>EEA Taskman ticket</gco:CharacterString>
+                    </cit:name>
+                    <cit:function>
+                      <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                                 codeListValue="information"/>
+                    </cit:function>
+                  </cit:CI_OnlineResource>
+                </mrd:onLine>
+              </snippet>
+            </template>
+          </action>
+
+          <field name="eea-taskman-ticket"
+                 xpath="/mdb:MD_Metadata/mdb:distributionInfo/*/mrd:transferOptions/*/mrd:onLine/*/cit:linkage[starts-with(*/text(), 'https://taskman.eionet.europa.eu/issues')]"/>
+
+          <field name="overviews"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:graphicOverview/*/mcc:fileName"/>
+
+          <action type="add"
+                  btnLabel="eea-add-overview"
+                  if="(count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+                                    'nonGeographicDataset'])
+                      + count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:graphicOverview)) = 0"
+                  or="graphicOverview"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:graphicOverview>
+                  <mcc:MD_BrowseGraphic>
+                    <mcc:fileName>
+                      <gco:CharacterString>https://sdi.eea.europa.eu/public/catalogue-graphic-overview/REPLACEBYUUID.png</gco:CharacterString>
+                    </mcc:fileName>
+                  </mcc:MD_BrowseGraphic>
+                </mri:graphicOverview>
+              </snippet>
+            </template>
+          </action>
+          <text if="(count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+                                    'nonGeographicDataset'])
+                      + count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:graphicOverview)) = 0"
+                ref="eea-add-overview-help"/>
+
+        </section>
+
+
+        <section name="eea-classification">
+          <text ref="eea-classification-help"/>
+
+          <section name="eea-topic">
+            <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:topicCategory"/>
+            <text ref="eea-topic-help"/>
+          </section>
+
+          <field name="eea-keyword-inspire"
+                 if="not(contains(mdb:MD_Metadata/
+                                    mdb:metadataScope/*/mdb:resourceScope/*/@codeListValue,
+                                    'nonGeographicDataset'))"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']"/>
+
+          <action type="add"
+                  btnLabel="eea-add-inspiretheme"
+                  if="(count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+                                    'nonGeographicDataset'])
+                      + count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'GEMET - INSPIRE themes, version 1.0'])) = 0"
+                  or="descriptiveKeywords"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:descriptiveKeywords>
+                  <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing">
+                      <gcx:Anchor xlink:href=""/>
+                    </mri:keyword>
+                    <mri:type>
+                      <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </mri:type>
+                    <mri:thesaurusName>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gcx:Anchor xlink:href="http://inspire.ec.europa.eu/theme">GEMET - INSPIRE themes, version 1.0</gcx:Anchor>
+                        </cit:title>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              <gco:Date>2008-06-01</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <cit:identifier>
+                          <mcc:MD_Identifier>
+                            <mcc:code>
+                              <gcx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme">geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme</gcx:Anchor>
+                            </mcc:code>
+                          </mcc:MD_Identifier>
+                        </cit:identifier>
+                      </cit:CI_Citation>
+                    </mri:thesaurusName>
+                  </mri:MD_Keywords>
+                </mri:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+          <text if="not(contains(mdb:MD_Metadata/
+                                    mdb:metadataScope/*/mdb:resourceScope/*/@codeListValue,
+                                    'nonGeographicDataset'))"
+                ref="eea-inspire-help"/>
+          <field name="eea-keyword-gemet"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'GEMET']"/>
+
+          <action type="add"
+                  btnLabel="eea-add-gemet"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'GEMET']) = 0"
+                  or="descriptiveKeywords"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:descriptiveKeywords>
+                  <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </mri:keyword>
+                    <mri:type>
+                      <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </mri:type>
+                    <mri:thesaurusName>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gco:CharacterString>GEMET</gco:CharacterString>
+                        </cit:title>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              <gco:Date>2018-08-16</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <cit:identifier>
+                          <mcc:MD_Identifier>
+                            <mcc:code>
+                              <gcx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gcx:Anchor>
+                            </mcc:code>
+                          </mcc:MD_Identifier>
+                        </cit:identifier>
+                      </cit:CI_Citation>
+                    </mri:thesaurusName>
+                  </mri:MD_Keywords>
+                </mri:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-gemet-help"/>
+
+
+
+
+          <field name="eea-keyword-rod"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'Reporting obligations']"/>
+
+          <action type="add"
+                  btnLabel="eea-add-rod"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'Reporting obligations']) = 0"
+                  or="descriptiveKeywords"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:descriptiveKeywords>
+                  <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </mri:keyword>
+                    <mri:type>
+                      <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </mri:type>
+                    <mri:thesaurusName>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gco:CharacterString>Reporting obligations</gco:CharacterString>
+                        </cit:title>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              <gco:Date>2021-08-25</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <cit:identifier>
+                          <mcc:MD_Identifier>
+                            <mcc:code>
+                              <gcx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.rod-eionet-europa-eu">geonetwork.thesaurus.external.theme.rod-eionet-europa-eu</gcx:Anchor>
+                            </mcc:code>
+                          </mcc:MD_Identifier>
+                        </cit:identifier>
+                      </cit:CI_Citation>
+                    </mri:thesaurusName>
+                  </mri:MD_Keywords>
+                </mri:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+
+          <text ref="eea-keyword-rod-help"/>
+
+          <field name="eea-keyword-eeamp"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA Management Plan']"/>
+
+          <action type="add"
+                  btnLabel="eea-add-eeamp"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA Management Plan']) = 0"
+                  or="descriptiveKeywords"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:descriptiveKeywords>
+                  <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </mri:keyword>
+                    <mri:type>
+                      <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </mri:type>
+                    <mri:thesaurusName>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gco:CharacterString>EEA Management Plan</gco:CharacterString>
+                        </cit:title>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              <gco:Date>2021-08-25</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <cit:identifier>
+                          <mcc:MD_Identifier>
+                            <mcc:code>
+                              <gcx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/local.theme.eea-mp">geonetwork.thesaurus.local.theme.eea-mp</gcx:Anchor>
+                            </mcc:code>
+                          </mcc:MD_Identifier>
+                        </cit:identifier>
+                      </cit:CI_Citation>
+                    </mri:thesaurusName>
+                  </mri:MD_Keywords>
+                </mri:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-keyword-mp-help"/>
+
+
+          <field if="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'Spatial scope']"/>
+
+          <action type="add"
+                  btnLabel="eea-add-spatial-scope"
+                  if="(count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+                                    'nonGeographicDataset'])
+                      + count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'Spatial scope'])) = 0"
+                  or="descriptiveKeywords"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:descriptiveKeywords>
+                  <mri:MD_Keywords>
+                    <mri:keyword>
+                      <gco:CharacterString>European</gco:CharacterString>
+                    </mri:keyword>
+                    <mri:type>
+                      <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </mri:type>
+                    <mri:thesaurusName>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gco:CharacterString>Spatial scope</gco:CharacterString>
+                        </cit:title>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              <gco:Date>2019-05-22</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <cit:identifier>
+                          <mcc:MD_Identifier>
+                            <mcc:code>
+                              <gcx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope">geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope</gcx:Anchor>
+                            </mcc:code>
+                          </mcc:MD_Identifier>
+                        </cit:identifier>
+                      </cit:CI_Citation>
+                    </mri:thesaurusName>
+                  </mri:MD_Keywords>
+                </mri:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+          <text if="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0"
+                ref="eea-spatialscope-help"/>
+
+          <field name="eea-keyword-spatial"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'Continents, countries, sea regions of the world.']"/>
+
+          <action type="add"
+                  btnLabel="eea-add-keyword-spatial"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'Continents, countries, sea regions of the world.']) = 0"
+                  or="descriptiveKeywords"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:descriptiveKeywords>
+                  <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </mri:keyword>
+                    <mri:type>
+                      <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="place"/>
+                    </mri:type>
+                    <mri:thesaurusName>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gco:CharacterString>Continents, countries, sea regions of the world.</gco:CharacterString>
+                        </cit:title>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              <gco:Date>2015-07-17</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <cit:identifier>
+                          <mcc:MD_Identifier>
+                            <mcc:code>
+                              <gcx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.place.regions">geonetwork.thesaurus.external.place.regions</gcx:Anchor>
+                            </mcc:code>
+                          </mcc:MD_Identifier>
+                        </cit:identifier>
+                      </cit:CI_Citation>
+                    </mri:thesaurusName>
+                  </mri:MD_Keywords>
+                </mri:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-country-help"/>
+
+          <field name="eea-keyword-cat"
+                 xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA categories']"
+          />
+
+          <action type="add"
+                  btnLabel="eea-add-categories"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA categories']) = 0"
+                  or="descriptiveKeywords"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:descriptiveKeywords gco:nilReason="withheld">
+                  <mri:MD_Keywords>
+                    <mri:keyword>
+                      <gco:CharacterString>geospatial data</gco:CharacterString>
+                    </mri:keyword>
+                    <mri:type>
+                      <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </mri:type>
+                    <mri:thesaurusName>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gco:CharacterString>EEA categories</gco:CharacterString>
+                        </cit:title>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              <gco:Date>2010-07-06</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <cit:identifier>
+                          <mcc:MD_Identifier>
+                            <mcc:code>
+                              <gcx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/local.theme.eea-categories">geonetwork.thesaurus.local.theme.eea-categories</gcx:Anchor>
+                            </mcc:code>
+                          </mcc:MD_Identifier>
+                        </cit:identifier>
+                      </cit:CI_Citation>
+                    </mri:thesaurusName>
+                  </mri:MD_Keywords>
+                </mri:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+
+          <text ref="eea-categories-help"
+                displayIfServiceInfo="count(session[profile = 'Administrator']) = 1"/>
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA topics']"/>
+
+          <action type="add"
+                  btnLabel="eea-add-topics"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA topics']) = 0"
+                  or="descriptiveKeywords"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:descriptiveKeywords>
+                  <mri:MD_Keywords>
+                    <mri:type>
+                      <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </mri:type>
+                    <mri:thesaurusName>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gcx:Anchor xlink:href="https://www.eea.europa.eu/themes">EEA topics</gcx:Anchor>
+                        </cit:title>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              <gco:Date>2020-09-24</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <cit:identifier>
+                          <mcc:MD_Identifier>
+                            <mcc:code>
+                              <gcx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.eea-topics">geonetwork.thesaurus.external.theme.eea-topics</gcx:Anchor>
+                            </mcc:code>
+                          </mcc:MD_Identifier>
+                        </cit:identifier>
+                      </cit:CI_Citation>
+                    </mri:thesaurusName>
+                  </mri:MD_Keywords>
+                </mri:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-topics-help"/>
+
+
+          <section name="eea-keyword-list">
+            <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA keyword list']/*/mri:keyword"
+                   or="keyword"
+                   in="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA keyword list']/*"/>
+
+            <action type="add"
+                    btnLabel="eea-add-eea-keywords"
+                    if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA keyword list']) = 0"
+                    or="descriptiveKeywords"
+                    in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+              <template>
+                <snippet>
+                  <mri:descriptiveKeywords gco:nilReason="withheld">
+                    <mri:MD_Keywords>
+                      <mri:keyword gco:nilReason="missing">
+                        <gco:CharacterString/>
+                      </mri:keyword>
+                      <mri:thesaurusName>
+                        <cit:CI_Citation>
+                          <cit:title>
+                            <gco:CharacterString>EEA keyword list</gco:CharacterString>
+                          </cit:title>
+                          <cit:date>
+                            <cit:CI_Date>
+                              <cit:date>
+                                <gco:Date>2002-03-01</gco:Date>
+                              </cit:date>
+                              <cit:dateType>
+                                <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                     codeListValue="publication"/>
+                              </cit:dateType>
+                            </cit:CI_Date>
+                          </cit:date>
+                        </cit:CI_Citation>
+                      </mri:thesaurusName>
+                    </mri:MD_Keywords>
+                  </mri:descriptiveKeywords>
+                </snippet>
+              </template>
+            </action>
+            <text ref="eea-keywords-help"/>
+          </section>
+
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'INSPIRE priority data set']"/>
+        </section>
+
+        <section name="eea-coverage"
+                 displayIfRecord="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0">
+          <field  xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:extent/*/gex:geographicElement"/>
+          <action type="add"
+                  btnLabel="eea-add-extent"
+                  or="extent"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:extent>
+                  <gex:EX_Extent>
+                    <gex:geographicElement>
+                      <gex:EX_GeographicBoundingBox>
+                        <gex:westBoundLongitude>
+                          <gco:Decimal></gco:Decimal>
+                        </gex:westBoundLongitude>
+                        <gex:eastBoundLongitude>
+                          <gco:Decimal></gco:Decimal>
+                        </gex:eastBoundLongitude>
+                        <gex:southBoundLatitude>
+                          <gco:Decimal></gco:Decimal>
+                        </gex:southBoundLatitude>
+                        <gex:northBoundLatitude>
+                          <gco:Decimal></gco:Decimal>
+                        </gex:northBoundLatitude>
+                      </gex:EX_GeographicBoundingBox>
+                    </gex:geographicElement>
+                  </gex:EX_Extent>
+                </mri:extent>
+              </snippet>
+            </template>
+          </action>
+
+          <text if="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0"
+                ref="eea-bbox-help"/>
+
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement"/>
+
+          <action type="add"
+                  btnLabel="eea-add-temporal-extent"
+                  or="extent"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:extent>
+                  <gex:EX_Extent>
+                    <gex:temporalElement>
+                      <gex:EX_TemporalExtent>
+                        <gex:extent>
+                          <gml:TimePeriod>
+                            <gml:beginPosition/>
+                            <gml:endPosition/>
+                          </gml:TimePeriod>
+                        </gex:extent>
+                      </gex:EX_TemporalExtent>
+                    </gex:temporalElement>
+                  </gex:EX_Extent>
+                </mri:extent>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-temporal-help"/>
+        </section>
+
+        <section displayIfRecord="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+                                    'nonGeographicDataset']) = 1">
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement"/>
+
+          <action type="add"
+                  btnLabel="eea-add-temporal-extent"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo//gex:temporalElement) = 0"
+                  or="extent"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:extent>
+                  <gex:EX_Extent>
+                    <gex:temporalElement>
+                      <gex:EX_TemporalExtent>
+                        <gex:extent>
+                          <gml:TimePeriod>
+                            <gml:beginPosition/>
+                            <gml:endPosition/>
+                          </gml:TimePeriod>
+                        </gex:extent>
+                      </gex:EX_TemporalExtent>
+                    </gex:temporalElement>
+                  </gex:EX_Extent>
+                </mri:extent>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-temporal-help"/>
+        </section>
+
+
+        <section name="eea-technical-details"
+                 displayIfRecord="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0">
+
+          <field xpath="/mdb:MD_Metadata/mdb:referenceSystemInfo/*/mrs:referenceSystemIdentifier"/>
+          <!-- Add one of the CRS proposed using the dropdown -->
+          <action type="add"
+                  btnLabel="addCrs"
+                  name="referenceSystemInfo" or="referenceSystemInfo"
+                  in="/mdb:MD_Metadata">
+            <template>
+              <!-- TODO: Update list to use INSPIRE TG2 encoding -->
+              <snippet label="addCrs4326">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/4326">EPSG:4326</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs4258">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/4258">EPSG:4258</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs3035">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/3035">EPSG:3035</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32628">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/32628">EPSG:32628</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32629">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/32629">EPSG:32629</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32630">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/32630">EPSG:32630</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32631">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/32631">EPSG:32631</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32632">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/32632">EPSG:32632</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32633">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/32633">EPSG:32633</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32634">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/32634">EPSG:32634</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32635">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/32635">EPSG:32635</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+              <snippet label="addCrs32740">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/32740">EPSG:32740</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
+            </template>
+          </action>
+
+          <text ref="eea-crs-help"/>
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:spatialRepresentationType"
+                 or="spatialRepresentationType"
+                 in="/mdb:MD_Metadata/mdb:identificationInfo/*"/>
+
+          <!-- -Display action only if none set. -->
+          <action type="add"
+                  btnLabel="addSpatialRepresentationType"
+                  or="spatialRepresentationType"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:spatialRepresentationType/*/@codeListValue) = 0"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:spatialRepresentationType>
+                  <mcc:MD_SpatialRepresentationTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
+                                                        codeListValue=""/>
+                </mri:spatialRepresentationType>
+              </snippet>
+            </template>
+          </action>
+
+          <text ref="eea-spatialreptype-help"/>
+
+
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/
+                    */mri:spatialResolution//mri:equivalentScale/*/mri:denominator"
+                 del="../../../.."/>
+
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/
+                    */mri:spatialResolution//mri:distance"
+                 del="../.."/>
+          <!--
+          if="count(mdb:MD_Metadata/mdb:identificationInfo[*/gmd:spatialRepresentationType/*/@codeListValue = 'vector']) = 1"
+          -->
+          <action type="add" btnLabel="spatialResolution" or="spatialResolution"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:spatialResolution>
+                  <mri:MD_Resolution>
+                    <mri:equivalentScale>
+                      <mri:MD_RepresentativeFraction>
+                        <mri:denominator>
+                          <gco:Integer/>
+                        </mri:denominator>
+                      </mri:MD_RepresentativeFraction>
+                    </mri:equivalentScale>
+                  </mri:MD_Resolution>
+                </mri:spatialResolution>
+              </snippet>
+            </template>
+          </action>
+
+          <!--
+          if="count(mdb:MD_Metadata/mdb:identificationInfo[*/gmd:spatialRepresentationType/*/@codeListValue = 'grid']) = 1"
+          -->
+          <action type="add" btnLabel="spatialDistance" or="spatialResolution"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:spatialResolution>
+                  <mri:MD_Resolution>
+                    <mri:distance>
+                      <gco:Distance uom="m"/>
+                    </mri:distance>
+                  </mri:MD_Resolution>
+                </mri:spatialResolution>
+              </snippet>
+            </template>
+          </action>
+
+          <text ref="eea-spatialresolution-help"/>
+
+
+
+          <field name="eea-mmu"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
+                          mdq:nameOfMeasure = 'Minimum Mapping Unit']/mdq:result/*/mdq:value"/>
+
+          <field name="eea-mmw"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
+                          mdq:nameOfMeasure = 'Minimum Mapping Width']/mdq:result/*/mdq:value"/>
+
+          <action type="add" btnLabel="eea-mmu" or="report"
+                  in="/mdb:MD_Metadata/mdb:dataQualityInfo/*"
+                  if="count(mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report[
+                          */mdq:nameOfMeasure = 'Minimum Mapping Unit']) = 0">
+            <template>
+              <snippet>
+                <mdq:report>
+                  <mdq:DQ_AbsoluteExternalPositionalAccuracy>
+                    <mdq:nameOfMeasure>
+                      <gco:CharacterString>Minimum Mapping Unit</gco:CharacterString>
+                    </mdq:nameOfMeasure>
+                    <mdq:result>
+                      <mdq:DQ_QuantitativeResult>
+                        <mdq:valueUnit>
+                          <gml:UnitDefinition gml:id="d3888e669a1051934">
+                            <gml:identifier codeSpace="">ha</gml:identifier>
+                          </gml:UnitDefinition>
+                        </mdq:valueUnit>
+                        <mdq:value>
+                          <gco:Record/>
+                        </mdq:value>
+                      </mdq:DQ_QuantitativeResult>
+                    </mdq:result>
+                  </mdq:DQ_AbsoluteExternalPositionalAccuracy>
+                </mdq:report>
+              </snippet>
+            </template>
+          </action>
+          <action type="add" btnLabel="eea-mmw" or="report"
+                  in="/mdb:MD_Metadata/mdb:dataQualityInfo/*"
+                  if="count(mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report[
+                          */mdq:nameOfMeasure = 'Minimum Mapping Width']) = 0">
+            <template>
+              <snippet>
+                <mdq:report>
+                  <mdq:DQ_AbsoluteExternalPositionalAccuracy>
+                    <mdq:nameOfMeasure>
+                      <gco:CharacterString>Minimum Mapping Width</gco:CharacterString>
+                    </mdq:nameOfMeasure>
+                    <mdq:result/>
+                    <mdq:result>
+                      <mdq:DQ_QuantitativeResult>
+                        <mdq:valueUnit>
+                          <gml:UnitDefinition gml:id="d3433e675a1051934">
+                            <gml:identifier codeSpace="">m</gml:identifier>
+                          </gml:UnitDefinition>
+                        </mdq:valueUnit>
+                        <mdq:value>
+                          <gco:Record/>
+                        </mdq:value>
+                      </mdq:DQ_QuantitativeResult>
+                    </mdq:result>
+                  </mdq:DQ_AbsoluteExternalPositionalAccuracy>
+                </mdq:report>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-mmuw-help"/>
+
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'Temporal resolution']"/>
+
+          <action type="add"
+                  btnLabel="eea-add-temporal-resolution"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'Temporal resolution']) = 0"
+                  or="descriptiveKeywords"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:descriptiveKeywords>
+                  <mri:MD_Keywords>
+                    <mri:type>
+                      <mri:MD_KeywordTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="temporal"/>
+                    </mri:type>
+                    <mri:thesaurusName>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gco:CharacterString>Temporal resolution</gco:CharacterString>
+                        </cit:title>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              <gco:Date>2017-11-07</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <cit:identifier>
+                          <mcc:MD_Identifier>
+                            <mcc:code>
+                              <gcx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                                          xlink:href="https://sdi.eea.europa.eu/catalogue/srv/eng/thesaurus.download?ref=local.temporal.temporal-update">geonetwork.thesaurus.local.temporal.temporal-update</gcx:Anchor>
+                            </mcc:code>
+                          </mcc:MD_Identifier>
+                        </cit:identifier>
+                      </cit:CI_Citation>
+                    </mri:thesaurusName>
+                  </mri:MD_Keywords>
+                </mri:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-temporalresolution-help"/>
+
+        </section>
+
+        <section name="eea-statistical-data-details"
+                 displayIfRecord="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA categories' and */mri:keyword/gco:CharacterString/text() = 'statistical data']) = 1">
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[contains(*/mri:thesaurusName/*/cit:title/*/text(), 'Unit of measure')]"/>
+          <action type="add"
+                  btnLabel="eea-add-unit-of-measure"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[contains(*/mri:thesaurusName/*/cit:title/*/text(), 'Unit of measure')]) = 0"
+                  or="descriptiveKeywords"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:descriptiveKeywords>
+                  <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </mri:keyword>
+                    <mri:type>
+                      <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </mri:type>
+                    <mri:thesaurusName>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gco:CharacterString>Unit of measure</gco:CharacterString>
+                        </cit:title>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              <gco:Date>2024-10-07</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <cit:identifier>
+                          <mcc:MD_Identifier>
+                            <mcc:code>
+                              <gcx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/api/registries/vocabularies/local.theme.eea-unit-of-measurement">geonetwork.thesaurus.local.theme.eea-unit-of-measurement</gcx:Anchor>
+                            </mcc:code>
+                          </mcc:MD_Identifier>
+                        </cit:identifier>
+                      </cit:CI_Citation>
+                    </mri:thesaurusName>
+                  </mri:MD_Keywords>
+                </mri:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() ='Available breakdowns']"/>
+          <action type="add"
+                  btnLabel="eea-add-available-breakdowns"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'Available breakdowns']) = 0"
+                  or="descriptiveKeywords"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:descriptiveKeywords>
+                  <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </mri:keyword>
+                    <mri:type>
+                      <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </mri:type>
+                    <mri:thesaurusName>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gco:CharacterString>Available breakdowns</gco:CharacterString>
+                        </cit:title>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              <gco:Date>2024-09-30</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <cit:identifier>
+                          <mcc:MD_Identifier>
+                            <mcc:code>
+                              <gcx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/local.theme.eea-available-breakdowns">geonetwork.thesaurus.local.theme.eea-available-breakdowns</gcx:Anchor>
+                            </mcc:code>
+                          </mcc:MD_Identifier>
+                        </cit:identifier>
+                      </cit:CI_Citation>
+                    </mri:thesaurusName>
+                  </mri:MD_Keywords>
+                </mri:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[contains(*/mri:thesaurusName/*/cit:title/*/text(), 'Reference period')]"/>
+          <action type="add"
+                  btnLabel="eea-add-reference-period"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[contains(*/mri:thesaurusName/*/cit:title/*/text(), 'Reference period')]) = 0"
+                  or="descriptiveKeywords"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:descriptiveKeywords>
+                  <mri:MD_Keywords>
+                    <mri:keyword>
+                      <gco:CharacterString></gco:CharacterString>
+                    </mri:keyword>
+                    <mri:type>
+                      <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </mri:type>
+                    <mri:thesaurusName>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gco:CharacterString>Reference period</gco:CharacterString>
+                        </cit:title>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              <gco:Date>2024-03-11</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <cit:identifier>
+                          <mcc:MD_Identifier>
+                            <mcc:code>
+                              <gcx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/local.theme.eea-stat-reference-period">geonetwork.thesaurus.local.theme.eea-stat-reference-period</gcx:Anchor>
+                            </mcc:code>
+                          </mcc:MD_Identifier>
+                        </cit:identifier>
+                      </cit:CI_Citation>
+                    </mri:thesaurusName>
+                  </mri:MD_Keywords>
+                </mri:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+
+
+          <field name="Frequency of dissemination - Grade"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
+                          mdq:nameOfMeasure/*/text() = 'Frequency of dissemination']/mdq:result/*/mdq:value"
+                 del="ancestor::mdq:report"
+                 use="data-gn-keyword-picker">
+            <directiveAttributes data-thesaurus-key="local.theme.eea-stat-frequency-of-dissemination-grade"/>
+          </field>
+          <field name="Frequency of dissemination - Comment"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
+                          mdq:nameOfMeasure/*/text() = 'Frequency of dissemination']/mdq:measureDescription"/>
+
+          <field name="Timeliness - Grade"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
+                          mdq:nameOfMeasure/*/text() = 'Timeliness']/mdq:result/*/mdq:value"
+                 del="ancestor::mdq:report"
+                 use="data-gn-keyword-picker">
+            <directiveAttributes data-thesaurus-key="local.theme.eea-stat-timeliness-grade"/>
+          </field>
+          <field name="Timeliness - Comment"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
+                          mdq:nameOfMeasure/*/text() = 'Timeliness']/mdq:measureDescription"/>
+
+          <field name="Reference area - Grade"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
+                          mdq:nameOfMeasure/*/text() = 'Reference area']/mdq:result/*/mdq:value"
+                 del="ancestor::mdq:report"
+                 use="data-gn-keyword-picker">
+            <directiveAttributes data-thesaurus-key="local.theme.eea-stat-reference-area-grade"/>
+          </field>
+          <field name="Reference area - Comment"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
+                          mdq:nameOfMeasure/*/text() = 'Reference area']/mdq:measureDescription"/>
+
+          <field name="Comparability - geographical - Grade"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
+                          mdq:nameOfMeasure/*/text() = 'Comparability - geographical']/mdq:result/*/mdq:value"
+                 del="ancestor::mdq:report"
+                 use="data-gn-keyword-picker">
+            <directiveAttributes data-thesaurus-key="local.theme.eea-stat-comparability-geographical-grade"/>
+          </field>
+          <field name="Comparability - geographical - Comment"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
+                          mdq:nameOfMeasure/*/text() = 'Comparability - geographical']/mdq:measureDescription"/>
+
+          <field name="Time coverage - Grade"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
+                          mdq:nameOfMeasure/*/text() = 'Time coverage']/mdq:result/*/mdq:value"
+                 del="ancestor::mdq:report"
+                 use="data-gn-keyword-picker">
+            <directiveAttributes data-thesaurus-key="local.theme.eea-stat-time-coverage-grade"/>
+          </field>
+          <field name="Time Coverage - Comment"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
+                          mdq:nameOfMeasure/*/text() = 'Time coverage']/mdq:measureDescription"/>
+
+          <field name="Comparability - over time - Grade"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
+                          mdq:nameOfMeasure/*/text() = 'Comparability - over time']/mdq:result/*/mdq:value"
+                 del="ancestor::mdq:report"
+                 use="data-gn-keyword-picker">
+            <directiveAttributes data-thesaurus-key="local.theme.eea-stat-comparability-overtime-grade"/>
+          </field>
+          <field name="Comparability - over time - Comment"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
+                          mdq:nameOfMeasure/*/text() = 'Comparability - over time']/mdq:measureDescription"/>
+
+          <action type="add"
+                  btnLabel="eea-add-statistical-measures"
+                  or="report"
+                  in="/mdb:MD_Metadata/mdb:dataQualityInfo/*">
+            <template>
+              <snippet label="eea-measure-frequency-of-dissemination">
+                <mdq:report>
+                  <mdq:DQ_AccuracyOfATimeMeasurement>
+                    <mdq:nameOfMeasure>
+                      <gco:CharacterString>Frequency of dissemination</gco:CharacterString>
+                    </mdq:nameOfMeasure>
+                    <mdq:measureDescription>
+                      <gco:CharacterString></gco:CharacterString>
+                    </mdq:measureDescription>
+                    <mdq:result>
+                      <mdq:DQ_QuantitativeResult>
+                        <mdq:valueUnit>
+                          <gml:BaseUnit gml:id="d22718e609a1051924">
+                            <gml:identifier codeSpace=""/>
+                            <gml:unitsSystem/>
+                          </gml:BaseUnit>
+                        </mdq:valueUnit>
+                        <mdq:value>
+                          <gco:Record></gco:Record>
+                        </mdq:value>
+                      </mdq:DQ_QuantitativeResult>
+                    </mdq:result>
+                  </mdq:DQ_AccuracyOfATimeMeasurement>
+                </mdq:report>
+              </snippet>
+              <snippet label="eea-measure-timeliness">
+                <mdq:report>
+                  <mdq:DQ_AccuracyOfATimeMeasurement>
+                    <mdq:nameOfMeasure>
+                      <gco:CharacterString>Timeliness</gco:CharacterString>
+                    </mdq:nameOfMeasure>
+                    <mdq:measureDescription>
+                      <gco:CharacterString></gco:CharacterString>
+                    </mdq:measureDescription>
+                    <mdq:result>
+                      <mdq:DQ_QuantitativeResult>
+                        <mdq:valueUnit>
+                          <gml:BaseUnit gml:id="d22718e609a1051924">
+                            <gml:identifier codeSpace=""/>
+                            <gml:unitsSystem/>
+                          </gml:BaseUnit>
+                        </mdq:valueUnit>
+                        <mdq:value>
+                          <gco:Record></gco:Record>
+                        </mdq:value>
+                      </mdq:DQ_QuantitativeResult>
+                    </mdq:result>
+                  </mdq:DQ_AccuracyOfATimeMeasurement>
+                </mdq:report>
+              </snippet>
+              <snippet label="eea-measure-reference-area">
+                <mdq:report>
+                  <mdq:DQ_QuantitativeAttributeAccuracy>
+                    <mdq:nameOfMeasure>
+                      <gco:CharacterString>Reference area</gco:CharacterString>
+                    </mdq:nameOfMeasure>
+                    <mdq:measureDescription>
+                      <gco:CharacterString></gco:CharacterString>
+                    </mdq:measureDescription>
+                    <mdq:result>
+                      <mdq:DQ_QuantitativeResult>
+                        <mdq:valueUnit>
+                          <gml:BaseUnit gml:id="d22718e609a1052934">
+                            <gml:identifier codeSpace=""/>
+                            <gml:unitsSystem/>
+                          </gml:BaseUnit>
+                        </mdq:valueUnit>
+                        <mdq:value>
+                          <gco:Record></gco:Record>
+                        </mdq:value>
+                      </mdq:DQ_QuantitativeResult>
+                    </mdq:result>
+                  </mdq:DQ_QuantitativeAttributeAccuracy>
+                </mdq:report>
+              </snippet>
+              <snippet label="eea-measure-comparability-geo">
+                <mdq:report>
+                  <mdq:DQ_DomainConsistency>
+                    <mdq:nameOfMeasure>
+                      <gco:CharacterString>Comparability - geographical</gco:CharacterString>
+                    </mdq:nameOfMeasure>
+                    <mdq:measureDescription>
+                      <gco:CharacterString></gco:CharacterString>
+                    </mdq:measureDescription>
+                    <mdq:result>
+                      <mdq:DQ_QuantitativeResult>
+                        <mdq:valueUnit>
+                          <gml:BaseUnit gml:id="d22718e609a1051934">
+                            <gml:identifier codeSpace=""/>
+                            <gml:unitsSystem/>
+                          </gml:BaseUnit>
+                        </mdq:valueUnit>
+                        <mdq:value>
+                          <gco:Record></gco:Record>
+                        </mdq:value>
+                      </mdq:DQ_QuantitativeResult>
+                    </mdq:result>
+                  </mdq:DQ_DomainConsistency>
+                </mdq:report>
+              </snippet>
+              <snippet label="eea-measure-time-coverage">
+                <mdq:report>
+                  <mdq:DQ_DomainConsistency>
+                    <mdq:nameOfMeasure>
+                      <gco:CharacterString>Time coverage</gco:CharacterString>
+                    </mdq:nameOfMeasure>
+                    <mdq:measureDescription>
+                      <gco:CharacterString></gco:CharacterString>
+                    </mdq:measureDescription>
+                    <mdq:result>
+                      <mdq:DQ_QuantitativeResult>
+                        <mdq:valueUnit>
+                          <gml:BaseUnit gml:id="d9765e687a1051934">
+                            <gml:identifier codeSpace=""/>
+                            <gml:unitsSystem/>
+                          </gml:BaseUnit>
+                        </mdq:valueUnit>
+                        <mdq:value>
+                          <gco:Record></gco:Record>
+                        </mdq:value>
+                      </mdq:DQ_QuantitativeResult>
+                    </mdq:result>
+                  </mdq:DQ_DomainConsistency>
+                </mdq:report>
+              </snippet>
+              <snippet label="eea-measure-comparability-overtime">
+                <mdq:report>
+                  <mdq:DQ_DomainConsistency>
+                    <mdq:nameOfMeasure>
+                      <gco:CharacterString>Comparability - over time</gco:CharacterString>
+                    </mdq:nameOfMeasure>
+                    <mdq:measureDescription>
+                      <gco:CharacterString></gco:CharacterString>
+                    </mdq:measureDescription>
+                    <mdq:result>
+                      <mdq:DQ_QuantitativeResult>
+                        <mdq:valueUnit>
+                          <gml:BaseUnit gml:id="d9765e687a1051934">
+                            <gml:identifier codeSpace=""/>
+                            <gml:unitsSystem/>
+                          </gml:BaseUnit>
+                        </mdq:valueUnit>
+                        <mdq:value>
+                          <gco:Record></gco:Record>
+                        </mdq:value>
+                      </mdq:DQ_QuantitativeResult>
+                    </mdq:result>
+                  </mdq:DQ_DomainConsistency>
+                </mdq:report>
+              </snippet>
+            </template>
+          </action>
+        </section>
+
+
+
+        <section name="eea-additional">
+
+          <section forEach="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceMaintenance"
+                   del="."
+                   or="resourceMaintenance"
+                   in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <field xpath="*/mmi:maintenanceAndUpdateFrequency" or="maintenanceAndUpdateFrequency" in="*"/>
+            <field xpath="*/mmi:maintenanceDate" or="maintenanceDate" in="*"/>
+            <field xpath="*/mmi:maintenanceNote" or="maintenanceNote" in="*"/>
+          </section>
+          <text ref="eea-maintenance-help"/>
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:defaultLocale/*/lan:language"/>
+          <text ref="eea-hr"/>
+
+
+          <field name="eea-distributionFormat"
+                 xpath="/mdb:MD_Metadata/mdb:distributionInfo/*/mrd:distributionFormat/*/mrd:formatSpecificationCitation/*/cit:title"
+                 del="../.."/>
+          <action type="add" btnLabel="eea-distributionFormat-add"
+                  class="gn-required"
+                  or="distributionFormat"
+                  in="/mdb:MD_Metadata/mdb:distributionInfo/*">
+            <template>
+              <snippet>
+                <mrd:distributionFormat>
+                  <mrd:MD_Format>
+                    <mrd:formatSpecificationCitation>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gco:CharacterString></gco:CharacterString>
+                        </cit:title>
+                      </cit:CI_Citation>
+                    </mrd:formatSpecificationCitation>
+                  </mrd:MD_Format>
+                </mrd:distributionFormat>
+              </snippet>
+            </template>
+          </action>
+
+
+          <text ref="eea-format-help"
+                if="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+                                    'nonGeographicDataset']) = 0"/>
+          <text ref="eea-format-tabular-help"
+                if="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+                                    'nonGeographicDataset']) = 1"/>
+
+        </section>
+
+
+
+        <section name="eea-dq">
+          <field name="Lineage statement"
+                 xpath="/mdb:MD_Metadata/mdb:resourceLineage/*/mrl:statement"/>
+
+          <action type="add" btnLabel="eea-dq-add"
+                  class="gn-required"
+                  if="count(mdb:MD_Metadata/mdb:resourceLineage) = 0"
+                  or="dataQualityInfo"
+                  in="/mdb:MD_Metadata">
+            <template>
+              <snippet>
+                <mdb:resourceLineage>
+                  <mrl:LI_Lineage>
+                    <mrl:statement gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </mrl:statement>
+                    <mrl:scope>
+                      <mcc:MD_Scope>
+                        <mcc:level>
+                          <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode"
+                                            codeListValue="dataset"/>
+                        </mcc:level>
+                      </mcc:MD_Scope>
+                    </mrl:scope>
+                  </mrl:LI_Lineage>
+                </mdb:resourceLineage>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-lineage"/>
+
+          <!-- Conformity -->
+          <field name="conformity"
+                 templateModeOnly="true"
+                 notDisplayedIfMissing="true"
+                 xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/mdq:DQ_DataQuality/
+                    mdq:report/mdq:DQ_DomainConsistency/mdq:result[count(mdq:DQ_ConformanceResult/mdq:specification/
+                      cit:CI_Citation/cit:title/(gco:CharacterString|gcx:Anchor)) > 0]"
+                 if="(count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue !=
+          'nonGeographicDataset'])
+                     + count(mdb:MD_Metadata/mdb:dataQualityInfo/mdq:DQ_DataQuality/
+                      mdq:report/mdq:DQ_DomainConsistency/mdq:result/mdq:DQ_ConformanceResult/mdq:specification/
+                      cit:CI_Citation/cit:title[(gco:CharacterString|gcx:Anchor)])) > 0"
+                 del="../..">
+            <template>
+              <values>
+                <key label="conformity_desc"
+                     xpath="mdq:DQ_ConformanceResult/mdq:specification/cit:CI_Citation/cit:title/(gco:CharacterString|gcx:Anchor)/text()"
+                     tooltip="mdq:pass">
+                  <helper name="cit:title"
+                          context="/mdb:MD_Metadata/mdb:dataQualityInfo/mdq:DQ_DataQuality/mdq:report/mdq:DQ_DomainConsistency/mdq:result/mdq:DQ_ConformanceResult/mdq:specification/cit:CI_Citation/cit:title"/>
+                </key>
+                <key label="conformity_linkage"
+                     xpath="mdq:DQ_ConformanceResult/mdq:specification/cit:CI_Citation/cit:title/gcx:Anchor/@xlink:href">
+                </key>
+                <key label="conformity_date"
+                     xpath="mdq:DQ_ConformanceResult/mdq:specification/cit:CI_Citation/cit:date/cit:CI_Date/cit:date/gco:Date"
+                     use="gn-date-picker"/>
+                <key label="pass"
+                     xpath="mdq:DQ_ConformanceResult/mdq:pass/gco:Boolean"
+                     use="gn-checkbox-with-nilreason">
+                  <directiveAttributes
+                    data-tag-name="mdq:pass"
+                    data-nilreason="eval#mdq:DQ_ConformanceResult/mdq:pass/@gco:nilReason"
+                    data-labels='{"true": "conformant", "false": "notConformant", "unknown": "notEvaluated"}'/>
+                </key>
+              </values>
+              <snippet>
+                <mdq:result>
+                  <mdq:DQ_ConformanceResult>
+                    <mdq:specification>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gcx:Anchor xlink:href="{{conformity_linkage}}">{{conformity_desc}}</gcx:Anchor>
+                        </cit:title>
+                        <gn:copy select="cit:alternateTitle"/>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              {{conformity_date}}
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode
+                                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                codeListValue="publication"/>
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <gn:copy select="cit:edition"/>
+                        <gn:copy select="cit:editionDate"/>
+                        <gn:copy select="cit:identifier"/>
+                        <gn:copy select="cit:citedResponsibleParty"/>
+                        <gn:copy select="cit:presentationForm"/>
+                        <gn:copy select="cit:series"/>
+                        <gn:copy select="cit:otherCitationDetails"/>
+                        <gn:copy select="cit:collectiveTitle"/>
+                        <gn:copy select="cit:ISBN"/>
+                        <gn:copy select="cit:ISSN"/>
+                      </cit:CI_Citation>
+                    </mdq:specification>
+                    <gn:copy select="mdq:explanation"/>
+                    {{pass}}
+                  </mdq:DQ_ConformanceResult>
+                </mdq:result>
+              </snippet>
+            </template>
+          </field>
+
+
+
+          <action type="add"
+                  class="gn-required"
+                  btnLabel="eea-add-inspire-conformity"
+                  if="(count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+          'nonGeographicDataset'])
+                      + count(mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/mdq:DQ_DomainConsistency[
+                              contains(mdq:result/*/mdq:specification/*/cit:title/(gco:CharacterString|gcx:Anchor), 'No 1089/2010')])) = 0"
+                  or="report"
+                  in="/mdb:MD_Metadata/mdb:dataQualityInfo/*">
+            <template>
+              <snippet>
+                <mdq:report>
+                  <mdq:DQ_DomainConsistency>
+                    <mdq:result>
+                      <mdq:DQ_ConformanceResult>
+                        <mdq:specification>
+                          <cit:CI_Citation>
+                            <cit:title>
+                              <gcx:Anchor xlink:href="http://data.europa.eu/eli/reg/2010/1089">Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</gcx:Anchor>
+                            </cit:title>
+                            <cit:date>
+                              <cit:CI_Date>
+                                <cit:date>
+                                  <gco:Date>2010-12-08</gco:Date>
+                                </cit:date>
+                                <cit:dateType>
+                                  <cit:CI_DateTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</cit:CI_DateTypeCode>
+                                </cit:dateType>
+                              </cit:CI_Date>
+                            </cit:date>
+                          </cit:CI_Citation>
+                        </mdq:specification>
+                        <mdq:explanation>
+                          <gco:CharacterString>See the referenced specification</gco:CharacterString>
+                        </mdq:explanation>
+                        <mdq:pass gco:nilReason="unknown"/>
+                      </mdq:DQ_ConformanceResult>
+                    </mdq:result>
+                  </mdq:DQ_DomainConsistency>
+                </mdq:report>
+              </snippet>
+            </template>
+          </action>
+
+          <text if="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+          'nonGeographicDataset']) = 0"
+                ref="eea-conformity-help"/>
+
+
+          <field name="eea-source-desc"
+                 xpath="/mdb:MD_Metadata/mdb:resourceLineage/*/mrl:source/*/mrl:description"/>
+
+
+          <action type="associatedResource"
+                  name="eea-add-source"
+                  process="source">
+            <directiveAttributes>{ "sources": {
+              "metadataStore": {
+              "label": "linkToSource",
+              "params": {
+              "isTemplate": "n",
+              "from": 1,
+              "to": 10
+              }},
+              "remoteurl": {
+              "multiple": false
+              }}}</directiveAttributes>
+          </action>
+
+          <text ref="eea-add-source-help"/>
+
+          <action type="associatedResource"
+                  name="eea-add-isrevision"
+                  process="siblings">
+            <directiveAttributes>{"associationType": "isRevisionOf"}</directiveAttributes>
+          </action>
+
+          <text ref="eea-add-isrevision-help"/>
+        </section>
+
+
+        <section name="eea-accessConstraints"
+                 displayIfRecord="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+          'nonGeographicDataset']) = 0">
+          <action type="add" btnLabel="eea-accessConstraints-add"
+                  if="count(*/mdb:identificationInfo/*/mri:resourceConstraints/*[mco:accessConstraints]) = 0"
+                  or="resourceConstraints"
+                  in="/*/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:resourceConstraints>
+                  <mco:MD_LegalConstraints>
+                    <mco:accessConstraints>
+                      <mco:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                                              codeListValue="otherRestrictions"/>
+                    </mco:accessConstraints>
+                    <mco:otherConstraints>
+                      <gcx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">no limitations to public access</gcx:Anchor>
+                    </mco:otherConstraints>
+                  </mco:MD_LegalConstraints>
+                </mri:resourceConstraints>
+              </snippet>
+            </template>
+          </action>
+
+          <field xpath="/*/mdb:identificationInfo/*/mri:resourceConstraints/*/mco:accessConstraints"
+                 del="../.."/>
+
+          <field xpath="/*/mdb:identificationInfo/*/mri:resourceConstraints/*[mco:accessConstraints]/mco:otherConstraints"
+                 del="../.."
+                 use="data-gn-keyword-picker">
+            <directiveAttributes data-thesaurus-key="external.theme.httpinspireeceuropaeumetadatacodelistLimitationsOnPublicAccess-LimitationsOnPublicAccess"
+                                 data-display-definition="true"
+                                 data-show-hints-on-focus="true"
+                                 data-thesaurus-concept-id-attribute="xlinkCOLONhref"/>
+          </field>
+
+
+          <text ref="eea-accessConstraints-help"/>
+        </section>
+
+
+        <section name="eea-useConstraints">
+          <field xpath="/*/mdb:identificationInfo/*/mri:resourceConstraints/*/mco:useConstraints"
+                 if="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+          'nonGeographicDataset']) = 0"
+                 del="../.."/>
+          <field name="eea-useConstraints"
+                 xpath="/*/mdb:identificationInfo/*/mri:resourceConstraints/*[mco:useConstraints]/mco:otherConstraints"
+                 del="../.."/>
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceConstraints/*/mco:useLimitation"/>
+
+
+          <action type="add" btnLabel="eea-useConstraints-add"
+                  if="count(*/mdb:identificationInfo/*/mri:resourceConstraints/*[mco:useConstraints]) = 0"
+                  or="resourceConstraints"
+                  in="/*/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:resourceConstraints>
+                  <mco:MD_LegalConstraints>
+                    <mco:useConstraints>
+                      <mco:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                                              codeListValue="otherRestrictions"/>
+                    </mco:useConstraints>
+                    <mco:otherConstraints>
+                      <gco:CharacterString>EEA standard re-use policy: unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged (http://www.eea.europa.eu/legal/copyright). Copyright holder: European Environment Agency (EEA).</gco:CharacterString>
+                    </mco:otherConstraints>
+                  </mco:MD_LegalConstraints>
+                </mri:resourceConstraints>
+              </snippet>
+            </template>
+          </action>
+
+          <text ref="eea-resourceConstraints-help"
+                if="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+          'nonGeographicDataset']) = 0"/>
+          <text ref="eea-resourceConstraints-tabular-help"
+                if="count(mdb:MD_Metadata/mdb:metadataScope/*/mdb:resourceScope[*/@codeListValue =
+          'nonGeographicDataset']) = 1"/>
+        </section>
+
+        <!--
+                <section name="eea-resourceConstraints">
+                  <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceConstraints/mco:MD_LegalConstraints/mco:accessConstraints"/>
+                  <text ref="eea-accessConstraints-help"/>
+                  <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceConstraints/mco:MD_LegalConstraints/mco:otherConstraints"
+                         use="data-gn-keyword-picker">
+                    <directiveAttributes data-thesaurus-key="external.theme.httpinspireeceuropaeumetadatacodelistLimitationsOnPublicAccess-LimitationsOnPublicAccess"
+                                         data-display-definition="true"
+                                         data-thesaurus-concept-id-attribute="xlinkCOLONhref"/>
+                  </field>
+                  <text ref="eea-otherConstraints-help"/>
+                  <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceConstraints/*/mco:useLimitation"/>
+                  <text ref="eea-resourceConstraints-help"/>
+                </section>
+        -->
+
+
+        <section name="eea-contacts">
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:pointOfContact"
+                 or="pointOfContact" in="/mdb:MD_Metadata/mdb:identificationInfo/*"/>
+
+          <action type="add"
+                  btnLabel="eea-add-principal-investigator"
+                  if="count(*/mdb:identificationInfo/*/mri:pointOfContact/*[cit:role/*/@codeListValue = 'principalInvestigator']) = 0"
+                  or="pointOfContact" in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:pointOfContact gco:nilReason="withheld">
+                  <cit:CI_Responsibility>
+                    <cit:role>
+                      <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode"
+                                       codeListValue="principalInvestigator"/>
+                    </cit:role>
+                    <cit:party>
+                      <cit:CI_Organisation>
+                        <cit:name>
+                          <gco:CharacterString>European Environment Agency</gco:CharacterString>
+                        </cit:name>
+                        <cit:contactInfo>
+                          <cit:CI_Contact>
+                            <cit:address>
+                              <cit:CI_Address>
+                                <cit:deliveryPoint>
+                                  <gco:CharacterString>Kongens Nytorv 6</gco:CharacterString>
+                                </cit:deliveryPoint>
+                                <cit:city>
+                                  <gco:CharacterString>Copenhagen</gco:CharacterString>
+                                </cit:city>
+                                <cit:administrativeArea>
+                                  <gco:CharacterString>K</gco:CharacterString>
+                                </cit:administrativeArea>
+                                <cit:postalCode>
+                                  <gco:CharacterString>1050</gco:CharacterString>
+                                </cit:postalCode>
+                                <cit:country>
+                                  <gco:CharacterString>Denmark</gco:CharacterString>
+                                </cit:country>
+                                <cit:electronicMailAddress>
+                                  <gco:CharacterString>sdi@eea.europa.eu</gco:CharacterString>
+                                </cit:electronicMailAddress>
+                              </cit:CI_Address>
+                            </cit:address>
+                          </cit:CI_Contact>
+                        </cit:contactInfo>
+                      </cit:CI_Organisation>
+                    </cit:party>
+                  </cit:CI_Responsibility>
+                </mri:pointOfContact>
+              </snippet>
+            </template>
+          </action>
+
+
+          <action type="add"
+                  btnLabel="eea-add-originator"
+                  or="pointOfContact" in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:pointOfContact gco:nilReason="withheld">
+                  <cit:CI_Responsibility>
+                    <cit:role>
+                      <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode"
+                                       codeListValue="originator"/>
+                    </cit:role>
+                    <cit:party>
+                      <cit:CI_Organisation>
+                        <cit:name>
+                          <gco:CharacterString>European Environment Agency</gco:CharacterString>
+                        </cit:name>
+                        <cit:contactInfo>
+                          <cit:CI_Contact>
+                            <cit:address>
+                              <cit:CI_Address>
+                                <cit:deliveryPoint>
+                                  <gco:CharacterString>Kongens Nytorv 6</gco:CharacterString>
+                                </cit:deliveryPoint>
+                                <cit:city>
+                                  <gco:CharacterString>Copenhagen</gco:CharacterString>
+                                </cit:city>
+                                <cit:administrativeArea>
+                                  <gco:CharacterString>K</gco:CharacterString>
+                                </cit:administrativeArea>
+                                <cit:postalCode>
+                                  <gco:CharacterString>1050</gco:CharacterString>
+                                </cit:postalCode>
+                                <cit:country>
+                                  <gco:CharacterString>Denmark</gco:CharacterString>
+                                </cit:country>
+                                <cit:electronicMailAddress>
+                                  <gco:CharacterString>sdi@eea.europa.eu</gco:CharacterString>
+                                </cit:electronicMailAddress>
+                              </cit:CI_Address>
+                            </cit:address>
+                          </cit:CI_Contact>
+                        </cit:contactInfo>
+                      </cit:CI_Organisation>
+                    </cit:party>
+                  </cit:CI_Responsibility>
+                </mri:pointOfContact>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-contact-help"/>
+          <!--
+                    <field name="metadata-contact"
+                           xpath="/mdb:MD_Metadata/gmd:contact"
+                           or="contact"
+                           in="/mdb:MD_Metadata"/>-->
+        </section>
+
+      </tab>
+
+      <flatModeExceptions>
+        <for name="mri:keyword"/>
+        <for name="cit:edition"/>
+        <for name="cit:date"/>
+        <for name="mri:status"/>
+        <for name="mri:pointOfContact"/>
+        <for name="mri:spatialRepresentationType"/>
+        <for name="mri:resourceMaintenance"/>
+        <for name="mmi:maintenanceAndUpdateFrequency"/>
+        <for name="mmi:maintenanceNote"/>
+        <for name="mmi:maintenanceDate"/>
+        <for name="mri:supplementalInformation"/>
+        <for name="mrl:lineage"/>
+      </flatModeExceptions>
+    </view>
+
+    <view name="eea-series"
+          displayIfRecord="contains(mdb:MD_Metadata/
+                                     mdb:metadataScope/*/mdb:resourceScope/*/@codeListValue,
+                                   'series')"
+          upAndDownControlHidden="true"
+          hideTimeInCalendar="true"
+          class="gn-indent-colored gn-label-above-input">
+
+      <thesaurusList>
+        <thesaurus key="external.theme.httpinspireeceuropaeutheme-theme"
+                   fieldset="false"
+                   suggestion="true"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory"
+                   fieldset="false"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope"
+                   fieldset="false"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.gemet"
+                   fieldset="false"
+                   suggestion="true"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.eea-topics"
+                   fieldset="false"
+                   suggestion="true"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.rod-eionet-europa-eu"
+                   fieldset="false"
+                   suggestion="true"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+      </thesaurusList>
+      <sidePanel>
+        <directive data-gn-associated-resources-panel="gnCurrentEdit.metadata"
+                   editor-config="eeaseries"/>
+
+        <directive data-gn-overview-manager=""/>
+
+        <text ref="eea-contact"/>
+      </sidePanel>
+
+      <tab id="eea-series-default" default="true" mode="flat">
+        <section name="eea-series-identification">
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/cit:title"/>
+          <text ref="eea-title-help"/>
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/cit:identifier/*/mcc:code"/>
+
+          <action type="add"
+                  btnLabel="eea-add-identifier"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/cit:identifier/*/mcc:code) = 0"
+                  or="identifier"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*">
+            <template>
+              <snippet>
+                <cit:identifier>
+                  <mcc:MD_Identifier>
+                    <mcc:code>
+                      <gco:CharacterString>[Provider_DataType_EpsgCode_ScaleResolution_ScaleResUnit_DatasetShortName_PublicOrInternal_TimeCoverage_VersionNumber_RevisionNumber]</gco:CharacterString>
+                    </mcc:code>
+                  </mcc:MD_Identifier>
+                </cit:identifier>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-identifier-help"/>
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:status"
+                 or="status" in="/mdb:MD_Metadata/mdb:identificationInfo/*"/>
+          <text ref="eea-hr"/>
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:abstract"/>
+          <text ref="eea-abstract-help"/>
+
+        </section>
+
+
+        <section name="eea-series-member-info">
+
+          <text>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="alert alert-info">
+                  Series information (ie. keywords, spatial and temporal extents, contact, languages, spatial representation type) can be computed from its members.
+
+                  Use the buttons below to:
+                  <ul>
+                    <li>Add a new member</li>
+                    <li>Synchronize the series with its members</li>
+                  </ul>
+                </div>
+                <div class="alert alert-warning">
+                  When synchronizing information from the series members you may lose information if you did manual editing of those information. Either do a complete manual encoding of the series information or synchronize it when adding a member. But don't do both.
+                </div>
+              </div>
+            </div>
+          </text>
+
+          <action type="associatedResource"
+                  name="eea-add-member"
+                  process="siblings">
+            <directiveAttributes>{
+              "fields": {"associationType": "isComposedOf"},
+              "sources": {"metadataStore": {"params": {"isTemplate": "n"}}}
+              }</directiveAttributes>
+          </action>
+
+          <action type="process"
+                  process="collection-updater"
+                  btnLabel="collection-updater"
+                  forceLabel="true"
+                  btnClass="fa-refresh"/>
+
+          <section name="eea-classification">
+            <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:topicCategory"/>
+
+            <field name="eea-keyword-inspire"
+                   xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']"/>
+
+            <field name="eea-keyword-gemet"
+                   xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'GEMET']"/>
+
+            <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'Spatial scope']"/>
+
+            <field name="eea-keyword-spatial"
+                   xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'Continents, countries, sea regions of the world.']"/>
+
+            <field name="eea-keyword-cat"
+                   xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA categories']"/>
+
+            <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA topics']"/>
+
+            <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'INSPIRE priority data set']"/>
+
+            <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'Temporal resolution']"/>
+          </section>
+
+          <section name="eea-coverage">
+            <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:extent/*/gex:geographicElement"/>
+
+            <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:extent/*/gex:temporalElement"/>
+          </section>
+
+          <section name="eea-additional">
+
+            <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/cit:date"/>
+
+            <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:defaultLocale"/>
+
+            <field name="eea-distributionFormat"
+                   xpath="/mdb:MD_Metadata/mdb:distributionInfo/*/mrd:distributionFormat/*/mrd:formatSpecificationCitation/*/cit:title"
+                   del="../.."/>
+          </section>
+
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:pointOfContact"/>
+        </section>
+      </tab>
+
+      <flatModeExceptions>
+        <for name="mri:keyword"/>
+        <for name="mri:edition"/>
+        <for name="cit:date"/>
+        <for name="mri:status"/>
+        <for name="mri:pointOfContact"/>
+        <for name="mri:resourceMaintenance"/>
+        <for name="mrl:lineage"/>
+      </flatModeExceptions>
+    </view>
+
     <view name="default"
           default="true"
           class="gn-label-above-input gn-indent-bluescale">
