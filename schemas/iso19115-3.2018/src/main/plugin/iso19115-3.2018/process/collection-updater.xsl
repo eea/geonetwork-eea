@@ -159,7 +159,19 @@
       <xsl:apply-templates select="mri:abstract" mode="expand"/>
       <xsl:apply-templates select="mri:purpose" mode="expand"/>
       <xsl:apply-templates select="mri:credit" mode="expand"/>
-      <xsl:apply-templates select="mri:status" mode="expand"/>
+<!--      <xsl:apply-templates select="mri:status" mode="expand"/>-->
+      <!-- EEA specific -->
+      <xsl:choose>
+        <xsl:when test="count($existingMembers/record) = count($existingMembers/record[.//mdb:identificationInfo/*/mri:status/*/@codeListValue = 'obsolete'])">
+          <mri:status>
+            <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"
+                                 codeListValue="obsolete"/>
+          </mri:status>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="mri:status"/>
+        </xsl:otherwise>
+      </xsl:choose>
 
       <xsl:call-template name="copyOrAddElement">
         <xsl:with-param name="elements" select="mri:pointOfContact"/>
