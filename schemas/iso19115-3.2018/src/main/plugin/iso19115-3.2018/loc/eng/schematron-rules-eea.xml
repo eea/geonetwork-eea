@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<strings>
+    <EEAmetadata.title>Metadata</EEAmetadata.title>
+
+    <EEAhierarchyLevel.report>Record hierarchy level is: </EEAhierarchyLevel.report>
+
+    <EEAPublicationDateMustBeEqualOrAfterCreationDate.alert>Publication date MUST be equal or after creation date.</EEAPublicationDateMustBeEqualOrAfterCreationDate.alert>
+
+    <EEAPublicationDateIsEqualOrAfterCreationDate.alert>Publication date is equal or after creation date.</EEAPublicationDateIsEqualOrAfterCreationDate.alert>
+
+    <EEASRS>Coordinate reference system.</EEASRS>
+    <EEASRS.alert>
+        <div>The Coordinate Reference System shall be referred to with its EPSG code </div>
+    </EEASRS.alert>
+    <EEASRS.report>Coordinate Reference System found: </EEASRS.report>
+
+    <EEATITLE>Citation</EEATITLE>
+    <EEATITLE.alert>Metadata title not found.</EEATITLE.alert>
+    <EEATITLE.report>Metadata title is </EEATITLE.report>
+
+    <EEAPUBDATE.alert>Publication date is not defined for a dataset published on EEA website at URL: </EEAPUBDATE.alert>
+    <EEAPUBDATE.report>Publication date of the dataset on EEA website is </EEAPUBDATE.report>
+
+    <EEACREATIONDATE.alert>Creation date is not defined.</EEACREATIONDATE.alert>
+    <EEACREATIONDATE.report>Creation date is </EEACREATIONDATE.report>
+    <EEAPUBLICATIONDATE.report>Publication date is not defined. The publication date shall be entered at least for datasets published in the EEA website.</EEAPUBLICATIONDATE.report>
+
+    <EEAEDITION.alert>Revision number is empty.</EEAEDITION.alert>
+    <EEAEDITION.report>Dataset edition is </EEAEDITION.report>
+
+    <EEAID.alert>The dataset identifier is missing.</EEAID.alert>
+    <EEAID.report>The dataser identifier is </EEAID.report>
+
+    <EEA_TEMPORAL_RESOLUTION.report>The temporal resolution is </EEA_TEMPORAL_RESOLUTION.report>
+
+    <EEAABSTRACT.alert>The abstract is missing.</EEAABSTRACT.alert>
+    <EEAABSTRACT.report>The dataset is described by an abstract.</EEAABSTRACT.report>
+
+    <EEAPOC.alert>The responsible party acting as point of contact is not described.</EEAPOC.alert>
+    <EEAPOC.report>The dataset point of contact is described.</EEAPOC.report>
+
+    <EEACUSTODIAN.alert>The responsible party acting as custodian is not described and is required for datasets owned by the EEA.</EEACUSTODIAN.alert>
+    <EEACUSTODIAN.report>The dataset custodian is described.</EEACUSTODIAN.report>
+
+    <EEA_UP_FREQ.alert>Update frequency is required for a dataset with a revision number.</EEA_UP_FREQ.alert>
+    <EEA_UP_FREQ.report>Dataset (with an edition number) update frequency is </EEA_UP_FREQ.report>
+
+    <EEA_KEYWORD_GEMET.alert>There shall be more than one keyword from GEMET (3 or 4 is even better).</EEA_KEYWORD_GEMET.alert>
+    <EEA_KEYWORD_GEMET.report> GEMET concept(s) found.</EEA_KEYWORD_GEMET.report>
+
+    <EEA_KEYWORD_Regions.alert>There shall be more than one keyword describing the spatial coverage.</EEA_KEYWORD_Regions.alert>
+    <EEA_KEYWORD_Regions.report> spatial concept(s) found.</EEA_KEYWORD_Regions.report>
+
+    <EEA_KEYWORD_EEA.alert>There shall be one keyword from EEA keywords</EEA_KEYWORD_EEA.alert>
+    <EEA_KEYWORD_EEA.report> EEA keyword(s) found.</EEA_KEYWORD_EEA.report>
+    <EEA_KEYWORD_EEA.error>No keyword from the EEA list has been set.</EEA_KEYWORD_EEA.error>
+
+    <EEA_KEYWORD_EEA_TOPIC.alert>There shall be one EEA topic</EEA_KEYWORD_EEA_TOPIC.alert>
+    <EEA_KEYWORD_EEA_TOPIC.report> EEA topic(s) found.</EEA_KEYWORD_EEA_TOPIC.report>
+    <EEA_KEYWORD_EEA_TOPIC.error>No EEA topic defined.</EEA_KEYWORD_EEA_TOPIC.error>
+
+    <EEA_KEYWORD_SPATIALSCOPE.alert>There shall be one keyword defining the spatial scope</EEA_KEYWORD_SPATIALSCOPE.alert>
+    <EEA_KEYWORD_SPATIALSCOPE.report> Spatial scope keyword(s) found.</EEA_KEYWORD_SPATIALSCOPE.report>
+
+    <EEA_RESCONSTRAINT.alert>No resource constraint found.</EEA_RESCONSTRAINT.alert>
+    <EEA_RESCONSTRAINT.report>Resource constraint is </EEA_RESCONSTRAINT.report>
+
+    <EEA_RESACONSTRAINT.alert>No resource access constraint found.</EEA_RESACONSTRAINT.alert>
+    <EEA_RESACONSTRAINT.report>Resource access constraint is </EEA_RESACONSTRAINT.report>
+
+    <EEA_RESUCONSTRAINT.alert>No resource use constraint found.</EEA_RESUCONSTRAINT.alert>
+    <EEA_RESUCONSTRAINT.report>Resource use constraint is </EEA_RESUCONSTRAINT.report>
+
+    <EEA_SPATIAL_TYPE.alert>No spatial representation type found.</EEA_SPATIAL_TYPE.alert>
+    <EEA_SPATIAL_TYPE.report>The dataset spatial representation type is </EEA_SPATIAL_TYPE.report>
+
+    <EEA_SPATIAL_RESOLUTION.alert>A temporal resolution value shall be encoded for time series datasets.</EEA_SPATIAL_RESOLUTION.alert>
+    <EEA_SPATIAL_RESOLUTION.report>The dataset spatial resolution is </EEA_SPATIAL_RESOLUTION.report>
+
+    <EEA_TEMPORAL.alert>The time period covered by the content of the dataset is not described.</EEA_TEMPORAL.alert>
+    <EEA_TEMPORAL.report>The time period covered by the content of the dataset is described.</EEA_TEMPORAL.report>
+</strings>
