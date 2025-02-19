@@ -17,6 +17,7 @@
         xmlns:msr="http://standards.iso.org/iso/19115/-3/msr/2.0"
         xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0"
         xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0"
+        xmlns:cat="http://standards.iso.org/iso/19115/-3/cat/1.0"
         xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
         xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0"
         xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/2.0"
@@ -1786,7 +1787,6 @@
             </template>
           </action>
           <text ref="eea-temporalresolution-help"/>
-
         </section>
 
         <section name="eea-statistical-data-details"
@@ -2163,6 +2163,162 @@
         </section>
 
 
+        <section name="Data model">
+          <field
+            xpath="/mdb:MD_Metadata/mdb:spatialRepresentationInfo/*/msr:geometricObjects"/>
+
+          <section forEach="/mdb:MD_Metadata/mdb:contentInfo"
+                   name="Table"
+                   del=".">
+
+            <section forEach="*/mrc:featureCatalogue/*/gfc:featureType" del=".">
+              <field xpath="*/gfc:carrierOfCharacteristics"
+                     name="Attribute"/>
+
+              <action type="add"
+                      btnLabel="Add attribute"
+                      or="carrierOfCharacteristics"
+                      in="*">
+                <template>
+                  <snippet>
+                    <gfc:carrierOfCharacteristics>
+                      <gfc:FC_FeatureAttribute>
+                        <gfc:memberName></gfc:memberName>
+                        <gfc:definition gco:nilReason="missing">
+                          <gco:CharacterString/>
+                        </gfc:definition>
+                        <gfc:code gco:nilReason="missing">
+                          <gco:CharacterString></gco:CharacterString>
+                        </gfc:code>
+                        <gfc:cardinality>
+                          <gco:CharacterString>0..1</gco:CharacterString>
+                        </gfc:cardinality>
+                        <gfc:valueType>
+                          <gco:TypeName>
+                            <gco:aName gco:nilReason="missing">
+                              <gco:CharacterString/>
+                            </gco:aName>
+                          </gco:TypeName>
+                        </gfc:valueType>
+                      </gfc:FC_FeatureAttribute>
+                    </gfc:carrierOfCharacteristics>
+                  </snippet>
+                </template>
+              </action>
+            </section>
+
+
+            <action type="add"
+                    btnLabel="Add data model"
+                    or="featureType"
+                    in="/mdb:MD_Metadata/mdb:contentInfo/*/mrc:featureCatalogue/gfc:FC_FeatureCatalogue[not(gfc:featureType)]">
+              <template>
+                <snippet>
+                  <gfc:featureType>
+                    <gfc:FC_FeatureType>
+                      <gfc:typeName></gfc:typeName>
+                      <gfc:isAbstract>
+                        <gco:Boolean>false</gco:Boolean>
+                      </gfc:isAbstract>
+                      <gfc:carrierOfCharacteristics>
+                        <gfc:FC_FeatureAttribute>
+                          <gfc:memberName></gfc:memberName>
+                          <gfc:definition gco:nilReason="missing">
+                            <gco:CharacterString/>
+                          </gfc:definition>
+                          <gfc:code gco:nilReason="missing">
+                            <gco:CharacterString></gco:CharacterString>
+                          </gfc:code>
+                          <gfc:valueType>
+                            <gco:TypeName>
+                              <gco:aName gco:nilReason="missing">
+                                <gco:CharacterString/>
+                              </gco:aName>
+                            </gco:TypeName>
+                          </gfc:valueType>
+                        </gfc:FC_FeatureAttribute>
+                      </gfc:carrierOfCharacteristics>
+                      <gfc:featureCatalogue/>
+                    </gfc:FC_FeatureType>
+                  </gfc:featureType>
+                </snippet>
+              </template>
+            </action>
+          </section>
+
+          <action type="add"
+                  btnLabel="Add data model"
+                  or="contentInfo"
+                  in="/mdb:MD_Metadata"
+                  if="(count(mdb:MD_Metadata/mdb:contentInfo) = 0)">
+            <template>
+              <snippet>
+                <mdb:contentInfo>
+                  <mrc:MD_FeatureCatalogue>
+                    <mrc:featureCatalogue>
+                      <gfc:FC_FeatureCatalogue>
+                        <cat:name gco:nilReason="missing">
+                          <gco:CharacterString></gco:CharacterString>
+                        </cat:name>
+                        <cat:scope gco:nilReason="missing">
+                          <gco:CharacterString/>
+                        </cat:scope>
+                        <cat:versionNumber gco:nilReason="missing">
+                          <gco:CharacterString/>
+                        </cat:versionNumber>
+                        <cat:versionDate>
+                          <gco:Date/>
+                        </cat:versionDate>
+                        <gfc:producer>
+                          <cit:CI_Responsibility>
+                            <cit:role>
+                              <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode"
+                                               codeListValue="author"/>
+                            </cit:role>
+                            <cit:party>
+                              <cit:CI_Organisation>
+                                <cit:name>
+                                  <gco:CharacterString></gco:CharacterString>
+                                </cit:name>
+                              </cit:CI_Organisation>
+                            </cit:party>
+                          </cit:CI_Responsibility>
+                        </gfc:producer>
+                        <gfc:featureType>
+                          <gfc:FC_FeatureType>
+                            <gfc:typeName></gfc:typeName>
+                            <gfc:isAbstract>
+                              <gco:Boolean>false</gco:Boolean>
+                            </gfc:isAbstract>
+                            <gfc:carrierOfCharacteristics>
+                              <gfc:FC_FeatureAttribute>
+                                <gfc:memberName></gfc:memberName>
+                                <gfc:definition gco:nilReason="missing">
+                                  <gco:CharacterString/>
+                                </gfc:definition>
+                                <gfc:code gco:nilReason="missing">
+                                  <gco:CharacterString></gco:CharacterString>
+                                </gfc:code>
+                                <gfc:valueType>
+                                  <gco:TypeName>
+                                    <gco:aName gco:nilReason="missing">
+                                      <gco:CharacterString/>
+                                    </gco:aName>
+                                  </gco:TypeName>
+                                </gfc:valueType>
+                              </gfc:FC_FeatureAttribute>
+                            </gfc:carrierOfCharacteristics>
+                            <gfc:featureCatalogue/>
+                          </gfc:FC_FeatureType>
+                        </gfc:featureType>
+                      </gfc:FC_FeatureCatalogue>
+                    </mrc:featureCatalogue>
+                  </mrc:MD_FeatureCatalogue>
+                </mdb:contentInfo>
+              </snippet>
+            </template>
+          </action>
+        </section>
 
         <section name="eea-additional">
 
