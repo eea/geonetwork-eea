@@ -33,6 +33,9 @@ ENV JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true \
 
 USER root
 
+# Add jetty to the www-data group
+RUN usermod --append --groups www-data jetty
+
 #============================================
 # Google Chrome
 #============================================
