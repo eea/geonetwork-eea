@@ -875,7 +875,8 @@
                 },
                 {
                   types: "onlines",
-                  filter: "-protocol:OGC.*|ESRI:.*|EEA.*|WWW:URL|.*DOWNLOAD.*|.*download.*",
+                  filter:
+                    "-protocol:OGC.*|ESRI:.*|EEA.*|WWW:URL|.*DOWNLOAD.*|.*download.*",
                   title: "links"
                 }
                 // {'types': 'onlines', 'filter': 'function:legend', 'title': 'mapLegend'},
