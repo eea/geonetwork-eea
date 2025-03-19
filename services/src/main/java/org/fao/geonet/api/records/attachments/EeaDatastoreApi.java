@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.fao.geonet.api.ApiUtils;
 import org.fao.geonet.domain.AbstractMetadata;
@@ -51,7 +52,7 @@ import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
 @Tag(name = API_CLASS_RECORD_TAG,
     description = API_CLASS_RECORD_OPS)
 public class EeaDatastoreApi {
-    private static final String EEA_ONLINE_RESOURCES_XPATH = "//gmd:onLine/*/gmd:linkage[starts-with(lower-case(gmd:URL), 'https://sdi.eea.europa.eu/data/%s')]/gmd:URL/text()";
+    private static final String EEA_ONLINE_RESOURCES_XPATH = ".//gmd:onLine/*/gmd:linkage[starts-with(lower-case(gmd:URL), 'https://sdi.eea.europa.eu/data/%s')]/gmd:URL/text()";
     private final NextcloudClient nextcloudClient;
 
     private BaseMetadataUtils baseMetadataUtils;
@@ -65,6 +66,7 @@ public class EeaDatastoreApi {
     @GetMapping(value = "/datastore")
     @ResponseBody
     public String test(@PathVariable String uuid, HttpServletRequest request) throws Exception {
+
         System.out.println("UUID: " + uuid);
         AbstractMetadata metadata = ApiUtils.canViewRecord(uuid, request);
         // Get direct download links
@@ -72,8 +74,8 @@ public class EeaDatastoreApi {
         List<Namespace> allNamespaces = new ArrayList<>(metadataXml.getAdditionalNamespaces());
         allNamespaces.add(metadataXml.getNamespace());
 
-        String xpath = ".//gmd:onLine/*/gmd:linkage[starts-with(lower-case(gmd:URL), 'https://sdi.eea.europa.eu/data/%s')]/gmd:URL/text()";
-        List<Text> links = (List<Text>) Xml.selectNodes(metadataXml, String.format(xpath, uuid),
+
+        List<Text> links = (List<Text>) Xml.selectNodes(metadataXml, String.format(EEA_ONLINE_RESOURCES_XPATH, uuid),
             allNamespaces);
 
         System.out.println("Links:");
@@ -87,14 +89,50 @@ public class EeaDatastoreApi {
 
         String resourceIdentifier = baseMetadataUtils.getResourceIdentifier(uuid);
         System.out.println("Resource Identifier: " + resourceIdentifier);
-        boolean shareExists = checkIfNextcloudShareExists(resourceIdentifier);
-        System.out.println("Share exists: " + shareExists);
+        NextcloudClient.FOLDER_TYPE folderType = getFolderType(resourceIdentifier);
+
+        boolean directoryExists = nextcloudClient.checkIfDirectoryExists(resourceIdentifier, folderType);
+        if (!directoryExists) {
+            // Create the folder and add the metadata file XML
+            nextcloudClient.createFolder(resourceIdentifier, folderType);
+            nextcloudClient.createFile(metadata.getData(), metadata.getUuid() + ".xml", resourceIdentifier, folderType);
+        }
+        List<String> existingShares = checkIfNextcloudShareExists(folderType, resourceIdentifier);
+        System.out.println("Share exists: " + existingShares.stream().collect(Collectors.joining(", ")));
+        if (existingShares.isEmpty()) {
+            // Create a share
+            existingShares.add(nextcloudClient.createShare(resourceIdentifier, folderType));
+        }
 
 
-        return metadata.getUuid();
+        return metadata.getUuid() + " - Shares: " + existingShares.stream().collect(Collectors.joining(", "));
     }
 
-    private boolean checkIfNextcloudShareExists(String resourceIdentifier) throws JDOMException {
+    /**
+     * Check if a share exists in Nextcloud for the specified resource identifier.
+     *
+     * @param folderType         the type of the folder.
+     * @param resourceIdentifier the identifier of the resource.
+     * @return a list of share URLs or an empty list if no shares exist.
+     * @throws JDOMException if an error occurs while parsing the XML response.
+     */
+    private List<String> checkIfNextcloudShareExists(NextcloudClient.FOLDER_TYPE folderType, String resourceIdentifier) throws JDOMException {
+        Element sharesResponse = nextcloudClient.getSharesResponse(resourceIdentifier, folderType);
+        int responseCode = nextcloudClient.getResponseCode(sharesResponse);
+        if (responseCode == HttpStatus.NOT_FOUND.value()) {
+            return new ArrayList<>();
+        }
+        return nextcloudClient.listShares(sharesResponse);
+
+    }
+
+    /**
+     * Get the folder type based on the resource identifier.
+     *
+     * @param resourceIdentifier the identifier of the resource.
+     * @return the folder type.
+     */
+    private NextcloudClient.FOLDER_TYPE getFolderType(String resourceIdentifier) {
         NextcloudClient.FOLDER_TYPE folderType = NextcloudClient.FOLDER_TYPE.PUBLIC;
         if (StringUtils.contains(resourceIdentifier, "_p_")) {
             folderType = NextcloudClient.FOLDER_TYPE.PUBLIC;
@@ -103,21 +141,7 @@ public class EeaDatastoreApi {
         } else if (StringUtils.contains(resourceIdentifier, "_i_")) {
             folderType = NextcloudClient.FOLDER_TYPE.INTERNAL;
         }
+        return folderType;
 
-        Element sharesResponse = nextcloudClient.getSharesResponse(resourceIdentifier, folderType);
-        int responseCode = nextcloudClient.getResponseCode(sharesResponse);
-        if (responseCode == HttpStatus.NOT_FOUND.value()) {
-            // TODO The folder doesn't exist, create it and add the XML file
-        }
-        List<String> shareList = nextcloudClient.listShares(sharesResponse);
-        if (shareList.isEmpty()) {
-            // TODO The share doesn't exist, create it
-        }
-
-        // TODO Prepare the response
-
-
-        return false;
     }
-
 }

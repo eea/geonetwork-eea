@@ -22,6 +22,8 @@
  */
 package org.fao.geonet.util.nextcloud;
 
+import com.github.sardine.Sardine;
+import com.github.sardine.SardineFactory;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -37,14 +39,21 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Component
 public class NextcloudClient {
 
     private final RestTemplate restTemplate;
-
     private final NextcloudConfig config;
+
+    public NextcloudClient(NextcloudConfig config, RestTemplate restTemplate) {
+        this.config = config;
+        this.restTemplate = restTemplate;
+
+    }
 
     private HttpHeaders createHeaders() {
         HttpHeaders headers = new HttpHeaders();
@@ -53,11 +62,6 @@ public class NextcloudClient {
         headers.set("OCS-APIRequest", "true");
         headers.setAccept(MediaType.parseMediaTypes("application/xml"));
         return headers;
-    }
-
-    public NextcloudClient(NextcloudConfig config, RestTemplate restTemplate) {
-        this.config = config;
-        this.restTemplate = restTemplate;
     }
 
     public Element getSharesResponse(String resourceIdentifier, FOLDER_TYPE folderType) {
@@ -97,6 +101,95 @@ public class NextcloudClient {
             throw new RuntimeException(e);
         }
         return sharesList;
+    }
+
+    /**
+     * Get the share URL from the share response.
+     *
+     * @param shareResponse the share response.
+     * @return the share URL.
+     */
+    public String getShareUrl(Element shareResponse) {
+        try {
+            return Xml.selectString(shareResponse, "./data/url");
+        } catch (JDOMException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Create a folder in Nextcloud using the WebDAV API, the folder will be created in the specified folder type.
+     *
+     * @param resourceIdentifier the identifier of the resource.
+     * @param folderType         the type of the folder.
+     * @throws IOException if an error occurs while creating the folder.
+     */
+    public void createFolder(String resourceIdentifier, FOLDER_TYPE folderType) throws IOException {
+        String path = config.getDatastorePath() + folderType + "/" + resourceIdentifier;
+        String url = config.getUrl() + "/remote.php/dav/files/" + config.getUsername() + "/" + path;
+        Sardine sardine = SardineFactory.begin(config.getUsername(), config.getPassword());
+        sardine.createDirectory(url);
+    }
+
+    /**
+     * Create a file in Nextcloud using the WebDAV API, the file will be created in the specified folder type.
+     *
+     * @param data               the content of the file.
+     * @param fileName           the name of the file.
+     * @param resourceIdentifier the identifier of the resource.
+     * @param folderType         the type of the folder.
+     * @throws IOException if an error occurs while creating the file.
+     */
+    public void createFile(String data, String fileName, String resourceIdentifier, FOLDER_TYPE folderType) throws IOException {
+        Sardine sardine = SardineFactory.begin(config.getUsername(), config.getPassword());
+        String path = config.getDatastorePath() + folderType + "/" + resourceIdentifier;
+        String url = config.getUrl() + "/remote.php/dav/files/" + config.getUsername() + "/" + path + "/" + fileName;
+        sardine.put(url, data.getBytes(StandardCharsets.UTF_8), "application/xml");
+    }
+
+    public boolean checkIfDirectoryExists(String resourceIdentifier, FOLDER_TYPE folderType) throws IOException {
+        Sardine sardine = SardineFactory.begin(config.getUsername(), config.getPassword());
+        String path = config.getDatastorePath() + folderType + "/" + resourceIdentifier;
+        String url = config.getUrl() + "/remote.php/dav/files/" + config.getUsername() + "/" + path;
+        return sardine.exists(url);
+    }
+
+    /**
+     * Create a share in Nextcloud for the specified resource identifier.
+     *
+     * @param resourceIdentifier the identifier of the resource.
+     * @param folderType         the type of the folder.
+     * @return the share URL.
+     */
+    public String createShare(String resourceIdentifier, FOLDER_TYPE folderType) {
+        String url = config.getUrl() + "/ocs/v2.php/apps/files_sharing/api/v1/shares";
+        String path = config.getDatastorePath() + folderType + "/" + resourceIdentifier;
+        // Build request body using MultiValueMap
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("path", path);
+        // 3 is the share type for Public Link, O is for user share, 1 is for group share
+        body.add("shareType", "3");
+        // 1 is the permission for read only
+        body.add("permissions", "1");
+
+        // Create request entity
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(body, createHeaders());
+
+        // Execute POST request
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+        System.out.println("Create Share response code: " + response.getStatusCode());
+        if (response.getStatusCode().is1xxInformational() || response.getStatusCode().is2xxSuccessful()) {
+            System.out.println("Share created successfully");
+        } else {
+            System.out.println("Failed to create share");
+            throw new RuntimeException("Failed to create share");
+        }
+        try {
+            Element createShareResponse = Xml.loadString(response.getBody(), false);
+            return getShareUrl(createShareResponse);
+        } catch (IOException | JDOMException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
