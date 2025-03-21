@@ -90,6 +90,20 @@
           <property name="xpath"
                     value="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier[1]/*/gmd:code/*/text()"/>
         </bean>
+        <bean class="org.fao.geonet.kernel.schema.SavedQuery">
+          <property name="id" value="eea-datastorelink-get"/>
+          <property name="xpath"
+                    value=".//gmd:onLine/*/gmd:linkage[starts-with(
+                                              lower-case(gmd:URL),
+                                              concat('https://sdi.eea.europa.eu/data/',
+                                                          ancestor::gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString/text()
+                                              ))]/gmd:URL/text()"/>
+        </bean>
+        <bean class="org.fao.geonet.kernel.schema.SavedQuery">
+          <property name="id" value="eea-resourceid-get"/>
+          <property name="xpath"
+                      value="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*[contains(text(), '_p_') or contains(text(), '_i_')]/text()"/>
+        </bean>
       </list>
     </property>
   </bean>

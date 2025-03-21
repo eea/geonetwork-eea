@@ -22,21 +22,23 @@
  */
 package org.fao.geonet.api.records.attachments;
 
-import javax.servlet.http.HttpServletRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
+import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
+import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
 import org.fao.geonet.api.ApiUtils;
 import org.fao.geonet.domain.AbstractMetadata;
+import org.fao.geonet.kernel.datamanager.IMetadataSchemaUtils;
 import org.fao.geonet.kernel.datamanager.base.BaseMetadataUtils;
+import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.util.nextcloud.NextcloudClient;
-import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.Namespace;
-import org.jdom.Text;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,21 +46,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
-import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
-
 @Controller
 @RequestMapping(value = {"/{portal}/api/records/{uuid}"})
 @Tag(name = API_CLASS_RECORD_TAG,
     description = API_CLASS_RECORD_OPS)
 public class EeaDatastoreApi {
-    private static final String EEA_ONLINE_RESOURCES_XPATH = ".//gmd:onLine/*/gmd:linkage[starts-with(lower-case(gmd:URL), 'https://sdi.eea.europa.eu/data/%s')]/gmd:URL/text()";
     private final NextcloudClient nextcloudClient;
 
-    private BaseMetadataUtils baseMetadataUtils;
+    @Autowired
+    protected IMetadataSchemaUtils metadataSchemaUtils;
 
-    public EeaDatastoreApi(BaseMetadataUtils baseMetadataUtils, NextcloudClient nextcloudClient) {
-        this.baseMetadataUtils = baseMetadataUtils;
+    public EeaDatastoreApi(NextcloudClient nextcloudClient) {
         this.nextcloudClient = nextcloudClient;
     }
 
@@ -69,25 +67,30 @@ public class EeaDatastoreApi {
 
         System.out.println("UUID: " + uuid);
         AbstractMetadata metadata = ApiUtils.canViewRecord(uuid, request);
+
         // Get direct download links
         Element metadataXml = metadata.getXmlData(false);
-        List<Namespace> allNamespaces = new ArrayList<>(metadataXml.getAdditionalNamespaces());
-        allNamespaces.add(metadataXml.getNamespace());
+
+        final MetadataSchema schema = metadataSchemaUtils
+            .getSchema(metadata.getDataInfo().getSchemaId());
+        String linkUrl = schema.queryString("eea-datastorelink-get", metadataXml);
+
+        if (StringUtils.isBlank(linkUrl)) {
+            throw new IllegalArgumentException(String.format(
+                "Record is missing the EEA datastore link https://sdi.eea.europa.eu/data/%s. Add it in order to initialize the corresponding Nextcloud directory.",
+                metadata.getUuid()));
+        }
+        System.out.println(linkUrl);
 
 
-        List<Text> links = (List<Text>) Xml.selectNodes(metadataXml, String.format(EEA_ONLINE_RESOURCES_XPATH, uuid),
-            allNamespaces);
+        String resourceIdentifier = schema.queryString("eea-resourceid-get", metadataXml);
 
-        System.out.println("Links:");
-        if (links.isEmpty()) {
-            System.out.println("No links found");
-        } else {
-            for (Text link : links) {
-                System.out.println(link);
-            }
+        if (StringUtils.isBlank(resourceIdentifier)) {
+            throw new IllegalArgumentException(
+                "Record is missing the EEA resource identifier. Add it in order to initialize the corresponding Nextcloud directory."
+            );
         }
 
-        String resourceIdentifier = baseMetadataUtils.getResourceIdentifier(uuid);
         System.out.println("Resource Identifier: " + resourceIdentifier);
         NextcloudClient.FOLDER_TYPE folderType = getFolderType(resourceIdentifier);
 
@@ -142,6 +145,5 @@ public class EeaDatastoreApi {
             folderType = NextcloudClient.FOLDER_TYPE.INTERNAL;
         }
         return folderType;
-
     }
 }
