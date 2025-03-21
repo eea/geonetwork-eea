@@ -30,6 +30,10 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.entity.ContentType;
+import org.fao.geonet.api.API;
+import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -43,9 +47,14 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Nextcloud client used for interacting with the Nextcloud API.
+ */
 @Component
 public class NextcloudClient {
 
+    public static final String REMOTE_PHP_DAV_FILES = "/remote.php/dav/files/";
+    public static final String META_STATUSCODE_XPATH = "./meta/statuscode";
     private final RestTemplate restTemplate;
     private final NextcloudConfig config;
 
@@ -53,8 +62,21 @@ public class NextcloudClient {
         this.config = config;
         this.restTemplate = restTemplate;
 
+        if (StringUtils.isBlank(config.getUrl())
+            || StringUtils.isBlank(config.getUsername())
+            || StringUtils.isBlank(config.getPassword())
+            || StringUtils.isBlank(config.getDatastorePath())) {
+            Log.warning(API.LOG_MODULE_NAME, "Datastore: The configuration of Nextcloud is not set. The Nextcloud API "
+                + "will not work. Please set the Nextcloud URL in config.properties or use System properties.");
+        }
+
     }
 
+    /**
+     * Create the headers for the Nextcloud API requests. It manages authentication and other required headers.
+     *
+     * @return the headers.
+     */
     private HttpHeaders createHeaders() {
         HttpHeaders headers = new HttpHeaders();
         String auth = Base64.getEncoder().encodeToString((config.getUsername() + ":" + config.getPassword()).getBytes(StandardCharsets.UTF_8));
@@ -64,8 +86,16 @@ public class NextcloudClient {
         return headers;
     }
 
-    public Element getSharesResponse(String resourceIdentifier, FOLDER_TYPE folderType) {
-        String path = config.getDatastorePath() + folderType + "/" + resourceIdentifier;
+    /**
+     * Get the shares response for the specified resource identifier.
+     *
+     * @param resourceIdentifier the identifier of the resource.
+     * @param folderType         the type of the folder.
+     * @return the shares request response.
+     * @throws NextcloudException if an error occurs while parsing the shares response.
+     */
+    public Element getSharesResponse(String resourceIdentifier, FOLDER_TYPE folderType) throws NextcloudException {
+        String path = getPath(resourceIdentifier, folderType);
         Map<String, ?> params = Map.of("path", path);
 
         String url = config.getUrl() + "/ocs/v2.php/apps/files_sharing/api/v1/shares?path={path}&reshares=true";
@@ -76,15 +106,29 @@ public class NextcloudClient {
         try {
             return Xml.loadString(responseBody, false);
         } catch (IOException | JDOMException e) {
-            throw new RuntimeException(e);
+            throw new NextcloudException("Error getting the existing shares for " + resourceIdentifier, e);
         }
     }
 
+    /**
+     * Get the response code from the response.
+     *
+     * @param response the response.
+     * @return the response code.
+     * @throws JDOMException if an error occurs while parsing the XML response.
+     */
     public int getResponseCode(Element response) throws JDOMException {
-        return Xml.selectNumber(response, "./meta/statuscode").intValue();
+        return Xml.selectNumber(response, META_STATUSCODE_XPATH).intValue();
     }
 
-    public List<String> listShares(Element response) {
+    /**
+     * List the shares from the response.
+     *
+     * @param response the response.
+     * @return a list of share URLs.
+     * @throws NextcloudException if an error occurs while extracting the shares.
+     */
+    public List<String> listShares(Element response) throws NextcloudException {
         List<String> sharesList = new ArrayList<>();
         try {
 
@@ -98,22 +142,24 @@ public class NextcloudClient {
             }
 
         } catch (JDOMException e) {
-            throw new RuntimeException(e);
+            throw new NextcloudException("Error extracting the shares from the Nextcloud response", e);
         }
         return sharesList;
     }
 
+
     /**
-     * Get the share URL from the share response.
+     * Get the share URL from the response.
      *
-     * @param shareResponse the share response.
+     * @param shareResponse the response.
+     * @throws NextcloudException if an error occurs while extracting the share URL.
      * @return the share URL.
      */
-    public String getShareUrl(Element shareResponse) {
+    public String getShareUrl(Element shareResponse) throws NextcloudException {
         try {
             return Xml.selectString(shareResponse, "./data/url");
         } catch (JDOMException e) {
-            throw new RuntimeException(e);
+            throw new NextcloudException("Error parsing the Nextcloud response and getting the share URL", e);
         }
     }
 
@@ -122,13 +168,17 @@ public class NextcloudClient {
      *
      * @param resourceIdentifier the identifier of the resource.
      * @param folderType         the type of the folder.
-     * @throws IOException if an error occurs while creating the folder.
+     * @throws NextcloudException if an error occurs while creating the folder.
      */
-    public void createFolder(String resourceIdentifier, FOLDER_TYPE folderType) throws IOException {
-        String path = config.getDatastorePath() + folderType + "/" + resourceIdentifier;
-        String url = config.getUrl() + "/remote.php/dav/files/" + config.getUsername() + "/" + path;
+    public void createFolder(String resourceIdentifier, FOLDER_TYPE folderType) throws NextcloudException {
+        String path = getPath(resourceIdentifier, folderType);
+        String url = config.getUrl() + REMOTE_PHP_DAV_FILES + config.getUsername() + "/" + path;
         Sardine sardine = SardineFactory.begin(config.getUsername(), config.getPassword());
-        sardine.createDirectory(url);
+        try {
+            sardine.createDirectory(url);
+        } catch (IOException e) {
+            throw new NextcloudException("Datashare: Error creating the folder '" + path + "' in Nextcloud", e);
+        }
     }
 
     /**
@@ -138,20 +188,37 @@ public class NextcloudClient {
      * @param fileName           the name of the file.
      * @param resourceIdentifier the identifier of the resource.
      * @param folderType         the type of the folder.
-     * @throws IOException if an error occurs while creating the file.
+     * @throws NextcloudException if an error occurs while creating the file.
      */
-    public void createFile(String data, String fileName, String resourceIdentifier, FOLDER_TYPE folderType) throws IOException {
+    public void createFile(String data, String fileName, String resourceIdentifier, FOLDER_TYPE folderType) throws NextcloudException {
         Sardine sardine = SardineFactory.begin(config.getUsername(), config.getPassword());
-        String path = config.getDatastorePath() + folderType + "/" + resourceIdentifier;
-        String url = config.getUrl() + "/remote.php/dav/files/" + config.getUsername() + "/" + path + "/" + fileName;
-        sardine.put(url, data.getBytes(StandardCharsets.UTF_8), "application/xml");
+        String path = getPath(resourceIdentifier, folderType);
+        String url = config.getUrl() + REMOTE_PHP_DAV_FILES + config.getUsername() + "/" + path + "/" + fileName;
+        try {
+            sardine.put(url, data.getBytes(StandardCharsets.UTF_8), ContentType.APPLICATION_XML.getMimeType());
+        } catch (IOException e) {
+            throw new NextcloudException("Error creating the XML metadata file '" + path + "' in Nextcloud", e);
+        }
     }
 
-    public boolean checkIfDirectoryExists(String resourceIdentifier, FOLDER_TYPE folderType) throws IOException {
+
+    /**
+     * Check if a directory exists in Nextcloud.
+     *
+     * @param resourceIdentifier the identifier of the resource.
+     * @param folderType         the type of the folder.
+     * @return true if the directory exists, false otherwise.
+     * @throws NextcloudException if an error occurs while checking if the directory exists.
+     */
+    public boolean checkIfDirectoryExists(String resourceIdentifier, FOLDER_TYPE folderType) throws NextcloudException {
         Sardine sardine = SardineFactory.begin(config.getUsername(), config.getPassword());
-        String path = config.getDatastorePath() + folderType + "/" + resourceIdentifier;
-        String url = config.getUrl() + "/remote.php/dav/files/" + config.getUsername() + "/" + path;
-        return sardine.exists(url);
+        String path = getPath(resourceIdentifier, folderType);
+        String url = config.getUrl() + REMOTE_PHP_DAV_FILES + config.getUsername() + "/" + path;
+        try {
+            return sardine.exists(url);
+        } catch (IOException e) {
+            throw new NextcloudException("Error checking in directory '" + path + "' exists in Nextcloud", e);
+        }
     }
 
     /**
@@ -159,11 +226,12 @@ public class NextcloudClient {
      *
      * @param resourceIdentifier the identifier of the resource.
      * @param folderType         the type of the folder.
+     * @throws NextcloudException if an error occurs while creating the share.
      * @return the share URL.
      */
-    public String createShare(String resourceIdentifier, FOLDER_TYPE folderType) {
+    public String createShare(String resourceIdentifier, FOLDER_TYPE folderType) throws NextcloudException {
         String url = config.getUrl() + "/ocs/v2.php/apps/files_sharing/api/v1/shares";
-        String path = config.getDatastorePath() + folderType + "/" + resourceIdentifier;
+        String path = getPath(resourceIdentifier, folderType);
         // Build request body using MultiValueMap
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("path", path);
@@ -177,22 +245,55 @@ public class NextcloudClient {
 
         // Execute POST request
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
-        System.out.println("Create Share response code: " + response.getStatusCode());
         if (response.getStatusCode().is1xxInformational() || response.getStatusCode().is2xxSuccessful()) {
-            System.out.println("Share created successfully");
+            Log.debug(API.LOG_MODULE_NAME, "Datastore: Share created successfully.");
         } else {
-            System.out.println("Failed to create share");
-            throw new RuntimeException("Failed to create share");
+            throw new NextcloudException("Failed to create share for " + path + ". Response code: " + response.getStatusCode());
         }
         try {
             Element createShareResponse = Xml.loadString(response.getBody(), false);
             return getShareUrl(createShareResponse);
         } catch (IOException | JDOMException e) {
-            throw new RuntimeException(e);
+            throw new NextcloudException("Error reading the response for creating the share for " + path, e);
         }
     }
 
+    /**
+     * Proxy the request to the Nextcloud share.
+     *
+     * @param shareUrl the share URL.
+     * @return the response.
+     */
+    public ResponseEntity<String> proxyRequest(String shareUrl) {
+        // Proxy the request to the Nextcloud share
+        String targetUrl = shareUrl;
+        if (StringUtils.isNotBlank(config.getShareUrlPrefix())) {
+            targetUrl = StringUtils.removeStart(shareUrl, config.getShareUrlPrefix());
+            targetUrl = config.getUrl() + "/" + targetUrl;
+        }
 
+        ResponseEntity<String> response = restTemplate.exchange(targetUrl, HttpMethod.GET, new HttpEntity<>(Map.of()), String.class);
+        return ResponseEntity
+            .status(response.getStatusCode())
+            .headers(response.getHeaders())
+            .body(response.getBody());
+    }
+
+    /**
+     * Get the path for the specified resource identifier and folder type.
+     *
+     * @param resourceIdentifier the identifier of the resource.
+     * @param folderType         the type of the folder.
+     * @return the path.
+     */
+    private String getPath(String resourceIdentifier, FOLDER_TYPE folderType) {
+        return config.getDatastorePath() + folderType + "/" + resourceIdentifier;
+    }
+
+
+    /**
+     * Folder types in EEA's Nextcloud.
+     */
     public enum FOLDER_TYPE {
         INTERNAL,
         PUBLIC,

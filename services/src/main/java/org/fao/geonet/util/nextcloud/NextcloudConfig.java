@@ -26,6 +26,9 @@ package org.fao.geonet.util.nextcloud;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * Nextcloud configuration
+ */
 @Component("nextcloudConfig")
 public class NextcloudConfig {
     @Value("${nextcloud.url}")
@@ -39,6 +42,9 @@ public class NextcloudConfig {
 
     @Value("${nextcloud.datastore.path}")
     private String datastorePath;
+
+    @Value("${nextcloud.shareUrl.prefix}")
+    private String shareUrlPrefix;
 
     public String getUrl() {
         return url;
@@ -70,5 +76,13 @@ public class NextcloudConfig {
 
     public void setDatastorePath(String datastorePath) {
         this.datastorePath = datastorePath;
+    }
+
+    public String getShareUrlPrefix() {
+        return shareUrlPrefix;
+    }
+
+    public void setShareUrlPrefix(String shareUrlPrefix) {
+        this.shareUrlPrefix = shareUrlPrefix;
     }
 }

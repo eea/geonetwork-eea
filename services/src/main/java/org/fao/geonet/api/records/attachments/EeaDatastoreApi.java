@@ -22,50 +22,63 @@
  */
 package org.fao.geonet.api.records.attachments;
 
+import javax.servlet.http.HttpServletRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
-import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
-import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
+import org.fao.geonet.api.API;
 import org.fao.geonet.api.ApiUtils;
 import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.kernel.datamanager.IMetadataSchemaUtils;
-import org.fao.geonet.kernel.datamanager.base.BaseMetadataUtils;
 import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.util.nextcloud.NextcloudClient;
+import org.fao.geonet.util.nextcloud.NextcloudException;
+import org.fao.geonet.utils.Log;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
+import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
+
 @Controller
 @RequestMapping(value = {"/{portal}/api/records/{uuid}"})
 @Tag(name = API_CLASS_RECORD_TAG,
     description = API_CLASS_RECORD_OPS)
 public class EeaDatastoreApi {
+    private static final String FILE_SUFFIX_PATTERN = "_metadata_%s.xml";
     private final NextcloudClient nextcloudClient;
-
-    @Autowired
     protected IMetadataSchemaUtils metadataSchemaUtils;
 
-    public EeaDatastoreApi(NextcloudClient nextcloudClient) {
+    public EeaDatastoreApi(NextcloudClient nextcloudClient, IMetadataSchemaUtils metadataSchemaUtils) {
         this.nextcloudClient = nextcloudClient;
+        this.metadataSchemaUtils = metadataSchemaUtils;
     }
 
 
+    /**
+     * @param uuid
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @io.swagger.v3.oas.annotations.Operation(summary = "Proxy the request to the Nextcloud share",
+        description = "Proxy the request to the Nextcloud share. It returns the HTML of the nextcloud share page. " +
+            "Intended to be called directly from the browser in a tab.")
     @GetMapping(value = "/datastore")
     @ResponseBody
-    public String test(@PathVariable String uuid, HttpServletRequest request) throws Exception {
+    public ResponseEntity<String> checkAndProxyDatastore(@PathVariable String uuid, HttpServletRequest request) throws Exception {
 
-        System.out.println("UUID: " + uuid);
+        List<String> existingShares = new ArrayList<>(1);
         AbstractMetadata metadata = ApiUtils.canViewRecord(uuid, request);
 
         // Get direct download links
@@ -80,7 +93,6 @@ public class EeaDatastoreApi {
                 "Record is missing the EEA datastore link https://sdi.eea.europa.eu/data/%s. Add it in order to initialize the corresponding Nextcloud directory.",
                 metadata.getUuid()));
         }
-        System.out.println(linkUrl);
 
 
         String resourceIdentifier = schema.queryString("eea-resourceid-get", metadataXml);
@@ -91,24 +103,37 @@ public class EeaDatastoreApi {
             );
         }
 
-        System.out.println("Resource Identifier: " + resourceIdentifier);
         NextcloudClient.FOLDER_TYPE folderType = getFolderType(resourceIdentifier);
-
-        boolean directoryExists = nextcloudClient.checkIfDirectoryExists(resourceIdentifier, folderType);
-        if (!directoryExists) {
-            // Create the folder and add the metadata file XML
-            nextcloudClient.createFolder(resourceIdentifier, folderType);
-            nextcloudClient.createFile(metadata.getData(), metadata.getUuid() + ".xml", resourceIdentifier, folderType);
+        try {
+            boolean directoryExists = nextcloudClient.checkIfDirectoryExists(resourceIdentifier, folderType);
+            if (!directoryExists) {
+                // Create the folder and add the metadata file XML
+                Log.debug(API.LOG_MODULE_NAME, "Datastore: Folder does not exist in Netcloud. Creating it.");
+                String title = schema.queryString("eea-title-default-get", metadataXml);
+                nextcloudClient.createFolder(resourceIdentifier, folderType);
+                nextcloudClient.createFile(metadata.getData(), sanitizeAndTrimTitle(title, uuid),
+                    resourceIdentifier, folderType);
+            }
+            if (!directoryExists) {
+                // Directory was just created. Don't check for existing shares, just create a new one
+                Log.debug(API.LOG_MODULE_NAME, "Datastore: adding new share to the new folder.");
+                existingShares.add(nextcloudClient.createShare(resourceIdentifier, folderType));
+            } else {
+                Log.debug(API.LOG_MODULE_NAME, "Datastore: Checkins for existing shares.");
+                // Directory already exists. Check if a share exists and create a new one if it doesn't
+                existingShares = checkIfNextcloudShareExists(folderType, resourceIdentifier);
+                Log.debug(API.LOG_MODULE_NAME, "Share exists: " + existingShares.stream().collect(Collectors.joining(", ")));
+                if (existingShares.isEmpty()) {
+                    // Create a share
+                    Log.debug(API.LOG_MODULE_NAME, "Datastore: No shares exist. Creating a new one.");
+                    existingShares.add(nextcloudClient.createShare(resourceIdentifier, folderType));
+                }
+            }
+        } catch (Exception e) {
+            throw new NextcloudException("Failed communicate with Nextcloud", e);
         }
-        List<String> existingShares = checkIfNextcloudShareExists(folderType, resourceIdentifier);
-        System.out.println("Share exists: " + existingShares.stream().collect(Collectors.joining(", ")));
-        if (existingShares.isEmpty()) {
-            // Create a share
-            existingShares.add(nextcloudClient.createShare(resourceIdentifier, folderType));
-        }
-
-
-        return metadata.getUuid() + " - Shares: " + existingShares.stream().collect(Collectors.joining(", "));
+        // Proxy the request to the Nextcloud share
+        return nextcloudClient.proxyRequest(existingShares.get(0));
     }
 
     /**
@@ -137,13 +162,35 @@ public class EeaDatastoreApi {
      */
     private NextcloudClient.FOLDER_TYPE getFolderType(String resourceIdentifier) {
         NextcloudClient.FOLDER_TYPE folderType = NextcloudClient.FOLDER_TYPE.PUBLIC;
-        if (StringUtils.contains(resourceIdentifier, "_p_")) {
-            folderType = NextcloudClient.FOLDER_TYPE.PUBLIC;
-        } else if (StringUtils.contains(resourceIdentifier, "_r_")) {
+
+        if (StringUtils.contains(resourceIdentifier, "_r_")) {
             folderType = NextcloudClient.FOLDER_TYPE.RESTRICTED;
         } else if (StringUtils.contains(resourceIdentifier, "_i_")) {
             folderType = NextcloudClient.FOLDER_TYPE.INTERNAL;
         }
         return folderType;
+    }
+
+
+    private String sanitizeAndTrimTitle(String title, String uuid) {
+        // Replace accented characters with non-accented characters
+        String normalizedTitle = Normalizer.normalize(title, Normalizer.Form.NFD);
+        String titleWithoutAccents = normalizedTitle.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+
+        // Replace non-regular characters with underscore
+        String sanitizedTitle = titleWithoutAccents.replaceAll("[^a-zA-Z0-9\\.\\-]", "_")
+            .replace("..", "_");
+
+        // Define the suffix
+        String suffix = String.format(FILE_SUFFIX_PATTERN, uuid);
+
+        // Ensure the total length does not exceed 120 characters
+        int maxTitleLength = 120 - suffix.length();
+        if (sanitizedTitle.length() > maxTitleLength) {
+            sanitizedTitle = sanitizedTitle.substring(0, maxTitleLength);
+        }
+
+        // Combine the sanitized title with the suffix
+        return sanitizedTitle + suffix;
     }
 }
