@@ -1673,7 +1673,7 @@
         </section>
 
         <section name="eea-statistical-data-details"
-                 displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA categories' and */gmd:keyword/gco:CharacterString/text() = 'statistical data']) = 1">
+                 displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA categories' and */gmd:keyword/*/text() = 'statistical data']) = 1">
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*/text(), 'Unit of measure')]"/>
           <action type="add"
                   btnLabel="eea-add-unit-of-measure"
