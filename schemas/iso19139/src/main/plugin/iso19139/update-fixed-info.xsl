@@ -111,18 +111,17 @@
    We add datashare link if missing or wrong,
    We copy siblings. -->
   <xsl:template match="gmd:transferOptions/*/gmd:onLine[1]" priority="2">
-    <xsl:apply-templates mode="copy-online"
-                         select="../gmd:onLine[(*/gmd:protocol/*/text() = 'EEA:FILEPATH'
+    <xsl:variable name="eeaOnLineResource"
+                  select="../gmd:onLine[(*/gmd:protocol/*/text() = 'EEA:FILEPATH'
                                            or */gmd:protocol/*/text() = 'EEA:FOLDERPATH')
                                            and starts-with(*/gmd:linkage/gmd:URL,
                                             'https://sdi.eea.europa.eu/webdav')]"/>
+    <xsl:apply-templates mode="copy-online"
+                         select="$eeaOnLineResource"/>
 
 
     <xsl:variable name="hasEEAFile"
-                  select="count(../gmd:onLine[(*/gmd:protocol/*/text() = 'EEA:FILEPATH'
-                                           or */gmd:protocol/*/text() = 'EEA:FOLDERPATH')
-                                           and starts-with(*/gmd:linkage/gmd:URL,
-                                            'https://sdi.eea.europa.eu/webdav')]) > 0"/>
+                  select="count($eeaOnLineResource) > 0"/>
 
     <xsl:variable name="hasNextCloudLink"
                   select="count(../gmd:onLine/*[gmd:linkage/*/text() = concat('https://sdi.eea.europa.eu/data/', /root/env/uuid)]) > 0"/>
@@ -164,10 +163,8 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
     </xsl:if>
 
     <xsl:apply-templates mode="copy-online"
-                         select="../gmd:onLine[*/gmd:protocol/*/text() != 'EEA:FILEPATH'
-                                               and */gmd:protocol/*/text() != 'EEA:FOLDERPATH'
-                                               and not(starts-with(*/gmd:linkage/gmd:URL,
-                                                'https://sdi.eea.europa.eu/webdav'))]"/>
+                         select="../gmd:onLine except $eeaOnLineResource"/>
+
   </xsl:template>
 
 
