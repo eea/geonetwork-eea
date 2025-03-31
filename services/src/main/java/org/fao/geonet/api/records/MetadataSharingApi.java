@@ -582,7 +582,10 @@ public class MetadataSharingApi implements ApplicationEventPublisherAware
             }
 
             if (sharing.isClear()) {
-                metadataOperations.deleteMetadataOper(String.valueOf(metadata.getId()), excludeFromDelete);
+                // TODO: Check with https://github.com/geonetwork/core-geonetwork/commit/18b00b351883a0b119f3d28722b0dd3f5ce2c223
+                // Unsetting privileges does not work with
+                // metadataOperations.deleteMetadataOper(String.valueOf(metadata.getId()), excludeFromDelete);
+                metadataOperations.deleteMetadataOper(String.valueOf(metadata.getId()), skipAllReservedGroup);
             }
 
             for (GroupOperations p : privileges) {
