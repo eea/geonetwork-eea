@@ -244,7 +244,7 @@
               &lt;/gmd:contactInfo&gt;
               &lt;gmd:role&gt;
                 &lt;gmd:CI_RoleCode codeList='http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode'
-      codeListValue='principalInvestigator'/&gt;
+      codeListValue=''/&gt;
     &lt;/gmd:role&gt;
   &lt;/gmd:CI_ResponsibleParty&gt;"/>
     </for>
