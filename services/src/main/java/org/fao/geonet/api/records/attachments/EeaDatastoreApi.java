@@ -163,9 +163,7 @@ public class EeaDatastoreApi {
     private NextcloudClient.FOLDER_TYPE getFolderType(String resourceIdentifier) {
         NextcloudClient.FOLDER_TYPE folderType = NextcloudClient.FOLDER_TYPE.PUBLIC;
 
-        if (StringUtils.contains(resourceIdentifier, "_r_")) {
-            folderType = NextcloudClient.FOLDER_TYPE.RESTRICTED;
-        } else if (StringUtils.contains(resourceIdentifier, "_i_")) {
+        if (StringUtils.contains(resourceIdentifier, "_i_")) {
             folderType = NextcloudClient.FOLDER_TYPE.INTERNAL;
         }
         return folderType;
