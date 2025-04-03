@@ -28,7 +28,9 @@
       <xsl:for-each select="$authors">
         <author>
           <xsl:variable name="name"
-                        select=".//cit:individual/*/cit:name"/>
+                        select="ignore"/>
+          <!-- EEA only require org in citation
+           select=".//cit:individual/*/cit:name"/>-->
 
           <xsl:variable name="listOfNames">
             <xsl:for-each select="$name">
