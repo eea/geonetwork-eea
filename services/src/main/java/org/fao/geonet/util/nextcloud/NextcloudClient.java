@@ -195,6 +195,8 @@ public class NextcloudClient {
         String path = getPath(resourceIdentifier, folderType);
         String url = config.getUrl() + REMOTE_PHP_DAV_FILES + config.getUsername() + "/" + path + "/" + fileName;
         try {
+            // TODO: Remove existing file if it exists? based on *uuid.xml ?
+            //  eg. if title change, the file needs to be updated
             sardine.put(url, data.getBytes(StandardCharsets.UTF_8), ContentType.APPLICATION_XML.getMimeType());
         } catch (IOException e) {
             throw new NextcloudException("Error creating the XML metadata file '" + path + "' in Nextcloud", e);

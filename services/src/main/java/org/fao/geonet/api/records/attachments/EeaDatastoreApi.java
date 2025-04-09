@@ -97,9 +97,10 @@ public class EeaDatastoreApi {
 
         String resourceIdentifier = schema.queryString("eea-resourceid-get", metadataXml);
 
-        if (StringUtils.isBlank(resourceIdentifier)) {
+        // Create the folder only if the resource identifier match the pattern
+        if (!isValidResourceIdentifier(resourceIdentifier)) {
             throw new IllegalArgumentException(
-                "Record is missing the EEA resource identifier. Add it in order to initialize the corresponding Nextcloud directory."
+                "Record is missing a valid EEA resource identifier. Add it in order to initialize the corresponding Nextcloud directory. Check the convention https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions"
             );
         }
 
@@ -109,11 +110,13 @@ public class EeaDatastoreApi {
             if (!directoryExists) {
                 // Create the folder and add the metadata file XML
                 Log.debug(API.LOG_MODULE_NAME, "Datastore: Folder does not exist in Netcloud. Creating it.");
-                String title = schema.queryString("eea-title-default-get", metadataXml);
                 nextcloudClient.createFolder(resourceIdentifier, folderType);
-                nextcloudClient.createFile(metadata.getData(), sanitizeAndTrimTitle(title, uuid),
-                    resourceIdentifier, folderType);
             }
+
+            String title = schema.queryString("eea-title-default-get", metadataXml);
+            nextcloudClient.createFile(metadata.getData(), sanitizeAndTrimTitle(title, uuid),
+                resourceIdentifier, folderType);
+
             if (!directoryExists) {
                 // Directory was just created. Don't check for existing shares, just create a new one
                 Log.debug(API.LOG_MODULE_NAME, "Datastore: adding new share to the new folder.");
@@ -134,6 +137,25 @@ public class EeaDatastoreApi {
         }
         // Proxy the request to the Nextcloud share
         return nextcloudClient.proxyRequest(existingShares.get(0));
+    }
+
+    private static final int EEA_RESOURCE_IDENTIFIER_PARTS = 10;
+    private static final int EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX = 6;
+
+    /**
+     * Check if the resource identifier is valid. https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions
+     */
+    private boolean isValidResourceIdentifier(String resourceIdentifier) {
+        if(StringUtils.isBlank(resourceIdentifier)) {
+            return false;
+        }
+
+        // Provider_DataType_EpsgCode_ScaleResolution_ScaleResUnit_DatasetShortName_PublicOrInternal_TimeCoverage_VersionNumber_RevisionNumber
+        String[] tokens = resourceIdentifier.split("_");
+        if (tokens.length != EEA_RESOURCE_IDENTIFIER_PARTS) {
+            return false;
+        }
+        return tokens[EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX].equals("p") || tokens[EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX].equals("i");
     }
 
     /**
@@ -176,7 +198,9 @@ public class EeaDatastoreApi {
         String titleWithoutAccents = normalizedTitle.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 
         // Replace non-regular characters with underscore
-        String sanitizedTitle = titleWithoutAccents.replaceAll("[^a-zA-Z0-9\\.\\-]", "_")
+        String sanitizedTitle = titleWithoutAccents
+            .replaceAll("[^a-zA-Z0-9\\-]", "_")
+            .replaceAll("\\_+", "_")
             .replace("..", "_");
 
         // Define the suffix
