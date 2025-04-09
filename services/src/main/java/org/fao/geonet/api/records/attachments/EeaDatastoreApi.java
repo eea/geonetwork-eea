@@ -200,7 +200,7 @@ public class EeaDatastoreApi {
         // Replace non-regular characters with underscore
         String sanitizedTitle = titleWithoutAccents
             .replaceAll("[^a-zA-Z0-9\\-]", "_")
-            .replaceAll("\\_+", "_")
+            .replaceAll("_+", "_")
             .replace("..", "_");
 
         // Define the suffix
