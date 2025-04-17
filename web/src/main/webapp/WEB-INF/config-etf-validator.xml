@@ -114,7 +114,7 @@
     <entry key="defaultTestSuite" value="TG version 2.0 - Data sets and series"/>
     <entry key="maxNumberOfEtfChecks" value="20"/>
     <entry key="intervalBetweenEtfChecks" value="5000"/>
-    <entry key="processing" value=""/>
+    <entry key="processing" value="present/csw/gmd-inspire-postprocessing.xsl"/>
   </util:map>
 
 
