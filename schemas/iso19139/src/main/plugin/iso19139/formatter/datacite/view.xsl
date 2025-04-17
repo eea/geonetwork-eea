@@ -342,18 +342,18 @@
       <xsl:for-each select="../gmd:pointOfContact/*[gmd:role/gmd:CI_RoleCode/@codeListValue = ('pointOfContact', 'custodian')]">
         <datacite:creator>
           <!-- The full name of the creator. -->
-          <xsl:choose>
+          <!-- EEA specific <xsl:choose>
             <xsl:when test="gmd:individualName/*/text() != ''">
               <datacite:creatorName nameType="Personal">
                 <xsl:value-of select="gmd:individualName/*/text()"/>
               </datacite:creatorName>
             </xsl:when>
-            <xsl:otherwise>
+            <xsl:otherwise>-->
               <datacite:creatorName nameType="Organizational">
                 <xsl:value-of select="gmd:organisationName/*/text()"/>
               </datacite:creatorName>
-            </xsl:otherwise>
-          </xsl:choose>
+            <!--</xsl:otherwise>
+          </xsl:choose>-->
           <!--
           <datacite:givenName>Elizabeth</datacite:givenName>
           <datacite:familyName>Miller</datacite:familyName>

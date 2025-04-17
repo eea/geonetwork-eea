@@ -224,12 +224,43 @@
     </for>
     <for name="gmd:pointOfContact" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
-        data-template-add-action="true"
+        data-template-add-action="false"
         data-search-action="true"
         data-popup-action="true"
         data-template-type="contact"
         data-insert-modes=""
-        data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
+        data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"
+        data-template-add-snippet="&lt;gmd:CI_ResponsibleParty xmlns:gmd='http://www.isotc211.org/2005/gmd'
+                   xmlns:gco='http://www.isotc211.org/2005/gco' &gt;
+              &lt;gmd:individualName gco:nilReason='missing'&gt;
+                &lt;gco:CharacterString/&gt;
+              &lt;/gmd:individualName&gt;
+              &lt;gmd:organisationName&gt;
+                &lt;gco:CharacterString&gt;&lt;/gco:CharacterString&gt;
+              &lt;/gmd:organisationName&gt;
+              &lt;gmd:contactInfo&gt;
+                &lt;gmd:CI_Contact&gt;
+                  &lt;gmd:address&gt;
+                    &lt;gmd:CI_Address&gt;
+                      &lt;gmd:electronicMailAddress gco:nilReason='missing'&gt;
+                        &lt;gco:CharacterString/&gt;
+                      &lt;/gmd:electronicMailAddress&gt;
+                    &lt;/gmd:CI_Address&gt;
+                  &lt;/gmd:address&gt;
+                  &lt;gmd:onlineResource&gt;
+                        &lt;gmd:CI_OnlineResource&gt;
+                           &lt;gmd:linkage&gt;
+                              &lt;gmd:URL/&gt;
+                           &lt;/gmd:linkage&gt;
+                        &lt;/gmd:CI_OnlineResource&gt;
+                     &lt;/gmd:onlineResource&gt;
+                &lt;/gmd:CI_Contact&gt;
+              &lt;/gmd:contactInfo&gt;
+              &lt;gmd:role&gt;
+                &lt;gmd:CI_RoleCode codeList='http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode'
+      codeListValue=''/&gt;
+    &lt;/gmd:role&gt;
+  &lt;/gmd:CI_ResponsibleParty&gt;"/>
     </for>
     <for name="gmd:distributorContact" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
@@ -1687,7 +1718,7 @@
         </section>
 
         <section name="eea-statistical-data-details"
-                 displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA categories' and */gmd:keyword/gco:CharacterString/text() = 'statistical data']) = 1">
+                 displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'EEA categories' and */gmd:keyword/*/text() = 'statistical data']) = 1">
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*/text(), 'Unit of measure')]"/>
           <action type="add"
                   btnLabel="eea-add-unit-of-measure"
@@ -1917,7 +1948,7 @@
                     <gmd:result>
                       <gmd:DQ_QuantitativeResult>
                         <gmd:valueUnit>
-                          <gml:BaseUnit gml:id="d22718e609a1051924">
+                          <gml:BaseUnit gml:id="d22718e609a1051924fd">
                             <gml:identifier codeSpace=""/>
                             <gml:unitsSystem/>
                           </gml:BaseUnit>
@@ -1942,7 +1973,7 @@
                     <gmd:result>
                       <gmd:DQ_QuantitativeResult>
                         <gmd:valueUnit>
-                          <gml:BaseUnit gml:id="d22718e609a1051924">
+                          <gml:BaseUnit gml:id="d22718e609a1051924t">
                             <gml:identifier codeSpace=""/>
                             <gml:unitsSystem/>
                           </gml:BaseUnit>
@@ -1967,7 +1998,7 @@
                     <gmd:result>
                       <gmd:DQ_QuantitativeResult>
                         <gmd:valueUnit>
-                          <gml:BaseUnit gml:id="d22718e609a1052934">
+                          <gml:BaseUnit gml:id="d22718e609a1052934ra">
                             <gml:identifier codeSpace=""/>
                             <gml:unitsSystem/>
                           </gml:BaseUnit>
@@ -1992,7 +2023,7 @@
                     <gmd:result>
                       <gmd:DQ_QuantitativeResult>
                         <gmd:valueUnit>
-                          <gml:BaseUnit gml:id="d22718e609a1051934">
+                          <gml:BaseUnit gml:id="d22718e609a1051934cg">
                             <gml:identifier codeSpace=""/>
                             <gml:unitsSystem/>
                           </gml:BaseUnit>
@@ -2017,7 +2048,7 @@
                     <gmd:result>
                       <gmd:DQ_QuantitativeResult>
                         <gmd:valueUnit>
-                          <gml:BaseUnit gml:id="d9765e687a1051934">
+                          <gml:BaseUnit gml:id="d9765e687a1051934tc">
                             <gml:identifier codeSpace=""/>
                             <gml:unitsSystem/>
                           </gml:BaseUnit>
@@ -2042,7 +2073,7 @@
                     <gmd:result>
                       <gmd:DQ_QuantitativeResult>
                         <gmd:valueUnit>
-                          <gml:BaseUnit gml:id="d9765e687a1051934">
+                          <gml:BaseUnit gml:id="d9765e687a1051934cot">
                             <gml:identifier codeSpace=""/>
                             <gml:unitsSystem/>
                           </gml:BaseUnit>

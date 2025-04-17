@@ -31,7 +31,9 @@
       <xsl:for-each select="$authors">
         <author>
           <xsl:variable name="name"
-                        select=".//gmd:individualName[1]"/>
+                        select="ignore"/>
+<!-- EEA only require org in citation
+                       select=".//gmd:individualName[1]"/>-->
 
           <xsl:for-each select="$name">
             <xsl:call-template name="localised">

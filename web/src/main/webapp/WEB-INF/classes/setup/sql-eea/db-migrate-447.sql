@@ -37,3 +37,6 @@ SELECT nextval('doiserver_id_seq'), 'Publication Office', '', c.value, d.value, 
 
 
 DELETE FROM settings WHERE name LIKE 'system/publication/doi/%' and name != 'system/publication/doi/doienabled';
+
+INSERT INTO Settings (name, value, datatype, position, internal) SELECT distinct 'system/metadataprivs/userAlwaysCanEditOwnedMetadata', 'false', 2, 9184, 'n' FROM settings WHERE NOT EXISTS (SELECT name FROM Settings WHERE name='system/metadataprivs/userAlwaysCanEditOwnedMetadata');
+
