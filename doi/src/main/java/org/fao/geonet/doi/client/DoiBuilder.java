@@ -22,20 +22,17 @@
 //==============================================================================
 package org.fao.geonet.doi.client;
 
+import java.util.Optional;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
+import static org.fao.geonet.doi.client.DoiManager.DOI_DEFAULT_PATTERN;
 import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.domain.DoiServer;
 import org.fao.geonet.domain.Group;
 import org.fao.geonet.kernel.datamanager.base.BaseMetadataUtils;
-import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.repository.DoiServerRepository;
 import org.fao.geonet.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Optional;
-
-import static org.fao.geonet.doi.client.DoiManager.DOI_DEFAULT_PATTERN;
 
 /**
  * Class to generate a DOI.
@@ -67,6 +64,10 @@ public class DoiBuilder {
      * Static utility for XSL calls.
      */
     public static String createDoi(String doiServerId, String uuid) {
+        if (StringUtils.isEmpty(doiServerId)) {
+            return uuid;
+        }
+
         DoiBuilder doiBuilder =
             ApplicationContextHolder.get().getBean(DoiBuilder.class);
 
