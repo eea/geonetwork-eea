@@ -297,9 +297,10 @@ public class ResourceLib {
                     valueToAdd = token;
                 }
 
-                if ((i == tokens.length - 1) && !hasCustomPrivateFolder) {
-                    valueToAdd = valueToAdd + "-draft";
-                }
+                // TODO: Check how draft metadata are handled
+                //                if ((i == tokens.length - 1) && !hasCustomPrivateFolder) {
+                //                    valueToAdd = valueToAdd + "-draft";
+                //                }
 
                 replacedTokens.add(valueToAdd);
             }
