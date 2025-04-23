@@ -110,7 +110,7 @@ public class EeaDatastoreApi {
             if (!directoryExists) {
                 // Create the folder and add the metadata file XML
                 Log.debug(API.LOG_MODULE_NAME, "Datastore: Folder does not exist in Netcloud. Creating it.");
-                nextcloudClient.createFolder(resourceIdentifier, folderType);
+                nextcloudClient.createSymlink(metadata.getId() + "", resourceIdentifier, folderType);
             }
 
             String title = schema.queryString("eea-title-default-get", metadataXml);

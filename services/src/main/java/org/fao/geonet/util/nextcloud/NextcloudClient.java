@@ -26,6 +26,8 @@ import com.github.sardine.Sardine;
 import com.github.sardine.SardineFactory;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -33,6 +35,8 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.entity.ContentType;
 import org.fao.geonet.api.API;
+import org.fao.geonet.kernel.GeonetworkDataDirectory;
+import org.fao.geonet.lib.Lib;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
@@ -57,10 +61,12 @@ public class NextcloudClient {
     public static final String META_STATUSCODE_XPATH = "./meta/statuscode";
     private final RestTemplate restTemplate;
     private final NextcloudConfig config;
+    private final GeonetworkDataDirectory geonetworkDataDirectory;
 
-    public NextcloudClient(NextcloudConfig config, RestTemplate restTemplate) {
+    public NextcloudClient(NextcloudConfig config, RestTemplate restTemplate, GeonetworkDataDirectory geonetworkDataDirectory) {
         this.config = config;
         this.restTemplate = restTemplate;
+        this.geonetworkDataDirectory = geonetworkDataDirectory;
 
         if (StringUtils.isBlank(config.getUrl())
             || StringUtils.isBlank(config.getUsername())
@@ -178,6 +184,26 @@ public class NextcloudClient {
             sardine.createDirectory(url);
         } catch (IOException e) {
             throw new NextcloudException("Datashare: Error creating the folder '" + path + "' in Nextcloud", e);
+        }
+    }
+
+    /**
+     * Create a symlink based on the resource identifier eg. eea_t_national-emissions-reported_p_2025_v01_r00
+     * which will be /{public|internal}/eea_t_national-emissions-reported_p_2025_v01_r00
+     * pointing to the metadata directory in the catalogue datastore.
+     *
+     */
+    public void createSymlink(String metadataId, String resourceIdentifier, FOLDER_TYPE folderType) throws NextcloudException {
+        try {
+            Path metadataDir = Lib.resource.getMetadataDir(geonetworkDataDirectory, metadataId);
+            String path = getPath(resourceIdentifier, folderType);
+            Path symLinkPath = Path.of(config.getBaseFolder(), path);
+            Files.createSymbolicLink(
+                symLinkPath,
+                symLinkPath.getParent().relativize(metadataDir)
+            );
+        } catch (IOException e) {
+            throw new NextcloudException("Datashare: Error creating the symlink for record with id '" + metadataId + "' in Nextcloud", e);
         }
     }
 

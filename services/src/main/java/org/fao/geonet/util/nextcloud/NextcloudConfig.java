@@ -40,8 +40,14 @@ public class NextcloudConfig {
     @Value("${nextcloud.password}")
     private String password;
 
+    @Value("${nextcloud.base.folder}")
+    private String baseFolder;
+
     @Value("${nextcloud.datastore.path}")
     private String datastorePath;
+
+    @Value("${nextcloud.cataloguestore.path}")
+    private String catalogueStorePath;
 
     @Value("${nextcloud.shareUrl.prefix}")
     private String shareUrlPrefix;
@@ -84,5 +90,21 @@ public class NextcloudConfig {
 
     public void setShareUrlPrefix(String shareUrlPrefix) {
         this.shareUrlPrefix = shareUrlPrefix;
+    }
+
+    public String getCatalogueStorePath() {
+        return catalogueStorePath;
+    }
+
+    public void setCatalogueStorePath(String catalogueStorePath) {
+        this.catalogueStorePath = catalogueStorePath;
+    }
+
+    public String getBaseFolder() {
+        return baseFolder;
+    }
+
+    public void setBaseFolder(String baseFolder) {
+        this.baseFolder = baseFolder;
     }
 }
