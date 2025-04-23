@@ -51,6 +51,163 @@
   <xsl:variable name="nonMultilingualFields"
                 select="$editorConfig/editor/multilingualFields/exclude"/>
 
+
+  <!-- EEA Specific / Start -->
+  <xsl:variable name="publicEmails"
+                select="'info@eea.europa.eu,sdi@eea.europa.eu,copernicus@eea.europa.eu'"/>
+
+  <!-- Matching the first gmd:online, we reorder links
+   datashare synch script to catch the first one.
+   We add datashare link if missing or wrong,
+   We copy siblings. -->
+  <xsl:template match="mrd:transferOptions/*/mrd:onLine[1]" priority="2">
+
+    <xsl:variable name="eeaOnLineResource"
+                  select="../mrd:onLine[(*/cit:protocol/*/text() = 'EEA:FILEPATH'
+                                           or */cit:protocol/*/text() = 'EEA:FOLDERPATH')
+                                           and starts-with(*/cit:linkage/gco:CharacterString,
+                                            'https://sdi.eea.europa.eu/webdav')]"/>
+
+    <xsl:variable name="hasEEAFile"
+                  select="count($eeaOnLineResource) > 0"/>
+
+    <xsl:variable name="hasNextCloudLink"
+                  select="count(../mrd:onLine/*[cit:linkage/*/text() = concat('https://sdi.eea.europa.eu/data/', /root/env/uuid)]) > 0"/>
+
+    <xsl:apply-templates mode="copy-online"
+                         select="$eeaOnLineResource"/>
+
+    <xsl:if test="$hasEEAFile and not($hasNextCloudLink)">
+      <!--
+Dataset identifier
+See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions#1-Dataset-Identifier-convention
+ eg. climate-adapt_r_4258_60_arcmin_projected-sea-level-rise_p_2081-2100_v01_r00
+ -->
+      <xsl:variable name="datasetIdentifier"
+                    select="/root/mdb:MD_Metadata/mdb:identificationInfo/*/
+                              mri:citation/*/cit:identifier/*/mcc:code/*[matches(text(), '.*_[ip]_.*')]/text()"/>
+      <xsl:variable name="isPublic"
+                    select="contains($datasetIdentifier, '_p_')"/>
+      <xsl:variable name="linkLabel"
+                    select="if ($isPublic) then 'Direct download' else 'Direct download (Eionet authentication)'"/>
+
+      <mrd:onLine>
+        <xsl:if test="not($isPublic)">
+          <xsl:attribute name="gco:nilReason" select="'withheld'"/>
+        </xsl:if>
+        <cit:CI_OnlineResource>
+          <cit:linkage>
+            <gco:CharacterString>https://sdi.eea.europa.eu/data/<xsl:value-of select="/root/env/uuid"/></gco:CharacterString>
+          </cit:linkage>
+          <cit:protocol>
+            <gco:CharacterString>WWW:URL</gco:CharacterString>
+          </cit:protocol>
+          <cit:name>
+            <gco:CharacterString><xsl:value-of select="$linkLabel"/></gco:CharacterString>
+          </cit:name>
+          <cit:function>
+            <cit:CI_OnLineFunctionCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                       codeListValue="download" />
+          </cit:function>
+        </cit:CI_OnlineResource>
+      </mrd:onLine>
+    </xsl:if>
+
+    <xsl:apply-templates mode="copy-online"
+                         select="../mrd:onLine except $eeaOnLineResource"/>
+
+  </xsl:template>
+
+
+  <xsl:template mode="copy-online"
+                match="mrd:onLine[
+                          starts-with(*/cit:linkage/gco:CharacterString, 'https://land.copernicus.eu')
+                          and ends-with(*/cit:linkage/gco:CharacterString, 'tab=download')
+                          and (not(*/cit:name) or */cit:name/gco:CharacterString = '')]"
+                priority="199">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <cit:CI_OnlineResource>
+        <xsl:copy-of select="*/cit:linkage"/>
+        <xsl:copy-of select="*/cit:protocol"/>
+        <xsl:copy-of select="*/cit:applicationProfile"/>
+        <cit:name>
+          <gco:CharacterString>Download (requires authentication)</gco:CharacterString>
+        </cit:name>
+        <xsl:copy-of select="*/cit:description"/>
+        <xsl:copy-of select="*/cit:function"/>
+      </cit:CI_OnlineResource>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template mode="copy-online"
+                match="mrd:onLine[starts-with(*/cit:protocol/gco:CharacterString, 'EEA')
+                                  or starts-with(*/cit:linkage/*/text(), 'https://taskman.eionet.europa.eu/issues')]">
+    <xsl:variable name="datasetIdentifier"
+                  select="/root/mdb:MD_Metadata/mdb:identificationInfo/*/
+                              mri:citation/*/cit:identifier/*/mcc:code/*[matches(text(), '.*_[ip]_.*')]/text()"/>
+    <xsl:variable name="isPublic"
+                  select="contains($datasetIdentifier, '_p_')
+                          and not(starts-with(*/cit:linkage/*/text(), 'https://taskman.eionet.europa.eu/issues'))"/>
+
+    <xsl:copy>
+      <xsl:if test="not($isPublic)">
+        <xsl:attribute name="gco:nilReason">withheld</xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates select="@*[name() != 'gco:nilReason']"/>
+      <xsl:apply-templates select="*"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template mode="copy-online"
+                match="mrd:onLine">
+    <xsl:copy>
+      <xsl:apply-templates select="*"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- We skip those not in first position as they are copied by previous template. -->
+  <xsl:template match="mrd:transferOptions/*/mrd:onLine"/>
+
+
+
+  <xsl:template match="mri:graphicOverview/*/mcc:fileName/*[text() = 'https://sdi.eea.europa.eu/public/catalogue-graphic-overview/REPLACEBYUUID.png']">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:value-of select="replace(., 'REPLACEBYUUID', /root/env/uuid)"/>
+    </xsl:copy>
+  </xsl:template>
+
+
+  <!-- Flag element with nilReason = withheld automatically
+  * All EEA protocols
+  * Keywords from EEA categories and EEA keyword list
+  * All contact with an email not from the list above
+
+  Those elements will be visible to user only when the download privileges
+  is set.-->
+
+  <xsl:template match="
+                  mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/* = 'EEA categories']|
+                  mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/* = 'EEA keyword list']|
+                  *[cit:CI_Responsibility and not(contains($publicEmails, .//cit:contactInfo/*/cit:address/*/cit:electronicMailAddress/*/text()))]"
+                priority="99">
+    <xsl:copy>
+      <xsl:attribute name="gco:nilReason">withheld</xsl:attribute>
+      <xsl:apply-templates select="@*[name() != 'gco:nilReason']"/>
+      <xsl:apply-templates select="*"/>
+    </xsl:copy>
+  </xsl:template>
+
+
+  <!-- EEA Specific / End -->
+
+
+
+
+
+
+
   <!-- If no metadata linkage exist, build one based on
   the metadata UUID. -->
   <xsl:variable name="createMetadataLinkage"

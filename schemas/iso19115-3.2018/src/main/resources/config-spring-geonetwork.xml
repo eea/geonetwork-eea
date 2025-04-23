@@ -70,6 +70,26 @@
           <property name="xpath"
                     value="mdb:identificationInfo/*/mri:citation/*/cit:identifier[1]/*/mcc:code/*/text()"/>
         </bean>
+        <bean class="org.fao.geonet.kernel.schema.SavedQuery">
+          <property name="id" value="eea-datastorelink-get"/>
+          <property name="xpath"
+                    value=".//mrd:onLine/*/cit:linkage[starts-with(
+                                              lower-case(gco:CharacterString),
+                                              concat('https://sdi.eea.europa.eu/data/',
+                                                          ancestor::mdb:MD_Metadata/mdb:metadataIdentifier//*/mcc:code/gco:CharacterString/text()
+                                              ))]/gco:CharacterString/text()"/>
+        </bean>
+        <bean class="org.fao.geonet.kernel.schema.SavedQuery">
+          <property name="id" value="eea-resourceid-get"/>
+          <property name="xpath"
+                    value="mdb:identificationInfo/*/mri:citation/*/cit:identifier/*/mcc:code/*[contains(text(), '_p_') or contains(text(), '_i_')]/text()"/>
+        </bean>
+
+        <bean class="org.fao.geonet.kernel.schema.SavedQuery">
+          <property name="id" value="eea-title-default-get"/>
+          <property name="xpath"
+                    value="mdb:identificationInfo/*/mri:citation/*/cit:title/*/text()"/>
+        </bean>
       </list>
     </property>
   </bean>

@@ -678,10 +678,7 @@
       </thesaurusList>
       <sidePanel>
         <directive data-gn-overview-manager=""
-                   data-file-types=".png,.gif,.jpeg,.jpg"
-                   displayIfRecord="not(contains(mdb:MD_Metadata/
-                                    mdb:metadataScope/*/mdb:resourceScope/*/@codeListValue,
-                                    'nonGeographicDataset'))"/>
+                   data-file-types=".png,.gif,.jpeg,.jpg"/>
 
         <directive data-gn-distribution-resources-panel="gnCurrentEdit.metadata"
                    data-mode="viewConfig.distributionConfig.layout || ''"
