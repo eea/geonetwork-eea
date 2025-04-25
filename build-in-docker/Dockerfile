@@ -33,6 +33,11 @@ ENV JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true \
 
 USER root
 
+RUN groupmod -g 933 www-data && \
+  usermod -u 933 -g 933 www-data && \
+  groupmod -g 33 jetty && \
+  usermod -u 33 -g 33 jetty
+
 # Add jetty to the www-data group
 RUN usermod --append --groups www-data jetty
 
