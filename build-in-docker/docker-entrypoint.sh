@@ -9,6 +9,8 @@ if ! command -v -- "$1" >/dev/null 2>&1 ; then
 	set -- java -jar "$JETTY_HOME/start.jar" "$@"
 fi
 
+# Add write permission to group for new created files and directories
+umask 002
 if [[ "$1" = jetty.sh ]] || [[ $(expr "$*" : 'java .*/start\.jar.*$') != 0 ]]; then
     # Customize context path
     if [ ! -f "${JETTY_BASE}/webapps/geonetwork.xml" ]; then
