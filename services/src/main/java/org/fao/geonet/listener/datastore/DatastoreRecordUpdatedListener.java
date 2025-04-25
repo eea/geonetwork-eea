@@ -44,7 +44,7 @@ public class DatastoreRecordUpdatedListener implements ApplicationListener<Recor
 
     @Override
     public void onApplicationEvent(RecordUpdatedEvent event) {
-        AbstractMetadata metadata = metadataUtils.findOneByUuid(event.getUuid());
+        AbstractMetadata metadata = metadataUtils.findOne(event.getMdId().intValue());
 
         try {
             nextcloudService.checkAndProxyDatastore(metadata);
