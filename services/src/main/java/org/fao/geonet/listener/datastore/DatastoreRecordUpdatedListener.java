@@ -25,9 +25,12 @@ package org.fao.geonet.listener.datastore;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.events.history.RecordUpdatedEvent;
+import org.fao.geonet.kernel.datamanager.IMetadataSchemaUtils;
 import org.fao.geonet.kernel.datamanager.base.BaseMetadataUtils;
+import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.util.nextcloud.NextcloudService;
 import org.fao.geonet.utils.Log;
+import org.fao.geonet.utils.Xml;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
@@ -36,9 +39,12 @@ import org.springframework.stereotype.Component;
 public class DatastoreRecordUpdatedListener implements ApplicationListener<RecordUpdatedEvent> {
     private final BaseMetadataUtils metadataUtils;
     private final NextcloudService nextcloudService;
+    private final IMetadataSchemaUtils metadataSchemaUtils;
 
-    public DatastoreRecordUpdatedListener(BaseMetadataUtils metadataUtils, NextcloudService nextcloudService) {
+    public DatastoreRecordUpdatedListener(BaseMetadataUtils metadataUtils, NextcloudService nextcloudService,
+                                          IMetadataSchemaUtils metadataSchemaUtils) {
         this.metadataUtils = metadataUtils;
+        this.metadataSchemaUtils = metadataSchemaUtils;
         this.nextcloudService = nextcloudService;
     }
 
@@ -47,7 +53,11 @@ public class DatastoreRecordUpdatedListener implements ApplicationListener<Recor
         AbstractMetadata metadata = metadataUtils.findOne(event.getMdId().intValue());
 
         try {
-            nextcloudService.checkAndProxyDatastore(metadata);
+            final MetadataSchema schema = metadataSchemaUtils
+                .getSchema(metadata.getDataInfo().getSchemaId());
+            String oldResourceIdentifier = schema.queryString("eea-resourceid-get", Xml.loadString(event.getPreviousState(), false));
+
+            nextcloudService.setupDatastore(metadata, oldResourceIdentifier);
         } catch (Exception ex) {
             Log.error(Geonet.DATA_MANAGER, "Metadata update: couldn't proxy the request to the Nextcloud share " + event.getSource(), ex);
         }

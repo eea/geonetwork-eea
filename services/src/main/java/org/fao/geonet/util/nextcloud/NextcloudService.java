@@ -22,6 +22,7 @@
  */
 package org.fao.geonet.util.nextcloud;
 
+import java.util.function.Predicate;
 import org.apache.commons.lang3.StringUtils;
 import org.fao.geonet.api.API;
 import org.fao.geonet.api.exception.ResourceNotFoundException;
@@ -72,7 +73,7 @@ public class NextcloudService {
 
     }
 
-    public ResponseEntity<String> checkAndProxyDatastore(AbstractMetadata metadata) throws ResourceNotFoundException, JDOMException, IOException {
+    public List<String> setupDatastore(AbstractMetadata metadata, String oldResourceIdentifier) throws ResourceNotFoundException, JDOMException, IOException {
         List<String> existingShares = new ArrayList<>(1);
         String uuid = metadata.getUuid();
 
@@ -104,20 +105,30 @@ public class NextcloudService {
             boolean directoryExists = nextcloudClient.checkIfDirectoryExists(resourceIdentifier, folderType);
             if (!directoryExists) {
                 // Create the folder and add the metadata file XML
-                Log.debug(API.LOG_MODULE_NAME, "Datastore: Folder does not exist in Netcloud. Creating it.");
+                Log.debug(API.LOG_MODULE_NAME, "Datastore: Folder does not exist for this resource identifier in Netcloud. Creating it.");
                 nextcloudClient.createSymlink(metadata.getId() + "", resourceIdentifier, folderType);
             }
 
+            if (StringUtils.isNotBlank(oldResourceIdentifier) && !oldResourceIdentifier.equals(resourceIdentifier)) {
+                // Remove the old symbolic link
+                Log.debug(API.LOG_MODULE_NAME, "Datastore: removing old symbolic link in Netcloud: " + oldResourceIdentifier);
+                nextcloudClient.deleteFile(oldResourceIdentifier, getFolderType(oldResourceIdentifier));
+            }
+
+
+            // Remove and update the current metadata file
+            nextcloudClient.deleteXmlDocument(resourceIdentifier, getFolderType(resourceIdentifier), uuid);
             String title = schema.queryString("eea-title-default-get", metadataXml);
             nextcloudClient.createFile(metadata.getData(), sanitizeAndTrimTitle(title, uuid),
                 resourceIdentifier, folderType);
+
 
             if (!directoryExists) {
                 // Directory was just created. Don't check for existing shares, just create a new one
                 Log.debug(API.LOG_MODULE_NAME, "Datastore: adding new share to the new folder.");
                 existingShares.add(nextcloudClient.createShare(resourceIdentifier, folderType));
             } else {
-                Log.debug(API.LOG_MODULE_NAME, "Datastore: Checkins for existing shares.");
+                Log.debug(API.LOG_MODULE_NAME, "Datastore: Checking for existing shares.");
                 // Directory already exists. Check if a share exists and create a new one if it doesn't
                 existingShares = checkIfNextcloudShareExists(folderType, resourceIdentifier);
                 Log.debug(API.LOG_MODULE_NAME, "Share exists: " + String.join(", ", existingShares));
@@ -131,24 +142,37 @@ public class NextcloudService {
             throw new NextcloudException("Failed communicate with Nextcloud", e);
         }
         // Proxy the request to the Nextcloud share
+        return existingShares;
+    }
+
+
+    public ResponseEntity<String> checkAndProxyDatastore(AbstractMetadata metadata) throws ResourceNotFoundException, JDOMException, IOException {
+        var existingShares = setupDatastore(metadata, null);
+        // Proxy the request to the Nextcloud share
         return nextcloudClient.proxyRequest(existingShares.get(0));
     }
 
     /**
      * Check if the resource identifier is valid. <a href="https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions">Naming conventions</a>
+     * And check file separator characters.
      */
     private boolean isValidResourceIdentifier(String resourceIdentifier) {
-        if(StringUtils.isBlank(resourceIdentifier)) {
+        if(StringUtils.isBlank(resourceIdentifier) || resourceIdentifier.contains("/") || resourceIdentifier.contains("..")) {
             return false;
         }
 
         // Provider_DataType_EpsgCode_ScaleResolution_ScaleResUnit_DatasetShortName_PublicOrInternal_TimeCoverage_VersionNumber_RevisionNumber
+        // Provider_DataType_DatasetShortName_PublicOrInternal_TimeCoverage_VersionNumber_RevisionNumber
         String[] tokens = resourceIdentifier.split("_");
-        if (tokens.length != EEA_RESOURCE_IDENTIFIER_PARTS) {
+        String dataType = tokens[1];
+        int length = "s".equals(dataType) ? EEA_RESOURCE_IDENTIFIER_PARTS - 3 : EEA_RESOURCE_IDENTIFIER_PARTS;
+        int accessIndex = "s".equals(dataType) ? EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX - 3 : EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX;
+        if (tokens.length != length) {
             return false;
         }
-        return tokens[EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX].equals("p") || tokens[EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX].equals("i");
+        return tokens[accessIndex].equals("p") || tokens[accessIndex].equals("i");
     }
+
 
     /**
      * Get the folder type based on the resource identifier.

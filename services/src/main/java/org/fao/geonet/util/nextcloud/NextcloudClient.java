@@ -207,6 +207,43 @@ public class NextcloudClient {
         }
     }
 
+
+    public void deleteFile(String resourceIdentifier, FOLDER_TYPE folderType) throws NextcloudException {
+        String path = getPath(resourceIdentifier, folderType);
+        Path filePath = Path.of(config.getBaseFolder(), path);
+        try {
+            if (Files.isSymbolicLink(filePath)) {
+                Files.deleteIfExists(filePath);
+            } else {
+                Log.debug(API.LOG_MODULE_NAME, String.format(
+                    "Datastore: %s is not a symbolic link. Keeping it.", filePath));
+            }
+        } catch (IOException e) {
+            throw new NextcloudException(String.format("Datashare: Error deleting folder %s in Nextcloud", filePath), e);
+        }
+    }
+
+    public void deleteXmlDocument(String resourceIdentifier, FOLDER_TYPE folderType, String uuid) {
+       String path = getPath(resourceIdentifier, folderType);
+        Path folderPath = Path.of(config.getBaseFolder(), path);
+        String suffix = "_metadata_" + uuid + ".xml";
+
+        try {
+            Files.list(folderPath)
+                 .filter(file -> file.toString().endsWith(suffix))
+                 .forEach(file -> {
+                     try {
+                         Files.deleteIfExists(file);
+                     } catch (IOException e) {
+                         throw new NextcloudException("Datashare: Error deleting file: " + file, e);
+                     }
+                 });
+        } catch (IOException e) {
+            throw new NextcloudException("Datashare: Error deleting files in folder: " + folderPath, e);
+        }
+    }
+
+
     /**
      * Create a file in Nextcloud using the WebDAV API, the file will be created in the specified folder type.
      *
