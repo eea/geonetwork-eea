@@ -26,10 +26,14 @@ import java.util.function.Predicate;
 import org.apache.commons.lang3.StringUtils;
 import org.fao.geonet.api.API;
 import org.fao.geonet.api.exception.ResourceNotFoundException;
+import org.fao.geonet.api.records.formatters.FormatterParams;
+import org.fao.geonet.api.records.formatters.XsltFormatter;
 import org.fao.geonet.domain.AbstractMetadata;
+import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataSchemaUtils;
 import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.utils.Log;
+import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.springframework.http.HttpStatus;
@@ -122,6 +126,15 @@ public class NextcloudService {
             nextcloudClient.createFile(metadata.getData(), sanitizeAndTrimTitle(title, uuid),
                 resourceIdentifier, folderType);
 
+            // Add README.md file using formatter
+            try {
+                Element readme = Xml.transform(metadataXml, metadataSchemaUtils.getSchemaDir(metadata.getDataInfo().getSchemaId()).resolve("formatter").resolve("readme").resolve("view.xsl"));
+                nextcloudClient.createFile(readme.getText(), "README.md",
+                    resourceIdentifier, folderType);
+            } catch (Exception e) {
+                Log.error(API.LOG_MODULE_NAME, "Failed to transform metadata XML to README.md", e);
+            }
+
 
             if (!directoryExists) {
                 // Directory was just created. Don't check for existing shares, just create a new one
@@ -165,8 +178,9 @@ public class NextcloudService {
         // Provider_DataType_DatasetShortName_PublicOrInternal_TimeCoverage_VersionNumber_RevisionNumber
         String[] tokens = resourceIdentifier.split("_");
         String dataType = tokens[1];
-        int length = "s".equals(dataType) ? EEA_RESOURCE_IDENTIFIER_PARTS - 3 : EEA_RESOURCE_IDENTIFIER_PARTS;
-        int accessIndex = "s".equals(dataType) ? EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX - 3 : EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX;
+        boolean isVectorOrRaster = "v".equals(dataType) || "r".equals(dataType);
+        int length = isVectorOrRaster ? EEA_RESOURCE_IDENTIFIER_PARTS : EEA_RESOURCE_IDENTIFIER_PARTS - 3;
+        int accessIndex = isVectorOrRaster ? EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX : EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX - 3;
         if (tokens.length != length) {
             return false;
         }
