@@ -73,7 +73,7 @@ public class NextcloudService {
         if (responseCode == HttpStatus.NOT_FOUND.value()) {
             return new ArrayList<>();
         }
-        return nextcloudClient.listShares(sharesResponse);
+        return nextcloudClient.listShares(sharesResponse, folderType);
 
     }
 

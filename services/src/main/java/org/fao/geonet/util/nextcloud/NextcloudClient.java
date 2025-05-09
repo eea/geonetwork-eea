@@ -25,6 +25,7 @@ package org.fao.geonet.util.nextcloud;
 import com.github.sardine.Sardine;
 import com.github.sardine.SardineFactory;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -130,11 +131,12 @@ public class NextcloudClient {
     /**
      * List the shares from the response.
      *
-     * @param response the response.
+     * @param response   the response.
+     * @param folderType
      * @return a list of share URLs.
      * @throws NextcloudException if an error occurs while extracting the shares.
      */
-    public List<String> listShares(Element response) throws NextcloudException {
+    public List<String> listShares(Element response, FOLDER_TYPE folderType) throws NextcloudException {
         List<String> sharesList = new ArrayList<>();
         try {
 
@@ -142,8 +144,16 @@ public class NextcloudClient {
             for (Object share : shares) {
                 if (share instanceof Element) {
                     Element shareElement = (Element) share;
-                    String shareUrl = shareElement.getChildText("url");
-                    sharesList.add(shareUrl);
+                    if (folderType == FOLDER_TYPE.INTERNAL) {
+                        String shareWith = shareElement.getChildText("share_with");
+                        if (config.getInternalShareGroups().contains(shareWith)) {
+                            String itemSource = shareElement.getChildText("item_source");
+                            sharesList.add(config.getUrl() + "/f/" + itemSource);
+                        }
+                    } else {
+                        String shareUrl = shareElement.getChildText("url");
+                        sharesList.add(shareUrl);
+                    }
                 }
             }
 
@@ -158,12 +168,17 @@ public class NextcloudClient {
      * Get the share URL from the response.
      *
      * @param shareResponse the response.
-     * @throws NextcloudException if an error occurs while extracting the share URL.
+     * @param folderType
      * @return the share URL.
+     * @throws NextcloudException if an error occurs while extracting the share URL.
      */
-    public String getShareUrl(Element shareResponse) throws NextcloudException {
+    public String getShareUrl(Element shareResponse, FOLDER_TYPE folderType) throws NextcloudException {
         try {
-            return Xml.selectString(shareResponse, "./data/url");
+            if (folderType == FOLDER_TYPE.INTERNAL) {
+                return config.getUrl() + "/f/" + Xml.selectString(shareResponse, "./data/item_source");
+            } else {
+                return Xml.selectString(shareResponse, "./data/url");
+            }
         } catch (JDOMException e) {
             throw new NextcloudException("Error parsing the Nextcloud response and getting the share URL", e);
         }
@@ -258,8 +273,6 @@ public class NextcloudClient {
         String path = getPath(resourceIdentifier, folderType);
         String url = config.getUrl() + REMOTE_PHP_DAV_FILES + config.getUsername() + "/" + path + "/" + fileName;
         try {
-            // TODO: Remove existing file if it exists? based on *uuid.xml ?
-            //  eg. if title change, the file needs to be updated
             sardine.put(url, data.getBytes(StandardCharsets.UTF_8), ContentType.APPLICATION_XML.getMimeType());
         } catch (IOException e) {
             throw new NextcloudException("Error creating the XML metadata file '" + path + "' in Nextcloud", e);
@@ -301,10 +314,30 @@ public class NextcloudClient {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("path", path);
         // 3 is the share type for Public Link, O is for user share, 1 is for group share
-        body.add("shareType", "3");
+        body.add("shareType", folderType == FOLDER_TYPE.INTERNAL ?"1" : "3");
         // 1 is the permission for read only
         body.add("permissions", "1");
 
+        if (folderType == FOLDER_TYPE.INTERNAL) {
+            // Create private share with EIONET user only if _i_ is in the resource identifier
+            String internalShareUrl = "";
+            for (String group : config.getInternalShareGroups()) {
+                try {
+                    body.remove("shareWith");
+                    body.add("shareWith", group);
+                    internalShareUrl = callShareRequest(body, url, path, folderType);
+                } catch (Exception e) {
+                    Log.debug(API.LOG_MODULE_NAME, "Datastore: Failed to share with group %s.", group);
+                }
+            }
+            // Get Internal share
+            return internalShareUrl;
+        } else {
+            return callShareRequest(body, url, path, folderType);
+        }
+    }
+
+    private String callShareRequest(MultiValueMap<String, String> body, String url, String path, FOLDER_TYPE folderType) {
         // Create request entity
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(body, createHeaders());
 
@@ -317,7 +350,7 @@ public class NextcloudClient {
         }
         try {
             Element createShareResponse = Xml.loadString(response.getBody(), false);
-            return getShareUrl(createShareResponse);
+            return getShareUrl(createShareResponse, folderType);
         } catch (IOException | JDOMException e) {
             throw new NextcloudException("Error reading the response for creating the share for " + path, e);
         }
@@ -332,6 +365,14 @@ public class NextcloudClient {
     public ResponseEntity<String> proxyRequest(String shareUrl) {
         // Proxy the request to the Nextcloud share
         String targetUrl = shareUrl;
+        if (targetUrl.startsWith(config.getUrl() + "/f/")) {
+            // Internal share, do redirect to trigger Nextcloud auth
+            return ResponseEntity.status(302)
+                .location(URI.create(targetUrl))
+                .header("Location", targetUrl)
+                .build();
+        }
+
         if (StringUtils.isNotBlank(config.getShareUrlPrefix())) {
             targetUrl = StringUtils.removeStart(shareUrl, config.getShareUrlPrefix());
             targetUrl = config.getUrl() + "/" + targetUrl;

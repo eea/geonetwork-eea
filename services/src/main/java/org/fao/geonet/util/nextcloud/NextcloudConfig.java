@@ -23,6 +23,7 @@
 package org.fao.geonet.util.nextcloud;
 
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -51,6 +52,9 @@ public class NextcloudConfig {
 
     @Value("${nextcloud.shareUrl.prefix}")
     private String shareUrlPrefix;
+
+    @Value("#{'${nextcloud.internalShare.groups}'.split(',')}")
+    private List<String> internalShareGroups;
 
     public String getUrl() {
         return url;
@@ -106,5 +110,13 @@ public class NextcloudConfig {
 
     public void setBaseFolder(String baseFolder) {
         this.baseFolder = baseFolder;
+    }
+
+    public List<String> getInternalShareGroups() {
+        return internalShareGroups;
+    }
+
+    public void setInternalShareGroups(List<String> internalShareGroups) {
+        this.internalShareGroups = internalShareGroups;
     }
 }
