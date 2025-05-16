@@ -83,8 +83,11 @@ public class GeonetworkAuthenticationProvider extends AbstractUserDetailsAuthent
             PasswordEncoder encoder = applicationContext.getBean(PasswordEncoder.class);
             UserRepository userRepository = applicationContext.getBean(UserRepository.class);
 
-            // Only check user with local db user (ie. authtype is '')
-            User user = userRepository.findOneByUsernameAndSecurityAuthTypeIsNullOrEmpty(username);
+            // TODO: Improve - when using GN5, authenticated user may have been created from an LDAP
+            // So GN4, don't need to create the user again as it has been created in GN5
+            // TOCHECK Only check user with local db user (ie. authtype is '')
+            //            User user = userRepository.findOneByUsernameAndSecurityAuthTypeIsNullOrEmpty(username);
+            User user = userRepository.findOneByUsername(username);
             if (user == null && checkUserNameOrEmail) {
                 user = userRepository.findOneByEmailAndSecurityAuthTypeIsNullOrEmpty(username);
             }
