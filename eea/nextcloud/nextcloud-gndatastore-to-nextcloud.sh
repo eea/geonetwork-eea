@@ -58,7 +58,8 @@ for hit in $(jq -r '.hits.hits[] | @base64' results.json); do
   fi
   echo "Moving content from $groupDir/$id\n"
   if [ -d "$OLDCATALOGUE_DIR/$groupDir/$id" ]; then
-    mv $OLDCATALOGUE_DIR/$groupDir/$id/* $NEWCATALOGUE_DIR/$uuid/.
+    mv $OLDCATALOGUE_DIR/$groupDir/$id/public/* $NEWCATALOGUE_DIR/$uuid/.
+    mv $OLDCATALOGUE_DIR/$groupDir/$id/private/* $NEWCATALOGUE_DIR/$uuid/.
   else
     echo "Source folder $OLDCATALOGUE_DIR/$groupDir/$id does not exist. Skipping."
   fi
