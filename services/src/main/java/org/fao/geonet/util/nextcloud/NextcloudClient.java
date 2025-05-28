@@ -271,9 +271,11 @@ public class NextcloudClient {
     public void createFile(String data, String fileName, String resourceIdentifier, FOLDER_TYPE folderType) throws NextcloudException {
         Sardine sardine = SardineFactory.begin(config.getUsername(), config.getPassword());
         String path = getPath(resourceIdentifier, folderType);
-        String url = config.getUrl() + REMOTE_PHP_DAV_FILES + config.getUsername() + "/" + path + "/" + fileName;
+        String url = config.getUrl() + REMOTE_PHP_DAV_FILES + config.getUsername() + "/" + path;
         try {
-            sardine.put(url, data.getBytes(StandardCharsets.UTF_8), ContentType.APPLICATION_XML.getMimeType());
+            // Tentative to refresh Nextcloud list of files in folder of external storage
+            sardine.list(url);
+            sardine.put(url + "/" + fileName, data.getBytes(StandardCharsets.UTF_8), ContentType.APPLICATION_XML.getMimeType());
         } catch (IOException e) {
             throw new NextcloudException("Error creating the XML metadata file '" + path + "/" + fileName + "' in Nextcloud", e);
         }
@@ -294,10 +296,6 @@ public class NextcloudClient {
         String url = config.getUrl() + REMOTE_PHP_DAV_FILES + config.getUsername() + "/" + path;
         try {
             boolean exists = sardine.exists(url);
-            if (exists) {
-                // Tentative to refresh Nextcloud list of files in folder of external storage
-                sardine.list(url);
-            }
             return exists;
         } catch (IOException e) {
             throw new NextcloudException("Error checking in directory '" + path + "' exists in Nextcloud", e);
