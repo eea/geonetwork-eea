@@ -371,7 +371,7 @@ public class NextcloudClient {
         if (targetUrl.startsWith(config.getUrl() + "/f/")) {
             // Internal share, do redirect to trigger Nextcloud auth
             return ResponseEntity.status(302)
-                .location(URI.create(targetUrl))
+                .location(URI.create(targetUrl.replaceAll(config.getUrl(), config.getShareUrlPrefix())))
                 .header("Location", targetUrl)
                 .build();
         }
