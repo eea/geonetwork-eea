@@ -32,6 +32,7 @@ import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataSchemaUtils;
 import org.fao.geonet.kernel.schema.MetadataSchema;
+import static org.fao.geonet.util.nextcloud.NextcloudClient.LOG_MODULE_NAME;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
@@ -105,17 +106,22 @@ public class NextcloudService {
         }
 
         NextcloudClient.FOLDER_TYPE folderType = getFolderType(resourceIdentifier);
+        Log.debug(LOG_MODULE_NAME, String.format("Datastore: Synchronization of folder %s (%s).", resourceIdentifier, folderType));
+
         try {
             boolean directoryExists = nextcloudClient.checkIfDirectoryExists(resourceIdentifier, folderType);
             if (!directoryExists) {
                 // Create the folder and add the metadata file XML
-                Log.debug(API.LOG_MODULE_NAME, "Datastore: Folder does not exist for this resource identifier in Netcloud. Creating it.");
+                Log.debug(LOG_MODULE_NAME, String.format("Datastore: Folder %s (%s) does not exist for this resource identifier in Netcloud. Creating it.", resourceIdentifier, folderType));
                 nextcloudClient.createSymlink(metadata.getId() + "", resourceIdentifier, folderType);
+                nextcloudClient.getDirectory(resourceIdentifier, folderType);
+            } else {
+                Log.debug(LOG_MODULE_NAME, String.format("Datastore: Folder %s (%s) exists for this resource identifier in Netcloud.", resourceIdentifier, folderType));
             }
 
             if (StringUtils.isNotBlank(oldResourceIdentifier) && !oldResourceIdentifier.equals(resourceIdentifier)) {
                 // Remove the old symbolic link
-                Log.debug(API.LOG_MODULE_NAME, "Datastore: removing old symbolic link in Netcloud: " + oldResourceIdentifier);
+                Log.debug(LOG_MODULE_NAME, "Datastore: removing old symbolic link in Netcloud: " + oldResourceIdentifier);
                 nextcloudClient.deleteFile(oldResourceIdentifier, getFolderType(oldResourceIdentifier));
             }
 
@@ -132,22 +138,22 @@ public class NextcloudService {
                 nextcloudClient.createFile(readme.getText(), "README.md",
                     resourceIdentifier, folderType);
             } catch (Exception e) {
-                Log.error(API.LOG_MODULE_NAME, "Failed to transform metadata XML to README.md", e);
+                Log.error(LOG_MODULE_NAME, "Failed to transform metadata XML to README.md", e);
             }
 
 
             if (!directoryExists) {
                 // Directory was just created. Don't check for existing shares, just create a new one
-                Log.debug(API.LOG_MODULE_NAME, "Datastore: adding new share to the new folder.");
+                Log.debug(LOG_MODULE_NAME, "Datastore: adding new share to the new folder.");
                 existingShares.add(nextcloudClient.createShare(resourceIdentifier, folderType));
             } else {
-                Log.debug(API.LOG_MODULE_NAME, "Datastore: Checking for existing shares.");
+                Log.debug(LOG_MODULE_NAME, "Datastore: Checking for existing shares.");
                 // Directory already exists. Check if a share exists and create a new one if it doesn't
                 existingShares = checkIfNextcloudShareExists(folderType, resourceIdentifier);
-                Log.debug(API.LOG_MODULE_NAME, "Share exists: " + String.join(", ", existingShares));
+                Log.debug(LOG_MODULE_NAME, "Share exists: " + String.join(", ", existingShares));
                 if (existingShares.isEmpty()) {
                     // Create a share
-                    Log.debug(API.LOG_MODULE_NAME, "Datastore: No shares exist. Creating a new one.");
+                    Log.debug(LOG_MODULE_NAME, "Datastore: No shares exist. Creating a new one.");
                     existingShares.add(nextcloudClient.createShare(resourceIdentifier, folderType));
                 }
             }

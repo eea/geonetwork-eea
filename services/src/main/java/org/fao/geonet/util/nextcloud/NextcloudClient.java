@@ -22,6 +22,7 @@
  */
 package org.fao.geonet.util.nextcloud;
 
+import com.github.sardine.DavResource;
 import com.github.sardine.Sardine;
 import com.github.sardine.SardineFactory;
 import java.io.IOException;
@@ -59,6 +60,7 @@ import org.springframework.web.client.RestTemplate;
 public class NextcloudClient {
 
     public static final String REMOTE_PHP_DAV_FILES = "/remote.php/dav/files/";
+    public static final String LOG_MODULE_NAME = "geonetwork.nextcloud";
     public static final String META_STATUSCODE_XPATH = "./meta/statuscode";
     private final RestTemplate restTemplate;
     private final NextcloudConfig config;
@@ -73,7 +75,7 @@ public class NextcloudClient {
             || StringUtils.isBlank(config.getUsername())
             || StringUtils.isBlank(config.getPassword())
             || StringUtils.isBlank(config.getDatastorePath())) {
-            Log.warning(API.LOG_MODULE_NAME, "Datastore: The configuration of Nextcloud is not set. The Nextcloud API "
+            Log.warning(LOG_MODULE_NAME, "Datastore: The configuration of Nextcloud is not set. The Nextcloud API "
                 + "will not work. Please set the Nextcloud URL in config.properties or use System properties.");
         }
 
@@ -213,10 +215,18 @@ public class NextcloudClient {
             Path metadataDir = Lib.resource.getMetadataDir(geonetworkDataDirectory, metadataId);
             String path = getPath(resourceIdentifier, folderType);
             Path symLinkPath = Path.of(config.getBaseFolder(), path);
-            Files.createSymbolicLink(
-                symLinkPath,
-                symLinkPath.getParent().relativize(metadataDir)
-            );
+            if (!Files.exists(symLinkPath)) {
+                Files.createSymbolicLink(
+                    symLinkPath,
+                    symLinkPath.getParent().relativize(metadataDir)
+                );
+            } else if (!Files.isSymbolicLink(symLinkPath)) {
+                Log.debug(LOG_MODULE_NAME, String.format(
+                    "Datashare: Path %s already exists and is not a symbolic link. Skipping creation.", symLinkPath));
+            } else {
+                Log.debug(LOG_MODULE_NAME, String.format(
+                    "Datashare: Symlink %s already exists. Skipping creation.", symLinkPath));
+            }
         } catch (IOException e) {
             throw new NextcloudException("Datashare: Error creating the symlink for record with id '" + metadataId + "' in Nextcloud", e);
         }
@@ -230,7 +240,7 @@ public class NextcloudClient {
             if (Files.isSymbolicLink(filePath)) {
                 Files.deleteIfExists(filePath);
             } else {
-                Log.debug(API.LOG_MODULE_NAME, String.format(
+                Log.debug(LOG_MODULE_NAME, String.format(
                     "Datastore: %s is not a symbolic link. Keeping it.", filePath));
             }
         } catch (IOException e) {
@@ -250,7 +260,7 @@ public class NextcloudClient {
                      try {
                          Files.deleteIfExists(file);
                      } catch (IOException e) {
-                         throw new NextcloudException("Datashare: Error deleting file: " + file, e);
+                         throw new NextcloudException(String.format("Datashare: Error deleting file %s ending with %s ", file, suffix), e);
                      }
                  });
         } catch (IOException e) {
@@ -303,6 +313,27 @@ public class NextcloudClient {
     }
 
     /**
+     * Tentative to refresh Nextcloud list of files in folder of external storage
+     *
+     * @param resourceIdentifier
+     * @param folderType
+     * @throws NextcloudException
+     */
+    public void getDirectory(String resourceIdentifier, FOLDER_TYPE folderType) throws NextcloudException {
+        Sardine sardine = SardineFactory.begin(config.getUsername(), config.getPassword());
+        String path = getPath(resourceIdentifier, folderType);
+        String url = config.getUrl() + REMOTE_PHP_DAV_FILES + config.getUsername() + "/" + path;
+        try {
+            boolean exists = sardine.exists(url);
+            Log.debug(LOG_MODULE_NAME, String.format("Datastore (getDirectory): Directory %s exists: %s", url, exists));
+            List<DavResource> list = sardine.list(url);
+            Log.debug(LOG_MODULE_NAME, String.format("Datastore (getDirectory): Directory contains %d files", list.size()));
+        } catch (IOException e) {
+            Log.debug(LOG_MODULE_NAME, String.format("Datastore (getDirectory): Exception %s", e.getMessage()));
+        }
+    }
+
+    /**
      * Create a share in Nextcloud for the specified resource identifier.
      *
      * @param resourceIdentifier the identifier of the resource.
@@ -330,7 +361,7 @@ public class NextcloudClient {
                     body.add("shareWith", group);
                     internalShareUrl = callShareRequest(body, url, path, folderType);
                 } catch (Exception e) {
-                    Log.debug(API.LOG_MODULE_NAME, "Datastore: Failed to share with group %s.", group);
+                    Log.debug(LOG_MODULE_NAME, "Datastore: Failed to share with group %s.", group);
                 }
             }
             // Get Internal share
@@ -347,7 +378,7 @@ public class NextcloudClient {
         // Execute POST request
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
         if (response.getStatusCode().is1xxInformational() || response.getStatusCode().is2xxSuccessful()) {
-            Log.debug(API.LOG_MODULE_NAME, "Datastore: Share created successfully.");
+            Log.debug(LOG_MODULE_NAME, "Datastore: Share created successfully.");
         } else {
             throw new NextcloudException("Failed to create share for " + path + ". Response code: " + response.getStatusCode());
         }
