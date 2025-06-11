@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.entity.ContentType;
 import org.fao.geonet.api.API;
@@ -248,29 +249,27 @@ public class NextcloudClient {
         }
     }
 
-    public void deleteXmlDocument(String resourceIdentifier, FOLDER_TYPE folderType, String uuid) {
-       String path = getPath(resourceIdentifier, folderType);
-        Path folderPath = Path.of(config.getBaseFolder(), path);
+   public void deleteXmlDocument(String resourceIdentifier, FOLDER_TYPE folderType, String uuid) {
+        Path folderPath = Path.of(config.getBaseFolder(), getPath(resourceIdentifier, folderType));
         String suffix = "_metadata_" + uuid + ".xml";
 
-        try {
-            Files.list(folderPath)
-                 .filter(file -> file.toString().endsWith(suffix))
-                 .forEach(file -> {
-                     try {
-                         Files.deleteIfExists(file);
-                     } catch (IOException e) {
-                         throw new NextcloudException(String.format("Datashare: Error deleting file %s ending with %s ", file, suffix), e);
-                     }
-                 });
-        } catch (IOException e) {
-            throw new NextcloudException("Datashare: Error deleting files in folder: " + folderPath, e);
-        }
+       try (Stream<Path> files = Files.list(folderPath)) {
+           files.filter(file -> file.toString().endsWith(suffix))
+               .forEach(file -> {
+                   try {
+                       Files.deleteIfExists(file);
+                   } catch (IOException e) {
+                       throw new NextcloudException(String.format("Datashare: Error deleting file %s ending with %s ", file, suffix), e);
+                   }
+               });
+       } catch (IOException e) {
+           throw new NextcloudException("Datashare: Error deleting files in folder: " + folderPath, e);
+       }
     }
 
 
     /**
-     * Create a file in Nextcloud using the WebDAV API, the file will be created in the specified folder type.
+     * Create a file in the folder corresponding to the resource identifier and  type.
      *
      * @param data               the content of the file.
      * @param fileName           the name of the file.
@@ -279,6 +278,18 @@ public class NextcloudClient {
      * @throws NextcloudException if an error occurs while creating the file.
      */
     public void createFile(String data, String fileName, String resourceIdentifier, FOLDER_TYPE folderType) throws NextcloudException {
+        String path = getPath(resourceIdentifier, folderType);
+        Path folderPath = Path.of(config.getBaseFolder(), path);
+
+        try {
+            Path filePath = folderPath.resolve(fileName);
+            Files.writeString(filePath, data, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new NextcloudException("Error creating the file '" + path + "/" + fileName + "'.", e);
+        }
+    }
+
+    public void createFileWithWebdav(String data, String fileName, String resourceIdentifier, FOLDER_TYPE folderType) throws NextcloudException {
         Sardine sardine = SardineFactory.begin(config.getUsername(), config.getPassword());
         String path = getPath(resourceIdentifier, folderType);
         String url = config.getUrl() + REMOTE_PHP_DAV_FILES + config.getUsername() + "/" + path;
@@ -290,6 +301,7 @@ public class NextcloudClient {
             throw new NextcloudException("Error creating the XML metadata file '" + path + "/" + fileName + "' in Nextcloud", e);
         }
     }
+
 
 
     /**
