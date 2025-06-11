@@ -234,7 +234,14 @@
                 visibility: scope.visibility
               });
               $http
-                .put("../api/records/" + gnCurrentEdit.uuid + "/attachments?" + params)
+                .put(
+                  "../api/records/" +
+                    gnCurrentEdit.uuid +
+                    "/attachments?visibility=" +
+                    scope.visibility +
+                    "&url=" +
+                    encodeURIComponent(scope.url)
+                )
                 .then(
                   function (response) {
                     $rootScope.$broadcast("gnFileStoreUploadDone");
