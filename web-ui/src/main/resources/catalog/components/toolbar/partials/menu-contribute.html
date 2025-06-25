@@ -30,6 +30,11 @@
       </a>
     </li>
     <li class="gn-menuitem-xs" role="menuitem" data-ng-if="user.canImportMetadata()">
+      <a data-gn-active-tb-item="{{gnCfg.mods.editor.appUrl}}#/add-dataset">
+        <span class="fa fa-fw fa-upload"></span><span translate>Upload dataset</span>
+      </a>
+    </li>
+    <li class="gn-menuitem-xs" role="menuitem" data-ng-if="user.canImportMetadata()">
       <a data-gn-active-tb-item="{{gnCfg.mods.editor.appUrl}}#/import">
         <span class="fa fa-fw fa-upload"></span><span translate>ImportRecord</span>
       </a>
