@@ -604,6 +604,7 @@
   <addCrs32634>WGS 84 / UTM zone 34N (EPSG:32634)</addCrs32634>
   <addCrs32635>WGS 84 / UTM zone 35N (EPSG:32635)</addCrs32635>
   <addCrs32740>WGS 84 / UTM zone 40S (EPSG:32740)</addCrs32740>
+  <addAnotherCrs>Add another EPSG code</addAnotherCrs>
 
 
   <eea-data-and-maps>Tabular data</eea-data-and-maps>

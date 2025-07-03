@@ -1588,6 +1588,19 @@
                   </mrs:MD_ReferenceSystem>
                 </mdb:referenceSystemInfo>
               </snippet>
+              <snippet label="addAnotherCrs">
+                <mdb:referenceSystemInfo>
+                  <mrs:MD_ReferenceSystem>
+                    <mrs:referenceSystemIdentifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/">EPSG:</gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </mrs:referenceSystemIdentifier>
+                  </mrs:MD_ReferenceSystem>
+                </mdb:referenceSystemInfo>
+              </snippet>
             </template>
           </action>
 
@@ -2160,7 +2173,7 @@
         </section>
 
 
-        <section name="Data model">
+        <section name="Data definition">
           <field
             xpath="/mdb:MD_Metadata/mdb:spatialRepresentationInfo/*/msr:geometricObjects"/>
 
@@ -2206,7 +2219,7 @@
 
 
             <action type="add"
-                    btnLabel="Add data model"
+                    btnLabel="Add data definition"
                     or="featureType"
                     in="/mdb:MD_Metadata/mdb:contentInfo/*/mrc:featureCatalogue/gfc:FC_FeatureCatalogue[not(gfc:featureType)]">
               <template>
@@ -2244,7 +2257,7 @@
           </section>
 
           <action type="add"
-                  btnLabel="Add data model"
+                  btnLabel="Add data definition"
                   or="contentInfo"
                   in="/mdb:MD_Metadata"
                   if="(count(mdb:MD_Metadata/mdb:contentInfo) = 0)">
