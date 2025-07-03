@@ -650,7 +650,7 @@
     <condition></condition>
   </element>
   <element name="msr:MD_FeatureCatalogueDescription" id="183.0">
-    <label>Feature catalogue description</label>
+    <label>Data definition</label>
     <description iso="true">Information identifying the feature catalogue or the
       conceptual schema
     </description>
@@ -685,7 +685,7 @@
     <condition>optional</condition>
   </element>
   <element name="msr:featureCatalogueCitation" id="188.0">
-    <label>Feature catalogue citation</label>
+    <label>Data definition citation</label>
     <description iso="true">complete bibliographic reference to one or more
       external feature catalogues
     </description>
@@ -694,7 +694,7 @@
 
 
   <element name="mrc:MD_FeatureCatalogue" id="189.0">
-    <label>Feature catalogue</label>
+    <label>Data definition</label>
     <description iso="true">A catalogue of feature types</description>
     <condition></condition>
   </element>

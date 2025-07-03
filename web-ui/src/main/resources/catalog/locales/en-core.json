@@ -411,7 +411,7 @@
     "featureCode": "Code",
     "featureIsAbstract": "Abstract feature",
     "featureAliases": "Aliases",
-    "featureAttributeTable": "Attribute table",
+    "featureAttributeTable": "Data definition",
     "attributeName": "Name",
     "attributeDefinition": "Definition",
     "attributeCardinality": "Cardinality:",
