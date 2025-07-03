@@ -1787,7 +1787,7 @@
         </section>
 
         <section name="eea-statistical-data-details"
-                 displayIfRecord="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA categories' and */mri:keyword/gco:CharacterString/text() = 'statistical data']) = 1">
+                 displayIfRecord="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA categories' and */mri:keyword/*/text() = 'statistical data']) = 1">
           <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[contains(*/mri:thesaurusName/*/cit:title/*/text(), 'Unit of measure')]"/>
           <action type="add"
                   btnLabel="eea-add-unit-of-measure"
