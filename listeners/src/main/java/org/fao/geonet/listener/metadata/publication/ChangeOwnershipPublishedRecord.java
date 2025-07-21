@@ -23,6 +23,8 @@
 
 package org.fao.geonet.listener.metadata.publication;
 
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import jeeves.server.context.ServiceContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.Group;
@@ -56,11 +58,16 @@ public class ChangeOwnershipPublishedRecord implements ApplicationListener<Metad
 
     @Override
     public void onApplicationEvent(MetadataPublished event) {
-        // Implementation in doBeforeCommit before the transaction is committed
+        // Events only triggered in the context of a transaction
+        // use runInTrasaction if needed.
     }
 
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void doBeforeCommit(MetadataPublished event) {
+        changeOwnership(event);
+    }
+
+    private void changeOwnership(MetadataPublished event) {
         try {
             ServiceContext serviceContext = ServiceContext.get();
 
@@ -86,6 +93,5 @@ public class ChangeOwnershipPublishedRecord implements ApplicationListener<Metad
         } catch (Throwable e) {
             Log.error(Geonet.DATA_MANAGER, "Couldn't update the ownership of the metadata " + event.getMd(), e);
         }
-
     }
 }

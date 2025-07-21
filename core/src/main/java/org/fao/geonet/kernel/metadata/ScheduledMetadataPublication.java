@@ -26,6 +26,8 @@ package org.fao.geonet.kernel.metadata;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
+import jeeves.transaction.TransactionManager;
+import jeeves.transaction.TransactionTask;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.AbstractMetadata;
@@ -42,16 +44,21 @@ import org.locationtech.jts.util.Assert;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import java.util.List;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Task checking on a regular basis the list of records
  * to be published.
  */
+@Component
 public class ScheduledMetadataPublication extends QuartzJobBean {
     @Autowired
     protected ServiceManager serviceManager;
@@ -83,29 +90,40 @@ public class ScheduledMetadataPublication extends QuartzJobBean {
         ApplicationContextHolder.set(this.applicationContext);
         ServiceContext serviceContext = createServiceContext();
 
-        // Get current date without time part
-        ISODate now = new ISODate(new ISODate().getDateAsString() + "T00:00:00.000Z");
+        // Needed to trigger doBeforeCommit events
+        TransactionManager.runInTransaction("ScheduledMetadataPublication", ApplicationContextHolder.get(),
+            TransactionManager.TransactionRequirement.CREATE_NEW,
+            TransactionManager.CommitBehavior.ALWAYS_COMMIT,
+            false, new TransactionTask<Void>() {
+                @Override
+                public Void doInTransaction(TransactionStatus transaction) throws Throwable {
+                    // Get current date without time part
+                    ISODate now = new ISODate(new ISODate().getDateAsString() + "T24:00:00.000Z");
 
-        List<MetadataStatus> metadataStatusList = metadataStatusRepository.findMetadataStatusForScheduledPublication(now);
-        metadataStatusList.forEach(status -> {
-            int metadataId = status.getMetadataId();
+                    List<MetadataStatus> metadataStatusList = metadataStatusRepository.findMetadataStatusForScheduledPublication(now);
+                    metadataStatusList.forEach(status -> {
+                        int metadataId = status.getMetadataId();
 
-            try {
-                // Publish the metadata
-                AbstractMetadata metadata = metadataUtils.findOne(metadataId);
-                if (metadata != null) {
-                    metadataPublicationService.shareMetadataWithReservedGroup(serviceContext, metadata, true, "default");
-                } else {
-                    Log.warning(Geonet.GEONETWORK, "Can not schedule publish the metadata with ID: " + metadataId + " because it does not exist.");
+                        try {
+                            // Publish the metadata
+                            AbstractMetadata metadata = metadataUtils.findOne(metadataId);
+                            if (metadata != null) {
+                                metadataPublicationService.shareMetadataWithReservedGroup(serviceContext, metadata, true, "default");
+                            } else {
+                                Log.warning(Geonet.GEONETWORK, "Can not schedule publish the metadata with ID: " + metadataId + " because it does not exist.");
+                            }
+
+                            // Mark the status as closed
+                            status.setCloseDate(new ISODate());
+                            metadataStatusRepository.save(status);
+                        } catch (Exception e) {
+                            Log.error(Geonet.GEONETWORK, "Error publishing metadata with ID with scheduled publication: " + metadataId, e);
+                        }
+                    });
+                    return null;
                 }
-
-                // Mark the status as closed
-                status.setCloseDate(new ISODate());
-                metadataStatusRepository.save(status);
-            } catch (Exception e) {
-                Log.error(Geonet.GEONETWORK, "Error publishing metadata with ID with scheduled publication: " + metadataId, e);
             }
-        });
+        );
     }
 
     private ServiceContext createServiceContext() {
