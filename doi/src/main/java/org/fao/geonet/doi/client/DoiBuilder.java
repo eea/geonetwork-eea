@@ -30,6 +30,7 @@ import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.domain.DoiServer;
 import org.fao.geonet.domain.Group;
 import org.fao.geonet.kernel.datamanager.base.BaseMetadataUtils;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.repository.DoiServerRepository;
 import org.fao.geonet.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;

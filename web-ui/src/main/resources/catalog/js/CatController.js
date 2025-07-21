@@ -836,9 +836,11 @@
             // and redirecting to the catalogue to view metadata record
             // appUrl: "https://sextant.ifremer.fr/Donnees/Catalogue",
             isSocialbarEnabled: true,
+            isDefaultContactViewEnabled: false,
             showStatusWatermarkFor: "",
             // 'showStatusTopBarFor': 'historicalArchive,obsolete,superseded',
             showStatusTopBarFor: "",
+            recordviewCustomMenu: [], // List of static pages identifiers to display
             showCitation: {
               enabled: true,
               if: { resourceType: ["series", "dataset", "nonGeographicDataset"] }
@@ -2001,6 +2003,17 @@
                       return true;
                     }
                     return false;
+                  };
+                  me["is" + profile + "OrMoreForGroup"] = function (groupId) {
+                    if ("Administrator" == profile) {
+                      return me.admin;
+                    }
+                    var allowedProfiles = $scope.profiles.slice(
+                      $scope.profiles.indexOf(profile)
+                    );
+                    return allowedProfiles.some(function (p) {
+                      return me["is" + p + "ForGroup"](groupId);
+                    });
                   };
                 });
                 angular.extend($scope.user, me);

@@ -30,7 +30,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>4.4.7-SNAPSHOT</version>
+    <version>4.4.9-SNAPSHOT</version>
   </parent>
 
 
@@ -633,6 +633,7 @@
       <version>${xmlunit.version}</version>
       <scope>test</scope>
     </dependency>
+
   </dependencies>
 
   <build>
@@ -1049,6 +1050,16 @@
   </build>
 
   <profiles>
+    <profile>
+      <id>datahub-integration</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.geonetwork-opensource.plugins</groupId>
+          <artifactId>gn-datahub-integration</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+      </dependencies>
+    </profile>
     <profile>
       <id>wro4j-prebuild-cache</id>
       <activation>

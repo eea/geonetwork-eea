@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2024 Food and Agriculture Organization of the
+ * Copyright (C) 2001-2025 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
  *
@@ -75,9 +75,10 @@ public class MetadataPublicationMailNotifier {
                 StatusValueNotificationLevel.valueOf(notificationSetting);
             if (notificationLevel != null) {
 
-                if (notificationLevel == StatusValueNotificationLevel.recordProfileReviewer) {
+                if (notificationLevel.name().startsWith("recordProfile")) {
                     Map<Integer, List<MetadataPublicationNotificationInfo>> metadataListToNotifyPublicationPerGroup =
                         metadataListToNotifyPublication.stream()
+                            .filter(metadata -> metadata.getGroupId() != null)
                             .collect(Collectors.groupingBy(MetadataPublicationNotificationInfo::getGroupId));
 
                     // Process the metadata published by group owner

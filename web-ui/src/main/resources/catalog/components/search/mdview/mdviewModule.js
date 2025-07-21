@@ -107,6 +107,7 @@
       gnConfigService.load().then(function (c) {
         $scope.isRecordHistoryEnabled = gnConfig["metadata.history.enabled"];
         $scope.isPreferGroupLogo = gnConfig["system.metadata.prefergrouplogo"];
+        $scope.isMdWorkflowEnable = gnConfig["metadata.workflow.enable"];
 
         var statusSystemRating = gnConfig["system.localrating.enable"];
 
@@ -183,6 +184,27 @@
         params[field][value] = true;
         gnSearchLocation.lastSearchUrl = null;
         gnSearchLocation.setSearch({ query_string: angular.toJson(params) });
+      };
+
+      $scope.cancelPublication = function (md) {
+        return gnMetadataActions.cancelPublication(md).then(
+          function (data) {
+            gnAlertService.addAlert({
+              msg: $translate.instant("metadataCancelPublication", {
+                title: md.resourceTitle
+              }),
+              type: "success"
+            });
+          },
+          function (reason) {
+            // Data needs improvements
+            // See https://github.com/geonetwork/core-geonetwork/issues/723
+            gnAlertService.addAlert({
+              msg: reason.data.message || reason.data.description,
+              type: "danger"
+            });
+          }
+        );
       };
 
       $scope.deleteRecord = function (md) {
