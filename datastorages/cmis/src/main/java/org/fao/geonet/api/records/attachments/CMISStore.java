@@ -495,6 +495,16 @@ public class CMISStore extends AbstractStore {
     }
 
     @Override
+    public MetadataResource renameResource(ServiceContext context, String metadataUuid, String resourceId, String newName, Boolean approved) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void renameFolder(Path originalPath, Path newPath) {
+
+    }
+
+    @Override
     public MetadataResourceContainer getResourceContainerDescription(final ServiceContext context, final String metadataUuid, Boolean approved) throws Exception {
         int metadataId = getAndCheckMetadataId(metadataUuid, approved);
 

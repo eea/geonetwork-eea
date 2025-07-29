@@ -262,6 +262,16 @@ public class S3Store extends AbstractStore {
         return new FilesystemStoreResourceContainer(metadataUuid, metadataId, metadataUuid, settingManager.getNodeURL() + "api/records/", approved);
     }
 
+    @Override
+    public MetadataResource renameResource(ServiceContext context, String metadataUuid, String resourceId, String newName, Boolean approved) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void renameFolder(Path originalPath, Path newPath) {
+
+    }
+
     private String getMetadataDir(final int metadataId) {
         return s3.getKeyPrefix() + metadataId;
     }
