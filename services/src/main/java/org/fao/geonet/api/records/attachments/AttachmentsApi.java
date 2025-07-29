@@ -1,6 +1,6 @@
 /*
  * =============================================================================
- * ===	Copyright (C) 2001-2024 Food and Agriculture Organization of the
+ * ===	Copyright (C) 2001-2025 Food and Agriculture Organization of the
  * ===	United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * ===	and United Nations Environment Programme (UNEP)
  * ===
@@ -39,13 +39,19 @@ import jeeves.server.context.ServiceContext;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.api.ApiParams;
 import org.fao.geonet.api.ApiUtils;
+import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.domain.MetadataResource;
 import org.fao.geonet.domain.MetadataResourceVisibility;
 import org.fao.geonet.domain.MetadataResourceVisibilityConverter;
 import org.fao.geonet.events.history.AttachmentAddedEvent;
 import org.fao.geonet.events.history.AttachmentDeletedEvent;
+import org.fao.geonet.kernel.datamanager.IMetadataIndexer;
+import org.fao.geonet.kernel.datamanager.IMetadataManager;
+import org.fao.geonet.kernel.search.IndexingMode;
 import org.fao.geonet.util.ImageUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -69,6 +75,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -94,6 +101,12 @@ public class AttachmentsApi {
     public static final Integer MAX_IMAGE_SIZE = 2048;
     private final ApplicationContext appContext = ApplicationContextHolder.get();
     private Store store;
+
+    @Autowired
+    private IMetadataManager metadataManager;
+
+    @Autowired
+    private IMetadataIndexer metadataIndexer;
 
     public AttachmentsApi() {
     }
@@ -285,22 +298,46 @@ public class AttachmentsApi {
 
             ApiUtils.canViewRecord(metadataUuid, request);
 
-            response.setHeader("Content-Disposition", "inline; filename=\"" + file.getMetadata().getFilename() + "\"");
-            response.setHeader("Cache-Control", "no-cache");
+            String originalFilename = file.getMetadata().getFilename();
             String contentType = getFileContentType(file.getPath());
-            response.setHeader("Content-Type", contentType);
+            String dispositionFilename = originalFilename;
 
+            // If the image is being resized, always return as PNG and update
+            // filename and content-type accordingly
             if (contentType.startsWith("image/") && size != null) {
                 if (size >= MIN_IMAGE_SIZE && size <= MAX_IMAGE_SIZE) {
+                    // Set content type to PNG
+                    contentType = "image/png";
+                    // Change file extension to .png
+                    int dotIdx = originalFilename.lastIndexOf('.');
+                    if (dotIdx > 0) {
+                        dispositionFilename = originalFilename.substring(0, dotIdx) + ".png";
+                    } else {
+                        dispositionFilename = originalFilename + ".png";
+                    }
+                    response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + dispositionFilename + "\"");
+                    response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
+                    response.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
+
+                    // Read, resize, and write the image as PNG, and set Content-Length
                     BufferedImage image = ImageIO.read(file.getPath().toFile());
                     BufferedImage resized = ImageUtil.resize(image, size);
-                    ImageIO.write(resized, "png", response.getOutputStream());
+                    // Write to a byte array first to get the length
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(resized, "png", baos);
+                    byte[] pngBytes = baos.toByteArray();
+                    response.setContentLengthLong(pngBytes.length);
+                    response.getOutputStream().write(pngBytes);
                 } else {
                     throw new IllegalArgumentException(String.format(
                         "Image can only be resized from %d to %d. You requested %d.",
                         MIN_IMAGE_SIZE, MAX_IMAGE_SIZE, size));
                 }
             } else {
+                // For all other files, use the original content type and filename
+                response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + dispositionFilename + "\"");
+                response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
+                response.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
                 response.setContentLengthLong(Files.size(file.getPath()));
 
                 try (InputStream inputStream = Files.newInputStream(file.getPath())) {
@@ -311,9 +348,9 @@ public class AttachmentsApi {
     }
 
 
-    @io.swagger.v3.oas.annotations.Operation(summary = "Update the metadata resource visibility")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Update the metadata resource visibility and/or the resource name")
     @PreAuthorize("hasAuthority('Editor')")
-    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Attachment visibility updated."),
+    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Attachment updated."),
         @ApiResponse(responseCode = "403", description = ApiParams.API_RESPONSE_NOT_ALLOWED_CAN_EDIT)})
     @RequestMapping(value = "/{resourceId}/**", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -321,7 +358,8 @@ public class AttachmentsApi {
     public MetadataResource patchResource(
         @Parameter(description = "The metadata UUID", required = true, example = "43d7c186-2187-4bcd-8843-41e575a5ef56") @PathVariable String metadataUuid,
         @Parameter(description = "The resource identifier (ie. filename)", required = true) @PathVariable String resourceId,
-        @Parameter(description = "The visibility", required = true, example = "public") @RequestParam(required = true) MetadataResourceVisibility visibility,
+        @Parameter(description = "The visibility", required = true, example = "public") @RequestParam(required = false) MetadataResourceVisibility visibility,
+        @Parameter(description = "The visibility", required = true, example = "public") @RequestParam(required = false) String newResourceName,
         @Parameter(description = "Use approved version or not", example = "true") @RequestParam(required = false, defaultValue = "false") Boolean approved,
         @Parameter(hidden = true) HttpServletRequest request) throws Exception {
 
@@ -329,7 +367,28 @@ public class AttachmentsApi {
         String resourceIdFile = retrieveResourceFileFromUrl(request);
 
         ServiceContext context = ApiUtils.createServiceContext(request);
-        return store.patchResourceStatus(context, metadataUuid, resourceIdFile, visibility, approved);
+
+        AbstractMetadata metadata = ApiUtils.canViewRecord(metadataUuid, request);
+
+        if (visibility == null && newResourceName == null) {
+            throw new IllegalArgumentException("Either visibility or new resource name must be provided.");
+        }
+
+        MetadataResource metadataResource = null;
+        if (newResourceName != null) {
+            Store.ResourceHolder metadataResourceToUpdate = store.getResource(context, metadataUuid, resourceId, approved);
+            metadataResource = store.renameResource(context, metadataUuid, resourceId, newResourceName, approved);
+
+            // Update the metadata references to the resource
+            metadata.setData(metadata.getData().replaceAll(metadataResourceToUpdate.getMetadata().getUrl(), metadataResource.getUrl()));
+            metadataManager.save(metadata);
+            metadataIndexer.indexMetadata(String.valueOf(metadata.getId()), true, IndexingMode.full);
+
+        }
+        if (visibility != null) {
+            metadataResource = store.patchResourceStatus(context, metadataUuid, resourceId, visibility, approved);
+        }
+        return metadataResource;
     }
 
     @io.swagger.v3.oas.annotations.Operation(summary = "Delete a metadata resource")

@@ -184,6 +184,7 @@ public class ResourceLoggerStore extends AbstractStore {
         return null;
     }
 
+
     @Override
     public void renameFolder(Path originalPath, Path newPath) {
         if (decoratedStore != null) {
@@ -287,5 +288,14 @@ public class ResourceLoggerStore extends AbstractStore {
             decoratedStore.copyResources(context, sourceUuid, targetUuid, metadataResourceVisibility, sourceApproved, targetApproved);
         }
 
+    }
+
+    @Override
+    public MetadataResource renameResource(ServiceContext context, String metadataUuid, String resourceId, String newName, Boolean approved) throws Exception {
+        if (decoratedStore != null) {
+            return decoratedStore.renameResource(context, metadataUuid, resourceId, newName, approved);
+        }
+
+        return null;
     }
 }

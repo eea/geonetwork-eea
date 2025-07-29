@@ -287,11 +287,6 @@ public abstract class AbstractStore implements Store {
         }
     }
 
-    @Override
-    public void renameFolder(Path originalPath, Path newPath) {
-        // Empty implementation
-    }
-
     protected String getFilename(final String metadataUuid, final String resourceId) {
         // It's not always clear when we get a resourceId or a filename
         String prefix = metadataUuid + "/attachments/";

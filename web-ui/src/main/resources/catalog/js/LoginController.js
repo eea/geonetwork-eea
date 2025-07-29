@@ -67,7 +67,7 @@
       $q,
       gnLangs
     ) {
-      $scope.formAction =  "../../api/user/signin?redirect=" + $location.url();
+      $scope.formAction = "../../api/user/signin?redirect=" + $location.url();
       $scope.registrationStatus = null;
       $scope.sendPassword = false;
       $scope.password = null;

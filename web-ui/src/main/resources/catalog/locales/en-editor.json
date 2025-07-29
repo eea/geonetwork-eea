@@ -127,7 +127,11 @@
     "directory": "Folder path",
     "directoryEntries": "Entries",
     "error": "Error",
-    "errors": "Error(s)",
+    "errors": "errors",
+    "success": "success",
+    "successes": "successes",
+    "warning": "warning",
+    "warnings": "warnings",
     "serviceDetachedToCurrentRecord": "Service detached from current record",
     "featureCatalog": "Feature catalog",
     "file": "File",
@@ -467,5 +471,9 @@
     "validationErrorLabel": "errors",
     "metadataDuplicatedField-title": "The metadata title is used in another metadata record.",
     "metadataDuplicatedField-altTitle": "The metadata alternate title is used in another metadata record.",
-    "metadataDuplicatedField-identifier": "The metadata resource identifier is used in another metadata record."
+    "metadataDuplicatedField-identifier": "The metadata resource identifier is used in another metadata record.",
+    "indexingIssues": "Indexing issues",
+    "indexingErrors": "Errors",
+    "indexingWarnings": "Warnings",
+    "fileStoreDuplicatedFilename": "The filename is already used in the file store."
 }
