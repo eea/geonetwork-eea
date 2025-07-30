@@ -329,6 +329,7 @@
           link: function (scope, element, attrs, controller) {
             scope.autoUpload =
               angular.isUndefined(attrs["autoUpload"]) || attrs["autoUpload"] == "true";
+            scope.selectAction = attrs["selectAction"] !== "false";
 
             scope.filestoreUploadOptions = {
               autoUpload: scope.autoUpload,

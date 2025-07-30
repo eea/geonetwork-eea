@@ -41,6 +41,7 @@
         <tr data-ng-repeat="r in metadataResources track by $index">
           <td>
             <a
+              data-ng-if="selectAction"
               href=""
               id="resource_{{$index}}"
               title="{{'clickToAddResource' | translate}}"
@@ -48,6 +49,9 @@
             >
               {{r.id.split('/').splice(2).join('/') | decodeURIComponent}}
             </a>
+            <span data-ng-if="!selectAction">
+              {{r.id.split('/').splice(2).join('/') | decodeURIComponent}}
+            </span>
 
             <div id="resource_edit_{{$index}}" class="hidden">
               <input
