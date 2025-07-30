@@ -28,6 +28,7 @@
                   xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0"
                   xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/2.0"
                   xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
+                  xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                   exclude-result-prefixes="#all">
 
@@ -50,6 +51,16 @@
 
   <!-- Remove DOI links -->
   <xsl:template match="mrd:onLine[*/cit:protocol/gco:CharacterString = $doiProtocol]" />
+
+
+  <!-- Remove resource identifier which should be unique among all records -->
+  <xsl:template match="mdb:identificationInfo/*/mri:citation/*/cit:identifier/*/mcc:code/gco:CharacterString[matches(text(), '.*_[ip]_.*')]">
+    <xsl:copy/>
+  </xsl:template>
+
+  <!-- Remove online resources that match Nextcloud storage -->
+  <xsl:template match="mrd:transferOptions/*/mrd:onLine[starts-with(*/cit:linkage/gco:CharacterString, 'https://sdi.eea.europa.eu/webdav/datastore')]"/>
+
 
   <!-- Do a copy of every nodes and attributes -->
   <xsl:template match="@*|node()">
