@@ -4,54 +4,63 @@
     <span data-translate="">{{title}}</span>
   </div>
   <div data-ng-class="{'panel-body': panelMode}">
-    <ul class="list-inline">
-      <li
-        class="thumbnail"
-        data-ng-class="isOverview ? 'gn-list-thumb' : 'gn-list-file'"
-        data-ng-repeat="f in relations"
-      >
-        <img
-          data-ng-if="isOverview"
-          class="thumb-small"
-          title="{{f.title | gnLocalized: lang}}"
-          data-ng-src="{{onlinesrcService.getApprovedUrl(f.lUrl || f.id)}}"
-        />
-
-        <div data-ng-if="!isOverview">
-          <div data-gn-link-icon="f" data-mode="gn-icon-inline"></div>
-          <div data-gn-link-label="f"></div>
-        </div>
-
-        <a
-          href=""
-          class="btn btn-link onlinesrc-remove"
-          data-ng-if="readonly !== true"
-          data-gn-confirm-click="{{removeBtnConfirm | translate:{url: f.lUrl} }}"
-          data-gn-click-and-spin="removeFile(f)"
-          title="{{removeBtnTitle | translate}}"
-        >
-          <i class="fa fa-times text-danger"></i>
-        </a>
-
-        <a
-          href=""
-          class="btn btn-link onlinesrc-edit"
-          data-ng-if="readonly !== true"
-          data-ng-click="onlinesrcService.onOpenPopup('onlinesrc', f)"
-          data-ng-show="editableThumbnail==='true'"
-          title="{{'edit' | translate}}"
-        >
-          <i class="fa fa-pencil"></i>
-        </a>
-      </li>
-    </ul>
-
     <div
-      data-ng-hide="isOverview && relations.thumbnails.length >= numberOfOverviews"
-      data-gn-data-uploader-button="btnLabel"
-      data-is-overview="isOverview"
-      data-file-types="fileTypes"
-      data-after-upload-cb="linkUploadedFileToRecord"
+      data-ng-if="type === 'datastore'"
+      id="gn-addonlinesrc-file-input"
+      data-gn-file-store="uuid"
+      data-select-action="false"
     ></div>
+
+    <div data-ng-if="type !== 'datastore'">
+      <ul class="list-inline">
+        <li
+          class="thumbnail"
+          data-ng-class="isOverview ? 'gn-list-thumb' : 'gn-list-file'"
+          data-ng-repeat="f in relations"
+        >
+          <img
+            data-ng-if="isOverview"
+            class="thumb-small"
+            title="{{f.title | gnLocalized: lang}}"
+            data-ng-src="{{onlinesrcService.getApprovedUrl(f.lUrl || f.id)}}"
+          />
+
+          <div data-ng-if="!isOverview">
+            <div data-gn-link-icon="f" data-mode="gn-icon-inline"></div>
+            <div data-gn-link-label="f"></div>
+          </div>
+
+          <a
+            href=""
+            class="btn btn-link onlinesrc-remove"
+            data-ng-if="readonly !== true"
+            data-gn-confirm-click="{{removeBtnConfirm | translate:{url: f.lUrl} }}"
+            data-gn-click-and-spin="removeFile(f)"
+            title="{{removeBtnTitle | translate}}"
+          >
+            <i class="fa fa-times text-danger"></i>
+          </a>
+
+          <a
+            href=""
+            class="btn btn-link onlinesrc-edit"
+            data-ng-if="readonly !== true"
+            data-ng-click="onlinesrcService.onOpenPopup('onlinesrc', f)"
+            data-ng-show="editableThumbnail==='true'"
+            title="{{'edit' | translate}}"
+          >
+            <i class="fa fa-pencil"></i>
+          </a>
+        </li>
+      </ul>
+
+      <div
+        data-ng-hide="isOverview && relations.thumbnails.length >= numberOfOverviews"
+        data-gn-data-uploader-button="btnLabel"
+        data-is-overview="isOverview"
+        data-file-types="fileTypes"
+        data-after-upload-cb="linkUploadedFileToRecord"
+      ></div>
+    </div>
   </div>
 </div>

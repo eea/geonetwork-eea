@@ -52,6 +52,8 @@
           scope.numberOfOverviews = parseInt(attrs["numberOfOverviews"]) || Infinity;
           scope.onlinesrcService = gnOnlinesrc;
 
+          scope.linkAfterUpload = attrs["linkAfterUpload"] !== "false";
+
           scope.defaultType = "thumbnails";
           scope.type = attrs["type"] || scope.defaultType;
           scope.panelMode =
@@ -92,6 +94,9 @@
           };
 
           scope.linkUploadedFileToRecord = function (link) {
+            if (!scope.linkAfterUpload) {
+              return;
+            }
             var tokens = link.url.split("."),
               params = scope.isOverview
                 ? {
