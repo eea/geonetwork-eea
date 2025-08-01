@@ -47,6 +47,7 @@
   <xsl:variable name="locales"
                 select="/root/*/*/lan:PT_Locale"/>
 
+  <xsl:variable name="serverUrl" select="java:getSettingValue('serverUrl')" />
 
   <xsl:variable name="nonMultilingualFields"
                 select="$editorConfig/editor/multilingualFields/exclude"/>
@@ -66,13 +67,13 @@
                   select="../mrd:onLine[(*/cit:protocol/*/text() = 'EEA:FILEPATH'
                                            or */cit:protocol/*/text() = 'EEA:FOLDERPATH')
                                            and starts-with(*/cit:linkage/gco:CharacterString,
-                                            'https://sdi.eea.europa.eu/webdav')]"/>
+                                            concat($serverUrl, '/webdav'))]"/>
 
     <xsl:variable name="hasEEAFile"
                   select="count($eeaOnLineResource) > 0"/>
 
     <xsl:variable name="hasNextCloudLink"
-                  select="count(../mrd:onLine/*[cit:linkage/*/text() = concat('https://sdi.eea.europa.eu/data/', /root/env/uuid)]) > 0"/>
+                  select="count(../mrd:onLine/*[cit:linkage/*/text() = concat($serverUrl, '/data/', /root/env/uuid)]) > 0"/>
 
     <xsl:apply-templates mode="copy-online"
                          select="$eeaOnLineResource"/>
@@ -97,7 +98,7 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
         </xsl:if>
         <cit:CI_OnlineResource>
           <cit:linkage>
-            <gco:CharacterString>https://sdi.eea.europa.eu/data/<xsl:value-of select="/root/env/uuid"/></gco:CharacterString>
+            <gco:CharacterString><xsl:value-of select="concat($serverUrl, '/data/', /root/env/uuid)"/></gco:CharacterString>
           </cit:linkage>
           <cit:protocol>
             <gco:CharacterString>WWW:URL</gco:CharacterString>

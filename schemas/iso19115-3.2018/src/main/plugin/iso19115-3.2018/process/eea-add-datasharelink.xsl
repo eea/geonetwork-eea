@@ -30,6 +30,7 @@
   xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:geonet="http://www.fao.org/geonetwork"
+  xmlns:util="java:org.fao.geonet.util.XslUtil"
   exclude-result-prefixes="#all"
   version="2.0">
 
@@ -45,12 +46,14 @@
   <xsl:variable name="isPublic"
                 select="contains($datasetIdentifier, '_p_')"/>
 
+  <xsl:variable name="serverUrl" select="util:getSettingValue('serverUrl')" />
+
   <xsl:variable name="hasEEAFile"
                 select="count(/mdb:MD_Metadata/mdb:distributionInfo/*/mrd:transferOptions/*/mrd:onLine[(
                                                          */cit:protocol/*/text() = 'EEA:FILEPATH'
                                                          or */cit:protocol/*/text() = 'EEA:FOLDERPATH')
                                                          and starts-with(*/cit:linkage/gco:CharacterString,
-                                                          'https://sdi.eea.europa.eu/webdav')]) > 0"/>
+                                                         concat($serverUrl, '/webdav'))]) > 0"/>
 
   <xsl:variable name="hasTransferOptions"
                 select="count(/mdb:MD_Metadata/mdb:distributionInfo/*/mrd:transferOptions/*) > 0"/>
@@ -93,7 +96,7 @@
       </xsl:if>
       <cit:CI_OnlineResource>
         <cit:linkage>
-          <gco:CharacterString><xsl:value-of select="concat('https://sdi.eea.europa.eu/webdav/datastore/', $folder, '/', $datasetIdentifier)"/></gco:CharacterString>
+          <gco:CharacterString><xsl:value-of select="concat($serverUrl, '/webdav/datastore/', $folder, '/', $datasetIdentifier)"/></gco:CharacterString>
         </cit:linkage>
         <cit:protocol>
           <gco:CharacterString>EEA:FOLDERPATH</gco:CharacterString>
