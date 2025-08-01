@@ -694,11 +694,13 @@ public class EsHTTPProxy {
                 if (doc.has("_source")) {
                     ObjectNode sourceNode = (ObjectNode) doc.get("_source");
 
-                    String metadataSchema = doc.get("_source").get("documentStandard").asText();
-                    MetadataSchema mds = schemaManager.getSchema(metadataSchema);
+                    if (doc.get("_source").has("documentStandard")) {
+                        String metadataSchema = doc.get("_source").get("documentStandard").asText();
+                        MetadataSchema mds = schemaManager.getSchema(metadataSchema);
 
-                    // Apply metadata schema filters to remove non-allowed fields
-                    processMetadataSchemaFilters(context, mds, doc);
+                        // Apply metadata schema filters to remove non-allowed fields
+                        processMetadataSchemaFilters(context, mds, doc);
+                    }
 
                     // Remove fields with privileges info
                     for (ReservedOperation o : ReservedOperation.values()) {
