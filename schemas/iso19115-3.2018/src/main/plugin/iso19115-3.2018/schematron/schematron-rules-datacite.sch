@@ -85,7 +85,7 @@
       <sch:let name="publisher"
                value="if (mdb:distributionInfo//mrd:distributorContact)
                       then mdb:distributionInfo//mrd:distributorContact[1]/*/cit:CI_Organisation/cit:name/*/text()
-                      else mdb:identificationInfo/*/gmd:pointOfContact[*/cit:role/*/@codeListValue = ('distributor', 'custodian')]/*/cit:CI_Organisation/cit:name/*/text()"/>
+                      else mdb:identificationInfo/*/mri:pointOfContact[*/cit:role/*/@codeListValue = ('distributor', 'custodian')]/*/cit:CI_Organisation/cit:name/*/text()"/>
 
       <sch:assert test="$publisher != ''">$loc/strings/datacite.publisher.missing</sch:assert>
       <sch:report test="$publisher != ''">
