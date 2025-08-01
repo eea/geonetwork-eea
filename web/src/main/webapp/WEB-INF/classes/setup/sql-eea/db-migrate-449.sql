@@ -35,6 +35,8 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('metada
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('metadata/url/dynamicAppLinkUrl', NULL, 0, 9167, 'y');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('metadata/url/sitemapLinkUrl', NULL, 0, 9165, 'y');
 
+ALTER TABLE Sources ADD COLUMN datahubEnabled BOOLEAN DEFAULT FALSE;
+ALTER TABLE Sources ADD COLUMN datahubConfiguration TEXT DEFAULT '';
 
 UPDATE Settings SET value='4.4.9' WHERE name='system/platform/version';
 UPDATE Settings SET value='SNAPSHOT' WHERE name='system/platform/subVersion';
