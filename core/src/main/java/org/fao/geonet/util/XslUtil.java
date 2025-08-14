@@ -424,6 +424,10 @@ public final class XslUtil {
             String value;
             if ("nodeUrl".equals(key)) {
                 value = settingsMan.getNodeURL();
+            } else if ("serverUrl".equals(key)) {
+                value = settingsMan.getServerURL();
+            } else if ("baseUrl".equals(key)) {
+                value = settingsMan.getBaseURL();
             } else {
                 value = settingsMan.getValue(key);
             }
