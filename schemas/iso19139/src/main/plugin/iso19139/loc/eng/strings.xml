@@ -669,8 +669,6 @@
   <!--<addCrs>Projection</addCrs>-->
   <addCrs4936>ETRS89-XYZ</addCrs4936>
   <addCrs4937>ETRS89-GRS80h</addCrs4937>
-  <addCrs4258>ETRS89-GRS80</addCrs4258>
-  <addCrs3035>ETRS89-LAEA</addCrs3035>
   <addCrs3034>ETRS89-LCC</addCrs3034>
   <addCrs3038>ETRS89-TM26N</addCrs3038>
   <addCrs3039>ETRS89-TM27N</addCrs3039>
