@@ -198,11 +198,19 @@
             </button>
             <button
               class="btn btn-default"
-              data-ng-click="eeaRecordSearch()"
+              data-ng-click="eeaRecordSearch(false)"
               title="Search for all not obsolete and superseded records, then select them and search nextcloud links."
             >
               <i class="fa fa-fw fa-save"></i>
-              <span data-translate="">Search for EEA links</span>
+              <span data-translate="">Search for links in EEA public records</span>
+            </button>
+            <button
+              class="btn btn-default"
+              data-ng-click="eeaRecordSearch(true)"
+              title="Search for all not obsolete and superseded records, then select them and search nextcloud links."
+            >
+              <i class="fa fa-fw fa-save"></i>
+              <span data-translate="">Search for links in EEA draft records</span>
             </button>
           </div>
         </div>

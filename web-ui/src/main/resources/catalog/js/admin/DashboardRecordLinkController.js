@@ -74,19 +74,24 @@
 
       $scope.refreshProcesses = false;
 
-      $http.get("../api/selections").then(function (r) {
-        Object.keys(r.data).map(function (k) {
-          $scope.selections.push({
-            id: k,
-            count: r.data[k],
-            label: $translate.instant(k) + (r.data[k] ? " (" + r.data[k] + ")" : "")
+      function loadSelections() {
+        $scope.selections.length = 0;
+        $http.get("../api/selections").then(function (r) {
+          Object.keys(r.data).map(function (k) {
+            $scope.selections.push({
+              id: k,
+              count: r.data[k],
+              label: $translate.instant(k) + (r.data[k] ? " (" + r.data[k] + ")" : "")
+            });
           });
+          $scope.selections = $scope.selections.filter(function (s) {
+            return s.count > 0;
+          });
+          $scope.selections.push({ id: "", label: "" });
         });
-        $scope.selections = $scope.selections.filter(function (s) {
-          return s.count > 0;
-        });
-        $scope.selections.push({ id: "", label: "" });
-      });
+      }
+
+      loadSelections();
 
       $scope.processesFinished = function () {
         $scope.processesRunning = false;
@@ -177,26 +182,31 @@
         }
       });
 
-      $scope.eeaRecordSearch = function () {
-        $http
-          .post("../api/search/records/_search?bucket=eea", {
-            size: 0,
-            query: {
-              query_string: {
-                query:
-                  "-cl_status.key:obsolete -cl_status.key:superseded +isTemplate:n +isHarvested:false"
+      $scope.eeaRecordSearch = function (withDraft) {
+        $http.delete("../api/selections/eea").then(function (r) {
+          $http
+            .post("../api/search/records/_search?bucket=eea", {
+              size: 0,
+              query: {
+                query_string: {
+                  query:
+                    "-cl_status.key:obsolete -cl_status.key:superseded +isTemplate:n +isHarvested:false" +
+                    (withDraft ? " +groupOwner:1069862" : " -groupOwner:1069862")
+                }
               }
-            }
-          })
-          .then(function (r) {
-            $http.put("../api/selections/eea").then(function (r) {
-              $scope.selectedSelection.id = "eea";
-              $scope.urlFilter = "https://sdi.eea.europa.eu/data/";
-              $http.get("../api/selections/eea").then(function (r) {
-                $scope.triggerSearch();
+            })
+            .then(function (r) {
+              $http.put("../api/selections/eea").then(function (r) {
+                loadSelections();
+                $scope.selectedSelection.id = "eea";
+                $scope.urlFilter = "https://sdi.eea.europa.eu/data/";
+                $http.get("../api/selections/eea").then(function (r) {
+                  $scope.selectionFilter = r.data.join(" ");
+                  $scope.triggerSearch();
+                });
               });
             });
-          });
+        });
       };
 
       $element.on("post-body.bs.table", function () {
