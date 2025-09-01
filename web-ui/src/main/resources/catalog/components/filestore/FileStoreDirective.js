@@ -367,6 +367,21 @@
               updateVisibilityEditingPanel(index, true);
             };
 
+            // EEA specific files created on Nextcloud automatically
+            scope.canRenameResource = function (r) {
+              return !(
+                r.id === scope.gnCurrentEdit.uuid + "/attachments/README.md" ||
+                r.id.match(
+                  new RegExp(
+                    scope.gnCurrentEdit.uuid +
+                      "/attachments/.*metadata_" +
+                      scope.gnCurrentEdit.uuid +
+                      ".xml"
+                  )
+                ) != null
+              );
+            };
+
             scope.cancelEditResource = function (r, index) {
               delete r.filename_edit;
               scope.duplicatedFilename = false;

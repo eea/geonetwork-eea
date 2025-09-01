@@ -124,6 +124,7 @@
             <a
               class="btn btn-link"
               title="{{'renameResource' | translate}}"
+              data-ng-show="canRenameResource(r)"
               data-ng-click="editResource(r, $index)"
               data-ng-disabled="editingResource"
             >
@@ -134,6 +135,7 @@
             <a
               class="btn btn-link"
               title="{{'deleteResource' | translate}}"
+              data-ng-show="canRenameResource(r)"
               data-gn-confirm-click="{{'removeFileFromStoreConfirm' | translate:{url: r.url} }}"
               data-ng-click="deleteResource(r)"
             >
