@@ -180,6 +180,7 @@
               >
             </a>
             <a
+              data-ng-if="user.canUploadDataset()"
               href="#/add-dataset"
               class="btn btn-primary btn-block gn-margin-bottom"
               title="{{'addRecord' | translate}}"

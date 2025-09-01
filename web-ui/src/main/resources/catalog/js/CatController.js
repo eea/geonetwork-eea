@@ -933,6 +933,7 @@
             appUrl: "../../{{node}}/{{lang}}/catalog.edit",
             isUserRecordsOnly: false,
             minUserProfileToCreateTemplate: "Administrator",
+            minUserProfileToUploadDataset: "Administrator",
             isFilterTagsDisplayed: false,
             fluidEditorLayout: true,
             createPageTpl: "../../catalog/templates/editor/new-metadata-horizontal.html",
@@ -1877,6 +1878,18 @@
                   ? "is" + profile[0].toUpperCase() + profile.substring(1) + "OrMore"
                   : "";
             return angular.isFunction(this[fnName]) ? this[fnName]() : this.isConnected();
+          },
+          canUploadDataset: function () {
+            var requiredProfile =
+                gnGlobalSettings.gnCfg.mods.editor.minUserProfileToUploadDataset || "",
+              fnName =
+                requiredProfile !== ""
+                  ? "is" +
+                    requiredProfile[0].toUpperCase() +
+                    requiredProfile.substring(1) +
+                    "OrMore"
+                  : "";
+            return angular.isFunction(this[fnName]) ? this[fnName]() : false;
           },
           canImportMetadata: function () {
             var profile = gnConfig["metadata.import.userprofile"] || "Editor",
