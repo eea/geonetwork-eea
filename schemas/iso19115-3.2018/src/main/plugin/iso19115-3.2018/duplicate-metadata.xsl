@@ -55,7 +55,9 @@
 
   <!-- Remove resource identifier which should be unique among all records -->
   <xsl:template match="mdb:identificationInfo/*/mri:citation/*/cit:identifier/*/mcc:code/gco:CharacterString[matches(text(), '.*_[ip]_.*')]">
-    <xsl:copy/>
+    <xsl:copy>
+      Update the resource identifier. Duplicated from: <xsl:value-of select="text()"/>
+    </xsl:copy>
   </xsl:template>
 
   <!-- Remove online resources that match Nextcloud storage -->

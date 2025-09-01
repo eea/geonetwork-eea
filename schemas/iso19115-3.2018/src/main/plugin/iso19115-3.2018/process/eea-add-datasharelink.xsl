@@ -41,7 +41,7 @@
 
   <xsl:variable name="datasetIdentifier"
                 select="/mdb:MD_Metadata/mdb:identificationInfo/*/
-                              mri:citation/*/cit:identifier/*/mcc:code/*[matches(text(), '.*_[ip]_.*')]/text()"/>
+                              mri:citation/*/cit:identifier/*/mcc:code/*[matches(text(), '^\S*_[ip]_\S*')]/text()"/>
 
   <xsl:variable name="isPublic"
                 select="contains($datasetIdentifier, '_p_')"/>
@@ -87,26 +87,28 @@
 
 
   <xsl:template name="add-datasharelink">
-    <xsl:variable name="folder"
-                  select="if ($isPublic) then 'public' else 'internal'"/>
+    <xsl:if test="$datasetIdentifier != ''">
+      <xsl:variable name="folder"
+                    select="if ($isPublic) then 'public' else 'internal'"/>
 
-    <mrd:onLine>
-      <xsl:if test="not($isPublic)">
-        <xsl:attribute name="gco:nilReason" select="'withheld'"/>
-      </xsl:if>
-      <cit:CI_OnlineResource>
-        <cit:linkage>
-          <gco:CharacterString><xsl:value-of select="concat($serverUrl, '/webdav/datastore/', $folder, '/', $datasetIdentifier)"/></gco:CharacterString>
-        </cit:linkage>
-        <cit:protocol>
-          <gco:CharacterString>EEA:FOLDERPATH</gco:CharacterString>
-        </cit:protocol>
-        <cit:function>
-          <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
-                                     codeListValue="download"/>
-        </cit:function>
-      </cit:CI_OnlineResource>
-    </mrd:onLine>
+      <mrd:onLine>
+        <xsl:if test="not($isPublic)">
+          <xsl:attribute name="gco:nilReason" select="'withheld'"/>
+        </xsl:if>
+        <cit:CI_OnlineResource>
+          <cit:linkage>
+            <gco:CharacterString><xsl:value-of select="concat($serverUrl, '/webdav/datastore/', $folder, '/', $datasetIdentifier)"/></gco:CharacterString>
+          </cit:linkage>
+          <cit:protocol>
+            <gco:CharacterString>EEA:FOLDERPATH</gco:CharacterString>
+          </cit:protocol>
+          <cit:function>
+            <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                       codeListValue="download"/>
+          </cit:function>
+        </cit:CI_OnlineResource>
+      </mrd:onLine>
+    </xsl:if>
   </xsl:template>
 
 
