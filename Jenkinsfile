@@ -22,12 +22,12 @@ pipeline {
             def safeBranch = env.BRANCH_NAME.replaceAll('/', '-')
             def tagName
             if (env.BRANCH_NAME == env.default_branch) {
-                tagName = GIT_COMMIT.take(8)
+                tagName = "${GIT_COMMIT.take(8)}"
             } else {
                 tagName = "${safeBranch}-${GIT_COMMIT.take(8)}"
             }
             try {
-                dockerImage = docker.build("$registry:$tagName", "--pull --no-cache --build-arg COMMIT_OR_BRANCH=$tagName ./build-in-docker/")
+                dockerImage = docker.build("$registry:$tagName", "--pull --no-cache --build-arg COMMIT_OR_BRANCH=${GIT_COMMIT} ./build-in-docker/")
                 docker.withRegistry('', 'eeajenkins') {
                     dockerImage.push()
                 }
