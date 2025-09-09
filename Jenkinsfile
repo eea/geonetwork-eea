@@ -17,19 +17,21 @@ pipeline {
       }
 
       steps {
-        script{
-            if (env.BRANCH_NAME == env.default_branch ) {
+        script {
+            // Replace all slashes in branch name with dashes for Docker tag compliance
+            def safeBranch = env.BRANCH_NAME.replaceAll('/', '-')
+            def tagName
+            if (env.BRANCH_NAME == env.default_branch) {
                 tagName = GIT_COMMIT.take(8)
             } else {
-                tagName = "$BRANCH_NAME"
+                tagName = "${safeBranch}-${GIT_COMMIT.take(8)}"
             }
             try {
                 dockerImage = docker.build("$registry:$tagName", "--pull --no-cache --build-arg COMMIT_OR_BRANCH=$tagName ./build-in-docker/")
-                docker.withRegistry( '', 'eeajenkins' ) {
+                docker.withRegistry('', 'eeajenkins') {
                     dockerImage.push()
                 }
-            }
-            finally {
+            } finally {
                 sh "docker rmi $registry:$tagName"
             }
         }
