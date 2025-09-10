@@ -112,16 +112,16 @@ public class NextcloudService {
             boolean directoryExists = nextcloudClient.checkIfDirectoryExists(resourceIdentifier, folderType);
             if (!directoryExists) {
                 // Create the folder and add the metadata file XML
-                Log.debug(LOG_MODULE_NAME, String.format("Datastore: Folder %s (%s) does not exist for this resource identifier in Netcloud. Creating it.", resourceIdentifier, folderType));
+                Log.debug(LOG_MODULE_NAME, String.format("Datastore: Folder %s (%s) does not exist for this resource identifier in Nextcloud. Creating it.", resourceIdentifier, folderType));
                 nextcloudClient.createSymlink(metadata.getId() + "", resourceIdentifier, folderType);
                 nextcloudClient.getDirectory(resourceIdentifier, folderType);
             } else {
-                Log.debug(LOG_MODULE_NAME, String.format("Datastore: Folder %s (%s) exists for this resource identifier in Netcloud.", resourceIdentifier, folderType));
+                Log.debug(LOG_MODULE_NAME, String.format("Datastore: Folder %s (%s) exists for this resource identifier in Nextcloud.", resourceIdentifier, folderType));
             }
 
             if (StringUtils.isNotBlank(oldResourceIdentifier) && !oldResourceIdentifier.equals(resourceIdentifier)) {
                 // Remove the old symbolic link
-                Log.debug(LOG_MODULE_NAME, "Datastore: removing old symbolic link in Netcloud: " + oldResourceIdentifier);
+                Log.debug(LOG_MODULE_NAME, "Datastore: removing old symbolic link in Nextcloud: " + oldResourceIdentifier);
                 nextcloudClient.deleteFile(oldResourceIdentifier, getFolderType(oldResourceIdentifier));
             }
 

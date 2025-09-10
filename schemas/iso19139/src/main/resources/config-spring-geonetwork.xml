@@ -93,9 +93,9 @@
         <bean class="org.fao.geonet.kernel.schema.SavedQuery">
           <property name="id" value="eea-datastorelink-get"/>
           <property name="xpath"
-                    value=".//gmd:onLine/*/gmd:linkage[starts-with(
+                    value=".//gmd:onLine/*/gmd:linkage[contains(
                                               lower-case(gmd:URL),
-                                              concat('https://sdi.eea.europa.eu/data/',
+                                              concat('.eea.europa.eu/data/',
                                                           ancestor::gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString/text()
                                               ))]/gmd:URL/text()"/>
         </bean>

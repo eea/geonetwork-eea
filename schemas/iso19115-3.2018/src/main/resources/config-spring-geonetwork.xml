@@ -73,9 +73,9 @@
         <bean class="org.fao.geonet.kernel.schema.SavedQuery">
           <property name="id" value="eea-datastorelink-get"/>
           <property name="xpath"
-                    value=".//mrd:onLine/*/cit:linkage[starts-with(
+                    value=".//mrd:onLine/*/cit:linkage[contains(
                                               lower-case(gco:CharacterString),
-                                              concat('https://sdi.eea.europa.eu/data/',
+                                              concat('.eea.europa.eu/data/',
                                                           ancestor::mdb:MD_Metadata/mdb:metadataIdentifier//*/mcc:code/gco:CharacterString/text()
                                               ))]/gco:CharacterString/text()"/>
         </bean>
