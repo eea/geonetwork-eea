@@ -687,12 +687,17 @@
                 // 'url' : '/formatters/xml?attachment=false',
                 url: "/formatters/xml",
                 class: "fa-file-code-o"
-              } /*,
+              } ,
               {
                 label: "exportDCAT",
-                url: "/geonetwork/api/collections/main/items/${uuid}?f=dcat",
+                url: "/formatters/eu-dcat-ap-hvd",
                 class: "fa-file-code-o"
-              }*/
+              } ,
+              {
+                label: "Export ESMS-IP (SDMX)",
+                url: "/formatters/sdmx?output=xml",
+                class: "fa-file-code-o"
+              }
             ],
             // Deprecated (use configuration on resultViewTpls)
             grid: {
