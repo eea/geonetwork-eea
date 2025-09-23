@@ -687,12 +687,12 @@
                 // 'url' : '/formatters/xml?attachment=false',
                 url: "/formatters/xml",
                 class: "fa-file-code-o"
-              } ,
+              },
               {
                 label: "exportDCAT",
                 url: "/formatters/eu-dcat-ap-hvd",
                 class: "fa-file-code-o"
-              } ,
+              },
               {
                 label: "Export ESMS-IP (SDMX)",
                 url: "/formatters/sdmx?output=xml",
