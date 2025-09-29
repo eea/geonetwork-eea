@@ -61,7 +61,7 @@
   </xsl:template>
 
   <!-- Remove online resources that match Nextcloud storage -->
-  <xsl:template match="mrd:transferOptions/*/mrd:onLine[starts-with(*/cit:linkage/gco:CharacterString, 'https://sdi.eea.europa.eu/webdav/datastore')]"/>
+  <xsl:template match="mrd:transferOptions/*/mrd:onLine[contains(*/cit:linkage/gco:CharacterString, '.eea.europa.eu/webdav/datastore')]"/>
 
 
   <!-- Do a copy of every nodes and attributes -->
