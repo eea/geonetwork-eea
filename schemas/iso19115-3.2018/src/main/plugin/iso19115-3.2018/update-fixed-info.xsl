@@ -57,6 +57,10 @@
   <xsl:variable name="publicEmails"
                 select="'info@eea.europa.eu,sdi@eea.europa.eu,copernicus@eea.europa.eu'"/>
 
+  <xsl:variable name="eeaDatasetIdentifier"
+                select="/root/mdb:MD_Metadata/mdb:identificationInfo/*/
+                              mri:citation/*/cit:identifier/*/mcc:code/*[matches(text(), '^\S*_[ip]_\S*')]/text()"/>
+
   <!-- Matching the first gmd:online, we reorder links
    datashare synch script to catch the first one.
    We add datashare link if missing or wrong,
@@ -157,6 +161,19 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
       </xsl:if>
       <xsl:apply-templates select="@*[name() != 'gco:nilReason']"/>
       <xsl:apply-templates select="*"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template priority="10"
+                match="cit:CI_OnlineResource[cit:protocol/gco:CharacterString = 'EEA:FOLDERPATH']/cit:linkage/gco:CharacterString[starts-with(., concat($serverUrl, '/webdav/datastore'))]">
+    <xsl:copy>
+      <xsl:apply-templates select="@*"/>
+      <xsl:variable name="isPublic"
+                    select="contains($eeaDatasetIdentifier, '_p_')"/>
+
+      <xsl:variable name="folder"
+                    select="if ($isPublic) then 'public' else 'internal'"/>
+      <xsl:value-of select="concat($serverUrl, '/webdav/datastore/', $folder, '/', $eeaDatasetIdentifier)"/>
     </xsl:copy>
   </xsl:template>
 
