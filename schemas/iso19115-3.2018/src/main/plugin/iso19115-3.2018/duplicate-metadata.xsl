@@ -30,12 +30,15 @@
                   xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
                   xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xmlns:java="java:org.fao.geonet.util.XslUtil"
                   exclude-result-prefixes="#all">
 
   <xsl:output method="xml" indent="yes"/>
 
   <xsl:variable name="doiProtocol"
                 select="'DOI'"/>
+
+  <xsl:variable name="serverUrl" select="java:getSettingValue('serverUrl')" />
 
   <xsl:template match="/root">
     <xsl:apply-templates select="*[1]"/>
@@ -61,7 +64,8 @@
   </xsl:template>
 
   <!-- Remove online resources that match Nextcloud storage -->
-  <xsl:template match="mrd:transferOptions/*/mrd:onLine[contains(*/cit:linkage/gco:CharacterString, '.eea.europa.eu/webdav/datastore')]"/>
+  <xsl:template match="mrd:transferOptions/*/mrd:onLine[contains(*/cit:linkage/gco:CharacterString, '.eea.europa.eu/webdav/datastore')
+                                    or starts-with(., concat($serverUrl, '/data/'))]"/>
 
 
   <!-- Do a copy of every nodes and attributes -->
