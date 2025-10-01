@@ -1327,6 +1327,8 @@
 
 
           <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'INSPIRE priority data set']"/>
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EU applicable legislations']"/>
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'High-value dataset categories']"/>
         </section>
 
         <section name="eea-coverage"
