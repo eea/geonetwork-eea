@@ -29,4 +29,7 @@ public class XslUtil {
     public static String threeCharLangCode(String iso2code) {
         return "fre";
     }
+    public static String getSettingValue(String key) {
+        return "http://localhost";
+    }
 }
