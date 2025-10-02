@@ -167,7 +167,7 @@
             scope.filestoreUploadOptions = {
               autoUpload: true,
               url:
-                "../api/records/" + gnCurrentEdit.uuid + "/attachments?visibility=public",
+                "../../api/records/" + gnCurrentEdit.uuid + "/attachments?visibility=public",
               dropZone: $("#gn-overview-dropzone"),
               singleUpload: true,
               // TODO: acceptFileTypes: /(\.|\/)(xml|skos|rdf)$/i,

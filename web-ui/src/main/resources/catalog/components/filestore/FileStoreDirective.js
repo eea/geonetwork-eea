@@ -90,7 +90,7 @@
                   singleUpload: scope.singleUpload,
                   autoUpload: scope.autoUpload,
                   url:
-                    "../api/records/" +
+                    "../../api/records/" +
                     gnCurrentEdit.uuid +
                     "/attachments?visibility=" +
                     (scope.visibility || "public"),
