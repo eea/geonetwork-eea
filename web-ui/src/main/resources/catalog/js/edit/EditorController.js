@@ -286,6 +286,12 @@
                         return "eea-series-default";
                       }
                       return defaultTab;
+                    },
+                    "iso19115-3.2018": function (md) {
+                      if (md.resourceType && md.resourceType[0] === "series") {
+                        return "eea-series-default";
+                      }
+                      return defaultTab;
                     }
                   };
                   if (schemaCustomConfig) {
