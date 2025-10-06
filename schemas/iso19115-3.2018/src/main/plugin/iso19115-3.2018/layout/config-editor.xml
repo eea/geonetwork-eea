@@ -1694,23 +1694,27 @@
 
           <field name="eea-mmu"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:nameOfMeasure = 'Minimum Mapping Unit']/mdq:result/*/mdq:value"/>
+                          mdq:measure/*/mdq:nameOfMeasure = 'Minimum Mapping Unit']/mdq:result/*/mdq:value"/>
 
           <field name="eea-mmw"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:nameOfMeasure = 'Minimum Mapping Width']/mdq:result/*/mdq:value"/>
+                          mdq:measure/*/mdq:nameOfMeasure = 'Minimum Mapping Width']/mdq:result/*/mdq:value"/>
 
           <action type="add" btnLabel="eea-mmu" or="report"
                   in="/mdb:MD_Metadata/mdb:dataQualityInfo/*"
                   if="count(mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report[
-                          */mdq:nameOfMeasure = 'Minimum Mapping Unit']) = 0">
+                          mdq:measure/*/mdq:nameOfMeasure = 'Minimum Mapping Unit']) = 0">
             <template>
               <snippet>
                 <mdq:report>
                   <mdq:DQ_AbsoluteExternalPositionalAccuracy>
-                    <mdq:nameOfMeasure>
-                      <gco:CharacterString>Minimum Mapping Unit</gco:CharacterString>
-                    </mdq:nameOfMeasure>
+                    <mdq:measure>
+                      <mdq:DQ_MeasureReference>
+                        <mdq:nameOfMeasure>
+                          <gco:CharacterString>Minimum Mapping Unit</gco:CharacterString>
+                        </mdq:nameOfMeasure>
+                      </mdq:DQ_MeasureReference>
+                    </mdq:measure>
                     <mdq:result>
                       <mdq:DQ_QuantitativeResult>
                         <mdq:valueUnit>
@@ -1731,14 +1735,18 @@
           <action type="add" btnLabel="eea-mmw" or="report"
                   in="/mdb:MD_Metadata/mdb:dataQualityInfo/*"
                   if="count(mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report[
-                          */mdq:nameOfMeasure = 'Minimum Mapping Width']) = 0">
+                          mdq:measure/*/mdq:nameOfMeasure = 'Minimum Mapping Width']) = 0">
             <template>
               <snippet>
                 <mdq:report>
                   <mdq:DQ_AbsoluteExternalPositionalAccuracy>
-                    <mdq:nameOfMeasure>
-                      <gco:CharacterString>Minimum Mapping Width</gco:CharacterString>
-                    </mdq:nameOfMeasure>
+                    <mdq:measure>
+                      <mdq:DQ_MeasureReference>
+                        <mdq:nameOfMeasure>
+                          <gco:CharacterString>Minimum Mapping Width</gco:CharacterString>
+                        </mdq:nameOfMeasure>
+                      </mdq:DQ_MeasureReference>
+                    </mdq:measure>
                     <mdq:result/>
                     <mdq:result>
                       <mdq:DQ_QuantitativeResult>
@@ -1959,69 +1967,69 @@
 
           <field name="Frequency of dissemination - Grade"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:nameOfMeasure/*/text() = 'Frequency of dissemination']/mdq:result/*/mdq:value"
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Frequency of dissemination']/mdq:result/*/mdq:value"
                  del="ancestor::mdq:report"
                  use="data-gn-keyword-picker">
             <directiveAttributes data-thesaurus-key="local.theme.eea-stat-frequency-of-dissemination-grade"/>
           </field>
           <field name="Frequency of dissemination - Comment"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:nameOfMeasure/*/text() = 'Frequency of dissemination']/mdq:measureDescription"/>
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Frequency of dissemination']/mdq:measureDescription"/>
 
           <field name="Timeliness - Grade"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:nameOfMeasure/*/text() = 'Timeliness']/mdq:result/*/mdq:value"
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Timeliness']/mdq:result/*/mdq:value"
                  del="ancestor::mdq:report"
                  use="data-gn-keyword-picker">
             <directiveAttributes data-thesaurus-key="local.theme.eea-stat-timeliness-grade"/>
           </field>
           <field name="Timeliness - Comment"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:nameOfMeasure/*/text() = 'Timeliness']/mdq:measureDescription"/>
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Timeliness']/mdq:measureDescription"/>
 
           <field name="Reference area - Grade"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:nameOfMeasure/*/text() = 'Reference area']/mdq:result/*/mdq:value"
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Reference area']/mdq:result/*/mdq:value"
                  del="ancestor::mdq:report"
                  use="data-gn-keyword-picker">
             <directiveAttributes data-thesaurus-key="local.theme.eea-stat-reference-area-grade"/>
           </field>
           <field name="Reference area - Comment"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:nameOfMeasure/*/text() = 'Reference area']/mdq:measureDescription"/>
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Reference area']/mdq:measureDescription"/>
 
           <field name="Comparability - geographical - Grade"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:nameOfMeasure/*/text() = 'Comparability - geographical']/mdq:result/*/mdq:value"
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Comparability - geographical']/mdq:result/*/mdq:value"
                  del="ancestor::mdq:report"
                  use="data-gn-keyword-picker">
             <directiveAttributes data-thesaurus-key="local.theme.eea-stat-comparability-geographical-grade"/>
           </field>
           <field name="Comparability - geographical - Comment"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:nameOfMeasure/*/text() = 'Comparability - geographical']/mdq:measureDescription"/>
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Comparability - geographical']/mdq:measureDescription"/>
 
           <field name="Time coverage - Grade"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:nameOfMeasure/*/text() = 'Time coverage']/mdq:result/*/mdq:value"
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Time coverage']/mdq:result/*/mdq:value"
                  del="ancestor::mdq:report"
                  use="data-gn-keyword-picker">
             <directiveAttributes data-thesaurus-key="local.theme.eea-stat-time-coverage-grade"/>
           </field>
           <field name="Time Coverage - Comment"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:nameOfMeasure/*/text() = 'Time coverage']/mdq:measureDescription"/>
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Time coverage']/mdq:measureDescription"/>
 
           <field name="Comparability - over time - Grade"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:nameOfMeasure/*/text() = 'Comparability - over time']/mdq:result/*/mdq:value"
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Comparability - over time']/mdq:result/*/mdq:value"
                  del="ancestor::mdq:report"
                  use="data-gn-keyword-picker">
             <directiveAttributes data-thesaurus-key="local.theme.eea-stat-comparability-overtime-grade"/>
           </field>
           <field name="Comparability - over time - Comment"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:nameOfMeasure/*/text() = 'Comparability - over time']/mdq:measureDescription"/>
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Comparability - over time']/mdq:measureDescription"/>
 
           <action type="add"
                   btnLabel="eea-add-statistical-measures"
