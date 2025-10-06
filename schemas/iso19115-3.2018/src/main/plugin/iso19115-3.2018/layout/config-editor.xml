@@ -1974,7 +1974,7 @@
           </field>
           <field name="Frequency of dissemination - Comment"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Frequency of dissemination']/mdq:measureDescription"/>
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Frequency of dissemination']/mdq:measure/*/mdq:measureDescription"/>
 
           <field name="Timeliness - Grade"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
@@ -1985,7 +1985,7 @@
           </field>
           <field name="Timeliness - Comment"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Timeliness']/mdq:measureDescription"/>
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Timeliness']/mdq:measure/*/mdq:measureDescription"/>
 
           <field name="Reference area - Grade"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
@@ -1996,7 +1996,7 @@
           </field>
           <field name="Reference area - Comment"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Reference area']/mdq:measureDescription"/>
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Reference area']/mdq:measure/*/mdq:measureDescription"/>
 
           <field name="Comparability - geographical - Grade"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
@@ -2007,7 +2007,7 @@
           </field>
           <field name="Comparability - geographical - Comment"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Comparability - geographical']/mdq:measureDescription"/>
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Comparability - geographical']/mdq:measure/*/mdq:measureDescription"/>
 
           <field name="Time coverage - Grade"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
@@ -2018,7 +2018,7 @@
           </field>
           <field name="Time Coverage - Comment"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Time coverage']/mdq:measureDescription"/>
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Time coverage']/mdq:measure/*/mdq:measureDescription"/>
 
           <field name="Comparability - over time - Grade"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
@@ -2029,7 +2029,7 @@
           </field>
           <field name="Comparability - over time - Comment"
                  xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/*/mdq:report/*[
-                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Comparability - over time']/mdq:measureDescription"/>
+                          mdq:measure/*/mdq:nameOfMeasure/*/text() = 'Comparability - over time']/mdq:measure/*/mdq:measureDescription"/>
 
           <action type="add"
                   btnLabel="eea-add-statistical-measures"
