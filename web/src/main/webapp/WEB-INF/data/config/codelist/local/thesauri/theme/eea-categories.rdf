@@ -1,34 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:foaf="http://xmlns.com/foaf/0.1/"
-         xmlns:dcterms="http://purl.org/dc/terms/"
-         xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-  <skos:ConceptScheme rdf:about="https://www.eea.europa.eu/tags">
-    <dc:title>EEA categories</dc:title>
-    <dc:description>
-    </dc:description>
-    <dc:creator>
-      <foaf:Organization>
-        <foaf:name>EEA</foaf:name>
-      </foaf:Organization>
-    </dc:creator>
-    <dcterms:issued>2010-07-06</dcterms:issued>
-    <dcterms:modified>2010-07-06</dcterms:modified>
-  </skos:ConceptScheme>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:dcterms="http://purl.org/dc/terms/"
+	xmlns:ns3="http://www.opengis.net/gml#"
+	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/">
 
-  <skos:Concept rdf:about='https://www.eea.europa.eu/categories/1'>
-    <skos:prefLabel xml:lang='en'>geospatial data</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
-  </skos:Concept>
-  <skos:Concept rdf:about='https://www.eea.europa.eu/categories/2'>
-    <skos:prefLabel xml:lang='en'>tabular data</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
-  </skos:Concept>
-  <skos:Concept rdf:about='https://www.eea.europa.eu/categories/3'>
-    <skos:prefLabel xml:lang='en'>statistical data</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
-  </skos:Concept>
+<rdf:Description rdf:about="https://www.eea.europa.eu/tags">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+	<dc:title>EEA categories</dc:title>
+	<dc:creator rdf:nodeID="node1hu13i7vpx1"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1hu13i7vpx1">
+	<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Organization"/>
+	<foaf:name>EEA</foaf:name>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/tags">
+	<dcterms:issued>2010-07-06</dcterms:issued>
+	<dcterms:modified>2010-07-06</dcterms:modified>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/categories/1">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">geospatial data</skos:prefLabel>
+	<skos:definition xml:lang="en"></skos:definition>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/categories/2">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">tabular data</skos:prefLabel>
+	<skos:definition xml:lang="en"></skos:definition>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/categories/3">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">statistical data</skos:prefLabel>
+	<ns3:BoundedBy rdf:nodeID="node1hu2otrm1x1"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1hu2otrm1x1">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns3:lowerCorner> </ns3:lowerCorner>
+	<ns3:upperCorner> </ns3:upperCorner>
+	<ns3:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
 </rdf:RDF>
-

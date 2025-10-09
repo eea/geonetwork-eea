@@ -1,138 +1,343 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ns3="http://purl.org/dc/elements/1.1/" xmlns:ns5="http://www.opengis.net/gml#" xmlns:ns2="http://www.w3.org/2004/02/skos/core#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-  <rdf:Description rdf:nodeID="node1i98itulax1">
-    <rdf:type rdf:resource="http://www.opengis.net/gml#Envelope" />
-  </rdf:Description>
-  <rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement">
-    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme" />
-    <ns3:title xml:lang="en">Unit of measure</ns3:title>
-    <ns3:identifier>eea-unit-of-measurement.rdf</ns3:identifier>
-    <ns3:type>theme</ns3:type>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="node1i98itulax1">
-    <ns5:lowerCorner />
-    <ns5:upperCorner />
-  </rdf:Description>
-  <rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#694577b6-3b4d-45b2-a009-75a30ba21fb3">
-    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="node1i98itulax1">
-    <ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326" />
-  </rdf:Description>
-  <rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#694577b6-3b4d-45b2-a009-75a30ba21fb3">
-    <ns5:BoundedBy rdf:nodeID="node1i98itulax1" />
-    <ns2:prefLabel xml:lang="en">mg O2 per litre</ns2:prefLabel>
-    <ns2:scopeNote xml:lang="en" />
-  </rdf:Description>
-  <rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#61a7ec1a-a059-4200-9879-df823dc235f6">
-    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
-    <ns2:prefLabel xml:lang="en">mg NO3 per litre</ns2:prefLabel>
-    <ns5:BoundedBy rdf:nodeID="node1i98kkqsmx1" />
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="node1i98kkqsmx1">
-    <rdf:type rdf:resource="http://www.opengis.net/gml#Envelope" />
-    <ns5:lowerCorner />
-    <ns5:upperCorner />
-    <ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326" />
-  </rdf:Description>
-  <rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#3fa50652-3985-4e5c-ac3a-8640a7a642ad">
-    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
-    <ns2:prefLabel xml:lang="en">mg PO4 per litre</ns2:prefLabel>
-    <ns5:BoundedBy rdf:nodeID="node1i98kl25ix1" />
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="node1i98kl25ix1">
-    <rdf:type rdf:resource="http://www.opengis.net/gml#Envelope" />
-    <ns5:lowerCorner />
-    <ns5:upperCorner />
-    <ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326" />
-  </rdf:Description>
-  <rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#98538f43-6e72-42fa-adb1-d4a9290599ff">
-    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
-    <ns2:prefLabel xml:lang="en">Index, 2006 = 100</ns2:prefLabel>
-    <ns5:BoundedBy rdf:nodeID="node1i98kl9mfx1" />
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="node1i98kl9mfx1">
-    <rdf:type rdf:resource="http://www.opengis.net/gml#Envelope" />
-    <ns5:lowerCorner />
-    <ns5:upperCorner />
-    <ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326" />
-  </rdf:Description>
-  <rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#f0d8a973-8b8a-4dc8-a16e-fca7383c7258">
-    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
-    <ns2:prefLabel xml:lang="en">Gg CO2 equivalent</ns2:prefLabel>
-    <ns5:BoundedBy rdf:nodeID="node1i98klg6fx1" />
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="node1i98klg6fx1">
-    <rdf:type rdf:resource="http://www.opengis.net/gml#Envelope" />
-    <ns5:lowerCorner />
-    <ns5:upperCorner />
-    <ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326" />
-  </rdf:Description>
-  <rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#d6477470-b901-47c2-89cb-518660173761">
-    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
-    <ns2:prefLabel xml:lang="en">g CO2 per km</ns2:prefLabel>
-    <ns5:BoundedBy rdf:nodeID="node1i98klmmnx1" />
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="node1i98klmmnx1">
-    <rdf:type rdf:resource="http://www.opengis.net/gml#Envelope" />
-    <ns5:lowerCorner />
-    <ns5:upperCorner />
-    <ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326" />
-  </rdf:Description>
-  <rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#135c0079-12b2-469d-b335-5170630a7d2b">
-    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
-    <ns2:prefLabel xml:lang="en">million EUR, 2022 prices</ns2:prefLabel>
-    <ns5:BoundedBy rdf:nodeID="node1i98klukfx1" />
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="node1i98klukfx1">
-    <rdf:type rdf:resource="http://www.opengis.net/gml#Envelope" />
-    <ns5:lowerCorner />
-    <ns5:upperCorner />
-    <ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326" />
-  </rdf:Description>
-  <rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#b07f4089-7e87-44da-8f4f-aa3f21a91dd6">
-    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
-    <ns2:prefLabel xml:lang="en">Percentage of total</ns2:prefLabel>
-    <ns5:BoundedBy rdf:nodeID="node1i98km51ix1" />
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="node1i98km51ix1">
-    <rdf:type rdf:resource="http://www.opengis.net/gml#Envelope" />
-    <ns5:lowerCorner />
-    <ns5:upperCorner />
-    <ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326" />
-  </rdf:Description>
-  <rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#210141a8-8c90-4ebd-879b-b06bfa6392f8">
-    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
-    <ns2:prefLabel xml:lang="en">Percentage</ns2:prefLabel>
-    <ns5:BoundedBy rdf:nodeID="node1i98kmaisx1" />
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="node1i98kmaisx1">
-    <rdf:type rdf:resource="http://www.opengis.net/gml#Envelope" />
-    <ns5:lowerCorner />
-    <ns5:upperCorner />
-    <ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326" />
-  </rdf:Description>
-  <rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#321e5cb6-9e8e-462d-9fe1-60942de6c678">
-    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
-    <ns2:prefLabel xml:lang="en">Number</ns2:prefLabel>
-    <ns5:BoundedBy rdf:nodeID="node1i98kmg57x1" />
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="node1i98kmg57x1">
-    <rdf:type rdf:resource="http://www.opengis.net/gml#Envelope" />
-    <ns5:lowerCorner />
-    <ns5:upperCorner />
-    <ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326" />
-  </rdf:Description>
-  <rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#59e5e56d-1c12-437f-9f30-8d9e6064f811">
-    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
-    <ns2:prefLabel xml:lang="en">Square kilometre</ns2:prefLabel>
-    <ns5:BoundedBy rdf:nodeID="node1i98kmorfx1" />
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="node1i98kmorfx1">
-    <rdf:type rdf:resource="http://www.opengis.net/gml#Envelope" />
-    <ns5:lowerCorner />
-    <ns5:upperCorner />
-    <ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326" />
-  </rdf:Description>
-</rdf:RDF>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:ns3="http://purl.org/dc/elements/1.1/"
+	xmlns:ns5="http://www.opengis.net/gml#"
+	xmlns:ns2="http://www.w3.org/2004/02/skos/core#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
 
+<rdf:Description rdf:nodeID="node1j5tce8ssx1">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx2">
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#4c7b7927-719e-4cfa-ba09-8e17fea2e1c0">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx1">
+	<ns5:lowerCorner></ns5:lowerCorner>
+	<ns5:upperCorner></ns5:upperCorner>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#694577b6-3b4d-45b2-a009-75a30ba21fb3">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx1">
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#694577b6-3b4d-45b2-a009-75a30ba21fb3">
+	<ns5:BoundedBy rdf:nodeID="node1j5tce8ssx1"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#59e5e56d-1c12-437f-9f30-8d9e6064f811">
+	<ns2:prefLabel xml:lang="en">Square kilometre</ns2:prefLabel>
+	<ns2:scopeNote xml:lang="en"></ns2:scopeNote>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#61a7ec1a-a059-4200-9879-df823dc235f6">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement">
+	<ns3:identifier>eea-unit-of-measurement.rdf</ns3:identifier>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#61a7ec1a-a059-4200-9879-df823dc235f6">
+	<ns5:BoundedBy rdf:nodeID="node1j5tce8ssx3"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx3">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner></ns5:lowerCorner>
+	<ns5:upperCorner></ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#3fa50652-3985-4e5c-ac3a-8640a7a642ad">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#61a7ec1a-a059-4200-9879-df823dc235f6">
+	<ns2:prefLabel xml:lang="en">mg NO3 per litre</ns2:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#3fa50652-3985-4e5c-ac3a-8640a7a642ad">
+	<ns5:BoundedBy rdf:nodeID="node1j5tce8ssx4"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx4">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner></ns5:lowerCorner>
+	<ns5:upperCorner></ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#98538f43-6e72-42fa-adb1-d4a9290599ff">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">Index, 2006 = 100</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1j5tce8ssx5"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx5">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner></ns5:lowerCorner>
+	<ns5:upperCorner></ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#f0d8a973-8b8a-4dc8-a16e-fca7383c7258">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">Gg CO2 equivalent</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1j5tce8ssx6"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx6">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner></ns5:lowerCorner>
+	<ns5:upperCorner></ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#d6477470-b901-47c2-89cb-518660173761">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">g CO2 per km</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1j5tce8ssx7"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx7">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner></ns5:lowerCorner>
+	<ns5:upperCorner></ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#135c0079-12b2-469d-b335-5170630a7d2b">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#4c7b7927-719e-4cfa-ba09-8e17fea2e1c0">
+	<ns2:scopeNote xml:lang="en"></ns2:scopeNote>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#135c0079-12b2-469d-b335-5170630a7d2b">
+	<ns5:BoundedBy rdf:nodeID="node1j5tce8ssx8"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx8">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner></ns5:lowerCorner>
+	<ns5:upperCorner></ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#b07f4089-7e87-44da-8f4f-aa3f21a91dd6">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">Percentage of total</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1j5tce8ssx9"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx9">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner></ns5:lowerCorner>
+	<ns5:upperCorner></ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#210141a8-8c90-4ebd-879b-b06bfa6392f8">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">Percentage</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1j5tce8ssx10"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx10">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner></ns5:lowerCorner>
+	<ns5:upperCorner></ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#321e5cb6-9e8e-462d-9fe1-60942de6c678">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">Number</ns2:prefLabel>
+	<ns5:BoundedBy rdf:nodeID="node1j5tce8ssx11"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx11">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner></ns5:lowerCorner>
+	<ns5:upperCorner></ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#59e5e56d-1c12-437f-9f30-8d9e6064f811">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#1bcbbf04-799c-4400-90e7-9ba8b3925046">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#59e5e56d-1c12-437f-9f30-8d9e6064f811">
+	<ns5:BoundedBy rdf:nodeID="node1j5tce8ssx12"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx12">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns5:lowerCorner></ns5:lowerCorner>
+	<ns5:upperCorner></ns5:upperCorner>
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#ed44e3b3-bf25-4362-b9b0-26e34891df39">
+	<ns2:inScheme rdf:resource="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#4c7b7927-719e-4cfa-ba09-8e17fea2e1c0">
+	<ns5:BoundedBy rdf:nodeID="node1j5tce8ssx2"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx2">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx13">
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#44f9a1a4-a38b-4ca3-a041-2dadbdf4dc50">
+	<ns5:BoundedBy rdf:nodeID="node1j5tce8ssx13"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx13">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#44f9a1a4-a38b-4ca3-a041-2dadbdf4dc50">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">Index, 2013 = 100</ns2:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx14">
+	<ns5:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#544da2c2-2ffb-4a5f-ad40-c2468def4b51">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#135c0079-12b2-469d-b335-5170630a7d2b">
+	<ns2:scopeNote xml:lang="en"></ns2:scopeNote>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#544da2c2-2ffb-4a5f-ad40-c2468def4b51">
+	<ns5:BoundedBy rdf:nodeID="node1j5tce8ssx14"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1j5tce8ssx14">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#4f911b72-52fa-4d60-88c2-f1a5aa757199">
+	<ns2:inScheme rdf:resource="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement"/>
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#ba0bbc27-d6ac-448c-9837-63b954fbac00">
+	<ns2:prefLabel xml:lang="en">kt CO2 equivalent</ns2:prefLabel>
+	<ns2:inScheme rdf:resource="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#b9f8a876-56e8-458f-b8f6-ce87364d3c6b">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:inScheme rdf:resource="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement"/>
+	<ns2:prefLabel xml:lang="en">Index, 2014 = 100</ns2:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#ed44e3b3-bf25-4362-b9b0-26e34891df39">
+	<ns2:prefLabel xml:lang="en">Billion EUR, 2023 prices</ns2:prefLabel>
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#4c7b7927-719e-4cfa-ba09-8e17fea2e1c0">
+	<ns2:prefLabel xml:lang="en">Billion EUR, 2022 prices</ns2:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#135c0079-12b2-469d-b335-5170630a7d2b">
+	<ns2:prefLabel xml:lang="en">Million EUR, 2022 prices</ns2:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#544da2c2-2ffb-4a5f-ad40-c2468def4b51">
+	<ns2:prefLabel xml:lang="en">Million EUR, 2023 prices</ns2:prefLabel>
+	<ns2:scopeNote xml:lang="en"></ns2:scopeNote>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#1bcbbf04-799c-4400-90e7-9ba8b3925046">
+	<ns2:inScheme rdf:resource="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement"/>
+	<ns2:prefLabel xml:lang="en">Billion EUR, 2024 prices</ns2:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#4717dd28-d4b4-4f0d-a9cd-4c1157a76565">
+	<ns2:prefLabel xml:lang="en">Million EUR, 2024 prices</ns2:prefLabel>
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:inScheme rdf:resource="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement">
+	<ns3:type>theme</ns3:type>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#61a7ec1a-a059-4200-9879-df823dc235f6">
+	<ns2:scopeNote xml:lang="en"></ns2:scopeNote>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#694577b6-3b4d-45b2-a009-75a30ba21fb3">
+	<ns2:scopeNote xml:lang="en"></ns2:scopeNote>
+	<ns2:prefLabel xml:lang="en">mg O2 per litre</ns2:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#67d08b55-2a70-49ee-ad8b-699821a8b2d0">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:inScheme rdf:resource="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement"/>
+	<ns2:prefLabel xml:lang="en">Index, 2010 = 100</ns2:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+	<ns3:title xml:lang="en">Unit of measure</ns3:title>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#3fa50652-3985-4e5c-ac3a-8640a7a642ad">
+	<ns2:prefLabel xml:lang="en">mg PO4 per litre</ns2:prefLabel>
+	<ns2:scopeNote xml:lang="en"></ns2:scopeNote>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#ba0bbc27-d6ac-448c-9837-63b954fbac00">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#4f911b72-52fa-4d60-88c2-f1a5aa757199">
+	<ns2:prefLabel xml:lang="en">Mt CO2 equivalent</ns2:prefLabel>
+	<ns2:scopeNote xml:lang="en"></ns2:scopeNote>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#31297316-35d9-4806-8cc0-efa992c8c0a2">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:inScheme rdf:resource="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement"/>
+	<ns2:prefLabel xml:lang="en">Index, 1991 = 100</ns2:prefLabel>
+	<ns2:scopeNote xml:lang="en"></ns2:scopeNote>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement#865fd11f-4269-4aa0-95f3-ff7b6b343da4">
+	<ns2:inScheme rdf:resource="https://sdi.eea.europa.eu/theme/eeaunitofmeasurement"/>
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<ns2:prefLabel xml:lang="en">Population index, 1991= 100</ns2:prefLabel>
+	<ns2:scopeNote xml:lang="en"></ns2:scopeNote>
+</rdf:Description>
+
+</rdf:RDF>

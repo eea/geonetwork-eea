@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:foaf="http://xmlns.com/foaf/0.1/"
-         xmlns:dcterms="http://purl.org/dc/terms/"
-         xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-  <skos:ConceptScheme rdf:about="https://www.eea.europa.eu/stat-reference-period">
-    <dc:title>Reference period</dc:title>
-    <dc:description></dc:description>
-    <dc:creator>
-      <foaf:Organization>
-        <foaf:name>EEA</foaf:name>
-      </foaf:Organization>
-    </dc:creator>
-    <dcterms:issued>2024-03-11</dcterms:issued>
-    <dcterms:modified>2024-03-11</dcterms:modified>
-  </skos:ConceptScheme>
-  <skos:Concept rdf:about='https://www.eea.europa.eu/stat-reference-period/1'>
-    <skos:prefLabel xml:lang='en'>Calendar year</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
-  </skos:Concept>
-</rdf:RDF>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
 
+<rdf:Description rdf:about="https://www.eea.europa.eu/stat-reference-period/1">
+	<skos:definition xml:lang="en"></skos:definition>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/stat-reference-period#75cc5d78-c75d-4ac9-b04d-bbef4848ae27">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/stat-reference-period/1">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Calendar year</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/stat-reference-period#75cc5d78-c75d-4ac9-b04d-bbef4848ae27">
+	<skos:inScheme rdf:resource="https://www.eea.europa.eu/stat-reference-period"/>
+	<skos:scopeNote xml:lang="en"></skos:scopeNote>
+	<skos:prefLabel xml:lang="en">Annual bathing season</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://www.eea.europa.eu/stat-reference-period">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+	<dc:title xml:lang="en">Reference period</dc:title>
+	<dc:identifier>eea-stat-reference-period.rdf</dc:identifier>
+	<dc:type>theme</dc:type>
+</rdf:Description>
+
+</rdf:RDF>

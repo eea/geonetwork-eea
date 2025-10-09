@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:ns3="http://www.opengis.net/gml#"
+	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+<rdf:Description rdf:nodeID="node1horbqm26x1">
+	<ns3:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#threeyears">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution">
+	<dc:type>temporal</dc:type>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#threeyears">
+	<ns3:BoundedBy rdf:nodeID="node1horbqm26x1"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1horbqm26x1">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution">
+	<dc:identifier>temporal-update.rdf</dc:identifier>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#continual">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Continual</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#daily">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Daily</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#fivedays">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Five days</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#weekly">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Weekly</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#fortnightly">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Fortnightly</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#monthly">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Monthly</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#quarterly">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Quarterly</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#biannually">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Biannually</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#annually">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Annually</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#asNeeded">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">As needed</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#irregular">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Irregular</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#notPlanned">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Not planned</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#unknown">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Unknown</skos:prefLabel>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#5fe641f7-2fe0-4757-8448-9b6e55e4d904">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Biennial</skos:prefLabel>
+	<skos:scopeNote xml:lang="en">Every two years</skos:scopeNote>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#0948f76e-b976-4346-be0a-9d583baf0b1b">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Triennial</skos:prefLabel>
+	<skos:scopeNote xml:lang="en">Every three years</skos:scopeNote>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#sixdays">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Six days</skos:prefLabel>
+	<ns3:BoundedBy rdf:nodeID="node1horbqm26x2"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1horbqm26x2">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns3:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#tendays">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Ten days</skos:prefLabel>
+	<ns3:BoundedBy rdf:nodeID="node1horbqm26x3"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="node1horbqm26x3">
+	<rdf:type rdf:resource="http://www.opengis.net/gml#Envelope"/>
+	<ns3:srsName rdf:resource="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+	<dc:title xml:lang="en">Temporal resolution</dc:title>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://sdi.eea.europa.eu/thesaurus/temporal-resolution#threeyears">
+	<skos:prefLabel xml:lang="en">Three years</skos:prefLabel>
+	<skos:scopeNote xml:lang="en">Three years</skos:scopeNote>
+</rdf:Description>
+
+</rdf:RDF>
