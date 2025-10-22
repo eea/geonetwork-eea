@@ -89,6 +89,17 @@
                 {
                   singleUpload: scope.singleUpload,
                   autoUpload: scope.autoUpload,
+                  formData: function (form) {
+                    var inputs = form.serializeArray();
+                    var formData = [];
+                    for (var i = 0; i < inputs.length; i++) {
+                      if (inputs[i].name === "file") {
+                        formData.push(inputs[i]);
+                        break;
+                      }
+                    }
+                    return formData;
+                  },
                   url:
                     "../../api/records/" +
                     gnCurrentEdit.uuid +
