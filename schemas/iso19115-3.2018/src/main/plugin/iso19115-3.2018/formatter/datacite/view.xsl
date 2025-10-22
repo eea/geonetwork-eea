@@ -497,7 +497,7 @@ eg.
       <xsl:variable name="publisher"
                     select="if ($metadata//mrd:distributorContact)
                             then $metadata//mrd:distributorContact
-                            else $metadata/mdb:identificationInfo/*/mri:pointOfContact[*/cit:role/*/@codeListValue = 'distributor']"/>
+                            else $metadata/mdb:identificationInfo/*/mri:pointOfContact[*/cit:role/*/@codeListValue = ('distributor', 'custodian')]"/>
       <xsl:value-of select="$publisher[1]/*/cit:party//cit:CI_Organisation/cit:name/*/text()"/>
     </datacite:publisher>
 
