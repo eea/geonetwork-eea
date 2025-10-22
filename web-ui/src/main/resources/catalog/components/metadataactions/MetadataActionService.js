@@ -75,6 +75,7 @@
     ) {
       var windowName = "geonetwork";
       var windowOption = "";
+      var selectedMetadataTypes = [];
       var translations = null;
       $translate([
         "metadataPublished",
