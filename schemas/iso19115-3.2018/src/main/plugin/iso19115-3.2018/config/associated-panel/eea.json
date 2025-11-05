@@ -332,6 +332,9 @@
         "label": "Product Information & Technical Documentation",
         "copyLabel": "name",
         "icon": "fa gn-icon-onlinesrc",
+        "sources": {
+          "filestore": true
+        },
         "process": "onlinesrc-add",
         "fields": {
           "url": {
