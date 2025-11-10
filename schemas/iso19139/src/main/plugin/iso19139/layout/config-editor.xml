@@ -2404,7 +2404,7 @@
                                               codeListValue="otherRestrictions"/>
                     </gmd:useConstraints>
                     <gmd:otherConstraints>
-                      <gco:CharacterString>EEA standard re-use policy: unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged (http://www.eea.europa.eu/legal/copyright). Copyright holder: European Environment Agency (EEA).</gco:CharacterString>
+                      <gco:CharacterString>License CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Copyright holder: European Environment Agency (EEA).</gco:CharacterString>
                     </gmd:otherConstraints>
                   </gmd:MD_LegalConstraints>
                 </gmd:resourceConstraints>
