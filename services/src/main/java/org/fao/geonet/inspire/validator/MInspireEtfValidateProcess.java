@@ -1,5 +1,7 @@
 package org.fao.geonet.inspire.validator;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import jeeves.server.context.ServiceContext;
 import jeeves.transaction.TransactionManager;
 import jeeves.transaction.TransactionTask;
@@ -23,6 +25,10 @@ import org.fao.geonet.schema.iso19139.ISO19139Namespaces;
 import org.fao.geonet.schema.iso19139.ISO19139SchemaPlugin;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedResource;
@@ -58,15 +64,21 @@ public class MInspireEtfValidateProcess implements SelfNaming {
     private long deleteAllDate = Long.MAX_VALUE;
     private long analyseMdDate = Long.MAX_VALUE;
 
+    public String processing;
+    private SchemaManager schemaManager;
 
     public MInspireEtfValidateProcess(String catalogueId,
                                       String url, String urlQuery,
                                       ServiceContext serviceContext,
-                                      ApplicationContext appContext) {
+                                      ApplicationContext appContext,
+                                      String processing,
+                                      SchemaManager schemaManager) {
         this.url = url;
         this.urlQuery = urlQuery;
         this.serviceContext = serviceContext;
         this.appContext = appContext;
+        this.processing = processing;
+        this.schemaManager = schemaManager;
 
         try {
             this.probeName = new ObjectName(String.format(
@@ -327,6 +339,20 @@ public class MInspireEtfValidateProcess implements SelfNaming {
             mdToValidate = metadataRecord.getData();
         }
 
+
+        if (StringUtils.isNotEmpty(processing)) {
+            Path xslProcessing = schemaManager.getSchemaDir(metadataRecord.getDataInfo().getSchemaId()).resolve(processing);
+            Element xml = null;
+            try {
+                xml = Xml.loadString(mdToValidate, false);
+                xml = Xml.transform(xml, xslProcessing);
+                mdToValidate = Xml.getString(xml);
+            } catch (Exception ex) {
+                Log.error(API.LOG_MODULE_NAME,
+                    String.format("Error converting metadata %s for INSPIRE validation with processing %s: %s",
+                        metadataRecord.getUuid(),  processing, ex.getMessage()), ex);
+            }
+        }
         return mdToValidate;
     }
 

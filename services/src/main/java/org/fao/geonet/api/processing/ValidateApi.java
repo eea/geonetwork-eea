@@ -57,6 +57,7 @@ import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.jdom.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -110,6 +111,9 @@ public class ValidateApi {
     IMetadataUtils metadataUtils;
     @Autowired
     MBeanExporter mBeanExporter;
+
+    @Value("#{validatorAdditionalConfig['processing']}")
+    public String processing;
 
     private final ArrayDeque<SelfNaming> mAnalyseProcesses = new ArrayDeque<>(NUMBER_OF_SUBSEQUENT_PROCESS_MBEAN_TO_KEEP);
 
@@ -376,7 +380,7 @@ public class ValidateApi {
             URL_QUERY = URL;
         }
 
-        MInspireEtfValidateProcess mAnalyseProcess = new MInspireEtfValidateProcess(settingManager.getSiteId(), URL, URL_QUERY, serviceContext, appContext);
+        MInspireEtfValidateProcess mAnalyseProcess = new MInspireEtfValidateProcess(settingManager.getSiteId(), URL, URL_QUERY, serviceContext, appContext, processing, schemaManager);
         mBeanExporter.registerManagedResource(mAnalyseProcess, mAnalyseProcess.getObjectName());
         try {
             mBeanExporter.unregisterManagedResource(mAnalyseProcesses.removeLast().getObjectName());

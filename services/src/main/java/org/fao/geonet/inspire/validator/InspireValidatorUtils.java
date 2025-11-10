@@ -154,6 +154,7 @@ public class InspireValidatorUtils {
     @Resource(name = "inspireEtfValidatorTestsuitesConditions")
     private Map<String, String> testsuitesConditions;
 
+
     @Value("#{validatorAdditionalConfig['maxNumberOfEtfChecks']}")
     private Integer maxNumberOfEtfChecks;
 
