@@ -201,7 +201,7 @@
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="gmd:updateScope" priority="5" mode="from19139to19115-3">
+  <xsl:template match="gmd:updateScope" priority="5" mode="from19139to19115-3.2018">
     <mmi:maintenanceScope>
       <mcc:MD_Scope>
         <xsl:call-template name="writeCodelistElement">
