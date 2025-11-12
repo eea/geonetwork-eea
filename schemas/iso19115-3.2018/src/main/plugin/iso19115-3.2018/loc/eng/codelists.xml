@@ -1290,8 +1290,8 @@
   </codelist>
   <codelist name="msr:MD_PixelOrientationCode">
     <entry>
-      <code>center</code>
-      <label>Center</label>
+      <code>centre</code>
+      <label>Centre</label>
       <description>Point halfway between the lower left and the upper right of
         the pixel
       </description>

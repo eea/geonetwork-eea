@@ -430,6 +430,12 @@
     </gmd:aggregationInfo>
   </xsl:template>
 
+
+  <xsl:template match="msr:MD_PixelOrientationCode[. = 'centre']" priority="2">
+    <gmd:MD_PixelOrientationCode>center</gmd:MD_PixelOrientationCode>
+  </xsl:template>
+
+
   <xsl:template match="mri:MD_AssociatedResource/mri:metadataReference" priority="2">
     <gmd:aggregateDataSetIdentifier>
       <gmd:MD_Identifier>

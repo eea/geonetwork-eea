@@ -1296,7 +1296,7 @@
   </codelist>
   <codelist name="msr:MD_PixelOrientationCode">
     <entry>
-      <code>center</code>
+      <code>centre</code>
       <label>Centre</label>
       <description>Point intermédiaire entre la partie gauche inférieure et la
         partie droite supérieure du pixel
