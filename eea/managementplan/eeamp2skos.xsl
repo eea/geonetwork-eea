@@ -22,7 +22,7 @@
         <dcterms:modified>2023-07-12</dcterms:modified>
       </skos:ConceptScheme>
       <xsl:for-each select=".//Table">
-        <xsl:sort select="concat(project_year, ' ', project_code)"
+        <xsl:sort select="concat(Programme_Year, ' ', ID)"
                   order="descending"/>
         <xsl:apply-templates select="."/>
       </xsl:for-each>
@@ -30,11 +30,11 @@
   </xsl:template>
 
   <xsl:template match="Table" priority="2">
-    <skos:Concept rdf:about="{project_url}">
-      <skos:prefLabel xml:lang="en"><xsl:value-of select="concat(project_year, ' ', project_code)"/></skos:prefLabel>
-      <skos:definition xml:lang="en">
-        <xsl:value-of select="project"/>
-      </skos:definition>
+    <skos:Concept rdf:about="{about}">
+      <skos:prefLabel xml:lang="en"><xsl:value-of select="concat(Programme_Year, ' ', ID)"/></skos:prefLabel>
+      <skos:scopeNote xml:lang="en">
+        <xsl:value-of select="Title"/>
+      </skos:scopeNote>
     </skos:Concept>
   </xsl:template>
 </xsl:stylesheet>
