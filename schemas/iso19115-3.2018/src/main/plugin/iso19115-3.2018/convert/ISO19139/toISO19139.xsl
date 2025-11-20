@@ -499,7 +499,11 @@
 
         <xsl:for-each select="mdq:DQ_DataQuality/mdq:report/*">
           <gmd:report>
-            <xsl:element name="{concat('gmd:',local-name())}">
+            <xsl:variable name="dqReportName"
+                          select="if (local-name() = 'DQ_NonQuantitativeAttributeCorrectness')
+                                       then 'DQ_NonQuantitativeAttributeAccuracy'
+                                       else local-name()"/>
+            <xsl:element name="{concat('gmd:', $dqReportName)}">
               <xsl:call-template name="writeCharacterStringElement">
                 <xsl:with-param name="elementName" select="'gmd:nameOfMeasure'"/>
                 <xsl:with-param name="nodeWithStringToWrite" select="mdq:measure/mdq:DQ_MeasureReference/mdq:nameOfMeasure"/>
