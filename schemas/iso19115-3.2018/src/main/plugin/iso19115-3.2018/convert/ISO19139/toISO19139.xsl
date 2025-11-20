@@ -522,12 +522,14 @@
                 <xsl:with-param name="nodeWithStringToWrite" select="mdq:evaluation/mdq:DQ_FullInspection/mdq:evaluationMethodDescription"/>
               </xsl:call-template>
 
-              <gmd:evaluationProcedure>
-                <xsl:apply-templates select="mdq:evaluation/mdq:DQ_FullInspection/mdq:evaluationProcedure/cit:CI_Citation"/>
-              </gmd:evaluationProcedure>
-              <gmd:dateTime>
-                <xsl:apply-templates select="mdq:evaluation/mdq:DQ_FullInspection/mdq:dateTime/gco2:DateTime"/>
-              </gmd:dateTime>
+              <xsl:for-each select="mdq:evaluation/mdq:DQ_FullInspection">
+                <gmd:evaluationProcedure>
+                  <xsl:apply-templates select="mdq:evaluationProcedure/cit:CI_Citation"/>
+                </gmd:evaluationProcedure>
+                <gmd:dateTime>
+                  <xsl:apply-templates select="mdq:dateTime/gco2:DateTime"/>
+                </gmd:dateTime>
+              </xsl:for-each>
               <xsl:apply-templates select="mdq:result"/>
             </xsl:element>
           </gmd:report>
@@ -1113,7 +1115,6 @@
                        srv2:parameter|
                        mri:keywordClass|
                        mri:temporalResolution|
-                       mrd:formatSpecificationCitation|
                        mdb:dateInfo|
                        mdb:metadataProfile|
                        mdb:alternativeMetadataReference|
