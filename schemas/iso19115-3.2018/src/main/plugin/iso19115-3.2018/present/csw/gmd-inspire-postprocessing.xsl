@@ -14,6 +14,8 @@
 
   <xsl:template match="gmd:CI_Citation/gmd:date[not(*/gmd:dateType/*/@codeListValue = ('creation', 'publication', 'revision'))]" priority="2"/>
 
+  <xsl:template match="gmd:distributor[not(*/gmd:distributorContact)]" priority="2"/>
+
   <!-- Remove geonet:* elements. -->
   <xsl:template match="gn:*" priority="2"/>
 
