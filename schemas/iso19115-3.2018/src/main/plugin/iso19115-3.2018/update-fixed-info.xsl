@@ -55,7 +55,7 @@
 
   <!-- EEA Specific / Start -->
   <xsl:variable name="publicEmails"
-                select="'info@eea.europa.eu,sdi@eea.europa.eu,copernicus@eea.europa.eu'"/>
+                select="'info@eea.europa.eu,sdi@eea.europa.eu,copernicus@eea.europa.eu,jrc-copernicus-land@ec.europa.eu'"/>
 
   <xsl:variable name="eeaDatasetIdentifier"
                 select="/root/mdb:MD_Metadata/mdb:identificationInfo/*/
@@ -208,7 +208,7 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
   <xsl:template match="
                   mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/* = 'EEA categories']|
                   mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/* = 'EEA keyword list']|
-                  *[cit:CI_Responsibility and not(contains($publicEmails, .//cit:contactInfo/*/cit:address/*/cit:electronicMailAddress/*/text()))]"
+                  *[cit:CI_Responsibility and not(contains($publicEmails, lower-case(.//cit:contactInfo/*/cit:address/*/cit:electronicMailAddress/*/text())))]"
                 priority="99">
     <xsl:copy>
       <xsl:attribute name="gco:nilReason">withheld</xsl:attribute>
