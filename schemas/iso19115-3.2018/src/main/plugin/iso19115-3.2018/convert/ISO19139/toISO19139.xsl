@@ -970,7 +970,7 @@
     <xsl:choose>
       <xsl:when test="$nodeWithStringToWrite">
         <xsl:element name="{$elementName}">
-          <xsl:copy-of select="$nodeWithStringToWrite/@*"/>
+          <xsl:apply-templates select="$nodeWithStringToWrite/@*"/>
           <xsl:if test="$isMultilingual">
             <xsl:attribute name="xsi:type" select="'gmd:PT_FreeText_PropertyType'"/>
           </xsl:if>
