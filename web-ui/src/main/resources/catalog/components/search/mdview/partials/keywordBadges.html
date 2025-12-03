@@ -18,12 +18,12 @@
     >
       <button gn-popover-anchor="" class="btn btn-default btn-xs">{{::k.default}}</button>
       <div gn-popover-content="">
-        <a data-ng-href="{{::k.link}}" data-ng-if="::!!k.link">
+        <a data-ng-href="{{::k.link}}" data-ng-if="isValidLink(k.link)">
           <i class="fa fa-fw fa-info"></i>
           <span data-translate="">keywordAnchorLink</span>
           <span>{{::k.default}}</span>
         </a>
-        <br data-ng-if="::!!k.link" />
+        <br data-ng-if="isValidLink(k.link)" />
 
         <div data-gn-search-filter-link="tag.\\*" data-filter="k.default">
           {{k.default}}

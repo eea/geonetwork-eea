@@ -598,7 +598,8 @@
 
   module.directive("gnKeywordBadges", [
     "gnGlobalSettings",
-    function (gnGlobalSettings) {
+    "$http",
+    function (gnGlobalSettings, $http) {
       return {
         templateUrl:
           "../../catalog/components/search/mdview/partials/" + "keywordBadges.html",
@@ -607,6 +608,8 @@
           thesaurus: "=thesaurus"
         },
         link: function (scope, element, attrs) {
+          scope.linkStatusCache = {};
+
           scope.thesaurus = angular.isArray(scope.thesaurus)
             ? scope.thesaurus
             : [scope.thesaurus];
@@ -617,6 +620,25 @@
               : gnGlobalSettings.gnCfg.mods.recordview.sortKeywordsAlphabetically
               ? "default"
               : "";
+          };
+          scope.isValidLink = function (link) {
+            if (!link || link.indexOf("http://www.naturalearthdata.com") === 0) {
+              return false;
+            }
+            if (scope.linkStatusCache[link] === undefined) {
+              scope.linkStatusCache[link] = false;
+              $http
+                .head(link)
+                .then(function (response) {
+                  if (response.status >= 200 && response.status < 400) {
+                    scope.linkStatusCache[link] = true;
+                  }
+                })
+                .catch(function () {
+                  scope.linkStatusCache[link] = false;
+                });
+            }
+            return scope.linkStatusCache[link];
           };
         }
       };
