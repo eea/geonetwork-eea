@@ -16,6 +16,10 @@
 
   <xsl:template match="gmd:distributor[not(*/gmd:distributorContact)]" priority="2"/>
 
+  <!-- eg. Taskman ticket only visible to authenticated users -->
+  <xsl:template match="gmd:onLine[*/gmd:linkage/gmd:URL = '']|gmd:onLine[not(*)]" priority="2"/>
+  <xsl:template match="gmd:onLine[*/gmd:protocol/gco:CharacterString = 'EEA:DBPG']" priority="2"/>
+
   <!-- Remove geonet:* elements. -->
   <xsl:template match="gn:*" priority="2"/>
 

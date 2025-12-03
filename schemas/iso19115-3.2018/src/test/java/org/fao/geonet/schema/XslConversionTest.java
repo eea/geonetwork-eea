@@ -26,10 +26,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.fao.geonet.schema.iso19115_3_2018.ISO19115_3_2018SchemaPlugin;
+import org.fao.geonet.schema.iso19139.ISO19139SchemaPlugin;
 import org.fao.geonet.schemas.XslProcessTest;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.builder.Input;
@@ -71,5 +73,26 @@ public class XslConversionTest extends XslProcessTest {
         assertFalse(
             String.format("Differences: %s", diff.toString()),
             diff.hasDifferences());
+    }
+
+
+
+
+    @Test
+    public void testEEAInspirePostProcess() throws Exception {
+        xslFile = Paths.get(testClass.getClassLoader().getResource("present/csw/gmd-inspire-postprocessing.xsl").toURI());
+        xmlFile = Paths.get(testClass.getClassLoader().getResource("eea-inspire.xml").toURI());
+
+        Element inputElement = Xml.loadFile(xmlFile);
+        Element resultElement = Xml.transform(inputElement, xslFile);
+
+        assertTrue(Xml.selectBoolean(inputElement, "count(.//gmd:distributor[not(*/gmd:distributorContact)]) = 1", ISO19139SchemaPlugin.allNamespaces.asList()));
+        assertTrue(Xml.selectBoolean(resultElement, "count(.//gmd:distributor) = 0", ISO19139SchemaPlugin.allNamespaces.asList()));
+        assertTrue(Xml.selectBoolean(inputElement, "count(.//gmd:onLine[*/gmd:linkage/gmd:URL = '']) = 2", ISO19139SchemaPlugin.allNamespaces.asList()));
+        assertTrue(Xml.selectBoolean(resultElement, "count(.//gmd:onLine[*/gmd:linkage/gmd:URL = '']) = 0", ISO19139SchemaPlugin.allNamespaces.asList()));
+        assertTrue(Xml.selectBoolean(inputElement, "count(.//gmd:onLine[*/gmd:protocol/*/text() = 'EEA:DBPG']) = 1", ISO19139SchemaPlugin.allNamespaces.asList()));
+        assertTrue(Xml.selectBoolean(resultElement, "count(.//gmd:onLine[*/gmd:protocol/*/text() = 'EEA:DBPG']) = 0", ISO19139SchemaPlugin.allNamespaces.asList()));
+
+        System.out.println(Xml.getString(resultElement));
     }
 }
