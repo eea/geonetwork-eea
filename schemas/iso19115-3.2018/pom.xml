@@ -21,6 +21,12 @@
     </dependency>
     <dependency>
       <groupId>org.geonetwork-opensource.schemas</groupId>
+      <artifactId>gn-schema-iso19139</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.geonetwork-opensource.schemas</groupId>
       <artifactId>gn-schema-core</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
