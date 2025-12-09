@@ -10,7 +10,7 @@ UPDATE metadata SET data = regexp_replace(data,
                                           <gco:CharacterString>License CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/).</gco:CharacterString>
                                           </mco:otherConstraints>
                                           </mco:MD_LegalConstraints>
-                                          </mri:resourceConstraints>') FROM metadata WHERE data ~ '<mri:resourceConstraints>\s*<mco:MD_Constraints>\s*<mco:useLimitation>\s*<gco:CharacterString>License CC-BY 4.0 \(https://creativecommons.org/licenses/by/4.0/\).\s*</gco:CharacterString>\s*</mco:useLimitation>\s*</mco:MD_Constraints>\s*</mri:resourceConstraints>';
+                                          </mri:resourceConstraints>') WHERE data ~ '<mri:resourceConstraints>\s*<mco:MD_Constraints>\s*<mco:useLimitation>\s*<gco:CharacterString>License CC-BY 4.0 \(https://creativecommons.org/licenses/by/4.0/\).\s*</gco:CharacterString>\s*</mco:useLimitation>\s*</mco:MD_Constraints>\s*</mri:resourceConstraints>';
 
 
 UPDATE metadata
