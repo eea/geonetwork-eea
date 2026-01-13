@@ -102,7 +102,7 @@
         <bean class="org.fao.geonet.kernel.schema.SavedQuery">
           <property name="id" value="eea-resourceid-get"/>
           <property name="xpath"
-                      value="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*[contains(text(), '_p_') or contains(text(), '_i_')]/text()"/>
+                      value="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*[contains(text(), '_p_') or contains(text(), '_i_') or contains(text(), '_r_')]/text()"/>
         </bean>
 
         <bean class="org.fao.geonet.kernel.schema.SavedQuery">

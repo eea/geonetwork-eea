@@ -22,15 +22,10 @@
  */
 package org.fao.geonet.util.nextcloud;
 
-import java.util.function.Predicate;
 import org.apache.commons.lang3.StringUtils;
-import org.fao.geonet.api.API;
 import org.fao.geonet.api.exception.ResourceNotFoundException;
-import org.fao.geonet.api.records.formatters.FormatterParams;
-import org.fao.geonet.api.records.formatters.XsltFormatter;
 import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.domain.ISODate;
-import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataSchemaUtils;
 import org.fao.geonet.kernel.schema.MetadataSchema;
 import static org.fao.geonet.util.nextcloud.NextcloudClient.LOG_MODULE_NAME;
@@ -52,6 +47,69 @@ public class NextcloudService {
     private static final String FILE_SUFFIX_PATTERN = "_metadata_%s.xml";
     private static final int EEA_RESOURCE_IDENTIFIER_PARTS = 10;
     private static final int EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX = 6;
+    public enum AccessType {
+        PUBLIC("p"),
+        INTERNAL("i"),
+        RESTRICTED("r");
+
+        private final String code;
+
+        AccessType(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public static boolean isValid(String code) {
+            for (AccessType type : values()) {
+                if (type.code.equals(code)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Return the AccessType for the given code or null if none matches.
+         */
+        public static AccessType fromCode(String code) {
+            if (code == null) return null;
+            for (AccessType type : values()) {
+                if (type.code.equals(code)) {
+                    return type;
+                }
+            }
+            return null;
+        }
+    }
+
+    public enum DataType {
+        RASTER("r"),
+        VECTOR("v"),
+        TABULAR("t"),
+        STATISTICAL("s");
+
+        private final String code;
+
+        DataType(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public static DataType find(String code) {
+            for (DataType type : values()) {
+                if (type.code.equals(code)) {
+                    return type;
+                }
+            }
+            return null;
+        }
+    }
 
     private final NextcloudClient nextcloudClient;
     private final IMetadataSchemaUtils metadataSchemaUtils;
@@ -102,7 +160,7 @@ public class NextcloudService {
         // Create the folder only if the resource identifier match the pattern
         if (!isValidResourceIdentifier(resourceIdentifier)) {
             throw new IllegalArgumentException(
-                "Record is missing a valid EEA resource identifier. Add it in order to initialize the corresponding Nextcloud directory. Check the convention https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions"
+                String.format("Record resource identifier %s is not valid. Add it in order to initialize the corresponding Nextcloud directory. Check the convention https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions", resourceIdentifier)
             );
         }
 
@@ -187,15 +245,61 @@ public class NextcloudService {
         // Provider_DataType_EpsgCode_ScaleResolution_ScaleResUnit_DatasetShortName_PublicOrInternal_TimeCoverage_VersionNumber_RevisionNumber
         // Provider_DataType_DatasetShortName_PublicOrInternal_TimeCoverage_VersionNumber_RevisionNumber
         String[] tokens = resourceIdentifier.split("_");
+        if (tokens.length < 2) {
+            return false;
+        }
         String dataType = tokens[1];
-        boolean isVectorOrRaster = "v".equals(dataType) || "r".equals(dataType);
+        DataType dt = DataType.find(dataType);
+        if (dt == null) {
+            return false;
+        }
+        boolean isVectorOrRaster = dt == DataType.VECTOR || dt == DataType.RASTER;
         int length = isVectorOrRaster ? EEA_RESOURCE_IDENTIFIER_PARTS : EEA_RESOURCE_IDENTIFIER_PARTS - 3;
-        int accessIndex = isVectorOrRaster ? EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX : EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX - 3;
 
         if (tokens.length != length) {
             return false;
         }
-        return tokens[accessIndex].equals("p") || tokens[accessIndex].equals("i");
+
+        try {
+            // Reuse getAccessType to validate access token and data type consistency
+            getAccessType(resourceIdentifier);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    private AccessType getAccessType(String resourceIdentifier) {
+        String[] tokens = resourceIdentifier.split("_");
+        String accessCode;
+        if (tokens.length < 2) {
+            throw new IllegalArgumentException(String.format("Resource identifier %s is malformed.", resourceIdentifier));
+        }
+
+        String dataTypeCode = tokens[1];
+        DataType dt = DataType.find(dataTypeCode);
+        if (dt == null) {
+            throw new IllegalArgumentException(String.format("Resource identifier %s contains invalid data type %s.", resourceIdentifier, dataTypeCode));
+        }
+
+        int accessIndex = (dt == DataType.VECTOR || dt == DataType.RASTER)
+            ? EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX
+            : EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX - 3;
+
+        if (tokens.length <= accessIndex) {
+            throw new IllegalArgumentException(String.format("Resource identifier %s is malformed (missing access token).", resourceIdentifier));
+        }
+
+        accessCode = tokens[accessIndex];
+
+        AccessType type = AccessType.fromCode(accessCode);
+        if (type != null) {
+            return type;
+        }
+
+        throw new IllegalArgumentException(
+            String.format("Resource identifier %s contains invalid access code %s.", resourceIdentifier, accessCode)
+        );
     }
 
 
@@ -206,12 +310,17 @@ public class NextcloudService {
      * @return the folder type.
      */
     private NextcloudClient.FOLDER_TYPE getFolderType(String resourceIdentifier) {
-        NextcloudClient.FOLDER_TYPE folderType = NextcloudClient.FOLDER_TYPE.PUBLIC;
-
-        if (StringUtils.contains(resourceIdentifier, "_i_")) {
-            folderType = NextcloudClient.FOLDER_TYPE.INTERNAL;
+        try {
+            AccessType accessType = getAccessType(resourceIdentifier);
+            if (accessType == AccessType.INTERNAL) {
+                return NextcloudClient.FOLDER_TYPE.INTERNAL;
+            } else if (accessType == AccessType.RESTRICTED) {
+                return NextcloudClient.FOLDER_TYPE.RESTRICTED;
+            }
+        } catch (IllegalArgumentException e) {
+            Log.warning(LOG_MODULE_NAME, "Failed to parse access type from resource identifier: " + resourceIdentifier + ". Defaulting to PUBLIC. Error: " + e.getMessage());
         }
-        return folderType;
+        return NextcloudClient.FOLDER_TYPE.PUBLIC;
     }
 
     private String sanitizeAndTrimTitle(String title, String uuid) {

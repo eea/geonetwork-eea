@@ -41,10 +41,13 @@
 
   <xsl:variable name="datasetIdentifier"
                 select="/mdb:MD_Metadata/mdb:identificationInfo/*/
-                              mri:citation/*/cit:identifier/*/mcc:code/*[matches(text(), '^\S*_[ip]_\S*')]/text()"/>
+                              mri:citation/*/cit:identifier/*/mcc:code/*[matches(text(), '^\S*_[ipr]_\S*')]/text()"/>
 
   <xsl:variable name="isPublic"
                 select="contains($datasetIdentifier, '_p_')"/>
+
+  <xsl:variable name="isInternal"
+                select="contains($datasetIdentifier, '_i_')"/>
 
   <xsl:variable name="serverUrl" select="util:getSettingValue('serverUrl')" />
 
@@ -89,7 +92,7 @@
   <xsl:template name="add-datasharelink">
     <xsl:if test="$datasetIdentifier != ''">
       <xsl:variable name="folder"
-                    select="if ($isPublic) then 'public' else 'internal'"/>
+                    select="if ($isPublic) then 'public' else if($isInternal) then 'internal' else 'restricted'"/>
 
       <mrd:onLine>
         <xsl:if test="not($isPublic)">

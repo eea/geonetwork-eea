@@ -56,6 +56,9 @@ public class NextcloudConfig {
     @Value("#{'${nextcloud.internalShare.groups}'.split(',')}")
     private List<String> internalShareGroups;
 
+    @Value("#{'${nextcloud.restrictedShare.groups}'.split(',')}")
+    private List<String> restrictedShareGroups;
+
     public String getUrl() {
         return url;
     }
@@ -118,5 +121,13 @@ public class NextcloudConfig {
 
     public void setInternalShareGroups(List<String> internalShareGroups) {
         this.internalShareGroups = internalShareGroups;
+    }
+
+    public List<String> getRestrictedShareGroups() {
+        return restrictedShareGroups;
+    }
+
+    public void setRestrictedShareGroups(List<String> restrictedShareGroups) {
+        this.restrictedShareGroups = restrictedShareGroups;
     }
 }

@@ -35,7 +35,7 @@
 
   <xsl:variable name="datasetIdentifier"
                 select="/gmd:MD_Metadata/gmd:identificationInfo/*/
-                              gmd:citation/*/gmd:identifier/*/gmd:code/*[matches(text(), '.*_[ip]_.*')]/text()"/>
+                              gmd:citation/*/gmd:identifier/*/gmd:code/*[matches(text(), '.*_[ipr]_.*')]/text()"/>
 
   <xsl:variable name="isPublic"
                 select="contains($datasetIdentifier, '_p_')"/>

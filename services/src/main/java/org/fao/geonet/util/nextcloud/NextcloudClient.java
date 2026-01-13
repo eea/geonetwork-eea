@@ -153,6 +153,12 @@ public class NextcloudClient {
                             String itemSource = shareElement.getChildText("item_source");
                             sharesList.add(config.getUrl() + "/f/" + itemSource);
                         }
+                    } else  if (folderType == FOLDER_TYPE.RESTRICTED) {
+                        String shareWith = shareElement.getChildText("share_with");
+                        if (config.getRestrictedShareGroups().contains(shareWith)) {
+                            String itemSource = shareElement.getChildText("item_source");
+                            sharesList.add(config.getUrl() + "/f/" + itemSource);
+                        }
                     } else {
                         String shareUrl = shareElement.getChildText("url");
                         sharesList.add(shareUrl);
@@ -177,7 +183,7 @@ public class NextcloudClient {
      */
     public String getShareUrl(Element shareResponse, FOLDER_TYPE folderType) throws NextcloudException {
         try {
-            if (folderType == FOLDER_TYPE.INTERNAL) {
+            if (folderType == FOLDER_TYPE.INTERNAL || folderType == FOLDER_TYPE.RESTRICTED) {
                 return config.getUrl() + "/f/" + Xml.selectString(shareResponse, "./data/item_source");
             } else {
                 return Xml.selectString(shareResponse, "./data/url");
@@ -385,7 +391,7 @@ public class NextcloudClient {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("path", path);
         // 3 is the share type for Public Link, O is for user share, 1 is for group share
-        body.add("shareType", folderType == FOLDER_TYPE.INTERNAL ?"1" : "3");
+        body.add("shareType", folderType == FOLDER_TYPE.INTERNAL || folderType == FOLDER_TYPE.RESTRICTED ? "1" : "3");
         // 1 is the permission for read only
         body.add("permissions", "1");
 
@@ -398,11 +404,24 @@ public class NextcloudClient {
                     body.add("shareWith", group);
                     internalShareUrl = callShareRequest(body, url, path, folderType);
                 } catch (Exception e) {
-                    Log.debug(LOG_MODULE_NAME, "Datastore: Failed to share with group %s.", group);
+                    Log.debug(LOG_MODULE_NAME, String.format("Datastore: Failed to share with group %s. %s", group, e.getMessage()));
                 }
             }
             // Get Internal share
             return internalShareUrl;
+        } else if (folderType == FOLDER_TYPE.RESTRICTED) {
+            String restrictedShareUrl = "";
+            for (String group : config.getRestrictedShareGroups()) {
+                try {
+                    body.remove("shareWith");
+                    body.add("shareWith", group);
+                    restrictedShareUrl = callShareRequest(body, url, path, folderType);
+                } catch (Exception e) {
+                    Log.debug(LOG_MODULE_NAME, String.format("Datastore: Failed to share with group %s. %s", group, e.getMessage()));
+                }
+            }
+            // Get Internal share
+            return restrictedShareUrl;
         } else {
             return callShareRequest(body, url, path, folderType);
         }

@@ -59,7 +59,7 @@
 
   <xsl:variable name="eeaDatasetIdentifier"
                 select="/root/mdb:MD_Metadata/mdb:identificationInfo/*/
-                              mri:citation/*/cit:identifier/*/mcc:code/*[matches(text(), '^\S*_[ip]_\S*')]/text()"/>
+                              mri:citation/*/cit:identifier/*/mcc:code/*[matches(text(), '^\S*_[ipr]_\S*')]/text()"/>
 
   <!-- Matching the first gmd:online, we reorder links
    datashare synch script to catch the first one.
@@ -90,11 +90,13 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
  -->
       <xsl:variable name="datasetIdentifier"
                     select="/root/mdb:MD_Metadata/mdb:identificationInfo/*/
-                              mri:citation/*/cit:identifier/*/mcc:code/*[matches(text(), '.*_[ip]_.*')]/text()"/>
+                              mri:citation/*/cit:identifier/*/mcc:code/*[matches(text(), '.*_[ipr]_.*')]/text()"/>
       <xsl:variable name="isPublic"
                     select="contains($datasetIdentifier, '_p_')"/>
+      <xsl:variable name="isInternal"
+                    select="contains($datasetIdentifier, '_i_')"/>
       <xsl:variable name="linkLabel"
-                    select="if ($isPublic) then 'Direct download' else 'Direct download (Eionet authentication)'"/>
+                    select="if ($isPublic) then 'Direct download' else if ($isInternal) then 'Direct download (Eionet authentication)' else 'Restricted download (Eionet authentication)'"/>
 
       <mrd:onLine>
         <xsl:if test="not($isPublic)">
@@ -170,9 +172,11 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
       <xsl:apply-templates select="@*"/>
       <xsl:variable name="isPublic"
                     select="contains($eeaDatasetIdentifier, '_p_')"/>
+      <xsl:variable name="isInternal"
+                    select="contains($eeaDatasetIdentifier, '_i_')"/>
 
       <xsl:variable name="folder"
-                    select="if ($isPublic) then 'public' else 'internal'"/>
+                    select="if ($isPublic) then 'public' else if($isInternal) then 'internal' else 'restricted'"/>
       <xsl:value-of select="concat($serverUrl, '/webdav/datastore/', $folder, '/', $eeaDatasetIdentifier)"/>
     </xsl:copy>
   </xsl:template>
