@@ -249,22 +249,47 @@ public class NextcloudClient {
         }
     }
 
+    public String getXmlDocumentDate(String resourceIdentifier, FOLDER_TYPE folderType, String uuid) {
+        Path xmlDocument = getXmlDocument(resourceIdentifier, folderType, uuid);
+        if (xmlDocument != null) {
+            try {
+                return Files.getLastModifiedTime(xmlDocument).toString();
+            } catch (IOException e) {
+                throw new NextcloudException("Datashare: Error getting last modified time for file: " + xmlDocument.getFileName(), e);
+            }
+        }
+        return null;
+    }
+
    public void deleteXmlDocument(String resourceIdentifier, FOLDER_TYPE folderType, String uuid) {
+        Path xmlDocument = getXmlDocument(resourceIdentifier, folderType, uuid);
+
+        if (xmlDocument != null) {
+           try {
+               Files.deleteIfExists(xmlDocument);
+           } catch (IOException e) {
+               throw new NextcloudException(String.format("Datashare: Error deleting file %s ", xmlDocument.getFileName()), e);
+           }
+       }
+    }
+
+    /**
+     * Get the XML document for the metadata knowing that it is saved with the following pattern: {title}_metadata_{uuid}.xml.
+     */
+    public Path getXmlDocument(String resourceIdentifier, FOLDER_TYPE folderType, String uuid) {
         Path folderPath = Path.of(config.getBaseFolder(), getPath(resourceIdentifier, folderType));
         String suffix = "_metadata_" + uuid + ".xml";
 
        try (Stream<Path> files = Files.list(folderPath)) {
-           files.filter(file -> file.toString().endsWith(suffix))
-               .forEach(file -> {
-                   try {
-                       Files.deleteIfExists(file);
-                   } catch (IOException e) {
-                       throw new NextcloudException(String.format("Datashare: Error deleting file %s ending with %s ", file, suffix), e);
-                   }
-               });
+           for (Path file : (Iterable<Path>) files::iterator) {
+               if (file.toString().endsWith(suffix)) {
+                   return file;
+               }
+           }
        } catch (IOException e) {
-           throw new NextcloudException("Datashare: Error deleting files in folder: " + folderPath, e);
+           throw new NextcloudException("Datashare: Error getting XML document in folder: " + folderPath, e);
        }
+       return null;
     }
 
 

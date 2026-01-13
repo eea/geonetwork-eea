@@ -29,6 +29,7 @@ import org.fao.geonet.api.exception.ResourceNotFoundException;
 import org.fao.geonet.api.records.formatters.FormatterParams;
 import org.fao.geonet.api.records.formatters.XsltFormatter;
 import org.fao.geonet.domain.AbstractMetadata;
+import org.fao.geonet.domain.ISODate;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataSchemaUtils;
 import org.fao.geonet.kernel.schema.MetadataSchema;
@@ -126,19 +127,22 @@ public class NextcloudService {
             }
 
 
-            // Remove and update the current metadata file
-            nextcloudClient.deleteXmlDocument(resourceIdentifier, getFolderType(resourceIdentifier), uuid);
-            String title = schema.queryString("eea-title-default-get", metadataXml);
-            nextcloudClient.createFile(metadata.getData(), sanitizeAndTrimTitle(title, uuid),
-                resourceIdentifier, folderType);
-
-            // Add README.md file using formatter
-            try {
-                Element readme = Xml.transform(metadataXml, metadataSchemaUtils.getSchemaDir(metadata.getDataInfo().getSchemaId()).resolve("formatter").resolve("readme").resolve("view.xsl"));
-                nextcloudClient.createFile(readme.getText(), "README.md",
+            // Remove and update the current metadata file if file does not exist or is outdated
+            String fileDate = nextcloudClient.getXmlDocumentDate(resourceIdentifier, getFolderType(resourceIdentifier), uuid);
+            if (fileDate == null || new ISODate(fileDate).compareTo(metadata.getDataInfo().getChangeDate()) < 0) {
+                nextcloudClient.deleteXmlDocument(resourceIdentifier, getFolderType(resourceIdentifier), uuid);
+                String title = schema.queryString("eea-title-default-get", metadataXml);
+                nextcloudClient.createFile(metadata.getData(), sanitizeAndTrimTitle(title, uuid),
                     resourceIdentifier, folderType);
-            } catch (Exception e) {
-                Log.error(LOG_MODULE_NAME, "Failed to transform metadata XML to README.md", e);
+
+                // Add README.md file using formatter
+                try {
+                    Element readme = Xml.transform(metadataXml, metadataSchemaUtils.getSchemaDir(metadata.getDataInfo().getSchemaId()).resolve("formatter").resolve("readme").resolve("view.xsl"));
+                    nextcloudClient.createFile(readme.getText(), "README.md",
+                        resourceIdentifier, folderType);
+                } catch (Exception e) {
+                    Log.error(LOG_MODULE_NAME, "Failed to transform metadata XML to README.md", e);
+                }
             }
 
 
@@ -187,6 +191,7 @@ public class NextcloudService {
         boolean isVectorOrRaster = "v".equals(dataType) || "r".equals(dataType);
         int length = isVectorOrRaster ? EEA_RESOURCE_IDENTIFIER_PARTS : EEA_RESOURCE_IDENTIFIER_PARTS - 3;
         int accessIndex = isVectorOrRaster ? EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX : EEA_RESOURCE_IDENTIFIER_ACCESS_INDEX - 3;
+
         if (tokens.length != length) {
             return false;
         }
