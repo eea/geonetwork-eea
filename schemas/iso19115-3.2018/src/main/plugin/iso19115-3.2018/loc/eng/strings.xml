@@ -231,13 +231,46 @@
       <div class="col-sm-2"/>
       <div class="col-sm-10">
         <div class="alert alert-info">
-          The dataset identifier shall be unique and ideally meaningful, following
+          For <strong>spatial data</strong> the following naming convention should be used:
+          <pre style="white-space: pre-wrap">Provider_DataType_EpsgCode_Scale_ScaleUnit_ShortName_PublicOrInternalOrRestricted_TimeCoverage_Version_RevisionNumber</pre>
+          The identifier shall be unique and ideally meaningful, following
           <a href="https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions" target="_blank">this convention</a>.
         </div>
       </div>
     </div>
     <hr/>
   </eea-identifier-help>
+  <eea-identifier-tabular-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          For default <strong>tabular data</strong> the following naming convention should be used:
+          <pre style="white-space: pre-wrap">Provider_t_ShortName_PublicOrInternalOrRestricted_TimeCoverage_Version_RevisionNumber</pre>
+          For <strong>statistical data</strong> the following naming convention should be used:
+          <pre style="white-space: pre-wrap">Provider_s_ShortName_PublicOrInternalOrRestricted_TimeCoverage_Version_RevisionNumber</pre>
+          The identifier shall be unique and ideally meaningful, following
+          <a href="https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions" target="_blank">this convention</a>.
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-identifier-tabular-help>
+  <eea-identifier-series-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          For <strong>series</strong> the following naming convention should be used:
+          <pre style="white-space: pre-wrap">Provider_ShortName_s</pre>
+          The identifier shall be unique and ideally meaningful, following
+          <a href="https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions" target="_blank">this convention</a>.
+
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </eea-identifier-series-help>
   <eea-graphicOverview-add>Add an overview</eea-graphicOverview-add>
   <eea-classification>Classification and keywords</eea-classification>
   <eea-topic>Classification - ISO 19115 Topic categories</eea-topic>

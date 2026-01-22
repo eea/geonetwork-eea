@@ -762,7 +762,14 @@
                   or="onLine"
                   in="/mdb:MD_Metadata/mdb:distributionInfo/*/mrd:transferOptions/*"/>
 
-          <text ref="eea-identifier-help"/>
+          <text ref="eea-identifier-tabular-help"
+                   if="contains(mdb:MD_Metadata/
+                                    mdb:metadataScope/*/mdb:resourceScope/*/@codeListValue,
+                                    'nonGeographicDataset')"/>
+          <text ref="eea-identifier-help"
+                if="contains(mdb:MD_Metadata/
+                                    mdb:metadataScope/*/mdb:resourceScope/*/@codeListValue,
+                                    'dataset')"/>
 
 
           <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/cit:edition"
@@ -2977,7 +2984,7 @@
               </snippet>
             </template>
           </action>
-          <text ref="eea-identifier-help"/>
+          <text ref="eea-identifier-series-help"/>
 
           <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:status"
                  or="status" in="/mdb:MD_Metadata/mdb:identificationInfo/*"/>

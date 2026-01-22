@@ -149,7 +149,7 @@ public class NextcloudService {
         String linkUrl = schema.queryString("eea-datastorelink-get", metadataXml);
 
         if (StringUtils.isBlank(linkUrl)) {
-            throw new IllegalArgumentException(String.format(
+            throw new NextcloudException(String.format(
                 "Record is missing the EEA datastore link https://sdi.eea.europa.eu/data/%s. Add it in order to initialize the corresponding Nextcloud directory.",
                 metadata.getUuid()));
         }
@@ -159,7 +159,7 @@ public class NextcloudService {
 
         // Create the folder only if the resource identifier match the pattern
         if (!isValidResourceIdentifier(resourceIdentifier)) {
-            throw new IllegalArgumentException(
+            throw new NextcloudException(
                 String.format("Record resource identifier %s is not valid. Add it in order to initialize the corresponding Nextcloud directory. Check the convention https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions", resourceIdentifier)
             );
         }
