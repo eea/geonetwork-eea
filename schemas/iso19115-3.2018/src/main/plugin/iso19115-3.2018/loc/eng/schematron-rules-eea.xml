@@ -30,6 +30,8 @@
 
     <EEAID.alert>The dataset identifier is missing.</EEAID.alert>
     <EEAID.report>The dataser identifier is </EEAID.report>
+    <EEAIDFORMAT.alert>None of the dataset identifiers match the resource identifier pattern. Check the convention https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_conventions. Check </EEAIDFORMAT.alert>
+    <EEAIDFORMAT.report>One dataset identifier is valid and follow the convention </EEAIDFORMAT.report>
 
     <EEA_TEMPORAL_RESOLUTION.report>The temporal resolution is </EEA_TEMPORAL_RESOLUTION.report>
 

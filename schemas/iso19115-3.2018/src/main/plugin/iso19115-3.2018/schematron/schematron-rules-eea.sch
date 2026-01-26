@@ -205,13 +205,27 @@
                 value="mri:citation/*/cit:identifier/
                 */mcc:code/gco:CharacterString[. != '']"/>
 
-            <sch:assert test="count($identifier) > 0"
+
+          <sch:let name="eeaIdentifierPattern"
+                   value="'^[a-zA-Z0-9.-]+_[rvts]_([a-zA-Z0-9.-]+_[0-9.x]+_[a-zA-Z]+_)?[a-zA-Z0-9.-]+_[pir]_[0-9]{4}(-[0-9]{4}|-now)?_v([0-9]+|xx)_r([0-9]+|xx)|^[a-zA-Z0-9.-]+_[a-zA-Z0-9.-]+_s'"/>
+
+          <sch:let name="isIdentifierValid"
+                  value="boolean($identifier[matches(., $eeaIdentifierPattern)])"/>
+
+          <sch:assert test="count($identifier) > 0"
                 ><sch:value-of
                     select="$loc/strings/EEAID.alert"/></sch:assert>
-            <sch:report test="count($identifier) > 0"><sch:value-of
-                select="$loc/strings/EEAID.report"/> "<sch:value-of
-                    select="string-join($identifier, ', ')"/>"</sch:report>
+          <sch:report test="count($identifier) > 0"><sch:value-of
+              select="$loc/strings/EEAID.report"/> "<sch:value-of
+                  select="string-join($identifier, ', ')"/>"</sch:report>
 
+          <sch:assert test="$isIdentifierValid"
+                ><sch:value-of
+                    select="$loc/strings/EEAIDFORMAT.alert"/><sch:value-of
+            select="string-join($identifier, ' or ')"/></sch:assert>
+          <sch:report test="$isIdentifierValid"><sch:value-of
+              select="$loc/strings/EEAIDFORMAT.report"/> "<sch:value-of
+                  select="string-join($identifier, ', ')"/>"</sch:report>
 
             <!-- MD_Metadata/identificationInfo/*/abstract. Is mandatory for EEA
                  https://taskman.eionet.europa.eu/projects/public-docs/wiki/Cataloguemetadata_guidelines#MD_MetadataidentificationInfoabstract
