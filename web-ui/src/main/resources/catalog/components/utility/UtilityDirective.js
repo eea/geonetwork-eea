@@ -3070,8 +3070,8 @@
     };
   });
 
-
-  module.directive("gnAuthProviderSelector", ["$http",
+  module.directive("gnAuthProviderSelector", [
+    "$http",
     function ($http) {
       return {
         templateUrl:

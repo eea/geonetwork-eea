@@ -1,9 +1,11 @@
-<hr data-ng-if="authProviders.length > 0"/>
+<hr data-ng-if="authProviders.length > 0" />
 
 <div data-ng-if="authProviders.length > 0">
-  <a class="btn btn-default btn-block text-uppercase "
-     data-ng-repeat="provider in authProviders"
-     href="{{provider.endpoint}}">
+  <a
+    class="btn btn-default btn-block text-uppercase"
+    data-ng-repeat="provider in authProviders"
+    href="{{provider.endpoint}}"
+  >
     {{provider.clientId}}
   </a>
 </div>
