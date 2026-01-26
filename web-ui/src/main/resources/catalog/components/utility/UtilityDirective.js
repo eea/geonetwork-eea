@@ -3069,4 +3069,36 @@
       }
     };
   });
+
+
+  module.directive("gnAuthProviderSelector", ["$http",
+    function ($http) {
+      return {
+        templateUrl:
+          "../../catalog/components/utility/partials/auth-provider-selector.html",
+        link: function (scope) {
+          scope.authProviders = [];
+          scope.retrieveProviders = function () {
+            $http.get("../../api/user/auth-providers").then(
+              function (response) {
+                if (!response.data) {
+                  return;
+                }
+                // filter out internal ldap or database auth provider
+                var providers = [];
+                for (var i = 0; i < response.data.length; i++) {
+                  if (response.data[i].endpoint) {
+                    providers.push(response.data[i]);
+                  }
+                }
+                scope.authProviders = providers;
+              },
+              function () {}
+            );
+          };
+          scope.retrieveProviders();
+        }
+      };
+    }
+  ]);
 })();
