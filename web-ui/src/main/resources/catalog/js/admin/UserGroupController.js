@@ -524,6 +524,10 @@
           }
           $scope.userSelected.profile = newprofile;
         }
+
+        if ($scope.userSelected.id) {
+          $scope.gnUserEdit.$setDirty();
+        }
       };
 
       $scope.updatingUser = function () {
