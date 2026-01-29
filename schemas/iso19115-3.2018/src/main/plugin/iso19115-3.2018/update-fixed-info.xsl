@@ -629,6 +629,15 @@ See https://taskman.eionet.europa.eu/projects/public-docs/wiki/Naming_convention
     </xsl:copy>
   </xsl:template>
 
+  <xsl:template match="cit:CI_Date[not(cit:date)]">
+    <xsl:copy>
+      <cit:date>
+        <gco:Date/>
+      </cit:date>
+      <xsl:copy-of select="cit:dateType"/>
+    </xsl:copy>
+  </xsl:template>
+
   <xsl:template match="mdb:dataQualityInfo/mdq:DQ_DataQuality/mdq:scope/*/mcc:level/*/@codeListValue[. = '']">
     <xsl:attribute name="codeListValue">
       <xsl:value-of select="/root/*/mdb:metadataScope/*/mdb:resourceScope/*/@codeListValue"/>
