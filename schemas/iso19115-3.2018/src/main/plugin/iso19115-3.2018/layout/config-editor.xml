@@ -683,8 +683,8 @@
                    data-file-types=".png,.gif,.jpeg,.jpg"/>
 
         <directive data-gn-file-uploader=""
-                   data-title="Resource for download"
-                   data-btn-label="Drop a file here"
+                   data-title="Dataset upload"
+                   data-btn-label="Select or drop data files to upload here"
                    data-icon="fa-cloud"
                    data-type="datastore"
                    data-link-after-upload="false"
