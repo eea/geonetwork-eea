@@ -1816,7 +1816,7 @@
                     <mdq:result>
                       <mdq:DQ_QuantitativeResult>
                         <mdq:valueUnit>
-                          <gml:UnitDefinition gml:id="d3888e669a1051934">
+                          <gml:UnitDefinition gml:id="">
                             <gml:identifier codeSpace="">ha</gml:identifier>
                           </gml:UnitDefinition>
                         </mdq:valueUnit>
@@ -1849,7 +1849,7 @@
                     <mdq:result>
                       <mdq:DQ_QuantitativeResult>
                         <mdq:valueUnit>
-                          <gml:UnitDefinition gml:id="d3433e675a1051934">
+                          <gml:UnitDefinition gml:id="">
                             <gml:identifier codeSpace="">m</gml:identifier>
                           </gml:UnitDefinition>
                         </mdq:valueUnit>
