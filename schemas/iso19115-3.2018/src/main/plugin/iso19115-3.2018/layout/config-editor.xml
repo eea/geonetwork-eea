@@ -654,7 +654,8 @@
           upAndDownControlHidden="true"
           hideTimeInCalendar="true"
           class="gn-indent-colored gn-label-above-input">
-      <thesaurusList>
+
+      <thesaurusList defaultTransformation="to-iso19115-3.2018-keyword-with-anchor">
         <thesaurus key="external.theme.httpinspireeceuropaeutheme-theme"
                    fieldset="false"
                    suggestion="true"
