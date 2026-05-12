@@ -142,9 +142,12 @@
     <sch:title>$loc/strings/EEACitation</sch:title>
       <sch:rule context="//mri:MD_DataIdentification">
 
+        <sch:let name="eeaIdentifierPattern"
+                 value="'^[a-zA-Z0-9.-]+_[rvts]_([a-zA-Z0-9.-]+_[0-9.x]+_[a-zA-Z]+_)?[a-zA-Z0-9.-]+_[pir]_[0-9]{4}(-[0-9]{4}|-now)?_v([0-9]+|xx)_r([0-9]+|xx)|^[a-zA-Z0-9.-]+_[a-zA-Z0-9.-]+_s'"/>
+
         <sch:let name="identifier"
                  value="mri:citation/*/cit:identifier/
-                */mcc:code/gco:CharacterString[not(starts-with(., 'DAT'))]"/>
+                */mcc:code/gco:CharacterString[matches(., $eeaIdentifierPattern)]"/>
 
         <sch:let name="eeaFilePath"
                  value="ancestor::mdb:MD_Metadata
