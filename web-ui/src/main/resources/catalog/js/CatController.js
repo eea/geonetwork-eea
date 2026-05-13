@@ -690,7 +690,7 @@
               },
               {
                 label: "exportDCAT",
-                url: "/formatters/eu-dcat-ap-hvd",
+                url: "/formatters/eu-geodcat-ap-semiceu",
                 class: "fa-file-code-o"
               },
               {
