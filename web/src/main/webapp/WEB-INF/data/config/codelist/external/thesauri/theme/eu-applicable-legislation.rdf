@@ -10,8 +10,8 @@
    </skos:ConceptScheme>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/reg_impl/2023/138/oj">
-      <skos:prefLabel xml:lang="en">Commission Implementing Regulation (EU) 2023/138 of 21 December 2022 laying down a list of specific high-value datasets and the arrangements for their publication and re-use</skos:prefLabel>
-      <skos:prefLabel xml:lang="fr">Règlement d’exécution (UE) 2023/138 de la Commission du 21 décembre 2022 établissant une liste d’ensembles de données de forte valeur spécifiques et les modalités de leur publication et de leur réutilisation</skos:prefLabel>
+      <skos:scopeNote xml:lang="en">Commission Implementing Regulation (EU) 2023/138 of 21 December 2022 laying down a list of specific high-value datasets and the arrangements for their publication and re-use</skos:scopeNote>
+      <skos:scopeNote xml:lang="fr">Règlement d’exécution (UE) 2023/138 de la Commission du 21 décembre 2022 établissant une liste d’ensembles de données de forte valeur spécifiques et les modalités de leur publication et de leur réutilisation</skos:scopeNote>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/act//NaN/oj">

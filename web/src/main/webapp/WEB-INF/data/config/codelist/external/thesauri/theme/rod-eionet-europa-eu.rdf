@@ -1179,6 +1179,10 @@ The first WFD implementation report published by the Commission on transposition
     <skos:prefLabel xml:lang="en">Water Framework Directive - Programmes of Measures - 2024 reporting</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/877">
+    <skos:prefLabel xml:lang="en">WISE - Monitoring Sites</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/137">
     <skos:prefLabel xml:lang="en">Air quality assessment annual reporting for 1st daughter directive</skos:prefLabel>
     <skos:definition xml:lang="en">Annual reporting under the 1st Daughter Directive must follow Commission Decision 2004/461/EC laying down a questionnaire to be used for annual reporting on ambient air quality assessment under Council Directives 96/62/EC and 1999/30/EC and under Directives 2000/69/EC and 2002/3/EC of the European Parliament and of the Council. (OJ L 156, 30 April 2004, p.78 - 125).Reporting through the annual questionnaire Commission Decision 2004/461/EC.</skos:definition>
@@ -1266,7 +1270,7 @@ Art. 3 and 8 of the Convention do not clearly define reporting obligations.</sko
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/757">
-    <skos:prefLabel xml:lang="en">Fuel Quality Directive Article 7a</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Fuel Quality Directive Article 7a - Reporting obligation has ceased with DIRECTIVE (EU) 2023/2413 OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL  of 18 October 2023</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/160">
@@ -1289,9 +1293,7 @@ Details on the reporting already made by the Member States and the related summa
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/524">
     <skos:prefLabel xml:lang="en">Urban Waste Water Treatment Directive - National Implementation Programme</skos:prefLabel>
-    <skos:definition xml:lang="en">The Commission's UWWTD data request 2019 is available at: https://forum.eionet.europa.eu/nrc-eionet-freshwater/library/urban-waste-water-treatment/uwwtd-reporting/2019-uwwtd-data-request 
-
-The document "Terms and Definitions of the UWWT Directive" is available at: http://ec.europa.eu/environment/water/water-urbanwaste/info/pdf/terms.pdf 
+    <skos:definition xml:lang="en">The document "Terms and Definitions of the UWWT Directive" is available at: http://ec.europa.eu/environment/water/water-urbanwaste/info/pdf/terms.pdf 
 
 Further information is available at the DG ENV Circabc library at: https://circabc.europa.eu/w/browse/8f158856-ae93-4b2a-a2a3-edbd37397ca7 .Transition periods for the EU-12 Member States (Bulgaria, Cyprus, the Czech Republic, Estonia, Hungary, Latvia, Lithuania, Malta, Poland, Romania, Slovakia, Slovenia) and Croatia as set out in the Accession Treaties (http://ec.europa.eu/environment/water/water-urbanwaste/legislation/deadlines/index_en.htm) and http://ec.europa.eu/environment/water/water-urbanwaste/legislation/pdf/Transitional%20periods%20Croatia.pdf).
 
@@ -1299,9 +1301,7 @@ Through inclusion into annex XX of the EEA agreement (Section II Water, article 
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/613">
     <skos:prefLabel xml:lang="en">Urban Waste Water Treatment Directive - Implementation</skos:prefLabel>
-    <skos:definition xml:lang="en">The Commission's UWWTD data request 2019 is available at: https://forum.eionet.europa.eu/nrc-eionet-freshwater/library/urban-waste-water-treatment/uwwtd-reporting/2019-uwwtd-data-request 
-
-The document "Terms and Definitions of the UWWT Directive" is available at: http://ec.europa.eu/environment/water/water-urbanwaste/info/pdf/terms.pdf 
+    <skos:definition xml:lang="en">The document "Terms and Definitions of the UWWT Directive" is available at: http://ec.europa.eu/environment/water/water-urbanwaste/info/pdf/terms.pdf 
 
 Further information is available at the DG ENV Circabc library at: https://circabc.europa.eu/w/browse/8f158856-ae93-4b2a-a2a3-edbd37397ca7 .Transition periods for the EU-12 Member States (Bulgaria, Cyprus, Croatia, the Czech Republic, Estonia, Hungary, Latvia, Lithuania, Malta, Poland, Romania, Slovakia, Slovenia) and Croatia as set out in the Accession Treaties (http://ec.europa.eu/environment/water/water-urbanwaste/legislation/deadlines/index_en.htm and http://ec.europa.eu/environment/water/water-urbanwaste/legislation/pdf/Transitional%20periods%20Croatia.pdf).
 
@@ -3126,6 +3126,24 @@ https://cdr.eionet.europa.eu/help/Floods/Floods_2018/index.html</skos:definition
 Reporting guidelines can be found in:
 https://cdr.eionet.europa.eu/help/Floods/Floods_2018/index.html</skos:definition>
   </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/871">
+    <skos:prefLabel xml:lang="en">Floods Directive - Units of Management and Competent Authorities - 2025</skos:prefLabel>
+    <skos:definition xml:lang="en">Reporting guidelines can be found in:
+https://reportnet.europa.eu/dataflow/1252/documents</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/872">
+    <skos:prefLabel xml:lang="en">Floods Directive - Preliminary Flood Risk Assessment and Areas of Potential Significant Flood Risk- 2025</skos:prefLabel>
+    <skos:definition xml:lang="en">Reporting guidelines can be found in:
+https://reportnet.europa.eu/dataflow/1252/documents</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/873">
+    <skos:prefLabel xml:lang="en">Floods Directive - Flood Risk Management Plans- 2028</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/874">
+    <skos:prefLabel xml:lang="en">Floods Directive - Flood Hazard Maps and Flood Risk Maps - December 2025</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/606">
     <skos:prefLabel xml:lang="en">MSFD transposition in national legislation</skos:prefLabel>
     <skos:definition xml:lang="en">Member States without marine waters shall bring into force only those measures which are necessary to ensure compliance with requirements under Article 6 (Regional cooperation) and Article 7 (Competent authorities).</skos:definition>
@@ -3500,7 +3518,9 @@ UNFCCC Guidelines on reporting biennial reports (BRs): https://unfccc.int/proces
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/725">
     <skos:prefLabel xml:lang="en">MCP Directive implementation report</skos:prefLabel>
-    <skos:definition xml:lang="en">The Commission will specify the technical formats for reporting by way of an implementing act.</skos:definition>
+    <skos:definition xml:lang="en">The Commission has specified the technical formats for reporting by way of an implementing act: CID 2025/57.
+
+EEA will develop a simple tool in Reportnet 3 to report this information smoothly and without any investment needed for MS.</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/726">
     <skos:prefLabel xml:lang="en">Annual CO emissions and concentration of CO emissions from MCPs</skos:prefLabel>
@@ -3590,7 +3610,7 @@ Re-submissions due to errors shall be provided within four weeks and include a c
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/751">
     <skos:prefLabel xml:lang="en">National Emission reduction Commitments Directive (NECD) - Projected emissions</skos:prefLabel>
-    <skos:definition xml:lang="en">All information including the latest templates to be used can be found here: https://www.ceip.at/reporting-instructions. 
+    <skos:definition xml:lang="en">All information including the latest templates to be used can be found here: https://www.ceip.at/reporting-instructions
 For 2023, Member States are free to use either the new Annex IV (URL: https://www.ceip.at/fileadmin/inhalte/ceip/00_pdf_other/2023/annex_iv_v2023.xlsx) template or the version used in previous years with aggregated NFR source categories.</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/752">
@@ -3737,27 +3757,75 @@ https://circabc.europa.eu/ui/group/fcb355ee-7434-4448-a53d-5dc5d1dac678/library/
     <skos:definition xml:lang="en">[notes about who reporting and how to register]</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/823">
-    <skos:prefLabel xml:lang="en">National systems for policies and measures and projections</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">National systems for policies and measures and projections - Energy Community</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/824">
-    <skos:prefLabel xml:lang="en">Integrated reporting on greenhouse gas policies and measures</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Integrated reporting on greenhouse gas policies and measures - Energy Community</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/825">
-    <skos:prefLabel xml:lang="en">Integrated reporting on national adaptation actions</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Integrated reporting on national adaptation actions- Energy Community</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/830">
-    <skos:prefLabel xml:lang="en">Information on the use of carbon price mechanism revenues - Annex II</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Use of revenues from carbon pricing mechanisms - Energy Community</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/856">
+    <skos:prefLabel xml:lang="en">Integrated national policies and measures - Energy Community</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/858">
+    <skos:prefLabel xml:lang="en">National projections of anthropogenic greenhouse gas emissions- Energy Community</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/859">
+    <skos:prefLabel xml:lang="en">Progress towards objectives, targets and contributions (Decarbonisation: greenhouse gas emissions and removals) - Energy Community</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/860">
+    <skos:prefLabel xml:lang="en">Progress towards objectives, targets and contributions (Decarbonisation: adaptation) - Energy Community</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/861">
+    <skos:prefLabel xml:lang="en">Support to developing countries - Energy Community</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/862">
+    <skos:prefLabel xml:lang="en">Additional reporting obligations in the area of renewable energy - Energy Community</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/863">
+    <skos:prefLabel xml:lang="en">Additional reporting obligations in the area of energy efficiency - Energy Community</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/864">
+    <skos:prefLabel xml:lang="en">Progress towards objectives, targets and contributions (Decarbonisation: renewable energy) - Energy Community</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/865">
+    <skos:prefLabel xml:lang="en">Progress towards objectives, targets and contributions (Energy efficiency) - Energy Community</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/866">
+    <skos:prefLabel xml:lang="en">Approximated greenhouse gas inventories - Energy Community</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/867">
+    <skos:prefLabel xml:lang="en">Greenhouse gas emissions inventories - Energy Community</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/831">
-    <skos:prefLabel xml:lang="en">Water Reuse Obligation</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Water Reuse Regulation - Report</skos:prefLabel>
     <skos:definition xml:lang="en">The reporting guideline might be revised based on the feedback received during or after the first data submission</skos:definition>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/832">
     <skos:prefLabel xml:lang="en">DWD exceedances, incidents and derogations - Article 18.1 (c, d, e)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/876">
+    <skos:prefLabel xml:lang="en">DWD risk assessments and risk management measures within catchment areas - Article 8.1(b)</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/834">
@@ -3818,6 +3886,32 @@ https://circabc.europa.eu/ui/group/fcb355ee-7434-4448-a53d-5dc5d1dac678/library/
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/853">
     <skos:prefLabel xml:lang="en">Regulation (EU) 2019/1242 of the European Parliament and of the Council of 20 June 2019 setting CO2 emission performance standards for new heavy-duty vehicles and amending Regulations (EC) No 595/2009 and (EU) 2018/956 </skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/854">
+    <skos:prefLabel xml:lang="en">National Restoration Plans</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/855">
+    <skos:prefLabel xml:lang="en">European Climate Law (ECL) Recommendations</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/868">
+    <skos:prefLabel xml:lang="en">Fluorinated gases (F-gases) reporting by undertakings (Regulation 2024)</skos:prefLabel>
+    <skos:definition xml:lang="en">Commission Implementing Regulation (EU) 2024/2195 of 4 September 2024 determining the format for submitting the reports of data referred to in Article 26 of Regulation (EU) 2024/573 of the European Parliament and of the Council on fluorinated greenhouse gases and repealing Commission Implementing Regulation (EU) No 1191/2014
+
+https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32024R2195</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/870">
+    <skos:prefLabel xml:lang="en">Fluorinated gases (F-gases) verification reporting (Regulation 2024)</skos:prefLabel>
+    <skos:definition xml:lang="en">Commission Implementing Regulation (EU) 2024/2195 of 4 September 2024 determining the format for submitting the reports of data referred to in Article 26 of Regulation (EU) 2024/573 of the European Parliament and of the Council on fluorinated greenhouse gases and repealing Commission Implementing Regulation (EU) No 1191/2014</skos:definition>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/869">
+    <skos:prefLabel xml:lang="en">Ozone-depleting substances (ODS) reporting by undertakings (Regulation 2024)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/875">
+    <skos:prefLabel xml:lang="en">Air Quality Data reporting under revised Air Quality Directive (recast)</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
 </rdf:RDF>
