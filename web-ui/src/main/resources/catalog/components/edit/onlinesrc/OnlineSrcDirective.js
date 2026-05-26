@@ -75,7 +75,7 @@
           scope.removeBtnTitle = scope.isOverview ? "removeThumbnail" : "remove";
 
           var loadRelations = function () {
-            if (scope.type === 'datastore') {
+            if (scope.type === "datastore") {
               return;
             }
 
@@ -611,7 +611,6 @@
               scope.gnCurrentEdit.metadata
             );
             scope.canPublishDoiForResource = gnDoiService.canPublishDoiForResource;
-
 
             /**
              * Calls service 'relations.get' to load
