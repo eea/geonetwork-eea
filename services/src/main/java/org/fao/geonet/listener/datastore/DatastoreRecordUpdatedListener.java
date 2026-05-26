@@ -31,12 +31,14 @@ import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.util.nextcloud.NextcloudService;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
-import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 
 @Component
-public class DatastoreRecordUpdatedListener implements ApplicationListener<RecordUpdatedEvent> {
+public class DatastoreRecordUpdatedListener {
     private final BaseMetadataUtils metadataUtils;
     private final NextcloudService nextcloudService;
     private final IMetadataSchemaUtils metadataSchemaUtils;
@@ -48,8 +50,9 @@ public class DatastoreRecordUpdatedListener implements ApplicationListener<Recor
         this.nextcloudService = nextcloudService;
     }
 
-    @Override
-    public void onApplicationEvent(RecordUpdatedEvent event) {
+    @Async
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, fallbackExecution = true)
+    public void onRecordUpdated(RecordUpdatedEvent event) {
         AbstractMetadata metadata = metadataUtils.findOne(event.getMdId().intValue());
 
         try {
