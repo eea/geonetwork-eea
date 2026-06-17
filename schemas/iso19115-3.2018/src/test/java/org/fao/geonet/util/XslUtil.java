@@ -32,4 +32,6 @@ public class XslUtil {
     public static String getSettingValue(String key) {
         return "http://localhost";
     }
+
+    public static String toUiConfigArg(String config)  { return config; }
 }
