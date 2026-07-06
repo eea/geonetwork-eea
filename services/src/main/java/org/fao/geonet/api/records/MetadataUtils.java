@@ -1036,7 +1036,7 @@ public class MetadataUtils {
                                                     AbstractMetadata metadata,
                                                     String metadataStatus,
                                                     String siteURL) throws Exception {
-        String seriesQuery = String.format("+agg_associated_isComposedOf:\"%s\"", metadata.getUuid());
+        String seriesQuery = String.format("+resourceType:series +agg_associated_isComposedOf:\"%s\"", metadata.getUuid());
         EsSearchManager searchManager = context.getBean(EsSearchManager.class);
         SettingManager settingManager = context.getBean(SettingManager.class);
         boolean isEnabledWorkflow = settingManager.getValueAsBool(Settings.METADATA_WORKFLOW_ENABLE);
