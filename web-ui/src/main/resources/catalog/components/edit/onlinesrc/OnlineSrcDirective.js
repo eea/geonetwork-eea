@@ -1551,6 +1551,11 @@
                         scope.isUrlOk = error === 200;
                       });
                   }
+                } else if (url.indexOf("https://sdi.eea.europa.eu/data") === 0) {
+                  // EEA / Do not trigger creation of a new user session
+                  // https://taskman.eionet.europa.eu/issues/305718
+                  scope.isUrlOk = true;
+                  return $q.reject("");
                 } else if (url.indexOf("http") === 0) {
                   return $http.head(scope.onlinesrcService.getApprovedUrl(url)).then(
                     function (response) {
