@@ -1183,6 +1183,10 @@ The first WFD implementation report published by the Commission on transposition
     <skos:prefLabel xml:lang="en">WISE - Monitoring Sites</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/890">
+    <skos:prefLabel xml:lang="en">Water Framework Directive - River Basin Management Plans - 2028 Protected Areas</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/137">
     <skos:prefLabel xml:lang="en">Air quality assessment annual reporting for 1st daughter directive</skos:prefLabel>
     <skos:definition xml:lang="en">Annual reporting under the 1st Daughter Directive must follow Commission Decision 2004/461/EC laying down a questionnaire to be used for annual reporting on ambient air quality assessment under Council Directives 96/62/EC and 1999/30/EC and under Directives 2000/69/EC and 2002/3/EC of the European Parliament and of the Council. (OJ L 156, 30 April 2004, p.78 - 125).Reporting through the annual questionnaire Commission Decision 2004/461/EC.</skos:definition>
@@ -3475,6 +3479,10 @@ UNFCCC Guidelines on reporting biennial reports (BRs): https://unfccc.int/proces
     <skos:prefLabel xml:lang="en">MS implementation of IED (Annex II of Commission Implementing Decision 2018/1135)</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/882">
+    <skos:prefLabel xml:lang="en">IED Implementation</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/706">
     <skos:prefLabel xml:lang="en">Annex I Questionnaire</skos:prefLabel>
     <skos:definition xml:lang="en"/>
@@ -3765,7 +3773,7 @@ https://circabc.europa.eu/ui/group/fcb355ee-7434-4448-a53d-5dc5d1dac678/library/
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/825">
-    <skos:prefLabel xml:lang="en">Integrated reporting on national adaptation actions- Energy Community</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">National climate change adaptation planning and strategies dataset - Energy Community</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/830">
@@ -3773,7 +3781,7 @@ https://circabc.europa.eu/ui/group/fcb355ee-7434-4448-a53d-5dc5d1dac678/library/
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/856">
-    <skos:prefLabel xml:lang="en">Integrated national policies and measures - Energy Community</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Integrated Climate and Energy Policies and Measures (PaMs) - Energy Community</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/858">
@@ -3785,7 +3793,7 @@ https://circabc.europa.eu/ui/group/fcb355ee-7434-4448-a53d-5dc5d1dac678/library/
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/860">
-    <skos:prefLabel xml:lang="en">Progress towards objectives, targets and contributions (Decarbonisation: adaptation) - Energy Community</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Progress to targets for adaptation (Annex III)</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/861">
@@ -3828,6 +3836,14 @@ https://circabc.europa.eu/ui/group/fcb355ee-7434-4448-a53d-5dc5d1dac678/library/
     <skos:prefLabel xml:lang="en">DWD risk assessments and risk management measures within catchment areas - Article 8.1(b)</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/883">
+    <skos:prefLabel xml:lang="en">DWD risk assessment of domestic distribution systems and the measures taken to address identified risks - Article 18.1(b)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/884">
+    <skos:prefLabel xml:lang="en">DWD reporting on access to water - Article 18.1 (a)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/834">
     <skos:prefLabel xml:lang="en">Annual report</skos:prefLabel>
     <skos:definition xml:lang="en"/>
@@ -3849,7 +3865,7 @@ https://circabc.europa.eu/ui/group/fcb355ee-7434-4448-a53d-5dc5d1dac678/library/
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/839">
-    <skos:prefLabel xml:lang="en">Art 13: Reporting of items (a), (b), (c) and (d)</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Art 13: Reporting of items (a), (b), (c), (d), (e) and (f)</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/841">
@@ -3912,6 +3928,34 @@ https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32024R2195</skos:def
   </skos:Concept>
   <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/875">
     <skos:prefLabel xml:lang="en">Air Quality Data reporting under revised Air Quality Directive (recast)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/880">
+    <skos:prefLabel xml:lang="en">Core EU Registry</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/881">
+    <skos:prefLabel xml:lang="en">IEPR and LCP</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/885">
+    <skos:prefLabel xml:lang="en">Human Biomonitoring (OSOA, Article 5)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/886">
+    <skos:prefLabel xml:lang="en">Early warning and action system for emerging chemical risks (OSOA, Article 19)</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/887">
+    <skos:prefLabel xml:lang="en">Urban Waste Water Treatment Directive (recast) - Article 23 [National implementation programme]</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/888">
+    <skos:prefLabel xml:lang="en">Urban Waste Water Treatment Directive (recast) - Article 22 [Information on monitoring of implementation]</skos:prefLabel>
+    <skos:definition xml:lang="en"/>
+  </skos:Concept>
+  <skos:Concept xmlns:dc="http://purl.org/dc/terms/" rdf:about="http://rod.eionet.europa.eu/obligations/889">
+    <skos:prefLabel xml:lang="en">National risk assessments and risk management capability (Article 6.1.d)</skos:prefLabel>
     <skos:definition xml:lang="en"/>
   </skos:Concept>
 </rdf:RDF>

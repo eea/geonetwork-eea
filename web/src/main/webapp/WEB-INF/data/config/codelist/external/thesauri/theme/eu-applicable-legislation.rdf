@@ -27,9 +27,9 @@ The decision establishes a common procedure for the exchange of information on t
 The information covered by the exchange of information shall be: (a) the results of the measurements carried out by the sampling or measuring stations; (b) a description of the sampling, sample preservation and measuring methods used and the frequency of sampling.
 
 The Decision is amended by:
--Council Decision 81/856/EEC of 19 October 1981 adapting, consequent upon the accession of Greece, Decision 77/795/EEC.
--Commission Decision 84/422/EEC of 24 July 1984 amending Annex I to Council Decision 77/795/EEC.
--Council Decision 86/574/EEC of 24 November 1986 amending Decision 77/795/EEC.
+-Council Decision 81/856/EEC of 19 October 1981 adapting, consequent upon the accession of Greece, Decision 77/795/EEC. 
+-Commission Decision 84/422/EEC of 24 July 1984 amending Annex I to Council Decision 77/795/EEC. 
+-Council Decision 86/574/EEC of 24 November 1986 amending Decision 77/795/EEC. 
 -Commission Decision 90/2/EEC of 14 December 1989 amending Annex I to Council Decision 77/795/EEC.
 -Council Regulation (EC) No 807/2003 of 14 April 2003 adapting to Decision 1999/468/EC the provisions relating to committees which assist the Commission in the exercise of its implementing powers laid down in Council instruments adopted in accordance with the consultation procedure.</skos:definition>
    </skos:Concept>
@@ -60,8 +60,8 @@ The main goals are the possibility to produce drinking water from water pumped f
       <skos:definition xml:lang="en">The Convention is also named Convention on the International Commission for the Protection of the Oder Against Pollution (ICPOAP)
 The Contracting Parties shall cooperate within "the Commission", to prevent the pollution of the Oder and the Stettiner Haff, including their drainage areas, hereinafter referred to as "the Oder".
 The objectives of this cooperation shall be in particular:
-(a) to prevent the pollution of the Oder and the Baltic Sea by contaminants and to achieve a sustained reduction in the pollution thereof;
-(b) to achieve the most natural aquatic and littoral ecosystems possible with the corresponding species diversity;
+(a) to prevent the pollution of the Oder and the Baltic Sea by contaminants and to achieve a sustained reduction in the pollution thereof; 
+(b) to achieve the most natural aquatic and littoral ecosystems possible with the corresponding species diversity; 
 (c) to permit utilisation of the Oder, in particular the production of drinking water from bank filtrate and the use of its water and sediments in agriculture.
 3. To achieve objectives, the Contracting Parties shall draw up joint action programmes within the Commission with timetables for their implementation. These action programmes may be gradually supplemented as necessary.
 4. For the attainment of these objectives, the Contracting Parties shall promote the exchange of modern technologies to prevent and reduce pollution resulting from agreements concluded under civil law.</skos:definition>
@@ -121,17 +121,17 @@ It was repealed by Directive 2006/11/EC of the European Parliament and of the Co
 
 The aim of this Directive is the prevention and progressive reduction, with a view to its elimination, of pollution caused by waste from the titanium dioxide industry. The Member States will take steps to ensure that waste disposal procedures take due account of human-health and environmental considerations. They will actively encourage waste prevention, recovery and recycling and the re-use of waste as raw materials. Any discharge, dumping, storage, accumulation or injection of waste will require prior authorization. The Member States will draw up programmes for the gradual reduction, and ultimate elimination, of pollution caused by waste from TiO2 manufacturing facilities.
 The Directive is amended by:
- -Council Directive 82/883/EEC of 3 December 1982 on procedures for the surveillance and monitoring of environments concerned by waste from the titanium dioxide industry further amended by Council Regulation (EC) No 807/2003 of 14 April 2003 adapting to Decision 1999/468/EC the provisions relating to committees which assist the Commission in the exercise of its implementing powers laid down in Council instruments adopted in accordance with the consultation procedure (unanimity);
+ -Council Directive 82/883/EEC of 3 December 1982 on procedures for the surveillance and monitoring of environments concerned by waste from the titanium dioxide industry further amended by Council Regulation (EC) No 807/2003 of 14 April 2003 adapting to Decision 1999/468/EC the provisions relating to committees which assist the Commission in the exercise of its implementing powers laid down in Council instruments adopted in accordance with the consultation procedure (unanimity); 
  -Council Directive 83/29/EEC of 24 January 1983 on waste from the titanium dioxide industry;
  -Council Directive 91/692/EEC of 23 December 1991 standardizing and rationalizing reports on the implementation of certain Directives relating to the environment further amended by Regulation (EC) No 1882/2003 of the European Parliament and of the Council of 29 September 2003 adapting to Council Decision 1999/468/EC (Celex N°31999D0468) the provisions relating to committees which assist the Commission in the exercise of its implementing powers laid down in instruments subject to the procedure referred to in Article 251 of the EC Treaty.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=CONSLEG:1978L0659:20030605:EN:PDF">
       <skos:prefLabel xml:lang="en">Council Directive 78/659/EEC of 18 July 1978 on the quality of fresh waters needing protection or improvement in order to support fish life - Repealed by Directive 2006/44/EC</skos:prefLabel>
-      <skos:definition xml:lang="en">This Directive concerns the quality of fresh waters and applies to those waters designated by the Member States as needing protection or improvement in order to support fish life.
+      <skos:definition xml:lang="en">This Directive concerns the quality of fresh waters and applies to those waters designated by the Member States as needing protection or improvement in order to support fish life. 
 
-The aim of this Directive is to protect or improve the quality of those running or standing fresh waters which support or which, if pollution were reduced or eliminated, would become capable of supporting fish belonging to:
-- indigenous species offering a natural diversity, or
+The aim of this Directive is to protect or improve the quality of those running or standing fresh waters which support or which, if pollution were reduced or eliminated, would become capable of supporting fish belonging to: 
+- indigenous species offering a natural diversity, or 
 - species the presence of which is judged desirable for water management purposes by the competent authorities of the Member States
 
 The Directive has been amended by:
@@ -157,11 +157,11 @@ The Directive has been amended by:
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=CONSLEG:1980L0068:19911223:EN:PDF">
       <skos:prefLabel xml:lang="en">Council Directive 80/68/EEC of 17 December 1979 on the protection of groundwater against pollution caused by certain dangerous substances - Repealed by Directive 2000/60/EC establishing a framework for Community action in the field of water policy</skos:prefLabel>
-      <skos:definition xml:lang="en">The purpose of this Directive is to prevent the pollution of groundwater by substances belonging to the families and groups of substances in lists I or II in the Annex.
-Member States shall take the necessary steps to:
-(a) prevent the introduction into groundwater of substances in list I ; and
+      <skos:definition xml:lang="en">The purpose of this Directive is to prevent the pollution of groundwater by substances belonging to the families and groups of substances in lists I or II in the Annex. 
+Member States shall take the necessary steps to: 
+(a) prevent the introduction into groundwater of substances in list I ; and 
 (b) limit the introduction into groundwater of substances in list II so as to avoid pollution of this water by these substances.
-By this Directive the protection of groundwater was taken out of Council Directive 76/464/EEC of 4 May 1976 on pollution caused by certain dangerous substances discharged into the aquatic environment of the Community.
+By this Directive the protection of groundwater was taken out of Council Directive 76/464/EEC of 4 May 1976 on pollution caused by certain dangerous substances discharged into the aquatic environment of the Community. 
 
 The Directive has been amended by:
  -Directive 91/692/EEC of 23 December 1991 standardizing and rationalizing reports on the implementation of certain Directives relating to the environment further amended by Regulation 1882/2003/EC of the European Parliament and of the Council of 29 September 2003 adapting to Council Decision 1999/468/EC (Celex N°31999D0468) the provisions relating to committees which assist the Commission in the exercise of its implementing powers laid down in instruments subject to the procedure referred to in Article 251 of the EC Treaty.</skos:definition>
@@ -179,14 +179,14 @@ Date of end of validity: 25/12/2003.</skos:definition>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/dir/1991/157/oj">
       <skos:prefLabel xml:lang="en">Council Directive 91/157/EEC of 18 March 1991 on batteries and accumulators containing certain dangerous substances</skos:prefLabel>
-      <skos:definition xml:lang="en">This Directive concerns the drawing up of programmes in order to achieve the following objectives:
-- reduction of the heavy-metal content of batteries and accumulators,
-- promotion of marketing of batteries and accumulators containing smaller quantities of dangerous substances and/or less polluting substances,
-- gradual reduction, in household waste, of spent batteries and accumulators covered by Annex I,
-- promotion of research aimed at reducing the dangerous-substance content and favouring the use of less polluting substitute substances in batteries and accumulators, and research into methods of recycling,
-- separate disposal of spent batteries and accumulators covered by Annex I
-(1. Batteries and accumulators put on the market as from 01/01/1999,containing more than 0,0005% of mercury by weight.
-2. Batteries and accumulators put on the market as from 18/09/1992 and containing - more than 25 mg mercury per cell, except alkaline manganese batteries, - more than 0,025 % cadmium by weight, - more than 0,4 % lead by weight.
+      <skos:definition xml:lang="en">This Directive concerns the drawing up of programmes in order to achieve the following objectives: 
+- reduction of the heavy-metal content of batteries and accumulators, 
+- promotion of marketing of batteries and accumulators containing smaller quantities of dangerous substances and/or less polluting substances, 
+- gradual reduction, in household waste, of spent batteries and accumulators covered by Annex I, 
+- promotion of research aimed at reducing the dangerous-substance content and favouring the use of less polluting substitute substances in batteries and accumulators, and research into methods of recycling, 
+- separate disposal of spent batteries and accumulators covered by Annex I 
+(1. Batteries and accumulators put on the market as from 01/01/1999,containing more than 0,0005% of mercury by weight. 
+2. Batteries and accumulators put on the market as from 18/09/1992 and containing - more than 25 mg mercury per cell, except alkaline manganese batteries, - more than 0,025 % cadmium by weight, - more than 0,4 % lead by weight. 
 3. Alkaline manganese batteries containing more than 0,025 % mercury by weight placed on the market as from 18/09/92).</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
@@ -202,7 +202,7 @@ The Directive has been amended by:
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/dir/2002/3/oj">
       <skos:prefLabel xml:lang="en">Directive 2002/3/EC of the European Parliament and of the Council of 12 February 2002 relating to ozone in ambient air</skos:prefLabel>
-      <skos:definition xml:lang="en">Directive 2008/50/EC of the European Parliament and of the Council of 21 May 2008 on ambient air quality and cleaner air for Europe
+      <skos:definition xml:lang="en">Directive 2008/50/EC of the European Parliament and of the Council of 21 May 2008 on ambient air quality and cleaner air for Europe 
 Article 31 Repeal and transitional provisions
 2. Notwithstanding the first subparagraph of paragraph 1, the following Articles shall remain in force:
 (b) Article 11(1) of Directive 96/62/EC and Article 10(1), (2) and (3) of Directive 2002/3/EC until the end of the second calendar year following the entry into force of the implementing measures referred to in Article 28(2) of this Directive;</skos:definition>
@@ -210,7 +210,7 @@ Article 31 Repeal and transitional provisions
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://eur-lex.europa.eu/smartapi/cgi/sga_doc?smartapi!celexapi!prod!CELEXnumdoc&amp;lg=en&amp;numdoc=31996L0059">
       <skos:prefLabel xml:lang="en">Council Directive 96/59/EC of 16 September 1996 on the disposal of polychlorinated biphenyls and polychlorinated terphenyls (PCB/PCT)</skos:prefLabel>
-      <skos:definition xml:lang="en">The purpose of this Directive is to approximate the laws of the Member States on the controlled elimination of PCBs. The Member States must take necessary measures concerning controlled disposal of PCBs, the decontamination or disposal of equipment containing PCBs and/or the disposal of used PCBs in order to eliminate them completely.
+      <skos:definition xml:lang="en">The purpose of this Directive is to approximate the laws of the Member States on the controlled elimination of PCBs. The Member States must take necessary measures concerning controlled disposal of PCBs, the decontamination or disposal of equipment containing PCBs and/or the disposal of used PCBs in order to eliminate them completely. 
 Member States must make an inventory of large equipment containing PCBs, adopt a plan for disposal of inventoried equipment, and make outlines for collection and disposal of non inventoried equipment</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
@@ -223,11 +223,11 @@ The Directive was originally adopted as Council Directive 96/61/EC and after sev
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/dir/1996/62/oj">
       <skos:prefLabel xml:lang="en">Council Directive 96/62/EC of 27 September 1996 on ambient air quality assessment and management</skos:prefLabel>
-      <skos:definition xml:lang="en">The general aim of this Directive is to define the basic principles of a common strategy to:
+      <skos:definition xml:lang="en">The general aim of this Directive is to define the basic principles of a common strategy to: 
 - define and establish objectives for ambient air quality in the Community designed to avoid, prevent or reduce harmful effects on human health and the environment as a whole,
 - assess the ambient air quality in Member States on the basis of common methods and criteria,
 - obtain adequate information on ambient air quality and ensure that it is made available to the public, inter alia by means of alert thresholds,
-- maintain ambient air quality where it is good and approve it in other cases.
+- maintain ambient air quality where it is good and approve it in other cases. 
 (text source Article 1 Objectives)
 
 Repealed by Directive 2008/50/EC of the European Parliament and of the Council of 21 May 2008 on ambient air quality and cleaner air for Europe, with effect from 10/06/2010.</skos:definition>
@@ -311,7 +311,7 @@ The Kyoto Protocol to the United Nations Framework Convention on Climate Change 
                  rdf:about="http://data.europa.eu/eli/dir/2001/80/oj">
       <skos:prefLabel xml:lang="en">Directive 2001/80/EC of the European Parliament and of the Council of 23 October 2001 on the limitation of emissions of certain pollutants into the air from large combustion plants</skos:prefLabel>
       <skos:definition xml:lang="en">This Directive shall apply to combustion plants, the rated thermal input of which is equal to or greater than 50 MW, irrespective of the type of fuel used (solid, liquid or gaseous). Its purpose is to limit the emissions of sulphur dioxide, nitrogen oxides and dust emitted from these plants.
-
+ 
 New reporting obligations concerning the emission inventories apply since 2004 as set out in Annex VIII(B) of the Directive.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
@@ -353,7 +353,7 @@ Establishments or undertakings which carry out disposal and recovery operations 
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/dir/2000/76/oj">
       <skos:prefLabel xml:lang="en">Directive 2000/76/EC of the European Parliament and of the Council of 4 December 2000 on the incineration of waste</skos:prefLabel>
-      <skos:definition xml:lang="en">The aim of this Directive is to prevent or to limit as far as practicable negative effects on the environment, in particular pollution by emissions into air, soil, surface water and groundwater, and the resulting risks to human health, from the incineration and co-incineration of waste.
+      <skos:definition xml:lang="en">The aim of this Directive is to prevent or to limit as far as practicable negative effects on the environment, in particular pollution by emissions into air, soil, surface water and groundwater, and the resulting risks to human health, from the incineration and co-incineration of waste. 
 This aim shall be met by means of stringent operational conditions and technical requirements and emission limit values for waste incineration and co-incineration plants.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
@@ -388,7 +388,7 @@ The Directive has been amended by:
       <skos:definition xml:lang="en">The purpose of this directive is to establish a framework for the protection of inland surface waters, transitional waters, coastal waters and groundwater.
 Link to the consolidated version: http://data.europa.eu/eli/dir/2000/60/2014-11-20
 
-The Directive has been amended by:
+The Directive has been amended by: 
 -Decision No 2455/2001/EC of the European Parliament and of the Council of 20 November 2001 establishing the list of priority substances in the field of water policy and amending Directive 2000/60/EC (http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2001:331:0001:0005:EN:PDF).
 -Directive 2008/32/EC of the European Parliament and of the Council of 11 March 2008 amending Directive 2000/60/EC establishing a framework for Community action in the field of water policy, as regards the implementing powers conferred on the Commission.
 -Directive 2008/105/EC of the European Parliament and of the Council of 16 December 2008 on environmental quality standards in the field of water policy, amending and subsequently repealing Council Directives 82/176/EEC, 83/513/EEC, 84/156/EEC, 84/491/EEC, 86/280/EEC and amending Directive 2000/60/EC of the European Parliament and of the Council.
@@ -400,26 +400,26 @@ The Directive has been amended by:
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/dir/1999/30/oj">
       <skos:prefLabel xml:lang="en">Council Directive 1999/30/EC of 22 April 1999 relating to limit values for sulphur dioxide, nitrogen dioxide and oxides of nitrogen, particulate matter and lead in ambient air</skos:prefLabel>
-      <skos:definition xml:lang="en">Member States shall ensure that up-to-date information on ambient concentrations of SO2, NOx, particulate matter and lead is routinely made available to the public.
+      <skos:definition xml:lang="en">Member States shall ensure that up-to-date information on ambient concentrations of SO2, NOx, particulate matter and lead is routinely made available to the public. 
 
-The health limit values for NO2 and Pb must be met by 2010.
+The health limit values for NO2 and Pb must be met by 2010. 
 Member States have to prepare attainment programmes showing how the limit values will be met on time for those zones or agglomerations where attainments by "business as usual" cannot be presumed. These programmes must be made directly available to the public, and must also be sent to the Commission see Comm. Dec. 2004/224/EC.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/dir/2000/69/oj">
       <skos:prefLabel xml:lang="en">Directive 2000/69/EC of the European Parliament and of the Council of 16 November 2000 relating to limit values for benzene and carbon monoxide in ambient air</skos:prefLabel>
       <skos:definition xml:lang="en">This Directive establishes limit values for concentrations of benzene and carbon monoxide in ambient air, and requires to assess concentrations of those pollutants in ambient air on the basis of common methods and criteria, as well as to obtain adequate information on concentrations of benzene and carbon monoxide and ensure that it is made available to the public.
-
+ 
 The limit value for benzene must be met by 2010 unless an extension is granted.
-
+ 
 Member States have to prepare attainment programmes showing how the limit values will be met on time for those zones or agglomerations where attainments by "business as usual" cannot be presumed. These programmes must be made directly available to the public, and must also be sent to the Commission see Comm. Dec. 2004/224/EC.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/reg/1990/1210/oj">
       <skos:prefLabel xml:lang="en">Council Regulation (EEC) No 1210/90 of 7 May 1990 on the establishment of the European Environment Agency and the European Environment Information and Observation Network</skos:prefLabel>
-      <skos:definition xml:lang="en">1. This Regulation establishes the European Environment Agency and aims at the setting-up of a European environment information and observation network.
-2. To achieve the aims of environmental protection and improvement laid down by the Treaty and by successive Community action programmes on the environment, the objective shall be to provide the Community and the Member States with:
-- objective, reliable and comparable information at European level enabling them to take the requisite measures to protect the environment, to assess the results of such measures and to ensure that the public is properly informed about the state of the environment,
+      <skos:definition xml:lang="en">1. This Regulation establishes the European Environment Agency and aims at the setting-up of a European environment information and observation network. 
+2. To achieve the aims of environmental protection and improvement laid down by the Treaty and by successive Community action programmes on the environment, the objective shall be to provide the Community and the Member States with: 
+- objective, reliable and comparable information at European level enabling them to take the requisite measures to protect the environment, to assess the results of such measures and to ensure that the public is properly informed about the state of the environment, 
 - to that end, the necessary technical and scientific support.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
@@ -503,21 +503,21 @@ The Council Directive 86/280/EEC has been amended by:
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/dir/1999/13/oj">
       <skos:prefLabel xml:lang="en">Council Directive 1999/13/EC of 11 March 1999 on the limitation of emissions of volatile organic compounds due to the use of organic solvents in certain activities and installations</skos:prefLabel>
-      <skos:definition xml:lang="en">The VOC Solvents Emissions Directive is the main policy instrument for the reduction of industrial emissions of volatile organic compounds (VOCs) in the European Union.
+      <skos:definition xml:lang="en">The VOC Solvents Emissions Directive is the main policy instrument for the reduction of industrial emissions of volatile organic compounds (VOCs) in the European Union. 
 
-It covers a wide range of solvent using activities, e.g. printing, surface cleaning, vehicle coating, dry cleaning and manufacture of footwear and pharmaceutical products.
+It covers a wide range of solvent using activities, e.g. printing, surface cleaning, vehicle coating, dry cleaning and manufacture of footwear and pharmaceutical products. 
 
-The VOC Solvents Emissions Directive requires installations in which such activities are applied to comply either with the emission limit values set out in the Directive or with the requirements of the so-called reduction scheme.
+The VOC Solvents Emissions Directive requires installations in which such activities are applied to comply either with the emission limit values set out in the Directive or with the requirements of the so-called reduction scheme. 
 
 New installations have to comply with the requirements of the VOC Solvents Emissions Directive at the time they are starting the activity. The final implementation date for existing installations was 31 October 2007.
 
 At intervals of three years, Member States shall send information to the Commission on the implementation of the Directive in the form of a report.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-                 rdf:about="http://data.europa.eu/eli/dir/1998/70/oj">
+                 rdf:about="http://data.europa.eu/eli/reg/2006/166/oj">
       <skos:prefLabel xml:lang="en">Directive 98/70/EC of the European Parliament and of the Council of 13 October 1998 relating to the quality of petrol and diesel fuels as amended</skos:prefLabel>
-      <skos:definition xml:lang="en">By 31 August each year the Member States must submit information according to Article 8(1) and 7a of Directive 98/70/EC (as amended). Article 8 (1) requires a summary of fuel quality monitoring data collected during the period January to December of the previous calendar year.
-Article 7a imposes requirements on fuel suppliers to reduce the greenhouse gas intensity of energy supplied for road transport.</skos:definition>
+      <skos:definition xml:lang="en">By 31 August each year the Member States must submit information according to Article 8(1). It requires a summary of fuel quality monitoring data collected during the period January to December of the previous calendar year.
+</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2005:191:0059:01:EN:HTML">
@@ -623,9 +623,9 @@ The Working Group on Environmental Monitoring serves as an instrument for UNECE 
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://www.cites.org/eng/disc/text.shtml">
       <skos:prefLabel xml:lang="en">Convention on International Trade in Endangered Species of Wild Fauna and Flora</skos:prefLabel>
-      <skos:definition xml:lang="en">The aim of CITES is to ensure that international trade in specimens of wild animals and plants does not threaten their survival.
+      <skos:definition xml:lang="en">The aim of CITES is to ensure that international trade in specimens of wild animals and plants does not threaten their survival.  
 
-CITES works by subjecting international trade in specimens of selected species to certain controls.  These require that all imports, exports, re-exports and introductions from the sea of species covered by the Convention have to be authorised through a licensing system.
+CITES works by subjecting international trade in specimens of selected species to certain controls.  These require that all imports, exports, re-exports and introductions from the sea of species covered by the Convention have to be authorised through a licensing system.  
 
 The species covered by CITES are listed in three Appendices, according to the degree of protection they need.  Appendix I includes species threatened with extinction.  Trade in specimens of these species is permitted only in exceptional circumstances.  Appendix II includes species not necessarily threatened with extinction, but in which trade must be controlled in order to avoid utilisation incompatible with their survival.  Finally, Appendix III contains species that are protected in at least one country, which has asked other CITES Parties for assistance in controlling the trade.</skos:definition>
    </skos:Concept>
@@ -740,9 +740,9 @@ Starting from 2007, the Regulation (EC) No 2152/2003 will be repealed and replac
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="https://planbleu.org/sites/default/files/upload/files/Barcelona_convention_and_protocols_2005_eng.pdf">
       <skos:prefLabel xml:lang="en">Convention for the Protection of the Marine Environment and the Coastal Region of the Mediterranean</skos:prefLabel>
-      <skos:definition xml:lang="en">The Barcelona Convention obliges the Contracting Parties generally to take all appropriate measures to prevent, abate, combat and to the fullest possible extent eliminate pollution of the Mediterranean Sea Area caused by dumping from ships and aircraft or incineration at sea, discharges from ships,
-exploration and exploitation of the continental shelf and the sea bed and its subsoil, land-based sources and transboundary movements and disposal of hazardous wastes.
-The Contracting Parties shall also protect and enhance the marine environment in that Area including conservation of biological diversity so as to contribute towards its sustainable development.
+      <skos:definition xml:lang="en">The Barcelona Convention obliges the Contracting Parties generally to take all appropriate measures to prevent, abate, combat and to the fullest possible extent eliminate pollution of the Mediterranean Sea Area caused by dumping from ships and aircraft or incineration at sea, discharges from ships, 
+exploration and exploitation of the continental shelf and the sea bed and its subsoil, land-based sources and transboundary movements and disposal of hazardous wastes.  
+The Contracting Parties shall also protect and enhance the marine environment in that Area including conservation of biological diversity so as to contribute towards its sustainable development. 
 International co-operation is to be undertaken in dealing with pollution emergencies, in the monitoring of pollution, and in scientific and technical matters.
 
 Convention for the Protection of the Mediterranean Sea against Pollution, amended as Convention for the Protection of the Marine Environment and the Coastal Region of the Mediterranean, was adopted in 1976 (CELEX reference: 21976A0216(01)). The original Barcelona Convention entered into force on 12 February 1978 and has been modified by amendments adopted in 1995.</skos:definition>
@@ -757,7 +757,7 @@ Convention for the Protection of the Mediterranean Sea against Pollution, amende
       <skos:prefLabel xml:lang="en">Decision No. 2367/2002/EC of the European Parliament and of the Council of 16 December 2002 on the Community Statistical Programme 2003 to 2007 as amended by Decision No 787/2004/EC</skos:prefLabel>
       <skos:definition xml:lang="en">The Decision establishes the European Community's statistical programme for the period 2003-2007. (amended to take account of enlargement)
 
-Annex I of the Decision defines the approaches, the main fields and the objectives of the actions envisaged during that period and also provides a summary of statistical requirements viewed from the perspective of the policy needs of the European Union.
+Annex I of the Decision defines the approaches, the main fields and the objectives of the actions envisaged during that period and also provides a summary of statistical requirements viewed from the perspective of the policy needs of the European Union.  
 
 As regards the environment, one of the main aims of the programme is to enhance data collection and analysis on global sustainable development.
 
@@ -771,13 +771,13 @@ The Decision 2367/2002/EC was amended by Decision No 787/2004/EC of the European
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/dir/2002/49/oj">
       <skos:prefLabel xml:lang="en">Directive 2002/49/EC of the European Parliament and of the Council of 25 June 2002 relating to the assessment and management of environmental noise</skos:prefLabel>
-      <skos:definition xml:lang="en">The main aim of this Directive is to provide a common basis for tackling the noise problem across the EU. The objectives include monitoring the environmental problem; by requiring Member States to draw up 'strategic noise maps' for major roads, railways, airports and agglomerations, using harmonised noise indicators. Local noise issues are addressed by requiring competent authorities to draw up action plans to reduce noise where necessary and maintain environmental noise quality where it is good. Member States shall report on noise maps.
+      <skos:definition xml:lang="en">The main aim of this Directive is to provide a common basis for tackling the noise problem across the EU. The objectives include monitoring the environmental problem; by requiring Member States to draw up 'strategic noise maps' for major roads, railways, airports and agglomerations, using harmonised noise indicators. Local noise issues are addressed by requiring competent authorities to draw up action plans to reduce noise where necessary and maintain environmental noise quality where it is good. Member States shall report on noise maps. 
 The Member States shall report on limit values in force and shall ensure that the information from strategic noise maps and summaries of the action plans are sent to the Commission.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/dir/1986/609/oj">
       <skos:prefLabel xml:lang="en">Council Directive 86/609/EEC of 24 November 1986 on the approximation of laws, regulations and administrative provisions of the Member States regarding the protection of animals used for experimental and other scientific purposes</skos:prefLabel>
-      <skos:definition xml:lang="en">The aim of this Directive is to ensure that where animals are used for experimental or other scientific purposes, the provisions for the animal's protection laid down by law or regulation or administrative provisions in the Member States, are approximated.
+      <skos:definition xml:lang="en">The aim of this Directive is to ensure that where animals are used for experimental or other scientific purposes, the provisions for the animal's protection laid down by law or regulation or administrative provisions in the Member States, are approximated. 
 At regular intervals Member States shall inform the Commission of the measures taken in this area and provide a suitable summary of the statistical information on the use of animals in experiments.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
@@ -895,8 +895,8 @@ environmental quality standards as defined in the air quality framework directiv
       <skos:prefLabel xml:lang="en">2004/224/EC: Commission Decision of 20 February 2004 laying down arrangements for the submission of information on plans or programmes required under Council Directive 96/62/EC in relation to limit values for certain pollutants in ambient air</skos:prefLabel>
       <skos:definition xml:lang="en">The arrangments for submission set out in the Annex is used for annual reporting under the air quality framework directive and its daughter directives. (of OJ L68, 6 March 2004, p.27 - 33).
 
-The limit values for NOx for the protection of vegetation must be met by 2001. The health limit values for SO2 and PM10 must be met by 2005, and health limit values for NO2 and Pb must be met by 2010 (1st Daughter Directive). The limit value for CO must be met by 2005. The limit value for benzene must be met by 2010 unless an extension is granted (2nd Daughter Directive).
-Member States have to prepare attainment programmes showing how the limit values will be met on time for those areas where attainments by "business as usual" cannot be presumed. These programmes must be made directly available to the public, and must also be sent to the Commission.
+The limit values for NOx for the protection of vegetation must be met by 2001. The health limit values for SO2 and PM10 must be met by 2005, and health limit values for NO2 and Pb must be met by 2010 (1st Daughter Directive). The limit value for CO must be met by 2005. The limit value for benzene must be met by 2010 unless an extension is granted (2nd Daughter Directive). 
+Member States have to prepare attainment programmes showing how the limit values will be met on time for those areas where attainments by "business as usual" cannot be presumed. These programmes must be made directly available to the public, and must also be sent to the Commission.  
 To facilitate a harmonized and structured way of reporting, detailed arrangements for Member States to submit the information on plans and programmes are laid down in this Commission Decision 2004/224/EC.
 
 The daughter directives set up under the Air quality framework directive can be found in ROD by following the link "Parent legislative instrument" on this page.</skos:definition>
@@ -905,8 +905,8 @@ The daughter directives set up under the Air quality framework directive can be 
                  rdf:about="http://data.europa.eu/eli/dir/2006/21/oj">
       <skos:prefLabel xml:lang="en">Directive 2006/21/EC of the European Parliament and of the Council of 15 March 2006 on the management of waste from extractive industries and amending Directive 2004/35/EC</skos:prefLabel>
       <skos:definition xml:lang="en">The Directive 2006/21/EC applies to waste resulting from extraction, processing and storage of mineral resources and the working of quarries. It provides for measures, procedures and guidance to prevent or reduce as far as possible any adverse effects on the environment, in particular water, air, soil, fauna and flora and landscape, and any resultant risks to human health, brought about as a result of the management of waste from the extractive industries.
-According to the Directive no waste management installation of the extractive industries can operate without a permit issued by the competent authorities. Member States must ensure that operators of the mining waste facility draw up a waste management plan with objective to prevent or reduce the generation of waste and its negative impact and to
-encourage waste recovery through recycling, re-use or recovery.
+According to the Directive no waste management installation of the extractive industries can operate without a permit issued by the competent authorities. Member States must ensure that operators of the mining waste facility draw up a waste management plan with objective to prevent or reduce the generation of waste and its negative impact and to  
+encourage waste recovery through recycling, re-use or recovery. 
 Waste facilities may be of two types according to their potential risks: a waste facility whose failure or incorrect operation would present a significant accident hazard (category A) and all other waste facilities(category B). For facilities in category A, the competent authority must compile an external emergency plan for the measures to be taken off-site in the event of an accident.
 The operator must provide a financial guarantee before the beginning of waste processing operations so as to ensure that the provisions of the Directive are complied with and that the financial resources for restoring the site are always available.
 A mining waste facility is regarded as finally closed when the competent authority carries out a final inspection, studies the reports submitted by the operator, confirms that the site has been restored and gives its approval. After closure, the operator must maintain and monitor the site for as long as the competent authority considers necessary.</skos:definition>
@@ -925,7 +925,7 @@ This Directive shall apply to any element of surface water where the competent a
 (c) artificially created confined waters separated from surface water and groundwater.
 The Directive lays down two monitoring parameters (Intestinal enterococci and Escherichia coli) instead of nineteen in the previous Directive, but sets a higher health standard according to the latest scientific knowledge. Other parameters may possibly be taken into account, such as the presence of cyanobacteria or microalgae.
 
-The Directive has been amended by:
+The Directive has been amended by: 
 -Regulation 596/2009/EC of the European Parliament and of the Council of 18 June 2009 adapting a number of instruments subject to the procedure referred to in Article 251 of the Treaty to Council Decision 1999/468/EC with regard to the regulatory procedure with scrutiny — Adaptation to the regulatory procedure with scrutiny — Part Four.
 - Council Directive 2013/64/EU of 17 December 2013 amending Council Directives 91/271/EEC and 1999/74/EC, and Directives 2000/60/EC, 2006/7/EC, 2006/25/EC and 2011/24/EU of the European Parliament and of the Council, following the amendment of the status of Mayotte with regard to the European Union
 
@@ -937,7 +937,7 @@ See the consolidated version of 2014 at http://data.europa.eu/eli/dir/2006/7/201
       <skos:definition xml:lang="en">Council Directive 76/464/EEC of 4 May 1976 on pollution caused by certain dangerous substances discharged into the aquatic environment of the Community has been significantly amended on several occasions. In order to clarify matters, a codification of the provisions in question should be drawn up.
 An inventory of discharges of certain particularly dangerous substances into the aquatic environment (inland surface water, territorial waters, internal coastal waters) of the Community should be drawn up in order to know where they originated.
 
-Annex I gives two lists of substances:
+Annex I gives two lists of substances: 
  List I contains certain individual substances selected mainly on the basis of their toxicity, persistence and bioaccumulation, with the exception of those which are biologically harmless or which are rapidly converted into substances which are biologically harmless.
   List II contains:
 — substances belonging to the families and groups of substances in List I for which the emission limit values laid down by the Directives referred to in Annex IX to Directive 2000/60/EC have not been determined by those Directives,
@@ -956,8 +956,8 @@ Annex I gives two lists of substances:
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/reg/1993/793/oj">
       <skos:prefLabel xml:lang="en">Council Regulation (EEC) No 793/93 of 23 March 1993 on the evaluation and control of the risks of existing substances</skos:prefLabel>
-      <skos:definition xml:lang="en">This Regulation shall apply to:
-(a) the collection, circulation and accessibility of information on existing substances;
+      <skos:definition xml:lang="en">This Regulation shall apply to: 
+(a) the collection, circulation and accessibility of information on existing substances; 
 (b) the evaluation of the risks of existing substances to man, including workers and consumers, and to the environment, in order to ensure better management of those risks within the framework of Community provisions.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
@@ -966,8 +966,8 @@ Annex I gives two lists of substances:
       <skos:definition xml:lang="en">Taking into account, in particular, the precautionary principle, the objective of this Regulation is to protect human health and the environment from persistent organic pollutants by prohibiting, phasing out as soon as possible, or restricting the production, placing on the market and use of substances subject to the Stockholm Convention on Persistent Organic Pollutants, hereinafter ‘the Convention’, or the 1998 Protocol to the 1979 Convention on Long-Range Transboundary Air Pollution on Persistent Organic Pollutants, hereinafter ‘the Protocol’, and by minimising, with a view to eliminating where feasible as soon as possible, releases of such substances, and by establishing provisions regarding waste consisting of, containing or contaminated by any of these substances.
 
 The Regulation has been amended by:
--Council Regulation (EC) No 1195/2006 of 18 July 2006 amending Annex IV to Regulation (EC) No 850/2004 of the European Parliament and of the Council on persistent organic pollutants.
--Council Regulation (EC) No 172/2007 of 16 February 2007 amending Annex V to Regulation (EC) No 850/2004 of the European Parliament and of the Council on persistent organic pollutants.
+-Council Regulation (EC) No 1195/2006 of 18 July 2006 amending Annex IV to Regulation (EC) No 850/2004 of the European Parliament and of the Council on persistent organic pollutants. 
+-Council Regulation (EC) No 172/2007 of 16 February 2007 amending Annex V to Regulation (EC) No 850/2004 of the European Parliament and of the Council on persistent organic pollutants. 
 -Commission Regulation (EC) No 323/2007 of 26 March 2007 amending Annex V to Regulation (EC) No 850/2004 of the European Parliament and of the Council on persistent organic pollutants and amending Directive 79/117/EEC.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
@@ -999,8 +999,8 @@ This Directive applies to the waters referred to in Article 1 of Directive 76/46
                  rdf:about="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=CONSLEG:1982L0176:20090113:EN:PDF">
       <skos:prefLabel xml:lang="en">Council Directive 82/176/EEC of 22 March 1982 on limit values and quality objectives for mercury discharges by the chlor-alkali electrolysis industry (Daughter to 2006/11/EC) - Repealed by Directive 2008/105/EC on environmental quality standards in the field of water policy</skos:prefLabel>
       <skos:definition xml:lang="en">This Directive in pursuance of Article 6 (1) of Directive 76/464/EEC:
-- lays down limit values for emission standards for mercury in discharges from industrial plants as defined in Article 2 point (d) of this Directive,
-- lays down quality objectives for mercury in the aquatic environment,
+- lays down limit values for emission standards for mercury in discharges from industrial plants as defined in Article 2 point (d) of this Directive, 
+- lays down quality objectives for mercury in the aquatic environment, 
 - lays down the time limits for compliance with the conditions of the authorizations granted by the competent authorities of Member States in the case of existing discharges,
 - in pursuance of Article 12 (1) of Directive 76/464/EEC, lays down the reference methods of measurement enabling the mercury content in discharges and in the aquatic environment to be determined,
 - in pursuance of Article 6 (3) of Directive 76/464/EEC, establishes a monitoring procedure,
@@ -1026,8 +1026,8 @@ The aim of the Regulation is to reinforce, simplify and specify the existing pro
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/dir/2006/66/oj">
       <skos:prefLabel xml:lang="en">Directive 2006/66/EC of the European Parliament and of the Council of 6 September 2006 on batteries and accumulators and waste batteries and accumulators and repealing Directive 91/157/EEC</skos:prefLabel>
-      <skos:definition xml:lang="en">The Directive prohibits the placing on the market of certain batteries and accumulators with a proportional mercury or cadmium content above a fixed threshold. In addition, it promotes a high rate of collection and recycling of waste batteries and accumulators and improvement in the environmental performance of all involved in the life-cycle of batteries and accumulators, including their recycling and disposal.
-The aim is to cut the amount of hazardous substances - in particular, mercury, cadmium and lead - dumped in the environment; this should be done by reducing the use of these substances in batteries and accumulators and by treating and re-using the amounts that are used.
+      <skos:definition xml:lang="en">The Directive prohibits the placing on the market of certain batteries and accumulators with a proportional mercury or cadmium content above a fixed threshold. In addition, it promotes a high rate of collection and recycling of waste batteries and accumulators and improvement in the environmental performance of all involved in the life-cycle of batteries and accumulators, including their recycling and disposal. 
+The aim is to cut the amount of hazardous substances - in particular, mercury, cadmium and lead - dumped in the environment; this should be done by reducing the use of these substances in batteries and accumulators and by treating and re-using the amounts that are used. 
 The Directive applies to all types of batteries and accumulators, apart from those used in equipment to protect Member States' security or for military purposes, or in equipment designed to be sent into space.
  To ensure that a high proportion of spent batteries and accumulators are recycled, Member States must take whatever measures are needed (including economic instruments) to promote and maximise separate waste collections and prevent batteries and accumulators being thrown away as unsorted municipal waste. They have to make arrangements enabling end-users to discard spent batteries and accumulators at collection points in their vicinity and have them taken back at no charge by the producers. Collection rates of at least 25% and 45% have to be reached by 26 September 2012 and 26 September 2016 respectively.</skos:definition>
    </skos:Concept>
@@ -1044,7 +1044,7 @@ This Directive also complements the provisions preventing or limiting inputs of 
       <skos:prefLabel xml:lang="en">Directive 2006/44/EC of the European Parliament and of the Council of 6 September 2006 on the quality of fresh waters needing protection or improvement in order to support fish life</skos:prefLabel>
       <skos:definition xml:lang="en">Council Directive 78/659/EEC of 18 July 1978 on the quality of fresh waters needing protection or improvement in order to support fish life has been significantly amended on several occasions. In the interests of clarity and rationality that Directive should be codified.
 
-In order to attain the objectives of this Directive, Member States should designate the waters to which it will apply and set limit values corresponding to certain parameters. The waters so designated should be brought into conformity with these values within five years of this designation.
+In order to attain the objectives of this Directive, Member States should designate the waters to which it will apply and set limit values corresponding to certain parameters. The waters so designated should be brought into conformity with these values within five years of this designation. 
 The physical and chemical parameters applicable to the salmonid and cyprinid waters designated by the Member States are listed in Annex I.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
@@ -1068,7 +1068,7 @@ The parameters applicable to the waters designated by the Member States are list
 The Directive covers all types of floods, including fluvial, pluvial, coastal and groundwater floods as well as floods from artificial water-bearing infrastructure and may exclude floods from sewerage systems.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-                 rdf:about="https://eur-lex.europa.eu/eli/dir/2008/56/oj">
+                 rdf:about="http://data.europa.eu/eli/dir/2008/56/2017-06-07">
       <skos:prefLabel xml:lang="en">Directive 2008/56/EC of the European Parliament and of the Council of 17 June 2008 establishing a framework for community action in the field of marine environmental policy</skos:prefLabel>
       <skos:definition xml:lang="en">This Directive establishes a framework within which Member States shall take the necessary measures to achieve or maintain good environmental status in the marine environment by the year 2020 at the latest.
 For that purpose, marine strategies shall be developed and implemented in order to:
@@ -1087,13 +1087,13 @@ Each Member State shall, in respect of each marine region or subregion concerned
       <skos:prefLabel xml:lang="en">Directive 2008/50/EC of the European Parliament and of the Council of 21 May 2008 on ambient air quality and cleaner air for Europe</skos:prefLabel>
       <skos:definition xml:lang="en">This new Directive includes the following key elements:
 
-*The merging of most of existing legislation into a single directive (except for the fourth daughter directive) with no change to existing air quality objectives*
-*New air quality objectives for PM2.5 (fine particles) including the limit value and exposure related objetives – exposure concentration obligation and exposure reduction target
-*The possibility to discount natural sources of pollution when assessing compliance against limit values
+*The merging of most of existing legislation into a single directive (except for the fourth daughter directive) with no change to existing air quality objectives* 
+*New air quality objectives for PM2.5 (fine particles) including the limit value and exposure related objetives – exposure concentration obligation and exposure reduction target 
+*The possibility to discount natural sources of pollution when assessing compliance against limit values 
 *The possibility for time extensions of three years (PM10) or up to five years (NO2, benzene) for complying with limit values, based on conditions and the assessment by the European Commission</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-                 rdf:about="http://data.europa.eu/eli/dir/2008/105/oj">
+                 rdf:about="http://data.europa.eu/eli/dir/2008/105">
       <skos:prefLabel xml:lang="en">Directive 2008/105/EC of the European Parliament and of the Council of 16 December 2008, as amended by Directive 2013/39/EU of the European Parliament and of the Council, on environmental quality standards in the field of water policy, amending and subsequently repealing Council Directives 82/176/EEC, 83/513/EEC, 84/156/EEC, 84/491/EEC, 86/280/EEC and amending Directive 2000/60/EC of the European Parliament and of the Council</skos:prefLabel>
       <skos:definition xml:lang="en">This Directive lays down environmental quality standards (EQS) for priority substances and certain other pollutants as provided for in Article 16 of the Water Framework Directive 2000/60/EC (WFD), with the aim of achieving good surface water chemical status and in accordance with the provisions and objectives of Article 4 of that Directive.</skos:definition>
    </skos:Concept>
@@ -1160,9 +1160,9 @@ More information at http://ec.europa.eu/environment/air/pollutants/paints_direct
 •	The prohibition of placing on the market some products containing F-Gases and the control of use in some specific applications where containment is not feasible and where alternatives had been readily available and cost-effective.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-                 rdf:about="http://data.europa.eu/eli/dec/2011/850/oj">
+                 rdf:about="http://data.europa.eu/eli/dec_impl/2011/850/oj">
       <skos:prefLabel xml:lang="en">2011/850/EU: Commission Implementing Decision of 12 December 2011 laying down rules for Directives 2004/107/EC and 2008/50/EC of the European Parliament and of the Council as regards the reciprocal exchange of information and reporting on ambient air quality</skos:prefLabel>
-      <skos:definition xml:lang="en">The decision lays down rules for Directives 2004/107/EC and 2008/50/EC of the European Parliament and of the Council as regards the reciprocal exchange of information and reporting on ambient air quality.
+      <skos:definition xml:lang="en">The decision lays down rules for Directives 2004/107/EC and 2008/50/EC of the European Parliament and of the Council as regards the reciprocal exchange of information and reporting on ambient air quality. 
 Article 16 Applicability
 1. This Decision shall apply from 1 January 2014.
 2. By way of derogation from paragraph 1 of this Article, Member States shall make available the information required pursuant to Articles 6 (Zones and agglomerations) and 7 (Assessment regime)for the first time no later than 31 December 2013.</skos:definition>
@@ -1175,13 +1175,13 @@ Article 16 Applicability
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="http://data.europa.eu/eli/reg/2013/525/oj">
       <skos:prefLabel xml:lang="en">Regulation (EU) No 525/2013 of the European Parliament and of the Council of 21 May 2013 on a mechanism for monitoring and reporting greenhouse gas emissions and for reporting other information at national and Union level relevant to climate change and repealing Decision No 280/2004/EC</skos:prefLabel>
-      <skos:definition xml:lang="en">This Regulation establishes a mechanism for:
-(a) ensuring the timeliness, transparency, accuracy, consistency, comparability and completeness of reporting by the Union and its Member States to the UNFCCC Secretariat;
-(b) reporting and verifying information relating to commitments of the Union and its Member States pursuant to the UNFCCC, to the Kyoto Protocol and to decisions adopted thereunder and evaluating progress towards meeting those commitments;
+      <skos:definition xml:lang="en">This Regulation establishes a mechanism for: 
+(a) ensuring the timeliness, transparency, accuracy, consistency, comparability and completeness of reporting by the Union and its Member States to the UNFCCC Secretariat; 
+(b) reporting and verifying information relating to commitments of the Union and its Member States pursuant to the UNFCCC, to the Kyoto Protocol and to decisions adopted thereunder and evaluating progress towards meeting those commitments; 
 (c) monitoring and reporting all anthropogenic emissions by sources and removals by sinks of greenhouse gases not controlled by the Montreal Protocol on substances that deplete the ozone layer in the Member States;
-(d) monitoring, reporting, reviewing and verifying greenhouse gas emissions and other information pursuant to Article 6 of Decision No 406/2009/EC;
-(e) reporting the use of revenue generated by auctioning allowances under Article 3d(1) or (2) or Article 10(1) of Directive 2003/87/EC, pursuant to Article 3d(4) and Article 10(3) of that Directive;
-(f) monitoring and reporting on the actions taken by Member States to adapt to the inevitable consequences of climate change in a cost-effective manner;
+(d) monitoring, reporting, reviewing and verifying greenhouse gas emissions and other information pursuant to Article 6 of Decision No 406/2009/EC; 
+(e) reporting the use of revenue generated by auctioning allowances under Article 3d(1) or (2) or Article 10(1) of Directive 2003/87/EC, pursuant to Article 3d(4) and Article 10(3) of that Directive; 
+(f) monitoring and reporting on the actions taken by Member States to adapt to the inevitable consequences of climate change in a cost-effective manner; 
 (g) evaluating progress by the Member States towards meeting their obligations under Decision No 406/2009/EC.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
@@ -1304,7 +1304,7 @@ The main areas not covered by this regulation are: radioactive substances and mi
       <skos:definition xml:lang="en">This Regulation lays down the requirements for the monitoring and reporting of CO2 emissions from and fuel consumption of new heavy-duty vehicles.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-                 rdf:about="http://data.europa.eu/eli/reg/2017/852/oj">
+                 rdf:about="http://data.europa.eu/eli/reg/2017/852/2024-07-30">
       <skos:prefLabel xml:lang="en">Regulation (EU) 2017/852 of the European Parliament and of the Council of 17 May 2017 on mercury</skos:prefLabel>
       <skos:definition xml:lang="en">This Regulation establishes measures and conditions concerning the use and storage of and trade in mercury, mercury compounds and mixtures of mercury, and the manufacture and use of and trade in mercury-added products, and the management of mercury waste, in order to ensure a high level of protection of human health and the environment from anthropogenic emissions and releases of mercury and mercury compounds.</skos:definition>
    </skos:Concept>
@@ -1385,19 +1385,19 @@ Pursuant to Article 12 of Regulation (EU) 2019/631, the Commission is required t
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52021DC0572">
       <skos:prefLabel xml:lang="en">EU forest strategy for 2030</skos:prefLabel>
-      <skos:definition xml:lang="en">The EU Forest Strategy for 2030 replaces the one published in 2013 and complements several legal instruments under the EU Green Deal, in particular the EU Biodiversity Strategy to 2030. The overall objective of the EU Forest Strategy is to “improve the quantity and quality of EU forests and strengthen their protection, restoration and resilience”. The Strategy outlines the following specific targets:
-• Mapping and monitoring the strict protection of primary and old-growth forests
-• Ensure that 30% of EU land area is under an effective management regime and 10% under strict legal protection
-• Planting an additional 3 billion trees – a roadmap to achieving the EU 3 billion tree planting by 2030 pledge is provided as part of the Commission Staff Document for the Forest Strategy for 2030
-• Future specific targets for the restoration of forests under the upcoming legal instruments on ecosystem restoration
+      <skos:definition xml:lang="en">The EU Forest Strategy for 2030 replaces the one published in 2013 and complements several legal instruments under the EU Green Deal, in particular the EU Biodiversity Strategy to 2030. The overall objective of the EU Forest Strategy is to “improve the quantity and quality of EU forests and strengthen their protection, restoration and resilience”. The Strategy outlines the following specific targets: 
+• Mapping and monitoring the strict protection of primary and old-growth forests 
+• Ensure that 30% of EU land area is under an effective management regime and 10% under strict legal protection 
+• Planting an additional 3 billion trees – a roadmap to achieving the EU 3 billion tree planting by 2030 pledge is provided as part of the Commission Staff Document for the Forest Strategy for 2030 
+• Future specific targets for the restoration of forests under the upcoming legal instruments on ecosystem restoration 
 
-The Strategy highlights gaps in the EU’s monitoring framework on forests, and the need for a “more comprehensive picture of EU’s forests’ multifunctionality” and “more detailed sustainable forest management indicators and thresholds”. The Strategy proposes to launch a legislative proposal for a Forest Observation, Reporting and Data Collection framework, which would also require that EU member countries prepare Strategic Plans at the national or regional level. The framework would support the development of a monitoring framework integrating information from remote sensing, geospatial data and ground-based monitoring. According to the Strategy, key topics which should be included in the monitoring framework are:
-• Climate change (mitigation and adaptation)
-• Biodiversity
-• Forest health
-• Damages from forest risks
-• Invasive alien species
-• Forest management
+The Strategy highlights gaps in the EU’s monitoring framework on forests, and the need for a “more comprehensive picture of EU’s forests’ multifunctionality” and “more detailed sustainable forest management indicators and thresholds”. The Strategy proposes to launch a legislative proposal for a Forest Observation, Reporting and Data Collection framework, which would also require that EU member countries prepare Strategic Plans at the national or regional level. The framework would support the development of a monitoring framework integrating information from remote sensing, geospatial data and ground-based monitoring. According to the Strategy, key topics which should be included in the monitoring framework are: 
+• Climate change (mitigation and adaptation) 
+• Biodiversity 
+• Forest health 
+• Damages from forest risks 
+• Invasive alien species 
+• Forest management 
 • Use of biomass for different socio-economic purposes </skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
@@ -1416,7 +1416,7 @@ The Strategy highlights gaps in the EU’s monitoring framework on forests, and 
       <skos:definition xml:lang="en"/>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-                 rdf:about="https://eur-lex.europa.eu/eli/dir/2020/2184/oj">
+                 rdf:about="http://data.europa.eu/eli/dir/2020/2184/oj">
       <skos:prefLabel xml:lang="en">DIRECTIVE (EU) 2020/2184 OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 16 December 2020 on the quality of water intended for human consumption (recast)</skos:prefLabel>
       <skos:definition xml:lang="en">The recast Drinking Water Directive is the EU’s main law on drinking water. It concerns the access to and the quality of water intended for human consumption  to protect human health.
 
@@ -1502,8 +1502,8 @@ This Regulation also lays down requirements for the reporting of CO2 emissions f
 This Regulation also lays down requirements for the reporting of CO2 emissions from, and fuel consumption of, new heavy-duty vehicles registered in the Union.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-                 rdf:about="http://data.europa.eu/eli/reg/2019/1242/oj">
-      <skos:prefLabel xml:lang="en">REGULATION (EU) 2019/1242 OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 20 June 2019
+                 rdf:about="http://data.europa.eu/eli/reg/2019/1242/2024-07-01">
+      <skos:prefLabel xml:lang="en">REGULATION (EU) 2019/1242 OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 20 June 2019 
 setting CO2 emission performance standards for new heavy-duty vehicles and amending Regulations (EC) No 595/2009 and (EU) 2018/956 of the European Parliament and of the Council and Council Directive 96/53/EC</skos:prefLabel>
       <skos:definition xml:lang="en">This Regulation sets CO2 emissions performance standards for new heavy-duty vehicles. Those standards contribute to achieving the Union’s climate-neutrality objective and the intermediate Union climate targets, as laid down in Regulation (EU) 2021/1119 of the European Parliament and of the Council, Member States’ targets of reducing their greenhouse gas emissions, as laid down in Regulation (EU) 2023/857 of the European Parliament and of the Council, and the objectives of the Paris Agreement, as well as to ensuring the proper functioning of the internal market.
 This Regulation also lays down requirements for the reporting of CO2 emissions from, and fuel consumption of, new heavy-duty vehicles registered in the Union (Art. 1, 2019/1242)</skos:definition>
@@ -1526,9 +1526,9 @@ Europe’s nature is in alarming decline, with more than 80% of habitats in poor
       <skos:definition xml:lang="en"/>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-                 rdf:about="https://eur-lex.europa.eu/eli/reg/2024/573/oj">
+                 rdf:about="http://data.europa.eu/eli/reg/2024/573/oj">
       <skos:prefLabel xml:lang="en">Regulation (EU) 2024/573 of the European Parliament and of the Council of 7 February 2024 on fluorinated greenhouse gases, amending Directive (EU) 2019/1937 and repealing Regulation (EU) No 517/2014</skos:prefLabel>
-      <skos:definition xml:lang="en">In response to the European Climate Law and the need for stronger climate action, the European Commission reviewed the 2014 F-gas Regulation and, on 7 April 2022, proposed a new regulation to the European Parliament and the Council of the European Union.
+      <skos:definition xml:lang="en">In response to the European Climate Law and the need for stronger climate action, the European Commission reviewed the 2014 F-gas Regulation and, on 7 April 2022, proposed a new regulation to the European Parliament and the Council of the European Union. 
 
 Building on the success of its predecessor, the F-gas Regulation (EU) 2024/573 was adopted on 7 February 2024 and started to apply on 11 March 2024.
 
@@ -1537,14 +1537,14 @@ The objective of this EU Regulation is to protect the environment by reducing em
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                  rdf:about="https://eur-lex.europa.eu/eli/reg/2024/590/oj">
       <skos:prefLabel xml:lang="en">Regulation (EU) 2024/590 of the European Parliament and of the Council of 7 February 2024 on substances that deplete the ozone layer, and repealing Regulation (EC) No 1005/2009</skos:prefLabel>
-      <skos:definition xml:lang="en">In response to the European Climate Law and the need for stronger climate action, the European Commission reviewed the 2009 Ozone Regulation and, on 7 April 2022, proposed a new regulation to the European Parliament and the Council of the European Union.
+      <skos:definition xml:lang="en">In response to the European Climate Law and the need for stronger climate action, the European Commission reviewed the 2009 Ozone Regulation and, on 7 April 2022, proposed a new regulation to the European Parliament and the Council of the European Union. 
 
 Building on the success of its predecessor, the Ozone Regulation (EU) 2024/590 was adopted on 7 February 2024 and started to apply on 11 March 2024.
 
 The objective of this EU Regulation is to protect the environment by reducing ozone-depleting substances.</skos:definition>
    </skos:Concept>
    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-                 rdf:about="https://eur-lex.europa.eu/eli/dir/2024/2881/oj/eng">
+                 rdf:about="http://data.europa.eu/eli/dir/2024/2881/oj">
       <skos:prefLabel xml:lang="en">Directive (EU) 2024/2881 of the European Parliament and of the Council of 23 October 2024 on ambient air quality and cleaner air for Europe (recast)</skos:prefLabel>
       <skos:definition xml:lang="en">This revised Directive includes the following key elements:
 * Merging of Directives 2008/50/EC and 2004/107/EC into one consolidated directive, simplifying the legal framework.
@@ -1554,5 +1554,25 @@ The objective of this EU Regulation is to protect the environment by reducing oz
 * Stronger obligations on Air Quality Plans and Roadmaps, including more detailed measures and stricter timelines.
 * Enhanced access to justice and citizen rights, enabling legal action where standards are not met.
 * Compliance with the new standards required by 2030, with the possibility of time extensions under strict conditions.</skos:definition>
+   </skos:Concept>
+   <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+                 rdf:about="http://data.europa.eu/eli/act//NaN/oj">
+      <skos:prefLabel xml:lang="en">Industrial Emission Portal Regulation (Regulation (EU) 2024/1244)</skos:prefLabel>
+      <skos:definition xml:lang="en"/>
+   </skos:Concept>
+   <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+                 rdf:about="http://data.europa.eu/eli/reg/2025/2455/oj">
+      <skos:prefLabel xml:lang="en">Regulation (EU) 2025/2455 of the European Parliament and of the Council of 26 November 2025 establishing a common data platform on chemicals, laying down rules to ensure that the data contained in it are findable, accessible, interoperable and reusable and establishing a monitoring and outlook framework for chemicals</skos:prefLabel>
+      <skos:definition xml:lang="en">The Regulation aims to increase the level of protection of the European environment and human health from chemical risks. A Common Data Platform that brings together and makes public data on chemicals held by the various European agencies is seen as a critical element to achieve this aim. This is meant to encompass data held by the European Chemicals Agency (ECHA), European Environment Agency (EEA), European Medicines Agency (EMA), European Food Safety Authority (EFSA), and European Agency for Safety and Health at Work (EU-OSHA).  </skos:definition>
+   </skos:Concept>
+   <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+                 rdf:about="https://eur-lex.europa.eu/eli/dir/2024/3019/oj/eng">
+      <skos:prefLabel xml:lang="en">Directive (EU) 2024/3019 of the European Parliament and of the Council of 27 November 2024 concerning urban wastewater treatment (recast)</skos:prefLabel>
+      <skos:definition xml:lang="en">This Directive lays down rules on the collection, treatment and discharge of urban wastewater, to protect the environment and human health, in line with the One Health approach, while progressively reducing greenhouse gas (GHG) emissions to sustainable levels, improving the energy balance of urban wastewater collection and treatment activities and contributing to the transition towards a circular economy. It also lays down rules on access to sanitation for all, on transparency of the urban wastewater sector, on the regular surveillance of relevant public health parameters in urban wastewater and on the implementation of the polluter-pays principle.</skos:definition>
+   </skos:Concept>
+   <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+                 rdf:about="https://data.europa.eu/eli/dec/2013/1313/oj/eng">
+      <skos:prefLabel xml:lang="en">DECISION No 1313/2013/EU OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 17 December 2013 on a Union Civil Protection Mechanism</skos:prefLabel>
+      <skos:definition xml:lang="en">Article 196 of the Treaty on the  Functioning of the European Union (EU) mandates cooperation among Member States to  enhance disaster prevention and response. The EU supports national efforts in these areas. In  2001, it established a civil protection mechanism to coordinate disaster response, which was  strengthened in 2013 with the Union Civil Protection Mechanism (UCPM). This mechanism enables collective EU action when a crisis exceeds a country's capacity.</skos:definition>
    </skos:Concept>
 </rdf:RDF>
