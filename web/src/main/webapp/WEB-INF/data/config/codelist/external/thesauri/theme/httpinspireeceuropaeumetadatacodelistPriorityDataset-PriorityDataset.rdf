@@ -3,8 +3,8 @@
   <skos:ConceptScheme xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset">
     <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/" xml:lang="en">INSPIRE priority data set</dc:title>
     <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/" xml:lang="en">List of data sets related to environmental reporting, which should be made available by Member States through the European Spatial Data Infrastructure in a stepwise manner. The list also reflects the data gaps identified during the evaluation of the state-of-implementation and the fitness of the Directive for its intended purpose (a so-called REFIT evaluation)</dc:description>
-    <dcterms:issued xmlns:dcterms="http://purl.org/dc/terms/">2018-06-12T11:16:28</dcterms:issued>
-    <dcterms:modified xmlns:dcterms="http://purl.org/dc/terms/">2018-06-12T11:16:28</dcterms:modified>
+    <dcterms:issued xmlns:dcterms="http://purl.org/dc/terms/">2018-04-04</dcterms:issued>
+    <dcterms:modified xmlns:dcterms="http://purl.org/dc/terms/">2018-04-04</dcterms:modified>
     <skos:hasTopConcept rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset/AirQualityManagementZonesAndAgglomerations-dir-2008-50" />
     <skos:hasTopConcept rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset/AirQualityMonitoringNetworks-dir-2008-50" />
     <skos:hasTopConcept rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset/AirQualityMonitoringStationsData-dir-2008-50" />

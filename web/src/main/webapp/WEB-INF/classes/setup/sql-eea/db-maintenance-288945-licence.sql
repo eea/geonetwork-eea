@@ -79,3 +79,12 @@ SET data = replace(data,
                    'License CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/).')
 WHERE data LIKE
       '%EEA standard re-use policy: unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged.%';
+
+
+-- 5aa86a38-38dd-4898-af67-07cdd851a27d
+UPDATE metadata
+SET data = replace(data,
+                   '>EA standard re-use policy: unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged (http://www.eea.europa.eu/legal/copyright).',
+                   '>License CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/).')
+WHERE data LIKE
+      '%>EA standard re-use policy: unless otherwise indicated, re-use of content on the EEA website for commercial or non-commercial purposes is permitted free of charge, provided that the source is acknowledged (http://www.eea.europa.eu/legal/copyright).%';
