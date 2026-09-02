@@ -36,7 +36,6 @@ import org.fao.geonet.exceptions.UserNotFoundEx;
 import org.fao.geonet.exceptions.XSDValidationErrorEx;
 import org.fao.geonet.inspire.validator.InspireValidatorException;
 import org.fao.geonet.util.FileUtil;
-import org.fao.geonet.util.nextcloud.NextcloudException;
 import org.fao.geonet.utils.Log;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -442,18 +441,6 @@ public class GlobalExceptionController {
         storeApiErrorCause(exception);
 
         return new ApiError("missing_resource_parameter", exception);
-    }
-
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ApiResponse(content = {@Content(mediaType = APPLICATION_JSON_VALUE)})
-    @ExceptionHandler({
-        NextcloudException.class
-    })
-    public ApiError nextcloudHandler(final Exception exception) {
-        storeApiErrorCause(exception);
-
-        return new ApiError("nextcloud_exception", exception);
     }
 
     /**

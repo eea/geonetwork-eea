@@ -35,7 +35,7 @@ Developer documentation located in ``README.md`` files in the code-base:
 ## EEA GeoNetwork
 
 EEA GeoNetwork is a customised version of GeoNetwork opensource. It includes specific features and configurations for the European Environment Agency (EEA) and its partners.
-It runs GeoNetwork 5 on top of GeoNetwork 4 and Nextcloud for file sharing.
+It runs GeoNetwork 5 on top of GeoNetwork 4 for file sharing.
 
 GeoNetwork 5 act as the main entry point and takes care of:
 * Authentication against EEA LDAP
@@ -44,7 +44,6 @@ GeoNetwork 5 act as the main entry point and takes care of:
 * And then proxy all other API calls to GeoNetwork 4
 
 EEA GeoNetwork is based on GeoNetwork 4.4.x versions. Main customizations are:
-* [Nextcloud integration for file sharing and datastore](services/src/main/java/org/fao/geonet/util/nextcloud)
 * [EEA editor configuration](schemas/iso19115-3.2018/src/main/plugin/iso19115-3.2018/layout/config-editor.xml#L653C6-L653C10)
 
 ### GeoNetwork 4 with Java 11
@@ -58,21 +57,7 @@ git checkout -b eea-4.9.x origin/eea-4.9.x
 mvn clean install -DskipTests
 jetty:run -Des.host=localhost -Des.index.records=eea-records \
    -Ddb.type=postgres -Ddb.port=5432 -Ddb.name=eea -Ddb.username=www-data -Ddb.password=www-data \
-   -Dgeonetwork.security.type=gn5 \
-   -Dgeonetwork.data.dir=/dev/geonetwork-eea/eea/nextcloud/datashare/external/cataloguestore/metadata_data
-```
-
-In `config.properties`, set Nextcloud connection parameters:
-
-```properties
-nextcloud.url=http://localhost:88
-nextcloud.username=admin
-nextcloud.password=admin
-nextcloud.base.folder=/dev/geonetwork-eea/eea/nextcloud/datashare
-nextcloud.datastore.path=/external/datastore/
-nextcloud.cataloguestore.path=/external/cataloguestore/metadata_data
-nextcloud.shareUrl.prefix=
-nextcloud.internalShare.groups=eea-staff,eionet-group-sdi
+   -Dgeonetwork.security.type=gn5 
 ```
 
 
@@ -94,7 +79,6 @@ GEONETWORK_URL=http://localhost:8282;
 SERVER_PORT=8282;
 SERVER_SERVLET_CONTEXT-PATH=/geonetwork;
 SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/eea
-GEONETWORK_DIRECTORY_DATA=/dev/geonetwork-eea/eea/nextcloud/datashare/external/cataloguestore
 GEONETWORK_DIRECTORY_METADATA_LAYOUT=UUID
 GEONETWORK_DIRECTORY_PRIVILEGES=NONE
 GEONETWORK_SECURITY_PROVIDER=ldap
@@ -113,22 +97,3 @@ GEONETWORK_SECURITY_LDAP_ATTRIBUTES_SURNAME=sn
 Access: http://localhost:8282/geonetwork
 
 
-### Nextcloud
-
-
-```shell
-mkdir datashare
-mkdir -p datashare/external/cataloguestore
-mkdir -p datashare/external/datastore/public
-docker run  \
- -e NEXTCLOUD_ADMIN_USER=admin \
- -e NEXTCLOUD_ADMIN_PASSWORD=admin \
- -e OVERWRITEWEBROOT=/ \
-  -p 88:80 \
-  -u 1000:1000 \
-  -v ./datashare:/var/www/html \
-  --name=nextcloud --rm  \
-  nextcloud
-```
-
-Access: http://localhost:88/

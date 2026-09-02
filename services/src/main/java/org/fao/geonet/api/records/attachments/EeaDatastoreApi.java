@@ -22,18 +22,15 @@
  */
 package org.fao.geonet.api.records.attachments;
 
-import javax.servlet.http.HttpServletRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-import org.fao.geonet.api.ApiUtils;
-import org.fao.geonet.domain.AbstractMetadata;
-import org.fao.geonet.util.nextcloud.NextcloudService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.view.RedirectView;
+
+import javax.servlet.http.HttpServletRequest;
 
 import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
 import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
@@ -43,10 +40,9 @@ import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
 @Tag(name = API_CLASS_RECORD_TAG,
     description = API_CLASS_RECORD_OPS)
 public class EeaDatastoreApi {
-    private final NextcloudService nextcloudService;
 
-    public EeaDatastoreApi(NextcloudService nextcloudService) {
-        this.nextcloudService = nextcloudService;
+    public EeaDatastoreApi() {
+
     }
 
     /**
@@ -55,14 +51,13 @@ public class EeaDatastoreApi {
      * @return
      * @throws Exception
      */
-    @io.swagger.v3.oas.annotations.Operation(summary = "Proxy the request to the Nextcloud share",
-        description = "Proxy the request to the Nextcloud share. It returns the HTML of the nextcloud share page. " +
-            "Intended to be called directly from the browser in a tab.")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Redirect to attachments",
+        description = "Redirect to the attachments endpoint. Intended to be called directly from the browser in a tab.")
     @GetMapping(value = "/datastore")
     @ResponseBody
-    public ResponseEntity<String> checkAndProxyDatastore(@PathVariable String uuid, HttpServletRequest request) throws Exception {
-        AbstractMetadata metadata = ApiUtils.canViewRecord(uuid, request);
+    public RedirectView checkAndProxyDatastore(@PathVariable String uuid, HttpServletRequest request) throws Exception {
+        // Redirect to attachments
+        return new RedirectView("/srv/api/records/" + uuid + "/attachments");
 
-        return nextcloudService.checkAndProxyDatastore(metadata);
     }
 }
