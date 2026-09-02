@@ -1814,16 +1814,16 @@
       // login url for inline signin form in top toolbar
       $scope.signInFormAction = "../../api/user/signin?redirect=" + $location.url();
       // login url and form action with hash reference to the current page
-      // $scope.signInFormLinkWithHash =
-      //   ($scope.gnCfg.mods.authentication.signinUrl ||
-      //     "../../{{node}}/{{lang}}/catalog.signin") +
-      //   "#" +
-      //   $location.url();
-      // $scope.signInFormActionWithHash =
-      //   ($scope.gnCfg.mods.authentication.signinAPI || "../../signin") +
-      //   "#" +
-      //   $location.url();
-      //
+      $scope.signInFormLinkWithHash =
+        ($scope.gnCfg.mods.authentication.signinUrl ||
+          "../../{{node}}/{{lang}}/catalog.signin") +
+        "#" +
+        $location.url();
+      $scope.signInFormActionWithHash =
+        ($scope.gnCfg.mods.authentication.signinAPI || "../../api/user/signin") +
+        "#" +
+        $location.url();
+
       // when the login input have focus, do not close the dropdown/popup
       $scope.focusLoginPopup = function () {
         $(".signin-dropdown #inputUsername, .signin-dropdown #inputPassword").one(

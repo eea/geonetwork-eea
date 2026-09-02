@@ -258,9 +258,10 @@ public class AttachmentsApi {
         String supportedFileMimetypes = settingManager.getValue(Settings.METADATA_EDIT_SUPPORTEDFILEMIMETYPES);
         fileMimetypeChecker.checkValidMimeType(file, supportedFileMimetypes.split("\\|"));
 
-        MetadataResource resource = store.putResource(context, metadataUuid, file, folder, visibility, approved);
+        AbstractMetadata metadata = ApiUtils.getRecord(metadataUuid);
+        MetadataResource resource = store.putResource(context, metadata.getUuid(), file, folder, visibility, approved);
 
-        String metadataIdString = ApiUtils.getInternalId(metadataUuid, approved);
+        String metadataIdString = ApiUtils.getInternalId(metadata.getUuid(), approved);
         if (metadataIdString != null && file != null && !file.isEmpty()) {
             long metadataId = Long.parseLong(metadataIdString);
             UserSession userSession = ApiUtils.getUserSession(request.getSession());
