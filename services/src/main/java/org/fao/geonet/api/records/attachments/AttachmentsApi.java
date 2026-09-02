@@ -201,7 +201,8 @@ public class AttachmentsApi {
         @RequestParam(required = false, defaultValue = FilesystemStore.DEFAULT_FILTER) String filter,
         @Parameter(hidden = true) HttpServletRequest request) throws Exception {
         ServiceContext context = ApiUtils.createServiceContext(request);
-        return store.getResources(context, metadataUuid, sort, filter, approved);
+        AbstractMetadata metadata = ApiUtils.getRecord(metadataUuid);
+        return store.getResources(context, metadata.getUuid(), sort, filter, approved);
     }
 
     @io.swagger.v3.oas.annotations.Operation(summary = "Delete all uploaded metadata resources")
@@ -215,7 +216,8 @@ public class AttachmentsApi {
         @Parameter(description = "Use approved version or not", example = "true") @RequestParam(required = false, defaultValue = "false") Boolean approved,
         @Parameter(hidden = true) HttpServletRequest request) throws Exception {
         ServiceContext context = ApiUtils.createServiceContext(request);
-        store.delResources(context, metadataUuid, approved);
+        AbstractMetadata metadata = ApiUtils.getRecord(metadataUuid);
+        store.delResources(context, metadata.getUuid(), approved);
 
         String metadataIdString = ApiUtils.getInternalId(metadataUuid, approved);
         if (metadataIdString != null) {
