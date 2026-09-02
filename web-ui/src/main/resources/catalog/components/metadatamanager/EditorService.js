@@ -64,6 +64,17 @@
        */
       var duration = 300;
 
+      gnCurrentEdit.getRelations = function (type) {
+        var c = gnCurrentEdit.relatedConfigUI.filter(function (c) {
+          return c.type === type;
+        });
+        if (c.length === 1) {
+          return c[0].relations;
+        } else {
+          return [];
+        }
+      };
+
       var isFirstElementOfItsKind = function (element) {
         return !isSameKindOfElement(element, $(element).prev().get(0));
       };
@@ -419,9 +430,6 @@
                 : angular.fromJson(getInputValue("resourceContainerDescription")),
             resourceManagementExternalProperties: angular.fromJson(
               getInputValue("resourceManagementExternalProperties")
-            ),
-            resourceFolderPrivilegesStrategy: getInputValue(
-              "resourceFolderPrivilegesStrategy"
             ),
             extent: extent,
             dataFormats: dataFormats,

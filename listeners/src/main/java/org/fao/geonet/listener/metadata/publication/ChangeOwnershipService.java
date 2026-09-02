@@ -33,6 +33,7 @@ import org.fao.geonet.kernel.datamanager.IMetadataIndexer;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataOperations;
 import org.fao.geonet.kernel.search.IndexingMode;
+import org.fao.geonet.kernel.search.submission.DirectIndexSubmitter;
 import org.fao.geonet.repository.OperationAllowedRepository;
 import org.fao.geonet.utils.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,8 @@ public class ChangeOwnershipService {
 
     @Autowired
     public ChangeOwnershipService(OperationAllowedRepository operationAllowedRepository,
-                                  IMetadataManager metadataManager, IMetadataOperations metadataOperations,
+                                  IMetadataManager metadataManager,
+                                  IMetadataOperations metadataOperations,
                                   IMetadataIndexer metadataIndexer) {
         this.operationAllowedRepository = operationAllowedRepository;
         this.metadataManager = metadataManager;
@@ -107,7 +109,7 @@ public class ChangeOwnershipService {
 
         metadataManager.updateMetadataOwner(metadataId, String.valueOf(userOwnerId), String.valueOf(newGroupOwnerId));
 
-        metadataIndexer.indexMetadata(String.valueOf(metadataId), true, IndexingMode.full);
+        metadataIndexer.indexMetadata(String.valueOf(metadataId), DirectIndexSubmitter.INSTANCE, IndexingMode.full);
     }
 
 

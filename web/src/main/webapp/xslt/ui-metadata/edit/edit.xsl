@@ -96,7 +96,6 @@
           <input type="hidden" id="otherLanguages" value="{$metadataOtherLanguagesAsJson}"/>
           <input type="hidden" id="resourceContainerDescription" value="{$resourceContainerDescription}"/>
           <input type="hidden" id="resourceManagementExternalProperties" value="{$resourceManagementExternalProperties}"/>
-          <input type="hidden" id="resourceFolderPrivilegesStrategy" value="{$resourceFolderPrivilegesStrategy}"/>
           <input type="hidden" id="version" name="version" value="{$metadata/gn:info/version}"/>
           <input type="hidden" id="currTab" name="currTab" value="{$tab}"/>
           <input type="hidden" id="displayAttributes" name="displayAttributes"

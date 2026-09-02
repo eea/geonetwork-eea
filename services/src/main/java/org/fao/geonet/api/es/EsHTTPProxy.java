@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 Food and Agriculture Organization of the
+ * Copyright (C) 2001-2026 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
  *
@@ -31,7 +31,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.Sets;
 import com.jayway.jsonpath.DocumentContext;
@@ -63,11 +62,11 @@ import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.SelectionManager;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
+import org.fao.geonet.kernel.schema.MetadataOperationFilterType;
 import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.kernel.schema.MetadataSchemaOperationFilter;
 import org.fao.geonet.kernel.search.EsFilterBuilder;
-import org.fao.geonet.kernel.setting.SettingManager;
-import org.fao.geonet.repository.SourceRepository;
+import org.fao.geonet.kernel.search.EsQueryFilterUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,28 +86,27 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.zip.DeflaterInputStream;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import static org.fao.geonet.kernel.setting.Settings.SYSTEM_METADATAPRIVS_USER_ALWAYS_CAN_EDIT_OWNED_METADATA;
 
-
+/**
+ * Proxy from GeoNetwork {@code /{portal}}/api} to Elasticsearch service.
+ *
+ * The portal and privileges are included the search provided by the user.
+ */
 @RequestMapping(value = {
     "/{portal}/api"
 })
 @Tag(name = "search",
     description = "Proxy for Elasticsearch catalog search operations")
 @Controller
-/**
- * Proxy from GeoNetwork {@code /{portal}}/api} to Elasticsearch service.
- *
- * The portal and privileges are included the search provided by the user.
- */
 public class EsHTTPProxy {
-    protected static final String[] validContentTypes = {
+    public static final String[] _validContentTypes = {
         "application/json", "text/plain"
     };
     private static final Logger LOGGER = LoggerFactory.getLogger(Geonet.INDEX_ENGINE);
@@ -116,7 +114,7 @@ public class EsHTTPProxy {
      * Privileges filter only allows
      * * op0 (ie. view operation) contains one of the ids of your groups
      */
-    private static final String FILTER_TEMPLATE = " {\n" +
+    private static final String filterTemplate = " {\n" +
         "       \t\"query_string\": {\n" +
         "       \t\t\"query\": \"%s\"\n" +
         "       \t}\n" +
@@ -126,13 +124,7 @@ public class EsHTTPProxy {
     private static final String MULTISEARCH_ENDPOINT = "_msearch";
 
     @Autowired
-    AccessManager accessManager;
-
-    @Autowired
     NodeInfo node;
-
-    @Autowired
-    SourceRepository sourceRepository;
 
     @Value("${es.index.records:gn-records}")
     private String defaultIndex;
@@ -149,7 +141,7 @@ public class EsHTTPProxy {
     /**
      * Ignore list of headers handled by proxy implementation directly.
      */
-    private String[] proxyHeadersIgnoreList = {"Content-Length"};
+    private final String[] proxyHeadersIgnoreList =  {"Content-Length"};
 
     @Autowired
     private EsRestClient client;
@@ -219,7 +211,7 @@ public class EsHTTPProxy {
         final AccessManager accessManager = context.getBean(AccessManager.class);
         final boolean isOwner = accessManager.isOwner(context, sourceInfo);
         final HashSet<ReservedOperation> operations;
-        boolean canEdit = id != null && accessManager.canEdit(context, id);
+        boolean canEdit = false;
         if (isOwner) {
             operations = Sets.newHashSet(Arrays.asList(ReservedOperation.values()));
             if (owner != null) {
@@ -228,6 +220,8 @@ public class EsHTTPProxy {
         } else {
             final Collection<Integer> groups =
                 accessManager.getUserGroups(context.getUserSession(), context.getIpAddress(), false);
+            final Collection<Integer> editingGroups =
+                accessManager.getUserGroups(context.getUserSession(), context.getIpAddress(), true);
             operations = Sets.newHashSet();
             for (ReservedOperation operation : ReservedOperation.values()) {
                 final JsonNode operationNodes = doc.get("_source").get(Geonet.IndexFieldNames.OP_PREFIX + operation.getId());
@@ -236,6 +230,11 @@ public class EsHTTPProxy {
                     if (opFields != null) {
                         for (JsonNode field : opFields) {
                             final int groupId = field.asInt();
+                            if (operation == ReservedOperation.editing
+                                && !canEdit
+                                && editingGroups.contains(groupId)) {
+                                canEdit = true;
+                            }
 
                             if (groups.contains(groupId)) {
                                 operations.add(operation);
@@ -245,13 +244,7 @@ public class EsHTTPProxy {
                 }
             }
         }
-
-        final SettingManager settingManager = context.getBean(SettingManager.class);
-        if (settingManager.getValueAsBool(SYSTEM_METADATAPRIVS_USER_ALWAYS_CAN_EDIT_OWNED_METADATA, true)) {
-            doc.put(Edit.Info.Elem.EDIT, isOwner || canEdit);
-        } else {
-            doc.put(Edit.Info.Elem.EDIT, canEdit);
-        }
+        doc.put(Edit.Info.Elem.EDIT, isOwner || canEdit);
         doc.put(Edit.Info.Elem.REVIEW,
             id != null && accessManager.hasReviewPermission(context, id));
         doc.put(Edit.Info.Elem.OWNER, isOwner);
@@ -306,9 +299,7 @@ public class EsHTTPProxy {
     public void search(
         @RequestParam(defaultValue = SelectionManager.SELECTION_BUCKET)
         String bucket,
-        @Parameter(description = "Type of related resource. If none, no associated resource returned.",
-            required = false
-        )
+        @Parameter(description = "Type of related resource. If none, no associated resource returned.")
         @RequestParam(name = "relatedType", defaultValue = "")
         RelatedItemType[] relatedTypes,
         @Parameter(hidden = true)
@@ -348,9 +339,7 @@ public class EsHTTPProxy {
     public void msearch(
         @RequestParam(defaultValue = SelectionManager.SELECTION_METADATA)
         String bucket,
-        @Parameter(description = "Type of related resource. If none, no associated resource returned.",
-            required = false
-        )
+        @Parameter(description = "Type of related resource. If none, no associated resource returned.")
         @RequestParam(name = "relatedType", defaultValue = "")
         RelatedItemType[] relatedTypes,
         @Parameter(hidden = true)
@@ -422,44 +411,64 @@ public class EsHTTPProxy {
         if (SEARCH_ENDPOINT.equals(endPoint) || MULTISEARCH_ENDPOINT.equals(endPoint)) {
             UserSession session = context.getUserSession();
             ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode nodeQuery = objectMapper.readTree(body);
-
-            // multisearch support
-            final MappingIterator<Object> mappingIterator = objectMapper.readerFor(JsonNode.class).readValues(body);
-            StringBuilder requestBody = new StringBuilder();
-            while (mappingIterator.hasNextValue()) {
-                JsonNode jsonNode = (JsonNode) mappingIterator.nextValue();
-                final JsonNode indexNode = jsonNode.get("index");
-                if (indexNode != null) {
-                    ((ObjectNode) jsonNode).put("index", defaultIndex);
-                } else {
-                    JsonNode queryNode = jsonNode.get("query");
-
-                    addFilterToQuery(context, objectMapper, jsonNode);
-                    if (selectionBucket != null) {
-                        // Multisearch are not supposed to work with a bucket.
-                        // Only one request is store in session
-                        session.setProperty(Geonet.Session.SEARCH_REQUEST + selectionBucket, jsonNode);
-                    }
-                    final JsonNode sourceNode = jsonNode.get("_source");
-                    if (sourceNode != null) {
-                        if (sourceNode.isArray()) {
-                            addRequiredField((ArrayNode) sourceNode);
-                        } else {
-                            final JsonNode sourceIncludes = sourceNode.get("includes");
-                            if (sourceIncludes != null && sourceIncludes.isArray()) {
-                                addRequiredField((ArrayNode) sourceIncludes);
-                            }
-                        }
-                    }
-                }
-                requestBody.append(jsonNode).append(System.lineSeparator());
-            }
+            String requestBody = buildSearchRequestBody(context, session, objectMapper, body, endPoint, selectionBucket);
             handleRequest(context, httpSession, request, response, url, endPoint,
-                requestBody.toString(), true, selectionBucket, relatedTypes);
+                requestBody, true, selectionBucket, relatedTypes);
         } else {
             handleRequest(context, httpSession, request, response, url, endPoint,
                 body, true, selectionBucket, relatedTypes);
+        }
+    }
+
+    private String buildSearchRequestBody(ServiceContext context,
+                                          UserSession session,
+                                          ObjectMapper objectMapper,
+                                          String body,
+                                          String endPoint,
+                                          String selectionBucket) throws Exception {
+        boolean isMultiSearch = MULTISEARCH_ENDPOINT.equals(endPoint);
+        final MappingIterator<Object> mappingIterator = objectMapper.readerFor(JsonNode.class).readValues(body);
+        StringBuilder requestBody = new StringBuilder();
+        int requestLineNumber = 0;
+        while (mappingIterator.hasNextValue()) {
+            JsonNode node = (JsonNode) mappingIterator.nextValue();
+            boolean isMultiSearchHeader = isMultiSearch && requestLineNumber % 2 == 0;
+            if (isMultiSearchHeader) {
+                if (!node.isObject()) {
+                    throw new IllegalArgumentException(
+                        "Invalid _msearch request: expected a JSON object for the header at line " + requestLineNumber);
+                }
+                ((ObjectNode) node).put("index", defaultIndex);
+            } else {
+                enrichSearchRequestNode(context, session, objectMapper, node, selectionBucket);
+            }
+            requestLineNumber++;
+            requestBody.append(node).append(System.lineSeparator());
+        }
+        return requestBody.toString();
+    }
+
+    private void enrichSearchRequestNode(ServiceContext context,
+                                         UserSession session,
+                                         ObjectMapper objectMapper,
+                                         JsonNode node,
+                                         String selectionBucket) throws Exception {
+        addFilterToQuery(context, objectMapper, node);
+        if (selectionBucket != null) {
+            // Multisearch are not supposed to work with a bucket.
+            // Only one request is store in session
+            session.setProperty(Geonet.Session.SEARCH_REQUEST + selectionBucket, node);
+        }
+        final JsonNode sourceNode = node.get("_source");
+        if (sourceNode != null) {
+            if (sourceNode.isArray()) {
+                addRequiredField((ArrayNode) sourceNode);
+            } else {
+                final JsonNode sourceIncludes = sourceNode.get("includes");
+                if (sourceIncludes != null && sourceIncludes.isArray()) {
+                    addRequiredField((ArrayNode) sourceIncludes);
+                }
+            }
         }
     }
 
@@ -474,103 +483,27 @@ public class EsHTTPProxy {
         source.add(Geonet.IndexFieldNames.OWNER);
         source.add(Geonet.IndexFieldNames.ID);
     }
+
     private void addFilterToQuery(ServiceContext context,
                                   ObjectMapper objectMapper,
                                   JsonNode esQuery) throws Exception {
 
-        // Build filter node
         String esFilter = buildQueryFilter(context,
             "",
             esQuery.toString().contains("\"draft\":")
                 || esQuery.toString().contains("+draft:")
                 || esQuery.toString().contains("-draft:"));
         JsonNode nodeFilter = objectMapper.readTree(esFilter);
-
-        JsonNode queryNode = esQuery.get("query");
-
-        // Defensive: if no "query", create a bool { must: match_all, filter: nodeFilter }
-        if (queryNode == null || queryNode.isNull()) {
-            ObjectNode boolNode = objectMapper.createObjectNode();
-            // prefer must = match_all object (same shape as existing code)
-            ObjectNode matchAll = objectMapper.createObjectNode();
-            matchAll.putObject("match_all");
-            boolNode.set("must", matchAll);
-            boolNode.set("filter", nodeFilter);
-            ((ObjectNode) esQuery).set("query", objectMapper.createObjectNode().set("bool", boolNode));
-            return;
-        }
-
-        // Try to find the boolean node where to insert the filter.
-        // Prefer function_score.query.bool if present because function_score
-        // needs the filter to be applied to the inner query used for scoring.
-        JsonNode functionScoreNode = queryNode.get("function_score");
-        if (functionScoreNode != null && functionScoreNode.isObject()) {
-            JsonNode innerQuery = functionScoreNode.get("query");
-            if (innerQuery == null || innerQuery.isNull()) {
-                // create function_score.query.bool with only the filter
-                ObjectNode boolNode = objectMapper.createObjectNode();
-                boolNode.set("filter", nodeFilter);
-                ((ObjectNode) functionScoreNode).set("query", objectMapper.createObjectNode().set("bool", boolNode));
-                return;
-            }
-
-            JsonNode innerBool = innerQuery.get("bool");
-            if (innerBool != null && innerBool.isObject()) {
-                insertFilter((ObjectNode) innerBool, nodeFilter);
-                return;
-            }
-
-            // innerQuery exists but isn't a bool -> wrap it into a bool { must: <old>, filter: <new> }
-            ObjectNode newBool = objectMapper.createObjectNode();
-            newBool.set("must", innerQuery.deepCopy());
-            newBool.set("filter", nodeFilter);
-            ((ObjectNode) functionScoreNode).set("query", objectMapper.createObjectNode().set("bool", newBool));
-            return;
-        }
-
-        // Top-level bool
-        JsonNode boolNode = queryNode.get("bool");
-        if (boolNode != null && boolNode.isObject()) {
-            insertFilter((ObjectNode) boolNode, nodeFilter);
-            return;
-        }
-
-        // Other query shapes: wrap existing query into a bool { must: <existing query>, filter: nodeFilter }
-        ObjectNode copy = queryNode.deepCopy();
-        ObjectNode objectNodeBool = objectMapper.createObjectNode();
-        objectNodeBool.set("must", copy);
-        objectNodeBool.set("filter", nodeFilter);
-
-        // Replace the existing "query" content with the new bool
-        ((ObjectNode) queryNode).removeAll();
-        ((ObjectNode) queryNode).set("bool", objectNodeBool);
+        EsQueryFilterUtils.addFilterToQuery(objectMapper, esQuery, nodeFilter);
     }
 
-    private void insertFilter(ObjectNode objectNode, JsonNode nodeFilter) {
-        JsonNode filter = objectNode.get("filter");
-        if (filter == null || filter.isNull()) {
-            objectNode.set("filter", nodeFilter);
-        } else if (filter.isArray()) {
-            ((ArrayNode) filter).add(nodeFilter);
-        } else {
-            // existing filter is an object (or other non-array) -> convert to array preserving both
-            ArrayNode arr = JsonNodeFactory.instance.arrayNode();
-            arr.add(filter);
-            arr.add(nodeFilter);
-            objectNode.set("filter", arr);
-        }
-    }
     /**
      * Add search privilege criteria to a query.
      */
     protected String buildQueryFilter(ServiceContext context, String type, boolean isSearchingForDraft) throws Exception {
-        return String.format(FILTER_TEMPLATE,
+        return String.format(filterTemplate,
             EsFilterBuilder.build(context, type, isSearchingForDraft, node));
 
-    }
-
-    private String buildDocTypeFilter(String type) {
-        return "documentType:" + type;
     }
 
     private void handleRequest(ServiceContext context,
@@ -638,12 +571,13 @@ public class EsHTTPProxy {
 
                 // content type has to be valid
                 if (!isContentTypeValid(contentType)) {
-                    if (connectionWithFinalHost.getResponseMessage() != null && connectionWithFinalHost.getResponseMessage().equalsIgnoreCase("Not Found")) {
-                        // content type was not valid because it was a not found page (text/html)
-                        response.sendError(HttpServletResponse.SC_NOT_FOUND, "Remote host not found");
-                        return;
+                    if (connectionWithFinalHost.getResponseMessage() != null) {
+                        if (connectionWithFinalHost.getResponseMessage().equalsIgnoreCase("Not Found")) {
+                            // content type was not valid because it was a not found page (text/html)
+                            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Remote host not found");
+                            return;
+                        }
                     }
-
 
                     response.sendError(HttpServletResponse.SC_FORBIDDEN,
                         "The content type of the remote host's response \"" + contentType
@@ -686,13 +620,13 @@ public class EsHTTPProxy {
                     IOUtils.closeQuietly(streamFromServer);
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
+                LOGGER.error("Error processing request", ex);
             } finally {
                 connectionWithFinalHost.disconnect();
             }
         } catch (IOException e) {
             // connection problem with the host
-            e.printStackTrace();
+            LOGGER.error("Error processing request", e);
 
             throw new Exception(
                 String.format("Failed to request Es at URL %s. " +
@@ -715,6 +649,10 @@ public class EsHTTPProxy {
         final Set<String> selections = (addPermissions ?
             SelectionManager.getManager(ApiUtils.getUserSession(httpSession)).getSelection(bucket) : new HashSet<>());
 
+        // The editor groups of the user do not depend on the processed document:
+        // fetch them at most once per response
+        final UserEditorGroups editorGroups = new UserEditorGroups(context.getUserSession());
+
         if (endPoint.equals(SEARCH_ENDPOINT)) {
             JsonStreamUtils.addInfoToDocs(parser, generator, doc -> {
                 if (addPermissions) {
@@ -722,27 +660,11 @@ public class EsHTTPProxy {
                     addSelectionInfo(doc, selections);
                 }
 
-                if ((relatedTypes != null) && (relatedTypes.length > 0)) {
+                if ((relatedTypes != null ) && (relatedTypes.length > 0)) {
                     addRelatedTypes(doc, relatedTypes, context);
                 }
 
-                if (doc.has("_source")) {
-                    ObjectNode sourceNode = (ObjectNode) doc.get("_source");
-
-                    if (doc.get("_source").has("documentStandard")) {
-                        String metadataSchema = doc.get("_source").get("documentStandard").asText();
-                        MetadataSchema mds = schemaManager.getSchema(metadataSchema);
-
-                        // Apply metadata schema filters to remove non-allowed fields
-                        processMetadataSchemaFilters(context, mds, doc);
-                    }
-
-                    // Remove fields with privileges info
-                    for (ReservedOperation o : ReservedOperation.values()) {
-                        sourceNode.remove("op" + o.getId());
-                    }
-
-                }
+                processSourceNode(context, doc, editorGroups);
             });
         } else {
             JsonStreamUtils.addInfoToDocsMSearch(parser, generator, doc -> {
@@ -751,18 +673,11 @@ public class EsHTTPProxy {
                     addSelectionInfo(doc, selections);
                 }
 
-                if ((relatedTypes != null) && (relatedTypes.length > 0)) {
+                if ((relatedTypes != null ) && (relatedTypes.length > 0)) {
                     addRelatedTypes(doc, relatedTypes, context);
                 }
 
-                // Remove fields with privileges info
-                if (doc.has("_source")) {
-                    ObjectNode sourceNode = (ObjectNode) doc.get("_source");
-
-                    for (ReservedOperation o : ReservedOperation.values()) {
-                        sourceNode.remove("op" + o.getId());
-                    }
-                }
+                processSourceNode(context, doc, editorGroups);
             });
         }
 
@@ -779,11 +694,13 @@ public class EsHTTPProxy {
      */
     private String getContentEncoding(Map<String, List<String>> headerFields) {
         for (String headerName : headerFields.keySet()) {
-            if (headerName != null && "Content-Encoding".equalsIgnoreCase(headerName)) {
-                List<String> valuesList = headerFields.get(headerName);
-                StringBuilder sBuilder = new StringBuilder();
-                valuesList.forEach(sBuilder::append);
-                return sBuilder.toString().toLowerCase();
+            if (headerName != null) {
+                if ("Content-Encoding".equalsIgnoreCase(headerName)) {
+                    List<String> valuesList = headerFields.get(headerName);
+                    StringBuilder sBuilder = new StringBuilder();
+                    valuesList.forEach(sBuilder::append);
+                    return sBuilder.toString().toLowerCase();
+                }
             }
         }
         return null;
@@ -855,7 +772,7 @@ public class EsHTTPProxy {
 
         // focus only on type, not on the text encoding
         String type = contentType.split(";")[0];
-        for (String validTypeContent : EsHTTPProxy.validContentTypes) {
+        for (String validTypeContent : EsHTTPProxy._validContentTypes) {
             if (validTypeContent.equals(type)) {
                 return true;
             }
@@ -867,54 +784,64 @@ public class EsHTTPProxy {
     /**
      * Process the metadata schema filters to filter out from the Elasticsearch response
      * the elements defined in the metadata schema filters.
-     * <p>
+     *
      * It uses a jsonpath to filter the elements, typically is configured with the following jsonpath, to
      * filter the ES object elements with an attribute nilReason = 'withheld'.
-     * <p>
-     * $.*[?(@.nilReason == 'withheld')]
-     * <p>
+     *
+     *  $.*[?(@.nilReason == 'withheld')]
+     *
      * The metadata index process, has to define this attribute. Any element that requires to be filtered, should be
      * defined as an object in Elasticsearch.
-     * <p>
+     *
      * Example for contacts:
-     * <p>
-     * <xsl:template mode="index-contact" match="*[cit:CI_Responsibility]">
-     * ...
-     * <!-- Check if the contact has an attribute @gco:nilReason = 'withheld', added by update-fixed-info.xsl process -->
-     * <xsl:variable name="hasWithheld" select="@gco:nilReason = 'withheld'" as="xs:boolean" />
-     * <p>
-     * <xsl:element name="contact{$fieldSuffix}">
-     * <xsl:attribute name="type" select="'object'"/>{
-     * ...
-     * "address":"<xsl:value-of select="util:escapeForJson($address)"/>"
-     * <xsl:if test="$hasWithheld">
-     * ,"nilReason": "withheld"
-     * </xsl:if>
+     *
+     *  <xsl:template mode="index-contact" match="*[cit:CI_Responsibility]">
+     *      ...
+     *      <!-- Check if the contact has an attribute @gco:nilReason = 'withheld', added by update-fixed-info.xsl process -->
+     *      <xsl:variable name="hasWithheld" select="@gco:nilReason = 'withheld'" as="xs:boolean" />
+     *
+     *      <xsl:element name="contact{$fieldSuffix}">
+     *        <xsl:attribute name="type" select="'object'"/>{
+     *        ...
+     *        "address":"<xsl:value-of select="util:escapeForJson($address)"/>"
+     *        <xsl:if test="$hasWithheld">
+     *         ,"nilReason": "withheld"
+     *        </xsl:if>
      *
      * @param mds
      * @param doc
      * @throws JsonProcessingException
      */
-    private void processMetadataSchemaFilters(ServiceContext context, MetadataSchema mds, ObjectNode doc) throws JsonProcessingException {
-        if (!doc.has("_source")) {
-            return;
-        }
-
-        ObjectMapper mapper = new ObjectMapper();
+    private void processMetadataSchemaFilters(ServiceContext context, MetadataSchema mds, ObjectNode doc,
+                                              UserEditorGroups editorGroups) throws JsonProcessingException, SQLException {
         ObjectNode sourceNode = (ObjectNode) doc.get("_source");
 
-        MetadataSchemaOperationFilter authenticatedFilter = mds.getOperationFilter("authenticated");
+        MetadataSchemaOperationFilter authenticatedFilter = mds.getOperationFilter(MetadataOperationFilterType.authenticated.name());
 
         List<String> jsonpathFilters = new ArrayList<>();
 
         if (authenticatedFilter != null && !context.getUserSession().isAuthenticated()) {
             jsonpathFilters.add(authenticatedFilter.getJsonpath());
         }
+        //do the same for groupOwner
+        MetadataSchemaOperationFilter groupOwnerFilter = mds.getOperationFilter(MetadataOperationFilterType.groupOwner.name());
+
+        if (groupOwnerFilter != null) {
+            if (context.getUserSession().getProfile() != Profile.Administrator) {
+                List<Integer> userGroups = editorGroups.get();
+                Integer groupOwner = getSourceInteger(doc, Geonet.IndexFieldNames.GROUP_OWNER);
+                boolean isGroupOwner = groupOwner != null && userGroups.contains(groupOwner);
+
+                if (!isGroupOwner) {
+                    jsonpathFilters.add(groupOwnerFilter.getJsonpath());
+                }
+            }
+        }
 
         MetadataSchemaOperationFilter editFilter = mds.getOperationFilter(ReservedOperation.editing);
 
         if (editFilter != null) {
-            boolean canEdit = doc.get("edit").asBoolean();
+            boolean canEdit = doc.path("edit").asBoolean(false);
 
             if (!canEdit) {
                 jsonpathFilters.add(editFilter.getJsonpath());
@@ -923,7 +850,7 @@ public class EsHTTPProxy {
 
         MetadataSchemaOperationFilter downloadFilter = mds.getOperationFilter(ReservedOperation.download);
         if (downloadFilter != null) {
-            boolean canDownload = doc.get("download").asBoolean();
+            boolean canDownload = doc.path("download").asBoolean(false);
 
             if (!canDownload) {
                 jsonpathFilters.add(downloadFilter.getJsonpath());
@@ -932,23 +859,27 @@ public class EsHTTPProxy {
 
         MetadataSchemaOperationFilter dynamicFilter = mds.getOperationFilter(ReservedOperation.dynamic);
         if (dynamicFilter != null) {
-            boolean canDynamic = doc.get("dynamic").asBoolean();
+            boolean canDynamic = doc.path("dynamic").asBoolean(false);
 
             if (!canDynamic) {
                 jsonpathFilters.add(dynamicFilter.getJsonpath());
             }
         }
 
+        if (jsonpathFilters.isEmpty()) {
+            return;
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = filterResponseElements(mapper, sourceNode, jsonpathFilters);
         if (actualObj != null) {
             doc.set("_source", actualObj);
         }
     }
-
     private JsonNode filterResponseElements(ObjectMapper mapper, ObjectNode sourceNode, List<String> jsonPathFilters) throws JsonProcessingException {
         DocumentContext jsonContext = JsonPath.parse(sourceNode.toPrettyString());
 
-        for (String jsonPath : jsonPathFilters) {
+        for(String jsonPath : jsonPathFilters) {
             if (StringUtils.isNotBlank(jsonPath)) {
                 try {
                     jsonContext = jsonContext.delete(jsonPath);
@@ -959,5 +890,55 @@ public class EsHTTPProxy {
         }
 
         return mapper.readTree(jsonContext.jsonString());
+    }
+
+    private void processSourceNode(ServiceContext context, ObjectNode doc,
+                                   UserEditorGroups editorGroups) throws SQLException, JsonProcessingException {
+        if (!doc.has("_source")) {
+            return;
+        }
+
+        ObjectNode sourceNode = (ObjectNode) doc.get("_source");
+
+        // Remove fields with privileges info
+        for (ReservedOperation o : ReservedOperation.values()) {
+            sourceNode.remove("op" + o.getId());
+        }
+
+        if (sourceNode.has(Geonet.IndexFieldNames.SCHEMA)) {
+            String metadataSchema = sourceNode.get(Geonet.IndexFieldNames.SCHEMA).asText();
+            try {
+                MetadataSchema mds = schemaManager.getSchema(metadataSchema);
+
+                // Apply metadata schema filters to remove non-allowed fields
+                processMetadataSchemaFilters(context, mds, doc, editorGroups);
+            } catch (IllegalArgumentException e) {
+                LOGGER.error("Failed to load metadata schema for {}. Error is: {}",
+                    getSourceString(doc, Geonet.IndexFieldNames.UUID),
+                    e.getMessage()
+                );
+            }
+        }
+    }
+
+    /**
+     * Lazy cache of the group identifiers where the user is Editor, used by the
+     * metadata schema filters. Fetching them at most once per search response
+     * avoids one database lookup per returned document.
+     */
+    static final class UserEditorGroups {
+        private final UserSession session;
+        private List<Integer> groups;
+
+        UserEditorGroups(UserSession session) {
+            this.session = session;
+        }
+
+        List<Integer> get() throws SQLException {
+            if (groups == null) {
+                groups = AccessManager.getGroups(session, Profile.Editor);
+            }
+            return groups;
+        }
     }
 }

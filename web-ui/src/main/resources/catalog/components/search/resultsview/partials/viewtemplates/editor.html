@@ -12,6 +12,7 @@
       <p data-ng-bind-html="getMetadataDeleteConfirmMessage()"></p>
     </div>
   </div>
+
   <table class="table gn-results-editor">
     <tr data-ng-repeat="md in searchResults.records">
       <td>
@@ -111,7 +112,7 @@
               <a
                 class="btn btn-default"
                 data-ng-show="user.canEditRecord(md) && md.isTemplate != 's'
-                             && (user.isReviewerOrMore() || md.mdStatus != 4 || !isMdWorkflowEnable)"
+                              && (user.isReviewerOrMore() || md.mdStatus != 4 || !isMdWorkflowEnable)"
                 data-ng-href="#/metadata/{{mdService.getMetadataIdToEdit(md)}}?redirectUrl=catalog.edit"
                 title="{{'edit' | translate}}"
               >
@@ -121,8 +122,8 @@
                 class="btn btn-default"
                 href=""
                 data-ng-show="(!md.isPublished() || (md.isPublished() && user.canDeletePublishedMetadata())) && user.canEditRecord(md) && md.isTemplate != 's'
-                             && (user.isReviewerOrMore() || md.mdStatus != 4 || !isMdWorkflowEnable)
-                             && md.draft != 'e'"
+                              && (user.isReviewerOrMore() || md.mdStatus != 4 || !isMdWorkflowEnable)
+                              && md.draft != 'e'"
                 data-ng-click="removeMetadata(md)"
                 title="{{'delete' | translate}}"
               >

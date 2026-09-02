@@ -29,6 +29,7 @@ import jeeves.server.context.ServiceContext;
 import org.fao.geonet.domain.MetadataResource;
 import org.fao.geonet.domain.MetadataResourceContainer;
 import org.fao.geonet.domain.MetadataResourceVisibility;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Closeable;
@@ -38,9 +39,6 @@ import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Nullable;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * A store allows user to upload resources (eg. files) to a metadata record and retrieve them.
@@ -104,7 +102,58 @@ public interface Store {
     List<MetadataResource> getResources(ServiceContext context, String metadataUuid, MetadataResourceVisibility metadataResourceVisibility, String filter, Boolean approved) throws Exception;
 
     /**
-     * Retrieve a metadata resource path.
+     * Retrieve all resources for a metadata. The list of resources depends on current user
+     * privileges.
+     *
+     * <p>This overload allows callers to control whether additional indexed properties
+     * are populated on each returned {@link MetadataResource}. Callers should set
+     * {@code includeAdditionalIndexedProperties} to {@code true} only when they actually
+     * need those extra indexed values (for example, when preparing data for search or
+     * indexing purposes). For simple listing or download operations where these extra
+     * properties are not required, it is recommended to set this flag to {@code false}.</p>
+     *
+     * @param context      the service context
+     * @param metadataUuid the metadata UUID
+     * @param sort         sort by resource name or sharing policy {@link Sort}
+     * @param filter       a {@link java.nio.file.Files#newDirectoryStream(Path) GLOB
+     *                     expression} to filter resources eg. *.{png|jpg}
+     * @param approved     return the approved version or not
+     * @param includeAdditionalIndexedProperties whether to populate additional indexed
+     *                     properties on returned resources ({@code true}) or to skip them
+     *                     for better performance when they are not needed ({@code false})
+     * @return A list of resources
+     * @throws Exception if an error occurs while retrieving the resources
+     */
+    List<MetadataResource> getResources(ServiceContext context, String metadataUuid, Sort sort, String filter, Boolean approved, boolean includeAdditionalIndexedProperties) throws Exception;
+
+    /**
+     * Retrieve all resources for a metadata having a specific sharing policy.
+     *
+     * <p>This overload allows callers to control whether additional indexed properties
+     * are populated on each returned {@link MetadataResource}. Callers should set
+     * {@code includeAdditionalIndexedProperties} to {@code true} only when they actually
+     * need those extra indexed values (for example, when preparing data for search or
+     * indexing purposes). For simple listing or download operations where these extra
+     * properties are not required, it is recommended to set this flag to {@code false}.</p>
+     *
+     * @param context                     the service context
+     * @param metadataUuid                the metadata UUID
+     * @param metadataResourceVisibility  the type of sharing policy
+     *                                    {@link MetadataResourceVisibility}
+     * @param filter                      a {@link java.nio.file.Files#newDirectoryStream(Path) GLOB
+     *                                    expression} to filter resources eg. *.{png|jpg}
+     * @param approved                    return the approved version or not
+     * @param includeAdditionalIndexedProperties whether to populate additional indexed
+     *                                    properties on returned resources ({@code true})
+     *                                    or to skip them for better performance when they
+     *                                    are not needed ({@code false})
+     * @return A list of resources
+     * @throws Exception if an error occurs while retrieving the resources
+     */
+    List<MetadataResource> getResources(ServiceContext context, String metadataUuid, MetadataResourceVisibility metadataResourceVisibility, String filter, Boolean approved, boolean includeAdditionalIndexedProperties) throws Exception;
+
+    /**
+     * Retrieve a resource.
      *
      *
      * @param context
@@ -116,7 +165,7 @@ public interface Store {
     ResourceHolder getResource(ServiceContext context, String metadataUuid, String resourceId) throws Exception;
 
     /**
-     * Retrieve a metadata resource path.
+     * Retrieve a resource.
      *
      *
      * @param context
@@ -129,7 +178,7 @@ public interface Store {
             String resourceId, Boolean approved) throws Exception;
 
     /**
-     * Retrieve a metadata resource path.
+     * Retrieve a resource.
      *
      *
      * @param context
@@ -141,12 +190,41 @@ public interface Store {
     ResourceHolder getResource(ServiceContext context, String metadataUuid, String resourceId, Boolean approved) throws Exception;
 
     /**
-     * Retrieve a metadata resource path (for internal use eg. indexing)
+     * Retrieve a resource (for internal use eg. indexing)
      */
     ResourceHolder getResourceInternal(String metadataUuid,
                                        final MetadataResourceVisibility visibility,
                                        String resourceId,
                                        Boolean approved) throws Exception;
+
+
+    /**
+     * Retrieve the metadata of a resource.
+     *
+     *
+     * @param context       The service context
+     * @param metadataUuid  The metadata UUID
+     * @param visibility    The type of sharing policy {@link MetadataResourceVisibility}
+     * @param resourceId    The resource identifier of its filename
+     * @return The resource
+     */
+    MetadataResource getResourceMetadata(ServiceContext context, String metadataUuid, MetadataResourceVisibility visibility,
+                                         String resourceId, Boolean approved) throws Exception;
+
+    /**
+     * Retrieve a range of bytes from a resource.
+     *
+     *
+     * @param context       The service context
+     * @param metadataUuid  The metadata UUID
+     * @param visibility    The type of sharing policy {@link MetadataResourceVisibility}
+     * @param resourceId    The resource identifier of its filename
+     * @param start         The start byte
+     * @param end           The end byte
+     * @return The specified range of the resource
+     */
+    ResourceHolder getResourceWithRange(ServiceContext context, String metadataUuid, MetadataResourceVisibility visibility,
+                                        String resourceId, Boolean approved, long start, long end) throws Exception;
 
     /**
      * Add a new resource from a file.
@@ -174,6 +252,24 @@ public interface Store {
                                  MetadataResourceVisibility metadataResourceVisibility, Boolean approved) throws Exception;
 
     /**
+     * Add a new resource from a file, under a destination folder.
+     *
+     *
+     * @param context
+     * @param metadataUuid               The metadata UUID
+     * @param file                       The resource file
+     * @param folder                     Optional destination folder (may contain "/"-separated
+     *                                   nested subfolders); the resource is stored as
+     *                                   {@code folder + "/" + file.getOriginalFilename()} when
+     *                                   provided, or under its own filename at the root otherwise
+     * @param metadataResourceVisibility The type of sharing policy {@link MetadataResourceVisibility}
+     * @param approved   Put the approved version or not
+     * @return The resource description
+     */
+    MetadataResource putResource(ServiceContext context, String metadataUuid, MultipartFile file, @Nullable String folder,
+                                 MetadataResourceVisibility metadataResourceVisibility, Boolean approved) throws Exception;
+
+    /**
      * Add a new resource from a file.
      *
      *
@@ -192,30 +288,30 @@ public interface Store {
         throws Exception;
 
     /**
-     * Add a new resource from a local file path.
+     * Add a new resource.
      *
      *
      * @param context
      * @param metadataUuid               The metadata UUID
-     * @param filePath                   The resource local filepath
+     * @param resource                   The resource
      * @param metadataResourceVisibility The type of sharing policy {@link MetadataResourceVisibility}
-     * @param approved   Return the approved version or not
+     * @param approved                   Return the approved version or not
      * @return The resource description
      */
-    MetadataResource putResource(ServiceContext context, String metadataUuid, Path filePath, MetadataResourceVisibility metadataResourceVisibility, Boolean approved) throws Exception;
+    MetadataResource putResource(ServiceContext context, String metadataUuid, Resource resource, MetadataResourceVisibility metadataResourceVisibility, Boolean approved) throws Exception;
 
     /**
-     * Add a new resource from a local file path.
+     * Add a new resource.
      *
      *
      * @param context
      * @param metadataUuid               The metadata UUID
-     * @param filePath                   The resource local filepath
+     * @param resource                   The resource
      * @param metadataResourceVisibility The type of sharing policy {@link MetadataResourceVisibility}
      * @return The resource description
      */
-	@Deprecated
-    MetadataResource putResource(ServiceContext context, String metadataUuid, Path filePath, MetadataResourceVisibility metadataResourceVisibility) throws Exception;
+    @Deprecated
+    MetadataResource putResource(ServiceContext context, String metadataUuid, Resource resource, MetadataResourceVisibility metadataResourceVisibility) throws Exception;
 
     /**
      * Add a new resource from a URL.
@@ -242,6 +338,25 @@ public interface Store {
      * @return The resource description
      */
     MetadataResource putResource(ServiceContext context, String metadataUuid, URL fileUrl, MetadataResourceVisibility metadataResourceVisibility, Boolean approved) throws Exception;
+
+    /**
+     * Add a new resource from a URL, under a destination folder.
+     *
+     *
+     * @param context
+     * @param metadataUuid               The metadata UUID
+     * @param fileUrl                    The resource file URL
+     * @param folder                     Optional destination folder (may contain "/"-separated
+     *                                   nested subfolders); the resource is stored as
+     *                                   {@code folder + "/" + <filename derived from the URL>}
+     *                                   when provided, or under its derived filename at the root
+     *                                   otherwise
+     * @param metadataResourceVisibility The type of sharing policy {@link MetadataResourceVisibility}
+     * @param approved   Return the approved version or not
+     * @return The resource description
+     */
+    MetadataResource putResource(ServiceContext context, String metadataUuid, URL fileUrl, @Nullable String folder,
+                                 MetadataResourceVisibility metadataResourceVisibility, Boolean approved) throws Exception;
 
     /**
      * Change the resource sharing policy
@@ -348,30 +463,80 @@ public interface Store {
     MetadataResourceContainer getResourceContainerDescription(final ServiceContext context, final String metadataUuid, Boolean approved) throws Exception;
 
     /**
-     * Copy all resources from none approved (draft working copy) to approved folder.
+     * Copies all resources from a source metadata record to a target metadata record.
      *
+     * <p>Resources can be copied between the approved and draft versions of the source and target
+     * metadata records, as determined by the {@code sourceApproved} and {@code targetApproved} flags.</p>
      *
-     * @param context
-     * @param sourceUuid               The source metadata UUID
-     * @param targetUuid               The target metadata UUID
-     * @param sourceApproved
-     * @param metadataResourceVisibility The type of sharing policy {@link MetadataResourceVisibility}
+     * <p><b>Implementation note:</b> If an implementation also copies resource properties,
+     * it must ensure that any property referencing the owning metadata record UUID
+     * is updated to {@code targetUuid}.</p>
      *
+     * @param context                    the service context
+     * @param sourceUuid                 the UUID of the source metadata record
+     * @param targetUuid                 the UUID of the target metadata record
+     * @param metadataResourceVisibility the resource sharing policy {@link MetadataResourceVisibility}
+     * @param sourceApproved             whether to copy resources from the approved version of the source record
+     * @param targetApproved             whether to copy resources to the approved version of the target record
+     * @throws Exception if the resource copy fails
      */
     void copyResources(ServiceContext context, String sourceUuid, String targetUuid, MetadataResourceVisibility metadataResourceVisibility, boolean sourceApproved, boolean targetApproved) throws Exception;
+
+    /**
+     * Retrieve a range of bytes from a resource.
+     *
+     *
+     * @param context       The service context
+     * @param metadataUuid  The metadata UUID
+     * @param resourceId    The resource identifier of its filename
+     * @param start         The start byte
+     * @param end           The end byte
+     * @return The specified range of the resource
+     */
+    ResourceHolder getResourceWithRange(ServiceContext context, String metadataUuid, String resourceId, Boolean approved, long start, long end) throws Exception;
+
+    /**
+     * Retrieve the metadata of a resource.
+     *
+     *
+     * @param context       The service context
+     * @param metadataUuid  The metadata UUID
+     * @param resourceId    The resource identifier of its filename
+     * @return The metadata of the resource
+     */
+    MetadataResource getResourceMetadata(ServiceContext context, String metadataUuid, String resourceId, Boolean approved) throws Exception;
 
     MetadataResource renameResource(ServiceContext context, String metadataUuid, String resourceId, String newName, Boolean approved) throws Exception;
 
     /**
-     * Renames a store folder.
+     * Physically migrate a resource still sitting in a legacy per-visibility folder into the flat
+     * layout, if this store implementation has such a legacy layout at all - only
+     * {@code FilesystemStore} does; other backends have no concept of it and use this default
+     * no-op.
      *
-     * @param originalPath
-     * @param newPath
+     * @param context  the service context
+     * @param resource the resource to migrate, as previously returned by {@link #getResources}
      */
-    void renameFolder(Path originalPath, Path newPath);
+    default void migrateResourceToFlatLayout(ServiceContext context, MetadataResource resource) throws Exception {
+    }
+
+    /**
+     * Delete a metadata record's legacy per-visibility folder, if this store implementation has
+     * such a legacy layout at all (see {@link #migrateResourceToFlatLayout}) and the folder is now
+     * empty - a no-op otherwise, so it's always safe to call once every resource of that
+     * visibility has been migrated. Default no-op for store implementations without such a legacy
+     * layout.
+     *
+     * @param context    the service context
+     * @param metadataId the metadata id
+     * @param visibility the legacy visibility folder to remove if empty
+     */
+    default void deleteLegacyVisibilityFolderIfEmpty(ServiceContext context, int metadataId, MetadataResourceVisibility visibility)
+            throws Exception {
+    }
 
     interface ResourceHolder extends Closeable {
-        Path getPath();
+        Resource getResource();
         MetadataResource getMetadata();
     }
 

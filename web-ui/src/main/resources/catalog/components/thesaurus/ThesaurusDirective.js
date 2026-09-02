@@ -246,6 +246,7 @@
           wrapper: "@",
           thesaurusKey: "@",
           keywords: "@",
+          keywordIds: "@",
           transformations: "@",
           currentTransformation: "@",
           lang: "@",
@@ -286,7 +287,9 @@
           scope.foundKeywords = [];
           scope.selected = [];
           scope.initialKeywords = [];
-          if (scope.keywords) {
+          if (scope.keywordIds) {
+            scope.initialKeywords = scope.keywordIds.split(",");
+          } else if (scope.keywords) {
             var buffer = "";
             for (var i = 0; i < scope.keywords.length; i++) {
               var next = scope.keywords.charAt(i);

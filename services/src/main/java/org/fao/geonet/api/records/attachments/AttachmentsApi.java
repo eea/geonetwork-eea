@@ -29,6 +29,7 @@ import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
 import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
 
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -36,6 +37,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
+import org.apache.tika.Tika;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.api.ApiParams;
 import org.fao.geonet.api.ApiUtils;
@@ -48,16 +51,18 @@ import org.fao.geonet.events.history.AttachmentDeletedEvent;
 import org.fao.geonet.kernel.datamanager.IMetadataIndexer;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.search.IndexingMode;
+import org.fao.geonet.kernel.search.submission.DirectIndexSubmitter;
+import org.fao.geonet.kernel.setting.SettingManager;
+import org.fao.geonet.kernel.setting.Settings;
+import org.fao.geonet.util.FileMimetypeChecker;
 import org.fao.geonet.util.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.core.io.Resource;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,6 +71,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -75,15 +81,10 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -99,13 +100,13 @@ import java.util.List;
 public class AttachmentsApi {
     public static final Integer MIN_IMAGE_SIZE = 1;
     public static final Integer MAX_IMAGE_SIZE = 2048;
+    public static final Integer BUFFER_SIZE = 8192;
     private final ApplicationContext appContext = ApplicationContextHolder.get();
     private Store store;
 
-    @Autowired
+    private FileMimetypeChecker fileMimetypeChecker;
+    private SettingManager settingManager;
     private IMetadataManager metadataManager;
-
-    @Autowired
     private IMetadataIndexer metadataIndexer;
 
     public AttachmentsApi() {
@@ -115,41 +116,51 @@ public class AttachmentsApi {
         this.store = store;
     }
 
+    public AttachmentsApi(Store store, IMetadataManager metadataManager, IMetadataIndexer metadataIndexer) {
+        this.store = store;
+        this.metadataManager = metadataManager;
+        this.metadataIndexer = metadataIndexer;
+    }
+
+    @Autowired
+    public AttachmentsApi(
+        FileMimetypeChecker fileMimetypeChecker,
+        SettingManager settingManager,
+        IMetadataManager metadataManager,
+        IMetadataIndexer metadataIndexer) {
+        this.fileMimetypeChecker = fileMimetypeChecker;
+        this.settingManager = settingManager;
+        this.metadataManager = metadataManager;
+        this.metadataIndexer = metadataIndexer;
+    }
+
     /**
-     * Based on the file content or file extension return an appropiate mime type.
+     * Based on the file name return an appropriate mime type.
      *
-     * @return The mime type or application/{{file_extension}} if none found.
+     * @return The mime type.
      */
-    public static String getFileContentType(Path file) throws IOException {
-        String contentType = Files.probeContentType(file);
-        if (contentType == null) {
-            String ext = com.google.common.io.Files.getFileExtension(file.getFileName().toString()).toLowerCase();
-            switch (ext) {
-                case "png":
-                case "gif":
-                case "bmp":
-                    contentType = "image/" + ext;
-                    break;
-                case "tif":
-                case "tiff":
-                    contentType = "image/tiff";
-                    break;
-                case "jpg":
-                case "jpeg":
-                    contentType = "image/jpeg";
-                    break;
-                case "txt":
-                    contentType = "text/plain";
-                    break;
-                case "htm":
-                case "html":
-                    contentType = "text/html";
-                    break;
-                default:
-                    contentType = "application/" + ext;
-            }
-        }
-        return contentType;
+    public static String getFileContentType(String filename) {
+        Tika tika = new Tika();
+        return tika.detect(filename);
+    }
+
+    private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
+
+    /**
+     * Extract the "/"-separated tail captured by this method's own "/**" mapping - the resource
+     * identifier or destination folder. A {@code {var:.+}} path variable cannot span multiple
+     * "/"-separated segments under this app's {@link AntPathMatcher}-based routing (classic XML
+     * MVC config, Spring 5.3.x - {@code {var:.+}} only ever matches within a single segment,
+     * regardless of what its regex says), so a nested value like {@code a/b/file.pdf} has to be
+     * captured with {@code /**} and extracted here instead of via a normal {@code @PathVariable}.
+     *
+     * @return the matched tail, or an empty string if nothing followed the mapping's fixed
+     * prefix (eg. a request to the bare {@code .../attachments} URL).
+     */
+    private static String extractPathWithinMapping(HttpServletRequest request) {
+        String pathWithinMapping = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+        String bestMatchingPattern = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
+        return PATH_MATCHER.extractPathWithinPattern(bestMatchingPattern, pathWithinMapping);
     }
 
     public Store getStore() {
@@ -174,7 +185,7 @@ public class AttachmentsApi {
     }
 
     public List<MetadataResource> getResources() {
-        return null;
+        return Collections.emptyList();
     }
 
     @io.swagger.v3.oas.annotations.Operation(summary = "List all metadata attachments", description = "<a href='https://docs.geonetwork-opensource.org/latest/user-guide/associating-resources/using-filestore/'>More info</a>")
@@ -215,9 +226,19 @@ public class AttachmentsApi {
         }
     }
 
-    @io.swagger.v3.oas.annotations.Operation(summary = "Create a new resource for a given metadata")
+    // The "/**" mapping lets a client target a destination folder for the upload (eg.
+    // POST .../attachments/a/b), mirroring the "/**" convention used by GET/PATCH/DELETE below -
+    // see extractPathWithinMapping's javadoc for why {folder:.+} can't be used for this instead.
+    // This can never shadow/be shadowed by AttachmentsActionsApi's literal
+    // PUT .../attachments/print-thumbnail mapping: Spring MVC's handler-mapping comparator always
+    // prefers an exact literal path over a wildcard pattern, which is also exactly why that
+    // literal mapping has never conflicted with the wildcard ones here either.
+    @io.swagger.v3.oas.annotations.Operation(summary = "Create a new resource for a given metadata",
+        parameters = {@Parameter(name = "folder", in = ParameterIn.PATH, required = false,
+            description = "The destination folder, if any (nested subfolders allowed, eg. 'a/b')")})
     @PreAuthorize("hasAuthority('Editor')")
     @RequestMapping(method = RequestMethod.POST,
+        value = "/**",
         consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -231,22 +252,31 @@ public class AttachmentsApi {
         @Parameter(description = "Use approved version or not", example = "true") @RequestParam(required = false, defaultValue = "false") Boolean approved,
         @Parameter(hidden = true) HttpServletRequest request) throws Exception {
         ServiceContext context = ApiUtils.createServiceContext(request);
-        MetadataResource resource = store.putResource(context, metadataUuid, file, visibility, approved);
+        String folderPath = extractPathWithinMapping(request);
+        String folder = folderPath.isEmpty() ? null : folderPath;
+
+        String supportedFileMimetypes = settingManager.getValue(Settings.METADATA_EDIT_SUPPORTEDFILEMIMETYPES);
+        fileMimetypeChecker.checkValidMimeType(file, supportedFileMimetypes.split("\\|"));
+
+        MetadataResource resource = store.putResource(context, metadataUuid, file, folder, visibility, approved);
 
         String metadataIdString = ApiUtils.getInternalId(metadataUuid, approved);
         if (metadataIdString != null && file != null && !file.isEmpty()) {
             long metadataId = Long.parseLong(metadataIdString);
             UserSession userSession = ApiUtils.getUserSession(request.getSession());
-            new AttachmentAddedEvent(metadataId, userSession.getUserIdAsInt(), file.getOriginalFilename())
+            new AttachmentAddedEvent(metadataId, userSession.getUserIdAsInt(), resource.getFilename())
                 .publish(ApplicationContextHolder.get());
         }
 
         return resource;
     }
 
-    @io.swagger.v3.oas.annotations.Operation(summary = "Create a new resource from a URL for a given metadata")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Create a new resource from a URL for a given metadata",
+        parameters = {@Parameter(name = "folder", in = ParameterIn.PATH, required = false,
+            description = "The destination folder, if any (nested subfolders allowed, eg. 'a/b')")})
     @PreAuthorize("hasAuthority('Editor')")
     @RequestMapping(method = RequestMethod.PUT,
+        value = "/**",
         produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Attachment added."),
@@ -259,7 +289,9 @@ public class AttachmentsApi {
         @Parameter(description = "Use approved version or not", example = "true") @RequestParam(required = false, defaultValue = "false") Boolean approved,
         @Parameter(hidden = true) HttpServletRequest request) throws Exception {
         ServiceContext context = ApiUtils.createServiceContext(request);
-        MetadataResource resource = store.putResource(context, metadataUuid, url, visibility, approved);
+        String folderPath = extractPathWithinMapping(request);
+        String folder = folderPath.isEmpty() ? null : folderPath;
+        MetadataResource resource = store.putResource(context, metadataUuid, url, folder, visibility, approved);
 
         String metadataIdString = ApiUtils.getInternalId(metadataUuid, approved);
         if (metadataIdString != null && url != null) {
@@ -272,101 +304,160 @@ public class AttachmentsApi {
         return resource;
     }
 
-    @io.swagger.v3.oas.annotations.Operation(summary = "Get a metadata resource")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Get a metadata resource",
+        parameters = {@Parameter(name = "resourceId", in = ParameterIn.PATH, required = true,
+            description = "The resource identifier (ie. filename); may contain nested folders (eg. 'a/b/file.pdf')")})
     // @PreAuthorize("permitAll")
-    @RequestMapping(value = "/{resourceId}/**", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.OK)
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Record attachment.",
-        content = @Content(schema = @Schema(type = "string", format = "binary"))),
+    // "/*/**" (not "/**") deliberately requires at least one path segment: this app registers
+    // two separate RequestMappingHandlerMapping beans (a pre-existing, unrelated quirk - not
+    // investigated further here, see the analysis report), so a bare "/**" that also matches the
+    // empty tail can end up dispatched here instead of to getAllResources's exact-literal mapping
+    // for the bare .../attachments URL, in a registration-order-dependent way rather than via
+    // clean pattern-specificity comparison. Requiring a first segment removes the overlap
+    // entirely, regardless of that underlying quirk.
+    @RequestMapping(value = "/*/**", method = RequestMethod.GET)
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Record attachment.",
+            content = @Content(schema = @Schema(type = "string", format = "binary"))),
+        @ApiResponse(responseCode = "206", description = "Partial content for resumable downloads.",
+            content = @Content(schema = @Schema(type = "string", format = "binary"))),
         @ApiResponse(responseCode = "403", description = "Operation not allowed. "
             + "User needs to be able to download the resource.")})
     public void getResource(
         @Parameter(description = "The metadata UUID", required = true, example = "43d7c186-2187-4bcd-8843-41e575a5ef56") @PathVariable String metadataUuid,
-        @Parameter(description = "The resource identifier (ie. filename)", required = true) @PathVariable String resourceId,
         @Parameter(description = "Use approved version or not", example = "true") @RequestParam(required = false, defaultValue = "true") Boolean approved,
         @Parameter(description = "Size (only applies to images). From 1px to 2048px.", example = "200") @RequestParam(required = false) Integer size,
         @Parameter(hidden = true) HttpServletRequest request,
         @Parameter(hidden = true) HttpServletResponse response
     ) throws Exception {
-
-        // To support files in subfolders
-        String resourceIdFile = retrieveResourceFileFromUrl(request);
-
         ServiceContext context = ApiUtils.createServiceContext(request);
+        String resourceId = extractPathWithinMapping(request);
+        ApiUtils.canViewRecord(metadataUuid, request);
 
-        try (Store.ResourceHolder file = store.getResource(context, metadataUuid, resourceIdFile, approved)) {
+        // Get the resource metadata
+        // We need size, last modified date and etag for the conditional headers
+        MetadataResource resourceMetadata = store.getResourceMetadata(context, metadataUuid, resourceId, approved);
 
-            ApiUtils.canViewRecord(metadataUuid, request);
+        if (resourceMetadata == null) {
+            response.setStatus(HttpStatus.NOT_FOUND.value());
+            return;
+        }
 
-            String originalFilename = file.getMetadata().getFilename();
-            String contentType = getFileContentType(file.getPath());
-            String dispositionFilename = originalFilename;
+        String fileName = resourceMetadata.getFilename();
+        long fileLastModifiedDate = resourceMetadata.getLastModification().getTime();
+        long fileSize = resourceMetadata.getSize();
+        MediaType fileMediaType = MediaType.parseMediaType(getFileContentType(fileName));
+        String fileETag = "\"" + DigestUtils.md5Hex(fileName + fileSize + resourceMetadata.getVersion() + fileLastModifiedDate) + "\"";
 
-            // If the image is being resized, always return as PNG and update
-            // filename and content-type accordingly
-            if (contentType.startsWith("image/") && size != null) {
-                if (size >= MIN_IMAGE_SIZE && size <= MAX_IMAGE_SIZE) {
-                    // Set content type to PNG
-                    contentType = "image/png";
-                    // Change file extension to .png
-                    int dotIdx = originalFilename.lastIndexOf('.');
-                    if (dotIdx > 0) {
-                        dispositionFilename = originalFilename.substring(0, dotIdx) + ".png";
-                    } else {
-                        dispositionFilename = originalFilename + ".png";
-                    }
-                    response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + dispositionFilename + "\"");
-                    response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
-                    response.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
+        // Set common headers
+        response.setHeader(HttpHeaders.CACHE_CONTROL, CacheControl.noCache().getHeaderValue());
+        response.setDateHeader(HttpHeaders.LAST_MODIFIED, fileLastModifiedDate);
+        response.setHeader(HttpHeaders.ETAG, fileETag);
+        response.setHeader(HttpHeaders.ACCEPT_RANGES, "bytes");
 
-                    // Read, resize, and write the image as PNG, and set Content-Length
-                    BufferedImage image = ImageIO.read(file.getPath().toFile());
-                    BufferedImage resized = ImageUtil.resize(image, size);
-                    // Write to a byte array first to get the length
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ImageIO.write(resized, "png", baos);
-                    byte[] pngBytes = baos.toByteArray();
-                    response.setContentLengthLong(pngBytes.length);
-                    response.getOutputStream().write(pngBytes);
-                } else {
-                    throw new IllegalArgumentException(String.format(
-                        "Image can only be resized from %d to %d. You requested %d.",
-                        MIN_IMAGE_SIZE, MAX_IMAGE_SIZE, size));
+        // Check if the request is not modified based on ETag or Last-Modified
+        if (new ServletWebRequest(request, response).checkNotModified(fileETag, fileLastModifiedDate)) {
+            return;
+        }
+
+        HttpRange range = null;
+        try {
+            List<HttpRange> ranges = HttpRange.parseRanges(request.getHeader(HttpHeaders.RANGE));
+            if (!ranges.isEmpty()) {
+                range = ranges.get(0);
+                if (range.getRangeStart(fileSize) >= fileSize) {
+                    throw new IllegalArgumentException("Range start (" + range.getRangeStart(fileSize) +
+                        ") must be lower than file size (" + fileSize + ").");
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            // invalid range -> 416 with real size
+            response.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
+            response.setHeader(HttpHeaders.CONTENT_RANGE, "bytes */" + fileSize);
+            return;
+        }
+
+        // If the request is a range request, check the If-Range header
+        String ifRange = request.getHeader(HttpHeaders.IF_RANGE);
+        if (range != null && ifRange != null) {
+            if (ifRange.startsWith("W/")) {
+                range = null; // weak ETag -> serve full resource
+            } else if (ifRange.startsWith("\"")) {
+                if (!fileETag.equals(ifRange)) {
+                    range = null; // strong ETag mismatch -> serve full resource
                 }
             } else {
-                // For all other files, use the original content type and filename
-                response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + dispositionFilename + "\"");
-                response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
-                response.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
-                response.setContentLengthLong(Files.size(file.getPath()));
-
-                try (InputStream inputStream = Files.newInputStream(file.getPath())) {
-                    StreamUtils.copy(inputStream, response.getOutputStream());
+                try {
+                    long ifRangeMillis = ZonedDateTime
+                        .parse(ifRange, java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME)
+                        .toInstant().toEpochMilli();
+                    if (fileLastModifiedDate > ifRangeMillis) {
+                        range = null; // newer -> serve full resource
+                    }
+                } catch (Exception ignored) {
+                    range = null; // invalid date -> full
                 }
+            }
+        }
+
+        // If the resource is an image and a size is requested, resize the image and return it
+        if (fileMediaType.getType().equals("image") && size != null) {
+            try (Store.ResourceHolder resourceHolder = store.getResource(context, metadataUuid, resourceId, approved)) {
+                serveResizedImage(resourceHolder.getResource(), fileName, fileETag, size, response);
+            }
+            return;
+        }
+
+        // Set headers for downloads
+        response.setContentType(fileMediaType.toString());
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment().filename(fileName).build().toString());
+
+        // Get the resource or a range of it
+        if (range != null) {
+            // Get the range start and end
+            long start = range.getRangeStart(fileSize);
+            long end = range.getRangeEnd(fileSize);
+            // Get the resource for the requested range
+            try (Store.ResourceHolder resourceHolder = store.getResourceWithRange(
+                context, metadataUuid, resourceId, approved, start, end)) {
+                response.setStatus(HttpStatus.PARTIAL_CONTENT.value());
+                response.setHeader(HttpHeaders.CONTENT_RANGE, "bytes " + start + "-" + end + "/" + fileSize);
+                response.setContentLengthLong(end - start + 1);
+                streamResource(resourceHolder.getResource(), response);
+            }
+        } else {
+            // Get the full resource
+            try (Store.ResourceHolder resourceHolder = store.getResource(context, metadataUuid, resourceId, approved)) {
+                response.setStatus(HttpStatus.OK.value());
+                response.setContentLengthLong(fileSize);
+                streamResource(resourceHolder.getResource(), response);
             }
         }
     }
 
 
-    @io.swagger.v3.oas.annotations.Operation(summary = "Update the metadata resource visibility and/or the resource name")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Update the metadata resource visibility and/or the resource name",
+        parameters = {@Parameter(name = "resourceId", in = ParameterIn.PATH, required = true,
+            description = "The resource identifier (ie. filename); may contain nested folders (eg. 'a/b/file.pdf')")})
     @PreAuthorize("hasAuthority('Editor')")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Attachment updated."),
         @ApiResponse(responseCode = "403", description = ApiParams.API_RESPONSE_NOT_ALLOWED_CAN_EDIT)})
-    @RequestMapping(value = "/{resourceId}/**", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    // "/*/**", not "/**": there's no bulk/collection-level PATCH mapping on this controller to
+    // collide with, but a bare .../attachments PATCH has no valid meaning either way (nothing to
+    // patch) - requiring a first segment rejects it outright instead of reaching the method body
+    // with an empty resourceId. See getResource's mapping comment for the other reason "/**"
+    // alone is unsafe here (a pre-existing, unrelated duplicate-HandlerMapping-bean quirk).
+    @RequestMapping(value = "/*/**", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     @ResponseBody
     public MetadataResource patchResource(
         @Parameter(description = "The metadata UUID", required = true, example = "43d7c186-2187-4bcd-8843-41e575a5ef56") @PathVariable String metadataUuid,
-        @Parameter(description = "The resource identifier (ie. filename)", required = true) @PathVariable String resourceId,
-        @Parameter(description = "The visibility", required = true, example = "public") @RequestParam(required = false) MetadataResourceVisibility visibility,
-        @Parameter(description = "The visibility", required = true, example = "public") @RequestParam(required = false) String newResourceName,
+        @Parameter(description = "The visibility", example = "public") @RequestParam(required = false) MetadataResourceVisibility visibility,
+        @Parameter(description = "The new resource name") @RequestParam(required = false) String newResourceName,
         @Parameter(description = "Use approved version or not", example = "true") @RequestParam(required = false, defaultValue = "false") Boolean approved,
         @Parameter(hidden = true) HttpServletRequest request) throws Exception {
-
-        // To support files in subfolders
-        String resourceIdFile = retrieveResourceFileFromUrl(request);
-
         ServiceContext context = ApiUtils.createServiceContext(request);
+        String resourceId = extractPathWithinMapping(request);
 
         AbstractMetadata metadata = ApiUtils.canViewRecord(metadataUuid, request);
 
@@ -376,14 +467,16 @@ public class AttachmentsApi {
 
         MetadataResource metadataResource = null;
         if (newResourceName != null) {
-            Store.ResourceHolder metadataResourceToUpdate = store.getResource(context, metadataUuid, resourceId, approved);
+            MetadataResource previousResource = store.getResourceMetadata(context, metadataUuid, resourceId, approved);
             metadataResource = store.renameResource(context, metadataUuid, resourceId, newResourceName, approved);
 
-            // Update the metadata references to the resource
-            metadata.setData(metadata.getData().replaceAll(metadataResourceToUpdate.getMetadata().getUrl(), metadataResource.getUrl()));
-            metadataManager.save(metadata);
-            metadataIndexer.indexMetadata(String.valueOf(metadata.getId()), true, IndexingMode.full);
-
+            if (previousResource != null && metadataResource != null && metadata != null && metadata.getData() != null) {
+                // Update the metadata references to the resource
+                metadata.setData(metadata.getData().replace(previousResource.getUrl(), metadataResource.getUrl()));
+                metadataManager.save(metadata);
+                metadataIndexer.indexMetadata(String.valueOf(metadata.getId()), DirectIndexSubmitter.INSTANCE, IndexingMode.full);
+            }
+            resourceId = newResourceName;
         }
         if (visibility != null) {
             metadataResource = store.patchResourceStatus(context, metadataUuid, resourceId, visibility, approved);
@@ -391,23 +484,23 @@ public class AttachmentsApi {
         return metadataResource;
     }
 
-    @io.swagger.v3.oas.annotations.Operation(summary = "Delete a metadata resource")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Delete a metadata resource",
+        parameters = {@Parameter(name = "resourceId", in = ParameterIn.PATH, required = true,
+            description = "The resource identifier (ie. filename); may contain nested folders (eg. 'a/b/file.pdf')")})
     @PreAuthorize("hasAuthority('Editor')")
-    @RequestMapping(value = "/{resourceId}/**", method = RequestMethod.DELETE)
-    @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "Attachment visibility removed."),
+    // "/*/**", not "/**": avoids colliding with delResources's exact mapping for the bare
+    // .../attachments URL - see getResource's mapping comment for why.
+    @RequestMapping(value = "/*/**", method = RequestMethod.DELETE)
+    @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "Attachment visibility removed.", content = {@Content(schema = @Schema(hidden = true))}),
         @ApiResponse(responseCode = "403", description = ApiParams.API_RESPONSE_NOT_ALLOWED_CAN_EDIT)})
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delResource(
         @Parameter(description = "The metadata UUID", required = true, example = "43d7c186-2187-4bcd-8843-41e575a5ef56") @PathVariable String metadataUuid,
-        @Parameter(description = "The resource identifier (ie. filename)", required = true) @PathVariable String resourceId,
         @Parameter(description = "Use approved version or not", example = "true") @RequestParam(required = false, defaultValue = "false") Boolean approved,
         @Parameter(hidden = true) HttpServletRequest request) throws Exception {
-
-        // To support files in subfolders
-        String resourceIdFile = retrieveResourceFileFromUrl(request);
-
         ServiceContext context = ApiUtils.createServiceContext(request);
-        store.delResource(context, metadataUuid, resourceIdFile, approved);
+        String resourceId = extractPathWithinMapping(request);
+        store.delResource(context, metadataUuid, resourceId, approved);
 
         String metadataIdString = ApiUtils.getInternalId(metadataUuid, approved);
         if (metadataIdString != null) {
@@ -418,14 +511,63 @@ public class AttachmentsApi {
         }
     }
 
-    private String retrieveResourceFileFromUrl(HttpServletRequest request) {
-        String fileName = new AntPathMatcher().extractPathWithinPattern(
-            request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE).toString(),request.getRequestURI());
+    /**
+     * Serves a resized image in PNG format.
+     *
+     * @param resource Resource representing the original image
+     * @param originalImageName Original filename of the image
+     * @param originalETag Original resource ETag used to generate resized image ETag
+     * @param size Desired size for the resized image (in pixels)
+     * @param response Current HTTP response
+     * @throws IOException If an I/O error occurs while reading or writing the image
+     */
+    private void serveResizedImage(Resource resource,
+                                   String originalImageName,
+                                   String originalETag,
+                                   int size,
+                                   HttpServletResponse response) throws IOException {
+        if (size < MIN_IMAGE_SIZE || size > MAX_IMAGE_SIZE) {
+            throw new IllegalArgumentException(String.format(
+                "Image can only be resized from %d to %d. You requested %d.",
+                MIN_IMAGE_SIZE, MAX_IMAGE_SIZE, size));
+        }
 
-        try {
-            return URLDecoder.decode(fileName, StandardCharsets.UTF_8.name());
-        } catch(UnsupportedEncodingException ex) {
-            return fileName;
+        try (InputStream inputStream = resource.getInputStream()) {
+            // Resize the image
+            BufferedImage resizedImage = ImageUtil.resize(ImageIO.read(inputStream), size);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ImageIO.write(resizedImage, "png", outputStream);
+
+            // Generate a new filename for the resized image
+            // Use the original filename without extension and append .png
+            String pngFilename = originalImageName.substring(0, originalImageName.lastIndexOf('.')) + ".png";
+
+            // Resized image headers
+            response.setStatus(HttpStatus.OK.value());
+            response.setContentType(MediaType.IMAGE_PNG_VALUE);
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
+                ContentDisposition.attachment().filename(pngFilename).build().toString());
+            response.setContentLength(outputStream.size());
+            response.setDateHeader(HttpHeaders.LAST_MODIFIED, System.currentTimeMillis());
+
+            // Generate a new ETag based on the original ETag and the size
+            response.setHeader(HttpHeaders.ETAG, "\"" + DigestUtils.md5Hex(originalETag + size) + "\"");
+
+            OutputStream servletOutput = response.getOutputStream();
+            outputStream.writeTo(servletOutput);
+            servletOutput.flush();
+        }
+    }
+
+    private void streamResource(Resource resource, HttpServletResponse response) throws IOException {
+        try (InputStream inputStream = resource.getInputStream()) {
+            OutputStream outputStream = response.getOutputStream();
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            outputStream.flush();
         }
     }
 }

@@ -497,13 +497,13 @@
           </gmd:scope>
         </xsl:if>
 
-        <xsl:for-each select="mdq:DQ_DataQuality/mdq:report/*">
+        <xsl:for-each select="mdq:DQ_DataQuality/mdq:report/*[local-name() != 'DQ_UsabilityElement']">
           <gmd:report>
-            <xsl:variable name="dqReportName"
-                          select="if (local-name() = 'DQ_NonQuantitativeAttributeCorrectness')
-                                       then 'DQ_NonQuantitativeAttributeAccuracy'
-                                       else local-name()"/>
-            <xsl:element name="{concat('gmd:', $dqReportName)}">
+            <xsl:variable name="dataQualityReportType"
+                          select="if (local-name()='DQ_NonQuantitativeAttributeCorrectness')
+                                       then 'DQ_NonQuantitativeAttributeAccuracy' else local-name()"/>
+
+            <xsl:element name="{concat('gmd:', $dataQualityReportType)}">
               <xsl:call-template name="writeCharacterStringElement">
                 <xsl:with-param name="elementName" select="'gmd:nameOfMeasure'"/>
                 <xsl:with-param name="nodeWithStringToWrite" select="mdq:measure/mdq:DQ_MeasureReference/mdq:nameOfMeasure"/>
@@ -526,14 +526,12 @@
                 <xsl:with-param name="nodeWithStringToWrite" select="mdq:evaluation/mdq:DQ_FullInspection/mdq:evaluationMethodDescription"/>
               </xsl:call-template>
 
-              <xsl:for-each select="mdq:evaluation/mdq:DQ_FullInspection">
-                <gmd:evaluationProcedure>
-                  <xsl:apply-templates select="mdq:evaluationProcedure/cit:CI_Citation"/>
-                </gmd:evaluationProcedure>
-                <gmd:dateTime>
-                  <xsl:apply-templates select="mdq:dateTime/gco2:DateTime"/>
-                </gmd:dateTime>
-              </xsl:for-each>
+              <gmd:evaluationProcedure>
+                <xsl:apply-templates select="mdq:evaluation/mdq:DQ_FullInspection/mdq:evaluationProcedure/cit:CI_Citation"/>
+              </gmd:evaluationProcedure>
+              <gmd:dateTime>
+                <xsl:apply-templates select="mdq:evaluation/mdq:DQ_FullInspection/mdq:dateTime/gco2:DateTime"/>
+              </gmd:dateTime>
               <xsl:apply-templates select="mdq:result"/>
             </xsl:element>
           </gmd:report>
@@ -963,7 +961,7 @@
     <xsl:param name="nodeWithStringToWrite"/>
 
     <xsl:variable name="isMultilingual"
-      select="count($nodeWithStringToWrite/gmd:PT_FreeText) > 0"/>
+      select="count($nodeWithStringToWrite/lan:PT_FreeText) > 0"/>
     <xsl:variable name="hasCharacterString"
       select="count($nodeWithStringToWrite/gco2:CharacterString) = 1"/>
 
@@ -971,9 +969,6 @@
       <xsl:when test="$nodeWithStringToWrite">
         <xsl:element name="{$elementName}">
           <xsl:apply-templates select="$nodeWithStringToWrite/@*"/>
-          <xsl:if test="$isMultilingual">
-            <xsl:attribute name="xsi:type" select="'gmd:PT_FreeText_PropertyType'"/>
-          </xsl:if>
 
           <xsl:if test="$hasCharacterString">
             <gco:CharacterString>
@@ -981,11 +976,15 @@
             </gco:CharacterString>
           </xsl:if>
           <xsl:if test="$isMultilingual">
-            <xsl:copy-of select="$nodeWithStringToWrite/gmd:PT_FreeText"/>
+            <xsl:apply-templates select="$nodeWithStringToWrite/lan:PT_FreeText"/>
           </xsl:if>
         </xsl:element>
       </xsl:when>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="@xsi:type[. = 'lan:PT_FreeText_PropertyType']">
+    <xsl:attribute name="xsi:type" select="'gmd:PT_FreeText_PropertyType'"/>
   </xsl:template>
 
   <xsl:template name="writeDateTime">
@@ -1119,6 +1118,7 @@
                        srv2:parameter|
                        mri:keywordClass|
                        mri:temporalResolution|
+                       mrd:formatSpecificationCitation|
                        mdb:dateInfo|
                        mdb:metadataProfile|
                        mdb:alternativeMetadataReference|

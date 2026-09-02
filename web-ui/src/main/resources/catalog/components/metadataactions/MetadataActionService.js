@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2023 Food and Agriculture Organization of the
+ * Copyright (C) 2001-2026 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
  *
@@ -27,8 +27,10 @@
   goog.require("gn_category");
   goog.require("gn_popup");
   goog.require("gn_share");
+  goog.require("gn_anonymous_access");
 
   var module = angular.module("gn_mdactions_service", [
+    "gn_anonymous_access",
     "gn_share",
     "gn_category",
     "gn_popup"
@@ -45,6 +47,7 @@
     "gnGlobalSettings",
     "gnUtilityService",
     "gnShareService",
+    "gnAnonymousAccessService",
     "gnPopup",
     "gnMdFormatter",
     "$translate",
@@ -64,6 +67,7 @@
       gnGlobalSettings,
       gnUtilityService,
       gnShareService,
+      gnAnonymousAccessService,
       gnPopup,
       gnMdFormatter,
       $translate,
@@ -77,6 +81,8 @@
       var windowOption = "";
       var selectedMetadataTypes = [];
       var translations = null;
+      var selectedMetadataTypes = [];
+
       $translate([
         "metadataPublished",
         "metadataUnpublished",
@@ -194,6 +200,10 @@
           );
       };
 
+      this.getSelectedMetadataTypes = function () {
+        return selectedMetadataTypes;
+      };
+
       /**
        * Export as PDF (one or selection). If params is search object, we check
        * for sortBy and sortOrder to process the print. If it is a string
@@ -238,11 +248,14 @@
        * one metadata, else export the whole selection.
        * @param {string} uuid
        */
-      this.metadataMEF = function (uuid, bucket, approved) {
+      this.metadataMEF = function (uuid, bucket, approved, includeAttachments) {
         var url = "../api/records/zip?";
         url += angular.isDefined(uuid) ? "&uuids=" + uuid : "";
         url += angular.isDefined(bucket) ? "&bucket=" + bucket : "";
         url += angular.isDefined(approved) ? "&approved=" + approved : "";
+        url += angular.isDefined(includeAttachments)
+          ? "&includeAttachments=" + includeAttachments
+          : "";
 
         location.replace(url);
       };
@@ -302,7 +315,7 @@
               gnUtilityService.openModal(
                 {
                   title: translations.metadataValidated,
-                  content: '<div gn-batch-report="processReport"></div>',
+                  content: '<div gn-batch-validation-report="processReport"></div>',
                   className: "gn-validation-popup",
                   onCloseCallback: function () {
                     $rootScope.$broadcast("operationOnSelectionStop");
@@ -635,6 +648,55 @@
               });
             }
           );
+      };
+
+      this.createAnonymousAccess = function (md, scope) {
+        return gnAnonymousAccessService
+          .create(angular.isDefined(md) ? md.uuid : undefined)
+          .then(
+            function (response) {
+              scope.$broadcast("AnonymousAccessCreated");
+              scope.hash = response;
+              scope.uuid = md.uuid;
+
+              // A hash is returned
+              gnUtilityService.openModal(
+                {
+                  title: $translate.instant("anonymousAccessTo", {
+                    title: md.resourceTitle
+                  }),
+                  content:
+                    '<div gn-anonymous-access="uuid" gn-anonymous-access-hash="hash"></div>',
+                  onCloseCallback: function () {
+                    scope.hash = null;
+                  }
+                },
+                scope,
+                "AnonymousAccessDone"
+              );
+            },
+            function (response) {
+              gnAlertService.addAlert({
+                msg: $translate.instant("anonymousAccessCreatedError", {
+                  errorDescription: response.data.description
+                }),
+                type: "danger"
+              });
+            }
+          );
+      };
+
+      this.deleteAnonymousAccess = function (md, scope) {
+        return gnAnonymousAccessService
+          .delete(angular.isDefined(md) ? md.uuid : undefined)
+          .then(function (response) {
+            scope.$broadcast("AnonymousAccessDeleted");
+            $rootScope.$broadcast("StatusUpdated", {
+              msg: $translate.instant("anonymousAccessDeleted"),
+              timeout: 2,
+              type: "success"
+            });
+          });
       };
 
       this.assignGroup = function (metadataId, groupId) {

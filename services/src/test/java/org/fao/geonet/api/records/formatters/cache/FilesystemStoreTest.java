@@ -32,7 +32,6 @@ import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.SystemInfo;
 import org.fao.geonet.api.records.formatters.FormatType;
 import org.fao.geonet.api.records.formatters.FormatterWidth;
-import org.fao.geonet.api.records.attachments.StoreFolderConfig;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.junit.After;
 import org.junit.Before;
@@ -69,7 +68,6 @@ public class FilesystemStoreTest {
     public void setUp() throws Exception {
         ConfigurableApplicationContext applicationContext = Mockito.mock(ConfigurableApplicationContext.class);
         ApplicationContextHolder.set(applicationContext);
-        Mockito.when(applicationContext.getBean(StoreFolderConfig.class)).thenReturn(new StoreFolderConfig());
 
         createDataDir();
         initStore();

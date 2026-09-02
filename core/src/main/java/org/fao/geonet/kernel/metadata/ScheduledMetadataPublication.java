@@ -23,39 +23,40 @@
 
 package org.fao.geonet.kernel.metadata;
 
-import java.util.List;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
 import jeeves.transaction.TransactionManager;
 import jeeves.transaction.TransactionTask;
+import org.apache.commons.lang3.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.domain.AbstractMetadata;
-import org.fao.geonet.domain.ISODate;
-import org.fao.geonet.domain.MetadataStatus;
-import org.fao.geonet.domain.Profile;
-import org.fao.geonet.domain.User;
+import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
+import org.fao.geonet.kernel.setting.SettingManager;
+import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.repository.MetadataStatusRepository;
 import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.repository.specification.UserSpecs;
 import org.fao.geonet.utils.Log;
-import org.locationtech.jts.util.Assert;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.quartz.QuartzJobBean;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionStatus;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Task checking on a regular basis the list of records
  * to be published.
  */
-@Component
 public class ScheduledMetadataPublication extends QuartzJobBean {
     @Autowired
     protected ServiceManager serviceManager;
@@ -75,6 +76,9 @@ public class ScheduledMetadataPublication extends QuartzJobBean {
     @Autowired
     private MetadataPublicationService metadataPublicationService;
 
+    @Autowired
+    private SettingManager settingManager;
+
     public ScheduledMetadataPublication() {
     }
 
@@ -84,6 +88,9 @@ public class ScheduledMetadataPublication extends QuartzJobBean {
      */
     @Override
     protected void executeInternal(JobExecutionContext jobContext) throws JobExecutionException {
+        if (!settingManager.getValueAsBool(Settings.METADATA_PUBLICATION_ENABLE_SCHEDULED_PUBLICATION, false)) {
+            return;
+        }
         ApplicationContextHolder.set(this.applicationContext);
         ServiceContext serviceContext = createServiceContext();
 
@@ -94,8 +101,16 @@ public class ScheduledMetadataPublication extends QuartzJobBean {
             false, new TransactionTask<Void>() {
                 @Override
                 public Void doInTransaction(TransactionStatus transaction) throws Throwable {
-                    // Get current date without time part
-                    ISODate now = new ISODate(new ISODate().getDateAsString() + "T24:00:00.000Z");
+                    // Cutoff for the records to publish, computed explicitly in UTC so it does not
+                    // depend on the server's default time zone: the end of the current day (UTC).
+                    // Combined with the "dueDate <= cutoff" query, records scheduled for the current
+                    // day (UTC) or earlier are published, while records due the next day are not
+                    // published early. Due dates are date-only, so second precision is sufficient.
+                    ISODate now = new ISODate(LocalDate.now(ZoneOffset.UTC)
+                        .atTime(LocalTime.MAX)
+                        .atOffset(ZoneOffset.UTC)
+                        .toInstant()
+                        .toEpochMilli());
 
                     List<MetadataStatus> metadataStatusList = metadataStatusRepository.findMetadataStatusForScheduledPublication(now);
                     metadataStatusList.forEach(status -> {
@@ -105,16 +120,23 @@ public class ScheduledMetadataPublication extends QuartzJobBean {
                             // Publish the metadata
                             AbstractMetadata metadata = metadataUtils.findOne(metadataId);
                             if (metadata != null) {
-                                metadataPublicationService.shareMetadataWithReservedGroup(serviceContext, metadata, true, "default");
+                                metadataPublicationService.shareMetadataWithReservedGroup(serviceContext, metadata, true, "default", new Locale(Geonet.DEFAULT_LANGUAGE));
                             } else {
                                 Log.warning(Geonet.GEONETWORK, "Can not schedule publish the metadata with ID: " + metadataId + " because it does not exist.");
                             }
-
-                            // Mark the status as closed
-                            status.setCloseDate(new ISODate());
-                            metadataStatusRepository.save(status);
                         } catch (Exception e) {
                             Log.error(Geonet.GEONETWORK, "Error publishing metadata with ID with scheduled publication: " + metadataId, e);
+                            // Record the failure reason on the task. The task is closed regardless of the
+                            // outcome (see the finally block) so that a record that keeps failing to publish
+                            // is not retried on every subsequent run, logging the same error indefinitely.
+                            // The record must be rescheduled once the underlying issue is resolved.
+                            status.setChangeMessage(StringUtils.abbreviate(
+                                "Scheduled publication failed: " + e.getMessage(), 2048));
+                        } finally {
+                            // Close the task regardless of success or failure so it is not picked up again
+                            // by the next scheduled run.
+                            status.setCloseDate(new ISODate());
+                            metadataStatusRepository.save(status);
                         }
                     });
                     return null;
@@ -133,12 +155,14 @@ public class ScheduledMetadataPublication extends QuartzJobBean {
     }
 
     private void loginAsAdmin(ServiceContext serviceContext) {
-        final User adminUser = userRepository.findAll(
+        final List<User> adminUsers = userRepository.findAll(
             UserSpecs.hasProfile(Profile.Administrator),
-            PageRequest.of(0, 1)).getContent().get(0);
-        Assert.isTrue(adminUser != null, "The system does not have an admin user");
+            PageRequest.of(0, 1)).getContent();
+        if (adminUsers.isEmpty()) {
+            throw new IllegalStateException("The system does not have an admin user");
+        }
         UserSession session = new UserSession();
-        session.loginAs(adminUser);
+        session.loginAs(adminUsers.get(0));
         serviceContext.setUserSession(session);
     }
 }

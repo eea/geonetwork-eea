@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2024 Food and Agriculture Organization of the
+ * Copyright (C) 2001-2023 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
  *
@@ -53,7 +53,6 @@ import org.fao.geonet.SystemInfo;
 import org.fao.geonet.analytics.WebAnalyticsConfiguration;
 import org.fao.geonet.api.records.attachments.FilesystemStoreResourceContainer;
 import org.fao.geonet.api.records.attachments.Store;
-import org.fao.geonet.api.records.attachments.StoreFolderConfig;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.*;
@@ -96,7 +95,6 @@ import org.geotools.api.referencing.operation.MathTransform;
 import org.owasp.esapi.errors.EncodingException;
 import org.owasp.esapi.reference.DefaultEncoder;
 import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.BeanFactoryAnnotationUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -146,7 +144,7 @@ public final class XslUtil {
         if (value instanceof HashMap) {
             @SuppressWarnings("rawtypes")
             HashMap map = (HashMap) value;
-            List<Polygon> geoms = new ArrayList<>();
+            List<Polygon> geoms = new ArrayList<Polygon>();
             for (Object entry : map.values()) {
                 addToList(geoms, entry);
             }
@@ -279,7 +277,7 @@ public final class XslUtil {
     private static final char CS_DEFAULT = ',';
     private static final char TS_WKT = ',';
     private static final char CS_WKT = ' ';
-    private static ThreadLocal<Boolean> allowScripting = new InheritableThreadLocal<>();
+    private static ThreadLocal<Boolean> allowScripting = new InheritableThreadLocal<Boolean>();
 
     /**
      * clean the src of ' and <>
@@ -604,9 +602,6 @@ public final class XslUtil {
 	public static boolean isDisableLoginForm() {
         SecurityProviderConfiguration securityProviderConfiguration = SecurityProviderConfiguration.get();
 
-        if ("gn5".equals(System.getProperty("geonetwork.security.type"))) {
-            return false;
-        }
         if (securityProviderConfiguration != null) {
             // No login form if providing a link or autologin
             return securityProviderConfiguration.getLoginType().equals(SecurityProviderConfiguration.LoginType.AUTOLOGIN.toString().toLowerCase())
@@ -752,16 +747,29 @@ public final class XslUtil {
         return "";
     }
 
-    /**
-     * Try to preserve some HTML layout to text layout.
-     *
-     * Replace br tag by new line, li by new line with leading *.
-     */
-    public static String htmlElement2textReplacer(String html) {
-        return html
-            .replaceAll("<br */?>", System.getProperty("line.separator"))
-            .replaceAll("<a.*?href=\"(?<url>https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*))\".*?>(?<label>.*?)<\\/a>", "${label} (${url})")
-            .replaceAll("<li>(.*)</li>", System.getProperty("line.separator") + "* $1");
+    public static String htmlElement2textReplacer(String htmlRaw) {
+        String separator = "\n";
+        String htmlWithoutNewlines = htmlRaw.replaceAll("[\n\r]", "");
+        org.jsoup.nodes.Document doc = Jsoup.parse(htmlWithoutNewlines);
+
+        // Handle <li> tags: prepend a bullet (*) to each item
+        doc.select("li:not(:empty)").prepend(separator + "* ");
+
+        // Handle <p> tags: append an empty string (ensure it becomes block-level)
+        doc.select("p:not(:empty)").prepend(separator).append(separator);
+
+        // Handle <h1-h6> tags: prepend # to the header
+        doc.select("h1:not(:empty), h2:not(:empty), h3:not(:empty), h4:not(:empty), h5:not(:empty), h6:not(:empty)").prepend(separator + "# ").append(separator);
+
+        // Handle <a> tags: append the URL in parentheses after the link text
+        for (org.jsoup.nodes.Element element : doc.select("a")) {
+            String text = element.text();
+            String link = element.attr("href");
+            if (!text.equals(link)) {
+                element.text(text + " (" + link + ")");
+            }
+        }
+        return doc.wholeText().trim();
     }
     public static String html2text(String html) {
         return Jsoup.parse(html).wholeText();
@@ -972,10 +980,10 @@ public final class XslUtil {
     }
 
     /**
-     * Return 2 iso lang code from a 3 iso lang code. If any error occurs return "".
+     * Return 2 iso lang code (ISO 639-1 two-letter code) from a 3 iso lang code. If any error occurs return "".
      *
-     * @param iso3LangCode The 2 iso lang code
-     * @return The related 3 iso lang code
+     * @param iso3LangCode The 3 chars iso lang code
+     * @return The related 2 chars iso lang code
      */
     public static
     @Nonnull
@@ -1104,10 +1112,7 @@ public final class XslUtil {
             Element elemRet = new Element("EX_GeographicBoundingBox", ISO19139Namespaces.GMD);
 
             boolean forceXY = Boolean.getBoolean(System.getProperty("org.geotools.referencing.forceXY", "false"));
-            Element elemminx;
-            Element elemmaxx;
-            Element elemminy;
-            Element elemmaxy;
+            Element elemminx, elemmaxx, elemminy, elemmaxy;
             if (forceXY) {
                 elemminx = new Element("westBoundLongitude", ISO19139Namespaces.GMD)
                     .addContent(new Element("Decimal", ISO19139Namespaces.GCO).setText("" + reprojected.getMinX()));
@@ -1296,11 +1301,12 @@ public final class XslUtil {
                 BufferedImage image;
                 if (m.find()) {
                     Store store = ApplicationContextHolder.get().getBean("filesystemStore", Store.class);
-                    try (Store.ResourceHolder file = store.getResourceInternal(
+                    try (Store.ResourceHolder resourceHolder = store.getResourceInternal(
                         URLDecoder.decode(m.group(1), Constants.ENCODING),
                         MetadataResourceVisibility.PUBLIC,
-                        URLDecoder.decode(m.group(2), Constants.ENCODING), true)) {
-                        image = ImageIO.read(file.getPath().toFile());
+                        URLDecoder.decode(m.group(2), Constants.ENCODING), true);
+                        InputStream is = resourceHolder.getResource().getInputStream()) {
+                        image = ImageIO.read(is);
                     }
                 } else {
                     URL imageUrl = new URL(url);
@@ -1546,7 +1552,7 @@ public final class XslUtil {
 
 
     public static List<String> getKeywordHierarchy(String keyword, String thesaurusId, String langCode) {
-        List<String> res = new ArrayList<>();
+        List<String> res = new ArrayList<String>();
         if (StringUtils.isEmpty(thesaurusId)) {
             return res;
         }
@@ -1675,6 +1681,9 @@ public final class XslUtil {
         return listOfLinks;
     }
 
+    public static String escapeForJson(String value) {
+        return StringEscapeUtils.escapeJson(value);
+    }
 
     public static String escapeForEcmaScript(String value) {
         return StringEscapeUtils.escapeEcmaScript(value);
@@ -1692,25 +1701,5 @@ public final class XslUtil {
         WebAnalyticsConfiguration webAnalyticsConfiguration = applicationContext.getBean(WebAnalyticsConfiguration.class);
 
         return webAnalyticsConfiguration.getJavascriptCode();
-    }
-
-    public static String escapeForJson(String value) {
-        return StringEscapeUtils.escapeJson(value);
-    }
-
-    /**
-     * get the metadata data directory folder privileges strategy
-     *
-     * @return the folder privileges strategy to be used.
-     */
-    public static StoreFolderConfig.FolderPrivilegesStrategy getResourceFolderPrivilegesStrategy() {
-        try {
-            StoreFolderConfig storeFolderConfig = BeanFactoryAnnotationUtils.qualifiedBeanOfType(ApplicationContextHolder.get().getBeanFactory(), StoreFolderConfig.class, "storeFolderConfig");
-            return storeFolderConfig.getFolderPrivilegesStrategy();
-
-        } catch (NoSuchBeanDefinitionException ex) {
-            return StoreFolderConfig.FolderPrivilegesStrategy.DEFAULT;
-
-        }
     }
 }

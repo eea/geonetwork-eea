@@ -213,6 +213,14 @@
         <dateStamp><xsl:value-of select="date-util:convertToISOZuluDateTime(normalize-space(.))"/></dateStamp>
       </xsl:for-each>
 
+      <!-- Publication date -->
+      <xsl:for-each select="(mdb:dateInfo/
+                              cit:CI_Date[cit:dateType/cit:CI_DateTypeCode/@codeListValue = 'publication']/
+                                cit:date/*[gn-fn-index:is-isoDate(.)])[1]">
+
+        <publicationDate><xsl:value-of select="text()"/></publicationDate>
+      </xsl:for-each>
+
 
       <xsl:copy-of select="gn-fn-index:add-field('mainLanguage', $mainLanguage)"/>
 
@@ -464,7 +472,7 @@
 
 
         <xsl:for-each
-          select="mri:defaultLocale/lan:PT_Locale/lan:language/lan:LanguageCode/@codeListValue">
+          select="mri:defaultLocale/lan:PT_Locale/lan:language/lan:LanguageCode/@codeListValue|mri:otherLocale/lan:PT_Locale/lan:language/lan:LanguageCode/@codeListValue">
           <resourceLanguage>
             <xsl:value-of select="."/>
           </resourceLanguage>
@@ -1199,13 +1207,13 @@
                       select="mrl:processStep/*[mrl:description/gco:CharacterString != '']"/>
         <xsl:for-each select="$processSteps">
           <xsl:variable name="stepDateTimeZulu"
-                        select="date-util:convertToISOZuluDateTime(normalize-space(mrl:stepDateTime))"/>
+                        select="date-util:convertToISOZuluDateTime(normalize-space(mrl:stepDateTime//gml:timePosition/text()))"/>
 
           <processSteps type="object">{
             "descriptionObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
                                 'description', mrl:description, $allLanguages, true())"/>
             <xsl:if test="$stepDateTimeZulu != ''">
-              ,"date": "<xsl:value-of select="mrl:stepDateTime//gml:timePosition/text()"/>"
+              ,"date": "<xsl:value-of select="$stepDateTimeZulu"/>"
             </xsl:if>
             ,"source": [
             <xsl:for-each select="mrl:source/*[mrl:description/gco:CharacterString != '']">

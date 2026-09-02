@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * Copyright (C) 2001-2026 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
  *
@@ -136,16 +136,34 @@
       $scope.confirmRemoveMetadata = function () {
         $scope.deleteRecord($scope.metadataToDelete).then(function () {
           $scope.metadataToDelete = null;
+          $("#gn-confirm-remove-metadata").modal("hide");
           $rootScope.$broadcast("search");
         });
       };
 
       $scope.getMetadataDeleteConfirmMessage = function () {
-        if (!$scope.metadataToDelete) return "";
+        if (!$scope.metadataToDelete) {
+          $("#gn-confirm-remove-metadata").modal("hide");
+          return "";
+        }
 
-        return $translate.instant("metadataDeleteConfirm", {
+        var translation = $translate.instant("metadataDeleteConfirm", {
           title: $scope.metadataToDelete.resourceTitle
         });
+
+        var translationMetadataResourceTypeKey =
+          "metadataDelete-" + $scope.metadataToDelete.resourceType;
+
+        var translationResourceType = $translate.instant(
+          translationMetadataResourceTypeKey
+        );
+
+        // If there is a message for the specific metadata resource type, append it to the generic message.
+        if (translationResourceType !== translationMetadataResourceTypeKey) {
+          translation += "<br/>" + translationResourceType;
+        }
+
+        return translation;
       };
 
       $scope.deleteRecord = function (md) {
@@ -180,9 +198,20 @@
     "$rootScope",
     "$route",
     "$location",
+    "$translate",
+    "$timeout",
     "gnSearchSettings",
     "gnGlobalSettings",
-    function ($scope, $rootScope, $route, $location, gnSearchSettings, gnGlobalSettings) {
+    function (
+      $scope,
+      $rootScope,
+      $route,
+      $location,
+      $translate,
+      $timeout,
+      gnSearchSettings,
+      gnGlobalSettings
+    ) {
       // Cleanup onbeforeunload event
       window.onbeforeunload = null;
 

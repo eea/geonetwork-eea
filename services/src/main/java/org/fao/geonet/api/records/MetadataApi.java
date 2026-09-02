@@ -23,6 +23,7 @@
 
 package org.fao.geonet.api.records;
 
+import com.google.gson.*;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -54,20 +55,21 @@ import org.fao.geonet.kernel.mef.MEFLib;
 import org.fao.geonet.kernel.search.EsSearchManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataRepository;
+import org.fao.geonet.util.XslUtil;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.nio.file.Files;
@@ -80,6 +82,7 @@ import static org.fao.geonet.api.ApiParams.*;
 
 import static org.fao.geonet.kernel.mef.MEFLib.Version.Constants.MEF_V1_ACCEPT_TYPE;
 import static org.fao.geonet.kernel.mef.MEFLib.Version.Constants.MEF_V2_ACCEPT_TYPE;
+import static org.fao.geonet.kernel.mef.MEFLib.Version.Constants.MEF_V3_ACCEPT_TYPE;
 
 @RequestMapping(value = {
     "/{portal}/api/records"
@@ -107,6 +110,10 @@ public class MetadataApi {
 
     @Autowired
     GeonetworkDataDirectory dataDirectory;
+
+    @Autowired
+    @Qualifier("apiMessages")
+    private ResourceBundleMessageSource messages;
 
     private ApplicationContext context;
 
@@ -179,6 +186,10 @@ public class MetadataApi {
             required = true)
         @PathVariable
         String metadataUuid,
+        @Parameter(description = "Formatter to use on the record view page. " +
+            "If invalid or not specified, no redirect to the record view page is performed.")
+        @RequestParam(required = false)
+        String recordViewFormatter,
         HttpServletResponse response,
         HttpServletRequest request
     )
@@ -188,6 +199,14 @@ public class MetadataApi {
         } catch (SecurityException e) {
             Log.debug(API.LOG_MODULE_NAME, e.getMessage(), e);
             throw new NotAllowedException(ApiParams.API_RESPONSE_NOT_ALLOWED_CAN_VIEW);
+        }
+
+        // Check if a redirect to the record view page is required.
+        String redirect = getRedirect(recordViewFormatter, languageUtils.getIso3langCode(request.getLocales()), metadataUuid);
+
+        // If a redirect is required, perform it.
+        if (redirect != null) {
+            return redirect;
         }
 
         String acceptHeader = StringUtils.isBlank(request.getHeader(HttpHeaders.ACCEPT)) ? MediaType.APPLICATION_XML_VALUE : request.getHeader(HttpHeaders.ACCEPT);
@@ -409,6 +428,13 @@ public class MetadataApi {
             }
         }
 
+        if (!metadataUtils.isMetadataAvailableInPortal(Integer.parseInt(mdId))) {
+            Log.debug(API.LOG_MODULE_NAME, String.format("Metadata with UUID '%s' is not available in the portal", metadataUuid));
+            throw new ResourceNotFoundException(String.format("Metadata with UUID '%s' not found.", metadataUuid))
+                .withMessageKey("exception.resourceNotFound.metadata")
+                .withDescriptionKey("exception.resourceNotFound.metadata.description", new String[]{ metadataUuid });
+        }
+
         Element xml = withInfo ?
             dataManager.getMetadata(context, mdId, forEditing,
                 withValidationErrors, keepXlinkAttributes) :
@@ -455,7 +481,8 @@ public class MetadataApi {
         produces = {
             "application/zip",
             MEF_V1_ACCEPT_TYPE,
-            MEF_V2_ACCEPT_TYPE
+            MEF_V2_ACCEPT_TYPE,
+            MEF_V3_ACCEPT_TYPE,
         })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Return the record."),
@@ -484,6 +511,13 @@ public class MetadataApi {
             defaultValue = "true")
         boolean withRelated,
         @Parameter(
+            description = "Whether to include file attachments in the exported MEF package."
+        )
+        @RequestParam(
+            required = false,
+            defaultValue = "true")
+        boolean includeAttachments,
+        @Parameter(
             description = "Resolve XLinks in the records.",
             required = false)
         @RequestParam(
@@ -509,6 +543,7 @@ public class MetadataApi {
         HttpServletRequest request
     )
         throws Exception {
+        Locale locale = languageUtils.parseAcceptLanguage(request.getLocales());
         AbstractMetadata metadata;
         try {
             metadata = ApiUtils.canViewRecord(metadataUuid, request);
@@ -516,11 +551,24 @@ public class MetadataApi {
             Log.debug(API.LOG_MODULE_NAME, e.getMessage(), e);
             throw new NotAllowedException(ApiParams.API_RESPONSE_NOT_ALLOWED_CAN_VIEW);
         }
+        // Check attachment size limit early if attachments are requested
+        if (includeAttachments) {
+            MEFLib.checkAttachmentsUnderSizeLimit(Set.of(metadataUuid), approved);
+        }
+
         Path stylePath = dataDirectory.getWebappDir().resolve(Geonet.Path.SCHEMAS);
         Path file = null;
         ServiceContext serviceContext = ApiUtils.createServiceContext(request);
-        String acceptHeader = StringUtils.isBlank(request.getHeader(HttpHeaders.ACCEPT)) ? "application/x-gn-mef-2-zip" : request.getHeader(HttpHeaders.ACCEPT);
+        String acceptHeader = request.getHeader(HttpHeaders.ACCEPT);
         MEFLib.Version version = MEFLib.Version.find(acceptHeader);
+        // MEFLib.Version.find() falls back to V2 for anything it doesn't recognize, including a
+        // blank/missing Accept header - but V3 (flat "store" folder, no public/private split) is
+        // this endpoint's actual default export format, so only trust that fallback as "V2" when
+        // the caller genuinely asked for it explicitly; treat every other unrecognized value as V3.
+        if (version == MEFLib.Version.V2
+            && !MEFLib.Version.Constants.MEF_V2_ACCEPT_TYPE.equalsIgnoreCase(acceptHeader)) {
+            version = MEFLib.Version.V3;
+        }
         try {
             if (version == MEFLib.Version.V1) {
                 // This parameter is deprecated in v2.
@@ -536,13 +584,13 @@ public class MetadataApi {
 
                 file = MEFLib.doExport(
                     serviceContext, id, format.toString(),
-                    skipUUID, withXLinksResolved, withXLinkAttribute, addSchemaLocation
+                    skipUUID, withXLinksResolved, withXLinkAttribute, addSchemaLocation, includeAttachments
                 );
                 response.setContentType(MEFLib.Version.Constants.MEF_V1_ACCEPT_TYPE);
             } else {
                 Set<String> uuidsToExport = new HashSet<>();
                 uuidsToExport.add(metadataUuid);
-                // MEF version 2 support multiple metadata record by file.
+                // MEF versions 2 and 3 both support multiple metadata records in one file.
                 if (withRelated) {
                     // Adding children in MEF file
 
@@ -559,17 +607,23 @@ public class MetadataApi {
                     uuidsToExport.addAll(getUuidsOfAssociatedRecords(related.getHasfeaturecats()));
                     uuidsToExport.addAll(getUuidsOfAssociatedRecords(related.getHassources()));
                 }
-                Log.info(Geonet.MEF, "Building MEF2 file with " + uuidsToExport.size()
-                    + " records.");
 
-                file = MEFLib.doMEF2Export(serviceContext, uuidsToExport, format.toString(), false, stylePath, withXLinksResolved, withXLinkAttribute, false, addSchemaLocation, approved);
-
-                response.setContentType(MEFLib.Version.Constants.MEF_V2_ACCEPT_TYPE);
+                if (version == MEFLib.Version.V2) {
+                    Log.info(Geonet.MEF, "Building MEF2 file with " + uuidsToExport.size()
+                        + " records.");
+                    file = MEFLib.doMEF2Export(serviceContext, uuidsToExport, format.toString(), false, stylePath, withXLinksResolved, withXLinkAttribute, false, addSchemaLocation, approved, includeAttachments);
+                    response.setContentType(MEFLib.Version.Constants.MEF_V2_ACCEPT_TYPE);
+                } else {
+                    Log.info(Geonet.MEF, "Building MEF3 file with " + uuidsToExport.size()
+                        + " records.");
+                    file = MEFLib.doMEF3Export(serviceContext, uuidsToExport, format.toString(), false, stylePath, withXLinksResolved, withXLinkAttribute, false, addSchemaLocation, approved, includeAttachments);
+                    response.setContentType(MEFLib.Version.Constants.MEF_V3_ACCEPT_TYPE);
+                }
             }
-            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, String.format(
-                "inline; filename=\"%s.zip\"",
-                metadata.getUuid()
-            ));
+            String suffix = includeAttachments ? "" : "-" + messages.getMessage("api.metadata.export.filename.withoutAttachmentsSuffix", null, locale);
+            String filename = metadata.getUuid() + suffix + ".zip";
+            ContentDisposition contentDisposition = ContentDisposition.inline().filename(filename).build();
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, contentDisposition.toString());
             response.setHeader(HttpHeaders.CONTENT_LENGTH, String.valueOf(Files.size(file)));
             FileUtils.copyFile(file.toFile(), response.getOutputStream());
         } finally {
@@ -855,5 +909,50 @@ public class MetadataApi {
         public void setValue(String value) {
             this.value = value;
         }
+    }
+
+    /**
+     * Constructs a redirect string based on the provided formatter label, language, and metadata UUID
+     *
+     * @param recordViewFormatter The label of the formatter to use on the record view page
+     * @param language            The language code to include in the URL
+     * @param metadataUuid        The unique identifier of the metadata record
+     * @return A redirect string if a matching formatter is found, or null if no formatter matches the provided label
+     */
+    private String getRedirect(@Nullable String recordViewFormatter, String language, String metadataUuid) {
+        if (StringUtils.isBlank(recordViewFormatter)) {
+            return null; // If no formatter is specified, return null
+        }
+
+        // Parse the UI configuration
+        JsonObject uiConfig = JsonParser.parseString(XslUtil.getUiConfiguration(null)).getAsJsonObject();
+
+        // Navigate through the JSON structure to retrieve the array of record view page formatters
+        JsonArray formatterArray = Optional.ofNullable(uiConfig)
+            .map(cfg -> cfg.getAsJsonObject("mods"))
+            .map(mods -> mods.getAsJsonObject("search"))
+            .map(search -> search.getAsJsonObject("formatter"))
+            .map(search -> search.getAsJsonArray("list"))
+            .orElse(null); // Return null if any of the objects in the chain are missing
+
+        // If the formatter array is null, return null as no formatters are available
+        if (formatterArray == null) return null;
+
+        // Iterate through each element in the formatter array
+        for (JsonElement element : formatterArray) {
+            JsonObject obj = element.getAsJsonObject(); // Convert the element to a JSON object
+
+            // Check if the "label" of the current formatter matches the provided formatter label
+            if (recordViewFormatter.equals(obj.get("label").getAsString())) {
+                // Retrieve the "url" of the matching formatter
+                String url = obj.get("url").getAsString();
+
+                // Return the constructed redirect
+                return "redirect:/srv/" + language + "/catalog.search#/metadata/" + metadataUuid + url;
+            }
+        }
+
+        // Return null if no matching formatter is found
+        return null;
     }
 }

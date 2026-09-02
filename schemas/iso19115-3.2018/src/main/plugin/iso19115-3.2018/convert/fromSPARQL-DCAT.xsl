@@ -251,7 +251,6 @@
                     </gco:CharacterString>
                   </mri:abstract>
 
-
                   <xsl:for-each select="gn-fn-sparql:getObject($root,
                                                   'http://purl.org/dc/terms/bibliographicCitation',
                                                   $resourceUri)/sr:literal">
@@ -534,7 +533,7 @@
                             <cit:identifier>
                               <mcc:MD_Identifier>
                                 <mcc:code>
-                                  <gcx:Anchor xlink:href="https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.data-theme-skos">geonetwork.thesaurus.external.theme.data-theme-skos</gcx:Anchor>
+                                  <gcx:Anchor xlink:href="https://localhost/geonetwork/srv/api/registries/vocabularies/external.theme.data-theme-skos">geonetwork.thesaurus.external.theme.data-theme-skos</gcx:Anchor>
                                 </mcc:code>
                               </mcc:MD_Identifier>
                             </cit:identifier>

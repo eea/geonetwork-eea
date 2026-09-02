@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2023 Food and Agriculture Organization of the
+ * Copyright (C) 2001-2026 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
  *
@@ -181,18 +181,36 @@
        * Remove the metadata and refresh the list when done.
        */
       $scope.confirmRemoveMetadata = function () {
-        // Required to close the confirm dialog properly when redirecting to the search page
-        $timeout(function () {
-          $scope.deleteRecord($scope.mdView.current.record).then(function () {});
-        }, 100);
+        // Close the confirm dialog properly before redirecting to the search page
+        $scope.deleteRecord($scope.mdView.current.record).then(function () {
+          $("#gn-confirm-remove-metadata").modal("hide");
+          $scope.closeRecord(md);
+        });
       };
 
       $scope.getMetadataDeleteConfirmMessage = function () {
-        if (!$scope.mdView.current.record) return "";
+        if (!$scope.mdView.current.record) {
+          $("#gn-confirm-remove-metadata").modal("hide");
+          return "";
+        }
 
-        return $translate.instant("metadataDeleteConfirm", {
+        var translation = $translate.instant("metadataDeleteConfirm", {
           title: $scope.mdView.current.record.resourceTitle
         });
+
+        var translationMetadataResourceTypeKey =
+          "metadataDelete-" + $scope.mdView.current.record.resourceType;
+
+        var translationResourceType = $translate.instant(
+          translationMetadataResourceTypeKey
+        );
+
+        // If there is a message for the specific metadata resource type, append it to the generic message.
+        if (translationResourceType !== translationMetadataResourceTypeKey) {
+          translation += "<br/>" + translationResourceType;
+        }
+
+        return translation;
       };
 
       $scope.recordFormatterList = gnMdFormatter.getFormatterForRecord(
@@ -241,7 +259,6 @@
               msg: $translate.instant("metadataRemoved", { title: md.resourceTitle }),
               type: "success"
             });
-            $scope.closeRecord(md);
           },
           function (reason) {
             // Data needs improvements
@@ -250,6 +267,7 @@
               msg: reason.data.message || reason.data.description,
               type: "danger"
             });
+            throw reason;
           }
         );
       };
