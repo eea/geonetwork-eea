@@ -31,6 +31,9 @@
             <span class="caret" />
           </button>
           <ul class="dropdown-menu" role="menu">
+            <li role="menuitem">
+              <a data-ng-click="switchToTab('eea-default', 'flat')" href="">eea</a>
+            </li>
             <li role="menuitem" class="disabled">
               <a data-ng-click="switchToTab('default', 'flat')" href="">Simple</a>
             </li>
@@ -306,13 +309,19 @@
                   <div class="th-inner " />
                 </th>
                 <th>
-                  <div class="th-inner ">Rôle</div>
-                </th>
-                <th>
                   <div class="th-inner ">Organisation</div>
                 </th>
                 <th>
+                  <div class="th-inner ">Individu</div>
+                </th>
+                <th>
                   <div class="th-inner ">Adresse e-mail</div>
+                </th>
+                <th>
+                  <div class="th-inner ">cit:onlineResource</div>
+                </th>
+                <th>
+                  <div class="th-inner ">Rôle</div>
                 </th>
                 <th>
                   <div class="th-inner " />
@@ -325,6 +334,76 @@
                   <div class="gn-move">
                     <a class="fa fa-angle-up hidden" data-gn-editor-control-move="152" data-domelement-to-move="152" data-direction="up" href="" tabindex="-1" />
                     <a class="fa fa-angle-down " data-gn-editor-control-move="152" data-domelement-to-move="152" data-direction="down" href="" tabindex="-1" />
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group gn-field gn-name  gn-Obligatoire " id="gn-el-159" data-gn-field-highlight="">
+                    <label for="gn-field-159" class="col-sm-2 control-label">Nom</label>
+                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table" data-gn-multilingual-field="{&quot;fre&quot;:&quot;#FR&quot;,&quot;ger&quot;:&quot;#DE&quot;,&quot;eng&quot;:&quot;#EN&quot;}" data-main-language="fre" data-expanded="false">
+                      <input class="form-control hidden" id="gn-field-159" name="_162" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" data-gn-check="#gn-el-159" lang="FR" type="text" value="GeoRhena" />
+                      <input class="form-control hidden" id="gn-field-159" name="_164" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" lang="DE" type="text" value="GeoRhena" />
+                      <input class="form-control hidden" id="gn-field-159" name="_166" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" lang="EN" type="text" value="GeoRhena" />
+                      <div class="gn-move">
+                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="158" data-domelement-to-move="159" data-direction="up" href="" tabindex="-1" />
+                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="158" data-domelement-to-move="159" data-direction="down" href="" tabindex="-1" />
+                      </div>
+                      <div class="well well-sm                 gn-attr                 hidden" id="gn-attr-div_159">
+                        <button type="button" class="btn btn-default btn-xs btn-attr btn-xs gn-attr-gco_nilReason" id="gn-attr-add-button-gcoCOLONnilReason_159" data-gn-click-and-spin="add('158', 'gco:nilReason', '159', null, true)" title="">
+                          <i class="fa fa-plus fa-fw" />
+                          Raison de l'absence
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-sm-1 col-xs-1 gn-control">
+                      <a class="btn pull-right" data-gn-click-and-spin="remove(158, 157, 159)" data-gn-field-highlight-remove="159" data-toggle="tooltip" data-placement="top" title="{{'deleteField' | translate}}">
+                        <i class="fa fa-times text-danger gn-control" />
+                      </a>
+                    </div>
+                  </div>
+                </td>
+                <td />
+                <td>
+                  <div class="form-group gn-field gn-electronicMailAddress  gn- " id="gn-el-196" data-gn-field-highlight="">
+                    <label for="gn-field-196" class="col-sm-2 control-label">Adresse e-mail</label>
+                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table">
+                      <input class="form-control " id="gn-field-196" name="_196" data-gn-field-tooltip="iso19115-3.2018|cit:electronicMailAddress|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:contactInfo/cit:CI_Contact/cit:address/cit:CI_Address/cit:electronicMailAddress" type="email" value="contact@georhena.eu" />
+                      <div class="gn-move">
+                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="195" data-domelement-to-move="196" data-direction="up" href="" tabindex="-1" />
+                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="195" data-domelement-to-move="196" data-direction="down" href="" tabindex="-1" />
+                      </div>
+                      <div class="well well-sm                 gn-attr                 hidden" id="gn-attr-div_196">
+                        <button type="button" class="btn btn-default btn-xs btn-attr btn-xs gn-attr-gco_nilReason" id="gn-attr-add-button-gcoCOLONnilReason_196" data-gn-click-and-spin="add('195', 'gco:nilReason', '196', null, true)" title="">
+                          <i class="fa fa-plus fa-fw" />
+                          Raison de l'absence
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-sm-1 col-xs-1 gn-control">
+                      <a class="btn pull-right" data-gn-click-and-spin="remove(195, 176, 196)" data-gn-field-highlight-remove="196" data-toggle="tooltip" data-placement="top" title="{{'deleteField' | translate}}">
+                        <i class="fa fa-times text-danger gn-control" />
+                      </a>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group gn-field gn-linkage gn-required gn- " id="gn-el-200" data-gn-field-highlight="">
+                    <label for="gn-field-200" class="col-sm-2 control-label">Adresse Internet</label>
+                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table" data-gn-multilingual-field="{&quot;fre&quot;:&quot;#FR&quot;,&quot;ger&quot;:&quot;#DE&quot;,&quot;eng&quot;:&quot;#EN&quot;}" data-main-language="fre" data-expanded="false">
+                      <input class="form-control hidden" id="gn-field-200" name="_203" data-gn-field-tooltip="iso19115-3.2018|cit:linkage|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:contactInfo/cit:CI_Contact/cit:onlineResource/cit:CI_OnlineResource/cit:linkage" required="required" data-gn-check="#gn-el-200" lang="FR" type="text" value="https://www.georhena.eu/" />
+                      <input class="form-control hidden" id="gn-field-200" name="_lang_DE_199" data-gn-field-tooltip="iso19115-3.2018|cit:linkage|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:contactInfo/cit:CI_Contact/cit:onlineResource/cit:CI_OnlineResource/cit:linkage" required="required" lang="DE" type="text" value="" />
+                      <input class="form-control hidden" id="gn-field-200" name="_lang_EN_199" data-gn-field-tooltip="iso19115-3.2018|cit:linkage|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:contactInfo/cit:CI_Contact/cit:onlineResource/cit:CI_OnlineResource/cit:linkage" required="required" lang="EN" type="text" value="" />
+                      <div class="gn-move">
+                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="199" data-domelement-to-move="200" data-direction="up" href="" tabindex="-1" />
+                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="199" data-domelement-to-move="200" data-direction="down" href="" tabindex="-1" />
+                      </div>
+                      <div class="well well-sm                 gn-attr                 hidden" id="gn-attr-div_200">
+                        <button type="button" class="btn btn-default btn-xs btn-attr btn-xs gn-attr-gco_nilReason" id="gn-attr-add-button-gcoCOLONnilReason_200" data-gn-click-and-spin="add('199', 'gco:nilReason', '200', null, true)" title="">
+                          <i class="fa fa-plus fa-fw" />
+                          Raison de l'absence
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-sm-1 col-xs-1 gn-control" />
                   </div>
                 </td>
                 <td>
@@ -362,54 +441,6 @@
                   </div>
                 </td>
                 <td>
-                  <div class="form-group gn-field gn-name  gn-Obligatoire " id="gn-el-159" data-gn-field-highlight="">
-                    <label for="gn-field-159" class="col-sm-2 control-label">Nom</label>
-                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table" data-gn-multilingual-field="{&quot;fre&quot;:&quot;#FR&quot;,&quot;ger&quot;:&quot;#DE&quot;,&quot;eng&quot;:&quot;#EN&quot;}" data-main-language="fre" data-expanded="false">
-                      <input class="form-control hidden" id="gn-field-159" name="_162" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" data-gn-check="#gn-el-159" lang="FR" type="text" value="GeoRhena" />
-                      <input class="form-control hidden" id="gn-field-159" name="_164" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" lang="DE" type="text" value="GeoRhena" />
-                      <input class="form-control hidden" id="gn-field-159" name="_166" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" lang="EN" type="text" value="GeoRhena" />
-                      <div class="gn-move">
-                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="158" data-domelement-to-move="159" data-direction="up" href="" tabindex="-1" />
-                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="158" data-domelement-to-move="159" data-direction="down" href="" tabindex="-1" />
-                      </div>
-                      <div class="well well-sm                 gn-attr                 hidden" id="gn-attr-div_159">
-                        <button type="button" class="btn btn-default btn-xs btn-attr btn-xs gn-attr-gco_nilReason" id="gn-attr-add-button-gcoCOLONnilReason_159" data-gn-click-and-spin="add('158', 'gco:nilReason', '159', null, true)" title="">
-                          <i class="fa fa-plus fa-fw" />
-                          Raison de l'absence
-                        </button>
-                      </div>
-                    </div>
-                    <div class="col-sm-1 col-xs-1 gn-control">
-                      <a class="btn pull-right" data-gn-click-and-spin="remove(158, 157, 159)" data-gn-field-highlight-remove="159" data-toggle="tooltip" data-placement="top" title="{{'deleteField' | translate}}">
-                        <i class="fa fa-times text-danger gn-control" />
-                      </a>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group gn-field gn-electronicMailAddress  gn- " id="gn-el-196" data-gn-field-highlight="">
-                    <label for="gn-field-196" class="col-sm-2 control-label">Adresse e-mail</label>
-                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table">
-                      <input class="form-control " id="gn-field-196" name="_196" data-gn-field-tooltip="iso19115-3.2018|cit:electronicMailAddress|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:contactInfo/cit:CI_Contact/cit:address/cit:CI_Address/cit:electronicMailAddress" type="email" value="contact@georhena.eu" />
-                      <div class="gn-move">
-                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="195" data-domelement-to-move="196" data-direction="up" href="" tabindex="-1" />
-                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="195" data-domelement-to-move="196" data-direction="down" href="" tabindex="-1" />
-                      </div>
-                      <div class="well well-sm                 gn-attr                 hidden" id="gn-attr-div_196">
-                        <button type="button" class="btn btn-default btn-xs btn-attr btn-xs gn-attr-gco_nilReason" id="gn-attr-add-button-gcoCOLONnilReason_196" data-gn-click-and-spin="add('195', 'gco:nilReason', '196', null, true)" title="">
-                          <i class="fa fa-plus fa-fw" />
-                          Raison de l'absence
-                        </button>
-                      </div>
-                    </div>
-                    <div class="col-sm-1 col-xs-1 gn-control">
-                      <a class="btn pull-right" data-gn-click-and-spin="remove(195, 176, 196)" data-gn-field-highlight-remove="196" data-toggle="tooltip" data-placement="top" title="{{'deleteField' | translate}}">
-                        <i class="fa fa-times text-danger gn-control" />
-                      </a>
-                    </div>
-                  </div>
-                </td>
-                <td>
                   <a class="btn pull-right" data-gn-click-and-spin="remove(152, 111, 152)" data-gn-field-highlight-remove="152" data-toggle="tooltip" data-placement="top" title="{{'deleteField' | translate}}">
                     <i class="fa fa-times text-danger gn-control" />
                   </a>
@@ -420,6 +451,76 @@
                   <div class="gn-move">
                     <a class="fa fa-angle-up " data-gn-editor-control-move="221" data-domelement-to-move="221" data-direction="up" href="" tabindex="-1" />
                     <a class="fa fa-angle-down hidden" data-gn-editor-control-move="221" data-domelement-to-move="221" data-direction="down" href="" tabindex="-1" />
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group gn-field gn-name  gn-Obligatoire " id="gn-el-228" data-gn-field-highlight="">
+                    <label for="gn-field-228" class="col-sm-2 control-label">Nom</label>
+                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table" data-gn-multilingual-field="{&quot;fre&quot;:&quot;#FR&quot;,&quot;ger&quot;:&quot;#DE&quot;,&quot;eng&quot;:&quot;#EN&quot;}" data-main-language="fre" data-expanded="false">
+                      <input class="form-control hidden" id="gn-field-228" name="_231" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" data-gn-check="#gn-el-228" lang="FR" type="text" value="Collectivité Européenne d'Alsace" />
+                      <input class="form-control hidden" id="gn-field-228" name="_233" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" lang="DE" type="text" value="Collectivité Européenne d'Alsace" />
+                      <input class="form-control hidden" id="gn-field-228" name="_235" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" lang="EN" type="text" value="Collectivité Européenne d'Alsace" />
+                      <div class="gn-move">
+                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="227" data-domelement-to-move="228" data-direction="up" href="" tabindex="-1" />
+                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="227" data-domelement-to-move="228" data-direction="down" href="" tabindex="-1" />
+                      </div>
+                      <div class="well well-sm                 gn-attr                 hidden" id="gn-attr-div_228">
+                        <button type="button" class="btn btn-default btn-xs btn-attr btn-xs gn-attr-gco_nilReason" id="gn-attr-add-button-gcoCOLONnilReason_228" data-gn-click-and-spin="add('227', 'gco:nilReason', '228', null, true)" title="">
+                          <i class="fa fa-plus fa-fw" />
+                          Raison de l'absence
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-sm-1 col-xs-1 gn-control">
+                      <a class="btn pull-right" data-gn-click-and-spin="remove(227, 226, 228)" data-gn-field-highlight-remove="228" data-toggle="tooltip" data-placement="top" title="{{'deleteField' | translate}}">
+                        <i class="fa fa-times text-danger gn-control" />
+                      </a>
+                    </div>
+                  </div>
+                </td>
+                <td />
+                <td>
+                  <div class="form-group gn-field gn-electronicMailAddress  gn- " id="gn-el-241" data-gn-field-highlight="">
+                    <label for="gn-field-241" class="col-sm-2 control-label">Adresse e-mail</label>
+                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table">
+                      <input class="form-control " id="gn-field-241" name="_241" data-gn-field-tooltip="iso19115-3.2018|cit:electronicMailAddress|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:contactInfo/cit:CI_Contact/cit:address/cit:CI_Address/cit:electronicMailAddress" type="email" value="info@chateaux-rhenans.eu" />
+                      <div class="gn-move">
+                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="240" data-domelement-to-move="241" data-direction="up" href="" tabindex="-1" />
+                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="240" data-domelement-to-move="241" data-direction="down" href="" tabindex="-1" />
+                      </div>
+                      <div class="well well-sm                 gn-attr                 hidden" id="gn-attr-div_241">
+                        <button type="button" class="btn btn-default btn-xs btn-attr btn-xs gn-attr-gco_nilReason" id="gn-attr-add-button-gcoCOLONnilReason_241" data-gn-click-and-spin="add('240', 'gco:nilReason', '241', null, true)" title="">
+                          <i class="fa fa-plus fa-fw" />
+                          Raison de l'absence
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-sm-1 col-xs-1 gn-control">
+                      <a class="btn pull-right" data-gn-click-and-spin="remove(240, 239, 241)" data-gn-field-highlight-remove="241" data-toggle="tooltip" data-placement="top" title="{{'deleteField' | translate}}">
+                        <i class="fa fa-times text-danger gn-control" />
+                      </a>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group gn-field gn-linkage gn-required gn- " id="gn-el-245" data-gn-field-highlight="">
+                    <label for="gn-field-245" class="col-sm-2 control-label">Adresse Internet</label>
+                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table" data-gn-multilingual-field="{&quot;fre&quot;:&quot;#FR&quot;,&quot;ger&quot;:&quot;#DE&quot;,&quot;eng&quot;:&quot;#EN&quot;}" data-main-language="fre" data-expanded="false">
+                      <input class="form-control hidden" id="gn-field-245" name="_248" data-gn-field-tooltip="iso19115-3.2018|cit:linkage|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:contactInfo/cit:CI_Contact/cit:onlineResource/cit:CI_OnlineResource/cit:linkage" required="required" data-gn-check="#gn-el-245" lang="FR" type="text" value="https://www.alsace.eu" />
+                      <input class="form-control hidden" id="gn-field-245" name="_lang_DE_244" data-gn-field-tooltip="iso19115-3.2018|cit:linkage|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:contactInfo/cit:CI_Contact/cit:onlineResource/cit:CI_OnlineResource/cit:linkage" required="required" lang="DE" type="text" value="" />
+                      <input class="form-control hidden" id="gn-field-245" name="_lang_EN_244" data-gn-field-tooltip="iso19115-3.2018|cit:linkage|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:contactInfo/cit:CI_Contact/cit:onlineResource/cit:CI_OnlineResource/cit:linkage" required="required" lang="EN" type="text" value="" />
+                      <div class="gn-move">
+                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="244" data-domelement-to-move="245" data-direction="up" href="" tabindex="-1" />
+                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="244" data-domelement-to-move="245" data-direction="down" href="" tabindex="-1" />
+                      </div>
+                      <div class="well well-sm                 gn-attr                 hidden" id="gn-attr-div_245">
+                        <button type="button" class="btn btn-default btn-xs btn-attr btn-xs gn-attr-gco_nilReason" id="gn-attr-add-button-gcoCOLONnilReason_245" data-gn-click-and-spin="add('244', 'gco:nilReason', '245', null, true)" title="">
+                          <i class="fa fa-plus fa-fw" />
+                          Raison de l'absence
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-sm-1 col-xs-1 gn-control" />
                   </div>
                 </td>
                 <td>
@@ -454,54 +555,6 @@
                       </div>
                     </div>
                     <div class="col-sm-1 col-xs-1 gn-control" />
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group gn-field gn-name  gn-Obligatoire " id="gn-el-228" data-gn-field-highlight="">
-                    <label for="gn-field-228" class="col-sm-2 control-label">Nom</label>
-                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table" data-gn-multilingual-field="{&quot;fre&quot;:&quot;#FR&quot;,&quot;ger&quot;:&quot;#DE&quot;,&quot;eng&quot;:&quot;#EN&quot;}" data-main-language="fre" data-expanded="false">
-                      <input class="form-control hidden" id="gn-field-228" name="_231" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" data-gn-check="#gn-el-228" lang="FR" type="text" value="Collectivité Européenne d'Alsace" />
-                      <input class="form-control hidden" id="gn-field-228" name="_233" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" lang="DE" type="text" value="Collectivité Européenne d'Alsace" />
-                      <input class="form-control hidden" id="gn-field-228" name="_235" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" lang="EN" type="text" value="Collectivité Européenne d'Alsace" />
-                      <div class="gn-move">
-                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="227" data-domelement-to-move="228" data-direction="up" href="" tabindex="-1" />
-                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="227" data-domelement-to-move="228" data-direction="down" href="" tabindex="-1" />
-                      </div>
-                      <div class="well well-sm                 gn-attr                 hidden" id="gn-attr-div_228">
-                        <button type="button" class="btn btn-default btn-xs btn-attr btn-xs gn-attr-gco_nilReason" id="gn-attr-add-button-gcoCOLONnilReason_228" data-gn-click-and-spin="add('227', 'gco:nilReason', '228', null, true)" title="">
-                          <i class="fa fa-plus fa-fw" />
-                          Raison de l'absence
-                        </button>
-                      </div>
-                    </div>
-                    <div class="col-sm-1 col-xs-1 gn-control">
-                      <a class="btn pull-right" data-gn-click-and-spin="remove(227, 226, 228)" data-gn-field-highlight-remove="228" data-toggle="tooltip" data-placement="top" title="{{'deleteField' | translate}}">
-                        <i class="fa fa-times text-danger gn-control" />
-                      </a>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group gn-field gn-electronicMailAddress  gn- " id="gn-el-241" data-gn-field-highlight="">
-                    <label for="gn-field-241" class="col-sm-2 control-label">Adresse e-mail</label>
-                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table">
-                      <input class="form-control " id="gn-field-241" name="_241" data-gn-field-tooltip="iso19115-3.2018|cit:electronicMailAddress|col|/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:contactInfo/cit:CI_Contact/cit:address/cit:CI_Address/cit:electronicMailAddress" type="email" value="info@chateaux-rhenans.eu" />
-                      <div class="gn-move">
-                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="240" data-domelement-to-move="241" data-direction="up" href="" tabindex="-1" />
-                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="240" data-domelement-to-move="241" data-direction="down" href="" tabindex="-1" />
-                      </div>
-                      <div class="well well-sm                 gn-attr                 hidden" id="gn-attr-div_241">
-                        <button type="button" class="btn btn-default btn-xs btn-attr btn-xs gn-attr-gco_nilReason" id="gn-attr-add-button-gcoCOLONnilReason_241" data-gn-click-and-spin="add('240', 'gco:nilReason', '241', null, true)" title="">
-                          <i class="fa fa-plus fa-fw" />
-                          Raison de l'absence
-                        </button>
-                      </div>
-                    </div>
-                    <div class="col-sm-1 col-xs-1 gn-control">
-                      <a class="btn pull-right" data-gn-click-and-spin="remove(240, 239, 241)" data-gn-field-highlight-remove="241" data-toggle="tooltip" data-placement="top" title="{{'deleteField' | translate}}">
-                        <i class="fa fa-times text-danger gn-control" />
-                      </a>
-                    </div>
                   </div>
                 </td>
                 <td>
@@ -1723,13 +1776,19 @@
                   <div class="th-inner " />
                 </th>
                 <th>
-                  <div class="th-inner ">Rôle</div>
-                </th>
-                <th>
                   <div class="th-inner ">Organisation</div>
                 </th>
                 <th>
+                  <div class="th-inner ">Individu</div>
+                </th>
+                <th>
                   <div class="th-inner ">Adresse e-mail</div>
+                </th>
+                <th>
+                  <div class="th-inner ">cit:onlineResource</div>
+                </th>
+                <th>
+                  <div class="th-inner ">Rôle</div>
                 </th>
                 <th>
                   <div class="th-inner " />
@@ -1742,40 +1801,6 @@
                   <div class="gn-move">
                     <a class="fa fa-angle-up hidden" data-gn-editor-control-move="460" data-domelement-to-move="460" data-direction="up" href="" tabindex="-1" />
                     <a class="fa fa-angle-down hidden" data-gn-editor-control-move="460" data-domelement-to-move="460" data-direction="down" href="" tabindex="-1" />
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group gn-field gn-role gn-required gn-Obligatoire " id="gn-el-463" data-gn-field-highlight="">
-                    <label for="gn-field-463" class="col-sm-2 control-label">Rôle</label>
-                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table">
-                      <select class="" id="gn-field-463" name="_463_codeListValue" required="required" data-gn-field-tooltip="iso19115-3.2018|cit:role|col|/col/cit:role">
-                        <option value="author" title="Organisme ou personne qui est auteur. Acteur qui dispose des droits moraux relatifs à la ressource">Auteur</option>
-                        <option value="coAuthor" title="Partie qui est conjointement l’auteur de la ressource">Co-auteur</option>
-                        <option value="collaborator" title="partie qui contribue à la génération de la ressource autreque l’auteur principal de la recherche">Collaborateur</option>
-                        <option value="contributor" title="Partie contribuant à la ressource">Contributeur</option>
-                        <option value="distributor" title="Organisme qui distribue la ressource. Diffuseur de second niveau de la ressource">Distributeur</option>
-                        <option value="rightsHolder" title="Droits de détention ou de gestion de la partie vis-à-vis de la ressource">Détenteur des droits</option>
-                        <option value="editor" title="Partie qui a réexaminé ou modifié la ressource pour améliorer son contenu">Editeur</option>
-                        <option value="publisher" title="Organisme qui assure la publication de la ressource." selected="">Editeur (publication)</option>
-                        <option value="processor" title="Organisme qui a réalisé des traitements sur la ressource. Acteur qui est intervenu lors de la réalisation de la ressource">Exécutant</option>
-                        <option value="funder" title="Partie offrant un soutien financier pour la ressource">Financeur</option>
-                        <option value="resourceProvider" title="Organisme qui fournit la ressource. Acteur qui délivre physiquement la ressource, soit de manière directe au destinataire, soit par l’intermédiaire d’un diffuseur">Fournisseur</option>
-                        <option value="custodian" title="Acteur responsable de la gestion et de la mise à jour de la ressource">Gestionnaire</option>
-                        <option value="principalInvestigator" title="Personne clé pour obtenir des informations sur la ressource et les recherches conduites autour de la ressource Acteur qui a assuré la réalisation de la ressource,éventuellement en faisant appel à des co-traitants ou des sous traitants">Investigateur principal</option>
-                        <option value="mediator" title="Une classe d’entité qui intervient pour l’accès à la ressource et pour laquelle la ressource est destinée ou est utile">Mediateur</option>
-                        <option value="stakeholder" title="Partie qui a un intérêt dans la ressource ou dans l’utilisation de la ressource">Partie prenante</option>
-                        <option value="pointOfContact" title="Organisme que l’on peut contacter pour avoir des renseignements détaillés sur la ressource. Acteur à contacter en premier lieu pour obtenir des informations relatives à la ressource">Point de contact</option>
-                        <option value="originator" title="Organisme qui a commandé la ressource. Acteur qui a été habilité à créer la ressource et qui a mis en place les moyens pour la constituer">Producteur</option>
-                        <option value="owner" title="Organisme qui est propriétaire de la ressource / Acteur qui détient les droits patrimoniaux de la ressource">Propriétaire</option>
-                        <option value="sponsor" title="Partie qui parle pour la ressource">Sponsor</option>
-                        <option value="user" title="Organisme qui utilise ou a utilisé la ressource">Utilisateur</option>
-                      </select>
-                      <div class="gn-move">
-                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="462" data-domelement-to-move="463" data-direction="up" href="" tabindex="-1" />
-                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="462" data-domelement-to-move="463" data-direction="down" href="" tabindex="-1" />
-                      </div>
-                    </div>
-                    <div class="col-sm-1 col-xs-1 gn-control" />
                   </div>
                 </td>
                 <td>
@@ -1803,6 +1828,7 @@
                     </div>
                   </div>
                 </td>
+                <td />
                 <td>
                   <div class="form-group gn-field gn-electronicMailAddress  gn- " id="gn-el-476" data-gn-field-highlight="">
                     <label for="gn-field-476" class="col-sm-2 control-label">Adresse e-mail</label>
@@ -1837,6 +1863,41 @@
                         <i class="fa fa-times text-danger gn-control" />
                       </a>
                     </div>
+                  </div>
+                </td>
+                <td />
+                <td>
+                  <div class="form-group gn-field gn-role gn-required gn-Obligatoire " id="gn-el-463" data-gn-field-highlight="">
+                    <label for="gn-field-463" class="col-sm-2 control-label">Rôle</label>
+                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table">
+                      <select class="" id="gn-field-463" name="_463_codeListValue" required="required" data-gn-field-tooltip="iso19115-3.2018|cit:role|col|/col/cit:role">
+                        <option value="author" title="Organisme ou personne qui est auteur. Acteur qui dispose des droits moraux relatifs à la ressource">Auteur</option>
+                        <option value="coAuthor" title="Partie qui est conjointement l’auteur de la ressource">Co-auteur</option>
+                        <option value="collaborator" title="partie qui contribue à la génération de la ressource autreque l’auteur principal de la recherche">Collaborateur</option>
+                        <option value="contributor" title="Partie contribuant à la ressource">Contributeur</option>
+                        <option value="distributor" title="Organisme qui distribue la ressource. Diffuseur de second niveau de la ressource">Distributeur</option>
+                        <option value="rightsHolder" title="Droits de détention ou de gestion de la partie vis-à-vis de la ressource">Détenteur des droits</option>
+                        <option value="editor" title="Partie qui a réexaminé ou modifié la ressource pour améliorer son contenu">Editeur</option>
+                        <option value="publisher" title="Organisme qui assure la publication de la ressource." selected="">Editeur (publication)</option>
+                        <option value="processor" title="Organisme qui a réalisé des traitements sur la ressource. Acteur qui est intervenu lors de la réalisation de la ressource">Exécutant</option>
+                        <option value="funder" title="Partie offrant un soutien financier pour la ressource">Financeur</option>
+                        <option value="resourceProvider" title="Organisme qui fournit la ressource. Acteur qui délivre physiquement la ressource, soit de manière directe au destinataire, soit par l’intermédiaire d’un diffuseur">Fournisseur</option>
+                        <option value="custodian" title="Acteur responsable de la gestion et de la mise à jour de la ressource">Gestionnaire</option>
+                        <option value="principalInvestigator" title="Personne clé pour obtenir des informations sur la ressource et les recherches conduites autour de la ressource Acteur qui a assuré la réalisation de la ressource,éventuellement en faisant appel à des co-traitants ou des sous traitants">Investigateur principal</option>
+                        <option value="mediator" title="Une classe d’entité qui intervient pour l’accès à la ressource et pour laquelle la ressource est destinée ou est utile">Mediateur</option>
+                        <option value="stakeholder" title="Partie qui a un intérêt dans la ressource ou dans l’utilisation de la ressource">Partie prenante</option>
+                        <option value="pointOfContact" title="Organisme que l’on peut contacter pour avoir des renseignements détaillés sur la ressource. Acteur à contacter en premier lieu pour obtenir des informations relatives à la ressource">Point de contact</option>
+                        <option value="originator" title="Organisme qui a commandé la ressource. Acteur qui a été habilité à créer la ressource et qui a mis en place les moyens pour la constituer">Producteur</option>
+                        <option value="owner" title="Organisme qui est propriétaire de la ressource / Acteur qui détient les droits patrimoniaux de la ressource">Propriétaire</option>
+                        <option value="sponsor" title="Partie qui parle pour la ressource">Sponsor</option>
+                        <option value="user" title="Organisme qui utilise ou a utilisé la ressource">Utilisateur</option>
+                      </select>
+                      <div class="gn-move">
+                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="462" data-domelement-to-move="463" data-direction="up" href="" tabindex="-1" />
+                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="462" data-domelement-to-move="463" data-direction="down" href="" tabindex="-1" />
+                      </div>
+                    </div>
+                    <div class="col-sm-1 col-xs-1 gn-control" />
                   </div>
                 </td>
                 <td />
@@ -3302,13 +3363,19 @@
                   <div class="th-inner " />
                 </th>
                 <th>
-                  <div class="th-inner ">Rôle</div>
-                </th>
-                <th>
                   <div class="th-inner ">Organisation</div>
                 </th>
                 <th>
+                  <div class="th-inner ">Individu</div>
+                </th>
+                <th>
                   <div class="th-inner ">Adresse e-mail</div>
+                </th>
+                <th>
+                  <div class="th-inner ">cit:onlineResource</div>
+                </th>
+                <th>
+                  <div class="th-inner ">Rôle</div>
                 </th>
                 <th>
                   <div class="th-inner " />
@@ -3321,6 +3388,54 @@
                   <div class="gn-move">
                     <a class="fa fa-angle-up hidden" data-gn-editor-control-move="16" data-domelement-to-move="16" data-direction="up" href="" tabindex="-1" />
                     <a class="fa fa-angle-down hidden" data-gn-editor-control-move="16" data-domelement-to-move="16" data-direction="down" href="" tabindex="-1" />
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group gn-field gn-name  gn-Obligatoire " id="gn-el-23" data-gn-field-highlight="">
+                    <label for="gn-field-23" class="col-sm-2 control-label">Nom</label>
+                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table" data-gn-multilingual-field="{&quot;fre&quot;:&quot;#FR&quot;,&quot;ger&quot;:&quot;#DE&quot;,&quot;eng&quot;:&quot;#EN&quot;}" data-main-language="fre" data-expanded="false">
+                      <input class="form-control hidden" id="gn-field-23" name="_26" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" data-gn-check="#gn-el-23" lang="FR" type="text" value="GeoRhena: Système d'Information Géographique du Rhin Supérieur" />
+                      <input class="form-control hidden" id="gn-field-23" name="_28" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" lang="DE" type="text" value="GeoRhena: Geographische Informationssystem des Oberrheins" />
+                      <input class="form-control hidden" id="gn-field-23" name="_30" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" lang="EN" type="text" value="GeoRhena: Geographical Information System of the Upper Rhine" />
+                      <div class="gn-move">
+                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="22" data-domelement-to-move="23" data-direction="up" href="" tabindex="-1" />
+                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="22" data-domelement-to-move="23" data-direction="down" href="" tabindex="-1" />
+                      </div>
+                      <div class="well well-sm                 gn-attr                 hidden" id="gn-attr-div_23">
+                        <button type="button" class="btn btn-default btn-xs btn-attr btn-xs gn-attr-gco_nilReason" id="gn-attr-add-button-gcoCOLONnilReason_23" data-gn-click-and-spin="add('22', 'gco:nilReason', '23', null, true)" title="">
+                          <i class="fa fa-plus fa-fw" />
+                          Raison de l'absence
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-sm-1 col-xs-1 gn-control">
+                      <a class="btn pull-right" data-gn-click-and-spin="remove(22, 21, 23)" data-gn-field-highlight-remove="23" data-toggle="tooltip" data-placement="top" title="{{'deleteField' | translate}}">
+                        <i class="fa fa-times text-danger gn-control" />
+                      </a>
+                    </div>
+                  </div>
+                </td>
+                <td />
+                <td />
+                <td>
+                  <div class="form-group gn-field gn-linkage gn-required gn- " id="gn-el-62" data-gn-field-highlight="">
+                    <label for="gn-field-62" class="col-sm-2 control-label">Adresse Internet</label>
+                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table" data-gn-multilingual-field="{&quot;fre&quot;:&quot;#FR&quot;,&quot;ger&quot;:&quot;#DE&quot;,&quot;eng&quot;:&quot;#EN&quot;}" data-main-language="fre" data-expanded="false">
+                      <input class="form-control hidden" id="gn-field-62" name="_65" data-gn-field-tooltip="iso19115-3.2018|cit:linkage|col|/mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:contactInfo/cit:CI_Contact/cit:onlineResource/cit:CI_OnlineResource/cit:linkage" required="required" data-gn-check="#gn-el-62" lang="FR" type="text" value="http://www.georhena.eu" />
+                      <input class="form-control hidden" id="gn-field-62" name="_lang_DE_61" data-gn-field-tooltip="iso19115-3.2018|cit:linkage|col|/mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:contactInfo/cit:CI_Contact/cit:onlineResource/cit:CI_OnlineResource/cit:linkage" required="required" lang="DE" type="text" value="" />
+                      <input class="form-control hidden" id="gn-field-62" name="_lang_EN_61" data-gn-field-tooltip="iso19115-3.2018|cit:linkage|col|/mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:contactInfo/cit:CI_Contact/cit:onlineResource/cit:CI_OnlineResource/cit:linkage" required="required" lang="EN" type="text" value="" />
+                      <div class="gn-move">
+                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="61" data-domelement-to-move="62" data-direction="up" href="" tabindex="-1" />
+                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="61" data-domelement-to-move="62" data-direction="down" href="" tabindex="-1" />
+                      </div>
+                      <div class="well well-sm                 gn-attr                 hidden" id="gn-attr-div_62">
+                        <button type="button" class="btn btn-default btn-xs btn-attr btn-xs gn-attr-gco_nilReason" id="gn-attr-add-button-gcoCOLONnilReason_62" data-gn-click-and-spin="add('61', 'gco:nilReason', '62', null, true)" title="">
+                          <i class="fa fa-plus fa-fw" />
+                          Raison de l'absence
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-sm-1 col-xs-1 gn-control" />
                   </div>
                 </td>
                 <td>
@@ -3357,42 +3472,16 @@
                     <div class="col-sm-1 col-xs-1 gn-control" />
                   </div>
                 </td>
-                <td>
-                  <div class="form-group gn-field gn-name  gn-Obligatoire " id="gn-el-23" data-gn-field-highlight="">
-                    <label for="gn-field-23" class="col-sm-2 control-label">Nom</label>
-                    <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table" data-gn-multilingual-field="{&quot;fre&quot;:&quot;#FR&quot;,&quot;ger&quot;:&quot;#DE&quot;,&quot;eng&quot;:&quot;#EN&quot;}" data-main-language="fre" data-expanded="false">
-                      <input class="form-control hidden" id="gn-field-23" name="_26" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" data-gn-check="#gn-el-23" lang="FR" type="text" value="GeoRhena: Système d'Information Géographique du Rhin Supérieur" />
-                      <input class="form-control hidden" id="gn-field-23" name="_28" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" lang="DE" type="text" value="GeoRhena: Geographische Informationssystem des Oberrheins" />
-                      <input class="form-control hidden" id="gn-field-23" name="_30" data-gn-field-tooltip="iso19115-3.2018|cit:name|col|/mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:party/cit:CI_Organisation/cit:name" lang="EN" type="text" value="GeoRhena: Geographical Information System of the Upper Rhine" />
-                      <div class="gn-move">
-                        <a class="fa fa-angle-up hidden" data-gn-editor-control-move="22" data-domelement-to-move="23" data-direction="up" href="" tabindex="-1" />
-                        <a class="fa fa-angle-down hidden" data-gn-editor-control-move="22" data-domelement-to-move="23" data-direction="down" href="" tabindex="-1" />
-                      </div>
-                      <div class="well well-sm                 gn-attr                 hidden" id="gn-attr-div_23">
-                        <button type="button" class="btn btn-default btn-xs btn-attr btn-xs gn-attr-gco_nilReason" id="gn-attr-add-button-gcoCOLONnilReason_23" data-gn-click-and-spin="add('22', 'gco:nilReason', '23', null, true)" title="">
-                          <i class="fa fa-plus fa-fw" />
-                          Raison de l'absence
-                        </button>
-                      </div>
-                    </div>
-                    <div class="col-sm-1 col-xs-1 gn-control">
-                      <a class="btn pull-right" data-gn-click-and-spin="remove(22, 21, 23)" data-gn-field-highlight-remove="23" data-toggle="tooltip" data-placement="top" title="{{'deleteField' | translate}}">
-                        <i class="fa fa-times text-danger gn-control" />
-                      </a>
-                    </div>
-                  </div>
-                </td>
-                <td />
                 <td />
               </tr>
             </tbody>
           </table>
         </fieldset>
-        <div class="form-group gn-field gn-required gn-extra-field gn-add-field  " id="gn-el-d1036e835" data-gn-cardinality="1-10000" data-gn-field-highlight="">
+        <div class="form-group gn-field gn-required gn-extra-field gn-add-field  " id="gn-el-d1068e835" data-gn-cardinality="1-10000" data-gn-field-highlight="">
           <label class="col-sm-2 control-label" data-gn-field-tooltip="iso19115-3.2018|mdb:contact|mdb:MD_Metadata|">Point de contact des métadonnées</label>
           <div class="col-sm-9">
-            <div data-gn-directory-entry-selector="" data-dom-id="d1036e835" data-element-name="mdb:contact" data-element-ref="1" data-template-add-snippet="&lt;cit:CI_Responsibility                    xmlns:cit='http://standards.iso.org/iso/19115/-3/cit/2.0'                    xmlns:gco='http://standards.iso.org/iso/19115/-3/gco/1.0'&gt;                     &lt;cit:role&gt;                       &lt;cit:CI_RoleCode codeList='http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode'                       codeListValue='pointOfContact'/&gt;                     &lt;/cit:role&gt;                     &lt;cit:party&gt;                       &lt;cit:CI_Organisation&gt;                         &lt;cit:name&gt;                           &lt;gco:CharacterString&gt;&lt;/gco:CharacterString&gt;                         &lt;/cit:name&gt;                         &lt;cit:contactInfo&gt;                           &lt;cit:CI_Contact&gt;                             &lt;cit:address&gt;                               &lt;cit:CI_Address&gt;                                 &lt;cit:electronicMailAddress&gt;                                   &lt;gco:CharacterString&gt;&lt;/gco:CharacterString&gt;                                 &lt;/cit:electronicMailAddress&gt;                               &lt;/cit:CI_Address&gt;                             &lt;/cit:address&gt;                           &lt;/cit:CI_Contact&gt;                         &lt;/cit:contactInfo&gt;                         &lt;cit:individual&gt;                           &lt;cit:CI_Individual&gt;                             &lt;cit:name&gt;                               &lt;gco:CharacterString&gt;&lt;/gco:CharacterString&gt;                             &lt;/cit:name&gt;                           &lt;/cit:CI_Individual&gt;                         &lt;/cit:individual&gt;                       &lt;/cit:CI_Organisation&gt;                     &lt;/cit:party&gt;                   &lt;/cit:CI_Responsibility&gt;" data-default-role="pointOfContact" data-search-action="true" data-popup-action="true" data-template-type="contact" data-filter="{&quot;root&quot;: &quot;cit:CI_Responsibility&quot;}" data-variables="cit:role/cit:CI_RoleCode/@codeListValue~{role}">
-              <a class="btn btn-default" title=" Responsabilité" data-gn-click-and-spin="addChoice(1, 'mdb:contact', 'cit:CI_Responsibility', 'd1036e835', 'replaceWith');">
+            <div data-gn-directory-entry-selector="" data-dom-id="d1068e835" data-element-name="mdb:contact" data-element-ref="1" data-template-add-snippet="&lt;cit:CI_Responsibility                    xmlns:cit='http://standards.iso.org/iso/19115/-3/cit/2.0'                    xmlns:gco='http://standards.iso.org/iso/19115/-3/gco/1.0'&gt;                     &lt;cit:role&gt;                       &lt;cit:CI_RoleCode codeList='http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode'                       codeListValue='pointOfContact'/&gt;                     &lt;/cit:role&gt;                     &lt;cit:party&gt;                       &lt;cit:CI_Organisation&gt;                         &lt;cit:name&gt;                           &lt;gco:CharacterString&gt;&lt;/gco:CharacterString&gt;                         &lt;/cit:name&gt;                         &lt;cit:contactInfo&gt;                           &lt;cit:CI_Contact&gt;                             &lt;cit:address&gt;                               &lt;cit:CI_Address&gt;                                 &lt;cit:electronicMailAddress&gt;                                   &lt;gco:CharacterString&gt;&lt;/gco:CharacterString&gt;                                 &lt;/cit:electronicMailAddress&gt;                               &lt;/cit:CI_Address&gt;                             &lt;/cit:address&gt;                           &lt;/cit:CI_Contact&gt;                         &lt;/cit:contactInfo&gt;                         &lt;cit:individual&gt;                           &lt;cit:CI_Individual&gt;                             &lt;cit:name&gt;                               &lt;gco:CharacterString&gt;&lt;/gco:CharacterString&gt;                             &lt;/cit:name&gt;                           &lt;/cit:CI_Individual&gt;                         &lt;/cit:individual&gt;                       &lt;/cit:CI_Organisation&gt;                     &lt;/cit:party&gt;                   &lt;/cit:CI_Responsibility&gt;" data-default-role="pointOfContact" data-search-action="true" data-popup-action="true" data-template-type="contact" data-filter="{&quot;root&quot;: &quot;cit:CI_Responsibility&quot;}" data-variables="cit:role/cit:CI_RoleCode/@codeListValue~{role}">
+              <a class="btn btn-default" title=" Responsabilité" data-gn-click-and-spin="addChoice(1, 'mdb:contact', 'cit:CI_Responsibility', 'd1068e835', 'replaceWith');">
                 <i type="button" class="fa fa-plus gn-add" title="Type de données pour l'informations concernant l’acteur et son rôle" />
               </a>
             </div>
@@ -3711,7 +3800,7 @@
       <div class="gn-editor-tools-container">
         <div data-gn-need-help="creating-metadata" />
         <div data-gn-overview-manager="" data-file-types=".png,.gif,.jpeg,.jpg" data-editable-thumbnail="true" />
-        <div data-gn-distribution-resources-panel="gnCurrentEdit.metadata" data-mode="viewConfig.distributionConfig.layout || ''" data-editor-config="default" data-related-config="[{                                              title: 'API',                                              filter: 'protocol:OGC:WMS|OGC:WMTS|ESRI:.*|atom.*|REST|OGC API Maps|OGC API Records',                                              editActions: ['addOnlinesrc#API']                                            }, {                                               title: 'download',                                               filter: 'protocol:OGC:WFS|OGC:WCS|.*DOWNLOAD.*|DB:.*|FILE:.*|OGC API Features|OGC API Coverages',                                               editActions: ['addOnlinesrc#onlineDownload|localNetwork']                                            }, {                                              title: 'map',                                              filter: 'protocol:OGC:OWS-C|PDF:MAP',                                              editActions: ['addOnlinesrc#onlineUseMap']                                            }, {                                              title: 'mapLegend',                                              filter: 'function:legend',                                              editActions: ['addOnlinesrc#onlineUseLegend']                                            }, {                                               title: 'links',                                               filter:'-protocol:OGC.*|REST|ESRI:.*|atom.*|.*DOWNLOAD.*|DB:.*|FILE:.*|PDF:MAP AND -function:legend|featureCatalogue|dataQualityReport',                                               editActions: ['addOnlinesrc#links']                                            }, {                                               title: 'quality',                                               filter: 'function:dataQualityReport',                                               editActions: ['addOnlinesrc#quality']                                            }, {                                               title: 'featureCatalog',                                               filter: 'function:featureCatalogue',                                               editActions: ['onlineUseFcats']                                            }]" />
+        <div data-gn-distribution-resources-panel="gnCurrentEdit.metadata" data-mode="viewConfig.distributionConfig.layout || ''" data-editor-config="eea" data-related-config="[{                                            title: 'download',                                            filter: 'protocol:WWW:URL|EEA.*|WWW:DOWNLOAD.*',                                            editActions: ['addOnlinesrc#onlineDownload|localNetwork']},                                          {                                            title: 'Services',                                            filter: 'protocol:OGC:.*|ESRI:.*',                                            editActions: ['addOnlinesrc#API']},                                          {                                             title: 'links',                                             filter:'-protocol:OGC:.*|ESRI:.*|EEA.*|WWW:URL|WWW:DOWNLOAD.*',                                             editActions: ['addOnlinesrc#links']}]" />
         <div data-gn-associated-resources-panel="gnCurrentEdit.metadata" />
         <div gn-geo-publisher="" data-ng-if="gnCurrentEdit.geoPublisherConfig" data-config="{{gnCurrentEdit.geoPublisherConfig}}" data-lang="lang" />
         <div data-gn-validation-report="" />

@@ -31,7 +31,9 @@ import org.owasp.esapi.reference.DefaultEncoder;
 import org.w3c.dom.Node;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class XslUtil {
     public static Boolean IS_INSPIRE_ENABLED = false;
@@ -41,6 +43,10 @@ public class XslUtil {
     }
     public static String threeCharLangCode(String iso2code) {
         return "fre";
+    }
+
+    public List <String> getNarrowerKeywords(String keywordLabel, String langCode, int depth) {
+        return new ArrayList<>();
     }
 
     public static String getSettingValue(String key) {
