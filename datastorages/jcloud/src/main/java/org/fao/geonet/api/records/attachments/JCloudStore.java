@@ -805,11 +805,6 @@ public class JCloudStore extends AbstractStore {
     }
 
     @Override
-    public void renameFolder(Path originalPath, Path newPath) {
-
-    }
-
-    @Override
     public MetadataResource getResourceDescription(final ServiceContext context, final String metadataUuid,
                                                    final MetadataResourceVisibility visibility, final String filename, Boolean approved) throws Exception {
         int metadataId = getAndCheckMetadataId(metadataUuid, approved);
