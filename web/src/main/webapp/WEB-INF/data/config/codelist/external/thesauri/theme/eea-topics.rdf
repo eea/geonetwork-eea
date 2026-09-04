@@ -1,246 +1,159 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:foaf="http://xmlns.com/foaf/0.1/"
-         xmlns:dcterms="http://purl.org/dc/terms/"
-         xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
   <skos:ConceptScheme rdf:about="https://www.eea.europa.eu/themes">
     <dc:title>EEA topics</dc:title>
-    <dc:description>
-    </dc:description>
+    <dc:description />
     <dc:creator>
       <foaf:Organization>
         <foaf:name>EEA</foaf:name>
       </foaf:Organization>
     </dc:creator>
     <dcterms:issued>2020-09-24</dcterms:issued>
-    <dcterms:modified>2022-10-18</dcterms:modified>
+    <dcterms:modified>2026-09-04</dcterms:modified>
   </skos:ConceptScheme>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term1'>
-    <skos:prefLabel xml:lang='en'>Agriculture and food</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/agriculture-and-food">
+    <skos:prefLabel xml:lang="en">Agriculture and food system</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Europe's food system and its primary sector, agriculture, provides us with the basic human need for food. It depends on healthy soils, clean water, biodiversity and a stable climate. Building a sustainable food system means producing enough food, while protecting the natural resources it relies on.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term2'>
-    <skos:prefLabel xml:lang='en'>Air pollution</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/air-pollution">
+    <skos:prefLabel xml:lang="en">Air pollution</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Most European city dwellers are exposed to unsafe levels of air pollution . Improving air quality to match World Health Organization (WHO)-recommended levels could prevent more than half of premature deaths caused by exposure to fine particulate matter.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term3'>
-    <skos:prefLabel xml:lang='en'>Bathing water quality</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/bathing-water">
+    <skos:prefLabel xml:lang="en">Bathing water quality</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Europe has a rich diversity of beautiful beaches and bathing areas, and each year millions of Europeans spend their weekends at their local beach or enjoy their holidays cooling off by the water. Bathing water quality across Europe has improved significantly over the past few decades, and is now consistently high, thanks to EU policies and actions by Member States.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term4'>
-    <skos:prefLabel xml:lang='en'>Biodiversity</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/biodiversity">
+    <skos:prefLabel xml:lang="en">Biodiversity: state of habitats and species</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Europe's rich array of biodiversity, habitats and species is under threat due to human activities and climate change. This degradation affects our well-being and economy. The EU is taking action to restore and protect the vital systems that support life on our planet.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term5'>
-    <skos:prefLabel xml:lang='en'>Bioeconomy</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/buildings-and-construction">
+    <skos:prefLabel xml:lang="en">Buildings and construction</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Buildings are homes, work places, schools, hospitals, shops, sports halls, transport terminals, where we all spend a significant part of our day. Their construction, maintenance and demolition present many challenges and some opportunities for climate change and the environment.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term6'>
-    <skos:prefLabel xml:lang='en'>Buildings and construction</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/chemicals">
+    <skos:prefLabel xml:lang="en">Chemicals</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Hazardous chemical substances can cause serious harm to the environment and human health. Although emissions from many dangerous chemicals have dropped in the EU, exposure to substances with unknown effects remains high.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term7'>
-    <skos:prefLabel xml:lang='en'>Chemicals</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/circular-economy">
+    <skos:prefLabel xml:lang="en">Circular economy</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Our production and consumption systems rely on raw materials that are, to a large extent, not reused or recycled. This linear model creates endless waste, continuous demand for virgin raw materials and unsustainable consumption patterns. The solution is to move to a circular economy where products and materials can be used longer and made into new products after use.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term8'>
-    <skos:prefLabel xml:lang='en'>Circular economy</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/climate-change-impacts-risks-and-adaptation">
+    <skos:prefLabel xml:lang="en">Climate change impacts, risks and adaptation</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Climate change is affecting people's lives across Europe through more frequent and severe heatwaves, flood, droughts and other extreme weather. Europe is adapting to reduce risks, protect people's health, safeguard nature and other extreme weather.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term9'>
-    <skos:prefLabel xml:lang='en'>Climate</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/climate-change-mitigation-reducing-emissions">
+    <skos:prefLabel xml:lang="en">Climate change mitigation: reducing emissions</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Our climate is changing because of greenhouse gases released into the atmosphere. Despite notable emission reductions over the last decades, the EU must transform production and consumption systems to achieve climate neutrality by 2050.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term10'>
-    <skos:prefLabel xml:lang='en'>Climate adaptation</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/electric-vehicles">
+    <skos:prefLabel xml:lang="en">Electric vehicles</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Electric cars, vans, trucks and buses will play a key role in reducing some of the negative impacts of road transport on human health, the environment and climate. Faced with a growing transport demand, electric vehicles alone cannot be enough to achieve a sustainable road transport in Europe. They need to be seen within the wider mobility system, with a focus on mobility need and alternative modes of transport.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term11'>
-    <skos:prefLabel xml:lang='en'>Climate mitigation</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/energy">
+    <skos:prefLabel xml:lang="en">Energy</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Our quality of life depends on a reliable and affordable supply of energy. Energy powers our homes, businesses, industries and transport systems. Europe's shift away from fossil fuels can cut greenhouse gas emissions and pollution while strengthening energy security.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term12'>
-    <skos:prefLabel xml:lang='en'>Economy and resources</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/energy-efficiency">
+    <skos:prefLabel xml:lang="en">Energy efficiency</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">To achieve climate neutrality by 2050, the EU needs to boost its energy efficiency and reduce its energy consumption faster. That will allow to achieve reductions in greenhouse gases and pollutants, while relieving pressure on Europe's energy supply and prices.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term13'>
-    <skos:prefLabel xml:lang='en'>Electric vehicles</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/environmental-health-impacts">
+    <skos:prefLabel xml:lang="en">Environmental health impacts</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Despite progress in many areas, environmental hazards continue to affect public health in the EU. Air pollution, noise, heavy metal emissions, heatwaves and cold spells continue to cause health issues and fatalities across Europe each year. Europe has put in place a wide range of policies and measures to reduce such health impacts.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term14'>
-    <skos:prefLabel xml:lang='en'>Energy</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/environmental-inequalities">
+    <skos:prefLabel xml:lang="en">Environmental inequalities</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Communities with lower levels of income and education are often more impacted by air, water and noise pollution, as well as climate change. So are the elderly, children and other vulnerable groups. In many cases, vulnerable groups are exposed to multiple environment- and climate-related hazards.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term15'>
-    <skos:prefLabel xml:lang='en'>Energy efficiency</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/extreme-weather-floods-droughts-and-heatwaves">
+    <skos:prefLabel xml:lang="en">Extreme weather: floods, droughts, heatwaves</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Europe is experiencing more frequent and more intense heatwaves, floods and droughts as the climate changes. These events affect our health, nature, water supplies, food production, infrastructure and economy. We must adapt and prepare for life in a changing climate.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term16'>
-    <skos:prefLabel xml:lang='en'>Environmental health impacts</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/forests-and-forestry">
+    <skos:prefLabel xml:lang="en">Forests and forestry</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Forests are responsible for a range of ecosystem services which are imperative for our health and well-being, as well as for the health of our planet.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term17'>
-    <skos:prefLabel xml:lang='en'>Environmental inequalities</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/industry">
+    <skos:prefLabel xml:lang="en">Industry</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Industry is an important part of the European economy, providing vital goods for modern life and jobs. At the same time, it is a source of great pressure on nature and on human health. Even though releases of pollutants by European industry have generally decreased over the last decade, the impacts and costs of pollution from industry remain high.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term18'>
-    <skos:prefLabel xml:lang='en'>Extreme weather</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/land-use">
+    <skos:prefLabel xml:lang="en">Land use</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">About 80% of Europe's land surface has been shaped by human activities: covered with buildings, roads, industrial infrastructure or used for agriculture. The way we use land constitutes one of the main drivers of environmental degradation and climate change.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term19'>
-    <skos:prefLabel xml:lang='en'>Fisheries and aquaculture</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/nature-protection-and-restoration">
+    <skos:prefLabel xml:lang="en">Nature protection and restoration</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Europe has set ambitious policy goals to allow nature to recover and flourish. Creating protected areas, green and blue infrastructure, restoring ecosystems, rewilding and facilitating nature-based solutions to climate change can all contribute to reversing biodiversity loss in the EU.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term20'>
-    <skos:prefLabel xml:lang='en'>Forests and forestry</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/noise">
+    <skos:prefLabel xml:lang="en">Noise</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Road transport is the most significant contributor to environmental noise pollution in the EU. EU policies are put in place to reduce exposure to and the harmful effects of noise pollution.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term21'>
-    <skos:prefLabel xml:lang='en'>Health</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/plastics">
+    <skos:prefLabel xml:lang="en">Plastics</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Plastics are everywhere - from food packaging to healthcare, construction materials, furniture and textiles. They are, unfortunately, also bad for the environment. They are not only polluting the seas and land, but also contributing to climate change and air emissions.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term22'>
-    <skos:prefLabel xml:lang='en'>Industry</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/pollution">
+    <skos:prefLabel xml:lang="en">Pollution</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Pollution can harm human health and the environment. It can be pollutants found in air, water and soil. It can also be harmful noise or artificial light. The EU is taking action to reduce pollution and the threats harmful substances pose to Europe's environment and human health.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term23'>
-    <skos:prefLabel xml:lang='en'>Land use</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/production-and-consumption">
+    <skos:prefLabel xml:lang="en">Production and consumption</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Europe has achieved unprecedented levels of prosperity and well-being during recent decades, and its social, health and environmental standards rank among the highest in the world. Still, the EU's production and consumption systems are hindering its ability to meet sustainability goals.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term24'>
-    <skos:prefLabel xml:lang='en'>Nature</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/renewable-energy">
+    <skos:prefLabel xml:lang="en">Renewable energy</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Increased renewable energy sources will help the EU transition towards a prosperous, sustainable, climate-compatible and independent economy. In recent years, Europe has been generating more renewable energy and a growing share of its energy consumption is met through renewable sources.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term25'>
-    <skos:prefLabel xml:lang='en'>Nature protection and restoration</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/resource-use-and-materials">
+    <skos:prefLabel xml:lang="en">Resource use and materials</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Raw materials and resources are essential for modern economies, but they come with environmental impacts. It is crucial that Europe sources and uses them responsibly to successfully transition towards a circular economy, climate neutrality and sustainability. We need to recycle these materials more while reducing extraction and consumption.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term26'>
-    <skos:prefLabel xml:lang='en'>Nature-based solutions</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/road-transport">
+    <skos:prefLabel xml:lang="en">Road transport</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">In recent years, cleaner road vehicles and fuels have become progressively more available, yet the sector's impacts on human health, the environment and climate change are persistent. A fundamental shift toward sustainability is needed in the way we move people and goods.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term27'>
-    <skos:prefLabel xml:lang='en'>Noise</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/seas-and-coasts">
+    <skos:prefLabel xml:lang="en">Seas and coasts</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">The European continent is surrounded by different seas and diverse coastal zones that are essential to society, economy and nature in general. Climate change, pollution and over-exploitation are among the top threats these areas face. Europe has put in place measures to protect its seas, resulting in some local improvements.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term28'>
-    <skos:prefLabel xml:lang='en'>Plastics</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/soil">
+    <skos:prefLabel xml:lang="en">Soil</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Soil is a vital component of natural capital, hosting rich biodiversity and providing critical ecosystem services, such as food production, water purification and carbon storage. However, the majority of EU soils are considered unhealthy, with potentially 2.8 million sites being contaminated.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term29'>
-    <skos:prefLabel xml:lang='en'>Pollution</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/sustainability-challenges">
+    <skos:prefLabel xml:lang="en">Sustainability challenges</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">We consume too much, in an unsustainable manner, and transitioning to sustainability is hard. It becomes even harder when we face multiple crises at the same time. The nature of the many crises we face means that now, more than ever, we need to stick to our long-term sustainability goals and policy aims and anchor these environmental and wellbeing aims into the new priority areas like security and competitiveness.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term30'>
-    <skos:prefLabel xml:lang='en'>Production and consumption</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/sustainability-solutions">
+    <skos:prefLabel xml:lang="en">Sustainability solutions</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">The solutions for transitioning to sustainability involve innovative social practices, technologies and business models. Sustainability transitions are society-wide, long-term processes built on innovation and knowledge creation. The nature of the many crises we face means that now, more than ever, we need to stick to our long-term sustainability goals and policy aims and anchor these environmental and wellbeing aims into the new priority areas like security and competitiveness.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term31'>
-    <skos:prefLabel xml:lang='en'>Renewable energy</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/sustainable-finance">
+    <skos:prefLabel xml:lang="en">Sustainable finance</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">We need substantial investments to reduce our economic activities' impacts on the environment and climate. Sustainable finance is about making sustainability considerations an integral part of financial policy and decision-making with the aim to re-orient and scale up public and private investments towards meeting sustainability goals.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term32'>
-    <skos:prefLabel xml:lang='en'>Resource use and materials</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/textiles">
+    <skos:prefLabel xml:lang="en">Textiles</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Jeans, raincoats, curtains, bedlinen, shoes, sportswear... The list is endless. We all need and use textile products. Textile consumption in Europe causes on average the fourth highest pressure on the environment and climate, following consumption of food, housing and mobility.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term33'>
-    <skos:prefLabel xml:lang='en'>Road transport</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/transport-and-mobility">
+    <skos:prefLabel xml:lang="en">Transport and mobility</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Transport keeps people and goods moving across Europe, connecting communities and supporting the economy. Making our mobility system more sustainable through cleaner technologies, smarter investments and better transport choices will reduce its impact on the environment, climate and our health.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term34'>
-    <skos:prefLabel xml:lang='en'>Seas and coasts</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/urban-sustainability">
+    <skos:prefLabel xml:lang="en">Urban sustainability</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Urban areas often have high population densities, intricate transport networks and dense commercial and industrial areas, which can compound existing environmental and health issues, and exacerbate social inequalities. At the same time, cities have the capacity to shape the transition to a more sustainable future.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term35'>
-    <skos:prefLabel xml:lang='en'>Soil</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/waste-and-recycling">
+    <skos:prefLabel xml:lang="en">Waste and recycling</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Europe is generating too much waste - and not enough is being recycled. The EU is working to create a more circular economy, among others, by preventing waste and improving waste management. At the same time, there are goals to reduce waste's burden on health and the environment, and to keep valuable resources in the economy.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term36'>
-    <skos:prefLabel xml:lang='en'>State of Europe's environment</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/water">
+    <skos:prefLabel xml:lang="en">Water</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">People, nature and the economy all need water and water is many things: a vital need, a local and global resource, a transport corridor, a climate regulator and home and provider to many species. Europe's rivers, lakes, seas and groundwater are under pressure from pollution, eutrophication, over-exploitation and climate change.</skos:scopeNote>
   </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term37'>
-    <skos:prefLabel xml:lang='en'>Sustainability</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
-  </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term38'>
-    <skos:prefLabel xml:lang='en'>Sustainability challenges</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
-  </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term39'>
-    <skos:prefLabel xml:lang='en'>Sustainability solutions</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
-  </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term40'>
-    <skos:prefLabel xml:lang='en'>Sustainable finance</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
-  </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term41'>
-    <skos:prefLabel xml:lang='en'>Textiles</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
-  </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term42'>
-    <skos:prefLabel xml:lang='en'>Transport and mobility</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
-  </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term43'>
-    <skos:prefLabel xml:lang='en'>Urban sustainability</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
-  </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term44'>
-    <skos:prefLabel xml:lang='en'>Waste and recycling</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
-  </skos:Concept>
-
-  <skos:Concept rdf:about='https://www.eea.europa.eu/themes#term45'>
-    <skos:prefLabel xml:lang='en'>Water</skos:prefLabel>
-    <skos:definition xml:lang='en'></skos:definition>
-  </skos:Concept>
-
 </rdf:RDF>
 
