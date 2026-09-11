@@ -4,7 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import org.jdom.Element;
@@ -62,5 +65,19 @@ public class EsSearchManagerTest {
         JsonNode expected = objectMapper.readTree("{\"field1\":\"content1\",\"indexingErrorMsg\":[{\"type\":\"error\",\"string\":\"string-reference\",\"values\":{\"value1\":\"content1\",\"value2\":\"content2\"}}]}");
 
         assertEquals(expected, result);
+    }
+
+    @Test
+    public void toFieldMapPreservesScalarBooleanAndKeepsOpArrays() {
+        Multimap<String, Object> fields = ArrayListMultimap.create();
+        fields.put("isPublishedToAll", true);
+        fields.put("op1", 1);
+        fields.put("op1", 2);
+
+        Object result = instance.toFieldMap(fields).get("isPublishedToAll");
+        Object[] opValues = (Object[]) instance.toFieldMap(fields).get("op1");
+
+        assertEquals(Boolean.TRUE, result);
+        assertArrayEquals(new Object[]{1, 2}, opValues);
     }
 }
