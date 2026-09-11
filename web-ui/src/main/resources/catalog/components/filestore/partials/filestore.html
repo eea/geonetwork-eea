@@ -84,6 +84,12 @@
             >
               {{r._displayName}}
             </a>
+            <span
+              data-ng-if="showFileStoreSize && hasFileSize(r.size)"
+              class="text-muted"
+              id="resource_size_{{$index}}"
+              >({{humanizeFileSize(r.size)}})</span
+            >
 
             <div id="resource_edit_{{$index}}" class="hidden">
               <input

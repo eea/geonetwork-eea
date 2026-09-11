@@ -25,6 +25,27 @@
   goog.provide("gn_filestore_directive");
 
   /**
+   * Convert a size in bytes into a human readable string (eg. '1.2 MB').
+   */
+  var humanizeDataSize = function (bytes) {
+    var numericBytes = Number(bytes);
+
+    if (
+      bytes === null ||
+      angular.isUndefined(bytes) ||
+      !isFinite(numericBytes) ||
+      numericBytes < 0
+    ) {
+      return null;
+    }
+
+    if (numericBytes === 0) return "0 Bytes";
+    var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+    var i = Math.floor(Math.log(numericBytes) / Math.log(1024)); // Determine the index for sizes
+    return parseFloat((numericBytes / Math.pow(1024, i)).toFixed(2)) + " " + sizes[i]; // Format size
+  };
+
+  /**
    * Given the flat list of a record's attachments (each resource's `filename` may contain
    * "/"-separated folders) and the folder currently being browsed, compute a single level of the
    * folder tree: the immediate subfolders of currentFolder, and the files directly inside it.
@@ -197,13 +218,6 @@
                 uploadFile();
               }
             });
-
-            var humanizeDataSize = function (bytes) {
-              if (bytes === 0) return "0 Bytes";
-              var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-              var i = Math.floor(Math.log(bytes) / Math.log(1024)); // Determine the index for sizes
-              return parseFloat((bytes / Math.pow(1024, i)).toFixed(2)) + " " + sizes[i]; // Format size
-            };
 
             // Function to remove files from scope.queue that match data.files by $$hashKey
             var removeUploadedFilesFromQueue = function (data) {
@@ -401,13 +415,15 @@
       "$translate",
       "$rootScope",
       "$parse",
+      "gnGlobalSettings",
       function (
         gnfilestoreService,
         gnOnlinesrc,
         gnCurrentEdit,
         $translate,
         $rootScope,
-        $parse
+        $parse,
+        gnGlobalSettings
       ) {
         return {
           restrict: "A",
@@ -440,6 +456,12 @@
             scope.selectOptions = { current: undefined };
             scope.metadataResources = [];
             scope.editingResource = false;
+            scope.showFileStoreSize =
+              gnGlobalSettings.gnCfg.mods.editor.showFileStoreSize;
+            scope.humanizeFileSize = humanizeDataSize;
+            scope.hasFileSize = function (size) {
+              return humanizeDataSize(size) !== null;
+            };
             scope.currentFolder = "";
             scope.currentFolders = [];
             scope.currentFiles = [];
@@ -526,9 +548,11 @@
             function updateVisibilityEditingPanel(index, editing) {
               if (editing) {
                 $("#resource_" + index).addClass("hidden");
+                $("#resource_size_" + index).addClass("hidden");
                 $("#resource_edit_" + index).removeClass("hidden");
               } else {
                 $("#resource_" + index).removeClass("hidden");
+                $("#resource_size_" + index).removeClass("hidden");
                 $("#resource_edit_" + index).addClass("hidden");
               }
             }
