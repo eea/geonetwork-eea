@@ -99,6 +99,10 @@
       <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
+      <li>
+        <div data-gn-auth-provider-selector=""></div>
+      </li>
+      <li role="separator" class="divider hidden-xs"></li>
       <form
         name="gnSigninForm"
         class="navbar-form"
@@ -151,7 +155,7 @@
         <li role="menuitem">
           <button
             type="submit"
-            class="btn btn-primary btn-block"
+            class="btn btn-default btn-block"
             aria-label="{{'signIn' | translate}}"
             data-ng-disabled="!gnSigninForm.$valid"
           >
@@ -160,9 +164,6 @@
           </button>
         </li>
       </form>
-      <li>
-        <div data-gn-auth-provider-selector=""></div>
-      </li>
       <!-- register -->
       <li
         role="separator"
