@@ -37,6 +37,11 @@
         </div>
         <div class="panel-body">
           <p data-translate="">loginText</p>
+
+          <div data-gn-auth-provider-selector=""></div>
+
+          <hr />
+
           <form
             class="form-horizontal"
             name="gnSigninForm"
@@ -101,15 +106,13 @@
 
             <button
               type="submit"
-              class="btn btn-primary btn-block"
+              class="btn btn-default btn-block"
               data-ng-disabled="!gnSigninForm.$valid"
             >
               <i class="fa fa-fw fa-sign-in"></i>
               <span data-translate="">signIn</span>
             </button>
           </form>
-
-          <div data-gn-auth-provider-selector=""></div>
 
           <p class="text-danger" data-ng-show="signinFailure">
             <strong data-translate="">signinFailure</strong>
