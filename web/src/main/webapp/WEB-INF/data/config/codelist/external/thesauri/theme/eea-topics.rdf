@@ -71,6 +71,10 @@
     <skos:prefLabel xml:lang="en">Extreme weather: floods, droughts, heatwaves</skos:prefLabel>
     <skos:scopeNote xml:lang="en">Europe is experiencing more frequent and more intense heatwaves, floods and droughts as the climate changes. These events affect our health, nature, water supplies, food production, infrastructure and economy. We must adapt and prepare for life in a changing climate.</skos:scopeNote>
   </skos:Concept>
+  <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/fisheries-and-aquaculture">
+    <skos:prefLabel xml:lang="en">Fisheries and aquaculture</skos:prefLabel>
+    <skos:scopeNote xml:lang="en"></skos:scopeNote>
+  </skos:Concept>
   <skos:Concept rdf:about="https://www.eea.europa.eu/en/topics/in-depth/forests-and-forestry">
     <skos:prefLabel xml:lang="en">Forests and forestry</skos:prefLabel>
     <skos:scopeNote xml:lang="en">Forests are responsible for a range of ecosystem services which are imperative for our health and well-being, as well as for the health of our planet.</skos:scopeNote>
