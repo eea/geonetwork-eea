@@ -764,7 +764,16 @@
       $scope.confirmClose = function (submit, approve) {
         var promise = gnEditor.save(false, null, true, submit, approve).then(
           function (form) {
-            closeEditor();
+            // EEA Call datastore API to sync Nextcloud
+            $http.get("../api/records/" + gnCurrentEdit.uuid + "/datastore").then(
+              function () {
+                closeEditor();
+              },
+              function (error) {
+                console.log("Error while syncing Nextcloud: " + error);
+                closeEditor();
+              }
+            );
           },
           function (error) {
             // When closing editor and if error occurs,

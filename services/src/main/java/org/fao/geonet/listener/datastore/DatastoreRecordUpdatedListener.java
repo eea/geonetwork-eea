@@ -55,16 +55,16 @@ public class DatastoreRecordUpdatedListener implements ApplicationListener<Recor
 //    public void onRecordUpdated(RecordUpdatedEvent event) {
     @Override
     public void onApplicationEvent(RecordUpdatedEvent event) {
-        AbstractMetadata metadata = metadataUtils.findOne(event.getMdId().intValue());
-        try {
-            final MetadataSchema schema = metadataSchemaUtils
-                .getSchema(metadata.getDataInfo().getSchemaId());
-            String oldResourceIdentifier = schema.queryString("eea-resourceid-get", Xml.loadString(event.getPreviousState(), false));
-
-            nextcloudService.setupDatastore(metadata, oldResourceIdentifier);
-        } catch (Exception ex) {
-            Log.error(Geonet.DATA_MANAGER, "Metadata update: couldn't proxy the request to the Nextcloud share " + event.getSource(), ex);
-        }
+//        AbstractMetadata metadata = metadataUtils.findOne(event.getMdId().intValue());
+//        try {
+//            final MetadataSchema schema = metadataSchemaUtils
+//                .getSchema(metadata.getDataInfo().getSchemaId());
+//            String oldResourceIdentifier = schema.queryString("eea-resourceid-get", Xml.loadString(event.getPreviousState(), false));
+//
+//            nextcloudService.setupDatastore(metadata, oldResourceIdentifier);
+//        } catch (Exception ex) {
+//            Log.error(Geonet.DATA_MANAGER, "Metadata update: couldn't proxy the request to the Nextcloud share " + event.getSource(), ex);
+//        }
 
     }
 }
