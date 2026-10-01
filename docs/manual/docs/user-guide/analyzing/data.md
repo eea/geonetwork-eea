@@ -14,11 +14,11 @@ Once collected, filtering is available in the map viewer for this layer. The fil
 
 Once indexed, all users can access the filtering menu providing:
 
--   a full text search on all fields
--   a control to display or not the heatmap
--   facets on all fields (computing automatically range facet for numbers)
--   table action display all values
--   filter action apply the filters to the WMS layers using SLD
+- a full text search on all fields
+- a control to display or not the heatmap
+- facets on all fields (computing automatically range facet for numbers)
+- table action display all values
+- filter action apply the filters to the WMS layers via the WMS `FILTER` parameter
 
 ![](img/filtering.png)
 
@@ -69,8 +69,8 @@ Here the options:
 
 You can
 
--   restrict the fields used for filter
--   specify your own ranges for numeric values
--   set your label
--   manage tokenized fields
--   enable heatmap
+- restrict the fields used for filter
+- specify your own ranges for numeric values
+- set your label
+- manage tokenized fields
+- enable heatmap
