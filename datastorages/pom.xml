@@ -83,8 +83,8 @@
       <id>datastorage-opendal</id>
       <activation>
         <property>
-          <!-- include when making a release -->
-          <name>release</name>
+          <!-- EEA: included by default, skip with -Dskip-datastorage-opendal -->
+          <name>!skip-datastorage-opendal</name>
         </property>
       </activation>
       <modules>
