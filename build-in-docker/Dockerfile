@@ -11,7 +11,9 @@ RUN git clone --recursive https://github.com/eea/geonetwork-eea.git /tmp/geonetw
 WORKDIR /tmp/geonetwork-eea
 RUN git checkout $COMMIT_OR_BRANCH
 RUN git submodule update --init --recursive
-RUN mvn -B install -DskipTests
+# Include the OpenDAL data storage, enabled at runtime with GEONETWORK_STORE_TYPE=opendal.
+# Its native library is picked for the build host, so build on linux-x86_64.
+RUN mvn -B install -DskipTests -Pdatastorage-opendal
 RUN unzip /tmp/geonetwork-eea/web/target/geonetwork.war -d /tmp/geonetwork
 
 
