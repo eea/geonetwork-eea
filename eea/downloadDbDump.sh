@@ -260,11 +260,16 @@ trap 'rm -f "$CHUNK_TMP"; cleanup_remote_control' EXIT
 DL_START=$(date +%s)
 for ((i = 0; i < TOTAL_CHUNKS; i++)); do
   fetched=0
+  EXPECTED=$((FINAL_SIZE - i * CHUNK_BYTES))
+  [[ $EXPECTED -gt $CHUNK_BYTES ]] && EXPECTED=$CHUNK_BYTES
   for attempt in 1 2 3 4 5; do
     : >"$CHUNK_TMP"
+    # iflag=fullblock: on NFS a single read() can come back short, and
+    # without it dd would count that as the whole block. The size check
+    # catches a stream kubectl cut off but still reported as success.
     if kubectl --context "$CONTEXT" -n "$NAMESPACE" exec "$POD" -c "$CONTAINER" -- \
-      sh -c "dd if='$REMOTE_DUMP' bs=${CHUNK_MB}M skip=$i count=1 2>/dev/null | base64 -w0" 2>/dev/null \
-      | base64 -d >"$CHUNK_TMP"; then
+      sh -c "dd if='$REMOTE_DUMP' bs=${CHUNK_MB}M skip=$i count=1 iflag=fullblock 2>/dev/null | base64 -w0" 2>/dev/null \
+      | base64 -d >"$CHUNK_TMP" && [[ $(wc -c <"$CHUNK_TMP") -eq $EXPECTED ]]; then
       cat "$CHUNK_TMP" >>"$OUTPUT"
       fetched=1
       break
