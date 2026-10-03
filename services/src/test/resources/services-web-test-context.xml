@@ -76,4 +76,7 @@
       <bean class="org.springframework.data.web.SortHandlerMethodArgumentResolver"/>
     </mvc:argument-resolvers>
   </mvc:annotation-driven>
+  <!-- ValidateApi reads its processing entry. Tests that need the full INSPIRE
+       validator configuration load inspire-validator-test-context.xml instead. -->
+  <bean id="validatorAdditionalConfig" class="java.util.HashMap"/>
 </beans>
