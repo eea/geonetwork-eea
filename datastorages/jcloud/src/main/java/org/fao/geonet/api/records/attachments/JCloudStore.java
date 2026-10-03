@@ -899,12 +899,6 @@ public class JCloudStore extends AbstractStore {
     }
 
 
-
-    @Override
-    public MetadataResource renameResource(ServiceContext context, String metadataUuid, String resourceId, String newName, Boolean approved) throws Exception {
-        return null;
-    }
-
     @Override
     public MetadataResource getResourceDescription(final ServiceContext context, final String metadataUuid,
                                                    final MetadataResourceVisibility visibility, final String filename, Boolean approved) throws Exception {
