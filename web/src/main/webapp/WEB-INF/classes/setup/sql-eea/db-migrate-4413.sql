@@ -217,7 +217,7 @@ UPDATE Settings SET value='0' WHERE name='system/platform/subVersion';
 DROP SEQUENCE IF EXISTS files_id_seq;
 DROP TABLE IF EXISTS files;
 
-INSERT INTO Settings (name, value, datatype, position, internal) SELECT distinct 'system/metadataprivs/publication/managepublicationdate', 'false', 2, 9182, 'n' from settings WHERE NOT EXISTS (SELECT name FROM Settings WHERE name = 'system/metadataprivs/publication/managepublicationdate');
+INSERT INTO Settings (name, value, datatype, position, internal) SELECT distinct 'system/metadataprivs/publication/managepublicationdate', 'true', 2, 9182, 'n' from settings WHERE NOT EXISTS (SELECT name FROM Settings WHERE name = 'system/metadataprivs/publication/managepublicationdate');
 UPDATE Settings SET position=9183 WHERE name='system/metadataprivs/publication/notificationLevel';
 UPDATE Settings SET position=9184 WHERE name='system/metadataprivs/publication/notificationGroups';
 
@@ -225,32 +225,18 @@ ALTER TABLE spg_page ADD COLUMN IF NOT EXISTS showOnNonApproved boolean DEFAULT 
 ALTER TABLE spg_page ADD COLUMN IF NOT EXISTS showOnApproved boolean DEFAULT true NOT NULL;
 ALTER TABLE spg_page ADD COLUMN IF NOT EXISTS showWhenWorkflowDisabled boolean DEFAULT true NOT NULL;
 
-INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('metadata/publication/enableScheduledPublication', 'true', 2, 12023, 'n');
+-- Move the force validation on save setting out of the workflow section so it
+-- can also be used when the metadata approval workflow is disabled.
+UPDATE Settings SET name='metadata/save/forceValidationOnMdSave', position = 12005 WHERE name='metadata/workflow/forceValidationOnMdSave';
 
-ALTER TABLE MetadataFileUploads ADD COLUMN IF NOT EXISTS resourceaccess VARCHAR(1);
-ALTER TABLE MetadataFileUploads ADD COLUMN IF NOT EXISTS mimetype VARCHAR(255);
-ALTER TABLE MetadataFileUploads ALTER COLUMN fileName TYPE VARCHAR(1024);
+-- Move the allow publication of invalid metadata setting out of the workflow
+-- section as it is a publication concern, not linked to the approval workflow.
+UPDATE Settings SET name='metadata/publication/allowPublishInvalidMd', position = 12023 WHERE name='metadata/workflow/allowPublishInvalidMd';
 
-UPDATE Settings SET value='4.4.13' WHERE name='system/platform/version';
-UPDATE Settings SET value='SNAPSHOT' WHERE name='system/platform/subVersion';
+-- Move the automatic unpublication of invalid metadata setting out of the
+-- workflow section as it is a publication concern, not linked to the approval workflow.
+UPDATE Settings SET name='metadata/publication/automaticUnpublishInvalidMd', position = 12024 WHERE name='metadata/workflow/automaticUnpublishInvalidMd';
 
-INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/csw/getRecordsIgnoreMetadataNotSupported', 'true', 2, 1321, 'y');
-
-INSERT INTO Settings (name, value, datatype, position, internal) SELECT distinct 'system/oai/enable', 'true', 2, 7000, 'n'  from settings WHERE NOT EXISTS (SELECT name FROM Settings WHERE name = 'system/oai/enable');
-
-UPDATE Settings SET value='4.4.12' WHERE name='system/platform/version';
-UPDATE Settings SET value='0' WHERE name='system/platform/subVersion';
-
-DROP SEQUENCE IF EXISTS files_id_seq;
-DROP TABLE IF EXISTS files;
-
-INSERT INTO Settings (name, value, datatype, position, internal) SELECT distinct 'system/metadataprivs/publication/managepublicationdate', 'false', 2, 9182, 'n' from settings WHERE NOT EXISTS (SELECT name FROM Settings WHERE name = 'system/metadataprivs/publication/managepublicationdate');
-UPDATE Settings SET position=9183 WHERE name='system/metadataprivs/publication/notificationLevel';
-UPDATE Settings SET position=9184 WHERE name='system/metadataprivs/publication/notificationGroups';
-
-ALTER TABLE spg_page ADD COLUMN IF NOT EXISTS showOnNonApproved boolean DEFAULT true NOT NULL;
-ALTER TABLE spg_page ADD COLUMN IF NOT EXISTS showOnApproved boolean DEFAULT true NOT NULL;
-ALTER TABLE spg_page ADD COLUMN IF NOT EXISTS showWhenWorkflowDisabled boolean DEFAULT true NOT NULL;
 
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('metadata/publication/enableScheduledPublication', 'true', 2, 12023, 'n');
 
