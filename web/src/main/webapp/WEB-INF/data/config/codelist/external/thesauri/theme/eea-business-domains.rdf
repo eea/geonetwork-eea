@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/">
+  <skos:ConceptScheme rdf:about="https://sdi.eea.europa.eu/registry/business-domains">
+    <dc:title xml:lang="en">EEA business domains and subdomains</dc:title>
+    <dc:description xml:lang="en">Business domains (level 1) and subdomains (level 2) of the EEA Data Lakehouse, used to classify EEA SDI records.</dc:description>
+    <dc:creator>European Environment Agency</dc:creator>
+    <dcterms:issued>2026-10-13</dcterms:issued>
+    <dcterms:modified>2026-10-13</dcterms:modified>
+    <skos:hasTopConcept rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_mitigation_energy" />
+    <skos:hasTopConcept rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_impacts_risks_adaptation" />
+    <skos:hasTopConcept rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems" />
+    <skos:hasTopConcept rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/land_agriculture_soil_forestry" />
+    <skos:hasTopConcept rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management" />
+    <skos:hasTopConcept rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries" />
+    <skos:hasTopConcept rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health" />
+    <skos:hasTopConcept rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry" />
+    <skos:hasTopConcept rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility" />
+    <skos:hasTopConcept rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/reference_data" />
+    <skos:hasTopConcept rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/non_domain_datasets" />
+  </skos:ConceptScheme>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/climate_change_mitigation_energy">
+    <skos:prefLabel xml:lang="en">Climate Change Mitigation and Energy</skos:prefLabel>
+    <skos:notation>climate_change_mitigation_energy</skos:notation>
+    <skos:definition xml:lang="en">Greenhouse-gas mitigation and the transition of energy systems towards climate neutrality. Includes emissions and removals, inventories and projections, mitigation policies and measures, climate targets, renewable energy, energy efficiency, energy production and consumption, and related transition information.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:topConceptOf rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_mitigation_energy/greenhouse_gas_emissions" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_mitigation_energy/energy_production_supply" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_mitigation_energy/energy_use_efficiency" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_mitigation_energy/energy_transition_decarbonisation" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/climate_change_mitigation_energy/greenhouse_gas_emissions">
+    <skos:prefLabel xml:lang="en">Greenhouse Gas Emissions</skos:prefLabel>
+    <skos:notation>greenhouse_gas_emissions</skos:notation>
+    <skos:definition xml:lang="en">Emissions and removals of greenhouse gases, including their magnitude, sources and sinks.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_mitigation_energy" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/climate_change_mitigation_energy/energy_production_supply">
+    <skos:prefLabel xml:lang="en">Energy Production &amp; Supply</skos:prefLabel>
+    <skos:notation>energy_production_supply</skos:notation>
+    <skos:definition xml:lang="en">Energy generation, transformation, supply and energy-system inputs.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_mitigation_energy" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/climate_change_mitigation_energy/energy_use_efficiency">
+    <skos:prefLabel xml:lang="en">Energy Use &amp; Efficiency</skos:prefLabel>
+    <skos:notation>energy_use_efficiency</skos:notation>
+    <skos:definition xml:lang="en">Energy consumption, demand and efficiency across sectors and activities.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_mitigation_energy" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/climate_change_mitigation_energy/energy_transition_decarbonisation">
+    <skos:prefLabel xml:lang="en">Energy Transition &amp; Decarbonisation</skos:prefLabel>
+    <skos:notation>energy_transition_decarbonisation</skos:notation>
+    <skos:definition xml:lang="en">Structural transition of the energy system and progress toward low-carbon/decarbonised energy and mitigation outcomes.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_mitigation_energy" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/climate_change_impacts_risks_adaptation">
+    <skos:prefLabel xml:lang="en">Climate Change Impacts, Risks and Adaptation</skos:prefLabel>
+    <skos:notation>climate_change_impacts_risks_adaptation</skos:notation>
+    <skos:definition xml:lang="en">Observed and projected climate-change impacts, climate-related risks and vulnerabilities, and measures to strengthen adaptation and resilience.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:topConceptOf rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_impacts_risks_adaptation/climate_hazards_extremes" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_impacts_risks_adaptation/climate_impacts_vulnerability" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_impacts_risks_adaptation/climate_risk" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_impacts_risks_adaptation/adaptation_resilience" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/climate_change_impacts_risks_adaptation/climate_hazards_extremes">
+    <skos:prefLabel xml:lang="en">Climate Hazards &amp; Extremes</skos:prefLabel>
+    <skos:notation>climate_hazards_extremes</skos:notation>
+    <skos:definition xml:lang="en">Climate-related physical hazards and extreme events.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_impacts_risks_adaptation" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/climate_change_impacts_risks_adaptation/climate_impacts_vulnerability">
+    <skos:prefLabel xml:lang="en">Climate Impacts &amp; Vulnerability</skos:prefLabel>
+    <skos:notation>climate_impacts_vulnerability</skos:notation>
+    <skos:definition xml:lang="en">Observed or projected impacts on environmental, social and economic systems and their vulnerability.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_impacts_risks_adaptation" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/climate_change_impacts_risks_adaptation/climate_risk">
+    <skos:prefLabel xml:lang="en">Climate Risk</skos:prefLabel>
+    <skos:notation>climate_risk</skos:notation>
+    <skos:definition xml:lang="en">Risk information combining hazards, exposure and vulnerability.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_impacts_risks_adaptation" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/climate_change_impacts_risks_adaptation/adaptation_resilience">
+    <skos:prefLabel xml:lang="en">Adaptation &amp; Resilience</skos:prefLabel>
+    <skos:notation>adaptation_resilience</skos:notation>
+    <skos:definition xml:lang="en">Measures, capacities and outcomes related to adapting to climate change and building resilience.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/climate_change_impacts_risks_adaptation" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems">
+    <skos:prefLabel xml:lang="en">Biodiversity and Ecosystems</skos:prefLabel>
+    <skos:notation>biodiversity_ecosystems</skos:notation>
+    <skos:definition xml:lang="en">Biodiversity and the state, condition, distribution, protection and restoration of species, habitats and ecosystems.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:topConceptOf rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems/species" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems/habitats_ecosystems" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems/protected_areas" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems/ecosystem_condition_restoration" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems/invasive_alien_species" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems/species">
+    <skos:prefLabel xml:lang="en">Species</skos:prefLabel>
+    <skos:notation>species</skos:notation>
+    <skos:definition xml:lang="en">Species occurrence, distribution, status, trends and conservation.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems/habitats_ecosystems">
+    <skos:prefLabel xml:lang="en">Habitats &amp; Ecosystems</skos:prefLabel>
+    <skos:notation>habitats_ecosystems</skos:notation>
+    <skos:definition xml:lang="en">Habitat and ecosystem extent, condition, distribution and characteristics.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems/protected_areas">
+    <skos:prefLabel xml:lang="en">Protected Areas</skos:prefLabel>
+    <skos:notation>protected_areas</skos:notation>
+    <skos:definition xml:lang="en">Spatial and descriptive information on protected and conserved areas and networks.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems/ecosystem_condition_restoration">
+    <skos:prefLabel xml:lang="en">Ecosystem Condition &amp; Restoration</skos:prefLabel>
+    <skos:notation>ecosystem_condition_restoration</skos:notation>
+    <skos:definition xml:lang="en">Condition, degradation, restoration needs, measures and outcomes for ecosystems.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems/invasive_alien_species">
+    <skos:prefLabel xml:lang="en">Invasive Alien Species</skos:prefLabel>
+    <skos:notation>invasive_alien_species</skos:notation>
+    <skos:definition xml:lang="en">Occurrence, spread, impacts and management of invasive alien species.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/biodiversity_ecosystems" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/land_agriculture_soil_forestry">
+    <skos:prefLabel xml:lang="en">Land, Agriculture, Soil and Forestry</skos:prefLabel>
+    <skos:notation>land_agriculture_soil_forestry</skos:notation>
+    <skos:definition xml:lang="en">Terrestrial land systems, their use, management and change, including land cover and land use, agriculture, soils, forests and forestry.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:topConceptOf rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/land_agriculture_soil_forestry/land_cover_land_use" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/land_agriculture_soil_forestry/soil" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/land_agriculture_soil_forestry/agriculture_food_systems" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/land_agriculture_soil_forestry/forests_forestry" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/land_agriculture_soil_forestry/land_cover_land_use">
+    <skos:prefLabel xml:lang="en">Land Cover &amp; Land Use</skos:prefLabel>
+    <skos:notation>land_cover_land_use</skos:notation>
+    <skos:definition xml:lang="en">Land cover, land use, land-use change and spatial land patterns.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/land_agriculture_soil_forestry" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/land_agriculture_soil_forestry/soil">
+    <skos:prefLabel xml:lang="en">Soil</skos:prefLabel>
+    <skos:notation>soil</skos:notation>
+    <skos:definition xml:lang="en">Soil properties, condition, degradation, contamination and functions.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/land_agriculture_soil_forestry" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/land_agriculture_soil_forestry/agriculture_food_systems">
+    <skos:prefLabel xml:lang="en">Agriculture &amp; Food Systems</skos:prefLabel>
+    <skos:notation>agriculture_food_systems</skos:notation>
+    <skos:definition xml:lang="en">Agricultural land, practices, production systems and environmental interactions of food systems.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/land_agriculture_soil_forestry" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/land_agriculture_soil_forestry/forests_forestry">
+    <skos:prefLabel xml:lang="en">Forests &amp; Forestry</skos:prefLabel>
+    <skos:notation>forests_forestry</skos:notation>
+    <skos:definition xml:lang="en">Forest extent, condition, resources, management and forestry-related environmental information.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/land_agriculture_soil_forestry" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management">
+    <skos:prefLabel xml:lang="en">Freshwater and Water Management</skos:prefLabel>
+    <skos:notation>freshwater_water_management</skos:notation>
+    <skos:definition xml:lang="en">Inland water resources, their quantity and quality, use, pressures and management, including rivers, lakes, groundwater, water services and water-related risks.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:topConceptOf rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management/water_bodies_ecological_status" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management/water_quality_pollution" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management/water_resources_hydrology" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management/water_use_supply_sanitation" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management/floods_droughts" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management/water_bodies_ecological_status">
+    <skos:prefLabel xml:lang="en">Water Bodies &amp; Ecological Status</skos:prefLabel>
+    <skos:notation>water_bodies_ecological_status</skos:notation>
+    <skos:definition xml:lang="en">Characteristics and environmental/ecological status of inland water bodies.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management/water_quality_pollution">
+    <skos:prefLabel xml:lang="en">Water Quality &amp; Pollution</skos:prefLabel>
+    <skos:notation>water_quality_pollution</skos:notation>
+    <skos:definition xml:lang="en">Chemical, biological and physical water quality and pollution pressures.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management/water_resources_hydrology">
+    <skos:prefLabel xml:lang="en">Water Resources &amp; Hydrology</skos:prefLabel>
+    <skos:notation>water_resources_hydrology</skos:notation>
+    <skos:definition xml:lang="en">Water quantity, hydrological conditions, availability, flows, levels and resource balance.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management/water_use_supply_sanitation">
+    <skos:prefLabel xml:lang="en">Water Use, Supply &amp; Sanitation</skos:prefLabel>
+    <skos:notation>water_use_supply_sanitation</skos:notation>
+    <skos:definition xml:lang="en">Abstraction, use, drinking-water supply, wastewater collection/treatment and reuse.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management/floods_droughts">
+    <skos:prefLabel xml:lang="en">Floods &amp; Droughts</skos:prefLabel>
+    <skos:notation>floods_droughts</skos:notation>
+    <skos:definition xml:lang="en">Flood and drought hazards, risk, impacts and related management information.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/freshwater_water_management" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries">
+    <skos:prefLabel xml:lang="en">Marine, Coastal and Fisheries</skos:prefLabel>
+    <skos:notation>marine_coastal_fisheries</skos:notation>
+    <skos:definition xml:lang="en">Marine and coastal environments, their condition, pressures, use and management, including fisheries-related environmental information.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:topConceptOf rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries/marine_ecosystems_biodiversity" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries/marine_pressures_pollution" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries/coastal_systems" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries/fisheries_aquaculture" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries/marine_use_management" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries/marine_ecosystems_biodiversity">
+    <skos:prefLabel xml:lang="en">Marine Ecosystems &amp; Biodiversity</skos:prefLabel>
+    <skos:notation>marine_ecosystems_biodiversity</skos:notation>
+    <skos:definition xml:lang="en">Marine habitats, species, ecosystem condition and biodiversity.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries/marine_pressures_pollution">
+    <skos:prefLabel xml:lang="en">Marine Pressures &amp; Pollution</skos:prefLabel>
+    <skos:notation>marine_pressures_pollution</skos:notation>
+    <skos:definition xml:lang="en">Pressures on marine environments including pollution, litter and other human pressures.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries/coastal_systems">
+    <skos:prefLabel xml:lang="en">Coastal Systems</skos:prefLabel>
+    <skos:notation>coastal_systems</skos:notation>
+    <skos:definition xml:lang="en">Coastal zones, habitats, processes, condition and land-sea interactions.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries/fisheries_aquaculture">
+    <skos:prefLabel xml:lang="en">Fisheries &amp; Aquaculture</skos:prefLabel>
+    <skos:notation>fisheries_aquaculture</skos:notation>
+    <skos:definition xml:lang="en">Fisheries, stocks, fishing pressure, aquaculture and related environmental interactions.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries/marine_use_management">
+    <skos:prefLabel xml:lang="en">Marine Use &amp; Management</skos:prefLabel>
+    <skos:notation>marine_use_management</skos:notation>
+    <skos:definition xml:lang="en">Marine spatial use, management areas and integrated management information.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/marine_coastal_fisheries" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health">
+    <skos:prefLabel xml:lang="en">Pollution and Environmental Health</skos:prefLabel>
+    <skos:notation>pollution_environmental_health</skos:notation>
+    <skos:definition xml:lang="en">Environmental pollution, exposure and associated impacts on human health and the environment, including air, noise, chemicals and environmental-health information.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:topConceptOf rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health/air_pollution" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health/environmental_noise" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health/chemicals" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health/environmental_exposure_health" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health/cross_media_pollution" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health/air_pollution">
+    <skos:prefLabel xml:lang="en">Air Pollution</skos:prefLabel>
+    <skos:notation>air_pollution</skos:notation>
+    <skos:definition xml:lang="en">Ambient air pollutants, concentrations, sources, exposure and air-pollution status.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health/environmental_noise">
+    <skos:prefLabel xml:lang="en">Environmental Noise</skos:prefLabel>
+    <skos:notation>environmental_noise</skos:notation>
+    <skos:definition xml:lang="en">Environmental noise sources, levels, exposure and impacts.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health/chemicals">
+    <skos:prefLabel xml:lang="en">Chemicals</skos:prefLabel>
+    <skos:notation>chemicals</skos:notation>
+    <skos:definition xml:lang="en">Chemicals of environmental concern, occurrence, use, releases, properties and risk-related information.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health/environmental_exposure_health">
+    <skos:prefLabel xml:lang="en">Environmental Exposure &amp; Health</skos:prefLabel>
+    <skos:notation>environmental_exposure_health</skos:notation>
+    <skos:definition xml:lang="en">Human exposure to environmental pressures and related health-relevant evidence.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health/cross_media_pollution">
+    <skos:prefLabel xml:lang="en">Cross-media Pollution</skos:prefLabel>
+    <skos:notation>cross_media_pollution</skos:notation>
+    <skos:definition xml:lang="en">Pollution information that is intentionally integrated across air, water, soil or other environmental media.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/pollution_environmental_health" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry">
+    <skos:prefLabel xml:lang="en">Circular Economy, Resources and Clean Industry</skos:prefLabel>
+    <skos:notation>circular_economy_resources_clean_industry</skos:notation>
+    <skos:definition xml:lang="en">Resource use, circularity, waste and the environmental performance and regulation of industrial activities, including industrial emissions, releases and clean-industry transition.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:topConceptOf rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry/resource_use_material_flows" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry/production_industry" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry/products_consumption" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry/waste_management_recycling" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry/secondary_materials_circularity" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry/resource_use_material_flows">
+    <skos:prefLabel xml:lang="en">Resource Use &amp; Material Flows</skos:prefLabel>
+    <skos:notation>resource_use_material_flows</skos:notation>
+    <skos:definition xml:lang="en">Extraction, use, stocks and flows of natural resources and materials.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry/production_industry">
+    <skos:prefLabel xml:lang="en">Production &amp; Industry</skos:prefLabel>
+    <skos:notation>production_industry</skos:notation>
+    <skos:definition xml:lang="en">Industrial activities, installations and production-related environmental information.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry/products_consumption">
+    <skos:prefLabel xml:lang="en">Products &amp; Consumption</skos:prefLabel>
+    <skos:notation>products_consumption</skos:notation>
+    <skos:definition xml:lang="en">Products, consumption patterns, product-related resource use and environmental characteristics.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry/waste_management_recycling">
+    <skos:prefLabel xml:lang="en">Waste Management &amp; Recycling</skos:prefLabel>
+    <skos:notation>waste_management_recycling</skos:notation>
+    <skos:definition xml:lang="en">Waste generation, collection, treatment, disposal, recycling and recovery.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry/secondary_materials_circularity">
+    <skos:prefLabel xml:lang="en">Secondary Materials &amp; Circularity</skos:prefLabel>
+    <skos:notation>secondary_materials_circularity</skos:notation>
+    <skos:definition xml:lang="en">Reuse, secondary raw materials, circular material use and measures of circularity.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/circular_economy_resources_clean_industry" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility">
+    <skos:prefLabel xml:lang="en">Transport and Mobility</skos:prefLabel>
+    <skos:notation>transport_mobility</skos:notation>
+    <skos:definition xml:lang="en">Passenger and freight transport and mobility across all modes, including transport activity, vehicles, infrastructure and the environmental characteristics of transport systems.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:topConceptOf rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility/road_transport" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility/rail_transport" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility/aviation" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility/maritime_inland_waterway_transport" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility/cross_modal_mobility_transport_systems" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility/road_transport">
+    <skos:prefLabel xml:lang="en">Road Transport</skos:prefLabel>
+    <skos:notation>road_transport</skos:notation>
+    <skos:definition xml:lang="en">Road-based passenger and freight transport, vehicles, fleets and road-transport activity.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility/rail_transport">
+    <skos:prefLabel xml:lang="en">Rail Transport</skos:prefLabel>
+    <skos:notation>rail_transport</skos:notation>
+    <skos:definition xml:lang="en">Passenger and freight rail transport and associated activity.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility/aviation">
+    <skos:prefLabel xml:lang="en">Aviation</skos:prefLabel>
+    <skos:notation>aviation</skos:notation>
+    <skos:definition xml:lang="en">Air transport activity and associated environmental data.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility/maritime_inland_waterway_transport">
+    <skos:prefLabel xml:lang="en">Maritime &amp; Inland Waterway Transport</skos:prefLabel>
+    <skos:notation>maritime_inland_waterway_transport</skos:notation>
+    <skos:definition xml:lang="en">Sea and inland-waterway transport activity and associated environmental data.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility/cross_modal_mobility_transport_systems">
+    <skos:prefLabel xml:lang="en">Cross-modal Mobility &amp; Transport Systems</skos:prefLabel>
+    <skos:notation>cross_modal_mobility_transport_systems</skos:notation>
+    <skos:definition xml:lang="en">Mobility demand, modal split, infrastructure and system-level information spanning multiple transport modes.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/transport_mobility" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/reference_data">
+    <skos:prefLabel xml:lang="en">Reference Data</skos:prefLabel>
+    <skos:notation>reference_data</skos:notation>
+    <skos:definition xml:lang="en">Cross-cutting reference datasets that are not tied to one environmental topic and that every business domain joins against, such as administrative and statistical boundaries (NUTS, LAU), basemaps, elevation models and reference grids.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:topConceptOf rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/reference_data/administrative_boundaries" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/reference_data/basemaps" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/reference_data/elevation" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/reference_data/reference_grids" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/reference_data/administrative_boundaries">
+    <skos:prefLabel xml:lang="en">Administrative Boundaries</skos:prefLabel>
+    <skos:notation>administrative_boundaries</skos:notation>
+    <skos:definition xml:lang="en">Administrative and statistical units and boundaries (NUTS, LAU, countries, functional urban areas, degree of urbanisation).</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/reference_data" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/reference_data/basemaps">
+    <skos:prefLabel xml:lang="en">Basemaps</skos:prefLabel>
+    <skos:notation>basemaps</skos:notation>
+    <skos:definition xml:lang="en">Background maps, map templates and image mosaics used for display and orientation.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/reference_data" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/reference_data/elevation">
+    <skos:prefLabel xml:lang="en">Elevation</skos:prefLabel>
+    <skos:notation>elevation</skos:notation>
+    <skos:definition xml:lang="en">Digital elevation and terrain models and their derivatives.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/reference_data" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/reference_data/reference_grids">
+    <skos:prefLabel xml:lang="en">Reference Grids</skos:prefLabel>
+    <skos:notation>reference_grids</skos:notation>
+    <skos:definition xml:lang="en">Standard spatial grids and gridded reference layers (EEA reference grid, EMEP grid, population grids).</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/reference_data" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/non_domain_datasets">
+    <skos:prefLabel xml:lang="en">Non-domain Datasets</skos:prefLabel>
+    <skos:notation>non_domain_datasets</skos:notation>
+    <skos:definition xml:lang="en">Datasets that are not about the environment but serve to run the Data Lakehouse itself: system tables, control lists and other administrative data.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:topConceptOf rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:narrower rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/non_domain_datasets/system" />
+  </skos:Concept>
+  <skos:Concept rdf:about="https://sdi.eea.europa.eu/registry/business-domains/non_domain_datasets/system">
+    <skos:prefLabel xml:lang="en">System</skos:prefLabel>
+    <skos:notation>system</skos:notation>
+    <skos:definition xml:lang="en">System tables, control lists and administrative views used to manage the Data Lakehouse.</skos:definition>
+    <skos:inScheme rdf:resource="https://sdi.eea.europa.eu/registry/business-domains" />
+    <skos:broader rdf:resource="https://sdi.eea.europa.eu/registry/business-domains/non_domain_datasets" />
+  </skos:Concept>
+</rdf:RDF>
+
