@@ -118,6 +118,13 @@
             showMaps: false,
             showMosaic: false,
             facetConfig: {
+              "th_eea-business-domains.default": {
+                "terms": {
+                  "field": "th_eea-business-domains_tree.default",
+                  "size": 85,
+                  "include": "[^^]+"
+                }
+              },
               "th_httpinspireeceuropaeutheme-theme_tree.key": {
                 terms: {
                   field: "th_httpinspireeceuropaeutheme-theme_tree.key",
@@ -372,6 +379,13 @@
                     type: "icon",
                     prefix: "fa fa-fw gn-icon-"
                   }
+                }
+              },
+              "th_eea-business-domains_tree.default": {
+                terms: {
+                  field: "th_eea-business-domains_tree.default",
+                  size: 85,
+                  order: { _key: "asc" }
                 }
               },
               "th_eea-topics.default": {
