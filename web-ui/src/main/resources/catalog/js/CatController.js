@@ -119,10 +119,10 @@
             showMosaic: false,
             facetConfig: {
               "th_eea-business-domains.default": {
-                "terms": {
-                  "field": "th_eea-business-domains_tree.default",
-                  "size": 85,
-                  "include": "[^^]+"
+                terms: {
+                  field: "th_eea-business-domains_tree.default",
+                  size: 85,
+                  include: "[^^]+"
                 }
               },
               "th_httpinspireeceuropaeutheme-theme_tree.key": {
