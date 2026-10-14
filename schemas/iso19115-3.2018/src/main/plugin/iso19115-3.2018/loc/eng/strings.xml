@@ -731,6 +731,19 @@
   <eea-dm-dates>Dates</eea-dm-dates>
   <eea-dm-creators>Creators</eea-dm-creators>
   <eea-dm-settings>Settings</eea-dm-settings>
+
+  <eea-add-eea-business-domains-keywords>Add EEA sub-domain and domain</eea-add-eea-business-domains-keywords>
+  <eea-business-domains-help>
+    <div class="row">
+      <div class="col-sm-2"/>
+      <div class="col-sm-10">
+        <div class="alert alert-info">
+          Select at least one business sub-domain and its parent domain from the list.
+        </div>
+      </div>
+    </div>
+  </eea-business-domains-help>
+
   <spatialResolution>Spatial resolution (scale denominator)</spatialResolution>
   <spatialDistance>Spatial resolution (distance)</spatialDistance>
   <conformity_desc>Tech spec title</conformity_desc>

@@ -48,6 +48,11 @@
   <xsl:template match="gmd:CI_Citation/gmd:identifier[*/gmd:code/*[not(ends-with(text(), '_s'))]]" mode="merge" priority="3"/>
 
 
+  <xsl:template match="mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA business domains and subdomains']" mode="merge" priority="3">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+
   <xsl:template match="*[name() = $elements/@name]" mode="merge" priority="2">
     <xsl:variable name="name"
                   select="name()"/>

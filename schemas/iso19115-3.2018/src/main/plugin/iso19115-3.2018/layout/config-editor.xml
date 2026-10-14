@@ -2950,6 +2950,10 @@
                    fieldset="false"
                    suggestion="true"
                    transformations="to-iso19115-3.2018-keyword-with-anchor"/>
+        <thesaurus key="external.theme.eea-business-domains"
+                   fieldset="false"
+                   suggestion="true"
+                   transformations="to-iso19115-3.2018-keyword-with-anchor"/>
       </thesaurusList>
       <sidePanel>
         <directive data-gn-associated-resources-panel="gnCurrentEdit.metadata"
@@ -2994,6 +2998,50 @@
           <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:abstract"/>
           <text ref="eea-abstract-help"/>
 
+          <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA business domains and subdomains']"/>
+          <action type="add"
+                  btnLabel="eea-add-eea-business-domains-keywords"
+                  if="count(mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA business domains and subdomains']) = 0"
+                  or="descriptiveKeywords"
+                  in="/mdb:MD_Metadata/mdb:identificationInfo/*">
+            <template>
+              <snippet>
+                <mri:descriptiveKeywords>
+                  <mri:MD_Keywords>
+                    <mri:type>
+                      <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </mri:type>
+                    <mri:thesaurusName>
+                      <cit:CI_Citation>
+                        <cit:title>
+                          <gco:CharacterString>EEA business domains and subdomains</gco:CharacterString>
+                        </cit:title>
+                        <cit:date>
+                          <cit:CI_Date>
+                            <cit:date>
+                              <gco:Date>2026-10-13</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                            </cit:dateType>
+                          </cit:CI_Date>
+                        </cit:date>
+                        <cit:identifier>
+                          <mcc:MD_Identifier>
+                            <mcc:code>
+                              <gcx:Anchor xlink:href="https://sdi.eea.europa.eu/catalogue/srv/api/registries/vocabularies/external.theme.eea-business-domains">geonetwork.thesaurus.external.theme.eea-business-domains</gcx:Anchor>
+                            </mcc:code>
+                          </mcc:MD_Identifier>
+                        </cit:identifier>
+                      </cit:CI_Citation>
+                    </mri:thesaurusName>
+                  </mri:MD_Keywords>
+                </mri:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+          <text ref="eea-business-domains-help"/>
         </section>
 
 

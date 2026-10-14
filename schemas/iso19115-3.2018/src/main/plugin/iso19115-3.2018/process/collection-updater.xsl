@@ -210,10 +210,15 @@
         <xsl:with-param name="name" select="'mri:graphicOverview'"/>
       </xsl:call-template>
       <xsl:apply-templates select="mri:resourceFormat" mode="expand"/>
+
       <xsl:call-template name="copyOrAddElement">
-        <xsl:with-param name="elements" select="mri:descriptiveKeywords"/>
+        <xsl:with-param name="elements" select="mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() != 'EEA business domains and subdomains']"/>
         <xsl:with-param name="name" select="'mri:descriptiveKeywords'"/>
       </xsl:call-template>
+
+      <!-- Preserve EEA business domains and subdomains in series-->
+      <xsl:copy-of select="mri:descriptiveKeywords[*/mri:thesaurusName/*/cit:title/*/text() = 'EEA business domains and subdomains']"/>
+
       <xsl:apply-templates select="mri:resourceSpecificUsage" mode="expand"/>
       <xsl:apply-templates select="mri:resourceConstraints" mode="expand"/>
 
