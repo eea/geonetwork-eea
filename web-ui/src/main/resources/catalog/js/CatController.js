@@ -115,8 +115,16 @@
             appUrl: "../../{{node}}/{{lang}}/catalog.search#/home",
             showSearch: true,
             showSocialBarInFooter: true,
-            showMaps: false,
             showMosaic: false,
+            // Random mosaic: records matching this query (used when mosaicRecords is empty)
+            mosaicQuery: "-cl_status.key:obsolete",
+            // Curated mosaic: list of {uuid, link}. An empty link opens the record page.
+            // Only links inside the application (starting with #/) are allowed.
+            mosaicRecords: [],
+            // Mosaic layout: "gallery" (full width, mixed sizes) or "grid" (same size tiles, max 4 per row)
+            mosaicLayout: "gallery",
+            showMaps: false,
+            showWelcomeMessage: false,
             facetConfig: {
               "th_eea-business-domains.default": {
                 terms: {
@@ -811,6 +819,11 @@
             disabledTools: {
               processes: false,
               addLayers: false,
+              addLayersWms: false,
+              addLayersWmts: false,
+              addLayersWfs: false,
+              addLayersEsriRest: false,
+              addLayersKml: false,
               projectionSwitcher: false,
               layers: false,
               legend: false,
@@ -1252,8 +1265,12 @@
           },
           authentication: {
             enabled: true,
-            signinUrl: "../../api/user/signin",
+            signinUrl: "../../{{node}}/{{lang}}/catalog.signin",
+            signinAPI: "../../api/user/signin",
             signoutUrl: "../../api/user/signout"
+            // GN5 configuration
+            // signinAPI: "../../api/user/signin",
+            // signoutUrl: "../../api/user/signout"
           },
           page: {
             enabled: true,
@@ -1310,6 +1327,7 @@
           "switcherProjectionList",
           "cookieWarning",
           "facetConfig",
+          "mosaicRecords",
           "searchOptions",
           "graticuleOgcService",
           "geocoder",
