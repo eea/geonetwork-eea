@@ -25,17 +25,22 @@
 package org.fao.geonet.api.records.attachments;
 
 import jeeves.server.context.ServiceContext;
+import org.apache.commons.io.IOUtils;
 import org.apache.opendal.Entry;
 import org.apache.opendal.ListOptions;
 import org.apache.opendal.Metadata;
 import org.apache.opendal.OpenDALException;
 import org.apache.opendal.Operator;
+import org.apache.opendal.ReadOptions;
+import org.apache.opendal.WriteOptions;
 import org.fao.geonet.api.exception.NotAllowedException;
 import org.fao.geonet.api.exception.ResourceNotFoundException;
 import org.fao.geonet.domain.MetadataResource;
 import org.fao.geonet.domain.MetadataResourceContainer;
 import org.fao.geonet.domain.MetadataResourceVisibility;
+import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.setting.SettingManager;
+import org.fao.geonet.lib.Lib;
 import org.fao.geonet.resources.OpenDALConfiguration;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.utils.Log;
@@ -43,9 +48,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
@@ -64,15 +69,22 @@ import java.util.Map;
  */
 public class OpenDALStore extends AbstractStore {
 
+    // Object stores need multipart parts of at least 5 MiB (S3), so buffer uploads in 8 MiB chunks
+    // instead of relying on the 16 KB writes coming from OperatorOutputStream.
+    private static final WriteOptions UPLOAD_OPTIONS = WriteOptions.builder().chunk(8L * 1024 * 1024).build();
+
     @Autowired
     private OpenDALConfiguration openDALConfiguration;
 
     @Autowired
     private SettingManager settingManager;
 
+    @Autowired
+    private GeonetworkDataDirectory dataDirectory;
+
     @Override
     public List<MetadataResource> getResources(ServiceContext context, String metadataUuid, MetadataResourceVisibility visibility, String filter, Boolean approved, boolean includeAdditionalIndexedProperties) throws Exception {
-        final int metadataId = canEdit(context, metadataUuid, approved);
+        final int metadataId = canDownload(context, metadataUuid, visibility, approved);
         final String metadataDirPrefix = getMetadataDir(metadataId) + "/";
 
         List<MetadataResource> resourceList = new ArrayList<>();
@@ -81,50 +93,46 @@ public class OpenDALStore extends AbstractStore {
         }
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:" + filter);
 
+        // A missing folder lists as empty, so any exception here is a real storage error and is not swallowed
         Operator op = openDALConfiguration.getOperator();
-        try {
-            // A single recursive listing under the whole metadata folder returns both legacy
-            // (<visibility>/...) and flat entries together, at any subfolder depth; classify each
-            // by which layout it's in rather than issuing a separate request per layout.
-            List<Entry> entries = op.list(metadataDirPrefix, ListOptions.builder().recursive(true).build());
-            Map<String, MetadataResourceVisibility> trackedAccess = loadTrackedAccessByFilename(metadataId);
-            for (Entry entry : entries) {
-                String entryPath = entry.getPath();
-                if (entryPath.endsWith("/")) {
-                    continue;
-                }
-                // Keep the whole path relative to the metadata folder (not just the last
-                // segment), so a subfolder resource's "filename" preserves its nested path.
-                String relativeKey = entryPath.startsWith(metadataDirPrefix)
-                    ? entryPath.substring(metadataDirPrefix.length()) : getFilenameFromPath(entryPath);
-
-                final MetadataResourceVisibility legacyVisibility = legacyVisibilityOf(relativeKey);
-                final String filename;
-                final MetadataResourceVisibility resourceVisibility;
-                if (legacyVisibility != null) {
-                    // Legacy layout: membership under the old <visibility>/ prefix is the visibility.
-                    filename = relativeKey.substring(legacyVisibility.toString().length() + 1);
-                    resourceVisibility = legacyVisibility;
-                } else {
-                    // Flat layout: only a tracked-access match counts, since the key alone no
-                    // longer implies visibility.
-                    filename = relativeKey;
-                    resourceVisibility = trackedAccess.get(filename);
-                }
-                if (resourceVisibility != visibility) {
-                    continue;
-                }
-
-                Path fileNamePath = Paths.get(filename).getFileName();
-                if (matcher.matches(fileNamePath)) {
-                    Metadata metadata = op.stat(entryPath);
-                    resourceList.add(createResourceDescription(metadataUuid, visibility, filename, metadata.getContentLength(),
-                            new Date(metadata.getLastModified().toEpochMilli()), metadataId, approved));
-                }
+        // A single recursive listing under the whole metadata folder returns both legacy
+        // (<visibility>/...) and flat entries together, at any subfolder depth; classify each
+        // by which layout it's in rather than issuing a separate request per layout.
+        List<Entry> entries = op.list(metadataDirPrefix, ListOptions.builder().recursive(true).build());
+        Map<String, MetadataResourceVisibility> trackedAccess = loadTrackedAccessByFilename(metadataId);
+        for (Entry entry : entries) {
+            String entryPath = entry.getPath();
+            if (entryPath.endsWith("/")) {
+                continue;
             }
-        } catch (OpenDALException e) {
-            // The metadata folder doesn't exist yet on this backend - nothing to list. (Whether
-            // listing a missing prefix throws or returns empty varies by OpenDAL service.)
+            // Keep the whole path relative to the metadata folder (not just the last
+            // segment), so a subfolder resource's "filename" preserves its nested path.
+            String relativeKey = entryPath.startsWith(metadataDirPrefix)
+                ? entryPath.substring(metadataDirPrefix.length()) : getFilenameFromPath(entryPath);
+
+            final MetadataResourceVisibility legacyVisibility = legacyVisibilityOf(relativeKey);
+            final String filename;
+            final MetadataResourceVisibility resourceVisibility;
+            if (legacyVisibility != null) {
+                // Legacy layout: membership under the old <visibility>/ prefix is the visibility.
+                filename = relativeKey.substring(legacyVisibility.toString().length() + 1);
+                resourceVisibility = legacyVisibility;
+            } else {
+                // Flat layout: only a tracked-access match counts, since the key alone no
+                // longer implies visibility.
+                filename = relativeKey;
+                resourceVisibility = trackedAccess.get(filename);
+            }
+            if (resourceVisibility != visibility) {
+                continue;
+            }
+
+            Path fileNamePath = Paths.get(filename).getFileName();
+            if (matcher.matches(fileNamePath)) {
+                Metadata metadata = op.stat(entryPath);
+                resourceList.add(createResourceDescription(metadataUuid, visibility, filename, metadata.getContentLength(),
+                        new Date(metadata.getLastModified().toEpochMilli()), metadataId, approved));
+            }
         }
 
         resourceList.sort(MetadataResourceVisibility.sortByFileName);
@@ -166,15 +174,25 @@ public class OpenDALStore extends AbstractStore {
     @Override
     public ResourceHolder getResource(ServiceContext context, String metadataUuid, MetadataResourceVisibility visibility, String resourceId, Boolean approved) throws Exception {
         int metadataId = canDownload(context, metadataUuid, visibility, approved);
+        return openResource(metadataUuid, metadataId, visibility, resourceId, approved, null);
+    }
+
+    /**
+     * Open a stream on the resource, or on the given range of it, without loading it into memory.
+     */
+    private ResourceHolder openResource(String metadataUuid, int metadataId, MetadataResourceVisibility visibility, String resourceId,
+                                        Boolean approved, ReadOptions readOptions) throws Exception {
         String key = resolveExistingKey(metadataUuid, metadataId, visibility, getFilename(metadataUuid, resourceId), approved);
         if (key == null) {
             throw resourceNotFound(metadataUuid, resourceId);
         }
         Operator op = openDALConfiguration.getOperator();
         try {
+            // Stat first: reading a missing file fails with code Unexpected instead of NotFound
             Metadata metadata = op.stat(key);
-            byte[] data = op.read(key);
-            return new OpenDALResourceHolder(data, createResourceDescription(metadataUuid, visibility, resourceId,
+            InputStream is = readOptions == null ? op.createInputStream(key) : op.createInputStream(key, readOptions);
+            // The metadata keeps the full object length, like S3Store, not the length of the range
+            return new OpenDALResourceHolder(is, createResourceDescription(metadataUuid, visibility, resourceId,
                     metadata.getContentLength(), new Date(metadata.getLastModified().toEpochMilli()), metadataId, approved));
         } catch (OpenDALException e) {
             throw notFoundOr(e, metadataUuid, resourceId);
@@ -201,37 +219,29 @@ public class OpenDALStore extends AbstractStore {
     @Override
     public String getResourcePresignedUrl(ServiceContext context, String metadataUuid, MetadataResourceVisibility visibility, String resourceId, Boolean approved) throws Exception {
         int metadataId = canDownload(context, metadataUuid, visibility, approved);
-        return openDALConfiguration.presignRead(getPath(metadataUuid, metadataId, visibility, resourceId));
+        String key = resolveExistingKey(metadataUuid, metadataId, visibility, getFilename(metadataUuid, resourceId), approved);
+        if (key == null) {
+            throw resourceNotFound(metadataUuid, resourceId);
+        }
+        return openDALConfiguration.presignRead(key);
     }
 
     @Override
     public ResourceHolder getResourceWithRange(ServiceContext context, String metadataUuid, MetadataResourceVisibility visibility, String resourceId, Boolean approved, long start, long end) throws Exception {
         int metadataId = canDownload(context, metadataUuid, visibility, approved);
-        String key = resolveExistingKey(metadataUuid, metadataId, visibility, getFilename(metadataUuid, resourceId), approved);
-        if (key == null) {
-            throw resourceNotFound(metadataUuid, resourceId);
-        }
-        Operator op = openDALConfiguration.getOperator();
-        try {
-            Metadata metadata = op.stat(key);
-            // OpenDAL's Java binding takes (offset, length), not (start, end) - end here is
-            // inclusive (matching this method's own contract), so the length is end - start + 1.
-            byte[] rangeData = op.read(key, start, end - start + 1);
-            return new OpenDALResourceHolder(rangeData, createResourceDescription(metadataUuid, visibility, resourceId,
-                    metadata.getContentLength(), new Date(metadata.getLastModified().toEpochMilli()), metadataId, approved));
-        } catch (OpenDALException e) {
-            throw notFoundOr(e, metadataUuid, resourceId);
-        }
+        return openResource(metadataUuid, metadataId, visibility, resourceId, approved,
+                ReadOptions.builder().offset(start).length(end - start + 1).build());
     }
 
     @Override
     public MetadataResource putResource(ServiceContext context, String metadataUuid, String filename, InputStream is, Date changeDate, MetadataResourceVisibility visibility, Boolean approved) throws Exception {
-        int metadataId = canEdit(context, metadataUuid, visibility, approved);
+        int metadataId = canEdit(context, metadataUuid, approved);
         String key = getFlatKey(metadataUuid, metadataId, filename);
 
         Operator op = openDALConfiguration.getOperator();
-        byte[] data = org.apache.commons.io.IOUtils.toByteArray(is);
-        op.write(key, data);
+        try (OutputStream os = op.createOutputStream(key, UPLOAD_OPTIONS)) {
+            IOUtils.copy(is, os);
+        }
 
         Metadata metadata = op.stat(key);
         return createResourceDescription(metadataUuid, visibility, filename,
@@ -352,9 +362,8 @@ public class OpenDALStore extends AbstractStore {
     @Override
     public String delResources(ServiceContext context, int metadataId) throws Exception {
         String path = getMetadataDir(metadataId) + "/";
-        Operator op = openDALConfiguration.getOperator();
         try {
-            deleteRecursive(op, path);
+            openDALConfiguration.getOperator().removeAll(path);
             Log.info(Geonet.RESOURCES, String.format("Metadata '%d' directory removed.", metadataId));
             return String.format("Metadata '%d' directory removed.", metadataId);
         } catch (OpenDALException e) {
@@ -362,23 +371,6 @@ public class OpenDALStore extends AbstractStore {
                 String.format("Unable to remove metadata '%d' directory '%s'. %s", metadataId, path, e.getMessage()));
             return String.format("Unable to remove metadata '%d' directory '%s'.", metadataId, path);
         }
-    }
-
-    private void deleteRecursive(Operator op, String path) {
-        // list() always includes an entry for "path" itself alongside its real children -
-        // skip it here, or recursing into it would call this method with the same path forever.
-        List<Entry> entries = op.list(path);
-        for (Entry entry : entries) {
-            if (entry.getPath().equals(path)) {
-                continue;
-            }
-            if (entry.getPath().endsWith("/")) {
-                deleteRecursive(op, entry.getPath());
-            } else {
-                op.delete(entry.getPath());
-            }
-        }
-        op.delete(path);
     }
 
     @Override
@@ -422,7 +414,8 @@ public class OpenDALStore extends AbstractStore {
 
     @Override
     public ResourceHolder getResourceInternal(String metadataUuid, MetadataResourceVisibility visibility, String resourceId, Boolean approved) throws Exception {
-        return getResource(null, metadataUuid, visibility, resourceId, approved);
+        int metadataId = getAndCheckMetadataId(metadataUuid, approved);
+        return openResource(metadataUuid, metadataId, visibility, resourceId, approved, null);
     }
 
     @Override
@@ -516,21 +509,35 @@ public class OpenDALStore extends AbstractStore {
     }
 
     protected String getMetadataDir(int metadataId) {
-        return "metadata/" + metadataId;
+        Path metadataFullDir = Lib.resource.getMetadataDir(dataDirectory, metadataId);
+        Path systemDir = dataDirectory.getSystemDataDir();
+        Path metadataDir;
+        // Same key layout as JCloudStore: relative to the system dir, else to the filesystem root.
+        if (metadataFullDir.startsWith(systemDir)) {
+            metadataDir = systemDir.relativize(metadataFullDir);
+        } else if (metadataFullDir.isAbsolute()) {
+            metadataDir = metadataFullDir.getRoot().relativize(metadataFullDir);
+        } else {
+            metadataDir = metadataFullDir;
+        }
+        // On Windows the separator is "\", object store keys need "/"
+        return metadataDir.toString().replace(metadataDir.getFileSystem().getSeparator(), "/");
     }
 
     public static class OpenDALResourceHolder implements ResourceHolder {
-        private final byte[] data;
+        private final InputStream inputStream;
+        private final InputStreamResource resource;
         private final MetadataResource metadata;
 
-        public OpenDALResourceHolder(byte[] data, MetadataResource metadata) {
-            this.data = data;
+        public OpenDALResourceHolder(InputStream inputStream, MetadataResource metadata) {
+            this.inputStream = inputStream;
+            this.resource = new InputStreamResource(inputStream);
             this.metadata = metadata;
         }
 
         @Override
         public Resource getResource() {
-            return new InputStreamResource(new ByteArrayInputStream(data));
+            return resource;
         }
 
         @Override
@@ -540,7 +547,7 @@ public class OpenDALStore extends AbstractStore {
 
         @Override
         public void close() throws IOException {
-            // Nothing to do
+            inputStream.close();
         }
     }
 }
