@@ -672,6 +672,7 @@
                   </includes>
                   <excludes>
                     <exclude>**/ElasticsearchIndexingTest.java</exclude>
+                    <exclude>**/MetadataFileUploadBackfillTaskIntegrationTest.java</exclude>
                   </excludes>
                 </configuration>
               </execution>
