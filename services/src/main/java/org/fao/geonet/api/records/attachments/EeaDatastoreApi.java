@@ -55,9 +55,9 @@ public class EeaDatastoreApi {
         description = "Redirect to the attachments endpoint. Intended to be called directly from the browser in a tab.")
     @GetMapping(value = "/datastore")
     @ResponseBody
-    public RedirectView checkAndProxyDatastore(@PathVariable String uuid, HttpServletRequest request) throws Exception {
+    public RedirectView checkAndProxyDatastore(@PathVariable String uuid, @PathVariable String portal, HttpServletRequest request) throws Exception {
         // Redirect to attachments
-        return new RedirectView("/srv/api/records/" + uuid + "/attachments");
+        return new RedirectView(request.getContextPath() + "/" + portal + "/api/records/" + uuid + "/attachments");
 
     }
 }
