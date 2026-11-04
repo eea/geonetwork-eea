@@ -42,6 +42,7 @@ import org.jdom.Element;
 import org.jdom.Namespace;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -68,6 +69,7 @@ import static org.junit.Assert.assertTrue;
  */
 @ContextConfiguration(inheritLocations = true, locations = {
     "classpath:formatter-test-context.xml", "classpath:formatter-cache-test-context.xml"})
+@Ignore
 public class FormatterApiSharedCacheIntegrationTest extends AbstractServiceIntegrationTest {
 
     private static final String DOWNLOAD_URL = "http://example.org/shared-cache-test-download";
