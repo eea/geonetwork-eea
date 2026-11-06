@@ -26,7 +26,6 @@ package org.fao.geonet.api.records.attachments;
 
 import jeeves.server.context.ServiceContext;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.opendal.Capability;
 import org.apache.opendal.Entry;
 import org.apache.opendal.ListOptions;
@@ -35,7 +34,6 @@ import org.apache.opendal.OpenDALException;
 import org.apache.opendal.Operator;
 import org.apache.opendal.ReadOptions;
 import org.apache.opendal.WriteOptions;
-import org.fao.geonet.api.exception.InputStreamLimitExceededException;
 import org.fao.geonet.api.exception.NotAllowedException;
 import org.fao.geonet.api.exception.ResourceAlreadyExistException;
 import org.fao.geonet.api.exception.ResourceNotFoundException;
@@ -294,14 +292,7 @@ public class OpenDALStore extends AbstractStore {
                                              @Nullable String folder, MetadataResourceVisibility visibility,
                                              Boolean approved, ContentRange range) throws Exception {
         sessions.abortIdle();
-        if (StringUtils.contains(file.getOriginalFilename(), ';')) {
-            throw new NotAllowedException(String.format(
-                "Uploaded resource '%s' contains forbidden character ; for metadata '%s'.", file.getOriginalFilename(), metadataUuid));
-        }
-        if (range.getTotal() > maxUploadSize) {
-            throw new InputStreamLimitExceededException(maxUploadSize, range.getTotal());
-        }
-        String filename = StringUtils.isNotEmpty(folder) ? folder + "/" + file.getOriginalFilename() : file.getOriginalFilename();
+        String filename = checkChunkAndGetFilename(file, folder, metadataUuid, range);
         int metadataId = canEdit(context, metadataUuid, approved);
         String key = getFlatKey(metadataUuid, metadataId, filename);
         int userId = context.getUserSession().getUserIdAsInt();

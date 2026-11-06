@@ -50,6 +50,8 @@ import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Nullable;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -361,6 +363,24 @@ public abstract class AbstractStore implements Store {
         try (LimitedInputStream is = new LimitedInputStream(file.getInputStream(), maxUploadSize, fileSize)) {
             return putResource(context, metadataUuid, filename, is, null, visibility, approved);
         }
+    }
+
+    /**
+     * Checks a chunk of a chunked upload the same way {@link #putResource(ServiceContext, String, MultipartFile, String,
+     * MetadataResourceVisibility, Boolean)} checks a whole file, but against the total size of the upload.
+     *
+     * @return the resource filename, prefixed with {@code folder} when there is one.
+     */
+    protected String checkChunkAndGetFilename(MultipartFile file, @Nullable String folder, String metadataUuid,
+                                              ContentRange range) throws Exception {
+        if (org.apache.commons.lang3.StringUtils.contains(file.getOriginalFilename(), ';')) {
+            throw new NotAllowedException(String.format(
+                "Uploaded resource '%s' contains forbidden character ; for metadata '%s'.", file.getOriginalFilename(), metadataUuid));
+        }
+        if (range.getTotal() > maxUploadSize) {
+            throw new InputStreamLimitExceededException(maxUploadSize, range.getTotal());
+        }
+        return StringUtils.isNotEmpty(folder) ? folder + "/" + file.getOriginalFilename() : file.getOriginalFilename();
     }
 
     @Override
