@@ -206,9 +206,12 @@
 
             var uploadFile = function () {
               scope.queue = [];
-              var maxChunkSize =
+              // The setting may have been saved as a string; jQuery File Upload needs a number.
+              var maxChunkSize = parseInt(
                 gnGlobalSettings.gnCfg.mods.editor &&
-                gnGlobalSettings.gnCfg.mods.editor.uploadMaxChunkSize;
+                  gnGlobalSettings.gnCfg.mods.editor.uploadMaxChunkSize,
+                10
+              );
               var chunkOptions =
                 maxChunkSize > 0
                   ? {
