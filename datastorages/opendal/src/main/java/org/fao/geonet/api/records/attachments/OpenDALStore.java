@@ -26,6 +26,7 @@ package org.fao.geonet.api.records.attachments;
 
 import jeeves.server.context.ServiceContext;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.opendal.Capability;
 import org.apache.opendal.Entry;
 import org.apache.opendal.ListOptions;
@@ -34,7 +35,9 @@ import org.apache.opendal.OpenDALException;
 import org.apache.opendal.Operator;
 import org.apache.opendal.ReadOptions;
 import org.apache.opendal.WriteOptions;
+import org.fao.geonet.api.exception.InputStreamLimitExceededException;
 import org.fao.geonet.api.exception.NotAllowedException;
+import org.fao.geonet.api.exception.ResourceAlreadyExistException;
 import org.fao.geonet.api.exception.ResourceNotFoundException;
 import org.fao.geonet.domain.MetadataResource;
 import org.fao.geonet.domain.MetadataResourceContainer;
@@ -48,6 +51,9 @@ import org.fao.geonet.utils.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Nullable;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -88,6 +94,26 @@ public class OpenDALStore extends AbstractStore {
 
     @Autowired
     private GeonetworkDataDirectory dataDirectory;
+
+    // Package-private and non-final so tests can swap in an instance with a controllable clock.
+    ChunkedUploadSessions sessions = new ChunkedUploadSessions(30 * 60 * 1000L, System::currentTimeMillis, this::abortUpload);
+
+    /**
+     * Aborts an idle or broken chunked upload. On S3, {@code close()} completes the multipart
+     * upload, so closing on top of an object written outside GeoNetwork would overwrite it: in that
+     * case leave the stream alone (the incomplete multipart upload is left to the bucket lifecycle
+     * rule). Otherwise close it and delete what it wrote.
+     */
+    void abortUpload(String key, OutputStream out) {
+        Operator op = openDALConfiguration.getOperator();
+        if (statExists(op, key)) {
+            Log.warning(Geonet.RESOURCES, String.format(
+                "Chunked upload '%s' aborted, but an object already exists at that key. Leaving it untouched.", key));
+            return;
+        }
+        IOUtils.closeQuietly(out);
+        op.delete(key);
+    }
 
     @Override
     public List<MetadataResource> getResources(ServiceContext context, String metadataUuid, MetadataResourceVisibility visibility, String filter, Boolean approved, boolean includeAdditionalIndexedProperties) throws Exception {
@@ -246,9 +272,70 @@ public class OpenDALStore extends AbstractStore {
         String key = getFlatKey(metadataUuid, metadataId, filename);
 
         Operator op = openDALConfiguration.getOperator();
+        if (sessions.isReserved(key)) {
+            throw new ResourceAlreadyExistException(String.format(
+                "A chunked upload of resource '%s' is in progress for metadata '%d'.", filename, metadataId));
+        }
+        if (!approved && statExists(op, key)) {
+            throw new ResourceAlreadyExistException(String.format(
+                "A resource with name '%s' and status '%s' already exists for metadata '%d'.", filename, visibility, metadataId));
+        }
         try (OutputStream os = op.createOutputStream(key, buildUploadOptions(op, metadataUuid, metadataId, filename))) {
             IOUtils.copy(is, os);
         }
+
+        Metadata metadata = op.stat(key);
+        return createResourceDescription(metadataUuid, visibility, filename,
+                metadata.getContentLength(), new Date(metadata.getLastModified().toEpochMilli()), metadataId, approved);
+    }
+
+    @Override
+    public MetadataResource putResourceChunk(ServiceContext context, String metadataUuid, MultipartFile file,
+                                             @Nullable String folder, MetadataResourceVisibility visibility,
+                                             Boolean approved, ContentRange range) throws Exception {
+        sessions.abortIdle();
+        if (StringUtils.contains(file.getOriginalFilename(), ';')) {
+            throw new NotAllowedException(String.format(
+                "Uploaded resource '%s' contains forbidden character ; for metadata '%s'.", file.getOriginalFilename(), metadataUuid));
+        }
+        if (range.getTotal() > maxUploadSize) {
+            throw new InputStreamLimitExceededException(maxUploadSize, range.getTotal());
+        }
+        String filename = StringUtils.isNotEmpty(folder) ? folder + "/" + file.getOriginalFilename() : file.getOriginalFilename();
+        int metadataId = canEdit(context, metadataUuid, approved);
+        String key = getFlatKey(metadataUuid, metadataId, filename);
+        int userId = context.getUserSession().getUserIdAsInt();
+
+        Operator op = openDALConfiguration.getOperator();
+        if (range.isFirst()) {
+            if (statExists(op, key)) {
+                throw new ResourceAlreadyExistException(String.format(
+                    "A resource with name '%s' already exists for metadata '%d'.", filename, metadataId));
+            }
+            sessions.open(key, userId, range.getTotal(),
+                () -> op.createOutputStream(key, buildUploadOptions(op, metadataUuid, metadataId, filename)));
+        }
+
+        if (!sessions.write(key, userId, range, file.getSize(), file.getInputStream())) {
+            return null;
+        }
+
+        if (statExists(op, key)) {
+            // Someone wrote the object outside GeoNetwork during the upload. Do not close the stream:
+            // on S3 that completes the multipart upload and overwrites the object. The incomplete
+            // multipart upload is left to the bucket lifecycle rule.
+            sessions.drop(key);
+            Log.warning(Geonet.RESOURCES, String.format(
+                "Chunked upload '%s' not completed: an object appeared at that key during the upload.", key));
+            throw new ResourceAlreadyExistException(String.format(
+                "A resource with name '%s' already exists for metadata '%d'.", filename, metadataId));
+        }
+        OutputStream out = sessions.complete(key);
+        if (out == null) {
+            // The session went away in between, eg. a concurrent abort.
+            throw new ChunkOffsetMismatchException(0);
+        }
+        out.close();
 
         Metadata metadata = op.stat(key);
         return createResourceDescription(metadataUuid, visibility, filename,
