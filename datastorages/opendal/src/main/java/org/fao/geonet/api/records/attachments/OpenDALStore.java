@@ -324,7 +324,15 @@ public class OpenDALStore extends AbstractStore {
             return null;
         }
 
-        if (statExists(op, key)) {
+        boolean appeared;
+        try {
+            appeared = statExists(op, key);
+        } catch (RuntimeException e) {
+            // Otherwise the session stays complete and every retry gets 409 with nothing left to send.
+            sessions.abort(key, session);
+            throw e;
+        }
+        if (appeared) {
             // Someone wrote the object outside GeoNetwork during the upload. Do not close the stream:
             // on S3 that completes the multipart upload and overwrites the object. The incomplete
             // multipart upload is left to the bucket lifecycle rule.
@@ -336,7 +344,16 @@ public class OpenDALStore extends AbstractStore {
         }
         // Fails if the session was aborted or replaced by a new upload in between.
         OutputStream out = sessions.complete(key, session);
-        out.close();
+        try {
+            out.close();
+        } catch (IOException | RuntimeException e) {
+            try {
+                abortUpload(key, out);
+            } catch (RuntimeException abortError) {
+                e.addSuppressed(abortError);
+            }
+            throw e;
+        }
 
         Metadata metadata = op.stat(key);
         return createResourceDescription(metadataUuid, visibility, filename,

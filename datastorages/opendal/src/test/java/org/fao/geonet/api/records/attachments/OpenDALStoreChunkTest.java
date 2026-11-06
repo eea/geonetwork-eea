@@ -26,6 +26,7 @@ package org.fao.geonet.api.records.attachments;
 
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
+import org.apache.opendal.OpenDALException;
 import org.apache.opendal.Operator;
 import org.fao.geonet.api.exception.InputStreamLimitExceededException;
 import org.fao.geonet.api.exception.NotAllowedException;
@@ -46,8 +47,11 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.PosixFilePermission;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -208,6 +212,29 @@ public class OpenDALStoreChunkTest {
         }
         assertEquals("direct", read("metadata/42/f.bin"));
         assertFalse(store.sessions.isReserved("metadata/42/f.bin"));
+    }
+
+    @Test
+    public void failureAfterLastWriteAbortsSession() throws Exception {
+        assertNull(chunk(null, "f.bin", "bytes 0-3/6", "abcd"));
+        // An unreadable root makes the stat before completion fail with something other than NotFound.
+        Set<PosixFilePermission> perms = Files.getPosixFilePermissions(root);
+        Files.setPosixFilePermissions(root, EnumSet.noneOf(PosixFilePermission.class));
+        try {
+            chunk(null, "f.bin", "bytes 4-5/6", "ef");
+            fail("expected the stat to fail");
+        } catch (OpenDALException expected) {
+            // ok
+        } finally {
+            Files.setPosixFilePermissions(root, perms);
+        }
+        assertFalse(store.sessions.isReserved("metadata/42/f.bin"));
+        try {
+            chunk(null, "f.bin", "bytes 4-5/6", "ef");
+            fail("expected ChunkOffsetMismatchException");
+        } catch (ChunkOffsetMismatchException e) {
+            assertEquals(0, e.getBytesWritten());
+        }
     }
 
     @Test(expected = ResourceAlreadyExistException.class)
