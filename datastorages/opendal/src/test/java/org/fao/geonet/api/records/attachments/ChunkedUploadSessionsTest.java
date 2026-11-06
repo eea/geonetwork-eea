@@ -131,6 +131,31 @@ public class ChunkedUploadSessionsTest {
     }
 
     @Test
+    public void uncheckedWriteErrorAbortsSession() throws Exception {
+        OutputStream failing = new OutputStream() {
+            @Override
+            public void write(int b) {
+                throw new IllegalStateException("native write failed");
+            }
+        };
+        sessions.open("k", 1, 10, () -> failing);
+        try {
+            write("k", 1, "bytes 0-4/10", "01234");
+            fail();
+        } catch (IllegalStateException expected) {
+            // expected
+        }
+        assertEquals(List.of("k"), aborted);
+        assertFalse(sessions.isReserved("k"));
+        try {
+            write("k", 1, "bytes 0-4/10", "01234");
+            fail();
+        } catch (ChunkOffsetMismatchException e) {
+            assertEquals(0, e.getBytesWritten());
+        }
+    }
+
+    @Test
     public void partSizeMismatchAbortsSession() throws Exception {
         open("k", 1, 10);
         try {
