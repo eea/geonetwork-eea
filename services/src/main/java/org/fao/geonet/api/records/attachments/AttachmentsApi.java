@@ -64,8 +64,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -252,16 +254,27 @@ public class AttachmentsApi {
         @Parameter(description = "The sharing policy", example = "public") @RequestParam(required = false, defaultValue = "public") MetadataResourceVisibility visibility,
         @Parameter(description = "The file to upload") @RequestParam("file") MultipartFile file,
         @Parameter(description = "Use approved version or not", example = "true") @RequestParam(required = false, defaultValue = "false") Boolean approved,
+        @Parameter(hidden = true) @RequestHeader(value = "Content-Range", required = false) String contentRange,
         @Parameter(hidden = true) HttpServletRequest request) throws Exception {
         ServiceContext context = ApiUtils.createServiceContext(request);
         String folderPath = extractPathWithinMapping(request);
         String folder = folderPath.isEmpty() ? null : folderPath;
 
-        String supportedFileMimetypes = settingManager.getValue(Settings.METADATA_EDIT_SUPPORTEDFILEMIMETYPES);
-        fileMimetypeChecker.checkValidMimeType(file, supportedFileMimetypes.split("\\|"));
+        ContentRange range = contentRange == null ? null : ContentRange.parse(contentRange);
+        if (range == null || range.isFirst()) {
+            String supportedFileMimetypes = settingManager.getValue(Settings.METADATA_EDIT_SUPPORTEDFILEMIMETYPES);
+            fileMimetypeChecker.checkValidMimeType(file, supportedFileMimetypes.split("\\|"));
+        }
 
         AbstractMetadata metadata = ApiUtils.getRecord(metadataUuid);
-        MetadataResource resource = store.putResource(context, metadata.getUuid(), file, folder, visibility, approved);
+        MetadataResource resource = range == null
+            ? store.putResource(context, metadata.getUuid(), file, folder, visibility, approved)
+            : store.putResourceChunk(context, metadata.getUuid(), file, folder, visibility, approved, range);
+
+        // Null for intermediate chunks: an empty 201 and no event.
+        if (resource == null) {
+            return null;
+        }
 
         String metadataIdString = ApiUtils.getInternalId(metadata.getUuid(), approved);
         if (metadataIdString != null && file != null && !file.isEmpty()) {
@@ -272,6 +285,15 @@ public class AttachmentsApi {
         }
 
         return resource;
+    }
+
+    @ExceptionHandler(ChunkOffsetMismatchException.class)
+    public ResponseEntity<Void> handleChunkOffsetMismatch(ChunkOffsetMismatchException e) {
+        ResponseEntity.BodyBuilder response = ResponseEntity.status(HttpStatus.CONFLICT);
+        if (e.toRangeHeader() != null) {
+            response.header(HttpHeaders.RANGE, e.toRangeHeader());
+        }
+        return response.build();
     }
 
     @io.swagger.v3.oas.annotations.Operation(summary = "Create a new resource from a URL for a given metadata",
