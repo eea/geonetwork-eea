@@ -52,6 +52,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Nullable;
+import javax.annotation.PreDestroy;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -95,6 +96,15 @@ public class OpenDALStore extends AbstractStore {
 
     // Package-private and non-final so tests can swap in an instance with a controllable clock.
     ChunkedUploadSessions sessions = new ChunkedUploadSessions(30 * 60 * 1000L, System::currentTimeMillis, this::abortUpload);
+
+    /**
+     * Aborts the chunked uploads still open when the application stops, so their streams and
+     * partial data do not outlive it.
+     */
+    @PreDestroy
+    public void abortOpenChunkedUploads() {
+        sessions.abortAll();
+    }
 
     /**
      * Aborts an idle or broken chunked upload. On S3, {@code close()} completes the multipart

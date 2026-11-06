@@ -83,6 +83,20 @@ public class ChunkedUploadSessions {
         }
     }
 
+    /**
+     * Aborts every open session, eg. when the store shuts down. Each session is aborted at most once.
+     */
+    public void abortAll() {
+        for (Map.Entry<String, Session> e : sessions.entrySet()) {
+            Session s = e.getValue();
+            synchronized (s) {
+                if (sessions.remove(e.getKey(), s)) {
+                    safeAbort(e.getKey(), s);
+                }
+            }
+        }
+    }
+
     public void open(String key, int userId, long total, Callable<OutputStream> opener) throws Exception {
         Session session = new Session(userId, total, clock.getAsLong());
         Session[] stale = new Session[1];
