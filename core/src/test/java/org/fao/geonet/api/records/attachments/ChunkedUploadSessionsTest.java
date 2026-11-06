@@ -73,6 +73,49 @@ public class ChunkedUploadSessionsTest {
         assertFalse(sessions.isReserved("k"));
     }
 
+    @Test(timeout = 10000)
+    public void abortIdleDoesNotWaitForAChunkBeingWritten() throws Exception {
+        open("busy", 1, 10);
+        java.util.concurrent.CountDownLatch writing = new java.util.concurrent.CountDownLatch(1);
+        java.util.concurrent.CountDownLatch release = new java.util.concurrent.CountDownLatch(1);
+        InputStream slow = new InputStream() {
+            private int sent;
+
+            @Override
+            public int read() throws IOException {
+                if (sent == 0) {
+                    writing.countDown();
+                    try {
+                        release.await();
+                    } catch (InterruptedException e) {
+                        throw new IOException(e);
+                    }
+                }
+                return sent < 5 ? '0' + sent++ : -1;
+            }
+        };
+        Thread writer = new Thread(() -> {
+            try {
+                sessions.write("busy", 1, ContentRange.parse("bytes 0-4/10"), 5, slow);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        writer.start();
+        assertTrue(writing.await(5, java.util.concurrent.TimeUnit.SECONDS));
+
+        Thread idleCheck = new Thread(sessions::abortIdle);
+        idleCheck.start();
+        idleCheck.join(2000);
+        boolean blocked = idleCheck.isAlive();
+
+        release.countDown();
+        writer.join();
+        idleCheck.join();
+        assertFalse("abortIdle waited for a chunk write of a session that is not idle", blocked);
+        assertTrue(aborted.isEmpty());
+    }
+
     @Test
     public void abortAllAbortsEveryOpenSessionOnce() throws Exception {
         open("a", 1, 10);
