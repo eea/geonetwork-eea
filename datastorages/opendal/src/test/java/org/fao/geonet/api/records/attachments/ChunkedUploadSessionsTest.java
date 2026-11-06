@@ -151,7 +151,75 @@ public class ChunkedUploadSessionsTest {
         } catch (IllegalArgumentException expected) {
             // expected
         }
-        assertEquals(List.of("k"), aborted);
+        assertTrue(aborted.isEmpty());
+        assertFalse(write("k", 1, "bytes 0-4/10", "01234"));
+        assertTrue(write("k", 1, "bytes 5-9/10", "56789"));
+    }
+
+    @Test
+    public void concurrentOpenReplacingPendingOpenerDoesNotLeakStream() throws Exception {
+        java.util.concurrent.CountDownLatch started = new java.util.concurrent.CountDownLatch(1);
+        java.util.concurrent.CountDownLatch release = new java.util.concurrent.CountDownLatch(1);
+        List<OutputStream> abortedStreams = new java.util.concurrent.CopyOnWriteArrayList<>();
+        ChunkedUploadSessions s = new ChunkedUploadSessions(1000, () -> now[0],
+            (k, o) -> abortedStreams.add(o));
+        ByteArrayOutputStream first = new ByteArrayOutputStream();
+        java.util.concurrent.ExecutorService ex = java.util.concurrent.Executors.newSingleThreadExecutor();
+        try {
+            java.util.concurrent.Future<?> f = ex.submit(() -> {
+                s.open("k", 1, 10, () -> {
+                    started.countDown();
+                    release.await();
+                    return first;
+                });
+                return null;
+            });
+            started.await();
+            java.util.concurrent.Future<?> second = java.util.concurrent.CompletableFuture.runAsync(() -> {
+                    try {
+                        s.open("k", 1, 10, ByteArrayOutputStream::new);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            Thread.sleep(100);
+            release.countDown();
+            try {
+                f.get();
+                fail();
+            } catch (java.util.concurrent.ExecutionException e) {
+                assertTrue(e.getCause() instanceof ResourceAlreadyExistException);
+            }
+            second.get();
+            assertEquals(1, abortedStreams.size());
+            assertSame(first, abortedStreams.get(0));
+            assertTrue(s.isReserved("k"));
+        } finally {
+            ex.shutdownNow();
+        }
+    }
+
+    @Test
+    public void failingAborterDoesNotStopCleanupOrChangeWriteError() throws Exception {
+        List<String> seen = new ArrayList<>();
+        ChunkedUploadSessions s = new ChunkedUploadSessions(1000, () -> now[0], (k, o) -> {
+            seen.add(k);
+            throw new IllegalStateException("boom");
+        });
+        s.open("a", 1, 10, ByteArrayOutputStream::new);
+        s.open("b", 1, 10, ByteArrayOutputStream::new);
+        now[0] = 1001;
+        s.abortIdle();
+        assertEquals(2, seen.size());
+        assertFalse(s.isReserved("a"));
+        assertFalse(s.isReserved("b"));
+        s.open("c", 1, 10, ByteArrayOutputStream::new);
+        try {
+            s.write("c", 1, ContentRange.parse("bytes 0-4/10"), 6, in("012345"));
+            fail();
+        } catch (IllegalArgumentException expected) {
+            // expected
+        }
     }
 
     @Test
