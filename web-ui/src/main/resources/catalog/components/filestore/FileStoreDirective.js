@@ -177,6 +177,44 @@
               droparea.removeClass("is-active");
             });
 
+            // Files being uploaded, from submit until success, final failure or cancel. Not
+            // fileupload('active'), which drops to 0 while a failed chunk waits for its retry.
+            // While it is above 0 the button is disabled and dropped files are ignored: a new
+            // file in single upload mode would replace the running one in the queue and leave
+            // it uploading, unseen and without retries.
+            scope.uploadsInProgress = 0;
+            var setUploading = function (files, uploading) {
+              scope.$evalAsync(function () {
+                files.forEach(function (file) {
+                  if (!!file.$uploading !== uploading) {
+                    file.$uploading = uploading;
+                    scope.uploadsInProgress += uploading ? 1 : -1;
+                  }
+                });
+              });
+            };
+            scope.$on("fileuploadsubmit", function (event, data) {
+              // jQuery File Upload 5.32.2 writes Content-Range and Content-Disposition into
+              // options.headers, which is the widget's own object (shallow copies), so a later
+              // upload would send the last chunk's headers. Give every submission its own copy.
+              data.headers = angular.extend(
+                {},
+                scope.filestoreUploadOptions && scope.filestoreUploadOptions.headers
+              );
+              setUploading(data.files, true);
+            });
+            // jQuery File Upload replaces the file input with an uncompiled clone after each
+            // selection, so ng-disabled on it stops working: set the property on the current
+            // one. Files are dropped on that transparent input too, so this blocks drops.
+            scope.$watch(
+              function () {
+                return scope.disabled || scope.uploadsInProgress > 0;
+              },
+              function (disabled) {
+                element.find("input[type=file]").prop("disabled", !!disabled);
+              }
+            );
+
             var retryChunkOrFail = function (e, data) {
               var file = data.files[0];
               var status = data.jqXHR && data.jqXHR.status;
@@ -194,6 +232,7 @@
                   // Removed from the queue (clear button, $cancel, a new file or folder)
                   // while waiting: the upload was cancelled, do not resume it.
                   if (scope.queue.indexOf(file) === -1) {
+                    setUploading([file], false);
                     return;
                   }
                   data.data = null;
@@ -277,6 +316,7 @@
             };
 
             var uploadResourceSuccess = function (e, data) {
+              setUploading(data.files, false);
               $rootScope.$broadcast("gnFileStoreUploadDone");
               if (scope.afterUploadCb && angular.isFunction(scope.afterUploadCb())) {
                 scope.afterUploadCb()(data.response().jqXHR.responseJSON);
@@ -285,6 +325,11 @@
             };
 
             var uploadResourceFailed = function (e, data) {
+              setUploading(data.files, false);
+              if (data.errorThrown === "abort") {
+                // Cancelled by the user (cancel button): not an error to report.
+                return;
+              }
               var jqXHR = angular.isDefined(data.response().jqXHR)
                 ? data.response().jqXHR
                 : null;

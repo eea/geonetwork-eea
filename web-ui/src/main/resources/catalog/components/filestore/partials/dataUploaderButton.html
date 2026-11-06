@@ -6,7 +6,7 @@
 >
   <span
     class="btn btn-primary btn-block fileinput-button"
-    data-ng-class="{disabled: disabled}"
+    data-ng-class="{disabled: disabled || uploadsInProgress > 0}"
   >
     <i class="fa fa-fw fa-plus-circle" data-ng-class="{hidden: active()}"></i>
     <i
@@ -15,7 +15,12 @@
       data-file-upload-progress="progress()"
     ></i>
     <span>{{btnLabel | translate}}</span>
-    <input type="file" name="file" accept="{{fileTypes}}" data-ng-disabled="disabled" />
+    <input
+      type="file"
+      name="file"
+      accept="{{fileTypes}}"
+      data-ng-disabled="disabled || uploadsInProgress > 0"
+    />
   </span>
 
   <ul class="list-group" data-ng-if="queue.length > 0">
@@ -29,7 +34,14 @@
         data-ng-class="isOverview ? 'gn-icon-thumbnail' : 'fa-file'"
       ></i>
       <span class="width-75">{{file.name}}</span>
-      <i class="btn fa fa-times text-danger" data-ng-click="clear(file)"></i>
+      <button
+        type="button"
+        class="btn btn-link"
+        title="{{'cancel' | translate}}"
+        data-ng-click="file.$cancel ? file.$cancel() : clear(file)"
+      >
+        <i class="fa fa-times text-danger"></i>
+      </button>
     </li>
   </ul>
 
