@@ -191,6 +191,11 @@
                 }
                 file.chunkRetries = (file.chunkRetries || 0) + 1;
                 setTimeout(function () {
+                  // Removed from the queue (clear button, $cancel, a new file or folder)
+                  // while waiting: the upload was cancelled, do not resume it.
+                  if (scope.queue.indexOf(file) === -1) {
+                    return;
+                  }
                   data.data = null;
                   data.submit();
                 }, 5000 * file.chunkRetries);
