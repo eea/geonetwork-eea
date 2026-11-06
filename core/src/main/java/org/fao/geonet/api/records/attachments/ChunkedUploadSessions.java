@@ -41,6 +41,12 @@ import java.util.function.LongSupplier;
 /**
  * Keeps one open {@link OutputStream} per object key across HTTP requests, so a large
  * upload can be sent as many short chunk requests. Thread-safe, no Spring or OpenDAL dependency.
+ *
+ * <p>Locking: each {@link Session} is its own monitor and guards its fields and stream. Only
+ * {@link #open} holds two monitors at once, always the new session first and then the older
+ * session it replaces, so no cycle is possible. Map operations run inside a monitor, never the
+ * other way round: the {@code compute} in {@link #open} takes no monitor. The opener and aborter
+ * callbacks must not call back into this class.</p>
  */
 public class ChunkedUploadSessions {
     /** Opaque handle of one upload, returned by {@link #write} once all its bytes are written. */
@@ -48,7 +54,8 @@ public class ChunkedUploadSessions {
         final int userId;
         final long total;
         long written;
-        long lastUsed;
+        // volatile: abortIdle reads it without the monitor to skip sessions that are busy or recent.
+        volatile long lastUsed;
         OutputStream out;
 
         Session(int userId, long total, long lastUsed) {
@@ -75,6 +82,12 @@ public class ChunkedUploadSessions {
         for (Iterator<Map.Entry<String, Session>> it = sessions.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<String, Session> e = it.next();
             Session s = e.getValue();
+            // Check before locking: a session being written holds its monitor for the whole chunk,
+            // and write sets lastUsed before copying, so it is never idle here. Without this every
+            // chunk request would wait for every other upload's chunk in progress.
+            if (now - s.lastUsed <= idleTimeoutMillis) {
+                continue;
+            }
             synchronized (s) {
                 if (now - s.lastUsed > idleTimeoutMillis && sessions.remove(e.getKey(), s)) {
                     safeAbort(e.getKey(), s);
