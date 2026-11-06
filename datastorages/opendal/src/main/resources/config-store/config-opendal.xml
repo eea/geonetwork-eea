@@ -19,6 +19,7 @@
         <property name="options">
             <map>
                 <entry key="root" value="${opendal.root}"/>
+                <entry key="atomic_write_dir" value="${opendal.atomic_write_dir}"/>
                 <entry key="endpoint" value="${opendal.endpoint}"/>
                 <entry key="bucket" value="${opendal.bucket}"/>
                 <entry key="access_key_id" value="${opendal.access_key_id}"/>
