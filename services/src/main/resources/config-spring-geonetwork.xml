@@ -78,8 +78,9 @@
         class="org.fao.geonet.services.resources.handlers.DefaultResourceRemoveHandler"/>
 
   <bean id="multipartResolver"
-        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        class="org.fao.geonet.util.PartCountLimitedMultipartResolver">
     <property name="maxUploadSize" value="\${api.params.maxUploadSize}"/>
+    <property name="maxPartCount" value="\${api.params.maxUploadPartCount:300}"/>
   </bean>
 
   <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
