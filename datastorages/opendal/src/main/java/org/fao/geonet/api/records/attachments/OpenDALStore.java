@@ -316,27 +316,26 @@ public class OpenDALStore extends AbstractStore {
                 () -> op.createOutputStream(key, buildUploadOptions(op, metadataUuid, metadataId, filename)));
         }
 
+        ChunkedUploadSessions.Session session;
         try (InputStream in = file.getInputStream()) {
-            if (!sessions.write(key, userId, range, file.getSize(), in)) {
-                return null;
-            }
+            session = sessions.write(key, userId, range, file.getSize(), in);
+        }
+        if (session == null) {
+            return null;
         }
 
         if (statExists(op, key)) {
             // Someone wrote the object outside GeoNetwork during the upload. Do not close the stream:
             // on S3 that completes the multipart upload and overwrites the object. The incomplete
             // multipart upload is left to the bucket lifecycle rule.
-            sessions.drop(key);
+            sessions.drop(key, session);
             Log.warning(Geonet.RESOURCES, String.format(
                 "Chunked upload '%s' not completed: an object appeared at that key during the upload.", key));
             throw new ResourceAlreadyExistException(String.format(
                 "A resource with name '%s' already exists for metadata '%d'.", filename, metadataId));
         }
-        OutputStream out = sessions.complete(key);
-        if (out == null) {
-            // The session went away in between, eg. a concurrent abort.
-            throw new ChunkOffsetMismatchException(0);
-        }
+        // Fails if the session was aborted or replaced by a new upload in between.
+        OutputStream out = sessions.complete(key, session);
         out.close();
 
         Metadata metadata = op.stat(key);
