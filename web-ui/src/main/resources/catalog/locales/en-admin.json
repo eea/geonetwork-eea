@@ -1257,6 +1257,8 @@
     "ui-isFilterTagsDisplayed-help": "If enabled, display the list of filters applied in the dashboard and the batch editor dashboard",
     "ui-showFileStoreSize": "Display file size in the file store",
     "ui-showFileStoreSize-help": "If enabled, display the size of each uploaded file in the metadata editor's online resources file store panel",
+    "ui-uploadMaxChunkSize": "Upload chunk size (bytes)",
+    "ui-uploadMaxChunkSize-help": "Upload large files in parts of this size, so that no single request runs into a proxy timeout. A failed part is retried automatically. <code>0</code> uploads each file in one request (default). Recommended: <code>16777216</code> (16 MiB), below the proxy request size limit. Only works when the catalogue stores attachments in the default file system store or the OpenDAL store; with other stores large uploads fail. The total file size is still limited by the server setting <code>api.params.maxUploadSize</code>.",
     "ui-isFilterTagsDisplayedInSearch": "Display filter tags in the search results",
     "ui-isFilterTagsDisplayedInSearch-help": "If enabled, display the list of filters applied in the search results page",
     "ui-searchMapPlacement": "Search result map placement",

@@ -871,6 +871,26 @@
                 </div>
 
                 <!-- numbers -->
+                <div class="row" data-ng-switch-when="uploadMaxChunkSize">
+                  <div class="col-lg-5 gn-nopadding-left">
+                    <label class="control-label" for="{{key}}-number"
+                      >{{('ui-' + key) | translate}}</label
+                    >
+                    <gn-ui-config-help></gn-ui-config-help>
+                  </div>
+
+                  <div class="col-lg-7 gn-nopadding-right">
+                    <input
+                      id="{{key}}-number"
+                      type="number"
+                      min="0"
+                      step="1048576"
+                      class="form-control"
+                      data-ng-model="mCfg[key]"
+                    />
+                  </div>
+                </div>
+
                 <div class="row" data-ng-switch-when="paginationInfo">
                   <div class="col-lg-5 gn-nopadding-left">
                     <label class="control-label">{{('ui-' + key) | translate}}</label>
