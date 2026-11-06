@@ -43,6 +43,7 @@ public class OpenDALConfiguration {
     private Operator operator;
     private String scheme = "fs";
     private long presignExpirySeconds = 0;
+    private int writeConcurrent = 1;
     private Map<String, String> options = new HashMap<>();
 
     public void setScheme(String scheme) {
@@ -64,6 +65,25 @@ public class OpenDALConfiguration {
         if (presignExpirySeconds != null && !presignExpirySeconds.isEmpty()) {
             this.presignExpirySeconds = Long.parseLong(presignExpirySeconds);
         }
+    }
+
+    /**
+     * Number of parts of a multipart upload sent to the storage in parallel (eg. S3).
+     * 1 (default) uploads parts one after the other. Each part in flight is buffered in memory,
+     * so an upload can use up to concurrent x chunk size of heap.
+     */
+    public void setWriteConcurrent(String writeConcurrent) {
+        if (writeConcurrent != null && !writeConcurrent.isEmpty()) {
+            int value = Integer.parseInt(writeConcurrent.trim());
+            if (value < 1) {
+                throw new IllegalArgumentException("OpenDAL write concurrent must be at least 1, got " + value);
+            }
+            this.writeConcurrent = value;
+        }
+    }
+
+    public int getWriteConcurrent() {
+        return writeConcurrent;
     }
 
     @PostConstruct

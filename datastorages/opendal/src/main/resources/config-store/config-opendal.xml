@@ -15,6 +15,7 @@
     <bean id="opendalConfiguration" class="org.fao.geonet.resources.OpenDALConfiguration">
         <property name="scheme" value="${opendal.scheme}"/>
         <property name="presignExpirySeconds" value="${opendal.presign_expiry_seconds}"/>
+        <property name="writeConcurrent" value="${opendal.write_concurrent}"/>
         <property name="options">
             <map>
                 <entry key="root" value="${opendal.root}"/>

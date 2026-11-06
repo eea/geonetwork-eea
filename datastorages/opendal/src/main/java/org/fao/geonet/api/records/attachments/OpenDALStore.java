@@ -256,13 +256,17 @@ public class OpenDALStore extends AbstractStore {
     }
 
     /**
-     * Upload options: chunk size for multipart uploads, plus content type and record identifiers
+     * Upload options: chunk size and parallel parts for multipart uploads, plus content type and record identifiers
      * as object metadata, each only when the backend advertises the capability (eg. S3 supports
      * both, the local filesystem does not support content type).
      */
     private WriteOptions buildUploadOptions(Operator op, String metadataUuid, int metadataId, String filename) {
         WriteOptions.WriteOptionsBuilder options = WriteOptions.builder().chunk(UPLOAD_CHUNK_SIZE);
         Capability capability = op.info.capability;
+        int concurrent = openDALConfiguration.getWriteConcurrent();
+        if (concurrent > 1 && capability.writeCanMulti) {
+            options.concurrent(concurrent);
+        }
         if (capability.writeWithContentType) {
             options.contentType(MimeTypeDetector.detect(filename));
         }
