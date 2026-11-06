@@ -1,6 +1,6 @@
 /*
  * =============================================================================
- * ===	Copyright (C) 2024 Food and Agriculture Organization of the
+ * ===	Copyright (C) 2024-2026 Food and Agriculture Organization of the
  * ===	United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * ===	and United Nations Environment Programme (UNEP)
  * ===
@@ -26,7 +26,7 @@ package org.fao.geonet.api.records.attachments;
 
 import jeeves.server.context.ServiceContext;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.api.exception.NotAllowedException;
 import org.fao.geonet.api.exception.InputStreamLimitExceededException;
@@ -348,7 +348,7 @@ public abstract class AbstractStore implements Store {
     @Override
     public final MetadataResource putResource(final ServiceContext context, final String metadataUuid, final MultipartFile file,
             final String folder, final MetadataResourceVisibility visibility, Boolean approved) throws Exception {
-        if (org.apache.commons.lang3.StringUtils.contains(file.getOriginalFilename(),';')) {
+        if (StringUtils.contains(file.getOriginalFilename(),';')) {
             throw new NotAllowedException(String.format(
                 "Uploaded resource '%s' contains forbidden character ; for metadata '%s'.", file.getOriginalFilename(), metadataUuid));
         }
@@ -373,7 +373,7 @@ public abstract class AbstractStore implements Store {
      */
     protected String checkChunkAndGetFilename(MultipartFile file, @Nullable String folder, String metadataUuid,
                                               ContentRange range) throws Exception {
-        if (org.apache.commons.lang3.StringUtils.contains(file.getOriginalFilename(), ';')) {
+        if (StringUtils.contains(file.getOriginalFilename(), ';')) {
             throw new NotAllowedException(String.format(
                 "Uploaded resource '%s' contains forbidden character ; for metadata '%s'.", file.getOriginalFilename(), metadataUuid));
         }
