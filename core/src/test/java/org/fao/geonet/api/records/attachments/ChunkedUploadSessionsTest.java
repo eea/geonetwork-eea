@@ -74,6 +74,24 @@ public class ChunkedUploadSessionsTest {
     }
 
     @Test
+    public void abortAllAbortsEveryOpenSessionOnce() throws Exception {
+        open("a", 1, 10);
+        open("b", 2, 10);
+        write("b", 2, "bytes 0-4/10", "01234");
+        open("done", 1, 2);
+        sessions.complete("done", write("done", 1, "bytes 0-1/2", "01"));
+
+        sessions.abortAll();
+
+        aborted.sort(null);
+        assertEquals(List.of("a", "b"), aborted);
+        assertFalse(sessions.isReserved("a"));
+        assertFalse(sessions.isReserved("b"));
+        sessions.abortAll();
+        assertEquals(2, aborted.size());
+    }
+
+    @Test
     public void sessionReplacedAfterLastWriteCannotBeCompleted() throws Exception {
         open("k", 1, 10);
         ChunkedUploadSessions.Session old = write("k", 1, "bytes 0-9/10", "0123456789");
