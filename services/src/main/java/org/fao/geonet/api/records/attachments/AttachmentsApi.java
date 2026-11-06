@@ -245,11 +245,15 @@ public class AttachmentsApi {
         value = "/**",
         consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.CREATED)
-    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Attachment uploaded."),
-        @ApiResponse(responseCode = "403", description = ApiParams.API_RESPONSE_NOT_ALLOWED_CAN_EDIT)})
+    // No @ResponseStatus here: it would override the 204 returned for intermediate chunks.
+    @ApiResponses(value = {@ApiResponse(responseCode = "201",
+            description = "Attachment uploaded, or last chunk of a chunked upload received."),
+        @ApiResponse(responseCode = "204", description = "Intermediate chunk of a chunked upload received."),
+        @ApiResponse(responseCode = "403", description = ApiParams.API_RESPONSE_NOT_ALLOWED_CAN_EDIT),
+        @ApiResponse(responseCode = "409", description = "Chunk does not start where the upload in progress stands. "
+            + "The Range header, when present, gives the bytes received so far; without it, restart from 0.")})
     @ResponseBody
-    public MetadataResource putResource(
+    public ResponseEntity<MetadataResource> putResource(
         @Parameter(description = "The metadata UUID", required = true, example = "43d7c186-2187-4bcd-8843-41e575a5ef56") @PathVariable String metadataUuid,
         @Parameter(description = "The sharing policy", example = "public") @RequestParam(required = false, defaultValue = "public") MetadataResourceVisibility visibility,
         @Parameter(description = "The file to upload") @RequestParam("file") MultipartFile file,
@@ -271,9 +275,10 @@ public class AttachmentsApi {
             ? store.putResource(context, metadata.getUuid(), file, folder, visibility, approved)
             : store.putResourceChunk(context, metadata.getUuid(), file, folder, visibility, approved, range);
 
-        // Null for intermediate chunks: an empty 201 and no event.
+        // Null for intermediate chunks: 204 and no event. Not an empty 201: jQuery parses any
+        // other empty answer as JSON and fails.
         if (resource == null) {
-            return null;
+            return ResponseEntity.noContent().build();
         }
 
         String metadataIdString = ApiUtils.getInternalId(metadata.getUuid(), approved);
@@ -284,7 +289,7 @@ public class AttachmentsApi {
                 .publish(ApplicationContextHolder.get());
         }
 
-        return resource;
+        return ResponseEntity.status(HttpStatus.CREATED).body(resource);
     }
 
     @ExceptionHandler(ChunkOffsetMismatchException.class)
