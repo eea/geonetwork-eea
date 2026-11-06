@@ -26,6 +26,7 @@
 package org.fao.geonet.api.records.attachments;
 
 import jeeves.server.context.ServiceContext;
+import org.apache.commons.io.IOUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.api.exception.InputStreamLimitExceededException;
 import org.fao.geonet.api.exception.ResourceAlreadyExistException;
@@ -42,21 +43,28 @@ import org.fao.geonet.utils.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.PathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Nullable;
+import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.FileSystem;
 import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
@@ -81,8 +89,15 @@ import java.util.stream.Stream;
 public class FilesystemStore extends AbstractStore {
     public static final String DEFAULT_FILTER = "*.*";
 
+    // Relative to the metadata data directory, next to the metadata folders.
+    private static final String CHUNKED_UPLOADS_DIR = ".chunked-uploads";
+    private static final long CHUNKED_UPLOAD_IDLE_TIMEOUT = 30 * 60 * 1000L;
+
     @Autowired
     SettingManager settingManager;
+
+    // Package-private and non-final so tests can swap in an instance with a controllable clock.
+    ChunkedUploadSessions sessions = new ChunkedUploadSessions(CHUNKED_UPLOAD_IDLE_TIMEOUT, System::currentTimeMillis, this::abortUpload);
 
     public FilesystemStore() {
     }
@@ -356,6 +371,103 @@ public class FilesystemStore extends AbstractStore {
         return getResourceDescription(context, metadataUuid, visibility, filename, filePath, approved);
     }
 
+    /**
+     * Writes the chunks to a {@code .part} file in {@link #CHUNKED_UPLOADS_DIR}, outside the metadata
+     * folders so it is never listed as a resource, and moves it into place after the last chunk.
+     * Chunked uploads never overwrite an existing resource.
+     */
+    @Override
+    public MetadataResource putResourceChunk(ServiceContext context, String metadataUuid, MultipartFile file,
+                                             @Nullable String folder, MetadataResourceVisibility visibility,
+                                             Boolean approved, ContentRange range) throws Exception {
+        sessions.abortIdle();
+        String filename = checkChunkAndGetFilename(file, folder, metadataUuid, range);
+        checkResourceId(filename);
+        int metadataId = canEdit(context, metadataUuid, approved);
+        int userId = context.getUserSession().getUserIdAsInt();
+        Path target = ensureDirectory(context, metadataId, filename).resolve(filename);
+        String key = target.toString();
+
+        if (range.isFirst()) {
+            Path tempDir = getDataDirectory(context).getMetadataDataDir().resolve(CHUNKED_UPLOADS_DIR);
+            deleteStalePartFiles(tempDir);
+            // Same check as getPath, but approved does not allow overwriting here.
+            if (Files.exists(target) || Files.exists(Lib.resource.getDir(visibility.toString(), metadataId).resolve(filename))) {
+                throw new ResourceAlreadyExistException(String.format(
+                    "A resource with name '%s' and status '%s' already exists for metadata '%d'.", filename, visibility, metadataId));
+            }
+            sessions.open(key, userId, range.getTotal(), () -> {
+                Files.createDirectories(tempDir);
+                Path part = tempDir.resolve(UUID.randomUUID() + ".part");
+                return new PartFileOutputStream(
+                    Files.newOutputStream(part, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE), part);
+            });
+        }
+
+        ChunkedUploadSessions.Session session;
+        try (InputStream in = file.getInputStream()) {
+            session = sessions.write(key, userId, range, file.getSize(), in);
+        }
+        if (session == null) {
+            return null;
+        }
+
+        // Fails if the session was aborted or replaced by a new upload in between.
+        PartFileOutputStream out = (PartFileOutputStream) sessions.complete(key, session);
+        try {
+            out.close();
+            Files.move(out.path, target);
+        } catch (FileAlreadyExistsException e) {
+            deleteQuietly(out.path);
+            Log.warning(Geonet.RESOURCES, String.format(
+                "Chunked upload '%s' not completed: a file appeared at that path during the upload.", key));
+            throw new ResourceAlreadyExistException(String.format(
+                "A resource with name '%s' and status '%s' already exists for metadata '%d'.", filename, visibility, metadataId));
+        } catch (IOException | RuntimeException e) {
+            deleteQuietly(out.path);
+            throw e;
+        }
+        return getResourceDescription(context, metadataUuid, visibility, filename, target, approved);
+    }
+
+    /** Aborts an idle or broken chunked upload: its part file is private to the session, so delete it. */
+    void abortUpload(String key, OutputStream out) {
+        IOUtils.closeQuietly(out);
+        deleteQuietly(((PartFileOutputStream) out).path);
+    }
+
+    /**
+     * Deletes part files left by uploads that were never completed nor aborted, eg. because of a
+     * restart. An upload in progress writes to its part file at least once per idle timeout.
+     */
+    private static void deleteStalePartFiles(Path tempDir) {
+        if (!Files.isDirectory(tempDir)) {
+            return;
+        }
+        long oldest = System.currentTimeMillis() - CHUNKED_UPLOAD_IDLE_TIMEOUT;
+        try (DirectoryStream<Path> parts = Files.newDirectoryStream(tempDir, "*.part")) {
+            for (Path part : parts) {
+                try {
+                    if (Files.getLastModifiedTime(part).toMillis() < oldest) {
+                        Files.deleteIfExists(part);
+                    }
+                } catch (IOException e) {
+                    Log.warning(Geonet.RESOURCES, "Could not delete stale chunked upload " + part + ": " + e);
+                }
+            }
+        } catch (IOException e) {
+            Log.warning(Geonet.RESOURCES, "Could not list stale chunked uploads in " + tempDir + ": " + e);
+        }
+    }
+
+    private static void deleteQuietly(Path path) {
+        try {
+            Files.deleteIfExists(path);
+        } catch (IOException e) {
+            Log.warning(Geonet.RESOURCES, "Could not delete chunked upload " + path + ": " + e);
+        }
+    }
+
     private Path getPath(ServiceContext context, String metadataUuid, MetadataResourceVisibility visibility, String fileName,
                          Boolean approved) throws Exception {
         int metadataId = getAndCheckMetadataId(metadataUuid, approved);
@@ -527,6 +639,22 @@ public class FilesystemStore extends AbstractStore {
         PathResource pathResource = (PathResource) resource;
         FileSystem fileSystem = getDataDirectory(context).getMetadataDataDir().getFileSystem();
         return  fileSystem.getPath(pathResource.getPath());
+    }
+
+    /** Keeps the path of the part file, so the aborter can delete it without a context. */
+    private static final class PartFileOutputStream extends FilterOutputStream {
+        private final Path path;
+
+        private PartFileOutputStream(OutputStream out, Path path) {
+            super(out);
+            this.path = path;
+        }
+
+        @Override
+        public void write(byte[] b, int off, int len) throws IOException {
+            // FilterOutputStream would write one byte at a time.
+            out.write(b, off, len);
+        }
     }
 
     private static class FilesystemResourceHolder implements ResourceHolder {
