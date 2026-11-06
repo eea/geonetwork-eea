@@ -316,8 +316,10 @@ public class OpenDALStore extends AbstractStore {
                 () -> op.createOutputStream(key, buildUploadOptions(op, metadataUuid, metadataId, filename)));
         }
 
-        if (!sessions.write(key, userId, range, file.getSize(), file.getInputStream())) {
-            return null;
+        try (InputStream in = file.getInputStream()) {
+            if (!sessions.write(key, userId, range, file.getSize(), in)) {
+                return null;
+            }
         }
 
         if (statExists(op, key)) {

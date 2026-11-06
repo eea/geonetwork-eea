@@ -185,6 +185,18 @@ public class OpenDALStoreChunkTest {
     }
 
     @Test
+    public void idleAbortLeavesObjectThatAppeared() throws Exception {
+        long[] now = {0};
+        store.sessions = new ChunkedUploadSessions(1000, () -> now[0], store::abortUpload);
+        assertNull(chunk(null, "f.bin", "bytes 0-3/10", "abcd"));
+        op().write("metadata/42/f.bin", "direct".getBytes(StandardCharsets.UTF_8));
+        now[0] = 5000;
+        assertNull(chunk(null, "g.bin", "bytes 0-3/10", "abcd"));
+        assertFalse(store.sessions.isReserved("metadata/42/f.bin"));
+        assertEquals("direct", read("metadata/42/f.bin"));
+    }
+
+    @Test
     public void lastChunkDoesNotOverwriteObjectThatAppeared() throws Exception {
         assertNull(chunk(null, "f.bin", "bytes 0-3/6", "abcd"));
         op().write("metadata/42/f.bin", "direct".getBytes(StandardCharsets.UTF_8));
