@@ -53,7 +53,8 @@ public class ChunkedUploadSessionsTest {
         return new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8));
     }
 
-    private boolean write(String key, int user, String range, String data) throws IOException {
+    private ChunkedUploadSessions.Session write(String key, int user, String range, String data)
+        throws IOException {
         ContentRange r = ContentRange.parse(range);
         return sessions.write(key, user, r, data.length(), in(data));
     }
@@ -65,11 +66,31 @@ public class ChunkedUploadSessionsTest {
     @Test
     public void writesChunksInOrderAndCompletes() throws Exception {
         open("k", 1, 10);
-        assertFalse(write("k", 1, "bytes 0-4/10", "01234"));
-        assertTrue(write("k", 1, "bytes 5-9/10", "56789"));
-        OutputStream out = sessions.complete("k");
+        assertNull(write("k", 1, "bytes 0-4/10", "01234"));
+        ChunkedUploadSessions.Session done = write("k", 1, "bytes 5-9/10", "56789");
+        OutputStream out = sessions.complete("k", done);
         assertEquals("0123456789", out.toString());
         assertFalse(sessions.isReserved("k"));
+    }
+
+    @Test
+    public void sessionReplacedAfterLastWriteCannotBeCompleted() throws Exception {
+        open("k", 1, 10);
+        ChunkedUploadSessions.Session old = write("k", 1, "bytes 0-9/10", "0123456789");
+        open("k", 1, 10);
+        assertNull(write("k", 1, "bytes 0-1/10", "ab"));
+        try {
+            sessions.complete("k", old);
+            fail();
+        } catch (ChunkOffsetMismatchException e) {
+            assertEquals(0, e.getBytesWritten());
+        }
+        sessions.drop("k", old);
+        sessions.abort("k", old);
+        assertEquals(List.of("k"), aborted);
+        assertTrue(sessions.isReserved("k"));
+        ChunkedUploadSessions.Session current = write("k", 1, "bytes 2-9/10", "cdefghij");
+        assertEquals("abcdefghij", sessions.complete("k", current).toString());
     }
 
     @Test
@@ -90,7 +111,7 @@ public class ChunkedUploadSessionsTest {
         write("k", 1, "bytes 0-4/10", "01234");
         open("k", 1, 10);
         assertEquals(List.of("k"), aborted);
-        assertTrue(write("k", 1, "bytes 0-9/10", "0123456789"));
+        assertNotNull(write("k", 1, "bytes 0-9/10", "0123456789"));
     }
 
     @Test
@@ -114,7 +135,7 @@ public class ChunkedUploadSessionsTest {
             assertEquals(5, e.getBytesWritten());
         }
         assertTrue(aborted.isEmpty());
-        assertTrue(write("k", 1, "bytes 5-9/10", "56789"));
+        assertNotNull(write("k", 1, "bytes 5-9/10", "56789"));
     }
 
     @Test
@@ -177,8 +198,8 @@ public class ChunkedUploadSessionsTest {
             // expected
         }
         assertTrue(aborted.isEmpty());
-        assertFalse(write("k", 1, "bytes 0-4/10", "01234"));
-        assertTrue(write("k", 1, "bytes 5-9/10", "56789"));
+        assertNull(write("k", 1, "bytes 0-4/10", "01234"));
+        assertNotNull(write("k", 1, "bytes 5-9/10", "56789"));
     }
 
     @Test
@@ -278,9 +299,9 @@ public class ChunkedUploadSessionsTest {
         open("b", 1, 4);
         write("a", 1, "bytes 0-1/4", "aa");
         write("b", 1, "bytes 0-1/4", "bb");
-        assertTrue(write("a", 1, "bytes 2-3/4", "AA"));
-        assertTrue(write("b", 1, "bytes 2-3/4", "BB"));
-        assertEquals("aaAA", sessions.complete("a").toString());
-        assertEquals("bbBB", sessions.complete("b").toString());
+        ChunkedUploadSessions.Session a = write("a", 1, "bytes 2-3/4", "AA");
+        ChunkedUploadSessions.Session b = write("b", 1, "bytes 2-3/4", "BB");
+        assertEquals("aaAA", sessions.complete("a", a).toString());
+        assertEquals("bbBB", sessions.complete("b", b).toString());
     }
 }

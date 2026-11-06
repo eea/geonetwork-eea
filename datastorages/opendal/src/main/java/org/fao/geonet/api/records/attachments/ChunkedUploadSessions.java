@@ -43,7 +43,8 @@ import java.util.function.LongSupplier;
  * upload can be sent as many short chunk requests. Thread-safe, no Spring or OpenDAL dependency.
  */
 public class ChunkedUploadSessions {
-    private static class Session {
+    /** Opaque handle of one upload, returned by {@link #write} once all its bytes are written. */
+    public static final class Session {
         final int userId;
         final long total;
         long written;
@@ -117,7 +118,11 @@ public class ChunkedUploadSessions {
         }
     }
 
-    public boolean write(String key, int userId, ContentRange range, long partSize, InputStream in)
+    /**
+     * Writes one chunk. Returns the session handle once the last byte is written, to pass to
+     * {@link #complete}, {@link #drop} or {@link #abort}; returns null while more chunks are expected.
+     */
+    public Session write(String key, int userId, ContentRange range, long partSize, InputStream in)
         throws IOException {
         Session s = sessions.get(key);
         if (s == null) {
@@ -151,13 +156,16 @@ public class ChunkedUploadSessions {
                 throw e;
             }
             s.lastUsed = clock.getAsLong();
-            return s.written == s.total;
+            return s.written == s.total ? s : null;
         }
     }
 
-    private void abort(String key, Session s) {
-        if (sessions.remove(key, s)) {
-            safeAbort(key, s);
+    /** Removes the session and aborts its stream, unless it was already replaced or removed. */
+    public void abort(String key, Session s) {
+        synchronized (s) {
+            if (sessions.remove(key, s)) {
+                safeAbort(key, s);
+            }
         }
     }
 
@@ -175,13 +183,28 @@ public class ChunkedUploadSessions {
         }
     }
 
-    public OutputStream complete(String key) {
-        Session s = sessions.remove(key);
-        return s == null ? null : s.out;
+    /**
+     * Removes the session and hands its stream to the caller to close. Fails with an offset of 0 if
+     * the session was aborted or replaced by a new upload since {@link #write} returned it.
+     */
+    public OutputStream complete(String key, Session s) {
+        synchronized (s) {
+            OutputStream out = s.out;
+            if (out == null || !sessions.remove(key, s)) {
+                throw new ChunkOffsetMismatchException(0);
+            }
+            s.out = null;
+            return out;
+        }
     }
 
-    public void drop(String key) {
-        sessions.remove(key);
+    /** Removes the session without closing or aborting its stream. */
+    public void drop(String key, Session s) {
+        synchronized (s) {
+            if (sessions.remove(key, s)) {
+                s.out = null;
+            }
+        }
     }
 
     public boolean isReserved(String key) {
