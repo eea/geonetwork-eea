@@ -25,6 +25,8 @@
 package org.fao.geonet.api.records.attachments;
 
 import org.fao.geonet.api.exception.ResourceAlreadyExistException;
+import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.utils.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -74,7 +76,7 @@ public class ChunkedUploadSessions {
             Session s = e.getValue();
             synchronized (s) {
                 if (now - s.lastUsed > idleTimeoutMillis && sessions.remove(e.getKey(), s)) {
-                    aborter.accept(e.getKey(), s.out);
+                    safeAbort(e.getKey(), s);
                 }
             }
         }
@@ -95,16 +97,23 @@ public class ChunkedUploadSessions {
         if (rejected[0]) {
             throw new ResourceAlreadyExistException("Another upload is in progress for " + key);
         }
-        try {
-            if (stale[0] != null) {
-                aborter.accept(key, stale[0].out);
-            }
-            synchronized (session) {
+        synchronized (session) {
+            try {
+                if (stale[0] != null) {
+                    synchronized (stale[0]) {
+                        safeAbort(key, stale[0]);
+                    }
+                }
                 session.out = opener.call();
+            } catch (Exception e) {
+                sessions.remove(key, session);
+                throw e;
             }
-        } catch (Exception e) {
-            sessions.remove(key, session);
-            throw e;
+            if (sessions.get(key) != session) {
+                // replaced by a concurrent open while the opener was running
+                safeAbort(key, session);
+                throw new ResourceAlreadyExistException("Upload replaced by a newer one for " + key);
+            }
         }
     }
 
@@ -115,11 +124,14 @@ public class ChunkedUploadSessions {
             throw new ChunkOffsetMismatchException(0);
         }
         synchronized (s) {
-            if (sessions.get(key) != s) {
+            if (sessions.get(key) != s || s.out == null) {
                 throw new ChunkOffsetMismatchException(0);
             }
+            if (s.userId != userId) {
+                throw new IllegalArgumentException("Chunk does not belong to the upload in progress");
+            }
             s.lastUsed = clock.getAsLong();
-            if (s.userId != userId || s.total != range.getTotal()) {
+            if (s.total != range.getTotal()) {
                 abort(key, s);
                 throw new IllegalArgumentException("Chunk does not belong to the upload in progress");
             }
@@ -143,7 +155,21 @@ public class ChunkedUploadSessions {
 
     private void abort(String key, Session s) {
         if (sessions.remove(key, s)) {
-            aborter.accept(key, s.out);
+            safeAbort(key, s);
+        }
+    }
+
+    /** Aborts the session stream once; a failing aborter is logged, never propagated. */
+    private void safeAbort(String key, Session s) {
+        OutputStream out = s.out;
+        s.out = null;
+        if (out == null) {
+            return;
+        }
+        try {
+            aborter.accept(key, out);
+        } catch (RuntimeException e) {
+            Log.warning(Geonet.RESOURCES, "Could not abort chunked upload " + key + ": " + e);
         }
     }
 
