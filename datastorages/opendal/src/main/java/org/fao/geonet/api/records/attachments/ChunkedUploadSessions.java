@@ -144,7 +144,9 @@ public class ChunkedUploadSessions {
             }
             try {
                 s.written += in.transferTo(s.out);
-            } catch (IOException e) {
+            } catch (IOException | RuntimeException e) {
+                // OpenDAL streams throw the unchecked OpenDALException. The writer may hold part of the
+                // chunk while written is unchanged, so a retry at the same offset would duplicate bytes.
                 abort(key, s);
                 throw e;
             }
