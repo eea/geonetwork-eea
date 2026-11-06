@@ -127,7 +127,8 @@
       "gnCurrentEdit",
       "$rootScope",
       "$translate",
-      function (gnCurrentEdit, $rootScope, $translate) {
+      "gnGlobalSettings",
+      function (gnCurrentEdit, $rootScope, $translate, gnGlobalSettings) {
         return {
           restrict: "A",
           templateUrl:
@@ -176,8 +177,43 @@
               droparea.removeClass("is-active");
             });
 
+            var retryChunkOrFail = function (e, data) {
+              var file = data.files[0];
+              var status = data.jqXHR && data.jqXHR.status;
+              var range = data.jqXHR && data.jqXHR.getResponseHeader("Range");
+              if (
+                data.errorThrown !== "abort" &&
+                (file.chunkRetries || 0) < 5 &&
+                (status === 0 || status >= 500 || (status === 409 && range))
+              ) {
+                if (status === 409) {
+                  data.uploadedBytes = parseInt(range.split("-")[1], 10) + 1;
+                }
+                file.chunkRetries = (file.chunkRetries || 0) + 1;
+                setTimeout(function () {
+                  data.data = null;
+                  data.submit();
+                }, 5000 * file.chunkRetries);
+              } else {
+                uploadResourceFailed(e, data);
+              }
+            };
+
             var uploadFile = function () {
               scope.queue = [];
+              var maxChunkSize =
+                gnGlobalSettings.gnCfg.mods.editor &&
+                gnGlobalSettings.gnCfg.mods.editor.uploadMaxChunkSize;
+              var chunkOptions =
+                maxChunkSize > 0
+                  ? {
+                      maxChunkSize: maxChunkSize,
+                      chunkdone: function (e, data) {
+                        data.files[0].chunkRetries = 0;
+                      },
+                      fail: retryChunkOrFail
+                    }
+                  : {};
               scope.filestoreUploadOptions = angular.extend(
                 {
                   singleUpload: scope.singleUpload,
@@ -196,6 +232,7 @@
                   fail: uploadResourceFailed,
                   headers: { "X-XSRF-TOKEN": $rootScope.csrf }
                 },
+                chunkOptions,
                 scope.uploadOptions || {}
               );
             };

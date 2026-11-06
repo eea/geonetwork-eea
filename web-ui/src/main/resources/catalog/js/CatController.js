@@ -973,6 +973,7 @@
             minUserProfileToUploadDataset: "Administrator",
             isFilterTagsDisplayed: false,
             showFileStoreSize: true,
+            uploadMaxChunkSize: 0,
             fluidEditorLayout: true,
             createPageTpl: "../../catalog/templates/editor/new-metadata-horizontal.html",
             editorIndentType: "",
