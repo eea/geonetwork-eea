@@ -523,6 +523,17 @@ public interface Store {
     MetadataResource renameResource(ServiceContext context, String metadataUuid, String resourceId, String newName, Boolean approved) throws Exception;
 
     /**
+     * Store one chunk of a chunked upload.
+     *
+     * @return the resource when the last chunk was stored, null for the other chunks
+     */
+    default MetadataResource putResourceChunk(ServiceContext context, String metadataUuid, MultipartFile file,
+                                              @Nullable String folder, MetadataResourceVisibility visibility,
+                                              Boolean approved, ContentRange range) throws Exception {
+        throw new IllegalArgumentException("Chunked uploads are not supported by this store");
+    }
+
+    /**
      * Physically migrate a resource still sitting in a legacy per-visibility folder into the flat
      * layout, if this store implementation has such a legacy layout at all - only
      * {@code FilesystemStore} does; other backends have no concept of it and use this default

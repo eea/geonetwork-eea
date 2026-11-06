@@ -40,6 +40,7 @@ import org.fao.geonet.util.ThreadPool;
 import org.fao.geonet.utils.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.Date;
@@ -143,6 +144,22 @@ public class ResourceLoggerStore extends AbstractStore {
         if (decoratedStore != null) {
             final MetadataResource resource = decoratedStore
                     .putResource(context, metadataUuid, filename, is, changeDate, visibility, approved);
+            if (resource != null) {
+                storePutRequest(context, metadataUuid, resource.getFilename(), resource.getSize(), resource.getVisibility(),
+                    resource.getMimeType(), approved);
+            }
+            return resource;
+        }
+        return null;
+    }
+
+    @Override
+    public MetadataResource putResourceChunk(ServiceContext context, String metadataUuid, MultipartFile file,
+                                             @Nullable String folder, MetadataResourceVisibility visibility,
+                                             Boolean approved, ContentRange range) throws Exception {
+        if (decoratedStore != null) {
+            final MetadataResource resource = decoratedStore
+                .putResourceChunk(context, metadataUuid, file, folder, visibility, approved, range);
             if (resource != null) {
                 storePutRequest(context, metadataUuid, resource.getFilename(), resource.getSize(), resource.getVisibility(),
                     resource.getMimeType(), approved);
