@@ -309,6 +309,12 @@ public class OpenDALStore extends AbstractStore {
 
         Operator op = openDALConfiguration.getOperator();
         if (range.isFirst()) {
+            // Before any write: on fs without atomic_write_dir the first chunk would leave a partial file at the key.
+            if (!openDALConfiguration.supportsChunkedUploads()) {
+                throw new IllegalArgumentException(
+                    "Chunked uploads need opendal.atomic_write_dir (OPENDAL_ATOMIC_WRITE_DIR) on the fs service. "
+                        + "Set it, or set uploadMaxChunkSize to 0 in the UI configuration.");
+            }
             if (statExists(op, key)) {
                 throw new ResourceAlreadyExistException(String.format(
                     "A resource with name '%s' already exists for metadata '%d'.", filename, metadataId));

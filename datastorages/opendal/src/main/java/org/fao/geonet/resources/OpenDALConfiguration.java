@@ -86,9 +86,21 @@ public class OpenDALConfiguration {
         return writeConcurrent;
     }
 
+    /**
+     * The {@code fs} service creates the target file on the first write, so a chunked upload would
+     * be visible while in progress and could not be completed. With {@code atomic_write_dir} it
+     * writes elsewhere and moves the file into place on close.
+     */
+    public boolean supportsChunkedUploads() {
+        return !"fs".equals(scheme) || options.containsKey("atomic_write_dir");
+    }
+
     @PostConstruct
     public void init() {
         log.info("Initializing OpenDAL operator with scheme: {}", scheme);
+        if (!supportsChunkedUploads()) {
+            log.warn("OpenDAL scheme fs without atomic_write_dir (OPENDAL_ATOMIC_WRITE_DIR): chunked uploads are refused.");
+        }
         // Presign is only available in the async API, the blocking operator shares the same service
         this.asyncOperator = AsyncOperator.of(scheme, options);
         this.operator = asyncOperator.blocking();

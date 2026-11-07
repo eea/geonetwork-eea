@@ -167,6 +167,24 @@ public class OpenDALStoreChunkTest {
         assertEquals("old", read("metadata/42/f.bin"));
     }
 
+    @Test
+    public void fsWithoutAtomicWriteDirRefusesFirstChunkAndWritesNothing() throws Exception {
+        OpenDALConfiguration plain = new OpenDALConfiguration();
+        plain.setScheme("fs");
+        plain.setOptions(new HashMap<>(Map.of("root", root.toString())));
+        plain.init();
+        try {
+            ReflectionTestUtils.setField(store, "openDALConfiguration", plain);
+            chunk(null, "f.bin", "bytes 0-3/10", "abcd");
+            fail("expected IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            assertFalse(exists("metadata/42/f.bin"));
+        } finally {
+            ReflectionTestUtils.setField(store, "openDALConfiguration", config);
+            plain.destroy();
+        }
+    }
+
     @Test(expected = InputStreamLimitExceededException.class)
     public void totalAboveMaxUploadSizeIsRejected() throws Exception {
         chunk(null, "f.bin", "bytes 0-9/101", "abcdefghij");
