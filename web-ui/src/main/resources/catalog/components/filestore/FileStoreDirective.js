@@ -201,6 +201,19 @@
                 {},
                 scope.filestoreUploadOptions && scope.filestoreUploadOptions.headers
               );
+              // Read when the upload starts, not when the directive links: an instance that
+              // links before the saved UI configuration is in gnGlobalSettings would never
+              // chunk. The widget builds the request options from this object, so it wins
+              // over the widget's own maxChunkSize. The setting may have been saved as a
+              // string; jQuery File Upload needs a number.
+              var maxChunkSize = parseInt(
+                gnGlobalSettings.gnCfg.mods.editor &&
+                  gnGlobalSettings.gnCfg.mods.editor.uploadMaxChunkSize,
+                10
+              );
+              if (maxChunkSize > 0) {
+                data.maxChunkSize = maxChunkSize;
+              }
               setUploading(data.files, true);
             });
             // jQuery File Upload replaces the file input with an uncompiled clone after each
@@ -219,13 +232,30 @@
               var file = data.files[0];
               var status = data.jqXHR && data.jqXHR.status;
               var range = data.jqXHR && data.jqXHR.getResponseHeader("Range");
+              // Only a file sent in chunks can be resumed. A single request that failed may
+              // have been stored, and a retry would get "already exists".
+              var chunked = data.maxChunkSize > 0 && file.size > data.maxChunkSize;
               if (
+                chunked &&
                 data.errorThrown !== "abort" &&
                 (file.chunkRetries || 0) < 5 &&
-                (status === 0 || status >= 500 || (status === 409 && range))
+                (status === 0 ||
+                  status >= 500 ||
+                  (status === 409 &&
+                    (range || (data.uploadedBytes > 0 && (file.chunkRestarts || 0) < 3))))
               ) {
+                // The server aborts a session on any write error, so a retry at the same offset
+                // gets 409 without Range: nothing is stored, restart from 0. With Range, resume
+                // after it. A 409 on the first chunk (file already exists) is final.
+                // chunkRetries is reset by every chunk that succeeds, so a failure that always
+                // hits the same chunk would restart forever: chunkRestarts is never reset.
                 if (status === 409) {
-                  data.uploadedBytes = parseInt(range.split("-")[1], 10) + 1;
+                  if (range) {
+                    data.uploadedBytes = parseInt(range.split("-")[1], 10) + 1;
+                  } else {
+                    data.uploadedBytes = 0;
+                    file.chunkRestarts = (file.chunkRestarts || 0) + 1;
+                  }
                 }
                 file.chunkRetries = (file.chunkRetries || 0) + 1;
                 setTimeout(function () {
@@ -245,22 +275,6 @@
 
             var uploadFile = function () {
               scope.queue = [];
-              // The setting may have been saved as a string; jQuery File Upload needs a number.
-              var maxChunkSize = parseInt(
-                gnGlobalSettings.gnCfg.mods.editor &&
-                  gnGlobalSettings.gnCfg.mods.editor.uploadMaxChunkSize,
-                10
-              );
-              var chunkOptions =
-                maxChunkSize > 0
-                  ? {
-                      maxChunkSize: maxChunkSize,
-                      chunkdone: function (e, data) {
-                        data.files[0].chunkRetries = 0;
-                      },
-                      fail: retryChunkOrFail
-                    }
-                  : {};
               scope.filestoreUploadOptions = angular.extend(
                 {
                   singleUpload: scope.singleUpload,
@@ -276,10 +290,13 @@
                   pasteZone: null,
                   // TODO: acceptFileTypes: /(\.|\/)(xml|skos|rdf)$/i,
                   done: uploadResourceSuccess,
-                  fail: uploadResourceFailed,
+                  chunkdone: function (e, data) {
+                    data.files[0].chunkRetries = 0;
+                  },
+                  // Calls uploadResourceFailed unless the file was sent in chunks.
+                  fail: retryChunkOrFail,
                   headers: { "X-XSRF-TOKEN": $rootScope.csrf }
                 },
-                chunkOptions,
                 scope.uploadOptions || {}
               );
             };
@@ -346,6 +363,9 @@
                 } else if (jqXHR.status === 413) {
                   // Catch 413 which may come from a proxy server with no messages.
                   message = "uploadedResourceSizeExceededException";
+                } else if (jqXHR.status === 409) {
+                  // A chunk the server cannot continue (see retryChunkOrFail): no message body.
+                  message = "uploadResumeFailedException";
                 }
               }
               if (message === "" && typeof data.errorThrown === "string") {
@@ -359,6 +379,10 @@
                     switch (message) {
                       case "uploadNetworkErrorException":
                         return $translate.instant("uploadNetworkErrorException", {
+                          file: data.files[0].name
+                        });
+                      case "uploadResumeFailedException":
+                        return $translate.instant("uploadResumeFailedException", {
                           file: data.files[0].name
                         });
                       case "ResourceAlreadyExistException":

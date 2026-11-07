@@ -427,6 +427,7 @@
   "uploadedResourceAlreadyExistException": "File {{file}} already exist in this record data store. Remove it first.",
   "uploadedResourceSizeExceededException": "File {{file}} too large ({{humanizedSize}}).",
   "uploadNetworkErrorException": "File {{file}} failed to upload due to network error or connection reset.",
+  "uploadResumeFailedException": "File {{file}} could not be uploaded because the upload was interrupted and could not be resumed. Please try again.",
   "qualityMeasures": "Quality",
   "measureType": "Type",
   "measureName": "Measure",
