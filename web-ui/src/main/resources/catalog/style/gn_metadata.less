@@ -825,3 +825,67 @@ ul.container-list {
     background-color: @dropdown-bg;
   }
 }
+
+// Record view / Datastore browser (gnDatastoreBrowser)
+.gn-datastore-browser {
+  .gn-datastore-browser-header {
+    flex-wrap: wrap;
+    gap: 10px;
+    h2 {
+      margin: 0;
+      line-height: 1.2;
+    }
+  }
+  .gn-datastore-root {
+    gap: 8px;
+    color: @text-color;
+    text-decoration: none;
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      color: @text-color;
+    }
+    &:hover h2 {
+      color: @link-hover-color;
+    }
+    &:focus:not(:focus-visible) {
+      outline: none;
+    }
+    .badge {
+      vertical-align: middle;
+    }
+  }
+  .list-group {
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+  .list-group-item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .gn-datastore-row {
+    gap: 8px;
+  }
+  a.gn-datastore-row {
+    color: @text-color;
+    text-decoration: none;
+  }
+  .gn-datastore-folder {
+    background-color: @gray-lighter;
+    cursor: pointer;
+    &:hover {
+      background-color: darken(@gray-lighter, 3%);
+    }
+    .fa-folder,
+    .fa-folder-open {
+      color: @brand-primary;
+    }
+  }
+  .gn-datastore-file:hover {
+    background-color: lighten(@gray-lighter, 3%);
+  }
+  .gn-datastore-meta {
+    font-size: @font-size-small;
+    margin: 0 10px;
+  }
+}

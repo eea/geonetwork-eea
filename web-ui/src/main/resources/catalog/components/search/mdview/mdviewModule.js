@@ -30,6 +30,7 @@
   goog.require("gn_userfeedback");
   goog.require("gn_thesaurus");
   goog.require("gn_catalog_service");
+  goog.require("gn_datastorebrowser");
 
   var module = angular.module("gn_mdview", [
     "gn_mdview_service",
@@ -37,7 +38,8 @@
     "gn_related_observer_directive",
     "gn_userfeedback",
     "gn_thesaurus",
-    "gn_catalog_service"
+    "gn_catalog_service",
+    "gn_datastorebrowser"
   ]);
 
   module.controller("GnMdViewController", [

@@ -10,17 +10,30 @@
   <div
     data-ng-init="mainType = config.getType(r, 'onlines');
                      badge = config.getBadgeLabel(mainType, r);
-                     icon = config.getClassIcon(mainType);"
+                     icon = config.getClassIcon(mainType);
+                     isEeaDirectDownload = r.locTitle.indexOf('Direct download') === 0;"
     class="row list-group-item gn-related-item gn-related-onlines gn-relation-type-{{mainType}}"
     data-ng-repeat="r in distributions | orderBy:getOrderBy"
     data-ng-if="!editable"
+    data-ng-hide="isEeaDirectDownload && (!md.uuid || r.datastoreFileCount === 0)"
     gn-popover=""
   >
+    <div data-ng-if="isEeaDirectDownload && md.uuid">
+      <div
+        data-gn-datastore-browser="md.uuid"
+        data-on-load="r.datastoreFileCount = count"
+      ></div>
+    </div>
     <div
+      data-ng-if="!isEeaDirectDownload"
       class="gn-related-icon-col col-xs-2 col-sm-2 text-center"
       data-gn-link-icon="r"
     ></div>
-    <div class="col-xs-10 col-sm-7" gn-popover-anchor="">
+    <div
+      data-ng-if="!isEeaDirectDownload"
+      class="col-xs-10 col-sm-7"
+      gn-popover-anchor=""
+    >
       <div gn-popover-content="" data-ng-if="!editable">
         <p class="text-muted">
           <span
@@ -155,7 +168,7 @@
       </div>
     </div>
 
-    <div class="col-xs-12 col-sm-3">
+    <div data-ng-if="!isEeaDirectDownload" class="col-xs-12 col-sm-3">
       <div class="row">
         <div class="col-md-8 gn-nopadding-left gn-nopadding-right">
           <div
