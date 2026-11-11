@@ -1,0 +1,112 @@
+<div class="gn-datastore-browser" data-ng-if="loading || error || tree.count > 0">
+  <div class="flex-row flex-align-center gn-datastore-browser-header">
+    <!-- Root node: collapsed on load, click to show the files -->
+    <a
+      href=""
+      class="flex-row flex-align-center flex-grow gn-datastore-root"
+      data-ng-click="toggleRoot()"
+      aria-expanded="{{rootExpanded}}"
+    >
+      <i
+        class="fa fa-fw text-muted"
+        data-ng-class="rootExpanded ? 'fa-caret-down' : 'fa-caret-right'"
+        aria-hidden="true"
+      ></i>
+      <h2 data-translate="">datastoreBrowserTitle</h2>
+      <span class="text-muted text-nowrap" data-ng-if="tree.count > 0">
+        <span class="badge">{{tree.count}}</span> {{tree.humanSize}}
+      </span>
+    </a>
+    <div class="btn-group btn-group-sm" data-ng-if="tree.folders.length > 0">
+      <button type="button" class="btn btn-default" data-ng-click="expandAll()">
+        <i class="fa fa-fw fa-plus-square-o" aria-hidden="true"></i>
+        <span class="hidden-xs" data-translate="">datastoreBrowserExpandAll</span>
+      </button>
+      <button type="button" class="btn btn-default" data-ng-click="collapseAll()">
+        <i class="fa fa-fw fa-minus-square-o" aria-hidden="true"></i>
+        <span class="hidden-xs" data-translate="">datastoreBrowserCollapseAll</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="text-muted" data-ng-if="loading">
+    <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+    <span data-translate="">datastoreBrowserLoading</span>
+  </div>
+
+  <div class="alert alert-warning" data-ng-if="error">
+    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+    <span data-translate="">datastoreBrowserError</span> {{error}}
+  </div>
+
+  <div class="list-group" data-ng-if="rootExpanded && rows.length > 0">
+    <div
+      data-ng-repeat="row in rows track by (row.type + ':' + (row.item.path || row.item.url))"
+      class="list-group-item gn-datastore-{{row.type}}"
+      data-ng-style="indent(row)"
+    >
+      <!-- Folder row: the whole row toggles the folder -->
+      <a
+        href=""
+        class="flex-row flex-align-center gn-datastore-row"
+        data-ng-if="row.type === 'folder'"
+        data-ng-click="toggle(row.item)"
+        aria-expanded="{{row.item.expanded}}"
+      >
+        <i
+          class="fa fa-fw text-muted"
+          data-ng-class="row.item.expanded ? 'fa-caret-down' : 'fa-caret-right'"
+          aria-hidden="true"
+        ></i>
+        <i
+          class="fa fa-fw fa-lg gn-margin-right-sm"
+          data-ng-class="row.item.expanded ? 'fa-folder-open' : 'fa-folder'"
+          aria-hidden="true"
+        ></i>
+        <strong class="flex-grow gn-break-all">{{row.item.name}}</strong>
+        <span class="text-muted text-nowrap">
+          <span class="badge">{{row.item.count}}</span>
+          {{row.item.humanSize}}
+        </span>
+      </a>
+
+      <!-- File row -->
+      <div
+        class="flex-row flex-align-center gn-datastore-row"
+        data-ng-if="row.type === 'file'"
+      >
+        <i class="fa fa-fw" aria-hidden="true"></i>
+        <i
+          class="fa fa-fw fa-lg text-muted gn-margin-right-sm {{row.item.icon}}"
+          aria-hidden="true"
+        ></i>
+        <a
+          class="flex-grow gn-break-all"
+          data-ng-href="{{row.item.url}}"
+          download="{{row.item.name}}"
+          >{{row.item.name}}</a
+        >
+        <i
+          class="fa fa-fw fa-lock text-danger"
+          data-ng-if="row.item.visibility === 'PRIVATE'"
+          title="{{'datastoreBrowserPrivate' | translate}}"
+        ></i>
+        <span class="text-muted text-nowrap hidden-xs gn-datastore-meta">
+          {{row.item.humanSize}}
+          <span data-ng-if="row.item.lastModification">
+            &middot; {{row.item.lastModification | date:'yyyy-MM-dd HH:mm'}}</span
+          >
+        </span>
+        <a
+          class="btn btn-default btn-sm"
+          data-ng-href="{{row.item.url}}"
+          download="{{row.item.name}}"
+          title="{{'download' | translate}} {{row.item.name}}"
+        >
+          <i class="fa fa-fw fa-download" aria-hidden="true"></i>
+          <span class="hidden-xs" data-translate="">download</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

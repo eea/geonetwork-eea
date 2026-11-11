@@ -495,5 +495,11 @@
   "mdWebsite": "Website",
   "mdOrganization": "Organization",
   "mdAddress": "Address",
-  "mdPhone": "Phone"
+  "mdPhone": "Phone",
+  "datastoreBrowserTitle": "Direct download",
+  "datastoreBrowserLoading": "Loading files...",
+  "datastoreBrowserError": "Failed to load the list of files.",
+  "datastoreBrowserExpandAll": "Expand all",
+  "datastoreBrowserCollapseAll": "Collapse all",
+  "datastoreBrowserPrivate": "Restricted access"
 }
