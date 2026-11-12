@@ -79,8 +79,7 @@
         {{::r.locDescription | striptags}}
       </p>
       <div data-ng-switch on="mainType">
-        <div class="text-muted" data-ng-switch-when="EEAFILE">
-        </div>
+        <div class="text-muted" data-ng-switch-when="EEAFILE"></div>
         <div data-ng-switch-when="WFS">
           <div
             data-ng-if="::isLayerProtocol(r)"
