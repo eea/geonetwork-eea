@@ -194,7 +194,8 @@ def run(args, doc, entries):
                      + open(args.rdf, "rb").read() + b"\r\n")
         parts.append(f"--{boundary}--\r\n".encode())
         status, raw = cat.call("POST", "registries/vocabularies", body=b"".join(parts),
-                               ctype=f"multipart/form-data; boundary={boundary}")
+                               ctype=f"multipart/form-data; boundary={boundary}",
+                               accept="text/xml")  # the upload only produces text/xml
         print(f"thesaurus upload: HTTP {status} {raw[:300].decode(errors='replace')}")
         return 0
 
