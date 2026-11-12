@@ -210,3 +210,25 @@ FROM ogcapi_field_mapping fm
 WHERE fm.config_id = 'property-mapping' AND fm.ogc_property = 'gemetKeywords'
   AND NOT EXISTS (SELECT 1 FROM ogcapi_facet_config fc
                   WHERE fc.field_mapping_id = fm.id AND fc.facet_name = 'gemetKeywords');
+
+-- 4. eeaBusinessDomain (EEA business domains thesaurus, subdomain keywords and their domains)
+INSERT INTO ogcapi_field_mapping
+    (config_id, sort_order, ogc_property, elastic_property, index_record_property,
+     type_override, is_sortable, is_queryable, add_property_to_output)
+SELECT 'property-mapping',
+       (SELECT COALESCE(MAX(sort_order), -1) + 1 FROM ogcapi_field_mapping WHERE config_id = 'property-mapping'),
+       'eeaBusinessDomain', 'th_eea-business-domains_tree.default',
+       'keywordHierarchyByThesaurus.["th_eea-business-domains_tree"].defaultTexts',
+       'LIST_STRING', false, true, true
+WHERE EXISTS (SELECT 1 FROM ogcapi_property_mapping WHERE id = 'property-mapping')
+  AND NOT EXISTS (SELECT 1 FROM ogcapi_field_mapping
+                  WHERE config_id = 'property-mapping' AND ogc_property = 'eeaBusinessDomain');
+
+INSERT INTO ogcapi_facet_config
+    (field_mapping_id, sort_order, facet_name, facet_type, bucket_sorting, bucket_sorting_direction,
+     bucket_count, minimum_document_count)
+SELECT fm.id, 0, 'eeaBusinessDomain', 'TERM', 'COUNT', 'DESCENDING', 100, 1
+FROM ogcapi_field_mapping fm
+WHERE fm.config_id = 'property-mapping' AND fm.ogc_property = 'eeaBusinessDomain'
+  AND NOT EXISTS (SELECT 1 FROM ogcapi_facet_config fc
+                  WHERE fc.field_mapping_id = fm.id AND fc.facet_name = 'eeaBusinessDomain');
