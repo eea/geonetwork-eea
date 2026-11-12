@@ -902,7 +902,7 @@
               sections: [
                 {
                   types: "onlines",
-                  filter: "protocol:WWW:URL|EEA.*|.*DOWNLOAD.*|.*download.*",
+                  filter: "protocol:WWW:URL|.*DOWNLOAD.*|.*download.*",
                   title: "download"
                 },
                 { filter: "protocol:OGC:OWS-C", title: "map" },
