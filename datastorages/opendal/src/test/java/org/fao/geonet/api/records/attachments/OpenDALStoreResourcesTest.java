@@ -52,6 +52,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -69,6 +70,7 @@ public class OpenDALStoreResourcesTest {
     private OpenDALConfiguration config;
     private OpenDALStore store;
     private ServiceContext context;
+    private SettingManager settingManager;
 
     @Before
     public void setUp() throws Exception {
@@ -96,7 +98,7 @@ public class OpenDALStoreResourcesTest {
                 return Collections.singletonMap("nested/b.txt", MetadataResourceVisibility.PUBLIC);
             }
         };
-        SettingManager settingManager = mock(SettingManager.class);
+        settingManager = mock(SettingManager.class);
         when(settingManager.getNodeURL()).thenReturn("http://localhost/geonetwork/");
         ReflectionTestUtils.setField(store, "openDALConfiguration", config);
         ReflectionTestUtils.setField(store, "settingManager", settingManager);
@@ -152,5 +154,20 @@ public class OpenDALStoreResourcesTest {
         assertEquals("uuid-1/attachments/nested/b.txt", resources.get(1).getId());
         assertEquals(7, resources.get(1).getSize());
         assertNotNull(resources.get(1).getLastModification());
+    }
+
+    @Test
+    public void getResourcesReadsTheNodeUrlOncePerListing() throws Exception {
+        Operator op = config.getOperator();
+        for (int i = 0; i < 20; i++) {
+            op.write("metadata/42/public/f" + i + ".txt", "x".getBytes(StandardCharsets.UTF_8));
+        }
+
+        List<MetadataResource> resources = store.getResources(context, UUID, MetadataResourceVisibility.PUBLIC,
+            null, true, false);
+
+        assertEquals(20, resources.size());
+        assertEquals("http://localhost/geonetwork/api/records/uuid-1/attachments/f0.txt", resources.get(0).getUrl());
+        verify(settingManager, times(1)).getNodeURL();
     }
 }
