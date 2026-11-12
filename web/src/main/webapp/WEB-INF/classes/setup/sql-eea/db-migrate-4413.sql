@@ -140,6 +140,8 @@ ALTER TABLE MetadataFileUploads ADD COLUMN IF NOT EXISTS resourceaccess VARCHAR(
 ALTER TABLE MetadataFileUploads ADD COLUMN IF NOT EXISTS mimetype VARCHAR(255);
 ALTER TABLE MetadataFileUploads ALTER COLUMN fileName TYPE VARCHAR(1024);
 
+INSERT INTO Settings (name, value, datatype, position, internal) SELECT distinct 'system/metadata/recordCreationDateFromXml', 'false', 2, 9190, 'n' from settings WHERE NOT EXISTS (SELECT name FROM Settings WHERE name = 'system/metadata/recordCreationDateFromXml');
+
 UPDATE Settings SET value='4.4.13' WHERE name='system/platform/version';
 UPDATE Settings SET value='SNAPSHOT' WHERE name='system/platform/subVersion';
 
