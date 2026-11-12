@@ -2,13 +2,15 @@
 --
 -- EEA disables the automatic database migration (WEB-INF/config-db/database_migration.xml),
 -- so this script is run by hand, in this order:
---   1. start GeoNetwork 4.4.13 once on the old database and stop it: Hibernate adds the new
---      columns this script relies on (e.g. groups.type);
---   2. run this script in one transaction:
+--   1. stop GeoNetwork 4 and GeoNetwork 5;
+--   2. run this script once, in one transaction:
 --        psql -v ON_ERROR_STOP=1 -1 -f db-migrate-4413.sql
---   3. start GeoNetwork 4.4.13 again, then GeoNetwork 5.
--- The OGC API Records configuration GeoNetwork 5 would otherwise seed on its first start is
--- inserted by this script, so the OGC API inserts at the end do not depend on GeoNetwork 5.
+--   3. start GeoNetwork 4.4.13, then GeoNetwork 5.
+-- It creates the schema GeoNetwork 4.4.13 would otherwise add through Hibernate, and the OGC API
+-- Records configuration GeoNetwork 5 would otherwise seed on its first start (Liquibase is
+-- disabled for EEA), so it does not depend on either application starting first.
+-- It is not meant to run twice: a second run stops at the first CREATE SEQUENCE and, in one
+-- transaction, changes nothing.
 
 create sequence ogcapi_field_mapping_id_seq;
 
@@ -160,6 +162,22 @@ INSERT INTO Settings (name, value, datatype, position, internal) SELECT distinct
 INSERT INTO Settings (name, value, datatype, position, internal) SELECT distinct 'system/metadata/edit/supportedFileMimetypes', '*/*', 0, 9107, 'n' from settings WHERE NOT EXISTS (SELECT name FROM Settings WHERE name = 'system/metadata/edit/supportedFileMimetypes');
 
 INSERT INTO Settings (name, value, datatype, position, internal) SELECT distinct 'metadata/zipExport/attachmentsSizeLimit', NULL, 1, 12700, 'n' from settings WHERE NOT EXISTS (SELECT name FROM Settings WHERE name = 'metadata/zipExport/attachmentsSizeLimit');
+
+-- Schema that GeoNetwork 4.4.13 expects and that upstream leaves to Hibernate
+-- (hibernate.hbm2ddl.auto=update). Created here so the script does not depend on GeoNetwork
+-- starting first, and so it also works when Hibernate only validates the schema.
+ALTER TABLE groups ADD COLUMN IF NOT EXISTS type varchar(255);
+
+CREATE SEQUENCE IF NOT EXISTS anonymous_access_link_id_seq START WITH 100 INCREMENT BY 1;
+ALTER SEQUENCE anonymous_access_link_id_seq OWNER TO "geonetwork";
+CREATE TABLE IF NOT EXISTS anonymousaccesslink
+(
+  id           integer      NOT NULL CONSTRAINT anonymousaccesslink_pkey PRIMARY KEY,
+  hash         varchar(255),
+  metadataid   integer      NOT NULL,
+  metadatauuid varchar(255) CONSTRAINT uk_rx48y1s1cjn8f27iwemxsrnty UNIQUE
+);
+ALTER TABLE anonymousaccesslink OWNER TO "geonetwork";
 
 UPDATE groups SET type='RecordPrivilege' WHERE id<2 AND type IS NULL;
 UPDATE groups SET type='Workspace' WHERE id>=2 AND type IS NULL;
