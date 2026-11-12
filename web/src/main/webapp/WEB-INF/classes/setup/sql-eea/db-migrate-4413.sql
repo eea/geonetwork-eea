@@ -330,6 +330,18 @@ WHERE fm.config_id = 'property-mapping' AND fm.ogc_property = 'eeaBusinessDomain
   AND NOT EXISTS (SELECT 1 FROM ogcapi_facet_config fc
                   WHERE fc.field_mapping_id = fm.id AND fc.facet_name = 'eeaBusinessDomain');
 
+-- 5. issued (resource publication date). GeoNetwork 5 adds it with the Liquibase changeset
+-- 00035-ogcapi-publication-date, which does not run for EEA, and it is not in the YAML seed above.
+-- Same values as the changeset. GeoNetwork 5 reads this configuration on startup.
+INSERT INTO ogcapi_field_mapping
+    (config_id, sort_order, ogc_property, elastic_property, index_record_property,
+     is_sortable, is_queryable, add_property_to_output)
+SELECT 'property-mapping', 115, 'issued', 'publicationDateForResource',
+       'resourceDateDetails.["publicationDateForResource"]', true, true, true
+WHERE EXISTS (SELECT 1 FROM ogcapi_property_mapping WHERE id = 'property-mapping')
+  AND NOT EXISTS (SELECT 1 FROM ogcapi_field_mapping
+                  WHERE config_id = 'property-mapping' AND ogc_property = 'issued');
+
 -- Attachment links through GeoNetwork 5 (/catalogue/api/records/<uuid>/attachments/...) only work
 -- while GeoNetwork 5 reads the attachments from the same disk as GeoNetwork 4. GeoNetwork 5 has no
 -- S3 store, so point them to GeoNetwork 4 (/catalogue/srv/api/...). Portal links
