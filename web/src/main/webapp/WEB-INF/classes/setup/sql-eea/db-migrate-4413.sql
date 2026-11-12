@@ -7,9 +7,8 @@
 --   2. run this script in one transaction:
 --        psql -v ON_ERROR_STOP=1 -1 -f db-migrate-4413.sql
 --   3. start GeoNetwork 4.4.13 again, then GeoNetwork 5.
--- The OGC API Records inserts at the end need the 'property-mapping' row that GeoNetwork 5
--- creates on its first start. On a database where GeoNetwork 5 has not run yet they do
--- nothing: run that part again after GeoNetwork 5 has started once.
+-- The OGC API Records configuration GeoNetwork 5 would otherwise seed on its first start is
+-- inserted by this script, so the OGC API inserts at the end do not depend on GeoNetwork 5.
 
 create sequence ogcapi_field_mapping_id_seq;
 
@@ -83,6 +82,73 @@ create table ogcapi_filter_facet
 
 alter table ogcapi_filter_facet
   owner to "geonetwork";
+
+-- OGC API Records property mapping: the configuration GeoNetwork 5 seeds from
+-- application-ogcapi-records.yml (eea-dev-5.0.x) when the 'property-mapping' row is missing.
+-- Inserted here so the configuration does not depend on GeoNetwork 5 starting first (Liquibase
+-- is disabled for EEA). Only when the row does not exist yet. Keep in sync with the GeoNetwork 5
+-- YAML when it changes the standard mappings.
+DO $$
+BEGIN
+IF NOT EXISTS (SELECT 1 FROM ogcapi_property_mapping WHERE id = 'property-mapping') THEN
+INSERT INTO ogcapi_property_mapping (id, default_bucket_count, update_sequence) VALUES ('property-mapping', 10, 1);
+INSERT INTO ogcapi_field_mapping (config_id, sort_order, ogc_property, elastic_property, index_record_property, type_override, sort_field_suffix, is_sortable, is_queryable, title, description, add_property_to_output) VALUES
+  ('property-mapping', 0, 'spatialRepresentationType', 'cl_spatialRepresentationType.key', 'codelists.["cl_spatialRepresentationType"].[*].properties.["key"]', 'LIST_STRING', NULL, false, false, NULL, NULL, true),
+  ('property-mapping', 1, 'resourceType', 'resourceType', 'resourceType', NULL, NULL, true, true, NULL, NULL, true),
+  ('property-mapping', 2, 'format', 'format', 'format', NULL, NULL, false, false, NULL, NULL, false),
+  ('property-mapping', 3, 'tags', 'tag.langeng', 'tag.[*].["default"]', NULL, NULL, false, false, NULL, NULL, false),
+  ('property-mapping', 4, 'updateFrequency', 'cl_maintenanceAndUpdateFrequency.key', 'codelists.["cl_maintenanceAndUpdateFrequency"].[*].properties.["key"]', 'SINGLE_STRING', NULL, true, true, NULL, NULL, true),
+  ('property-mapping', 5, 'topic', 'cl_topic.key', 'codelists.["cl_topic"].[*].properties.["key"]', 'LIST_STRING', NULL, false, true, NULL, NULL, true),
+  ('property-mapping', 6, 'status', 'cl_status.key', 'codelists.["cl_status"].[*].properties.["key"]', 'LIST_STRING', NULL, false, true, NULL, NULL, true),
+  ('property-mapping', 7, 'creationYearForResource', 'creationYearForResource', 'resourceDateDetails.["creationYearForResource"].[0]', NULL, NULL, true, false, NULL, NULL, true),
+  ('property-mapping', 8, 'linkProtocol', 'linkProtocol', 'linkProtocols', NULL, NULL, false, false, NULL, NULL, true),
+  ('property-mapping', 9, 'createDate', 'createDate', 'createDate', NULL, NULL, true, true, NULL, NULL, true),
+  ('property-mapping', 10, 'resourceTitleObject', 'resourceTitleObject.default', 'resourceTitle.["default"]', NULL, 'sort', true, true, NULL, NULL, true),
+  ('property-mapping', 11, 'resolutionScaleDenominator', 'resolutionScaleDenominator', 'resolutionScaleDenominator', NULL, NULL, true, true, NULL, NULL, true),
+  ('property-mapping', 12, 'popularity', 'popularity', 'popularity', NULL, NULL, true, false, NULL, NULL, true),
+  ('property-mapping', 13, 'childUuid', 'childUuid', 'childUuid', 'LIST_STRING', NULL, false, true, NULL, NULL, true),
+  ('property-mapping', 14, 'orgForResource', 'OrgForResourceObject.default', 'orgForResourceByRole.["OrgForResourceObject"].[*].["default"]', NULL, NULL, false, false, NULL, NULL, true),
+  ('property-mapping', 15, 'id', 'uuid', NULL, NULL, NULL, false, false, NULL, NULL, true),
+  ('property-mapping', 16, 'created', 'createDate', NULL, NULL, NULL, false, false, NULL, NULL, true),
+  ('property-mapping', 17, 'updated', 'resourceDate.date', NULL, NULL, NULL, false, false, NULL, NULL, true),
+  ('property-mapping', 18, 'language', 'mainLanguage', NULL, NULL, NULL, false, false, NULL, NULL, true),
+  ('property-mapping', 19, 'languages', 'otherLanguage', NULL, NULL, NULL, false, false, NULL, NULL, true),
+  ('property-mapping', 20, 'organization', 'OrgForResourceObject.default', NULL, NULL, NULL, false, false, NULL, NULL, true),
+  ('property-mapping', 21, 'title', 'resourceTitleObject.default', NULL, NULL, NULL, false, false, NULL, NULL, true),
+  ('property-mapping', 22, 'description', 'resourceAbstractObject.default', NULL, NULL, NULL, false, false, NULL, NULL, true),
+  ('property-mapping', 23, 'keywords', 'tag.default', NULL, NULL, NULL, false, false, NULL, NULL, true),
+  ('property-mapping', 24, 'geometry', 'geom', NULL, NULL, NULL, false, false, NULL, NULL, true),
+  ('property-mapping', 25, 'time', 'resourceTemporalDateRange', NULL, NULL, NULL, false, false, NULL, NULL, true);
+INSERT INTO ogcapi_facet_config (field_mapping_id, sort_order, facet_name, facet_type, bucket_sorting, bucket_sorting_direction, bucket_count, minimum_document_count, number_bucket_interval, calendar_interval_unit)
+SELECT fm.id, v.sort_order, v.facet_name, v.facet_type, v.bucket_sorting, v.bucket_sorting_direction, v.bucket_count, v.minimum_document_count, v.number_bucket_interval, v.calendar_interval_unit
+FROM (VALUES
+  ('spatialRepresentationType', 0, 'spatialRepresentationType', 'TERM', 'COUNT', 'DESCENDING', NULL, 1, NULL, NULL),
+  ('resourceType', 0, 'resourceType', 'TERM', 'COUNT', 'DESCENDING', NULL, 1, NULL, NULL),
+  ('format', 0, 'format', 'TERM', 'COUNT', 'DESCENDING', 50, 1, NULL, NULL),
+  ('tags', 0, 'tags', 'TERM', 'COUNT', 'DESCENDING', 50, 1, NULL, NULL),
+  ('updateFrequency', 0, 'updateFrequency', 'TERM', 'COUNT', 'DESCENDING', 50, 1, NULL, NULL),
+  ('topic', 0, 'topic', 'TERM', 'COUNT', 'DESCENDING', 25, 1, NULL, NULL),
+  ('status', 0, 'status', 'TERM', 'COUNT', 'DESCENDING', NULL, 1, NULL, NULL),
+  ('creationYearForResource', 0, 'creationYearForResource', 'HISTOGRAM_FIXED_INTERVAL', 'VALUE', 'DESCENDING', 25, 1, 5, NULL),
+  ('creationYearForResource', 1, 'creationYearForResource2', 'HISTOGRAM_FIXED_BUCKET_COUNT', 'VALUE', 'ASCENDING', 5, 1, NULL, NULL),
+  ('linkProtocol', 0, 'availableInServices', 'FILTER', 'COUNT', 'DESCENDING', NULL, 1, NULL, NULL),
+  ('createDate', 0, 'createDate', 'HISTOGRAM_FIXED_INTERVAL', 'VALUE', 'DESCENDING', 25, 1, NULL, 'month'),
+  ('createDate', 1, 'createDate2', 'HISTOGRAM_FIXED_BUCKET_COUNT', 'VALUE', 'DESCENDING', 5, 1, NULL, NULL),
+  ('resolutionScaleDenominator', 0, 'resolutionScaleDenominator', 'HISTOGRAM_FIXED_INTERVAL', 'VALUE', 'DESCENDING', 25, 1, 100000, NULL),
+  ('resolutionScaleDenominator', 1, 'resolutionScaleDenominator2', 'HISTOGRAM_FIXED_BUCKET_COUNT', 'VALUE', 'DESCENDING', 5, 1, NULL, NULL),
+  ('orgForResource', 0, 'orgForResource', 'TERM', 'COUNT', 'DESCENDING', 50, 1, NULL, NULL)
+) AS v(ogc_property, sort_order, facet_name, facet_type, bucket_sorting, bucket_sorting_direction, bucket_count, minimum_document_count, number_bucket_interval, calendar_interval_unit)
+JOIN ogcapi_field_mapping fm ON fm.config_id = 'property-mapping' AND fm.ogc_property = v.ogc_property;
+INSERT INTO ogcapi_filter_facet (facet_config_id, sort_order, filter_name, filter_equation_cql)
+SELECT fc.id, v.sort_order, v.filter_name, v.filter_equation_cql
+FROM (VALUES
+  ('linkProtocol', 'availableInServices', 0, 'availableInDownloadService', 'linkProtocol = ''OGC:WFS'''),
+  ('linkProtocol', 'availableInServices', 1, 'availableInViewService', 'linkProtocol = ''OGC:WMS''')
+) AS v(ogc_property, facet_name, sort_order, filter_name, filter_equation_cql)
+JOIN ogcapi_field_mapping fm ON fm.config_id = 'property-mapping' AND fm.ogc_property = v.ogc_property
+JOIN ogcapi_facet_config fc ON fc.field_mapping_id = fm.id AND fc.facet_name = v.facet_name;
+END IF;
+END $$;
 
 
 INSERT INTO Settings (name, value, datatype, position, internal) SELECT distinct 'system/publication/doi/doimailnotification', 'false', 2, 100192, 'n' from settings WHERE NOT EXISTS (SELECT name FROM Settings WHERE name = 'system/publication/doi/doimailnotification');
