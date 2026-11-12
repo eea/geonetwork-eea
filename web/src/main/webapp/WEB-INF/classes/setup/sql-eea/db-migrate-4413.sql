@@ -1,3 +1,16 @@
+-- EEA migration to GeoNetwork 4.4.13 (4.4.10 to 4.4.13 and EEA changes).
+--
+-- EEA disables the automatic database migration (WEB-INF/config-db/database_migration.xml),
+-- so this script is run by hand, in this order:
+--   1. start GeoNetwork 4.4.13 once on the old database and stop it: Hibernate adds the new
+--      columns this script relies on (e.g. groups.type);
+--   2. run this script in one transaction:
+--        psql -v ON_ERROR_STOP=1 -1 -f db-migrate-4413.sql
+--   3. start GeoNetwork 4.4.13 again, then GeoNetwork 5.
+-- The OGC API Records inserts at the end need the 'property-mapping' row that GeoNetwork 5
+-- creates on its first start. On a database where GeoNetwork 5 has not run yet they do
+-- nothing: run that part again after GeoNetwork 5 has started once.
+
 create sequence ogcapi_field_mapping_id_seq;
 
 alter sequence ogcapi_field_mapping_id_seq owner to "geonetwork";
