@@ -329,3 +329,13 @@ FROM ogcapi_field_mapping fm
 WHERE fm.config_id = 'property-mapping' AND fm.ogc_property = 'eeaBusinessDomain'
   AND NOT EXISTS (SELECT 1 FROM ogcapi_facet_config fc
                   WHERE fc.field_mapping_id = fm.id AND fc.facet_name = 'eeaBusinessDomain');
+
+-- Attachment links through GeoNetwork 5 (/catalogue/api/records/<uuid>/attachments/...) only work
+-- while GeoNetwork 5 reads the attachments from the same disk as GeoNetwork 4. GeoNetwork 5 has no
+-- S3 store, so point them to GeoNetwork 4 (/catalogue/srv/api/...). Portal links
+-- (/catalogue/<portal>/api/...) are GeoNetwork 4 URLs already and are left as they are.
+-- The records are reindexed by the full reindex after the migration.
+UPDATE metadata
+SET data = regexp_replace(data, '/catalogue/api/records/([^/<"[:space:]]+)/attachments/',
+                          '/catalogue/srv/api/records/\1/attachments/', 'g')
+WHERE data LIKE '%/catalogue/api/records/%/attachments/%';
