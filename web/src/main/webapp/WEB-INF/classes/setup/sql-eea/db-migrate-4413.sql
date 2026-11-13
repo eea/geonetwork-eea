@@ -379,12 +379,27 @@ INSERT INTO ogcapi_filter_facet (facet_config_id, sort_order, filter_name, filte
   ) AS f(sort_order, filter_name, filter_equation_cql)
   WHERE fm.config_id = 'property-mapping' AND fc.facet_name = 'resolutionScaleDenominatorRanges';
 
--- Insert from https://github.com/geonetwork/geonetwork/blob/dev/src/shared/database/src/main/resources/db/changesets/00036-ogcapi-temporal-extent-facet.xml
-INSERT INTO ogcapi_facet_config (field_mapping_id, sort_order, facet_name, facet_type, calendar_interval_unit,
-                                    minimum_document_count, hard_bounds_min, hard_bounds_max,
-                                    bucket_count, bucket_sorting, bucket_sorting_direction)
-  SELECT id, 0, 'temporalExtent', 'HISTOGRAM_FIXED_INTERVAL', 'year',
-          0, '1900', 'now/y',
-          500, 'VALUE', 'ASCENDING'
-  FROM ogcapi_field_mapping
-  WHERE config_id = 'property-mapping' AND ogc_property = 'temporalExtent'
+-- Alter table and Insert from https://github.com/geonetwork/geonetwork/blob/dev/src/shared/database/src/main/resources/db/changesets/00036-ogcapi-temporal-extent-facet.xml
+ALTER TABLE ogcapi_facet_config
+    ADD COLUMN IF NOT EXISTS hard_bounds_min VARCHAR(50),
+    ADD COLUMN IF NOT EXISTS hard_bounds_max VARCHAR(50);
+
+INSERT INTO ogcapi_field_mapping (id, config_id, sort_order, ogc_property, elastic_property, type_override,
+                                  is_sortable, is_queryable, add_property_to_output)
+SELECT (SELECT COALESCE(MAX(id), 0) + 1 FROM ogcapi_field_mapping),
+       'property-mapping', 116, 'temporalExtent', 'resourceTemporalExtentDateRange', 'SINGLE_DATE',
+       false, false, false
+WHERE EXISTS (SELECT 1 FROM ogcapi_property_mapping WHERE id = 'property-mapping')
+  AND NOT EXISTS (SELECT 1 FROM ogcapi_field_mapping
+                  WHERE config_id = 'property-mapping' AND ogc_property = 'temporalExtent');
+
+INSERT INTO ogcapi_facet_config (id, field_mapping_id, sort_order, facet_name, facet_type, calendar_interval_unit,
+                                 minimum_document_count, hard_bounds_min, hard_bounds_max,
+                                 bucket_count, bucket_sorting, bucket_sorting_direction)
+SELECT (SELECT COALESCE(MAX(id), 0) + 1 FROM ogcapi_facet_config),
+       fm.id, 0, 'temporalExtent', 'HISTOGRAM_FIXED_INTERVAL', 'year',
+       0, '1900', 'now/y', 500, 'VALUE', 'ASCENDING'
+FROM ogcapi_field_mapping fm
+WHERE fm.config_id = 'property-mapping' AND fm.ogc_property = 'temporalExtent'
+  AND NOT EXISTS (SELECT 1 FROM ogcapi_facet_config fc
+                  WHERE fc.field_mapping_id = fm.id AND fc.facet_name = 'temporalExtent');
