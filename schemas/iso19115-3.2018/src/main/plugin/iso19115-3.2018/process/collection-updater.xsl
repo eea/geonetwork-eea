@@ -105,6 +105,9 @@
     <tag name="mri:pointOfContact" context="mri:MD_DataIdentification|srv:SV_ServiceIdentification"
          groupBy="*/cit:party/*/cit:contactInfo/*/cit:address/*/cit:electronicMailAddress/*/text()"
          merge="."/>
+    <tag name="mrd:distributionFormat" context="mrd:MD_Distribution"
+         groupBy="*/mrd:formatSpecificationCitation/*/cit:title/*/text()"
+         merge="."/>
   </xsl:variable>
 
 
@@ -238,6 +241,44 @@
   </xsl:template>
 
 
+
+  <!-- No distribution section in the record but members have formats:
+  create one (after identificationInfo/contentInfo to follow the ISO order)
+  which is then expanded with a distributionFormat placeholder. -->
+  <xsl:template match="mdb:MD_Metadata[not(mdb:distributionInfo)
+                                       and $existingMembers//mrd:distributionFormat]"
+                mode="expand">
+    <xsl:variable name="insertAfter"
+                  select="(mdb:identificationInfo|mdb:contentInfo)[last()]"/>
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:for-each select="node()">
+        <xsl:apply-templates select="." mode="expand"/>
+        <xsl:if test=". is $insertAfter">
+          <mdb:distributionInfo>
+            <xsl:variable name="distribution">
+              <mrd:MD_Distribution/>
+            </xsl:variable>
+            <xsl:apply-templates select="$distribution/*" mode="expand"/>
+          </mdb:distributionInfo>
+        </xsl:if>
+      </xsl:for-each>
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- Add a distributionFormat placeholder (if none) so that the merge
+  can populate it from the members. -->
+  <xsl:template match="mrd:MD_Distribution" mode="expand">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates select="mrd:description" mode="expand"/>
+      <xsl:call-template name="copyOrAddElement">
+        <xsl:with-param name="elements" select="mrd:distributionFormat"/>
+        <xsl:with-param name="name" select="'mrd:distributionFormat'"/>
+      </xsl:call-template>
+      <xsl:apply-templates select="*[not(self::mrd:description|self::mrd:distributionFormat)]" mode="expand"/>
+    </xsl:copy>
+  </xsl:template>
 
   <xsl:template match="mdb:identificationInfo/*/mri:citation/*" mode="expand">
     <xsl:copy>
