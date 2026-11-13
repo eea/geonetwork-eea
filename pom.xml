@@ -1675,7 +1675,7 @@
     <jts.version>1.20.0</jts.version>
     <pg.version>42.7.3</pg.version>
 
-    <spring.version>5.3.39</spring.version>
+    <spring.version>7.0.10</spring.version>
     <spring.security.version>5.8.16</spring.security.version>
     <spring.jpa.version>2.7.18</spring.jpa.version>
     <springboot.version>2.7.0</springboot.version>
