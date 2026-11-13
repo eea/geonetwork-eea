@@ -351,3 +351,40 @@ UPDATE metadata
 SET data = regexp_replace(data, '/catalogue/api/records/([^/<"[:space:]]+)/attachments/',
                           '/catalogue/srv/api/records/\1/attachments/', 'g')
 WHERE data LIKE '%/catalogue/api/records/%/attachments/%';
+
+-- Remap time on resourceTemporalExtentDateRange https://github.com/geonetwork/geonetwork/issues/247
+UPDATE ogcapi_field_mapping
+SET elastic_property = 'resourceTemporalExtentDateRange'
+WHERE config_id = 'property-mapping'
+  AND ogc_property = 'time'
+  AND elastic_property = 'resourceTemporalDateRange';
+
+-- Insert from https://github.com/geonetwork/geonetwork/blob/dev/src/shared/database/src/main/resources/db/changesets/00037-ogcapi-scale-ranges-facet.xml
+INSERT INTO ogcapi_facet_config (field_mapping_id, sort_order, facet_name, facet_type, bucket_sorting, bucket_sorting_direction)
+  SELECT fm.id,
+          (SELECT COALESCE(MAX(fc.sort_order) + 1, 0) FROM ogcapi_facet_config fc WHERE fc.field_mapping_id = fm.id),
+          'resolutionScaleDenominatorRanges', 'FILTER', 'VALUE', 'ASCENDING'
+  FROM ogcapi_field_mapping fm
+  WHERE fm.config_id = 'property-mapping' AND fm.ogc_property = 'resolutionScaleDenominator';
+
+INSERT INTO ogcapi_filter_facet (facet_config_id, sort_order, filter_name, filter_equation_cql)
+  SELECT fc.id, f.sort_order, f.filter_name, f.filter_equation_cql
+  FROM ogcapi_facet_config fc
+  JOIN ogcapi_field_mapping fm ON fm.id = fc.field_mapping_id
+  CROSS JOIN (VALUES
+      (0, '1_upTo100000', 'resolutionScaleDenominator &lt; 100000'),
+      (1, '2_100000to1000000', 'resolutionScaleDenominator &gt;= 100000 AND resolutionScaleDenominator &lt; 1000000'),
+      (2, '3_1000000to10000000', 'resolutionScaleDenominator &gt;= 1000000 AND resolutionScaleDenominator &lt; 10000000'),
+      (3, '4_above10000000', 'resolutionScaleDenominator &gt;= 10000000')
+  ) AS f(sort_order, filter_name, filter_equation_cql)
+  WHERE fm.config_id = 'property-mapping' AND fc.facet_name = 'resolutionScaleDenominatorRanges';
+
+-- Insert from https://github.com/geonetwork/geonetwork/blob/dev/src/shared/database/src/main/resources/db/changesets/00036-ogcapi-temporal-extent-facet.xml
+INSERT INTO ogcapi_facet_config (field_mapping_id, sort_order, facet_name, facet_type, calendar_interval_unit,
+                                    minimum_document_count, hard_bounds_min, hard_bounds_max,
+                                    bucket_count, bucket_sorting, bucket_sorting_direction)
+  SELECT id, 0, 'temporalExtent', 'HISTOGRAM_FIXED_INTERVAL', 'year',
+          0, '1900', 'now/y',
+          500, 'VALUE', 'ASCENDING'
+  FROM ogcapi_field_mapping
+  WHERE config_id = 'property-mapping' AND ogc_property = 'temporalExtent'
