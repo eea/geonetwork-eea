@@ -361,23 +361,27 @@ WHERE config_id = 'property-mapping'
 
 -- Insert from https://github.com/geonetwork/geonetwork/blob/dev/src/shared/database/src/main/resources/db/changesets/00037-ogcapi-scale-ranges-facet.xml
 INSERT INTO ogcapi_facet_config (field_mapping_id, sort_order, facet_name, facet_type, bucket_sorting, bucket_sorting_direction)
-  SELECT fm.id,
-          (SELECT COALESCE(MAX(fc.sort_order) + 1, 0) FROM ogcapi_facet_config fc WHERE fc.field_mapping_id = fm.id),
-          'resolutionScaleDenominatorRanges', 'FILTER', 'VALUE', 'ASCENDING'
-  FROM ogcapi_field_mapping fm
-  WHERE fm.config_id = 'property-mapping' AND fm.ogc_property = 'resolutionScaleDenominator';
+SELECT fm.id,
+       (SELECT COALESCE(MAX(fc.sort_order) + 1, 0) FROM ogcapi_facet_config fc WHERE fc.field_mapping_id = fm.id),
+       'resolutionScaleDenominatorRanges', 'FILTER', 'VALUE', 'ASCENDING'
+FROM ogcapi_field_mapping fm
+WHERE fm.config_id = 'property-mapping' AND fm.ogc_property = 'resolutionScaleDenominator'
+  AND NOT EXISTS (SELECT 1 FROM ogcapi_facet_config fc
+                  JOIN ogcapi_field_mapping fm2 ON fm2.id = fc.field_mapping_id
+                  WHERE fm2.config_id = 'property-mapping' AND fc.facet_name = 'resolutionScaleDenominatorRanges');
 
 INSERT INTO ogcapi_filter_facet (facet_config_id, sort_order, filter_name, filter_equation_cql)
-  SELECT fc.id, f.sort_order, f.filter_name, f.filter_equation_cql
-  FROM ogcapi_facet_config fc
-  JOIN ogcapi_field_mapping fm ON fm.id = fc.field_mapping_id
-  CROSS JOIN (VALUES
-      (0, '1_upTo100000', 'resolutionScaleDenominator &lt; 100000'),
-      (1, '2_100000to1000000', 'resolutionScaleDenominator &gt;= 100000 AND resolutionScaleDenominator &lt; 1000000'),
-      (2, '3_1000000to10000000', 'resolutionScaleDenominator &gt;= 1000000 AND resolutionScaleDenominator &lt; 10000000'),
-      (3, '4_above10000000', 'resolutionScaleDenominator &gt;= 10000000')
-  ) AS f(sort_order, filter_name, filter_equation_cql)
-  WHERE fm.config_id = 'property-mapping' AND fc.facet_name = 'resolutionScaleDenominatorRanges';
+SELECT fc.id, f.sort_order, f.filter_name, f.filter_equation_cql
+FROM ogcapi_facet_config fc
+JOIN ogcapi_field_mapping fm ON fm.id = fc.field_mapping_id
+CROSS JOIN (VALUES
+    (0, '1_upTo100000', 'resolutionScaleDenominator < 100000'),
+    (1, '2_100000to1000000', 'resolutionScaleDenominator >= 100000 AND resolutionScaleDenominator < 1000000'),
+    (2, '3_1000000to10000000', 'resolutionScaleDenominator >= 1000000 AND resolutionScaleDenominator < 10000000'),
+    (3, '4_above10000000', 'resolutionScaleDenominator >= 10000000')
+) AS f(sort_order, filter_name, filter_equation_cql)
+WHERE fm.config_id = 'property-mapping' AND fc.facet_name = 'resolutionScaleDenominatorRanges'
+  AND NOT EXISTS (SELECT 1 FROM ogcapi_filter_facet ff WHERE ff.facet_config_id = fc.id);
 
 -- Alter table and Insert from https://github.com/geonetwork/geonetwork/blob/dev/src/shared/database/src/main/resources/db/changesets/00036-ogcapi-temporal-extent-facet.xml
 ALTER TABLE ogcapi_facet_config
