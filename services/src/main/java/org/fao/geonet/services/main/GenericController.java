@@ -115,6 +115,7 @@ public class GenericController {
             srvReq = ServiceRequestFactory.create(request, response,
                 portal, lang, service);
         } catch (BadParameterEx e) {
+            // client error, no need for a stack trace in the log
             Log.warning(Log.REQUEST, "Cannot build ServiceRequest: " + e.getMessage());
             response.sendError(400, e.getMessage());
             return;

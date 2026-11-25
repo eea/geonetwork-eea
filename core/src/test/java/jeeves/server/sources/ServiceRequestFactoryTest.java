@@ -50,6 +50,7 @@ public class ServiceRequestFactoryTest {
 
     @Test
     public void ignoresEmptyFileParts() throws Exception {
+        // a file input left blank in a form is sent as an empty part with no file name
         MockMultipartHttpServletRequest request = multipartPost();
         request.addFile(new MockMultipartFile("file", "", "application/octet-stream", new byte[0]));
         request.addParameter("type", "site");

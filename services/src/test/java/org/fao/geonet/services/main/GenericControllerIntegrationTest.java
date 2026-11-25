@@ -52,6 +52,8 @@ public class GenericControllerIntegrationTest extends AbstractServiceIntegration
             .andExpect(status().reason("File uploads are not supported by this service."))
             .andReturn();
 
+        // dispatching the request that could not be built fails with an exception, which
+        // the global exception handler would resolve without changing the 400 status
         assertNull(result.getResolvedException());
     }
 }

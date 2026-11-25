@@ -29,7 +29,7 @@
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>geonetwork</artifactId>
   <packaging>pom</packaging>
-  <version>4.4.13-SNAPSHOT</version>
+  <version>4.4.14-SNAPSHOT</version>
   <name>GeoNetwork opensource</name>
   <description>GeoNetwork opensource is a standards based, Free and
     Open Source catalog application to manage spatially referenced
@@ -368,6 +368,21 @@
   <!-- =========================================================== -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcprov-jdk18on</artifactId>
+        <version>${bouncycastle.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcpkix-jdk18on</artifactId>
+        <version>${bouncycastle.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcutil-jdk18on</artifactId>
+        <version>${bouncycastle.version}</version>
+      </dependency>
       <!-- rewrite url servletfilter -->
       <dependency>
         <groupId>org.tuckey</groupId>
@@ -1063,6 +1078,16 @@
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-cas</artifactId>
         <version>${spring.security.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.springframework.security</groupId>
@@ -1098,6 +1123,16 @@
         <groupId>org.keycloak</groupId>
         <artifactId>keycloak-spring-security-adapter</artifactId>
         <version>${keycloak.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
@@ -1709,6 +1744,11 @@
          (see its POM), otherwise fox:external-document/PDF embedding fails at runtime with
          NoClassDefFoundError masked as "java.io.IOException: closed". -->
     <pdfbox.version>3.0.3</pdfbox.version>
+    <!-- Single jdk18on version for all BouncyCastle artifacts. It overrides the version PDFBox
+         brings in, so raise it when upgrading PDFBox if PDFBox needs a newer one.
+         The jdk15on artifacts (no longer maintained) are excluded from keycloak and
+         spring-security-cas in dependencyManagement. -->
+    <bouncycastle.version>1.87</bouncycastle.version>
     <xmlunit.version>2.10.0</xmlunit.version>
     <jackson.version>2.22.0</jackson.version>
     <jsonpath.version>2.10.0</jsonpath.version>

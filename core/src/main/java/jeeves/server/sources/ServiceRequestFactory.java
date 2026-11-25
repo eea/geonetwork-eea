@@ -265,6 +265,8 @@ public final class ServiceRequestFactory {
     //---------------------------------------------------------------------------
 
     private static Element getMultipartParams(HttpServletRequest req, MultipartRequest multipart) {
+        //--- file uploads are handled by the REST API, these services do not accept them.
+        //--- Empty parts (a file input left blank in a form) carry no file and are ignored.
         boolean hasFile = multipart.getMultiFileMap().values().stream()
             .flatMap(List::stream)
             .anyMatch(file -> !file.isEmpty());
